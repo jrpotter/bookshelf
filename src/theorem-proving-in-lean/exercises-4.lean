@@ -2,7 +2,6 @@
  -
  - Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
 -/
-import algebra.parity
 import data.int.basic
 import data.nat.basic
 import data.real.basic
@@ -56,7 +55,9 @@ example : α → ((∀ x : α, r) ↔ r) :=
 
 -- Ensure we do not use classical logic in the first or third subproblems.
 section
+
 open classical
+
 example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
   iff.intro
     (assume h₁, or.elim (classical.em r)
@@ -140,7 +141,7 @@ section ex_5
 open classical
 
 variables (α : Type*) (p q : α → Prop)
-variable r : Prop
+variables r s : Prop
 
 example : (∃ x : α, r) → r :=
   assume ⟨hx, hr⟩,
@@ -155,15 +156,74 @@ example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
     (assume ⟨hx, ⟨hp, hr⟩⟩, ⟨exists.intro hx hp, hr⟩)
     (assume ⟨⟨hx, hp⟩, hr⟩, exists.intro hx ⟨hp, hr⟩)
 
-example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := sorry
-example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry
-example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := sorry
-example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
-example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+  iff.intro
+    (assume ⟨hx, hpq⟩, hpq.elim
+      (assume hp, or.inl (exists.intro hx hp))
+      (assume hq, or.inr (exists.intro hx hq)))
+    (assume h, h.elim
+      (assume ⟨hx, hp⟩, exists.intro hx (or.inl hp))
+      (assume ⟨hx, hq⟩, exists.intro hx (or.inr hq)))
 
-example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
-example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
-example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
+  iff.intro
+    (assume h ⟨hx, np⟩, np (h hx))
+    (assume h hx, classical.by_contradiction (
+      assume np,
+      h (exists.intro hx np)
+    ))
+
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) :=
+  iff.intro
+    (assume ⟨hx, hp⟩ h, absurd hp (h hx))
+    (assume h, classical.by_contradiction (
+      assume h',
+      h (λ (x : α), assume hp, h' (exists.intro x hp))
+    ))
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
+  iff.intro
+    (assume h hx hp, h (exists.intro hx hp))
+    (assume h ⟨hx, hp⟩, absurd hp (h hx))
+
+lemma forall_negation : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
+  iff.intro
+    (assume h, classical.by_contradiction (
+      assume h',
+      h (λ (x : α), classical.by_contradiction (
+        assume np,
+        h' (exists.intro x np)
+      ))
+    ))
+    (assume ⟨hx, np⟩ h, absurd (h hx) np)
+
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
+  forall_negation α p
+
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
+  iff.intro
+    (assume h ⟨hx, hp⟩, h hx hp)
+    (assume h hx hp, h ⟨hx, hp⟩)
+
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
+  iff.intro
+    (assume ⟨hx, hp⟩ h, hp (h hx))
+    (assume h₁, or.elim (classical.em (∀ x, p x))
+      (assume h₂, exists.intro a (assume hp, h₁ h₂))
+      (assume h₂,
+        have h₃ : (∃ x, ¬p x), from iff.elim_left (forall_negation α p) h₂,
+        match h₃ with
+          ⟨hx, hp⟩ := exists.intro hx (assume hp', absurd hp' hp)
+        end))
+
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
+  iff.intro
+    (assume ⟨hx, hrp⟩ hr, exists.intro hx (hrp hr))
+    (assume h, or.elim (classical.em r)
+      (assume hr, match h hr with
+        ⟨hx, hp⟩ := exists.intro hx (assume hr, hp)
+      end)
+      (assume nr, exists.intro a (assume hr, absurd hr nr)))
 
 end ex_5
 
@@ -190,7 +250,10 @@ exp_log_eq h
 
 theorem log_mul {x y : real} (hx : x > 0) (hy : y > 0) :
   log (x * y) = log x + log y :=
-sorry
+calc log (x * y) = log (x * exp (log y)) : by rw (exp_log_eq hy)
+             ... = log (exp (log x) * exp (log y)) : by rw (exp_log_eq hx)
+             ... = log (exp (log x + log y)) : by rw exp_add
+             ... = log x + log y : by rw log_exp_eq
 
 end ex_6
 
@@ -201,6 +264,9 @@ end ex_6
 section ex_7
 #check sub_self
 
-example (x : Z) : x * 0 = 0 :=
-sorry
+example (x : ℤ) : x * 0 = 0 :=
+calc x * 0 = x * (x - x) : by rw (sub_self x)
+       ... = x * x - x * x : by rw (mul_sub x x x)
+       ... = 0 : by rw (sub_self (x * x))
+
 end ex_7
