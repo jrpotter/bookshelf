@@ -149,41 +149,38 @@ example : (∃ x : α, r) → r :=
 
 example (a : α) : r → (∃ x : α, r) :=
   assume hr,
-  exists.intro a hr
+  ⟨a, hr⟩
 
 example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
   iff.intro
-    (assume ⟨hx, ⟨hp, hr⟩⟩, ⟨exists.intro hx hp, hr⟩)
-    (assume ⟨⟨hx, hp⟩, hr⟩, exists.intro hx ⟨hp, hr⟩)
+    (assume ⟨hx, ⟨hp, hr⟩⟩, ⟨⟨hx, hp⟩, hr⟩)
+    (assume ⟨⟨hx, hp⟩, hr⟩, ⟨hx, ⟨hp, hr⟩⟩)
 
 example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
   iff.intro
     (assume ⟨hx, hpq⟩, hpq.elim
-      (assume hp, or.inl (exists.intro hx hp))
-      (assume hq, or.inr (exists.intro hx hq)))
+      (assume hp, or.inl (⟨hx, hp⟩))
+      (assume hq, or.inr (⟨hx, hq⟩)))
     (assume h, h.elim
-      (assume ⟨hx, hp⟩, exists.intro hx (or.inl hp))
-      (assume ⟨hx, hq⟩, exists.intro hx (or.inr hq)))
+      (assume ⟨hx, hp⟩, ⟨hx, or.inl hp⟩)
+      (assume ⟨hx, hq⟩, ⟨hx, or.inr hq⟩))
 
 example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
   iff.intro
     (assume h ⟨hx, np⟩, np (h hx))
-    (assume h hx, classical.by_contradiction (
-      assume np,
-      h (exists.intro hx np)
-    ))
+    (assume h hx, classical.by_contradiction (assume np, h ⟨hx, np⟩))
 
 example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) :=
   iff.intro
     (assume ⟨hx, hp⟩ h, absurd hp (h hx))
     (assume h, classical.by_contradiction (
       assume h',
-      h (λ (x : α), assume hp, h' (exists.intro x hp))
+      h (λ (x : α), assume hp, h' ⟨x, hp⟩)
     ))
 
 example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
   iff.intro
-    (assume h hx hp, h (exists.intro hx hp))
+    (assume h hx hp, h ⟨hx, hp⟩)
     (assume h ⟨hx, hp⟩, absurd hp (h hx))
 
 lemma forall_negation : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
@@ -192,7 +189,7 @@ lemma forall_negation : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
       assume h',
       h (λ (x : α), classical.by_contradiction (
         assume np,
-        h' (exists.intro x np)
+        h' ⟨x, np⟩
       ))
     ))
     (assume ⟨hx, np⟩ h, absurd (h hx) np)
@@ -209,21 +206,21 @@ example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
   iff.intro
     (assume ⟨hx, hp⟩ h, hp (h hx))
     (assume h₁, or.elim (classical.em (∀ x, p x))
-      (assume h₂, exists.intro a (assume hp, h₁ h₂))
+      (assume h₂, ⟨a, assume hp, h₁ h₂⟩)
       (assume h₂,
         have h₃ : (∃ x, ¬p x), from iff.elim_left (forall_negation α p) h₂,
         match h₃ with
-          ⟨hx, hp⟩ := exists.intro hx (assume hp', absurd hp' hp)
+          ⟨hx, hp⟩ := ⟨hx, (assume hp', absurd hp' hp)⟩
         end))
 
 example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
   iff.intro
-    (assume ⟨hx, hrp⟩ hr, exists.intro hx (hrp hr))
+    (assume ⟨hx, hrp⟩ hr, ⟨hx, hrp hr⟩)
     (assume h, or.elim (classical.em r)
       (assume hr, match h hr with
-        ⟨hx, hp⟩ := exists.intro hx (assume hr, hp)
+        ⟨hx, hp⟩ := ⟨hx, (assume hr, hp)⟩
       end)
-      (assume nr, exists.intro a (assume hr, absurd hr nr)))
+      (assume nr, ⟨a, (assume hr, absurd hr nr)⟩))
 
 end ex_5
 
