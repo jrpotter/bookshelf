@@ -1,43 +1,33 @@
-/- Exercises 2.10
+/- Exercises 2
  -
  - Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
 -/
 
--- Borrowed from the book.
-def double (x : ℕ) : ℕ := x + x
-def do_twice (f : ℕ → ℕ) (x : ℕ) : ℕ := f (f x)
-
 -- Exercise 1
 --
 -- Define the function `Do_Twice`, as described in Section 2.4.
-section ex_1
-def Do_Twice (f : (ℕ → ℕ) → (ℕ → ℕ)) (x : ℕ → ℕ)
-  : (ℕ → ℕ) :=
-f (f x)
-end ex_1
+namespace ex1
+
+def double (x : Nat) := x + x
+def doTwice (f : Nat → Nat) (x : Nat) : Nat := f (f x)
+def doTwiceTwice (f : (Nat → Nat) → (Nat → Nat)) (x : Nat → Nat) := f (f x)
+
+#reduce doTwiceTwice doTwice double 2
+
+end ex1
 
 -- Exercise 2
 --
 -- Define the functions `curry` and `uncurry`, as described in Section 2.4.
-section ex_2
-def curry (α β γ : Type*) (f : α × β → γ)
-  : α → β → γ :=
-λ α β, f (α, β)
+namespace ex2
 
-def uncurry (α β γ : Type*) (f : α → β → γ)
-  : α × β → γ :=
-λ x, f x.1 x.2
-end ex_2
+def curry (f : α × β → γ) : (α → β → γ) :=
+  fun α β => f (α, β)
 
--- Borrowed from the book.
-universe u
-constant vec : Type u → ℕ → Type u
+def uncurry (f : α → β → γ) : (α × β → γ) :=
+  fun x => f x.1 x.2
 
-namespace vec
-constant empty : Π (α : Type u), vec α 0
-constant cons : Π (α : Type u) (n : ℕ), α → vec α n → vec α (n + 1)
-constant append : Π (α : Type u) (n m : ℕ), vec α m → vec α n → vec α (n + m)
-end vec
+end ex2
 
 -- Exercise 3
 --
@@ -48,23 +38,30 @@ end vec
 -- implicit arguments for parameters that can be inferred. Declare some
 -- variables and check some expressions involving the constants that you have
 -- declared.
-section ex_3
+namespace ex3
+
+universe u
+axiom vec : Type u → Nat → Type u
 
 namespace vec
-constant add :
-  Π {α : Type u} {n : ℕ}, vec α n → vec α n → vec α n
-constant reverse :
-  Π {α : Type u} {n : ℕ}, vec α n → vec α n
+
+axiom empty : ∀ (α : Type u), vec α 0
+axiom cons : ∀ (α : Type u) (n : Nat), α → vec α n → vec α (n + 1)
+axiom append : ∀ (α : Type u) (n m : Nat), vec α m → vec α n → vec α (n + m)
+axiom add : ∀ {α : Type u} {n : Nat}, vec α n → vec α n → vec α n
+axiom reverse : ∀ {α : Type u} {n : Nat}, vec α n → vec α n
+
 end vec
 
 -- Check results.
-variables a b : vec Prop 1
-variables c d : vec Prop 2
+variable (a b : vec Prop 1)
+variable (c d : vec Prop 2)
+
 #check vec.add a b
 -- #check vec.add a c
 #check vec.reverse a
 
-end ex_3
+end ex3
 
 -- Exercise 4
 --
@@ -74,23 +71,29 @@ end ex_3
 -- (using vec) multiplication of a matrix by a vector. Once again, declare some
 -- variables and check some expressions involving the constants that you have
 -- declared.
-constant matrix : Type u → ℕ → ℕ → Type u
+namespace ex4
 
-section ex_4
+universe u
+axiom matrix : Type u → Nat → Nat → Type u
 
 namespace matrix
-constant add : Π {α : Type u} {m n : ℕ}, matrix α m n → matrix α m n → matrix α m n
-constant mul : Π {α : Type u} {m n p : ℕ}, matrix α m n → matrix α n p → matrix α m p
-constant app : Π {α : Type u} {m n : ℕ}, matrix α m n → vec α n → vec α m
+
+axiom add : ∀ {α : Type u} {m n : Nat},
+  matrix α m n → matrix α m n → matrix α m n
+axiom mul : ∀ {α : Type u} {m n p : Nat},
+  matrix α m n → matrix α n p → matrix α m p
+axiom app : ∀ {α : Type u} {m n : Nat},
+  matrix α m n → ex3.vec α n → ex3.vec α m
+
 end matrix
 
-variables a b : matrix Prop 5 7
-variable c : matrix Prop 7 3
-variable d : vec Prop 3
+variable (a b : matrix Prop 5 7)
+variable (c : matrix Prop 7 3)
+variable (d : ex3.vec Prop 3)
 
 #check matrix.add a b
 -- #check matrix.add a c
 #check matrix.mul a c
 #check matrix.app c d
 
-end ex_4
+end ex4

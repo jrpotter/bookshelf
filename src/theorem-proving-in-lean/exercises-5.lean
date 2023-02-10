@@ -1,499 +1,453 @@
-/- Exercises 5.8
+/- Exercises 5
  -
  - Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
 -/
-
-import tactic.rcases
 
 -- Exercise 1
 --
 -- Go back to the exercises in Chapter 3 and Chapter 4 and redo as many as you
 -- can now with tactic proofs, using also `rw` and `simp` as appropriate.
-section ex_1_3_1
+namespace ex1
 
-variables p q r : Prop
+-- Exercises 3.1
+
+section ex3_1
+
+variable (p q r : Prop)
 
 -- Commutativity of ∧ and ∨
-example : p ∧ q ↔ q ∧ p :=
-begin
-  split,
-  { rintro ⟨p, q⟩, exact ⟨q, p⟩ },
-  { rintro ⟨q, p⟩, exact ⟨p, q⟩ },
-end
+example : p ∧ q ↔ q ∧ p := by
+  apply Iff.intro
+  · intro ⟨hp, hq⟩
+    exact ⟨hq, hp⟩
+  · intro ⟨hq, hp⟩
+    exact ⟨hp, hq⟩
 
-example : p ∨ q ↔ q ∨ p :=
-begin
-  split,
-  { rintro (p | q),
-    { exact or.inr p },
-    { exact or.inl q },
-  },
-  { rintro (q | p),
-    { exact or.inr q },
-    { exact or.inl p },
-  },
-end
+example : p ∨ q ↔ q ∨ p := by
+  apply Iff.intro
+  · intro
+    | Or.inl hp => exact Or.inr hp
+    | Or.inr hq => exact Or.inl hq
+  · intro
+    | Or.inl hq => exact Or.inr hq
+    | Or.inr hp => exact Or.inl hp
 
 -- Associativity of ∧ and ∨
-example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) :=
-begin
-  split,
-  { rintro ⟨⟨p, q⟩, r⟩, exact ⟨p, q, r⟩ },
-  { rintro ⟨p, q, r⟩, exact ⟨⟨p, q⟩, r⟩ },
-end
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := by
+  apply Iff.intro
+  · intro ⟨⟨hp, hq⟩, hr⟩
+    exact ⟨hp, hq, hr⟩
+  · intro ⟨hp, hq, hr⟩
+    exact ⟨⟨hp, hq⟩, hr⟩
 
-example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
-begin
-  split,
-  { rintro ((p | q) | r),
-    { exact or.inl p },
-    { exact or.inr (or.inl q) },
-    { exact or.inr (or.inr r) },
-  },
-  { rintro (p | q | r),
-    { exact or.inl (or.inl p) },
-    { exact or.inl (or.inr q) },
-    { exact or.inr r },
-  },
-end
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := by
+  apply Iff.intro
+  · intro
+    | Or.inl (Or.inl hp) => exact Or.inl hp
+    | Or.inl (Or.inr hq) => exact Or.inr (Or.inl hq)
+    | Or.inr         hr  => exact Or.inr (Or.inr hr)
+  · intro
+    | Or.inl         hp  => exact Or.inl (Or.inl hp)
+    | Or.inr (Or.inl hq) => exact Or.inl (Or.inr hq)
+    | Or.inr (Or.inr hr) => exact Or.inr hr
 
 -- Distributivity
-example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
-begin
-  split,
-  { rintro ⟨p, (q | r)⟩,
-    { exact or.inl ⟨p, q⟩ },
-    { exact or.inr ⟨p, r⟩ },
-  },
-  { rintro (⟨p, q⟩ | ⟨p, r⟩),
-    { exact ⟨p, or.inl q⟩ },
-    { exact ⟨p, or.inr r⟩ },
-  },
-end
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := by
+  apply Iff.intro
+  · intro
+    | ⟨hp, Or.inl hq⟩ => exact Or.inl ⟨hp, hq⟩
+    | ⟨hp, Or.inr hr⟩ => exact Or.inr ⟨hp, hr⟩
+  · intro
+    | Or.inl ⟨hp, hq⟩ => exact ⟨hp, Or.inl hq⟩
+    | Or.inr ⟨hp, hr⟩ => exact ⟨hp, Or.inr hr⟩
 
-example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) :=
-begin
-  split,
-  { rintro (p | ⟨q, r⟩),
-    { exact ⟨or.inl p, or.inl p⟩ },
-    { exact ⟨or.inr q, or.inr r⟩ },
-  },
-  { rintro ⟨(p | q), (p | r)⟩;
-    exact or.inl p <|> exact or.inr ⟨q, r⟩,
-  },
-end
+example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := by
+  apply Iff.intro
+  · intro
+    | Or.inl      hp  => exact ⟨Or.inl hp, Or.inl hp⟩
+    | Or.inr ⟨hq, hr⟩ => exact ⟨Or.inr hq, Or.inr hr⟩
+  · intro
+    | ⟨Or.inl hp,         _⟩ => exact Or.inl hp
+    | ⟨Or.inr  _, Or.inl hp⟩ => exact Or.inl hp
+    | ⟨Or.inr hq, Or.inr hr⟩ => exact Or.inr ⟨hq, hr⟩
 
 -- Other properties
-example : (p → (q → r)) ↔ (p ∧ q → r) :=
-begin
-  split,
-  { rintros h ⟨hp, hq⟩, exact h hp hq },
-  { intros h hp hq, exact h ⟨hp, hq⟩ },
-end
+example : (p → (q → r)) ↔ (p ∧ q → r) := by
+  apply Iff.intro
+  · intro h ⟨hp, hq⟩
+    exact h hp hq
+  · intro h hp hq
+    exact h ⟨hp, hq⟩
 
-example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) :=
-begin
-  split,
-  { intros h₁,
-    split,
-    { intro p, exact h₁ (or.inl p) },
-    { intro q, exact h₁ (or.inr q) },
-  },
-  { rintros ⟨hp, hq⟩ h,
-    apply or.elim h,
-    { intro p, exact hp p },
-    { intro q, exact hq q },
-  },
-end
+example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := by
+  apply Iff.intro
+  · intro h
+    apply And.intro
+    · intro hp
+      exact h (Or.inl hp)
+    · intro hq
+      exact h (Or.inr hq)
+  · intro ⟨hpr, hqr⟩ h
+    apply Or.elim h
+    · intro hp
+      exact hpr hp
+    · intro hq
+      exact hqr hq
 
-example : ¬(p ∨ q) ↔ ¬p ∧ ¬q :=
-begin
-  split,
-  { intro h,
-    split,
-    { intro hp, apply h, exact or.inl hp },
-    { intro hq, apply h, exact or.inr hq },
-  },
-  { rintros ⟨np, nq⟩ (p | q),
-    { apply np, assumption },
-    { apply nq, assumption },
-  },
-end
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := by
+  apply Iff.intro
+  · intro h
+    apply And.intro
+    · intro hp
+      exact h (Or.inl hp)
+    · intro hq
+      exact h (Or.inr hq)
+  · intro ⟨np, nq⟩
+    intro
+    | Or.inl hp => exact absurd hp np
+    | Or.inr hq => exact absurd hq nq
 
-example : ¬p ∨ ¬q → ¬(p ∧ q) :=
-begin
-  rintro (np | nq) ⟨hp, hq⟩,
-  { apply np, assumption },
-  { apply nq, assumption },
-end
+example : ¬p ∨ ¬q → ¬(p ∧ q) := by
+  intro
+  | Or.inl np => intro h; exact absurd h.left np
+  | Or.inr nq => intro h; exact absurd h.right nq
 
-example : ¬(p ∧ ¬p) :=
-begin
-  rintro ⟨hp, np⟩,
+example : ¬(p ∧ ¬p) := by
+  intro ⟨hp, np⟩
   exact absurd hp np
-end
 
-example : p ∧ ¬q → ¬(p → q) :=
-begin
-  rintro ⟨hp, nq⟩ hpq,
-  apply nq,
-  exact hpq hp
-end
+example : p ∧ ¬q → ¬(p → q) := by
+  intro ⟨hp, nq⟩ h
+  exact absurd (h hp) nq
 
-example : ¬p → (p → q) :=
-begin
-  intros np hp,
-  exact absurd hp np,
-end
+example : ¬p → (p → q) := by
+  intro np hp
+  exact absurd hp np
 
-example : (¬p ∨ q) → (p → q) :=
-begin
-  rintros (np | hq) hp,
-  { exact absurd hp np },
-  { exact hq },
-end
+example : (¬p ∨ q) → (p → q) := by
+  intro
+  | Or.inl np => intro hp; exact absurd hp np
+  | Or.inr hq => exact fun _ => hq
 
-example : p ∨ false ↔ p :=
-begin
-  split,
-  { rintro (hp | hf),
-    { exact hp },
-    { exact false.elim hf },
-  },
-  { intro hp,
-    exact or.inl hp,
-  },
-end
+example : p ∨ False ↔ p := by
+  apply Iff.intro
+  · intro
+    | Or.inl hp => exact hp
+    | Or.inr ff => exact False.elim ff
+  · intro hp
+    exact Or.inl hp
 
-example : p ∧ false ↔ false :=
-begin
-  split,
-  { rintro ⟨hp, hf⟩, assumption },
-  { intro hf, exact false.elim hf },
-end
+example : p ∧ False ↔ False := by
+  apply Iff.intro
+  · intro ⟨_, ff⟩
+    exact ff
+  · intro ff
+    exact False.elim ff
 
-example : (p → q) → (¬q → ¬p) :=
-begin
-  rintro hpq nq hp,
-  apply nq,
-  exact absurd (hpq hp) nq,
-end
+example : (p → q) → (¬q → ¬p) := by
+  intro hpq nq hp
+  exact absurd (hpq hp) nq
 
-end ex_1_3_1
+end ex3_1
 
-section ex_1_3_2
+-- Exercises 3.2
 
-open classical
+section ex3_2
 
-variables p q r s : Prop
+open Classical
 
-example (hp : p) : (p → r ∨ s) → ((p → r) ∨ (p → s)) :=
-begin
-  intro h,
-  apply or.elim (h hp),
-  { intro hr, exact or.inl (assume hp, hr) },
-  { intro hs, exact or.inr (assume hp, hs) }
-end
+variable (p q r s : Prop)
 
-example : ¬(p ∧ q) → ¬p ∨ ¬q :=
-begin
-  intro h₁,
-  apply or.elim (classical.em p),
-  { intro hp,
-    apply or.elim (classical.em q),
-    { assume hq, exact false.elim (h₁ ⟨hp, hq⟩) },
-    { assume nq, exact or.inr nq },
-  },
-  { intro np,
-    exact or.inl np,
-  },
-end
+example (hp : p) : (p → r ∨ s) → ((p → r) ∨ (p → s)) := by
+  intro h
+  apply (h hp).elim
+  · intro hr
+    exact Or.inl (fun _ => hr)
+  · intro hs
+    exact Or.inr (fun _ => hs)
 
-example : ¬(p → q) → p ∧ ¬q :=
-begin
-  intro h₁,
-  split,
-  { by_contradiction np, apply h₁, intro hp, exact absurd hp np },
-  { intro hq, apply h₁, intro hp, exact hq },
-end
+example : ¬(p ∧ q) → ¬p ∨ ¬q := by
+  intro h
+  apply (em p).elim
+  · intro hp
+    apply (em q).elim
+    · intro hq
+      exact False.elim (h ⟨hp, hq⟩)
+    · intro nq
+      exact Or.inr nq
+  · intro np
+    exact Or.inl np
 
-example : (p → q) → (¬p ∨ q) :=
-begin
-  intro hpq,
-  apply or.elim (classical.em p),
-  { assume hp, exact or.inr (hpq hp) },
-  { assume np, exact or.inl np },
-end
+example : ¬(p → q) → p ∧ ¬q := by
+  intro h
+  apply And.intro
+  · apply byContradiction
+    intro np
+    apply h
+    intro hp
+    exact absurd hp np
+  · intro hq
+    apply h
+    intro _
+    exact hq
 
-example : (¬q → ¬p) → (p → q) :=
-begin
-  intros hqp hp,
-  by_contradiction nq,
-  exact absurd hp (hqp nq),
-end
+example : (p → q) → (¬p ∨ q) := by
+  intro hpq
+  apply (em p).elim
+  · intro hp
+    exact Or.inr (hpq hp)
+  · intro np
+    exact Or.inl np
 
-example : p ∨ ¬p :=
-by apply classical.em
+example : (¬q → ¬p) → (p → q) := by
+  intro hqp hp
+  apply byContradiction
+  intro nq
+  exact absurd hp (hqp nq)
 
-example : (((p → q) → p) → p) :=
-begin
-  intro h,
-  apply or.elim (classical.em p),
-  { intro hp, assumption },
-  { intro np, apply h, intro hp, exact absurd hp np },
-end
+example : p ∨ ¬p := by apply em
 
-end ex_1_3_2
+example : (((p → q) → p) → p) := by
+  intro h
+  apply (em p).elim
+  · intro hp
+    exact hp
+  · intro np
+    apply h
+    intro hp
+    exact absurd hp np
 
-section ex_1_3_3
+end ex3_2
 
-variable p : Prop
+-- Exercises 3.3
 
-example (hp : p) : ¬(p ↔ ¬p) :=
-begin
-  intro h₁,
-  cases h₁ with h₂,
-  exact absurd hp (h₂ hp),
-end
+section ex3_3
 
-end ex_1_3_3
+variable (p : Prop)
 
-section ex_1_4_1
+example (hp : p) : ¬(p ↔ ¬p) := by
+  intro h
+  exact absurd hp (h.mp hp)
 
-variables (α : Type*) (p q : α → Prop)
+end ex3_3
 
-example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
-begin
-  split,
-  { intro h,
-    split,
-    { intro hx, exact and.left (h hx) },
-    { intro hx, exact and.right (h hx) },
-  },
-  { intros h hx,
-    have hl : ∀ (x : α), p x, from and.left h,
-    have hr : ∀ (x : α), q x, from and.right h,
-    exact ⟨hl hx, hr hx⟩
-  },
-end
+-- Exercises 4.1
 
-example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
-begin
-  intros h₁ h₂ hx,
+section ex4_1
+
+variable (α : Type _)
+variable (p q : α → Prop)
+
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := by
+  apply Iff.intro
+  · intro h
+    apply And.intro
+    · intro hx; exact And.left (h hx)
+    · intro hx; exact And.right (h hx)
+  · intro h hx
+    have lhs : ∀ (x : α), p x := And.left h
+    have rhs : ∀ (x : α), q x := And.right h
+    exact ⟨lhs hx, rhs hx⟩
+
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := by
+  intro h₁ h₂ hx
   exact h₁ hx (h₂ hx)
-end
 
-example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
-begin
-  rintro (h₁ | h₂),
-  { intro hx, exact or.inl (h₁ hx) },
-  { intro hx, exact or.inr (h₂ hx) },
-end
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := by
+  intro
+  | Or.inl h => intro hx; exact Or.inl (h hx)
+  | Or.inr h => intro hx; exact Or.inr (h hx)
 
-end ex_1_4_1
+end ex4_1
 
-section ex_1_4_2
+-- Exercises 4.2
 
-variables (α : Type*) (p q : α → Prop)
-variable r : Prop
+section ex4_2
 
-example : α → ((∀ x : α, r) ↔ r) :=
-begin
-  intro hα,
-  split,
-  { intro hαr, apply hαr, exact hα },
-  { intros hr hα, exact hr },
-end
+variable (α : Type _)
+variable (p q : α → Prop)
+variable (r : Prop)
+
+example : α → ((∀ _ : α, r) ↔ r) := by
+  intro ha
+  apply Iff.intro
+  · intro har
+    apply har
+    exact ha
+  · intro hr _
+    exact hr
 
 section
 
-open classical
+open Classical
 
-example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
-begin
-  split,
-  { intro h₁,
-    apply or.elim (classical.em r),
-    { intro hr, exact or.inr hr },
-    { intro nr,
-      exact or.inl begin
-        intro hx,
-        have h₂ : p hx ∨ r, from h₁ hx,
-        apply or.elim h₂,
-        { intro hp, exact hp },
-        { intro hr, exact absurd hr nr },
-      end
-    },
-  },
-  { assume h₁ hx,
-    apply or.elim h₁,
-    { assume h₂, exact or.inl (h₂ hx) },
-    { assume hr, exact or.inr hr },
-  },
-end
+example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r := by
+  apply Iff.intro
+  · intro h
+    apply (em r).elim
+    · intro hr
+      exact Or.inr hr
+    · intro nr
+      apply Or.inl
+      · intro hx
+        apply (h hx).elim
+        · exact id
+        · intro hr
+          exact absurd hr nr
+  · intro h₁ hx
+    apply h₁.elim
+    · intro h₂
+      exact Or.inl (h₂ hx)
+    · intro hr
+      exact Or.inr hr
 
 end
 
-example : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
-begin
-  split,
-  { intros h hr hx, exact h hx hr },
-  { intros h hx hr, exact h hr hx },
-end
+example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := by
+  apply Iff.intro
+  · intro h hr hx
+    exact h hx hr
+  · intro h hx hr
+    exact h hr hx
 
-end ex_1_4_2
+end ex4_2
 
-section ex_1_4_3
+-- Exercises 4.3
 
-open classical
+section ex4_3
 
-variables (men : Type*) (barber : men)
+open Classical
+
+variable (men : Type _)
+variable (barber : men)
 variable (shaves : men → men → Prop)
 
-example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) :
-  false :=
-begin
-  apply or.elim (classical.em (shaves barber barber)),
-  { intro hb,
-    apply iff.elim_left (h barber) hb,
-    exact hb,
-  },
-  { intro nb,
-    have s, from iff.elim_right (h barber) nb,
-    exact absurd s nb
-  },
-end
+example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False := by
+  apply (em (shaves barber barber)).elim
+  · intro hb
+    exact absurd hb ((h barber).mp hb)
+  · intro nb
+    exact absurd ((h barber).mpr nb) nb
 
-end ex_1_4_3
+end ex4_3
 
-section ex_1_4_5
+-- Exercises 4.5
 
-open classical
+section ex4_5
 
-variables (α : Type*) (p q : α → Prop)
-variables r s : Prop
+open Classical
 
-example : (∃ x : α, r) → r :=
-begin
-  rintro ⟨hx, hr⟩,
-  exact hr,
-end
+variable (α : Type _)
+variable (p q : α → Prop)
+variable (r s : Prop)
 
-example (a : α) : r → (∃ x : α, r) :=
-begin
-  intro hr,
+example : (∃ _ : α, r) → r := by
+  intro ⟨_, hr⟩
+  exact hr
+
+example (a : α) : r → (∃ _ : α, r) := by
+  intro hr
   exact ⟨a, hr⟩
-end
 
-example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
-begin
-  split,
-  { rintro ⟨hx, ⟨hp, hr⟩⟩, exact ⟨⟨hx, hp⟩, hr⟩ },
-  { rintro ⟨⟨hx, hp⟩, hr⟩, exact ⟨hx, ⟨hp, hr⟩⟩ },
-end
+example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := by
+  apply Iff.intro
+  · intro ⟨hx, hp, hr⟩
+    exact ⟨⟨hx, hp⟩, hr⟩
+  · intro ⟨⟨hx, hp⟩, hr⟩
+    exact ⟨hx, hp, hr⟩
 
-example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
-begin
-  split,
-  { rintro ⟨hx, (hp | hq)⟩,
-    { exact or.inl ⟨hx, hp⟩ },
-    { exact or.inr ⟨hx, hq⟩ },
-  },
-  { rintro (⟨hx, hp⟩ | ⟨hx, hq⟩),
-    { exact ⟨hx, or.inl hp⟩ },
-    { exact ⟨hx, or.inr hq⟩ },
-  },
-end
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := by
+  apply Iff.intro
+  · intro
+    | ⟨hx, Or.inl hp⟩ => exact Or.inl ⟨hx, hp⟩
+    | ⟨hx, Or.inr hq⟩ => exact Or.inr ⟨hx, hq⟩
+  · intro
+    | Or.inl ⟨hx, hp⟩ => exact ⟨hx, Or.inl hp⟩
+    | Or.inr ⟨hx, hq⟩ => exact ⟨hx, Or.inr hq⟩
 
-example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
-begin
-  split,
-  { rintros ha ⟨hx, np⟩, exact absurd (ha hx) np },
-  { intros he hx, by_contradiction np, exact he ⟨hx, np⟩ },
-end
+example : (∀ x, p x) ↔ ¬(∃ x, ¬p x) := by
+  apply Iff.intro
+  · intro ha ⟨hx, np⟩
+    exact absurd (ha hx) np
+  · intro he hx
+    apply byContradiction
+    intro np
+    exact he ⟨hx, np⟩
 
-example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) :=
-begin
-  split,
-  { rintro ⟨hx, hp⟩ h, exact absurd hp (h hx) },
-  { intro h₁,
-    by_contradiction h₂,
-    apply h₁,
-    intros hx hp,
-    exact h₂ ⟨hx, hp⟩,
-  },
-end
-
-example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
-begin
-  split,
-  { intros h hx hp,
-    exact h ⟨hx, hp⟩
-  },
-  { rintros h ⟨hx, hp⟩,
+example : (∃ x, p x) ↔ ¬(∀ x, ¬p x) := by
+  apply Iff.intro
+  · intro ⟨hx, hp⟩ h
     exact absurd hp (h hx)
-  },
-end
+  · intro h₁
+    apply byContradiction
+    intro h₂
+    apply h₁
+    intro hx hp
+    exact h₂ ⟨hx, hp⟩
 
-lemma forall_negation : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
-begin
-  split,
-  { intro h₁,
-    by_contradiction h₂,
-    exact h₁ (λ (x : α), begin
-      by_contradiction np,
-      exact h₂ ⟨x, np⟩
-    end)
-  },
-  { rintros ⟨hx, np⟩ h, exact absurd (h hx) np },
-end
-
-example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := forall_negation α p
-
-example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
-begin
-  split,
-  { rintros h ⟨hx, hp⟩, exact h hx hp },
-  { intros h hx hp,
+example : (¬∃ x, p x) ↔ (∀ x, ¬p x) := by
+  apply Iff.intro
+  · intro h hx hp
     exact h ⟨hx, hp⟩
-  },
-end
+  · intro h ⟨hx, hp⟩
+    exact absurd hp (h hx)
 
-example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
-begin
-  split,
-  { rintros ⟨hx, hp⟩ h, apply hp, exact h hx },
-  { intro h₁,
-    apply or.elim (classical.em (∀ x, p x)),
-    { intro h₂, exact ⟨a, (assume hp, h₁ h₂)⟩ },
-    { intro h₂,
-      have h₃ : (∃ x, ¬p x), from iff.elim_left (forall_negation α p) h₂,
-      exact let ⟨hx, hp⟩ := h₃ in ⟨hx, (assume hp', absurd hp' hp)⟩,
-    },
-  },
-end
+theorem forall_negation : (¬∀ x, p x) ↔ (∃ x, ¬p x) := by
+  apply Iff.intro
+  · intro h₁
+    apply byContradiction
+    intro h₂
+    exact h₁ (fun (x : α) => by
+      apply byContradiction
+      intro np
+      exact h₂ ⟨x, np⟩)
+  · intro ⟨hx, np⟩ h
+    exact absurd (h hx) np
 
-example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
-begin
-  split,
-  { rintros ⟨hx, h⟩ hr, exact ⟨hx, h hr⟩ },
-  { intro h,
-    apply or.elim (classical.em r),
-    { intro hr,
-      exact let ⟨hx, hp⟩ := h hr in ⟨hx, (assume hr, hp)⟩
-    },
-    { intro nr, exact ⟨a, (assume hr, absurd hr nr)⟩ },
-  },
-end
+example : (¬∀ x, p x) ↔ (∃ x, ¬p x) := forall_negation α p
 
-end ex_1_4_5
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r := by
+  apply Iff.intro
+  · intro h ⟨hx, hp⟩
+    exact h hx hp
+  · intro h hx hp
+    exact h ⟨hx, hp⟩
+
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := by
+  apply Iff.intro
+  · intro ⟨hx, hp⟩ h
+    apply hp
+    exact h hx
+  · intro h₁
+    apply (em (∀ x, p x)).elim
+    · intro h₂
+      exact ⟨a, fun _ => h₁ h₂⟩
+    · intro h₂
+      have ⟨hx, np⟩ : (∃ x, ¬p x) := (forall_negation α p).mp h₂
+      exact ⟨hx, fun hp => absurd hp np⟩
+
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := by
+  apply Iff.intro
+  · intro ⟨hx, h⟩ hr
+    exact ⟨hx, h hr⟩
+  · intro h
+    apply (em r).elim
+    · intro hr
+      have ⟨hx, hp⟩ := h hr
+      exact ⟨hx, fun _ => hp⟩
+    · intro nr
+      exact ⟨a, fun hr => absurd hr nr⟩
+
+end ex4_5
+
+end ex1
 
 -- Exercise 2
 --
 -- Use tactic combinators to obtain a one line proof of the following:
-section ex_2
+namespace ex2
 
 example (p q r : Prop) (hp : p) : (p ∨ q ∨ r) ∧ (q ∨ p ∨ r) ∧ (q ∨ r ∨ p) :=
-by simp *
+by simp [*]
 
-end ex_2
+end ex2

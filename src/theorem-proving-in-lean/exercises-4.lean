@@ -1,102 +1,94 @@
-/- Exercises 4.6
+/- Exercises 4
  -
  - Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
 -/
-import data.int.basic
-import data.nat.basic
-import data.real.basic
 
 -- Exercise 1
 --
 -- Prove these equivalences. You should also try to understand why the reverse
 -- implication is not derivable in the last example.
-section ex_1
+namespace ex1
 
-variables (α : Type*) (p q : α → Prop)
+variable (α : Type _)
+variable (p q : α → Prop)
 
 example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
-  iff.intro
-    ( assume h,
-      and.intro
-        (assume x, and.left (h x))
-        (assume x, and.right (h x)))
-    (assume ⟨h₁, h₂⟩ x, ⟨h₁ x, h₂ x⟩)
+  Iff.intro
+    (fun h => ⟨fun x => And.left (h x), fun x => And.right (h x)⟩)
+    (fun ⟨h₁, h₂⟩ x => ⟨h₁ x, h₂ x⟩)
 
 example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
-  assume h₁ h₂ x,
-  have px : p x, from h₂ x,
-  h₁ x px
+  fun h₁ h₂ x =>
+    have px : p x := h₂ x
+    h₁ x px
 
 example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
-  assume h₁ x,
-  h₁.elim
-    (assume h₂, or.inl (h₂ x))
-    (assume h₂, or.inr (h₂ x))
+  fun h₁ x => h₁.elim
+    (fun h₂ => Or.inl (h₂ x))
+    (fun h₂ => Or.inr (h₂ x))
 
 -- The implication in the above example cannot be proven in the other direction
 -- because it may be the case predicate `p x` holds for certain values of `x`
 -- but not others that `q x` may hold for (and vice versa).
 
-end ex_1
+end ex1
 
 -- Exercise 2
 --
 -- It is often possible to bring a component of a formula outside a universal
 -- quantifier, when it does not depend on the quantified variable. Try proving
 -- these (one direction of the second of these requires classical logic).
-section ex_2
+namespace ex2
 
-variables (α : Type*) (p q : α → Prop)
-variable r : Prop
+variable (α : Type _)
+variable (p q : α → Prop)
+variable (r : Prop)
 
-example : α → ((∀ x : α, r) ↔ r) :=
-  assume ha,
-  iff.intro (assume h, h ha) (assume hr ha, hr)
+example : α → ((∀ _ : α, r) ↔ r) :=
+  fun a => Iff.intro (fun h => h a) (fun hr _ => hr)
 
--- Ensure we do not use classical logic in the first or third subproblems.
 section
 
-open classical
+open Classical
 
 example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
-  iff.intro
-    (assume h₁, or.elim (classical.em r)
-      (assume hr, or.inr hr)
-      (assume nr, or.inl (λ (x : α), or.elim (h₁ x)
-        (assume hp, hp)
-        (assume hr, absurd hr nr))))
-    (assume h₁, or.elim h₁
-      (assume h₂, (λ (x : α), or.inl (h₂ x)))
-      (assume hr, (λ (x : α), or.inr hr)))
+  Iff.intro
+    (fun h₁ => (em r).elim
+      Or.inr
+      (fun nr => Or.inl (fun x => (h₁ x).elim id (absurd · nr))))
+    (fun h₁ => h₁.elim
+      (fun h₂ x => Or.inl (h₂ x))
+      (fun hr _ => Or.inr hr))
+
 end
 
 example : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
-  iff.intro
-    (assume h₁ hr hx, h₁ hx hr)
-    (assume h₁ hx hr, h₁ hr hx)
+  Iff.intro
+    (fun h hr hx => h hx hr)
+    (fun h hx hr => h hr hx)
 
-end ex_2
+end ex2
 
 -- Exercise 3
 --
 -- Consider the "barber paradox," that is, the claim that in a certain town
 -- there is a (male) barber that shaves all and only the men who do not shave
 -- themselves. Prove that this is a contradiction.
-section ex_3
+namespace ex3
 
-open classical
+open Classical
 
-variables (men : Type*) (barber : men)
+variable (men : Type _)
+variable (barber : men)
 variable (shaves : men → men → Prop)
 
-example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) :
-  false :=
-    have b : shaves barber barber ↔ ¬ shaves barber barber, from h barber,
-    or.elim (classical.em (shaves barber barber))
-      (assume b', absurd b' (iff.elim_left b b'))
-      (assume b', absurd (iff.elim_right b b') b')
+example (h : ∀ x : men, shaves barber x ↔ ¬shaves x x) : False :=
+  have b : shaves barber barber ↔ ¬shaves barber barber := h barber
+  (em (shaves barber barber)).elim
+    (fun b' => absurd b' (Iff.mp b b'))
+    (fun b' => absurd (Iff.mpr b b') b')
 
-end ex_3
+end ex3
 
 -- Exercise 4
 --
@@ -108,162 +100,141 @@ end ex_3
 -- states that every odd number greater than `5` is the sum of three primes.
 -- Look up the definition of a Fermat prime or any of the other statements, if
 -- necessary.
-section ex_4
+namespace ex4
 
-def prime (n : ℕ) : Prop :=
-  n > 1 ∧ ∀ (m : ℕ), (1 < m ∧ m < n) → n % m ≠ 0
+def even (a : Nat) := ∃ b, a = 2 * b
 
-def infinitely_many_primes : Prop :=
-  ∀ (n : ℕ), (∃ (m : ℕ), m > n ∧ prime m)
+def odd (a : Nat) := ¬even a
 
-def Fermat_prime (n : ℕ) : Prop :=
-  ∃ (m : ℕ), n = 2^(2^m) + 1
+def prime (n : Nat) : Prop :=
+  n > 1 ∧ ∀ (m : Nat), (1 < m ∧ m < n) → n % m ≠ 0
 
-def infinitely_many_Fermat_primes : Prop :=
-  ∀ (n : ℕ), (∃ (m : ℕ), m > n ∧ Fermat_prime m)
+def infinitelyManyPrimes : Prop :=
+  ∀ (n : Nat), (∃ (m : Nat), m > n ∧ prime m)
 
-def goldbach_conjecture : Prop :=
-  ∀ (n : ℕ), even n ∧ n > 2 → (∃ (x y : ℕ), prime x ∧ prime y ∧ x + y = n)
+def FermatPrime (n : Nat) : Prop :=
+  ∃ (m : Nat), n = 2^(2^m) + 1
 
-def Goldbach's_weak_conjecture : Prop :=
-  ∀ (n : ℕ), odd n ∧ n > 5 → (∃ (x y z : ℕ), prime x ∧ prime y ∧ prime z ∧ x + y + z = n)
+def infinitelyManyFermatPrimes : Prop :=
+  ∀ (n : Nat), (∃ (m : Nat), m > n ∧ FermatPrime m)
 
-def Fermat's_last_theorem : Prop :=
-  ∀ (n : ℕ), n > 2 → (∀ (a b c : ℕ), a^n + b^n ≠ c^n)
+def GoldbachConjecture : Prop :=
+  ∀ (n : Nat), even n ∧ n > 2 →
+    ∃ (x y : Nat), prime x ∧ prime y ∧ x + y = n
 
-end ex_4
+def Goldbach'sWeakConjecture : Prop :=
+  ∀ (n : Nat), odd n ∧ n > 5 →
+    ∃ (x y z : Nat), prime x ∧ prime y ∧ prime z ∧ x + y + z = n
+
+def Fermat'sLastTheorem : Prop :=
+  ∀ (n : Nat), n > 2 → (∀ (a b c : Nat), a^n + b^n ≠ c^n)
+
+end ex4
 
 -- Exercise 5
 --
 -- Prove as many of the identities listed in Section 4.4 as you can.
-section ex_5
+namespace ex5
 
-open classical
+open Classical
 
-variables (α : Type*) (p q : α → Prop)
-variables r s : Prop
+variable (α : Type _)
+variable (p q : α → Prop)
+variable (r s : Prop)
 
-example : (∃ x : α, r) → r :=
-  assume ⟨hx, hr⟩,
-  hr
+example : (∃ _ : α, r) → r :=
+  fun ⟨_, hr⟩ => hr
 
-example (a : α) : r → (∃ x : α, r) :=
-  assume hr,
-  ⟨a, hr⟩
+example (a : α) : r → (∃ _ : α, r) :=
+  fun hr => ⟨a, hr⟩
 
 example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
-  iff.intro
-    (assume ⟨hx, ⟨hp, hr⟩⟩, ⟨⟨hx, hp⟩, hr⟩)
-    (assume ⟨⟨hx, hp⟩, hr⟩, ⟨hx, ⟨hp, hr⟩⟩)
+  Iff.intro
+    (fun ⟨hx, ⟨hp, hr⟩⟩ => ⟨⟨hx, hp⟩, hr⟩)
+    (fun ⟨⟨hx, hp⟩, hr⟩ => ⟨hx, ⟨hp, hr⟩⟩)
 
 example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
-  iff.intro
-    (assume ⟨hx, hpq⟩, hpq.elim
-      (assume hp, or.inl (⟨hx, hp⟩))
-      (assume hq, or.inr (⟨hx, hq⟩)))
-    (assume h, h.elim
-      (assume ⟨hx, hp⟩, ⟨hx, or.inl hp⟩)
-      (assume ⟨hx, hq⟩, ⟨hx, or.inr hq⟩))
+  Iff.intro
+    (fun ⟨hx, hpq⟩ => hpq.elim
+      (fun hp => Or.inl ⟨hx, hp⟩)
+      (fun hq => Or.inr ⟨hx, hq⟩))
+    (fun h => h.elim
+      (fun ⟨hx, hp⟩ => ⟨hx, Or.inl hp⟩)
+      (fun ⟨hx, hq⟩ => ⟨hx, Or.inr hq⟩))
 
-example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
-  iff.intro
-    (assume h ⟨hx, np⟩, np (h hx))
-    (assume h hx, classical.by_contradiction (assume np, h ⟨hx, np⟩))
+example : (∀ x, p x) ↔ ¬(∃ x, ¬p x) :=
+  Iff.intro
+    (fun h ⟨hx, np⟩ => np (h hx))
+    (fun h hx => byContradiction
+      fun np => h ⟨hx, np⟩)
 
-example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) :=
-  iff.intro
-    (assume ⟨hx, hp⟩ h, absurd hp (h hx))
-    (assume h, classical.by_contradiction (
-      assume h',
-      h (λ (x : α), assume hp, h' ⟨x, hp⟩)
-    ))
+example : (∃ x, p x) ↔ ¬(∀ x, ¬p x) :=
+  Iff.intro
+    (fun ⟨hx, hp⟩ h => absurd hp (h hx))
+    (fun h => byContradiction
+      fun h' => h (fun (x : α) hp => h' ⟨x, hp⟩))
 
-example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
-  iff.intro
-    (assume h hx hp, h ⟨hx, hp⟩)
-    (assume h ⟨hx, hp⟩, absurd hp (h hx))
+example : (¬∃ x, p x) ↔ (∀ x, ¬p x) :=
+  Iff.intro
+    (fun h hx hp => h ⟨hx, hp⟩)
+    (fun h ⟨hx, hp⟩ => absurd hp (h hx))
 
-lemma forall_negation : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
-  iff.intro
-    (assume h, classical.by_contradiction (
-      assume h',
-      h (λ (x : α), classical.by_contradiction (
-        assume np,
-        h' ⟨x, np⟩
-      ))
-    ))
-    (assume ⟨hx, np⟩ h, absurd (h hx) np)
+theorem forall_negation : (¬∀ x, p x) ↔ (∃ x, ¬p x) :=
+  Iff.intro
+    (fun h => byContradiction
+      fun h' => h (fun (x : α) => byContradiction
+        fun np => h' ⟨x, np⟩))
+    (fun ⟨hx, np⟩ h => absurd (h hx) np)
 
-example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
+example : (¬∀ x, p x) ↔ (∃ x, ¬p x) :=
   forall_negation α p
 
 example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
-  iff.intro
-    (assume h ⟨hx, hp⟩, h hx hp)
-    (assume h hx hp, h ⟨hx, hp⟩)
+  Iff.intro
+    (fun h ⟨hx, hp⟩ => h hx hp)
+    (fun h hx hp => h ⟨hx, hp⟩)
 
 example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
-  iff.intro
-    (assume ⟨hx, hp⟩ h, hp (h hx))
-    (assume h₁, or.elim (classical.em (∀ x, p x))
-      (assume h₂, ⟨a, assume hp, h₁ h₂⟩)
-      (assume h₂,
-        have h₃ : (∃ x, ¬p x), from iff.elim_left (forall_negation α p) h₂,
+  Iff.intro
+    (fun ⟨hx, hp⟩ h => hp (h hx))
+    (fun h₁ => (em (∀ x, p x)).elim
+      (fun h₂ => ⟨a, fun _ => h₁ h₂⟩)
+      (fun h₂ =>
+        have h₃ : (∃ x, ¬p x) := Iff.mp (forall_negation α p) h₂
         match h₃ with
-          ⟨hx, hp⟩ := ⟨hx, (assume hp', absurd hp' hp)⟩
-        end))
+        | ⟨hx, hp⟩ => ⟨hx, fun hp' => absurd hp' hp⟩))
 
 example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
-  iff.intro
-    (assume ⟨hx, hrp⟩ hr, ⟨hx, hrp hr⟩)
-    (assume h, or.elim (classical.em r)
-      (assume hr, match h hr with
-        ⟨hx, hp⟩ := ⟨hx, (assume hr, hp)⟩
-      end)
-      (assume nr, ⟨a, (assume hr, absurd hr nr)⟩))
+  Iff.intro
+    (fun ⟨hx, hrp⟩ hr => ⟨hx, hrp hr⟩)
+    (fun h => (em r).elim
+      (fun hr => match h hr with
+                 | ⟨hx, hp⟩ => ⟨hx, fun _ => hp⟩)
+      (fun nr => ⟨a, fun hr => absurd hr nr⟩))
 
-end ex_5
+end ex5
 
 -- Exercise 6
 --
 -- Give a calculational proof of the theorem `log_mul` below.
-section ex_6
+namespace ex6
 
-variables log exp : real → real
-variable log_exp_eq : ∀ x, log (exp x) = x
-variable exp_log_eq : ∀ {x}, x > 0 → exp (log x) = x
-variable exp_pos : ∀ x, exp x > 0
-variable exp_add : ∀ x y, exp (x + y) = exp x * exp y
+variable (log exp : Float → Float)
+variable (log_exp_eq : ∀ x, log (exp x) = x)
+variable (exp_log_eq : ∀ {x}, x > 0 → exp (log x) = x)
+variable (exp_pos : ∀ x, exp x > 0)
+variable (exp_add : ∀ x y, exp (x + y) = exp x * exp y)
 
--- this ensures the assumptions are available in tactic proofs
-include log_exp_eq exp_log_eq exp_pos exp_add
+example (x y z : Float) : exp (x + y + z) = exp x * exp y * exp z :=
+  by rw [exp_add, exp_add]
 
-example (x y z : real) :
-  exp (x + y + z) = exp x * exp y * exp z :=
-by rw [exp_add, exp_add]
+example (y : Float) (h : y > 0) : exp (log y) = y := exp_log_eq h
 
-example (y : real) (h : y > 0) : exp (log y) = y :=
-exp_log_eq h
-
-theorem log_mul {x y : real} (hx : x > 0) (hy : y > 0) :
+theorem log_mul {x y : Float} (hx : x > 0) (hy : y > 0) :
   log (x * y) = log x + log y :=
-calc log (x * y) = log (x * exp (log y)) : by rw (exp_log_eq hy)
-             ... = log (exp (log x) * exp (log y)) : by rw (exp_log_eq hx)
-             ... = log (exp (log x + log y)) : by rw exp_add
-             ... = log x + log y : by rw log_exp_eq
+calc log (x * y) = log (x * exp (log y)) := by rw [exp_log_eq hy]
+               _ = log (exp (log x) * exp (log y)) := by rw [exp_log_eq hx]
+               _ = log (exp (log x + log y)) := by rw [exp_add]
+               _ = log x + log y := by rw [log_exp_eq]
 
-end ex_6
-
--- Exercise 7
---
--- Prove the theorem below, using only the ring properties of ℤ enumerated in
--- Section 4.2 and the theorem `sub_self.`
-section ex_7
-#check sub_self
-
-example (x : ℤ) : x * 0 = 0 :=
-calc x * 0 = x * (x - x) : by rw (sub_self x)
-       ... = x * x - x * x : by rw (mul_sub x x x)
-       ... = 0 : by rw (sub_self (x * x))
-
-end ex_7
+end ex6
