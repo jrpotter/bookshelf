@@ -31,42 +31,42 @@ def add (m n : Nat) : Nat :=
 instance : Add Nat where
   add := add
 
-theorem addZero (m : Nat) : m + Nat.zero = m :=
+theorem add_zero (m : Nat) : m + Nat.zero = m :=
   rfl
 
-theorem addSucc (m n : Nat) : m + n.succ = (m + n).succ :=
+theorem add_succ (m n : Nat) : m + n.succ = (m + n).succ :=
   rfl
 
-theorem zeroAdd (n : Nat) : Nat.zero + n = n :=
+theorem zero_add (n : Nat) : Nat.zero + n = n :=
 Nat.recOn (motive := fun x => Nat.zero + x = x)
   n
   (show Nat.zero + Nat.zero = Nat.zero from rfl)
   (fun (n : Nat) (ih : Nat.zero + n = n) =>
     show Nat.zero + n.succ = n.succ from
     calc
-      Nat.zero + n.succ = (Nat.zero + n).succ := addSucc Nat.zero n
+      Nat.zero + n.succ = (Nat.zero + n).succ := add_succ Nat.zero n
                       _ = n.succ := by rw [ih])
 
 -- Additional definitions.
-def mul (m n : Nat) : Nat := sorry
+def mul (m n : Nat) : Nat :=
+  match n with
+  | Nat.zero => Nat.zero
+  | Nat.succ n => m + mul m n
 
--- def mul (m n : nat) : nat :=
--- nat.rec_on n nat.zero (λ k ak, add m ak)
+def pred (n : Nat) : Nat :=
+  match n with
+  | Nat.zero => Nat.zero
+  | Nat.succ n => n
 
-def pred (n : Nat) : Nat := sorry
+def sub (m n : Nat) : Nat :=
+  match n with
+  | Nat.zero => m
+  | Nat.succ n => sub (pred m) n
 
--- def pred (n : nat) : nat :=
--- nat.cases_on n nat.zero id
-
-def sub (m n : Nat) : Nat := sorry
-
--- def sub (m n : nat) : nat :=
--- nat.rec_on n m (λ k ak, pred ak)
-
-def exp (m n : Nat) : Nat := sorry
-
--- def exp (m n : nat) : nat :=
--- nat.rec_on n (nat.zero.succ) (λ k ak, mul m ak)
+def exp (m n : Nat) : Nat :=
+  match n with
+  | Nat.zero => Nat.zero.succ
+  | Nat.succ n => mul m (exp m n)
 
 end Nat
 
@@ -82,41 +82,90 @@ end ex1
 -- c. `reverse (reverse t) = t`
 namespace ex2
 
-open List
-
 variable {α : Type _}
 
--- theorem length_sum (s t : list α) : length (s ++ t) = length s + length t :=
--- list.rec_on s
---   (by rw [nil_append, length, zero_add])
---   (assume hd tl ih, by rw [
---     length,
---     cons_append,
---     length,
---     ih,
---     add_assoc,
---     add_comm t.length,
---     add_assoc
---   ])
--- 
--- lemma cons_reverse (hd : α) (tl : list α)
---   : reverse (hd :: tl) = reverse tl ++ [hd] :=
--- sorry
--- 
--- theorem length_reverse (t : list α) : length (reverse t) = length t :=
--- list.rec_on t
---   (by unfold reverse reverse_core)
---   (assume hd tl ih, begin
---     unfold length,
---     rw cons_reverse,
---     rw length_sum,
---     unfold length,
---     rw zero_add,
---     rw ih,
---   end)
--- 
--- theorem reverse_reverse (t : list α) : reverse (reverse t) = t :=
--- list.rec_on t rfl (assume hd tl ih, sorry)
+theorem length_sum (s t : List α)
+        : List.length (s ++ t) = List.length s + List.length t :=
+  List.recOn s
+    (by rw [List.nil_append, List.length, Nat.zero_add])
+    (fun hd tl ih => by rw [
+      List.length,
+      List.cons_append,
+      List.length,
+      ih,
+      Nat.add_assoc,
+      Nat.add_comm t.length,
+      Nat.add_assoc
+    ])
+
+theorem length_inject_anywhere (x : α) (as bs : List α)
+        : List.length (as ++ [x] ++ bs) = List.length as + List.length bs + 1 := by
+  induction as with
+  | nil => simp
+  | cons head tail ih => calc
+      List.length (head :: tail ++ [x] ++ bs)
+          = List.length (tail ++ [x] ++ bs) + 1 := rfl
+        _ = List.length tail + List.length bs + 1 + 1 := by rw [ih]
+        _ = List.length tail + (List.length bs + 1) + 1 := by rw [Nat.add_assoc (List.length tail)]
+        _ = List.length tail + (1 + List.length bs) + 1 := by rw [Nat.add_comm (List.length bs)]
+        _ = List.length tail + 1 + List.length bs + 1 := by rw [Nat.add_assoc (List.length tail) 1]
+        _ = List.length (head :: tail) + List.length bs + 1 := rfl
+
+theorem list_reverse_aux_append (as bs : List α)
+        : List.reverseAux as bs = List.reverse as ++ bs := by
+  induction as generalizing bs with
+  | nil => rw [List.reverseAux, List.reverse, List.reverseAux, List.nil_append]
+  | cons head tail ih => calc
+      List.reverseAux (head :: tail) bs
+          = List.reverseAux tail (head :: bs) := rfl
+        _ = List.reverse tail ++ (head :: bs) := by rw [ih]
+        _ = List.reverse tail ++ ([head] ++ bs) := rfl
+        _ = List.reverse tail ++ [head] ++ bs := by rw [List.append_assoc]
+        _ = List.reverseAux tail [head] ++ bs := by rw [ih]
+        _ = List.reverseAux (head :: tail) [] ++ bs := rfl
+
+theorem length_reverse (t : List α)
+        : List.length (List.reverse t) = List.length t := by
+  induction t with
+  | nil => simp
+  | cons head tail ih => calc
+      List.length (List.reverse (head :: tail))
+          = List.length (List.reverseAux tail [head]) := rfl
+        _ = List.length (List.reverse tail ++ [head]) := by rw [list_reverse_aux_append]
+        _ = List.length (List.reverse tail) + List.length [head] := by simp
+        _ = List.length tail + List.length [head] := by rw [ih]
+        _ = List.length tail + 1 := rfl
+        _ = List.length [] + List.length tail + 1 := by simp
+        _ = List.length ([] ++ [head] ++ tail) := by rw [length_inject_anywhere]
+        _ = List.length (head :: tail) := rfl
+
+theorem reverse_reverse_aux (as bs : List α)
+        : List.reverse (as ++ bs) = List.reverse bs ++ List.reverse as := by
+  induction as generalizing bs with
+  | nil => simp
+  | cons head tail ih => calc
+      List.reverse (head :: tail ++ bs)
+          = List.reverseAux (head :: tail ++ bs) [] := rfl
+        _ = List.reverseAux (tail ++ bs) [head] := rfl
+        _ = List.reverse (tail ++ bs) ++ [head] := by rw [list_reverse_aux_append]
+        _ = List.reverse bs ++ List.reverse tail ++ [head] := by rw [ih]
+        _ = List.reverse bs ++ (List.reverse tail ++ [head]) := by rw [List.append_assoc]
+        _ = List.reverse bs ++ (List.reverseAux tail [head]) := by rw [list_reverse_aux_append]
+        _ = List.reverse bs ++ (List.reverseAux (head :: tail) []) := rfl
+        _ = List.reverse bs ++ List.reverse (head :: tail) := rfl
+
+theorem reverse_reverse (t : List α)
+        : List.reverse (List.reverse t) = t := by
+  induction t with
+  | nil => simp
+  | cons head tail ih => calc
+      List.reverse (List.reverse (head :: tail))
+          = List.reverse (List.reverseAux tail [head]) := rfl
+        _ = List.reverse (List.reverse tail ++ [head]) := by rw [list_reverse_aux_append]
+        _ = List.reverse [head] ++ List.reverse (List.reverse tail) := by rw [reverse_reverse_aux]
+        _ = List.reverse [head] ++ tail := by rw [ih]
+        _ = [head] ++ tail := by simp
+        _ = head :: tail := rfl
 
 end ex2
 
@@ -134,61 +183,22 @@ end ex2
 -- assignment of values to the variables.
 namespace ex3
 
--- inductive foo : Type*
--- | const : ℕ → foo
--- | var : ℕ → foo
--- | plus : foo → foo → foo
--- | times : foo → foo → foo
--- 
--- def value_at : ℕ → list ℕ → ℕ
--- | 0       vs := list.head vs
--- | i       [] := default
--- | (i + 1) vs := value_at i (list.tail vs)
--- 
--- -- The provided "variables" are supplied in a 0-indexed list.
--- def eval_foo : foo → list ℕ → ℕ
--- | (foo.const n) vs := n
--- | (foo.var n) vs := value_at n vs
--- | (foo.plus m n) vs := eval_foo m vs + eval_foo n vs
--- | (foo.times m n) vs := eval_foo m vs * eval_foo n vs
+inductive foo : Type _
+  | const : Nat → foo
+  | var : Nat → foo
+  | plus : foo → foo → foo
+  | times : foo → foo → foo
+
+def value_at : Nat → List Nat → Nat
+| _,       [] => default
+| 0,       vs => List.head! vs
+| (i + 1), vs => value_at i (List.tail! vs)
+
+-- The provided "variables" are supplied in a 0-indexed list.
+def eval_foo : foo → List Nat → Nat
+  | (foo.const n)  , _  => n
+  | (foo.var n)    , vs => value_at n vs
+  | (foo.plus m n) , vs => eval_foo m vs + eval_foo n vs
+  | (foo.times m n), vs => eval_foo m vs * eval_foo n vs
 
 end ex3
-
--- Exercise 4
---
--- Similarly, define the type of propositional formulas, as well as functions on
--- the type of such formulas: an evaluation function, functions that measure the
--- complexity of a formula, and a function that substitutes another formula for
--- a given variable.
-namespace ex4
-
--- inductive foo : Type*
--- | tt : foo
--- | ff : foo
--- | and : foo → foo → foo
--- | or : foo → foo → foo
--- 
--- def eval_foo : foo → bool
--- | foo.tt := true
--- | foo.ff := false
--- | (foo.and lhs rhs) := eval_foo lhs ∧ eval_foo rhs
--- | (foo.or lhs rhs) := eval_foo lhs ∨ eval_foo rhs
--- 
--- def complexity_foo : foo → ℕ
--- | foo.tt := 1
--- | foo.ff := 1
--- | (foo.and lhs rhs) := 1 + complexity_foo lhs + complexity_foo rhs
--- | (foo.or lhs rhs) := 1 + complexity_foo lhs + complexity_foo rhs
---
--- def substitute : foo → foo := sorry
-
-end ex4
-
--- Exercise 5
---
--- Simulate the mutual inductive definition of `even` and `odd` described in
--- Section 7.9 with an ordinary inductive type, using an index to encode the
--- choice between them in the target type.
-namespace ex5
-
-end ex5
