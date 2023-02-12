@@ -183,11 +183,11 @@ end ex2
 -- assignment of values to the variables.
 namespace ex3
 
-inductive foo : Type _
-  | const : Nat → foo
-  | var : Nat → foo
-  | plus : foo → foo → foo
-  | times : foo → foo → foo
+inductive Foo : Type _
+  | const : Nat → Foo
+  | var : Nat → Foo
+  | plus : Foo → Foo → Foo
+  | times : Foo → Foo → Foo
 
 def value_at : Nat → List Nat → Nat
 | _,       [] => default
@@ -195,10 +195,10 @@ def value_at : Nat → List Nat → Nat
 | (i + 1), vs => value_at i (List.tail! vs)
 
 -- The provided "variables" are supplied in a 0-indexed list.
-def eval_foo : foo → List Nat → Nat
-  | (foo.const n)  , _  => n
-  | (foo.var n)    , vs => value_at n vs
-  | (foo.plus m n) , vs => eval_foo m vs + eval_foo n vs
-  | (foo.times m n), vs => eval_foo m vs * eval_foo n vs
+def eval_foo : Foo → List Nat → Nat
+  | (Foo.const n)  , _  => n
+  | (Foo.var n)    , vs => value_at n vs
+  | (Foo.plus m n) , vs => eval_foo m vs + eval_foo n vs
+  | (Foo.times m n), vs => eval_foo m vs * eval_foo n vs
 
 end ex3
