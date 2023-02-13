@@ -42,9 +42,6 @@ def reverse : List α → List α
 
 end ex2
 
--- What does it mean to "derecurse" a function?  A recursive function can be written iteratively.
--- What class of recursive functions can be written iteratively? Primitive recursive functions.
-
 -- Exercise 3
 --
 -- Define your own function to carry out course-of-value recursion on the
@@ -52,7 +49,11 @@ end ex2
 -- `WellFounded.fix` on your own.
 namespace ex3
 
--- TODO: Answer this.
+def below {motive : Nat → Type} : Nat → Type
+  | Nat.zero => PUnit
+  | Nat.succ n => PProd (PProd (motive n) (@below motive n)) (PUnit : Type)
+
+-- TODO: Sort out how to write `brecOn` and `WellFounded.fix`.
 
 end ex3
 
@@ -69,9 +70,7 @@ inductive Vector (α : Type u) : Nat → Type u
 
 namespace Vector
 
-def append (v₁ : Vector α m) (v₂ : Vector α n) : Vector α (m + n) := sorry
-
--- TODO: Answer this.
+-- TODO: Sort out how to write `append`.
 
 end Vector
 
