@@ -5,11 +5,7 @@ package «bookshelf» {
   -- add package configuration options here
 }
 
+@[default_target]
 lean_lib «Bookshelf» {
   -- add library configuration options here
-}
-
-@[default_target]
-lean_exe «bookshelf» {
-  root := `Main
 }
