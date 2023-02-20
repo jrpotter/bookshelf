@@ -1,0 +1,6 @@
+import TheoremProvingInLean.Exercises2
+import TheoremProvingInLean.Exercises3
+import TheoremProvingInLean.Exercises4
+import TheoremProvingInLean.Exercises5
+import TheoremProvingInLean.Exercises7
+import TheoremProvingInLean.Exercises8

@@ -1,4 +1,5 @@
-/build
-/lake-packages/*
-/_target
-/leanpkg.path
+# Lean
+**/build
+**/lake-packages/*
+**/_target
+**/leanpkg.path
