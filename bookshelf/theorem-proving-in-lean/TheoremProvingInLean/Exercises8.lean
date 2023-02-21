@@ -1,6 +1,7 @@
-/- Exercises 8
- -
- - Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+/-
+# References
+
+1. Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
 -/
 
 -- Exercise 1
