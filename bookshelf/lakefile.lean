@@ -4,9 +4,9 @@ open Lake DSL
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git"
 
-package «Common»
+package «Bookshelf»
 
 @[default_target]
-lean_lib «Common» {
-  roots := #["Bookshelf"]
+lean_lib «Bookshelf» {
+  -- add library configuration options here
 }
