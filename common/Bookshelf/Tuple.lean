@@ -14,16 +14,17 @@ An n-tuple is defined recursively as:
 
   ⟨x₁, ..., xₙ₊₁⟩ = ⟨⟨x₁, ..., xₙ⟩, xₙ₊₁⟩
 
-As [1] notes, it is also useful to define ⟨x⟩ = x.
+TODO: As [1] notes, it is useful to define ⟨x⟩ = x. Is this syntactically
+possible in Lean?
 --/
-inductive Tuple (α : Type u) : Nat → Type u where
-  | nil : Tuple α 0
+inductive Tuple : (α : Type u) → Nat → Type u where
+  | only : α → Tuple α 1
   | cons : {n : Nat} → Tuple α n → α → Tuple α (n + 1)
 
 syntax (priority := high) "⟨" term,+ "⟩" : term
 
 macro_rules
-  | `(⟨$x⟩) => `(Tuple.cons Tuple.nil $x)
+  | `(⟨$x⟩) => `(Tuple.only $x)
   | `(⟨$xs:term,*, $x⟩) => `(Tuple.cons ⟨$xs,*⟩ $x)
 
 namespace Tuple
@@ -34,10 +35,7 @@ Returns the value at the nth-index of the given tuple.
 def index (t : Tuple α n) (m : Nat) : 1 ≤ m ∧ m ≤ n → α := by
   intro h
   cases t
-  · case nil =>
-    have ff : 1 ≤ 0 := Nat.le_trans h.left h.right
-    ring_nf at ff
-    exact False.elim ff
+  · case only last => exact last
   . case cons n' init last =>
     by_cases k : m = n' + 1
     · exact last
@@ -46,14 +44,13 @@ def index (t : Tuple α n) (m : Nat) : 1 ≤ m ∧ m ≤ n → α := by
         norm_num at h₂
         exact h₂))
 
--- TODO: Prove the following theorem
+-- TODO: Prove `eq_by_index`.
+-- TODO: Prove Lemma 0A [1].
 
 theorem eq_by_index (t₁ t₂ : Tuple α n)
   : (t₁ = t₂) ↔ (∀ i : Nat, 1 ≤ i ∧ i ≤ n → index t₁ i = index t₂ i) := by
   apply Iff.intro
   · sorry
   · sorry
-
--- TODO: [1] Lemma 0A
 
 end Tuple
