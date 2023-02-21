@@ -1,7 +1,14 @@
+/-
+# References
+
+1. Levin, Oscar. Discrete Mathematics: An Open Introduction. 3rd ed., n.d.
+   https://discrete.openmathbooks.org/pdfs/dmoi3-tablet.pdf.
+-/
+
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
-/--
+/--[1]
 A 0th-indexed geometric sequence.
 -/
 structure Geometric where
@@ -10,19 +17,19 @@ structure Geometric where
 
 namespace Geometric
 
-/--
+/--[1]
 The value of the `n`th term of an geometric sequence.
 -/
 def termClosed (seq : Geometric) (n : Nat) : Int := seq.a₀ * seq.r ^ n
 
-/--
+/--[1]
 The value of the `n`th term of an geometric sequence.
 -/
 def termRecursive : Geometric → Nat → Int
   | seq,       0 => seq.a₀
   | seq, (n + 1) => seq.r * (seq.termRecursive n)
 
-/--
+/--[1]
 The recursive definition and closed definitions of a geometric sequence are
 equivalent.
 -/
@@ -39,7 +46,7 @@ theorem term_recursive_closed (seq : Geometric) (n : Nat)
         _ = seq.a₀ * seq.r ^ (n + 1) := by ring
         _ = seq.termClosed (n + 1) := rfl)
 
-/--
+/--[1]
 Summation of the first `n` terms of a geometric sequence.
 -/
 def sum : Geometric → Nat → Int

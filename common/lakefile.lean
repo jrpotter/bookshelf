@@ -8,5 +8,5 @@ package «Common»
 
 @[default_target]
 lean_lib «Common» {
-  roots := #["Sequence"]
+  roots := #["Bookshelf"]
 }

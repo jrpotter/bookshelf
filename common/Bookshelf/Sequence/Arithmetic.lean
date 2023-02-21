@@ -1,7 +1,14 @@
+/-
+# References
+
+1. Levin, Oscar. Discrete Mathematics: An Open Introduction. 3rd ed., n.d.
+   https://discrete.openmathbooks.org/pdfs/dmoi3-tablet.pdf.
+-/
+
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
-/--
+/--[1]
 A 0th-indexed arithmetic sequence.
 -/
 structure Arithmetic where
@@ -10,19 +17,19 @@ structure Arithmetic where
 
 namespace Arithmetic
 
-/--
+/--[1]
 Returns the value of the `n`th term of an arithmetic sequence.
 -/
 def termClosed (seq : Arithmetic) (n : Nat) : Int := seq.a₀ + seq.Δ * n
 
-/--
+/--[1]
 Returns the value of the `n`th term of an arithmetic sequence.
 -/
 def termRecursive : Arithmetic → Nat → Int
   | seq,       0 => seq.a₀
   | seq, (n + 1) => seq.Δ + seq.termRecursive n
 
-/--
+/--[1]
 The recursive definition and closed definitions of an arithmetic sequence are
 equivalent.
 -/
@@ -39,14 +46,14 @@ theorem term_recursive_closed (seq : Arithmetic) (n : Nat)
         _ = seq.a₀ + seq.Δ * (n + 1) := by ring
         _ = termClosed seq (n + 1) := rfl)
 
-/--
+/--[1]
 Summation of the first `n` terms of an arithmetic sequence.
 -/
 def sum : Arithmetic → Nat → Int
   |   _,       0 => 0
   | seq, (n + 1) => seq.termClosed n + seq.sum n
 
-/--
+/--[1]
 The closed formula of the summation of the first `n` terms of an arithmetic
 series.
 --/

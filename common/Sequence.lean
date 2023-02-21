@@ -1,2 +1,0 @@
-import Sequence.Arithmetic
-import Sequence.Geometric
