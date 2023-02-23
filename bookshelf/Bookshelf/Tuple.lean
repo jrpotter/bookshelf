@@ -10,8 +10,6 @@
 
 import Mathlib.Tactic.Ring
 
-universe u
-
 /--
 As described in [1], `n`-tuples are defined recursively as such:
 

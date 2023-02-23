@@ -83,14 +83,29 @@ section
 
 variable {k m n : Nat}
 variable (p : n + (m - 1) = m + k)
-variable (qₙ : 1 ≤ n)
 variable (qₘ : 1 ≤ m)
 
 namespace Lemma_0a
 
-lemma aux1 : n = k + 1 := sorry
+lemma aux1 : n = k + 1 :=
+  let ⟨m', h⟩ := Nat.exists_eq_succ_of_ne_zero $ show m ≠ 0 by
+    intro h
+    have ff : 1 ≤ 0 := h ▸ qₘ
+    ring_nf at ff
+    exact ff.elim
+  calc
+    n = n + (m - 1) - (m - 1) := by rw [Nat.add_sub_cancel]
+    _ = m' + 1 + k - (m' + 1 - 1) := by rw [p, h]
+    _ = m' + 1 + k - m' := by simp
+    _ = 1 + k + m' - m' := by rw [Nat.add_assoc, Nat.add_comm]
+    _ = 1 + k := by simp
+    _ = k + 1 := by rw [Nat.add_comm]
 
-lemma aux2 : 1 ≤ m → 1 ≤ k + 1 ∧ k + 1 ≤ m + k := sorry
+lemma aux2 : 1 ≤ k + 1 ∧ k + 1 ≤ m + k := And.intro
+  (by simp)
+  (calc
+    k + 1 ≤ k + m := Nat.add_le_add_left qₘ k
+        _ = m + k := by rw [Nat.add_comm])
 
 end Lemma_0a
 
@@ -101,7 +116,7 @@ Assume that ⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩. Then
 -/
 theorem lemma_0a (xs : XTuple α (n, m - 1)) (ys : Tuple α (m + k))
   : (cast (cast_eq_size p) xs.norm = ys)
-  → (cast (cast_eq_size aux1) (xs.first qₙ) = ys.take (k + 1) (aux2 qₘ))
+  → (cast (cast_eq_size (aux1 p qₘ)) (xs.first qₙ) = ys.take (k + 1) (aux2 qₘ))
   := sorry
 
 end
