@@ -43,13 +43,35 @@ Converts an `XTuple` into "normal form".
 def norm : XTuple α (m, n) → Tuple α (m + n)
   |         x[] => t[]
   | snoc x[] ts => cast (by simp) ts
-  | snoc  is ts => is.norm.concat ts
+  | snoc  is ts => Tuple.concat is.norm ts
 
 /--
 Casts a tuple indexed by `m` to one indexed by `n`.
 -/
-theorem cast_eq_size : (m = n) → (Tuple α m = Tuple α n) :=
+theorem lift_eq_size : (m = n) → (Tuple α m = Tuple α n) :=
   fun h => by rw [h]
+
+/--
+Normalization distributes when the `snd` component is `nil`.
+-/
+theorem distrib_norm_snoc_nil {t : XTuple α (p, q)}
+  : norm (snoc t t[]) = norm t :=
+  sorry
+
+/--
+Normalizing an `XTuple` is equivalent to concatenating the `fst` component (in
+normal form) with the second.
+-/
+theorem norm_snoc_eq_concat {t₁ : XTuple α (p, q)} {t₂ : Tuple α n}
+  : norm (snoc t₁ t₂) = t₁.norm.concat t₂ :=
+  Tuple.recOn
+    (motive := fun k t => norm (snoc t₁ t) = t₁.norm.concat t)
+    t₂
+    (calc
+      norm (snoc t₁ t[])
+          = t₁.norm := distrib_norm_snoc_nil
+        _ = t₁.norm.concat t[] := by rw [Tuple.self_concat_nil_eq_self])
+    (sorry)
 
 /--
 Implements Boolean equality for `XTuple α n` provided `α` has decidable
@@ -76,36 +98,80 @@ def length : XTuple α n → Nat
 Returns the first component of our `XTuple`. For example, the first component of
 tuple `x[x[1, 2], 3, 4]` is `t[1, 2]`.
 -/
-def first : XTuple α (m, n) → 1 ≤ m → Tuple α m
-  | snoc ts _, _ => ts.norm
+def fst : XTuple α (m, n) → Tuple α m
+  | x[] => t[]
+  | snoc ts _ => ts.norm
+
+/--
+Given `XTuple α (m, n)`, the `fst` component is equal to an initial segment of
+size `k` of the tuple in normal form.
+-/
+theorem self_fst_eq_norm_take (t : XTuple α (m, n))
+  : cast (by simp) (t.norm.take m) = t.fst :=
+  XTuple.casesOn
+    (motive := fun (m, n) t => cast (by simp) (t.norm.take m) = t.fst)
+    t
+    rfl
+    (@fun p q r t₁ t₂ => sorry)
+
+/--
+If the normal form of our `XTuple` is the same as another `Tuple`, the `fst`
+component must be a prefix of the second.
+-/
+theorem norm_eq_fst_eq_take {t₁ : XTuple α (m, n)} {t₂ : Tuple α (m + n)}
+  : (t₁.norm = t₂) → cast (by simp) (t₂.take m) = t₁.fst := by
+  intro h
+  sorry
+
+/--
+Returns the first component of our `XTuple`. For example, the first component of
+tuple `x[x[1, 2], 3, 4]` is `t[3, 4]`.
+-/
+def snd : XTuple α (m, n) → Tuple α n
+  | x[] => t[]
+  | snoc _ ts => ts
 
 section
 
 variable {k m n : Nat}
-variable (p : n + (m - 1) = m + k)
-variable (qₘ : 1 ≤ m)
+variable (p : 1 ≤ m)
+variable (q : n + (m - 1) = m + k)
 
 namespace Lemma_0a
 
-lemma aux1 : n = k + 1 :=
+lemma n_eq_succ_k : n = k + 1 :=
   let ⟨m', h⟩ := Nat.exists_eq_succ_of_ne_zero $ show m ≠ 0 by
     intro h
-    have ff : 1 ≤ 0 := h ▸ qₘ
+    have ff : 1 ≤ 0 := h ▸ p
     ring_nf at ff
     exact ff.elim
   calc
     n = n + (m - 1) - (m - 1) := by rw [Nat.add_sub_cancel]
-    _ = m' + 1 + k - (m' + 1 - 1) := by rw [p, h]
+    _ = m' + 1 + k - (m' + 1 - 1) := by rw [q, h]
     _ = m' + 1 + k - m' := by simp
     _ = 1 + k + m' - m' := by rw [Nat.add_assoc, Nat.add_comm]
     _ = 1 + k := by simp
     _ = k + 1 := by rw [Nat.add_comm]
 
-lemma aux2 : 1 ≤ k + 1 ∧ k + 1 ≤ m + k := And.intro
-  (by simp)
-  (calc
-    k + 1 ≤ k + m := Nat.add_le_add_left qₘ k
-        _ = m + k := by rw [Nat.add_comm])
+lemma min_comm_succ_eq : min (m + k) (k + 1) = k + 1 :=
+  Nat.recOn k
+    (by simp; exact p)
+    (fun k' ih => calc
+      min (m + (k' + 1)) (k' + 1 + 1)
+          = min (m + k' + 1) (k' + 1 + 1) := by conv => rw [Nat.add_assoc]
+        _ = min (m + k') (k' + 1) + 1 := Nat.min_succ_succ (m + k') (k' + 1)
+        _ = k' + 1 + 1 := by rw [ih])
+
+-- TODO: Consider using coercions and heterogeneous equality isntead of these.
+
+def cast_norm : XTuple α (n, m - 1) → Tuple α (m + k)
+  | xs => cast (lift_eq_size q) xs.norm 
+
+def cast_fst : XTuple α (n, m - 1) → Tuple α (k + 1)
+  | xs => cast (lift_eq_size (n_eq_succ_k p q)) xs.fst
+  
+def cast_init_seq (ys : Tuple α (m + k)) :=
+  cast (lift_eq_size (min_comm_succ_eq p)) (ys.take (k + 1))
 
 end Lemma_0a
 
@@ -115,9 +181,8 @@ open Lemma_0a
 Assume that ⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩. Then x₁ = ⟨y₁, ..., yₖ₊₁⟩.
 -/
 theorem lemma_0a (xs : XTuple α (n, m - 1)) (ys : Tuple α (m + k))
-  : (cast (cast_eq_size p) xs.norm = ys)
-  → (cast (cast_eq_size (aux1 p qₘ)) (xs.first qₙ) = ys.take (k + 1) (aux2 qₘ))
-  := sorry
+  : (cast_norm q xs = ys) → (cast_fst p q xs = cast_init_seq p ys) :=
+  fun h => sorry
 
 end
 

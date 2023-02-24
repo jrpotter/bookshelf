@@ -26,23 +26,22 @@ def size (_ : Vector α n) : Nat := n
 /--
 Returns the first entry of the `Vector`.
 -/
-def head : Vector α n → 1 ≤ n → α
-  | cons v _, _ => v
+def head : Vector α (n + 1) → α
+  | cons v _ => v
 
 /--
 Returns the last entry of the `Vector`.
 -/
-def last (v : Vector α n) : 1 ≤ n → α :=
-  fun h =>
-    match v with
-    | nil => by ring_nf at h; exact h.elim
-    | @cons _ n' v vs => if h' : n' > 0 then vs.last h' else v
+def last : Vector α (n + 1) → α
+  | cons v vs => if _ : n = 0 then v else
+      match n with
+      | _ + 1 => vs.last
 
 /--
 Returns all but the `head` of the `Vector`.
 -/
-def tail : Vector α n → 1 ≤ n → Vector α (n - 1)
-  | cons _ vs, _ => vs
+def tail : Vector α (n + 1) → Vector α n
+  | cons _ vs => vs
 
 /--
 Appends an entry to the end of the `Vector`.
