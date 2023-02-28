@@ -34,7 +34,7 @@ namespace Tuple
  - Coercions
  - -------------------------------------/
 
-scoped instance : CoeOut (Tuple α (min (n + m) n)) (Tuple α n) where
+scoped instance : CoeOut (Tuple α (min (m + n) m)) (Tuple α m) where
   coe := cast (by simp)
 
 scoped instance : Coe (Tuple α 0) (Tuple α (min n 0)) where
@@ -52,7 +52,7 @@ scoped instance : Coe (Tuple α n) (Tuple α (0 + n)) where
 scoped instance : Coe (Tuple α (min m n + 1)) (Tuple α (min (m + 1) (n + 1))) where
   coe := cast (by rw [Nat.min_succ_succ])
 
-scoped instance : Coe (Tuple α n) (Tuple α (min (n + m) n)) where
+scoped instance : Coe (Tuple α m) (Tuple α (min (m + n) m)) where
   coe := cast (by simp)
 
 /- -------------------------------------
@@ -127,7 +127,6 @@ def cons : Tuple α n → α → Tuple α (n + 1)
 Join two `Tuple`s together end to end.
 -/
 def concat : Tuple α m → Tuple α n → Tuple α (m + n)
-  | t[], ts => ts
   | is, t[] => is
   | is, snoc ts t => snoc (concat is ts) t
 
@@ -143,9 +142,26 @@ theorem self_concat_nil_eq_self (t : Tuple α m) : concat t t[] = t :=
 Concatenating `nil` with a `Tuple` yields the `Tuple`.
 -/
 theorem nil_concat_self_eq_self (t : Tuple α m) : concat t[] t = t :=
-  match t with
-  | t[] => rfl
-  | snoc _ _ => rfl
+  Tuple.recOn
+    t
+    (by unfold concat; simp)
+    (@fun n as a ih => by
+      unfold concat
+      rw [ih]
+      suffices HEq (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a) ↑(snoc as a)
+        from eq_of_heq this
+      have h₁ := Eq.recOn
+        (motive := fun x h => HEq
+          (snoc (cast (show Tuple α n = Tuple α x by rw [h]) as) a)
+          (snoc as a))
+        (show n = 0 + n by simp)
+        HEq.rfl
+      exact Eq.recOn
+        (motive := fun x h => HEq
+          (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a)
+          (cast h (snoc as a)))
+        (show Tuple α (n + 1) = Tuple α (0 + (n + 1)) by simp)
+        h₁)
 
 /--
 Concatenating a `Tuple` to a nonempty `Tuple` moves `concat` calls closer to
@@ -153,16 +169,7 @@ expression leaves.
 -/
 theorem concat_snoc_snoc_concat {bs : Tuple α n}
   : concat as (snoc bs b) = snoc (concat as bs) b :=
-  match as with
-  | t[] => by
-    unfold concat
-    simp
-    show cast (show Tuple α (n + 1) = Tuple α (0 + (n + 1)) by simp) (snoc bs b)
-            = cast rfl (snoc (cast (show Tuple α n = Tuple α (0 + n) by simp) bs) b)
-    congr
-    all_goals simp
-    exact Eq.recOn (show Tuple α n = Tuple α (0 + n) by simp) (HEq.refl bs)
-  | snoc _ _ => rfl
+  rfl
 
 /--
 `snoc` is equivalent to concatenating the `init` and `last` element together.
@@ -171,7 +178,7 @@ theorem snoc_eq_init_concat_last (as : Tuple α m) : snoc as a = concat as t[a] 
   Tuple.casesOn (motive := fun _ t => snoc t a = concat t t[a])
     as
     rfl
-    (fun is a' => by simp; unfold concat concat; rfl)
+    (fun _ _ => by simp; unfold concat concat; rfl)
 
 /- -------------------------------------
  - Initial sequences
