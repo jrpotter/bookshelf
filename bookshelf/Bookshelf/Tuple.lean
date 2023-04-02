@@ -5,7 +5,6 @@
    Harcourt/Academic Press, 2001.
 -/
 
-import Mathlib.Tactic.NormCast
 import Mathlib.Tactic.Ring
 
 /--

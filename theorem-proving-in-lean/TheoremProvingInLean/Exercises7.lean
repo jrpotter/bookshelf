@@ -45,8 +45,9 @@ Nat.recOn (motive := fun x => Nat.zero + x = x)
   (fun (n : Nat) (ih : Nat.zero + n = n) =>
     show Nat.zero + n.succ = n.succ from
     calc
-      Nat.zero + n.succ = (Nat.zero + n).succ := add_succ Nat.zero n
-                      _ = n.succ := by rw [ih])
+      Nat.zero + n.succ
+        = (Nat.zero + n).succ := add_succ Nat.zero n
+      _ = n.succ := by rw [ih])
 
 -- Additional definitions.
 def mul (m n : Nat) : Nat :=
@@ -105,12 +106,12 @@ theorem length_inject_anywhere (x : α) (as bs : List α)
   | nil => simp
   | cons head tail ih => calc
       List.length (head :: tail ++ [x] ++ bs)
-          = List.length (tail ++ [x] ++ bs) + 1 := rfl
-        _ = List.length tail + List.length bs + 1 + 1 := by rw [ih]
-        _ = List.length tail + (List.length bs + 1) + 1 := by rw [Nat.add_assoc (List.length tail)]
-        _ = List.length tail + (1 + List.length bs) + 1 := by rw [Nat.add_comm (List.length bs)]
-        _ = List.length tail + 1 + List.length bs + 1 := by rw [Nat.add_assoc (List.length tail) 1]
-        _ = List.length (head :: tail) + List.length bs + 1 := rfl
+        = List.length (tail ++ [x] ++ bs) + 1 := rfl
+      _ = List.length tail + List.length bs + 1 + 1 := by rw [ih]
+      _ = List.length tail + (List.length bs + 1) + 1 := by rw [Nat.add_assoc (List.length tail)]
+      _ = List.length tail + (1 + List.length bs) + 1 := by rw [Nat.add_comm (List.length bs)]
+      _ = List.length tail + 1 + List.length bs + 1 := by rw [Nat.add_assoc (List.length tail) 1]
+      _ = List.length (head :: tail) + List.length bs + 1 := rfl
 
 theorem list_reverse_aux_append (as bs : List α)
         : List.reverseAux as bs = List.reverse as ++ bs := by
@@ -118,12 +119,12 @@ theorem list_reverse_aux_append (as bs : List α)
   | nil => rw [List.reverseAux, List.reverse, List.reverseAux, List.nil_append]
   | cons head tail ih => calc
       List.reverseAux (head :: tail) bs
-          = List.reverseAux tail (head :: bs) := rfl
-        _ = List.reverse tail ++ (head :: bs) := by rw [ih]
-        _ = List.reverse tail ++ ([head] ++ bs) := rfl
-        _ = List.reverse tail ++ [head] ++ bs := by rw [List.append_assoc]
-        _ = List.reverseAux tail [head] ++ bs := by rw [ih]
-        _ = List.reverseAux (head :: tail) [] ++ bs := rfl
+        = List.reverseAux tail (head :: bs) := rfl
+      _ = List.reverse tail ++ (head :: bs) := by rw [ih]
+      _ = List.reverse tail ++ ([head] ++ bs) := rfl
+      _ = List.reverse tail ++ [head] ++ bs := by rw [List.append_assoc]
+      _ = List.reverseAux tail [head] ++ bs := by rw [ih]
+      _ = List.reverseAux (head :: tail) [] ++ bs := rfl
 
 theorem length_reverse (t : List α)
         : List.length (List.reverse t) = List.length t := by
@@ -131,14 +132,14 @@ theorem length_reverse (t : List α)
   | nil => simp
   | cons head tail ih => calc
       List.length (List.reverse (head :: tail))
-          = List.length (List.reverseAux tail [head]) := rfl
-        _ = List.length (List.reverse tail ++ [head]) := by rw [list_reverse_aux_append]
-        _ = List.length (List.reverse tail) + List.length [head] := by simp
-        _ = List.length tail + List.length [head] := by rw [ih]
-        _ = List.length tail + 1 := rfl
-        _ = List.length [] + List.length tail + 1 := by simp
-        _ = List.length ([] ++ [head] ++ tail) := by rw [length_inject_anywhere]
-        _ = List.length (head :: tail) := rfl
+        = List.length (List.reverseAux tail [head]) := rfl
+      _ = List.length (List.reverse tail ++ [head]) := by rw [list_reverse_aux_append]
+      _ = List.length (List.reverse tail) + List.length [head] := by simp
+      _ = List.length tail + List.length [head] := by rw [ih]
+      _ = List.length tail + 1 := rfl
+      _ = List.length [] + List.length tail + 1 := by simp
+      _ = List.length ([] ++ [head] ++ tail) := by rw [length_inject_anywhere]
+      _ = List.length (head :: tail) := rfl
 
 theorem reverse_reverse_aux (as bs : List α)
         : List.reverse (as ++ bs) = List.reverse bs ++ List.reverse as := by
@@ -146,14 +147,14 @@ theorem reverse_reverse_aux (as bs : List α)
   | nil => simp
   | cons head tail ih => calc
       List.reverse (head :: tail ++ bs)
-          = List.reverseAux (head :: tail ++ bs) [] := rfl
-        _ = List.reverseAux (tail ++ bs) [head] := rfl
-        _ = List.reverse (tail ++ bs) ++ [head] := by rw [list_reverse_aux_append]
-        _ = List.reverse bs ++ List.reverse tail ++ [head] := by rw [ih]
-        _ = List.reverse bs ++ (List.reverse tail ++ [head]) := by rw [List.append_assoc]
-        _ = List.reverse bs ++ (List.reverseAux tail [head]) := by rw [list_reverse_aux_append]
-        _ = List.reverse bs ++ (List.reverseAux (head :: tail) []) := rfl
-        _ = List.reverse bs ++ List.reverse (head :: tail) := rfl
+        = List.reverseAux (head :: tail ++ bs) [] := rfl
+      _ = List.reverseAux (tail ++ bs) [head] := rfl
+      _ = List.reverse (tail ++ bs) ++ [head] := by rw [list_reverse_aux_append]
+      _ = List.reverse bs ++ List.reverse tail ++ [head] := by rw [ih]
+      _ = List.reverse bs ++ (List.reverse tail ++ [head]) := by rw [List.append_assoc]
+      _ = List.reverse bs ++ (List.reverseAux tail [head]) := by rw [list_reverse_aux_append]
+      _ = List.reverse bs ++ (List.reverseAux (head :: tail) []) := rfl
+      _ = List.reverse bs ++ List.reverse (head :: tail) := rfl
 
 theorem reverse_reverse (t : List α)
         : List.reverse (List.reverse t) = t := by
@@ -161,12 +162,12 @@ theorem reverse_reverse (t : List α)
   | nil => simp
   | cons head tail ih => calc
       List.reverse (List.reverse (head :: tail))
-          = List.reverse (List.reverseAux tail [head]) := rfl
-        _ = List.reverse (List.reverse tail ++ [head]) := by rw [list_reverse_aux_append]
-        _ = List.reverse [head] ++ List.reverse (List.reverse tail) := by rw [reverse_reverse_aux]
-        _ = List.reverse [head] ++ tail := by rw [ih]
-        _ = [head] ++ tail := by simp
-        _ = head :: tail := rfl
+        = List.reverse (List.reverseAux tail [head]) := rfl
+      _ = List.reverse (List.reverse tail ++ [head]) := by rw [list_reverse_aux_append]
+      _ = List.reverse [head] ++ List.reverse (List.reverse tail) := by rw [reverse_reverse_aux]
+      _ = List.reverse [head] ++ tail := by rw [ih]
+      _ = [head] ++ tail := by simp
+      _ = head :: tail := rfl
 
 end ex2
 
