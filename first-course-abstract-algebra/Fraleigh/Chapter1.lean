@@ -1,7 +1,7 @@
 /-
-# References
+Chapter 1
 
-1. Fraleigh, John B. A First Course in Abstract Algebra, n.d.
+Introduction and Examples
 -/
 
 import Mathlib.Data.Complex.Basic

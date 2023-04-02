@@ -1,7 +1,7 @@
 /-
-# References
+Chapter 3
 
-1. Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+Propositions and Proofs
 -/
 
 -- Exercise 1

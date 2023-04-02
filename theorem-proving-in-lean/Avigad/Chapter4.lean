@@ -1,7 +1,7 @@
 /-
-# References
+Chapter 4
 
-1. Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+Quantifiers and Equality
 -/
 
 -- Exercise 1

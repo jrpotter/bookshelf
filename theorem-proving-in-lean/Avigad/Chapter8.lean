@@ -1,7 +1,7 @@
 /-
-# References
+Chapter 8
 
-1. Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+Induction and Recursion
 -/
 
 -- Exercise 1

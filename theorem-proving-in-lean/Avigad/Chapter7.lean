@@ -1,7 +1,7 @@
 /-
-# References
+Chapter 7
 
-1. Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+Inductive Types
 -/
 
 -- Exercise 1

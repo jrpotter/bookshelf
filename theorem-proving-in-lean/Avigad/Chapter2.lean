@@ -1,7 +1,7 @@
 /-
-# References
+Chapter 2
 
-1. Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+Dependent Type Theory
 -/
 
 -- Exercise 1
