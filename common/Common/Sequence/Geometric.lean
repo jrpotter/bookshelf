@@ -1,10 +1,3 @@
-/-
-# References
-
-1. Levin, Oscar. Discrete Mathematics: An Open Introduction. 3rd ed., n.d.
-   https://discrete.openmathbooks.org/pdfs/dmoi3-tablet.pdf.
--/
-
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 

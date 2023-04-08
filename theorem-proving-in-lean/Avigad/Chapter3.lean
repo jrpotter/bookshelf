@@ -4,10 +4,13 @@ Chapter 3
 Propositions and Proofs
 -/
 
+-- ========================================
 -- Exercise 1
 --
 -- Prove the following identities, replacing the "sorry" placeholders with
 -- actual proofs.
+-- ========================================
+
 namespace ex1
 
 open or
@@ -102,10 +105,13 @@ example : (p → q) → (¬q → ¬p) :=
 
 end ex1
 
--- Example 2
+-- ========================================
+-- Exercise 2
 --
 -- Prove the following identities, replacing the “sorry” placeholders with
 -- actual proofs. These require classical reasoning.
+-- ========================================
+
 namespace ex2
 
 open Classical
@@ -147,9 +153,12 @@ example : (((p → q) → p) → p) :=
 
 end ex2
 
--- Example 3
+-- ========================================
+-- Exercise 3
 --
 -- Prove `¬(p ↔ ¬p)` without using classical logic.
+-- ========================================
+
 namespace ex3
 
 variable (p : Prop)

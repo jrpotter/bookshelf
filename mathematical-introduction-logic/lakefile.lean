@@ -3,9 +3,7 @@ open Lake DSL
 
 package «mathematical-introduction-logic»
 
-require Bookshelf from "../bookshelf"
+require Common from "../common"
 
 @[default_target]
-lean_lib «enderton» {
-  -- add library configuration options here
-}
+lean_lib «enderton»

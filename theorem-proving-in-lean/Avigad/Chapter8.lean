@@ -4,12 +4,15 @@ Chapter 8
 Induction and Recursion
 -/
 
+-- ========================================
 -- Exercise 1
 --
 -- Open a namespace `Hidden` to avoid naming conflicts, and use the equation
 -- compiler to define addition, multiplication, and exponentiation on the
 -- natural numbers. Then use the equation compiler to derive some of their basic
 -- properties.
+-- ========================================
+
 namespace ex1
 
 def add : Nat → Nat → Nat
@@ -26,11 +29,14 @@ def exp : Nat → Nat → Nat
 
 end ex1
 
+-- ========================================
 -- Exercise 2
 --
 -- Similarly, use the equation compiler to define some basic operations on lists
 -- (like the reverse function) and prove theorems about lists by induction (such
 -- as the fact that `reverse (reverse xs) = xs` for any list `xs`).
+-- ========================================
+
 namespace ex2
 
 variable {α : Type _}
@@ -43,11 +49,14 @@ def reverse : List α → List α
 
 end ex2
 
+-- ========================================
 -- Exercise 3
 --
 -- Define your own function to carry out course-of-value recursion on the
 -- natural numbers. Similarly, see if you can figure out how to define
 -- `WellFounded.fix` on your own.
+-- ========================================
+
 namespace ex3
 
 def below {motive : Nat → Type} : Nat → Type
@@ -58,11 +67,14 @@ def below {motive : Nat → Type} : Nat → Type
 
 end ex3
 
+-- ========================================
 -- Exercise 4
 --
 -- Following the examples in Section Dependent Pattern Matching, define a
 -- function that will append two vectors. This is tricky; you will have to
 -- define an auxiliary function.
+-- ========================================
+
 namespace ex4
 
 inductive Vector (α : Type u) : Nat → Type u
@@ -77,11 +89,14 @@ end Vector
 
 end ex4
 
+-- ========================================
 -- Exercise 5
 --
 -- Consider the following type of arithmetic expressions. The idea is that
 -- `var n` is a variable, `vₙ`, and `const n` is the constant whose value is
 -- `n`.
+-- ========================================
+
 namespace ex5
 
 inductive Expr where
@@ -113,10 +128,12 @@ def sampleVal : Nat → Nat
 -- Try it out. You should get 47 here.
 -- #eval eval sampleVal sampleExpr
 
+-- ----------------------------------------
 -- Implement "constant fusion," a procedure that simplifies subterms like
 -- `5 + 7` to `12`. Using the auxiliary function `simpConst`, define a function
 -- "fuse": to simplify a plus or a times, first simplify the arguments
 -- recursively, and then apply `simpConst` to try to simplify the result.
+-- ----------------------------------------
 
 def simpConst : Expr → Expr
   | plus (const n₁) (const n₂)  => const (n₁ + n₂)

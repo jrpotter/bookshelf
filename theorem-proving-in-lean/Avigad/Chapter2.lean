@@ -4,9 +4,11 @@ Chapter 2
 Dependent Type Theory
 -/
 
+-- ========================================
 -- Exercise 1
 --
 -- Define the function `Do_Twice`, as described in Section 2.4.
+-- ========================================
 namespace ex1
 
 def double (x : Nat) := x + x
@@ -17,9 +19,11 @@ def doTwiceTwice (f : (Nat → Nat) → (Nat → Nat)) (x : Nat → Nat) := f (f
 
 end ex1
 
+-- ========================================
 -- Exercise 2
 --
 -- Define the functions `curry` and `uncurry`, as described in Section 2.4.
+-- ========================================
 namespace ex2
 
 def curry (f : α × β → γ) : (α → β → γ) :=
@@ -30,6 +34,7 @@ def uncurry (f : α → β → γ) : (α × β → γ) :=
 
 end ex2
 
+-- ========================================
 -- Exercise 3
 --
 -- Above, we used the example `vec α n` for vectors of elements of type `α` of
@@ -39,6 +44,8 @@ end ex2
 -- implicit arguments for parameters that can be inferred. Declare some
 -- variables and check some expressions involving the constants that you have
 -- declared.
+-- ========================================
+
 namespace ex3
 
 universe u
@@ -64,6 +71,7 @@ variable (c d : vec Prop 2)
 
 end ex3
 
+-- ========================================
 -- Exercise 4
 --
 -- Similarly, declare a constant `matrix` so that `matrix α m n` could represent
@@ -72,6 +80,8 @@ end ex3
 -- (using vec) multiplication of a matrix by a vector. Once again, declare some
 -- variables and check some expressions involving the constants that you have
 -- declared.
+-- ========================================
+
 namespace ex4
 
 universe u

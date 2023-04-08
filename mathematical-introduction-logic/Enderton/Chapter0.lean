@@ -4,15 +4,15 @@ Chapter 0
 Useful Facts About Sets
 -/
 
-import Bookshelf.Tuple
+import Common.Tuple
 
 /--
-The following describes a so-called "generic" tuple. Like in `Bookshelf.Tuple`,
-an `n`-tuple is defined recursively like so:
+The following describes a so-called "generic" tuple. Like in `Common.Tuple`, an
+`n`-tuple is defined recursively like so:
 
   `⟨x₁, ..., xₙ⟩ = ⟨⟨x₁, ..., xₙ₋₁⟩, xₙ⟩`
 
-Unlike `Bookshelf.Tuple`, a "generic" tuple bends the syntax above further. For
+Unlike `Common.Tuple`, a "generic" tuple bends the syntax above further. For
 example, both tuples above are equivalent to:
 
   `⟨⟨x₁, ..., xₘ⟩, xₘ₊₁, ..., xₙ⟩`
@@ -20,7 +20,7 @@ example, both tuples above are equivalent to:
 for some `1 ≤ m ≤ n`. This distinction is purely syntactic, but necessary to
 prove certain theorems found in [1] (e.g. `lemma_0a`).
 
-In general, prefer `Bookshelf.Tuple`.
+In general, prefer `Common.Tuple`.
 -/
 inductive XTuple : (α : Type u) → (size : Nat × Nat) → Type u where
   | nil : XTuple α (0, 0)
@@ -38,9 +38,9 @@ namespace XTuple
 
 open scoped Tuple
 
-/- -------------------------------------
- - Normalization
- - -------------------------------------/
+-- ========================================
+-- Normalization
+-- ========================================
 
 /--
 Converts an `XTuple` into "normal form".
@@ -97,9 +97,9 @@ theorem norm_snoc_eq_concat {t₁ : XTuple α (p, q)} {t₂ : Tuple α n}
   : norm (snoc t₁ t₂) = Tuple.concat t₁.norm t₂ := by
   conv => lhs; unfold norm
 
-/- -------------------------------------
- - Equality
- - -------------------------------------/
+-- ========================================
+-- Equality
+-- ========================================
 
 /--
 Implements Boolean equality for `XTuple α n` provided `α` has decidable
@@ -108,9 +108,9 @@ equality.
 instance BEq [DecidableEq α] : BEq (XTuple α n) where
   beq t₁ t₂ := t₁.norm == t₂.norm
 
-/- -------------------------------------
- - Basic API
- - -------------------------------------/
+-- ========================================
+-- Basic API
+-- ========================================
 
 /--
 Returns the number of entries in the `XTuple`.
@@ -163,9 +163,9 @@ def snd : XTuple α (m, n) → Tuple α n
   | x[] => t[]
   | snoc _ ts => ts
 
-/- -------------------------------------
- - Lemma 0A
- - -------------------------------------/
+-- ========================================
+-- Lemma 0A
+-- ========================================
 
 section
 
@@ -188,13 +188,13 @@ lemma n_eq_succ_k : n = k + 1 :=
     _ = 1 + k + m' - m' := by rw [Nat.add_assoc, Nat.add_comm]
     _ = 1 + k := by simp
     _ = k + 1 := by rw [Nat.add_comm]
-  
+
 lemma n_pred_eq_k : n - 1 = k := by
   have h : k + 1 - 1 = k + 1 - 1 := rfl
   conv at h => lhs; rw [←n_eq_succ_k p q]
   simp at h
   exact h
-  
+
 lemma n_geq_one : 1 ≤ n := by
   rw [n_eq_succ_k p q]
   simp
@@ -221,7 +221,7 @@ def cast_norm : XTuple α (n, m - 1) → Tuple α (m + k)
 
 def cast_fst : XTuple α (n, m - 1) → Tuple α (k + 1)
   | xs => cast (by rw [n_eq_succ_k p q]) xs.fst
-  
+
 def cast_take (ys : Tuple α (m + k)) :=
   cast (by rw [min_comm_succ_eq p]) (ys.take (k + 1))
 

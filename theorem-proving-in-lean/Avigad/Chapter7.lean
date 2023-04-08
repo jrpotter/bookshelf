@@ -4,6 +4,7 @@ Chapter 7
 Inductive Types
 -/
 
+-- ========================================
 -- Exercise 1
 --
 -- Try defining other operations on the natural numbers, such as multiplication,
@@ -15,6 +16,8 @@ Inductive Types
 -- Since many of these are already defined in Lean’s core library, you should
 -- work within a namespace named hide, or something like that, in order to avoid
 -- name clashes.
+-- ========================================
+
 namespace ex1
 
 -- As defined in the book.
@@ -74,6 +77,7 @@ end Nat
 
 end ex1
 
+-- ========================================
 -- Exercise 2
 --
 -- Define some operations on lists, like a `length` function or the `reverse`
@@ -82,6 +86,8 @@ end ex1
 -- a. `length (s ++ t) = length s + length t`
 -- b. `length (reverse t) = length t`
 -- c. `reverse (reverse t) = t`
+-- ========================================
+
 namespace ex2
 
 variable {α : Type _}
@@ -171,6 +177,7 @@ theorem reverse_reverse (t : List α)
 
 end ex2
 
+-- ========================================
 -- Exercise 3
 --
 -- Define an inductive data type consisting of terms built up from the following
@@ -183,6 +190,8 @@ end ex2
 --
 -- Recursively define a function that evaluates any such term with respect to an
 -- assignment of values to the variables.
+-- ========================================
+
 namespace ex3
 
 inductive Foo : Type _

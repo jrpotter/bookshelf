@@ -4,10 +4,13 @@ Chapter 4
 Quantifiers and Equality
 -/
 
+-- ========================================
 -- Exercise 1
 --
 -- Prove these equivalences. You should also try to understand why the reverse
 -- implication is not derivable in the last example.
+-- ========================================
+
 namespace ex1
 
 variable (α : Type _)
@@ -34,11 +37,14 @@ example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
 
 end ex1
 
+-- ========================================
 -- Exercise 2
 --
 -- It is often possible to bring a component of a formula outside a universal
 -- quantifier, when it does not depend on the quantified variable. Try proving
 -- these (one direction of the second of these requires classical logic).
+-- ========================================
+
 namespace ex2
 
 variable (α : Type _)
@@ -70,11 +76,14 @@ example : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
 
 end ex2
 
+-- ========================================
 -- Exercise 3
 --
 -- Consider the "barber paradox," that is, the claim that in a certain town
 -- there is a (male) barber that shaves all and only the men who do not shave
 -- themselves. Prove that this is a contradiction.
+-- ========================================
+
 namespace ex3
 
 open Classical
@@ -91,6 +100,7 @@ example (h : ∀ x : men, shaves barber x ↔ ¬shaves x x) : False :=
 
 end ex3
 
+-- ========================================
 -- Exercise 4
 --
 -- Remember that, without any parameters, an expression of type `Prop` is just
@@ -101,6 +111,8 @@ end ex3
 -- states that every odd number greater than `5` is the sum of three primes.
 -- Look up the definition of a Fermat prime or any of the other statements, if
 -- necessary.
+-- ========================================
+
 namespace ex4
 
 def even (a : Nat) := ∃ b, a = 2 * b
@@ -132,9 +144,12 @@ def Fermat'sLastTheorem : Prop :=
 
 end ex4
 
+-- ========================================
 -- Exercise 5
 --
 -- Prove as many of the identities listed in Section 4.4 as you can.
+-- ========================================
+
 namespace ex5
 
 open Classical
@@ -215,9 +230,12 @@ example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
 
 end ex5
 
+-- ========================================
 -- Exercise 6
 --
 -- Give a calculational proof of the theorem `log_mul` below.
+-- ========================================
+
 namespace ex6
 
 variable (log exp : Float → Float)

@@ -1,10 +1,3 @@
-/-
-# References
-
-1. Enderton, Herbert B. A Mathematical Introduction to Logic. 2nd ed. San Diego:
-   Harcourt/Academic Press, 2001.
--/
-
 import Mathlib.Tactic.Ring
 
 /--
@@ -29,9 +22,9 @@ macro_rules
 
 namespace Tuple
 
-/- -------------------------------------
- - Coercions
- - -------------------------------------/
+-- ========================================
+-- Coercions
+-- ========================================
 
 scoped instance : CoeOut (Tuple α (min (m + n) m)) (Tuple α m) where
   coe := cast (by simp)
@@ -54,9 +47,9 @@ scoped instance : Coe (Tuple α (min m n + 1)) (Tuple α (min (m + 1) (n + 1))) 
 scoped instance : Coe (Tuple α m) (Tuple α (min (m + n) m)) where
   coe := cast (by simp)
 
-/- -------------------------------------
- - Equality
- - -------------------------------------/
+-- ========================================
+-- Equality
+-- ========================================
 
 theorem eq_nil : @Tuple.nil α = t[] := rfl
 
@@ -90,9 +83,9 @@ protected def hasDecEq [DecidableEq α] (t₁ t₂ : Tuple α n) : Decidable (Eq
 
 instance [DecidableEq α] : DecidableEq (Tuple α n) := Tuple.hasDecEq
 
-/- -------------------------------------
- - Basic API
- - -------------------------------------/
+-- ========================================
+-- Basic API
+-- ========================================
 
 /--
 Returns the number of entries of the `Tuple`.
@@ -118,9 +111,9 @@ def cons : Tuple α n → α → Tuple α (n + 1)
   | t[], a => t[a]
   | snoc ts t, a => snoc (cons ts a) t
 
-/- -------------------------------------
- - Concatenation
- - -------------------------------------/
+-- ========================================
+-- Concatenation
+-- ========================================
 
 /--
 Join two `Tuple`s together end to end.
@@ -179,9 +172,9 @@ theorem snoc_eq_init_concat_last (as : Tuple α m) : snoc as a = concat as t[a] 
     rfl
     (fun _ _ => by simp; unfold concat concat; rfl)
 
-/- -------------------------------------
- - Initial sequences
- - -------------------------------------/
+-- ========================================
+-- Initial sequences
+-- ========================================
 
 /--
 Take the first `k` entries from the `Tuple` to form a new `Tuple`, or the entire
