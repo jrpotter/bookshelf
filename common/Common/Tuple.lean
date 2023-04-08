@@ -69,7 +69,8 @@ theorem eq_iff_snoc {t₁ t₂ : Tuple α n}
 /--
 Implements decidable equality for `Tuple α m`, provided `a` has decidable equality. 
 -/
-protected def hasDecEq [DecidableEq α] (t₁ t₂ : Tuple α n) : Decidable (Eq t₁ t₂) :=
+protected def hasDecEq [DecidableEq α] (t₁ t₂ : Tuple α n)
+  : Decidable (Eq t₁ t₂) :=
   match t₁, t₂ with
   | t[], t[] => isTrue eq_nil
   | snoc as a, snoc bs b =>

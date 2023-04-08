@@ -1,5 +1,22 @@
 # Lean
-**/build
-**/lake-packages/*
-**/_target
-**/leanpkg.path
+*/build
+*/lake-packages
+*/_target
+*/leanpkg.path
+
+# TeX
+*.aux
+*.cb
+*.cb2
+*.fdb_latexmk
+*.fls
+*.fmt
+*.fot
+*.lof
+*.log
+*.lot
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+.*.lb

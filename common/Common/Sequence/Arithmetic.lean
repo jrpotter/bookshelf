@@ -1,33 +1,41 @@
+import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
-/--[1]
-A 0th-indexed arithmetic sequence.
+/--
+A `0`th-indexed arithmetic sequence.
 -/
 structure Arithmetic where
-  a₀ : Int
-  Δ : Int
+  a₀ : Real
+  Δ : Real
 
 namespace Arithmetic
 
-/--[1]
+/--
 Returns the value of the `n`th term of an arithmetic sequence.
--/
-def termClosed (seq : Arithmetic) (n : Nat) : Int := seq.a₀ + seq.Δ * n
 
-/--[1]
-Returns the value of the `n`th term of an arithmetic sequence.
+This function calculates the value of this term directly. Keep in mind the
+sequence is `0`th-indexed.
 -/
-def termRecursive : Arithmetic → Nat → Int
+def termClosed (seq : Arithmetic) (n : Nat) : Real :=
+  seq.a₀ + seq.Δ * n
+
+/--
+Returns the value of the `n`th term of an arithmetic sequence.
+
+This function calculates the value of this term recursively. Keep in mind the
+sequence is `0`th-indexed.
+-/
+def termRecursive : Arithmetic → Nat → Real
   | seq,       0 => seq.a₀
   | seq, (n + 1) => seq.Δ + seq.termRecursive n
 
-/--[1]
-The recursive definition and closed definitions of an arithmetic sequence are
-equivalent.
+/--
+The recursive and closed term definitions of an arithmetic sequence agree with
+one another.
 -/
 theorem term_recursive_closed (seq : Arithmetic) (n : Nat)
-        : seq.termRecursive n = seq.termClosed n := by
+  : seq.termRecursive n = seq.termClosed n := by
   induction n with
   | zero => unfold termRecursive termClosed; norm_num
   | succ n ih => calc
@@ -35,14 +43,33 @@ theorem term_recursive_closed (seq : Arithmetic) (n : Nat)
         = seq.Δ + seq.termRecursive n := rfl
       _ = seq.Δ + seq.termClosed n := by rw [ih]
       _ = seq.Δ + (seq.a₀ + seq.Δ * n) := rfl
-      _ = seq.a₀ + seq.Δ * (n + 1) := by ring
+      _ = seq.a₀ + seq.Δ * (↑n + 1) := by ring
+      _ = seq.a₀ + seq.Δ * ↑(n + 1) := by simp
       _ = termClosed seq (n + 1) := rfl
 
-/--[1]
-Summation of the first `n` terms of an arithmetic sequence.
+/--
+The summation of the first `n + 1` terms of an arithmetic sequence.
+
+This function calculates the sum directly.
 -/
-def sum : Arithmetic → Nat → Int
+noncomputable def sum_closed (seq : Arithmetic) (n : Nat) : Real :=
+  ((n + 1) * (seq.a₀ + seq.termClosed n)) / 2
+
+/--
+The summation of the first `n + 1` terms of an arithmetic sequence.
+
+This function calculates the sum recursively.
+-/
+def sum_recursive : Arithmetic → Nat → Real
   |   _,       0 => 0
-  | seq, (n + 1) => seq.termClosed n + seq.sum n
+  | seq, (n + 1) => seq.termClosed (n + 1) + seq.sum_recursive n
+
+/--
+The recursive and closed definitions of the sum of an arithmetic sequence agree
+with one another.
+-/
+theorem sum_recursive_closed (seq : Arithmetic) (n : Nat)
+  : sum_recursive seq n = sum_closed seq n :=
+  sorry
 
 end Arithmetic
