@@ -133,11 +133,10 @@ theorem self_concat_nil_eq_self (t : Tuple α m) : concat t t[] = t :=
 /--
 Concatenating `nil` with a `Tuple` yields the `Tuple`.
 -/
-theorem nil_concat_self_eq_self (t : Tuple α m) : concat t[] t = t :=
-  Tuple.recOn
-    t
-    (by unfold concat; simp)
-    (@fun n as a ih => by
+theorem nil_concat_self_eq_self (t : Tuple α m) : concat t[] t = t := by
+  induction t with
+  | nil => unfold concat; simp
+  | @snoc n as a ih =>
       unfold concat
       rw [ih]
       suffices HEq (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a) ↑(snoc as a)
@@ -153,7 +152,7 @@ theorem nil_concat_self_eq_self (t : Tuple α m) : concat t[] t = t :=
           (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a)
           (cast h (snoc as a)))
         (show Tuple α (n + 1) = Tuple α (0 + (n + 1)) by simp)
-        h₁)
+        h₁
 
 /--
 Concatenating a `Tuple` to a nonempty `Tuple` moves `concat` calls closer to
@@ -166,11 +165,11 @@ theorem concat_snoc_snoc_concat {bs : Tuple α n}
 /--
 `snoc` is equivalent to concatenating the `init` and `last` element together.
 -/
-theorem snoc_eq_init_concat_last (as : Tuple α m) : snoc as a = concat as t[a] :=
-  Tuple.casesOn (motive := fun _ t => snoc t a = concat t t[a])
-    as
-    rfl
-    (fun _ _ => by simp; unfold concat concat; rfl)
+theorem snoc_eq_init_concat_last (as : Tuple α m)
+  : snoc as a = concat as t[a] := by
+  cases as with
+  | nil => rfl
+  | snoc _ _ => simp; unfold concat concat; rfl
 
 -- ========================================
 -- Initial sequences
@@ -196,10 +195,10 @@ def take (t : Tuple α n) (k : Nat) : Tuple α (min n k) :=
 /--
 Taking no entries from any `Tuple` should yield an empty one.
 -/
-theorem self_take_zero_eq_nil (t : Tuple α n) : take t 0 = @nil α :=
-  Tuple.recOn (motive := fun _ t => take t 0 = @nil α) t
-    (by simp; rfl)
-    (fun as a ih => by unfold take; simp; rw [ih]; simp)
+theorem self_take_zero_eq_nil (t : Tuple α n) : take t 0 = @nil α := by
+  induction t with
+  | nil => simp; rfl
+  | snoc as a ih => unfold take; simp; rw [ih]; simp
 
 /--
 Taking any number of entries from an empty `Tuple` should yield an empty one.
@@ -210,10 +209,10 @@ theorem nil_take_zero_eq_nil (k : Nat) : (take (@nil α) k) = @nil α := by
 /--
 Taking `n` entries from a `Tuple` of size `n` should yield the same `Tuple`.
 -/
-theorem self_take_size_eq_self (t : Tuple α n) : take t n = t :=
-  Tuple.casesOn (motive := fun x t => take t x = t) t
-    (by simp; rfl)
-    (fun as a => by unfold take; simp)
+theorem self_take_size_eq_self (t : Tuple α n) : take t n = t := by
+  cases t with
+  | nil => simp; rfl
+  | snoc as a => unfold take; simp
 
 /--
 Taking all but the last entry of a `Tuple` is the same result, regardless of the
@@ -229,7 +228,11 @@ Taking `n` elements from a tuple of size `n + 1` is the same as invoking `init`.
 -/
 theorem init_eq_take_pred (t : Tuple α (n + 1)) : take t n = init t :=
   match t with
-  | snoc as a => by unfold init take; simp; rw [self_take_size_eq_self]; simp
+  | snoc as a => by
+      unfold init take
+      simp
+      rw [self_take_size_eq_self]
+      simp
 
 /--
 If two `Tuple`s are equal, then any initial sequences of those two `Tuple`s are
@@ -244,16 +247,15 @@ Given a `Tuple` of size `k`, concatenating an arbitrary `Tuple` and taking `k`
 elements yields the original `Tuple`.
 -/
 theorem eq_take_concat {t₁ : Tuple α m} {t₂ : Tuple α n}
-  : take (concat t₁ t₂) m = t₁ :=
-  Tuple.recOn
-    (motive := fun x t => take (concat t₁ t) m = t₁) t₂
-    (by simp; rw [self_concat_nil_eq_self, self_take_size_eq_self])
-    (@fun n' as a ih => by
+  : take (concat t₁ t₂) m = t₁ := by
+  induction t₂ with
+  | nil => simp; rw [self_concat_nil_eq_self, self_take_size_eq_self]
+  | @snoc n' as a ih =>
       simp
       rw [concat_snoc_snoc_concat]
       unfold take
       simp
       rw [ih]
-      simp)
+      simp
 
 end Tuple

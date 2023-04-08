@@ -27,17 +27,16 @@ The recursive definition and closed definitions of a geometric sequence are
 equivalent.
 -/
 theorem term_recursive_closed (seq : Geometric) (n : Nat)
-        : seq.termRecursive n = seq.termClosed n :=
-  Nat.recOn
-    n
-    (by unfold termClosed termRecursive; norm_num)
-    (fun n ih => calc
+        : seq.termRecursive n = seq.termClosed n := by
+  induction n with
+  | zero => unfold termClosed termRecursive; norm_num
+  | succ n ih => calc
       seq.termRecursive (n + 1)
         = seq.r * (seq.termRecursive n) := rfl
       _ = seq.r * (seq.termClosed n) := by rw [ih]
       _ = seq.r * (seq.a₀ * seq.r ^ n) := rfl
       _ = seq.a₀ * seq.r ^ (n + 1) := by ring
-      _ = seq.termClosed (n + 1) := rfl)
+      _ = seq.termClosed (n + 1) := rfl
 
 /--[1]
 Summation of the first `n` terms of a geometric sequence.

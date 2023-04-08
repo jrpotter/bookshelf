@@ -66,18 +66,18 @@ theorem norm_snoc_nil_nil_eq_nil : @norm α 0 0 (snoc x[] t[]) = t[] := by
 Normalization elimates `snoc` when the `snd` component is `nil`.
 -/
 theorem norm_snoc_nil_elim {t : XTuple α (p, q)}
-  : norm (snoc t t[]) = norm t :=
-  XTuple.casesOn t
-    (motive := fun _ t => norm (snoc t t[]) = norm t)
-    (by simp; unfold norm norm; rfl)
-    (fun tf tl => by
+  : norm (snoc t t[]) = norm t := by
+  cases t with
+  | nil => simp; unfold norm norm; rfl
+  | snoc tf tl =>
       simp
-      conv => lhs; unfold norm)
+      conv => lhs; unfold norm
 
 /--
 Normalization eliminates `snoc` when the `fst` component is `nil`.
 -/
-theorem norm_nil_snoc_elim {ts : Tuple α n} : norm (snoc x[] ts) = cast (by simp) ts := by
+theorem norm_nil_snoc_elim {ts : Tuple α n}
+  : norm (snoc x[] ts) = cast (by simp) ts := by
   unfold norm norm
   rw [Tuple.nil_concat_self_eq_self]
 
