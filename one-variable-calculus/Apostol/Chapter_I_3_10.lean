@@ -1,7 +1,5 @@
 import Mathlib.Data.PNat.Basic
 import Mathlib.Data.Real.Basic
-import Mathlib.Order.Basic
-import Mathlib.Tactic.LibrarySearch
 
 #check Archimedean
 
