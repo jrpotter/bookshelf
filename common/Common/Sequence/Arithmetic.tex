@@ -3,6 +3,11 @@
 \usepackage{hyperref}
 
 \newtheorem{theorem}{Theorem}
+\newtheorem{custominner}{Theorem}
+\newenvironment{custom}[1]{%
+  \renewcommand\thecustominner{#1}%
+  \custominner
+}{\endcustominner}
 
 \begin{document}
 

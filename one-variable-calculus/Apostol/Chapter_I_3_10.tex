@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{amsfonts, amsthm}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{custominner}{Theorem}
+\newenvironment{custom}[1]{%
+  \renewcommand\thecustominner{#1}%
+  \custominner
+}{\endcustominner}
+
+\begin{document}
+
+\begin{custom}{1.29}
+
+For every real $x$ there exists a positive integer $n$ such that $n > x$.
+
+\end{custom}
+
+\begin{proof}
+
+\href{Chapter_I_3_10.lean}{Apostol.Chapter\_I\_3\_10.Real.exists\_pnat\_geq\_self}
+
+\end{proof}
+
+\begin{custom}{1.30}[Archimedean Property of the Reals]
+
+If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive integer $n$ such that $nx > y$.
+
+\end{custom}
+
+\begin{proof}
+
+\href{Chapter_I_3_10.lean}{Apostol.Chapter\_I\_3\_10.Real.pos\_imp\_exists\_pnat\_mul\_self\_geq}
+
+\end{proof}
+
+\end{document}
