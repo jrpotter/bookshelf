@@ -61,15 +61,32 @@ The summation of the first `n + 1` terms of a geometric sequence.
 This function calculates the sum recursively.
 -/
 def sum_recursive : Geometric → Nat → Real
-  |   _,       0 => 0
-  | seq, (n + 1) => seq.termClosed n + seq.sum_recursive n
+  | seq,       0 => seq.a₀
+  | seq, (n + 1) => seq.termClosed (n + 1) + seq.sum_recursive n
 
 /--
-The recursive and closed definitions of the sum of an arithmetic sequence agree
+The recursive and closed definitions of the sum of a geometric sequence agree
 with one another.
 -/
 theorem sum_recursive_closed (seq : Geometric) (n : Nat) (p : seq.r ≠ 1)
-  : sum_recursive seq n = sum_closed_ratio_neq_one seq n p :=
-  sorry
+  : sum_recursive seq n = sum_closed_ratio_neq_one seq n p := by
+  have h : 1 - seq.r ≠ 0 := by
+    intro h
+    rw [sub_eq_iff_eq_add, zero_add] at h
+    exact False.elim (p (Eq.symm h))
+  induction n with
+  | zero =>
+    unfold sum_recursive sum_closed_ratio_neq_one
+    simp
+    rw [mul_div_assoc, div_self h, mul_one] 
+  | succ n ih =>
+    calc
+      sum_recursive seq (n + 1)
+      _ = seq.termClosed (n + 1) + seq.sum_recursive n := rfl
+      _ = seq.termClosed (n + 1) + sum_closed_ratio_neq_one seq n p := by rw [ih]
+      _ = seq.a₀ * seq.r ^ (n + 1) + (seq.a₀ * (1 - seq.r ^ (n + 1))) / (1 - seq.r) := rfl
+      _ = seq.a₀ * seq.r ^ (n + 1) * (1 - seq.r) / (1 - seq.r) + (seq.a₀ * (1 - seq.r ^ (n + 1))) / (1 - seq.r) := by rw [mul_div_cancel _ h]
+      _ = (seq.a₀ * (1 - seq.r ^ (n + 1 + 1))) / (1 - seq.r) := by ring_nf
+      _ = sum_closed_ratio_neq_one seq (n + 1) p := rfl
 
 end Geometric
