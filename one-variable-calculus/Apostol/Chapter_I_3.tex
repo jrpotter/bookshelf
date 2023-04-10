@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[shortlabels]{enumitem}
 
 \input{../../common/preamble}
 
@@ -6,52 +7,76 @@
 
 \begin{xtheorem}{I.27}
 
-Every nonempty set $S$ that is bounded below has a greatest lower bound;
-that is, there is a real number $L$ such that $L = \inf{S}$.
+  Every nonempty set $S$ that is bounded below has a greatest lower bound; that
+  is, there is a real number $L$ such that $L = \inf{S}$.
 
 \end{xtheorem}
 
 \begin{proof}
 
-\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_isGLB}
+  \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_isGLB}
 
 \end{proof}
 
 \begin{xtheorem}{I.29}
 
-For every real $x$ there exists a positive integer $n$ such that $n > x$.
+  For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
 \end{xtheorem}
 
 \begin{proof}
 
-\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_pnat_geq_self}
+  \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_pnat_geq_self}
 
 \end{proof}
 
 \begin{xtheorem}{I.30}[Archimedean Property of the Reals]
 
-If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive integer $n$ such that $nx > y$.
+  If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
+  integer $n$ such that $nx > y$.
 
 \end{xtheorem}
 
 \begin{proof}
 
-\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_pnat_mul_self_geq_of_pos}
+  \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_pnat_mul_self_geq_of_pos}
 
 \end{proof}
 
 \begin{xtheorem}{I.31}
 
-If three real numbers $a$, $x$, and $y$ satisfy the inequalities
-$$a \leq x \leq a + \frac{y}{n}$$
-for every integer $n \geq 1$, then $x = a$.
+  If three real numbers $a$, $x$, and $y$ satisfy the inequalities
+  $$a \leq x \leq a + \frac{y}{n}$$
+  for every integer $n \geq 1$, then $x = a$.
 
 \end{xtheorem}
 
 \begin{proof}
 
-\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.forall_pnat_leq_self_leq_frac_imp_eq}
+  \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.forall_pnat_leq_self_leq_frac_imp_eq}
+
+\end{proof}
+
+\begin{xtheorem}{I.32}
+
+  Let $h$ be a given positive number and let $S$ be a set of real numbers.
+  \begin{enumerate}[(a)]
+    \item If $S$ has a supremum, then for some $x$ in $S$ we have
+      $$x > \sup{S} - h.$$
+    \item If $S$ has an infimum, then for some $x$ in $S$ we have
+      $$x < \inf{S} + h.$$
+  \end{enumerate}
+
+\end{xtheorem}
+
+\begin{proof}
+
+  \  % Force space prior to *Proof.*
+
+  \begin{enumerate}[(a)]
+    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.arb_close_to_sup}
+    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.arb_close_to_inf}
+  \end{enumerate}
 
 \end{proof}
 
