@@ -1,0 +1,58 @@
+\documentclass{article}
+
+\input{../../common/preamble}
+
+\begin{document}
+
+\begin{xtheorem}{I.27}
+
+Every nonempty set $S$ that is bounded below has a greatest lower bound;
+that is, there is a real number $L$ such that $L = \inf{S}$.
+
+\end{xtheorem}
+
+\begin{proof}
+
+\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_isGLB}
+
+\end{proof}
+
+\begin{xtheorem}{I.29}
+
+For every real $x$ there exists a positive integer $n$ such that $n > x$.
+
+\end{xtheorem}
+
+\begin{proof}
+
+\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_pnat_geq_self}
+
+\end{proof}
+
+\begin{xtheorem}{I.30}[Archimedean Property of the Reals]
+
+If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive integer $n$ such that $nx > y$.
+
+\end{xtheorem}
+
+\begin{proof}
+
+\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.exists_pnat_mul_self_geq_of_pos}
+
+\end{proof}
+
+\begin{xtheorem}{I.31}
+
+If three real numbers $a$, $x$, and $y$ satisfy the inequalities
+$$a \leq x \leq a + \frac{y}{n}$$
+for every integer $n \geq 1$, then $x = a$.
+
+\end{xtheorem}
+
+\begin{proof}
+
+\href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.forall_pnat_leq_self_leq_frac_imp_eq}
+
+\end{proof}
+
+\end{document}
