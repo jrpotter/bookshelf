@@ -40,7 +40,7 @@ theorem term_recursive_closed (seq : Geometric) (n : Nat)
   | zero => unfold termClosed termRecursive; norm_num
   | succ n ih => calc
       seq.termRecursive (n + 1)
-        = seq.r * (seq.termRecursive n) := rfl
+      _ = seq.r * (seq.termRecursive n) := rfl
       _ = seq.r * (seq.termClosed n) := by rw [ih]
       _ = seq.r * (seq.a₀ * seq.r ^ n) := rfl
       _ = seq.a₀ * seq.r ^ (n + 1) := by ring

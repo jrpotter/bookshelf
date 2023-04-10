@@ -88,10 +88,10 @@ only if `-x` is the greatest lower bound of `S`.
 theorem is_lub_neg_set_iff_is_glb_set_neg (S : Set ℝ)
   : IsLUB (-S) x = IsGLB S (-x) :=
   calc IsLUB (-S) x
-  _ = IsLeast (upperBounds (-S)) x := rfl
-  _ = IsLeast (-lowerBounds S) x := by rw [upper_bounds_neg_eq_neg_lower_bounds S]
-  _ = IsGreatest (lowerBounds S) (-x) := by rw [is_least_neg_set_eq_is_greatest_set_neq]
-  _ = IsGLB S (-x) := rfl
+    _ = IsLeast (upperBounds (-S)) x := rfl
+    _ = IsLeast (-lowerBounds S) x := by rw [upper_bounds_neg_eq_neg_lower_bounds S]
+    _ = IsGreatest (lowerBounds S) (-x) := by rw [is_least_neg_set_eq_is_greatest_set_neq]
+    _ = IsGLB S (-x) := rfl
 
 /--
 Theorem I.27

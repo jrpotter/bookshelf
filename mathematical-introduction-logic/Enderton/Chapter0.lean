@@ -140,7 +140,10 @@ size `k` of the tuple in normal form.
 -/
 theorem self_fst_eq_norm_take (t : XTuple α (m, n)) : t.fst = t.norm.take m :=
   match t with
-  | x[] => by unfold fst; rw [Tuple.self_take_zero_eq_nil]; simp
+  | x[] => by
+    unfold fst
+    rw [Tuple.self_take_zero_eq_nil]
+    simp
   | snoc tf tl => by
     unfold fst
     conv => rhs; unfold norm
@@ -152,8 +155,9 @@ If the normal form of an `XTuple` is equal to a `Tuple`, the `fst` component
 must be a prefix of the `Tuple`.
 -/
 theorem norm_eq_fst_eq_take {t₁ : XTuple α (m, n)} {t₂ : Tuple α (m + n)}
-  : (t₁.norm = t₂) → (t₁.fst = t₂.take m) :=
-  fun h => by rw [self_fst_eq_norm_take, h]
+  : (t₁.norm = t₂) → (t₁.fst = t₂.take m) := by
+  intro h
+  rw [self_fst_eq_norm_take, h]
 
 /--
 Returns the first component of our `XTuple`. For example, the first component of
@@ -173,9 +177,7 @@ variable {k m n : Nat}
 variable (p : 1 ≤ m)
 variable (q : n + (m - 1) = m + k)
 
-namespace Lemma_0a
-
-lemma n_eq_succ_k : n = k + 1 :=
+private lemma n_eq_succ_k : n = k + 1 := by
   let ⟨m', h⟩ := Nat.exists_eq_succ_of_ne_zero $ show m ≠ 0 by
     intro h
     have ff : 1 ≤ 0 := h ▸ p
@@ -189,48 +191,46 @@ lemma n_eq_succ_k : n = k + 1 :=
     _ = 1 + k := by simp
     _ = k + 1 := by rw [Nat.add_comm]
 
-lemma n_pred_eq_k : n - 1 = k := by
+private lemma n_pred_eq_k : n - 1 = k := by
   have h : k + 1 - 1 = k + 1 - 1 := rfl
   conv at h => lhs; rw [←n_eq_succ_k p q]
   simp at h
   exact h
 
-lemma n_geq_one : 1 ≤ n := by
+private lemma n_geq_one : 1 ≤ n := by
   rw [n_eq_succ_k p q]
   simp
 
-lemma min_comm_succ_eq : min (m + k) (k + 1) = k + 1 :=
+private lemma min_comm_succ_eq : min (m + k) (k + 1) = k + 1 :=
   Nat.recOn k
     (by simp; exact p)
-    (fun k' ih => calc
-      min (m + (k' + 1)) (k' + 1 + 1)
-          = min (m + k' + 1) (k' + 1 + 1) := by conv => rw [Nat.add_assoc]
-        _ = min (m + k') (k' + 1) + 1 := Nat.min_succ_succ (m + k') (k' + 1)
-        _ = k' + 1 + 1 := by rw [ih])
+    (fun k' ih => calc min (m + (k' + 1)) (k' + 1 + 1)
+      _ = min (m + k' + 1) (k' + 1 + 1) := by conv => rw [Nat.add_assoc]
+      _ = min (m + k') (k' + 1) + 1 := Nat.min_succ_succ (m + k') (k' + 1)
+      _ = k' + 1 + 1 := by rw [ih])
 
-lemma n_eq_min_comm_succ : n = min (m + k) (k + 1) := by
+private lemma n_eq_min_comm_succ : n = min (m + k) (k + 1) := by
   rw [min_comm_succ_eq p]
   exact n_eq_succ_k p q
 
-lemma n_pred_m_eq_m_k : n + (m - 1) = m + k := by
+private lemma n_pred_m_eq_m_k : n + (m - 1) = m + k := by
   rw [←Nat.add_sub_assoc p, Nat.add_comm, Nat.add_sub_assoc (n_geq_one p q)]
   conv => lhs; rw [n_pred_eq_k p q]
 
-def cast_norm : XTuple α (n, m - 1) → Tuple α (m + k)
+private def cast_norm : XTuple α (n, m - 1) → Tuple α (m + k)
   | xs => cast (by rw [q]) xs.norm
 
-def cast_fst : XTuple α (n, m - 1) → Tuple α (k + 1)
+private def cast_fst : XTuple α (n, m - 1) → Tuple α (k + 1)
   | xs => cast (by rw [n_eq_succ_k p q]) xs.fst
 
-def cast_take (ys : Tuple α (m + k)) :=
+private def cast_take (ys : Tuple α (m + k)) :=
   cast (by rw [min_comm_succ_eq p]) (ys.take (k + 1))
 
-end Lemma_0a
+/--
+Lemma 0A
 
-open Lemma_0a
-
-/--[1]
-Assume that ⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩. Then x₁ = ⟨y₁, ..., yₖ₊₁⟩.
+Assume that `⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩`.
+Then `x₁ = ⟨y₁, ..., yₖ₊₁⟩`.
 -/
 theorem lemma_0a (xs : XTuple α (n, m - 1)) (ys : Tuple α (m + k))
   : (cast_norm q xs = ys) → (cast_fst p q xs = cast_take p ys) := by

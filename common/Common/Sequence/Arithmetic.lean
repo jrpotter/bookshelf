@@ -41,7 +41,7 @@ theorem term_recursive_closed (seq : Arithmetic) (n : Nat)
   | succ n ih =>
     calc
       termRecursive seq (Nat.succ n)
-        = seq.Δ + seq.termRecursive n := rfl
+      _ = seq.Δ + seq.termRecursive n := rfl
       _ = seq.Δ + seq.termClosed n := by rw [ih]
       _ = seq.Δ + (seq.a₀ + seq.Δ * n) := rfl
       _ = seq.a₀ + seq.Δ * (↑n + 1) := by ring

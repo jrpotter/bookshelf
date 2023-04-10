@@ -1,13 +1,12 @@
 import Mathlib.Tactic.Ring
 
 /--
-As described in [1], `n`-tuples are defined recursively as such:
+`n`-tuples are defined recursively as such:
 
   `⟨x₁, ..., xₙ⟩ = ⟨⟨x₁, ..., xₙ₋₁⟩, xₙ⟩`
 
-We allow for empty tuples; [2] expects this functionality.
-
-For a `Tuple`-like type with opposite "endian", refer to `Vector`.
+We allow empty tuples. For a `Tuple`-like type with opposite "endian", refer to
+`Mathlib.Data.Vector`.
 -/
 inductive Tuple : (α : Type u) → (size : Nat) → Type u where
   | nil : Tuple α 0
@@ -67,7 +66,8 @@ theorem eq_iff_snoc {t₁ t₂ : Tuple α n}
     exact And.intro h₂ h₁
 
 /--
-Implements decidable equality for `Tuple α m`, provided `a` has decidable equality. 
+Implements decidable equality for `Tuple α m`, provided `a` has decidable
+equality. 
 -/
 protected def hasDecEq [DecidableEq α] (t₁ t₂ : Tuple α n)
   : Decidable (Eq t₁ t₂) :=
@@ -138,22 +138,22 @@ theorem nil_concat_self_eq_self (t : Tuple α m) : concat t[] t = t := by
   induction t with
   | nil => unfold concat; simp
   | @snoc n as a ih =>
-      unfold concat
-      rw [ih]
-      suffices HEq (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a) ↑(snoc as a)
-        from eq_of_heq this
-      have h₁ := Eq.recOn
-        (motive := fun x h => HEq
-          (snoc (cast (show Tuple α n = Tuple α x by rw [h]) as) a)
-          (snoc as a))
-        (show n = 0 + n by simp)
-        HEq.rfl
-      exact Eq.recOn
-        (motive := fun x h => HEq
-          (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a)
-          (cast h (snoc as a)))
-        (show Tuple α (n + 1) = Tuple α (0 + (n + 1)) by simp)
-        h₁
+    unfold concat
+    rw [ih]
+    suffices HEq (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a) ↑(snoc as a)
+      from eq_of_heq this
+    have h₁ := Eq.recOn
+      (motive := fun x h => HEq
+        (snoc (cast (show Tuple α n = Tuple α x by rw [h]) as) a)
+        (snoc as a))
+      (show n = 0 + n by simp)
+      HEq.rfl
+    exact Eq.recOn
+      (motive := fun x h => HEq
+        (snoc (cast (_ : Tuple α n = Tuple α (0 + n)) as) a)
+        (cast h (snoc as a)))
+      (show Tuple α (n + 1) = Tuple α (0 + (n + 1)) by simp)
+      h₁
 
 /--
 Concatenating a `Tuple` to a nonempty `Tuple` moves `concat` calls closer to
@@ -227,21 +227,22 @@ theorem take_subst_last {as : Tuple α n} (a₁ a₂ : α)
 /--
 Taking `n` elements from a tuple of size `n + 1` is the same as invoking `init`.
 -/
-theorem init_eq_take_pred (t : Tuple α (n + 1)) : take t n = init t :=
-  match t with
-  | snoc as a => by
-      unfold init take
-      simp
-      rw [self_take_size_eq_self]
-      simp
+theorem init_eq_take_pred (t : Tuple α (n + 1)) : take t n = init t := by
+  cases t with
+  | snoc as a =>
+    unfold init take
+    simp
+    rw [self_take_size_eq_self]
+    simp
 
 /--
 If two `Tuple`s are equal, then any initial sequences of those two `Tuple`s are
 also equal.
 -/
 theorem eq_tuple_eq_take {t₁ t₂ : Tuple α n}
-  : (t₁ = t₂) → (t₁.take k = t₂.take k) :=
-  fun h => by rw [h]
+  : (t₁ = t₂) → (t₁.take k = t₂.take k) := by
+  intro h
+  rw [h]
 
 /--
 Given a `Tuple` of size `k`, concatenating an arbitrary `Tuple` and taking `k`
@@ -250,13 +251,15 @@ elements yields the original `Tuple`.
 theorem eq_take_concat {t₁ : Tuple α m} {t₂ : Tuple α n}
   : take (concat t₁ t₂) m = t₁ := by
   induction t₂ with
-  | nil => simp; rw [self_concat_nil_eq_self, self_take_size_eq_self]
+  | nil =>
+    simp
+    rw [self_concat_nil_eq_self, self_take_size_eq_self]
   | @snoc n' as a ih =>
-      simp
-      rw [concat_snoc_snoc_concat]
-      unfold take
-      simp
-      rw [ih]
-      simp
+    simp
+    rw [concat_snoc_snoc_concat]
+    unfold take
+    simp
+    rw [ih]
+    simp
 
 end Tuple
