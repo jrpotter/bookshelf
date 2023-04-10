@@ -1,13 +1,6 @@
 \documentclass{article}
-\usepackage{amsfonts, amsthm}
-\usepackage{hyperref}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{custominner}{Theorem}
-\newenvironment{custom}[1]{%
-  \renewcommand\thecustominner{#1}%
-  \custominner
-}{\endcustominner}
+\input{../../preamble}
 
 \begin{document}
 
@@ -21,7 +14,7 @@ $$\sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.$$
 
 \begin{proof}
 
-\href{Arithmetic.lean}{Common.Sequence.Arithmetic.sum\_recursive\_closed}
+\href{Arithmetic.lean}{Common.Sequence.Arithmetic.sum_recursive_closed}
 
 \end{proof}
 

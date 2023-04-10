@@ -1,13 +1,6 @@
 \documentclass{article}
-\usepackage{amsfonts, amsthm}
-\usepackage{hyperref}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{custominner}{Theorem}
-\newenvironment{custom}[1]{%
-  \renewcommand\thecustominner{#1}%
-  \custominner
-}{\endcustominner}
+\input{../../common/preamble}
 
 \begin{document}
 
@@ -20,7 +13,7 @@ Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
 
 \begin{proof}
 
-\href{Chapter0.lean}{Enderton.Chapter0.lemma\_0a}
+\href{Chapter0.lean}{Enderton.Chapter0.lemma_0a}
 
 \end{proof}
 

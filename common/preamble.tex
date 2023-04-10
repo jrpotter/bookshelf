@@ -1,0 +1,12 @@
+\usepackage{amsfonts, amsthm}
+\usepackage{hyperref}
+\usepackage{underscore}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{xtheoreminner}{Theorem}
+\newenvironment{xtheorem}[1]{%
+  \renewcommand\thextheoreminner{#1}%
+  \xtheoreminner
+}{\endxtheoreminner}
+
+\hypersetup{colorlinks=true, urlcolor=blue}

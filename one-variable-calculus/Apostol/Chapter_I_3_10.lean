@@ -27,7 +27,7 @@ lemma leq_nat_abs_ceil_self (x : ℝ) : x ≤ Int.natAbs ⌈x⌉ := by
       _ ≤ ↑(Int.natAbs ⌈x⌉) := GE.ge.le h'    
 
 /--
-Theorem 1.29
+Theorem I.29
 
 For every real `x` there exists a positive integer `n` such that `n > x`.
 -/
@@ -40,19 +40,51 @@ theorem exists_pnat_geq_self (x : ℝ) : ∃ n : ℕ+, ↑n > x := by
   exact ⟨x', h⟩
 
 /--
-Theorem 1.30
+Theorem I.30
 
 If `x > 0` and if `y` is an arbitrary real number, there exists a positive
 integer `n` such that `nx > y`.
 
 This is known as the *Archimedean Property of the Reals*.
 -/
-theorem pos_imp_exists_pnat_mul_self_geq {x y : ℝ}
+theorem exists_pnat_mul_self_geq_of_pos {x y : ℝ}
   : x > 0 → ∃ n : ℕ+, n * x > y := by
   intro hx
   let ⟨n, p⟩ := exists_pnat_geq_self (y / x)
   have p' := mul_lt_mul_of_pos_right p hx
   rw [div_mul, div_self (show x ≠ 0 from LT.lt.ne' hx), div_one] at p'
   exact ⟨n, p'⟩
+
+/--
+Theorem I.31
+
+If three real numbers `a`, `x`, and `y` satisfy the inequalities
+`a ≤ x ≤ a + y / n` for every integer `n ≥ 1`, then `x = a`.
+-/
+theorem forall_pnat_leq_self_leq_frac_iff_eq {x y a : ℝ}
+  : (∀ n : ℕ+, a ≤ x ∧ x ≤ a + (y / n)) → x = a := by
+  intro h
+  match @trichotomous ℝ LT.lt _ x a with
+  | -- x = a
+    Or.inr (Or.inl r) => exact r
+  | -- x < a
+    Or.inl r => 
+    have z : a < a := lt_of_le_of_lt (h 1).left r
+    simp at z
+  | -- x > a
+    Or.inr (Or.inr r) =>
+    let ⟨c, hc⟩ := exists_pos_add_of_lt' r
+    let ⟨n, hn⟩ := @exists_pnat_mul_self_geq_of_pos c y hc.left
+    have hn := mul_lt_mul_of_pos_left hn $
+      have hp : 0 < (↑↑n : ℝ) := by simp
+      show 0 < ((↑↑n)⁻¹ : ℝ) from inv_pos.mpr hp
+    rw [inv_mul_eq_div, ←mul_assoc, mul_comm (n⁻¹ : ℝ), ←one_div, mul_one_div] at hn
+    simp at hn
+    have hn := add_lt_add_left hn a
+    have := calc a + y / ↑↑n
+      _ < a + c := hn
+      _ = x := hc.right
+      _ ≤ a + y / ↑↑n := (h n).right
+    simp at this
 
 end Real

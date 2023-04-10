@@ -1,37 +1,44 @@
 \documentclass{article}
-\usepackage{amsfonts, amsthm}
-\usepackage{hyperref}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{custominner}{Theorem}
-\newenvironment{custom}[1]{%
-  \renewcommand\thecustominner{#1}%
-  \custominner
-}{\endcustominner}
+\input{../../common/preamble}
 
 \begin{document}
 
-\begin{custom}{1.29}
+\begin{xtheorem}{1.29}
 
 For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
-\end{custom}
+\end{xtheorem}
 
 \begin{proof}
 
-\href{Chapter_I_3_10.lean}{Apostol.Chapter\_I\_3\_10.Real.exists\_pnat\_geq\_self}
+\href{Chapter_I_3_10.lean}{Apostol.Chapter_I_3_10.Real.exists_pnat_geq_self}
 
 \end{proof}
 
-\begin{custom}{1.30}[Archimedean Property of the Reals]
+\begin{xtheorem}{1.30}[Archimedean Property of the Reals]
 
 If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive integer $n$ such that $nx > y$.
 
-\end{custom}
+\end{xtheorem}
 
 \begin{proof}
 
-\href{Chapter_I_3_10.lean}{Apostol.Chapter\_I\_3\_10.Real.pos\_imp\_exists\_pnat\_mul\_self\_geq}
+\href{Chapter_I_3_10.lean}{Apostol.Chapter_I_3_10.Real.exists_pnat_mul_self_geq_of_pos}
+
+\end{proof}
+
+\begin{xtheorem}{1.31}
+
+If three real numbers $a$, $x$, and $y$ satisfy the inequalities
+$$a \leq x \leq a + \frac{y}{n}$$
+for every integer $n \geq 1$, then $x = a$.
+
+\end{xtheorem}
+
+\begin{proof}
+
+\href{Chapter_I_3_10.lean}{Apostol.Chapter_I_3_10.Real.forall_pnat_leq_self_leq_frac_iff_eq}
 
 \end{proof}
 
