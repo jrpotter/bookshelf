@@ -74,9 +74,50 @@
   \  % Force space prior to *Proof.*
 
   \begin{enumerate}[(a)]
-    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.arb_close_to_sup}
-    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.arb_close_to_inf}
+    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.sup_imp_exists_gt_sup_sub_delta}
+    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.inf_imp_exists_lt_inf_add_delta}
   \end{enumerate}
+
+\end{proof}
+
+\begin{xtheorem}{I.33}[Additive Property]
+
+  Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
+  $$C = \{a + b : a \in A, b \in B\}.$$
+
+  \begin{enumerate}[(a)]
+    \item If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
+      $$\sup{C} = \sup{A} + \sup{B}.$$
+    \item If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
+      $$\inf{C} = \inf{A} + \inf{B}.$$
+  \end{enumerate}
+
+\end{xtheorem}
+
+\begin{proof}
+
+  \  % Force space prior to *Proof.*
+
+  \begin{enumerate}[(a)]
+    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.sup_minkowski_sum_eq_sup_add_sup}
+    \item \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.inf_minkowski_sum_eq_inf_add_inf}
+  \end{enumerate}
+
+\end{proof}
+
+\begin{xtheorem}{I.34}
+
+  Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that
+  $$s \leq t$$
+  for every $s$ in $S$ and every $t$ in $T$. Then $S$ has a supremum, and $T$
+  has an infimum, and they satisfy the inequality
+  $$\sup{S} \leq \inf{T}.$$
+
+\end{xtheorem}
+
+\begin{proof}
+
+  \href{Chapter_I_3.lean}{Apostol.Chapter_I_3.Real.forall_mem_le_forall_mem_imp_sup_le_inf}
 
 \end{proof}
 

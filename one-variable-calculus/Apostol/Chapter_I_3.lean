@@ -1,4 +1,6 @@
+import Common.Data.Real.Set
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Pointwise.Basic
 import Mathlib.Tactic.LibrarySearch
 
@@ -6,6 +8,10 @@ import Mathlib.Tactic.LibrarySearch
 #check Real.exists_isLUB
 
 namespace Real
+
+-- ========================================
+-- The least-upper-bound axiom (completeness axiom)
+-- ========================================
 
 /--
 A property holds for the negation of elements in set `S` if and only if it also
@@ -139,6 +145,10 @@ lemma leq_nat_abs_ceil_self (x : ℝ) : x ≤ Int.natAbs ⌈x⌉ := by
       _ ≤ 0 := le_of_lt (lt_of_not_le h)
       _ ≤ ↑(Int.natAbs ⌈x⌉) := GE.ge.le h'    
 
+-- ========================================
+-- The Archimedean property of the real-number system
+-- ========================================
+
 /--
 Theorem I.29
 
@@ -200,14 +210,75 @@ theorem forall_pnat_leq_self_leq_frac_imp_eq {x y a : ℝ}
       _ ≤ a + y / ↑↑n := (h n).right
     simp at this
 
+-- ========================================
+-- Fundamental properties of the supremum and infimum
+-- ========================================
+
+/--
+Every member of a set `S` is less than or equal to some value `ub` if and only
+if `ub` is an upper bound of `S`. 
+-/
+lemma mem_upper_bounds_iff_forall_le {S : Set ℝ}
+  : ub ∈ upperBounds S ↔ (∀ x, x ∈ S → x ≤ ub) := by
+  apply Iff.intro
+  · intro h _ hx
+    exact (h hx)
+  · exact id
+
+/--
+If a set `S` has a least upper bound, it follows every member of `S` is less
+than or equal to that value.
+-/
+lemma forall_lub_imp_forall_le {S : Set ℝ}
+  : IsLUB S ub → (∀ x, x ∈ S → x ≤ ub) := by
+  intro h
+  rw [← mem_upper_bounds_iff_forall_le]
+  exact h.left
+
 /--
 Theorem I.32a
 
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
 has a supremum, then for some `x` in `S` we have `x > sup S - h`.
 -/
-theorem arb_close_to_sup (S : Set ℝ) (s h : ℝ) (hp : h > 0)
-  : IsLUB S s → ∃ x : S, x > s - h := sorry
+theorem sup_imp_exists_gt_sup_sub_delta (S : Set ℝ) (s h : ℝ) (hp : h > 0)
+  : IsLUB S s → ∃ x ∈ S, x > s - h := by
+  intro hb
+  -- Suppose all members of our set was less than `s - h`. Then `s` couldn't be
+  -- the *least* upper bound.
+  by_contra nb
+  suffices s - h ∈ upperBounds S by
+    have h' : h < h := calc h
+      _ ≤ 0 := (le_sub_self_iff s).mp (hb.right this)
+      _ < h := hp
+    simp at h'
+  rw [not_exists] at nb
+  have nb' : ∀ x ∈ S, x ≤ s - h := by
+    intro x hx
+    exact le_of_not_gt (not_and.mp (nb x) hx)
+  rw [← mem_upper_bounds_iff_forall_le] at nb'
+  exact nb'
+
+/--
+Every member of a set `S` is greater than or equal to some value `lb` if and
+only if `lb` is a lower bound of `S`. 
+-/
+lemma mem_lower_bounds_iff_forall_ge {S : Set ℝ}
+  : lb ∈ lowerBounds S ↔ (∀ x ∈ S, x ≥ lb) := by
+  apply Iff.intro
+  · intro h _ hx
+    exact (h hx)
+  · exact id
+
+/--
+If a set `S` has a greatest lower bound, it follows every member of `S` is
+greater than or equal to that value.
+-/
+lemma forall_glb_imp_forall_ge {S : Set ℝ}
+  : IsGLB S lb → (∀ x ∈ S, x ≥ lb) := by
+  intro h
+  rw [← mem_lower_bounds_iff_forall_ge]
+  exact h.left
 
 /--
 Theorem I.32b
@@ -215,7 +286,97 @@ Theorem I.32b
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
 has an infimum, then for some `x` in `S` we have `x < inf S + h`.
 -/
-theorem arb_close_to_inf (S : Set ℝ) (s h : ℝ) (hp : h > 0)
-  : IsGLB S s → ∃ x : S, x < s + h := sorry
+theorem inf_imp_exists_lt_inf_add_delta (S : Set ℝ) (s h : ℝ) (hp : h > 0)
+  : IsGLB S s → ∃ x ∈ S, x < s + h := by
+  intro hb
+  -- Suppose all members of our set was greater than `s + h`. Then `s` couldn't
+  -- be the *greatest* lower bound.
+  by_contra nb
+  suffices s + h ∈ lowerBounds S by
+    have h' : h < h := calc h
+      _ ≤ 0 := (add_le_iff_nonpos_right s).mp (hb.right this)
+      _ < h := hp
+    simp at h'
+  rw [not_exists] at nb
+  have nb' : ∀ x ∈ S, x ≥ s + h := by
+    intro x hx
+    exact le_of_not_gt (not_and.mp (nb x) hx)
+  rw [← mem_lower_bounds_iff_forall_ge] at nb'
+  exact nb'
+
+/--
+Theorem I.33a (Additive Property)
+
+Given nonempty subsets `A` and `B` of `ℝ`, let `C` denote the set
+`C = {a + b : a ∈ A, b ∈ B}`. If each of `A` and `B` has a supremum, then `C`
+has a supremum, and `sup C = sup A + sup B`.
+-/
+theorem sup_minkowski_sum_eq_sup_add_sup (A B : Set ℝ) (a b : ℝ)
+  (hA : A.Nonempty) (hB : B.Nonempty)
+  (ha : IsLUB A a) (hb : IsLUB B b)
+  : IsLUB (Real.minkowski_sum A B) (a + b) := by
+  let C := Real.minkowski_sum A B
+  -- First we show `a + b` is an upper bound of `C`.
+  have hub : a + b ∈ upperBounds C := by
+    rw [mem_upper_bounds_iff_forall_le]
+    intro x hx
+    have ⟨a', ⟨ha', ⟨b', ⟨hb', hxab⟩⟩⟩⟩: ∃ a ∈ A, ∃ b ∈ B, x = a + b := hx
+    have hs₁ : a' ≤ a := (forall_lub_imp_forall_le ha) a' ha'
+    have hs₂ : b' ≤ b := (forall_lub_imp_forall_le hb) b' hb'
+    exact calc x
+      _ = a' + b' := hxab
+      _ ≤ a + b := add_le_add hs₁ hs₂
+  -- Now we show `a + b` is the *least* upper bound of `C`. If it wasn't, then
+  -- either `¬IsLUB A a` or `¬IsLUB B b`, a contradiction.
+  by_contra nub
+  have h : ¬IsLUB A a ∨ ¬IsLUB B b := by
+    sorry
+  cases h with
+  | inl na => exact absurd ha na
+  | inr nb => exact absurd hb nb
+
+/--
+Theorem I.33b (Additive Property)
+
+Given nonempty subsets `A` and `B` of `ℝ`, let `C` denote the set
+`C = {a + b : a ∈ A, b ∈ B}`. If each of `A` and `B` has an infimum, then `C`
+has an infimum, and `inf C = inf A + inf B`.
+-/
+theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
+  (hA : A.Nonempty) (hB : B.Nonempty)
+  (ha : IsGLB A a) (hb : IsGLB B b)
+  : IsGLB (Real.minkowski_sum A B) (a + b) := by
+  let C := Real.minkowski_sum A B
+  -- First we show `a + b` is a lower bound of `C`.
+  have hub : a + b ∈ lowerBounds C := by
+    rw [mem_lower_bounds_iff_forall_ge]
+    intro x hx
+    have ⟨a', ⟨ha', ⟨b', ⟨hb', hxab⟩⟩⟩⟩: ∃ a ∈ A, ∃ b ∈ B, x = a + b := hx
+    have hs₁ : a' ≥ a := (forall_glb_imp_forall_ge ha) a' ha'
+    have hs₂ : b' ≥ b := (forall_glb_imp_forall_ge hb) b' hb'
+    exact calc x
+      _ = a' + b' := hxab
+      _ ≥ a + b := add_le_add hs₁ hs₂
+  -- Now we show `a + b` is the *greatest* lower bound of `C`. If it wasn't,
+  -- then either `¬IsGLB A a` or `¬IsGLB B b`, a contradiction.
+  by_contra nub
+  have h : ¬IsGLB A a ∨ ¬IsGLB B b := by
+    sorry
+  cases h with
+  | inl na => exact absurd ha na
+  | inr nb => exact absurd hb nb
+
+/--
+Theorem I.34
+
+Given two nonempty subsets `S` and `T` of `ℝ` such that `s ≤ t` for every `s` in
+`S` and every `t` in `T`. Then `S` has a supremum, and `T` has an infimum, and
+they satisfy the inequality `sup S ≤ inf T`.
+-/
+theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
+  (hS : S.Nonempty) (hT : T.Nonempty)
+  (p : ∀ s ∈ S, ∀ t ∈ T, s ≤ t)
+  : ∃ (s : ℝ), IsLUB S s ∧ ∃ (t : ℝ), IsGLB T t ∧ s ≤ t := by
+  sorry
 
 end Real
