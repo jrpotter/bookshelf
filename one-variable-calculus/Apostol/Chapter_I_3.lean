@@ -188,27 +188,61 @@ theorem forall_pnat_leq_self_leq_frac_imp_eq {x y a : ℝ}
   : (∀ n : ℕ+, a ≤ x ∧ x ≤ a + (y / n)) → x = a := by
   intro h
   match @trichotomous ℝ LT.lt _ x a with
-  | -- x = a
-    Or.inr (Or.inl r) => exact r
-  | -- x < a
-    Or.inl r => 
+  | Or.inr (Or.inl r) =>  -- x = a
+    exact r
+  | Or.inl r =>  -- x < a
     have z : a < a := lt_of_le_of_lt (h 1).left r
     simp at z
-  | -- x > a
-    Or.inr (Or.inr r) =>
+  | Or.inr (Or.inr r) =>  -- x > a
     let ⟨c, hc⟩ := exists_pos_add_of_lt' r
     let ⟨n, hn⟩ := @exists_pnat_mul_self_geq_of_pos c y hc.left
     have hn := mul_lt_mul_of_pos_left hn $
       have hp : 0 < (↑↑n : ℝ) := by simp
       show 0 < ((↑↑n)⁻¹ : ℝ) from inv_pos.mpr hp
-    rw [inv_mul_eq_div, ←mul_assoc, mul_comm (n⁻¹ : ℝ), ←one_div, mul_one_div] at hn
+    rw [
+      inv_mul_eq_div,
+      ← mul_assoc, mul_comm (n⁻¹ : ℝ),
+      ← one_div,
+      mul_one_div
+    ] at hn
     simp at hn
-    have hn := add_lt_add_left hn a
     have := calc a + y / ↑↑n
-      _ < a + c := hn
+      _ < a + c := add_lt_add_left hn a
       _ = x := hc.right
       _ ≤ a + y / ↑↑n := (h n).right
     simp at this
+
+/--
+If three real numbers `a`, `x`, and `y` satisfy the inequalities
+`a - y / n ≤ x ≤ a` for every integer `n ≥ 1`, then `x = a`.
+-/
+theorem forall_pnat_frac_leq_self_leq_imp_eq {x y a : ℝ}
+  : (∀ n : ℕ+, a - (y / n) ≤ x ∧ x ≤ a) → x = a := by
+  intro h
+  match @trichotomous ℝ LT.lt _ x a with
+  | Or.inr (Or.inl r) =>  -- x = a
+    exact r
+  | Or.inl r =>  -- x < a
+    let ⟨c, hc⟩ := exists_pos_add_of_lt' r
+    let ⟨n, hn⟩ := @exists_pnat_mul_self_geq_of_pos c y hc.left
+    have hn := mul_lt_mul_of_pos_left hn $
+      have hp : 0 < (↑↑n : ℝ) := by simp
+      show 0 < ((↑↑n)⁻¹ : ℝ) from inv_pos.mpr hp
+    rw [
+      inv_mul_eq_div,
+      ← mul_assoc, mul_comm (n⁻¹ : ℝ),
+      ← one_div,
+      mul_one_div
+    ] at hn
+    simp at hn
+    have := calc a - y / ↑↑n
+      _ > a - c := sub_lt_sub_left hn a
+      _ = x := sub_eq_of_eq_add (Eq.symm hc.right)
+      _ ≥ a - y / ↑↑n := (h n).left
+    simp at this
+  | Or.inr (Or.inr r) =>  -- x > a
+    have z : x < x := lt_of_le_of_lt (h 1).right r
+    simp at z
 
 -- ========================================
 -- Fundamental properties of the supremum and infimum
@@ -219,7 +253,7 @@ Every member of a set `S` is less than or equal to some value `ub` if and only
 if `ub` is an upper bound of `S`. 
 -/
 lemma mem_upper_bounds_iff_forall_le {S : Set ℝ}
-  : ub ∈ upperBounds S ↔ (∀ x, x ∈ S → x ≤ ub) := by
+  : ub ∈ upperBounds S ↔ ∀ x ∈ S, x ≤ ub := by
   apply Iff.intro
   · intro h _ hx
     exact (h hx)
@@ -230,7 +264,7 @@ If a set `S` has a least upper bound, it follows every member of `S` is less
 than or equal to that value.
 -/
 lemma forall_lub_imp_forall_le {S : Set ℝ}
-  : IsLUB S ub → (∀ x, x ∈ S → x ≤ ub) := by
+  : IsLUB S ub → ∀ x ∈ S, x ≤ ub := by
   intro h
   rw [← mem_upper_bounds_iff_forall_le]
   exact h.left
@@ -241,7 +275,7 @@ Theorem I.32a
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
 has a supremum, then for some `x` in `S` we have `x > sup S - h`.
 -/
-theorem sup_imp_exists_gt_sup_sub_delta (S : Set ℝ) (s h : ℝ) (hp : h > 0)
+theorem sup_imp_exists_gt_sup_sub_delta {S : Set ℝ} {s h : ℝ} (hp : h > 0)
   : IsLUB S s → ∃ x ∈ S, x > s - h := by
   intro hb
   -- Suppose all members of our set was less than `s - h`. Then `s` couldn't be
@@ -256,15 +290,14 @@ theorem sup_imp_exists_gt_sup_sub_delta (S : Set ℝ) (s h : ℝ) (hp : h > 0)
   have nb' : ∀ x ∈ S, x ≤ s - h := by
     intro x hx
     exact le_of_not_gt (not_and.mp (nb x) hx)
-  rw [← mem_upper_bounds_iff_forall_le] at nb'
-  exact nb'
+  rwa [← mem_upper_bounds_iff_forall_le] at nb'
 
 /--
 Every member of a set `S` is greater than or equal to some value `lb` if and
 only if `lb` is a lower bound of `S`. 
 -/
 lemma mem_lower_bounds_iff_forall_ge {S : Set ℝ}
-  : lb ∈ lowerBounds S ↔ (∀ x ∈ S, x ≥ lb) := by
+  : lb ∈ lowerBounds S ↔ ∀ x ∈ S, x ≥ lb := by
   apply Iff.intro
   · intro h _ hx
     exact (h hx)
@@ -275,7 +308,7 @@ If a set `S` has a greatest lower bound, it follows every member of `S` is
 greater than or equal to that value.
 -/
 lemma forall_glb_imp_forall_ge {S : Set ℝ}
-  : IsGLB S lb → (∀ x ∈ S, x ≥ lb) := by
+  : IsGLB S lb → ∀ x ∈ S, x ≥ lb := by
   intro h
   rw [← mem_lower_bounds_iff_forall_ge]
   exact h.left
@@ -286,7 +319,7 @@ Theorem I.32b
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
 has an infimum, then for some `x` in `S` we have `x < inf S + h`.
 -/
-theorem inf_imp_exists_lt_inf_add_delta (S : Set ℝ) (s h : ℝ) (hp : h > 0)
+theorem inf_imp_exists_lt_inf_add_delta {S : Set ℝ} {s h : ℝ} (hp : h > 0)
   : IsGLB S s → ∃ x ∈ S, x < s + h := by
   intro hb
   -- Suppose all members of our set was greater than `s + h`. Then `s` couldn't
@@ -301,8 +334,7 @@ theorem inf_imp_exists_lt_inf_add_delta (S : Set ℝ) (s h : ℝ) (hp : h > 0)
   have nb' : ∀ x ∈ S, x ≥ s + h := by
     intro x hx
     exact le_of_not_gt (not_and.mp (nb x) hx)
-  rw [← mem_lower_bounds_iff_forall_ge] at nb'
-  exact nb'
+  rwa [← mem_lower_bounds_iff_forall_ge] at nb'
 
 /--
 Theorem I.33a (Additive Property)
@@ -326,14 +358,34 @@ theorem sup_minkowski_sum_eq_sup_add_sup (A B : Set ℝ) (a b : ℝ)
     exact calc x
       _ = a' + b' := hxab
       _ ≤ a + b := add_le_add hs₁ hs₂
-  -- Now we show `a + b` is the *least* upper bound of `C`. If it wasn't, then
-  -- either `¬IsLUB A a` or `¬IsLUB B b`, a contradiction.
-  by_contra nub
-  have h : ¬IsLUB A a ∨ ¬IsLUB B b := by
-    sorry
-  cases h with
-  | inl na => exact absurd ha na
-  | inr nb => exact absurd hb nb
+  -- Now we show `a + b` is the *least* upper bound of `C`. We know a least
+  -- upper bound `c` exists; show that `c = a + b`.
+  have ⟨c, hc⟩ := exists_isLUB C
+    (Real.nonempty_minkowski_sum_iff_nonempty_add_nonempty.mpr ⟨hA, hB⟩)
+    ⟨a + b, hub⟩
+  suffices (∀ n : ℕ+, c ≤ a + b ∧ a + b ≤ c + (1 / n)) by
+    rwa [← forall_pnat_leq_self_leq_frac_imp_eq this] at hc
+  intro n
+  apply And.intro
+  · exact hc.right hub
+  · have hd : 1 / (2 * n) > (0 : ℝ) := by norm_num
+    have ⟨a', ha'⟩ := sup_imp_exists_gt_sup_sub_delta hd ha
+    have ⟨b', hb'⟩ := sup_imp_exists_gt_sup_sub_delta hd hb
+    have hab' : a + b < a' + b' + 1 / n := by
+      have ha'' := add_lt_add_right ha'.right (1 / (2 * ↑↑n))
+      have hb'' := add_lt_add_right hb'.right (1 / (2 * ↑↑n))
+      rw [sub_add_cancel] at ha'' hb''
+      have hr := add_lt_add ha'' hb''
+      ring_nf at hr
+      ring_nf
+      rwa [add_assoc, add_comm b' (↑↑n)⁻¹, ← add_assoc]
+    have hc' : a' + b' ≤ c := by
+      refine forall_lub_imp_forall_le hc (a' + b') ?_
+      show ∃ a ∈ A, ∃ b ∈ B, a' + b' = a + b
+      exact ⟨a', ⟨ha'.left, ⟨b', ⟨hb'.left, rfl⟩⟩⟩⟩
+    calc a + b
+      _ ≤ a' + b' + 1 / n := le_of_lt hab'
+      _ ≤ c + 1 / n := add_le_add_right hc' (1 / n)
 
 /--
 Theorem I.33b (Additive Property)
@@ -348,7 +400,7 @@ theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
   : IsGLB (Real.minkowski_sum A B) (a + b) := by
   let C := Real.minkowski_sum A B
   -- First we show `a + b` is a lower bound of `C`.
-  have hub : a + b ∈ lowerBounds C := by
+  have hlb : a + b ∈ lowerBounds C := by
     rw [mem_lower_bounds_iff_forall_ge]
     intro x hx
     have ⟨a', ⟨ha', ⟨b', ⟨hb', hxab⟩⟩⟩⟩: ∃ a ∈ A, ∃ b ∈ B, x = a + b := hx
@@ -357,14 +409,17 @@ theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
     exact calc x
       _ = a' + b' := hxab
       _ ≥ a + b := add_le_add hs₁ hs₂
-  -- Now we show `a + b` is the *greatest* lower bound of `C`. If it wasn't,
-  -- then either `¬IsGLB A a` or `¬IsGLB B b`, a contradiction.
-  by_contra nub
-  have h : ¬IsGLB A a ∨ ¬IsGLB B b := by
-    sorry
-  cases h with
-  | inl na => exact absurd ha na
-  | inr nb => exact absurd hb nb
+  -- Now we show `a + b` is the *greatest* lower bound of `C`. We know a
+  -- greatest lower bound `c` exists; show that `c = a + b`.
+  have ⟨c, hc⟩ := exists_isGLB C
+    (Real.nonempty_minkowski_sum_iff_nonempty_add_nonempty.mpr ⟨hA, hB⟩)
+    ⟨a + b, hlb⟩
+  suffices (∀ n : ℕ+, c - (1 / n) ≤ a + b ∧ a + b ≤ c) by
+    rwa [← forall_pnat_frac_leq_self_leq_imp_eq this] at hc
+  intro n
+  apply And.intro
+  · sorry
+  · exact hc.right hlb
 
 /--
 Theorem I.34
