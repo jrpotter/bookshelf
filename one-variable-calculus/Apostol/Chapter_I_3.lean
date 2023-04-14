@@ -418,7 +418,24 @@ theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
     rwa [← forall_pnat_frac_leq_self_leq_imp_eq this] at hc
   intro n
   apply And.intro
-  · sorry
+  · have hd : 1 / (2 * n) > (0 : ℝ) := by norm_num
+    have ⟨a', ha'⟩ := inf_imp_exists_lt_inf_add_delta hd ha
+    have ⟨b', hb'⟩ := inf_imp_exists_lt_inf_add_delta hd hb
+    have hab' : a' + b' - 1 / n < a + b := by
+      have ha'' := sub_lt_sub_right ha'.right (1 / (2 * ↑↑n))
+      have hb'' := sub_lt_sub_right hb'.right (1 / (2 * ↑↑n))
+      rw [add_sub_cancel] at ha'' hb''
+      have hr := add_lt_add ha'' hb''
+      ring_nf at hr
+      ring_nf
+      rwa [← add_sub_assoc, add_sub_right_comm]
+    have hc' : c ≤ a' + b' := by
+      refine forall_glb_imp_forall_ge hc (a' + b') ?_
+      show ∃ a ∈ A, ∃ b ∈ B, a' + b' = a + b
+      exact ⟨a', ⟨ha'.left, ⟨b', ⟨hb'.left, rfl⟩⟩⟩⟩
+    calc c - 1 / n
+      _ ≤ a' + b' - 1 / n := sub_le_sub_right hc' (1 / n)
+      _ ≤ a + b := le_of_lt hab'
   · exact hc.right hlb
 
 /--
@@ -432,6 +449,17 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
   (hS : S.Nonempty) (hT : T.Nonempty)
   (p : ∀ s ∈ S, ∀ t ∈ T, s ≤ t)
   : ∃ (s : ℝ), IsLUB S s ∧ ∃ (t : ℝ), IsGLB T t ∧ s ≤ t := by
+  let ⟨s, hs⟩ := hS
+  let ⟨t, ht⟩ := hT
+  have ps : t ∈ upperBounds S := by
+    intro x hx
+    exact p x hx t ht
+  have pt : s ∈ lowerBounds T  := by
+    intro x hx
+    exact p s hs x hx
+  have ⟨s', hs'⟩ := Real.exists_isLUB S hS ⟨t, ps⟩
+  have ⟨t', ht'⟩ := Real.exists_isGLB T hT ⟨s, pt⟩
+  refine ⟨s', ⟨hs', ⟨t', ⟨ht', ?_⟩⟩⟩⟩
   sorry
 
 end Real
