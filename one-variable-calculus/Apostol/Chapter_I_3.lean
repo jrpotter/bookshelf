@@ -1,8 +1,4 @@
 import Common.Data.Real.Set
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Pointwise.Basic
-import Mathlib.Tactic.LibrarySearch
 
 #check Archimedean
 #check Real.exists_isLUB
@@ -270,6 +266,14 @@ lemma forall_lub_imp_forall_le {S : Set ℝ}
   exact h.left
 
 /--
+Any member of the upper bounds of a set must be greater than or equal to the
+least member of that set.
+-/
+lemma mem_imp_ge_lub {x : ℝ} (h : IsLUB S s) : x ∈ upperBounds S → x ≥ s := by
+  intro hx
+  exact h.right hx
+
+/--
 Theorem I.32a
 
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
@@ -312,6 +316,14 @@ lemma forall_glb_imp_forall_ge {S : Set ℝ}
   intro h
   rw [← mem_lower_bounds_iff_forall_ge]
   exact h.left
+
+/--
+Any member of the lower bounds of a set must be less than or equal to the
+greatest member of that set.
+-/
+lemma mem_imp_le_glb {x : ℝ} (h : IsGLB S s) : x ∈ lowerBounds S → x ≤ s := by
+  intro hx
+  exact h.right hx
 
 /--
 Theorem I.32b
@@ -449,6 +461,8 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
   (hS : S.Nonempty) (hT : T.Nonempty)
   (p : ∀ s ∈ S, ∀ t ∈ T, s ≤ t)
   : ∃ (s : ℝ), IsLUB S s ∧ ∃ (t : ℝ), IsGLB T t ∧ s ≤ t := by
+  -- Sshow a supremum of `S` and an infimum of `T` exists (since each set bounds
+  -- above and below the other, respectively).
   let ⟨s, hs⟩ := hS
   let ⟨t, ht⟩ := hT
   have ps : t ∈ upperBounds S := by
@@ -457,9 +471,30 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
   have pt : s ∈ lowerBounds T  := by
     intro x hx
     exact p s hs x hx
-  have ⟨s', hs'⟩ := Real.exists_isLUB S hS ⟨t, ps⟩
-  have ⟨t', ht'⟩ := Real.exists_isGLB T hT ⟨s, pt⟩
-  refine ⟨s', ⟨hs', ⟨t', ⟨ht', ?_⟩⟩⟩⟩
-  sorry
+  have ⟨S_lub, hS_lub⟩ := Real.exists_isLUB S hS ⟨t, ps⟩
+  have ⟨T_glb, hT_glb⟩ := Real.exists_isGLB T hT ⟨s, pt⟩
+  refine ⟨S_lub, ⟨hS_lub, ⟨T_glb, ⟨hT_glb, ?_⟩⟩⟩⟩
+  -- Assume `T_glb < S_lub`. Then `∃ c, T_glb + c < S_lub` which in turn implies
+  -- existence of some `x ∈ S` such that `T_glb < S_lub - c / 2 < x < S_lub`.
+  by_contra nr
+  rw [not_le] at nr
+  have ⟨c, hc⟩ := exists_pos_add_of_lt' nr
+  have c_div_two_gt_zero : c / 2 > 0 := by
+    have hr := div_lt_div_of_lt (show (0 : ℝ) < 2 by simp) hc.left
+    rwa [zero_div] at hr
+  have T_glb_lt_S_lub_sub_c_div_two : T_glb < S_lub - c / 2 := by
+    have hr := congrFun (congrArg HSub.hSub hc.right) (c / 2)
+    rw [add_sub_assoc, sub_half c] at hr
+    calc T_glb
+      _ < T_glb + c / 2 := (lt_add_iff_pos_right T_glb).mpr c_div_two_gt_zero
+      _ = S_lub - c / 2 := hr
+  -- Since `x ∈ S`, `p` implies `x ≤ t` for all `t ∈ T`. So `x ≤ T_glb`. But the
+  -- above implies `T_glb < x`.
+  have ⟨x, hx⟩ := sup_imp_exists_gt_sup_sub_delta c_div_two_gt_zero hS_lub
+  have : x < x := calc x
+    _ ≤ T_glb := mem_imp_le_glb hT_glb (p x hx.left)
+    _ < S_lub - c / 2 := T_glb_lt_S_lub_sub_c_div_two
+    _ < x := hx.right
+  simp at this
 
 end Real
