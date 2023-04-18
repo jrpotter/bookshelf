@@ -1,8 +1,17 @@
 import Mathlib.Data.Real.Sqrt
 
-notation "ℝ²" => ℝ × ℝ
+import Common.Real.Basic
 
 namespace Real
+
+/--
+The undirected angle at `p2` between the line segments to `p1` and `p3`.
+
+PORT: `geometry.euclidean.angle`
+-/
+axiom angle (p₁ p₂ p₃ : ℝ²) (h : p₁ ≠ p₂ ∧ p₂ ≠ p₃ ∧ p₃ ≠ p₁): ℝ
+
+notation "∠" => angle
 
 /--
 Determine the distance between two points in `ℝ²`.

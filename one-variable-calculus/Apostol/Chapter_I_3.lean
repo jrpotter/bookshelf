@@ -3,7 +3,7 @@ Chapter I 3
 
 A Set of Axioms for the Real-Number System
 -/
-import Common.Data.Real.Set
+import Common.Real.Set
 
 #check Archimedean
 #check Real.exists_isLUB
