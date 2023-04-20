@@ -1,5 +1,5 @@
-import Common.List.Basic
-import Common.Real.Set.Interval
+import Bookshelf.List.Basic
+import Bookshelf.Real.Set.Interval
 
 namespace Real
 

@@ -3,7 +3,7 @@ open Lake DSL
 
 package «mathematical-introduction-logic»
 
-require Common from "../common"
+require Bookshelf from "../shared"
 
 @[default_target]
 lean_lib «enderton»

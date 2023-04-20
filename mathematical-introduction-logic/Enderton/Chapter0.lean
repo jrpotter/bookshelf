@@ -4,15 +4,15 @@ Chapter 0
 Useful Facts About Sets
 -/
 
-import Common.Tuple
+import Bookshelf.Tuple
 
 /--
-The following describes a so-called "generic" tuple. Like in `Common.Tuple`, an
-`n`-tuple is defined recursively like so:
+The following describes a so-called "generic" tuple. Like in `Bookshelf.Tuple`,
+an `n`-tuple is defined recursively like so:
 
   `⟨x₁, ..., xₙ⟩ = ⟨⟨x₁, ..., xₙ₋₁⟩, xₙ⟩`
 
-Unlike `Common.Tuple`, a "generic" tuple bends the syntax above further. For
+Unlike `Bookshelf.Tuple`, a "generic" tuple bends the syntax above further. For
 example, both tuples above are equivalent to:
 
   `⟨⟨x₁, ..., xₘ⟩, xₘ₊₁, ..., xₙ⟩`
@@ -20,7 +20,7 @@ example, both tuples above are equivalent to:
 for some `1 ≤ m ≤ n`. This distinction is purely syntactic, but necessary to
 prove certain theorems found in [1] (e.g. `lemma_0a`).
 
-In general, prefer `Common.Tuple`.
+In general, prefer `Bookshelf.Tuple`.
 -/
 inductive XTuple : (α : Type u) → (size : Nat × Nat) → Type u where
   | nil : XTuple α (0, 0)

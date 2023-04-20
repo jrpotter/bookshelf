@@ -1,8 +1,8 @@
 import Mathlib.Data.Fin.Basic
 import Mathlib.Tactic.NormNum
 
-import Common.Real.Basic
-import Common.Real.Set.Partition
+import Bookshelf.Real.Basic
+import Bookshelf.Real.Set.Partition
 
 namespace Real.Function
 
