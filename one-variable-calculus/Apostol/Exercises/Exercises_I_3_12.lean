@@ -1,5 +1,5 @@
 /-
-I 3.12 Exercises
+Exercises I 3.12
 
 A Set of Axioms for the Real-Number System
 -/
