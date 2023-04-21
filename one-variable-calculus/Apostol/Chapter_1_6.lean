@@ -138,8 +138,7 @@ If there exists some `k` satisfying the description in the above `def`, then `Q`
 is measurable.
 -/
 axiom exhaustion_exists_unique_imp_measurable (Q : Set ℝ²)
-  : (∃ k : ℝ, forall_subset_between_step_imp_le_between_area k Q ∧
-      (∀ x : ℝ, forall_subset_between_step_imp_le_between_area x Q → x = k))
+  : (∃! k : ℝ, forall_subset_between_step_imp_le_between_area k Q)
   → Q ∈ 𝓜
 
 /--
@@ -152,6 +151,6 @@ axiom exhaustion_exists_unique_imp_area_eq (Q : Set ℝ²)
   : ∃ k : ℝ,
       (h : forall_subset_between_step_imp_le_between_area k Q ∧
         (∀ x : ℝ, forall_subset_between_step_imp_le_between_area x Q → x = k))
-  → area (exhaustion_exists_unique_imp_measurable Q ⟨k, h⟩) = k
+    → area (exhaustion_exists_unique_imp_measurable Q ⟨k, h⟩) = k
 
 end Real
