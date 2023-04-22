@@ -1,8 +1,8 @@
 # Lean
-*/build
-*/lake-packages
-*/_target
-*/leanpkg.path
+build
+lake-packages
+_target
+leanpkg.path
 
 # TeX
 *.aux
