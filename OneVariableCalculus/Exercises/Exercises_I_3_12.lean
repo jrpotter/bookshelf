@@ -10,7 +10,7 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.Tactic.LibrarySearch
 
 import Bookshelf.Real.Rational
-import OneVariableCalculus.Apostol.Chapters.Chapter_I_3
+import OneVariableCalculus.Chapters.Chapter_I_3
 
 -- ========================================
 -- Exercise 1

@@ -1,1 +1,0 @@
-import OneVariableCalculus.Apostol.Exercises.Exercises_I_3_12

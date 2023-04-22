@@ -2,7 +2,7 @@ import Mathlib.Data.Fin.Basic
 import Mathlib.Tactic.NormNum
 
 import Bookshelf.Real.Basic
-import OneVariableCalculus.Apostol.Real.Set.Partition
+import OneVariableCalculus.Real.Set.Partition
 
 namespace Real.Function
 

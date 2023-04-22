@@ -3,8 +3,8 @@ Chapter 1.6
 
 The concept of area as a set function
 -/
-import OneVariableCalculus.Apostol.Real.Function.Step
-import OneVariableCalculus.Apostol.Real.Geometry.Rectangle
+import OneVariableCalculus.Real.Function.Step
+import OneVariableCalculus.Real.Geometry.Rectangle
 
 namespace Real.Geometry.Area
 

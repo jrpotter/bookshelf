@@ -1,1 +1,6 @@
-import TheoremProvingInLean.Avigad
+import TheoremProvingInLean.Chapter2
+import TheoremProvingInLean.Chapter3
+import TheoremProvingInLean.Chapter4
+import TheoremProvingInLean.Chapter5
+import TheoremProvingInLean.Chapter7
+import TheoremProvingInLean.Chapter8

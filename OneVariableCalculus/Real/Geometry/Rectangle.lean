@@ -1,4 +1,4 @@
-import OneVariableCalculus.Apostol.Real.Geometry.Basic
+import OneVariableCalculus.Real.Geometry.Basic
 
 namespace Real
 

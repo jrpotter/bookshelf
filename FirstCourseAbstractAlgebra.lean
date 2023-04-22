@@ -1,1 +1,1 @@
-import FirstCourseAbstractAlgebra.Fraleigh
+import FirstCourseAbstractAlgebra.Chapter1
