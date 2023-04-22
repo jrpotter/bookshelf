@@ -9,7 +9,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.Real.Sqrt
 import Mathlib.Tactic.LibrarySearch
 
-import Apostol.Chapter_I_3
+import Apostol.Chapters.Chapter_I_3
 import Bookshelf.Real.Rational
 
 -- ========================================

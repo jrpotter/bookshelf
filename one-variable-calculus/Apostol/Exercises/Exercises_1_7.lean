@@ -60,7 +60,7 @@ Exercises 1.7
 -- Prove that a triangle whose vertices are lattice points cannot be
 -- equilateral.
 --
--- [Hint: Assume there is such a triangle and ocmpute its area in two ways,
+-- [Hint: Assume there is such a triangle and compute its area in two ways,
 -- using exercises 2 and 4.]
 -- ----------------------------------------
 

@@ -5,13 +5,17 @@ import Bookshelf.Real.Basic
 namespace Real
 
 /--
-The undirected angle at `p2` between the line segments to `p1` and `p3`.
+The undirected angle at `p₂` between the line segments to `p₁` and `p₃`. If
+either of those points equals `p₂`, this is `π / 2`.
 
 PORT: `geometry.euclidean.angle`
 -/
-axiom angle (p₁ p₂ p₃ : ℝ²) (h : p₁ ≠ p₂ ∧ p₂ ≠ p₃ ∧ p₃ ≠ p₁): ℝ
+axiom angle (p₁ p₂ p₃ : ℝ²) : ℝ
 
-notation "∠" => angle
+noncomputable def port_geometry_euclidean_angle (p₁ p₂ p₃ : ℝ²) :=
+  if p₁ = p₂ ∨ p₂ = p₃ then π / 2 else angle p₁ p₂ p₃
+
+notation "∠" => port_geometry_euclidean_angle
 
 /--
 Determine the distance between two points in `ℝ²`.

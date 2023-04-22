@@ -3,10 +3,10 @@ Chapter 1.6
 
 The concept of area as a set function
 -/
-import Bookshelf.Real.Function.Step
-import Bookshelf.Real.Geometry.Rectangle
+import Apostol.Real.Function.Step
+import Apostol.Real.Geometry.Rectangle
 
-namespace Real
+namespace Real.Geometry.Area
 
 /--
 All *measurable sets*, i.e. sets in the plane to which an area can be assigned.
@@ -153,4 +153,4 @@ axiom exhaustion_exists_unique_imp_area_eq (Q : Set ℝ²)
         (∀ x : ℝ, forall_subset_between_step_imp_le_between_area x Q → x = k))
     → area (exhaustion_exists_unique_imp_measurable Q ⟨k, h⟩) = k
 
-end Real
+end Real.Geometry.Area
