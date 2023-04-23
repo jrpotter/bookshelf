@@ -1,6 +1,11 @@
 /-
 Exercises 1.7
 -/
+import OneVariableCalculus.Real.Geometry.Area
+import OneVariableCalculus.Real.Geometry.Rectangle
+
+open Real
+open Real.Geometry.Area
 
 -- ========================================
 -- The properties of area in this set of exercises are to be deduced from the
@@ -16,7 +21,20 @@ Exercises 1.7
 -- (c) The union of a finite collection of line segments in a plane.
 -- ----------------------------------------
 
--- # TODO
+example (p : Point)
+  : p.set_def ∈ 𝓜
+  ∧ ((h : p.set_def ∈ 𝓜) → area h = 0) :=
+  sorry
+
+example (S : Set Point) (hf : Set.Finite S)
+  : (⋃ p ∈ S, p.set_def) ∈ 𝓜
+  ∧ ((h : (⋃ p ∈ S, p.set_def) ∈ 𝓜) → area h = 0) :=
+  sorry
+
+example (S : Set LineSegment) (hf : Set.Finite S)
+  : (⋃ s ∈ S, s.set_def) ∈ 𝓜
+  ∧ ((h : (⋃ s ∈ S, s.set_def) ∈ 𝓜) → area h = 0) :=
+  sorry
 
 -- ----------------------------------------
 -- Exercise 2
