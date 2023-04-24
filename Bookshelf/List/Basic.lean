@@ -28,4 +28,18 @@ def pairwise (xs : List α) (f : α → α → β) : List β :=
   | none => []
   | some ys => zipWith f xs ys
 
+/--
+If `x` is a member of the pairwise'd list, there must exist two (adjacent)
+elements of the list, say `x₁` and `x₂`, such that `x = f x₁ x₂`.
+-/
+theorem mem_pairwise_imp_exists {xs : List α} (h : x ∈ xs.pairwise f)
+  : ∃ x₁ x₂, x₁ ∈ xs ∧ x₂ ∈ xs ∧ x = f x₁ x₂ := by
+  unfold pairwise at h
+  cases h' : tail? xs with
+  | none => rw [h'] at h; cases h
+  | some ys =>
+    rw [h'] at h
+    simp only at h
+    sorry
+
 end List

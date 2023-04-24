@@ -102,9 +102,16 @@ abbrev LineSegment := Subtype (fun r : Rectangle =>
 
 namespace LineSegment
 
+/--
+A `LineSegment` `s` is the set of points corresponding to the shortest line
+segment joining the two distinct points of `s`.
+-/
 def set_def (s : LineSegment) : Set ℝ² :=
   sorry
 
+/--
+Either the width or height of a `LineSegment` is zero.
+-/
 theorem width_or_height_eq_zero (s : LineSegment)
   : s.val.width = 0 ∨ s.val.height = 0 := by
   apply Or.elim s.property
