@@ -1,7 +1,5 @@
 import Mathlib.Data.Fintype.Basic
-import Mathlib.Logic.Basic
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.LibrarySearch
 
 namespace List
 

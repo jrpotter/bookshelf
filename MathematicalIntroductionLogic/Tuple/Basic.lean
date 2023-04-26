@@ -1,12 +1,24 @@
 import Mathlib.Tactic.Ring
 
 /--
-`n`-tuples are defined recursively as such:
+A representation of a tuple. In particular, `n`-tuples are defined recursively
+as follows:
 
   `⟨x₁, ..., xₙ⟩ = ⟨⟨x₁, ..., xₙ₋₁⟩, xₙ⟩`
 
 We allow empty tuples. For a `Tuple`-like type with opposite "endian", refer to
 `Mathlib.Data.Vector`.
+
+Keep in mind a tuple in Lean already exists but it differs in two ways:
+
+1. It is right associative. That is, `(x₁, x₂, x₃)` evaluates to
+   `(x₁, (x₂, x₃))` instead of `((x₁, x₂), x₃)`.
+2. Internally a tuple is syntactic sugar for nested `Prod` instances. Inputs
+   types of `Prod` are not required to be the same meaning non-homogeneous
+   collections are allowed.
+   
+In general, prefer using `Prod` over this `Tuple` definition. This exists solely
+for proving theorems outlined in Enderton's book.
 -/
 inductive Tuple : (α : Type u) → (size : Nat) → Type u where
   | nil : Tuple α 0
