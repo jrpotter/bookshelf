@@ -1,2 +1,2 @@
-import MathematicalIntroductionLogic.Chapter0
+import MathematicalIntroductionLogic.Enderton
 import MathematicalIntroductionLogic.Tuple

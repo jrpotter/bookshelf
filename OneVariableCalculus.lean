@@ -1,3 +1,2 @@
-import OneVariableCalculus.Chapters
-import OneVariableCalculus.Exercises
+import OneVariableCalculus.Apostol
 import OneVariableCalculus.Real
