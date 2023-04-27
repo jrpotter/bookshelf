@@ -5,7 +5,7 @@ when possible (with respect to my current level of ability) and fallback to
 LaTeX when not.
 
 - [ ] Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
-- [ ] Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
+- [x] Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
 - [ ] Axler, Sheldon. Linear Algebra Done Right. Undergraduate Texts in Mathematics. Cham: Springer International Publishing, 2015.
 - [ ] Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. Introduction to Algorithms. 3rd ed. Cambridge, Mass: MIT Press, 2009.
 - [ ] Enderton, Herbert B. A Mathematical Introduction to Logic. 2nd ed. San Diego: Harcourt/Academic Press, 2001.

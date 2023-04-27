@@ -59,11 +59,32 @@ end ex2
 
 namespace ex3
 
-def below {motive : Nat → Type} : Nat → Type
-  | Nat.zero => PUnit
-  | Nat.succ n => PProd (PProd (motive n) (@below motive n)) (PUnit : Type)
+def below {motive : Nat → Sort u} (t : Nat) : Sort (max 1 u) :=
+  Nat.recOn t
+    (zero := PUnit)
+    (succ := fun n ih => PProd (PProd (motive n) ih) (PUnit : Sort (max 1 u)))
 
--- TODO: Sort out how to write `brecOn` and `WellFounded.fix`.
+/--
+A copied implementation of `Nat.brecOn` with the `motive` properly supplied.
+Notice the `noncomputable` tag; the code generator does not support the `recOn`
+recursor yet, for reasons I haven't fully understood yet. This thread touches on
+the topic:
+
+https://leanprover-community.github.io/archive/stream/270676-lean4/topic/code.20generator.20does.20not.20support.20recursor.html
+-/
+noncomputable def brecOn {motive : Nat → Sort u}
+  (t : Nat) (F : (t : Nat) → @below motive t → motive t) : motive t :=
+  (Nat.recOn t
+    (motive := fun n => PProd
+      (motive n)
+      (Nat.recOn n PUnit fun n ih => PProd (PProd (motive n) ih) PUnit))
+    (zero := { fst := F Nat.zero PUnit.unit, snd := PUnit.unit })
+    (succ := fun n ih => {
+      fst := F (Nat.succ n) { fst := ih, snd := PUnit.unit },
+      snd := { fst := ih, snd := PUnit.unit }
+    })).1
+
+#check WellFounded.fix
 
 end ex3
 
@@ -83,7 +104,13 @@ inductive Vector (α : Type u) : Nat → Type u
 
 namespace Vector
 
--- TODO: Sort out how to write `append`.
+/--
+As long we flip the indices in our type signature in the resulting summation,
+there is no need for an auxiliary function.
+-/
+def append : Vector α m → Vector α n → Vector α (n + m)
+  | nil, bs => bs
+  | cons a as, bs => cons a (append as bs)
 
 end Vector
 
@@ -92,9 +119,7 @@ end ex4
 -- ========================================
 -- Exercise 5
 --
--- Consider the following type of arithmetic expressions. The idea is that
--- `var n` is a variable, `vₙ`, and `const n` is the constant whose value is
--- `n`.
+-- Consider the following type of arithmetic expressions. The ideSure, looks like RDS w
 -- ========================================
 
 namespace ex5
@@ -115,10 +140,10 @@ def sampleExpr : Expr :=
 -- evaluates such an expression, evaluating each `var n` to `v n`.
 
 def eval (v : Nat → Nat) : Expr → Nat
-  | const n     => sorry
+  | const n     => n
   | var n       => v n
-  | plus e₁ e₂  => sorry
-  | times e₁ e₂ => sorry
+  | plus e₁ e₂  => eval v e₁ + eval v e₂
+  | times e₁ e₂ => eval v e₁ * eval v e₂
 
 def sampleVal : Nat → Nat
   | 0 => 5
@@ -126,7 +151,7 @@ def sampleVal : Nat → Nat
   | _ => 0
 
 -- Try it out. You should get 47 here.
--- #eval eval sampleVal sampleExpr
+#eval eval sampleVal sampleExpr
 
 -- ----------------------------------------
 -- Implement "constant fusion," a procedure that simplifies subterms like
@@ -140,15 +165,45 @@ def simpConst : Expr → Expr
   | times (const n₁) (const n₂) => const (n₁ * n₂)
   | e                           => e
 
-def fuse : Expr → Expr := sorry
+def fuse : Expr → Expr
+  | plus e₁ e₂  => simpConst $ plus (fuse e₁) (fuse e₂)
+  | times e₁ e₂ => simpConst $ times (fuse e₁) (fuse e₂)
+  | e           => e
 
 theorem simpConst_eq (v : Nat → Nat)
-        : ∀ e : Expr, eval v (simpConst e) = eval v e :=
-  sorry
+  : ∀ e : Expr, eval v (simpConst e) = eval v e := by
+  intro e
+  unfold simpConst
+  repeat { unfold eval }
+  match h : e with
+  | const n
+  | var n
+  | plus  (const   _) (const _)
+  | plus  (var     _) _
+  | plus  (plus  _ _) _
+  | plus  (times _ _) _
+  | times (const   _) (const _)
+  | times (var     _) _
+  | times (plus  _ _) _
+  | times (times _ _) _ => rfl
+  | plus  _ (var     _)
+  | plus  _ (plus  _ _)
+  | plus  _ (times _ _)
+  | times _ (var     _)
+  | times _ (plus  _ _)
+  | times _ (times _ _) => simp only
+  
 
 theorem fuse_eq (v : Nat → Nat)
-        : ∀ e : Expr, eval v (fuse e) = eval v e :=
-  sorry
+  : ∀ e : Expr, eval v (fuse e) = eval v e := by
+  intro e
+  induction e with
+  | const n | var n => unfold fuse; rfl
+  | plus e₁ e₂ he₁ he₂ | times e₁ e₂ he₁ he₂ =>
+    unfold fuse
+    rw [simpConst_eq]
+    unfold eval
+    rw [he₁, he₂]
 
 -- The last two theorems show that the definitions preserve the value.
 
