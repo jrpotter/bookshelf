@@ -148,28 +148,6 @@ theorem zip_with_nonempty_iff_args_nonempty
     rw [has, hbs]
     simp
 
-private lemma fin_zip_with_imp_val_lt_length_left {i : Fin (zipWith f xs ys).length}
-  : i.1 < length xs := by
-  have hi := i.2
-  simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
-  exact hi.left
-
-private lemma fin_zip_with_imp_val_lt_length_right {i : Fin (zipWith f xs ys).length}
-  : i.1 < length ys := by
-  have hi := i.2
-  simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
-  exact hi.right
-
-/--
-Calling `get _ i` on a zip of `xs` and `ys` is the same as applying the function
-argument to each of `get xs i` and `get ys i` directly.
--/
-theorem get_zip_with_apply_get_get {i : Fin (zipWith f xs ys).length}
-  : get (zipWith f xs ys) i = f
-      (get xs ⟨i.1, fin_zip_with_imp_val_lt_length_left⟩)
-      (get ys ⟨i.1, fin_zip_with_imp_val_lt_length_right⟩) := by
-  sorry
-
 -- ========================================
 -- Pairwise
 -- ========================================
@@ -224,6 +202,12 @@ theorem mem_pairwise_imp_length_self_ge_2 {xs : List α} (h : xs.pairwise f ≠ 
     cases hx' : bs with
     | nil => rw [hx'] at h; simp at h
     | cons a' bs' => unfold length length; rw [add_assoc]; norm_num
+
+private lemma fin_zip_with_imp_val_lt_length_left {i : Fin (zipWith f xs ys).length}
+  : i.1 < length xs := by
+  have hi := i.2
+  simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
+  exact hi.left
 
 /--
 If `x` is a member of the pairwise'd list, there must exist two (adjacent)
@@ -286,7 +270,7 @@ theorem mem_pairwise_imp_exists {xs : List α} (h : x ∈ xs.pairwise f)
       = get ys { val := ↑i, isLt := i_lt_length_ys } := by
       conv => lhs; unfold get; simp
     rw [hx₂_offset_idx] at hx₂
-    rw [get_zip_with_apply_get_get, ← hx₁, ← hx₂] at hx
+    rw [get_zipWith, ← hx₁, ← hx₂] at hx
     exact Eq.symm hx
 
 end List

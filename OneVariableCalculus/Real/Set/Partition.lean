@@ -41,11 +41,29 @@ instance : Membership ℝ Partition where
   mem (x : ℝ) (p : Partition) := p.left ≤ x ∧ x ≤ p.right
 
 /--
+Every subdivision point is `≥` the left-most point of the partition.
+-/
+theorem subdivision_point_geq_left {p : Partition} (h : x ∈ p.xs)
+  : p.left ≤ x := by
+  suffices ∀ i : Fin p.xs.length, p.left ≤ List.get p.xs i by
+    rw [List.mem_iff_exists_get] at h
+    have ⟨i, hi⟩ := h
+    rw [← hi]
+    exact this i
+  intro ⟨i, hi⟩
+  sorry
+
+/--
+Every subdivision point is `≤` the right-most point of the partition.
+-/
+theorem subdivision_point_leq_right {p : Partition} (h : x ∈ p.xs)
+  : x ≤ p.right := sorry
+
+/--
 Every subdivision point of a `Partition` is itself a member of the `Partition`.
 -/
 theorem subdivision_point_mem_partition {p : Partition} (h : x ∈ p.xs)
-  : x ∈ p := by
-  sorry
+  : x ∈ p := ⟨subdivision_point_geq_left h, subdivision_point_leq_right h⟩
 
 end Partition
 
