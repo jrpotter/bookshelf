@@ -4,43 +4,26 @@ import Mathlib.Tactic.NormNum
 namespace List
 
 -- ========================================
+-- Indexing
+-- ========================================
+
+/--
+Getting an element `i` from a list is equivalent to `get`ting an element `i + 1`
+from that list as a tail.
+-/
+theorem get_cons_succ_self_eq_get_tail_self
+  : get (x :: xs) (Fin.succ i) = get xs i := by
+  conv => lhs; unfold get; simp only
+
+-- ========================================
 -- Length
--- ========================================
-
-/--
-Only the empty list has length zero.
--/
-theorem length_zero_iff_self_eq_nil : length xs = 0 ↔ xs = [] := by
-  apply Iff.intro
-  · intro h
-    cases xs with
-    | nil => rfl
-    | cons a as => simp at h
-  · intro h
-    rw [h]
-    simp
-
-/--
-If the length of a list is greater than zero, it cannot be `List.nil`.
--/
-theorem length_gt_zero_imp_not_nil : xs.length > 0 → xs ≠ [] := by
-  intro h
-  by_contra nh
-  rw [nh] at h
-  have : 0 > 0 := calc 0
-    _ = length [] := by rw [← length_zero_iff_self_eq_nil.mpr nh, nh]
-    _ > 0 := h
-  simp at this
-
--- ========================================
--- Membership
 -- ========================================
 
 /--
 A list is nonempty if and only if it can be written as a head concatenated with
 a tail.
 -/
-theorem self_nonempty_imp_exists_mem : xs ≠ [] ↔ (∃ a as, xs = a :: as) := by
+theorem self_neq_nil_imp_exists_mem : xs ≠ [] ↔ (∃ a as, xs = a :: as) := by
   apply Iff.intro
   · intro h
     cases hx : xs with
@@ -51,24 +34,44 @@ theorem self_nonempty_imp_exists_mem : xs ≠ [] ↔ (∃ a as, xs = a :: as) :=
     simp
 
 /--
+Only the empty list has length zero.
+-/
+theorem eq_nil_iff_length_zero : xs = [] ↔ length xs = 0 := by
+  apply Iff.intro
+  · intro h
+    rw [h]
+    simp
+  · intro h
+    cases xs with
+    | nil => rfl
+    | cons a as => simp at h
+
+/--
+If the length of a list is greater than zero, it cannot be `List.nil`.
+-/
+theorem neq_nil_iff_length_gt_zero : xs ≠ [] ↔ xs.length > 0 := by
+  have : ¬xs = [] ↔ ¬length xs = 0 := Iff.not eq_nil_iff_length_zero
+  rwa [
+    show ¬xs = [] ↔ xs ≠ [] from Iff.rfl,
+    show ¬length xs = 0 ↔ length xs ≠ 0 from Iff.rfl,
+    ← zero_lt_iff
+  ] at this
+
+-- ========================================
+-- Membership
+-- ========================================
+
+/--
 If there exists a member of a list, the list must be nonempty.
 -/
-theorem nonempty_iff_mem : xs ≠ [] ↔ ∃ x, x ∈ xs := by
+theorem exists_mem_iff_neq_nil : (∃ x, x ∈ xs) ↔ xs ≠ [] := by
   apply Iff.intro
+  · intro ⟨x, hx⟩
+    induction hx <;> simp
   · intro hx
     cases xs with
     | nil => simp at hx
     | cons a as => exact ⟨a, by simp⟩
-  · intro ⟨x, hx⟩
-    induction hx <;> simp
-
-/--
-Getting an element `i` from a list is equivalent to `get`ting an element `i + 1`
-from that list as a tail.
--/
-theorem get_cons_succ_self_eq_get_tail_self
-  : get (x :: xs) (Fin.succ i) = get xs i := by
-  conv => lhs; unfold get; simp only
 
 /--
 Any value that can be retrieved via `get` must be a member of the list argument.
@@ -115,13 +118,51 @@ theorem mem_iff_exists_get {xs : List α}
     | cons a bs => rw [← hi]; exact get_mem_self
 
 -- ========================================
+-- Sublists
+-- ========================================
+
+/--
+Given nonempty list `xs`, `head` is equivalent to `get`ting the `0`th index.
+-/
+theorem head_eq_get_zero {xs : List α} (h : xs ≠ [])
+  : head xs h = get xs ⟨0, neq_nil_iff_length_gt_zero.mp h⟩ := by
+  have ⟨a, ⟨as, hs⟩⟩ := self_neq_nil_imp_exists_mem.mp h
+  subst hs
+  simp
+
+/--
+Given nonempty list `xs`, `getLast xs` is equivalent to `get`ting the
+`length - 1`th index.
+-/
+theorem getLast_eq_get_length_sub_one {xs : List α} (h : xs ≠ [])
+  : getLast xs h = get xs ⟨xs.length - 1, by
+      have ⟨_, ⟨_, hs⟩⟩ := self_neq_nil_imp_exists_mem.mp h
+      rw [hs]
+      simp⟩ := by
+  induction xs with
+  | nil => simp at h
+  | cons _ as ih =>
+    match as with
+    | nil => simp
+    | cons b bs => unfold getLast; rw [ih]; simp
+
+/--
+If a `List` has a `tail?` defined, it must be nonempty.
+-/
+theorem some_tail?_imp_cons (h : tail? xs = some ys) : ∃ x, xs = x :: ys := by
+  unfold tail? at h
+  cases xs with
+  | nil => simp at h
+  | cons r rs => exact ⟨r, by simp at h; rw [h]⟩
+
+-- ========================================
 -- Zips
 -- ========================================
 
 /--
 The length of a list zipped with its tail is the length of the tail.
 -/
-theorem length_zip_with_self_tail_eq_length_sub_one
+theorem length_zipWith_self_tail_eq_length_sub_one
   : length (zipWith f (a :: as) as) = length as := by
   rw [length_zipWith]
   simp only [length_cons, ge_iff_le, min_eq_right_iff]
@@ -132,21 +173,41 @@ theorem length_zip_with_self_tail_eq_length_sub_one
 The result of a `zipWith` is nonempty if and only if both arguments are
 nonempty.
 -/
-theorem zip_with_nonempty_iff_args_nonempty
+theorem zipWith_nonempty_iff_args_nonempty
   : zipWith f as bs ≠ [] ↔ as ≠ [] ∧ bs ≠ [] := by
   apply Iff.intro
   · intro h
-    rw [self_nonempty_imp_exists_mem] at h
+    rw [self_neq_nil_imp_exists_mem] at h
     have ⟨z, ⟨zs, hzs⟩⟩ := h
     refine ⟨?_, ?_⟩ <;>
     · by_contra nh
       rw [nh] at hzs
       simp at hzs
   · intro ⟨ha, hb⟩
-    have ⟨a', ⟨as', has⟩⟩ := self_nonempty_imp_exists_mem.mp ha
-    have ⟨b', ⟨bs', hbs⟩⟩ := self_nonempty_imp_exists_mem.mp hb
+    have ⟨a', ⟨as', has⟩⟩ := self_neq_nil_imp_exists_mem.mp ha
+    have ⟨b', ⟨bs', hbs⟩⟩ := self_neq_nil_imp_exists_mem.mp hb
     rw [has, hbs]
     simp
+
+/--
+An index less than the length of a `zip` is less than the length of the left
+operand.
+-/
+theorem fin_zipWith_imp_val_lt_length_left {i : Fin (zipWith f xs ys).length}
+  : ↑i < length xs := by
+  have hi := i.2
+  simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
+  exact hi.left
+
+/--
+An index less than the length of a `zip` is less than the length of the left
+operand.
+-/
+theorem fin_zipWith_imp_val_lt_length_right {i : Fin (zipWith f xs ys).length}
+  : ↑i < length ys := by
+  have hi := i.2
+  simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
+  exact hi.right
 
 -- ========================================
 -- Pairwise
@@ -180,13 +241,11 @@ theorem len_pairwise_len_cons_sub_one {xs : List α} (h : xs.length > 0)
   unfold pairwise tail?
   cases xs with
   | nil =>
-    have h' := length_gt_zero_imp_not_nil h
-    simp at h'
+    have := neq_nil_iff_length_gt_zero.mpr h
+    simp at this
   | cons a bs =>
-    suffices length (zipWith f (a :: bs) bs) = length bs by
-      rw [this]
-      simp
-    rw [length_zip_with_self_tail_eq_length_sub_one]
+    rw [length_zipWith_self_tail_eq_length_sub_one]
+    conv => lhs; unfold length
 
 /--
 If the `pairwise` list isn't empty, then the original list must have at least
@@ -203,74 +262,38 @@ theorem mem_pairwise_imp_length_self_ge_2 {xs : List α} (h : xs.pairwise f ≠ 
     | nil => rw [hx'] at h; simp at h
     | cons a' bs' => unfold length length; rw [add_assoc]; norm_num
 
-private lemma fin_zip_with_imp_val_lt_length_left {i : Fin (zipWith f xs ys).length}
-  : i.1 < length xs := by
-  have hi := i.2
-  simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
-  exact hi.left
-
 /--
 If `x` is a member of the pairwise'd list, there must exist two (adjacent)
 elements of the list, say `x₁` and `x₂`, such that `x = f x₁ x₂`.
 -/
-theorem mem_pairwise_imp_exists {xs : List α} (h : x ∈ xs.pairwise f)
-  : ∃ x₁ x₂, x₁ ∈ xs ∧ x₂ ∈ xs ∧ x = f x₁ x₂ := by
+theorem mem_pairwise_imp_exists_adjacent {xs : List α} (h : x ∈ xs.pairwise f)
+  : ∃ i : Fin (xs.length - 1), ∃ x₁ x₂,
+      x₁ = get xs ⟨i.1, Nat.lt_of_lt_pred i.2⟩ ∧
+      x₂ = get xs ⟨i.1 + 1, lt_tsub_iff_right.mp i.2⟩ ∧
+      x = f x₁ x₂ := by
   unfold pairwise at h
-  cases hys : tail? xs with
-  | none => rw [hys] at h; cases h
+  cases hs : tail? xs with
+  | none => rw [hs] at h; cases h
   | some ys =>
-    rw [hys] at h
+    rw [hs] at h
     simp only at h
-
-    -- Since our `tail?` result isn't `none`, we should be able to decompose
-    -- `xs` into concatenation operands.
-    have ⟨r, hrs⟩ : ∃ r, xs = r :: ys := by
-      unfold tail? at hys
-      cases xs with
-      | nil => simp at hys
-      | cons r rs => exact ⟨r, by simp at hys; rw [hys]⟩
-
-    -- Maintain a collection of relations related to `i` and the length of `xs`.
-    -- Because of the proof-carrying `Fin` index, we find ourselves needing to
-    -- cast these values around periodically.
+    -- Find index `i` that corresponds to the index `x₁`. We decompose this
+    -- `Fin` type into `j` and `hj` to make rewriting easier.
+    have ⟨_, hy⟩ := some_tail?_imp_cons hs    
     have ⟨i, hx⟩ := mem_iff_exists_get.mp h
-    have succ_i_lt_length_xs : ↑i + 1 < length xs := by
-      have hi := add_lt_add_right i.2 1
-      conv at hi => rhs; rw [hrs, length_zip_with_self_tail_eq_length_sub_one]
-      conv => rhs; rw [congrArg length hrs]; unfold length
-      exact hi
-    have succ_i_lt_length_cons_r_ys : ↑i + 1 < length (r :: ys) := by
-      have hi := i.2
-      conv at hi => rhs; rw [hrs, length_zip_with_self_tail_eq_length_sub_one]
-      exact add_lt_add_right hi 1
-    have i_lt_length_ys : ↑i < length ys := by
-      unfold length at succ_i_lt_length_cons_r_ys
-      exact Nat.lt_of_succ_lt_succ succ_i_lt_length_cons_r_ys
-
-    -- Choose the indices `x₁` and `x₂` that correspond to our `x` member. We
-    -- massage these values into the correct shape and then prove `x = f x₁ x₂`.
-    let x₁ := xs.get ⟨i, fin_zip_with_imp_val_lt_length_left⟩
-    let x₂ := xs.get ⟨i + 1, succ_i_lt_length_xs⟩
-
-    have hx₁ : x₁ = xs.get ⟨i, fin_zip_with_imp_val_lt_length_left⟩ := rfl
-    have hx₂ : x₂ = get (r :: ys) { val := ↑i + 1, isLt := succ_i_lt_length_cons_r_ys } := by
-      rw [show x₂ = xs.get _ by rfl]
-      congr
-      exact Eq.recOn
-        (motive := fun x h => HEq
-          succ_i_lt_length_xs
-          (cast (show (↑i + 1 < length xs) = (↑i + 1 < length x) by rw [← h])
-            succ_i_lt_length_xs))
-        (show xs = r :: ys from hrs)
-        HEq.rfl
-
-    refine ⟨x₁, ⟨x₂, ⟨get_mem_self, ⟨get_mem_self, ?_⟩⟩⟩⟩
-    have hx₂_offset_idx
-      : get (r :: ys) { val := ↑i + 1, isLt := succ_i_lt_length_cons_r_ys}
-      = get ys { val := ↑i, isLt := i_lt_length_ys } := by
-      conv => lhs; unfold get; simp
-    rw [hx₂_offset_idx] at hx₂
-    rw [get_zipWith, ← hx₁, ← hx₂] at hx
-    exact Eq.symm hx
+    have ⟨j, hj⟩ := i
+    rw [
+      hy,
+      length_zipWith_self_tail_eq_length_sub_one,
+      show length ys = length xs - 1 by rw [hy]; simp
+    ] at hj
+    refine
+      ⟨⟨j, hj⟩,
+        ⟨get xs ⟨j, Nat.lt_of_lt_pred hj⟩,
+          ⟨get xs ⟨j + 1, lt_tsub_iff_right.mp hj⟩,
+            ⟨rfl, ⟨rfl, ?_⟩⟩⟩⟩⟩
+    rw [← hx, get_zipWith]
+    subst hy
+    simp only [length_cons, get, Nat.add_eq, add_zero]
 
 end List

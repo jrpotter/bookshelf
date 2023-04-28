@@ -11,14 +11,25 @@ Any member of a subinterval of a partition `P` must also be a member of `P`.
 lemma mem_open_subinterval_imp_mem_partition {p : Partition}
   (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => i(x₁, x₂)))
   (hy : y ∈ I) : y ∈ p := by
-  -- By definition, a partition must always have at least two points in the
-  -- interval. We can disregard the empty case.
   cases h : p.xs with
-  | nil => rw [h] at hI; cases hI
+  | nil =>
+    -- By definition, a partition must always have at least two points in the
+    -- interval. Discharge the empty case.
+    rw [h] at hI
+    cases hI
   | cons x ys =>
-    have ⟨x₁, ⟨x₂, ⟨hx₁, ⟨hx₂, hI'⟩⟩⟩⟩ := List.mem_pairwise_imp_exists hI
+    have ⟨i, x₁, ⟨x₂, ⟨hx₁, ⟨hx₂, hI'⟩⟩⟩⟩ :=
+      List.mem_pairwise_imp_exists_adjacent hI
+    have hx₁ : x₁ ∈ p.xs := by
+      rw [hx₁]
+      let j : Fin (List.length p.xs) := ⟨i.1, Nat.lt_of_lt_pred i.2⟩
+      exact List.mem_iff_exists_get.mpr ⟨j, rfl⟩
+    have hx₂ : x₂ ∈ p.xs := by
+      rw [hx₂]
+      let j : Fin (List.length p.xs) := ⟨i.1 + 1, lt_tsub_iff_right.mp i.2⟩
+      exact List.mem_iff_exists_get.mpr ⟨j, rfl⟩
     rw [hI'] at hy
-    refine ⟨?_, ?_⟩
+    apply And.intro
     · calc p.left
         _ ≤ x₁ := (subdivision_point_mem_partition hx₁).left
         _ ≤ y := le_of_lt hy.left

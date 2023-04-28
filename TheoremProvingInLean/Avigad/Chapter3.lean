@@ -7,8 +7,7 @@ Propositions and Proofs
 -- ========================================
 -- Exercise 1
 --
--- Prove the following identities, replacing the "sorry" placeholders with
--- actual proofs.
+-- Prove the following identities.
 -- ========================================
 
 namespace ex1
@@ -108,8 +107,7 @@ end ex1
 -- ========================================
 -- Exercise 2
 --
--- Prove the following identities, replacing the “sorry” placeholders with
--- actual proofs. These require classical reasoning.
+-- Prove the following identities. These require classical reasoning.
 -- ========================================
 
 namespace ex2
