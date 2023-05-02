@@ -52,6 +52,13 @@ Cardinal
 def C (x : α → β → δ) (y : β) (z : α) := x z y
 
 /--
+Converse Warbler
+
+`W'xy = yxx`
+-/
+def W' (x : α) (y : α → α → β) := y x x
+
+/--
 Dickcissel
 
 `D₁xyzwv = xyz(wv)`
@@ -196,6 +203,13 @@ Robin
 def R (x : α) (y : β → α → γ) (z : β) := y z x
 
 /--
+Sage Bird
+
+`Θx = x(Θx)`
+-/
+partial def Θ [Inhabited α] (x : α → α) := x (Θ x)
+
+/--
 Starling
 
 `Sxyz = xz(yz)`
@@ -224,3 +238,10 @@ Vireo
 `Vxyz = zxy`
 -/
 def V (x : α) (y : β) (z : α → β → γ) := z x y
+
+/--
+Warbler
+
+`Wxy = xyy`
+-/
+def W (x : α → α → β) (y : α) := x y y
