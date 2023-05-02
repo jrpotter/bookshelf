@@ -70,8 +70,7 @@ namespace Point
 /--
 A `Point` is the set consisting of just itself.
 -/
-def set_def (p : Point) : Set ℝ² :=
-  { x : ℝ² | x = p.val.top_left }
+def set_def (p : Point) : Set ℝ² := p.val.set_def
 
 /--
 The width of a `Point` is `0`.
@@ -106,8 +105,7 @@ namespace LineSegment
 A `LineSegment` `s` is the set of points corresponding to the shortest line
 segment joining the two distinct points of `s`.
 -/
-def set_def (s : LineSegment) : Set ℝ² :=
-  sorry
+def set_def (s : LineSegment) : Set ℝ² := s.val.set_def
 
 /--
 Either the width or height of a `LineSegment` is zero.

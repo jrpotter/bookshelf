@@ -112,7 +112,7 @@ example (x y : ℝ) (h : x < y) : ∃ r : ℚ, x < r ∧ r < y := by
 -- ========================================
 
 example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
-  : irrational (x + y) := by
+  : irrational (x + y) :=
   sorry
 
 example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
