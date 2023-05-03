@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\input{preamble}
+
+\newcommand{\larea}[2]{\lean{../..}{Bookshelf/Real/Geometry/Area}{#1}{#2}}
+\newcommand{\lrect}[2]{\lean{../..}{Bookshelf/Real/Geometry/Rectangle}{#1}{#2}}
+
+\begin{document}
+
+The properties of area in this set of exercises are to be deduced from the
+axioms for area stated in the foregoing section.
+
+\section{Exercise 1}%
+\label{sec:exercise-1}
+
+Prove that each of the following sets is measurable and has zero area:
+
+\subsection{Exercise 1a}%
+\label{sub:exercise-1a}
+
+A set consisting of a single point.
+
+\begin{proof}
+
+  Let $S$ be a set consisting of a single point.
+  By definition of a \lrect{Real.Point}{Point}, $S$ is a rectangle in which all
+    vertices coincide.
+  By \larea{Choice-of-Scale}{Choice of Scale}, $S$ is measurable with area its
+    width times its height.
+  The width and height of $S$ is trivially zero.
+  Therefore $a(S) = (0)(0) = 0$.
+
+\end{proof}
+
+\subsection{Exercise 1b}%
+\label{sub:exercise-1b}
+
+A set consisting of a finite number of points in a plane.
+
+\begin{proof}
+
+  We show for all $k > 0$, a set consisting of $k$ points in a plane is
+  measurable with area $0$.
+
+  \paragraph{Base Case}%
+
+    Consider a set $S$ consisting of a single point in a plane.
+    By \eqref{sub:exercise-1a}, $S$ is measurable with area $0$.
+
+  \paragraph{Induction Step}%
+
+    Define our induction hypothesis as, "Let $k > 0$ and assume a set consisting
+      of $k$ points in a plane is measurable with area $0$."
+
+    Consider a set $S_{k+1}$ consisting of $k + 1$ points in a plane.
+    Pick an arbitrary point of $S_{k+1}$.
+    Denote the set containing just this point as $T$.
+    Denote the remaining set of points as $S_k$.
+    By construction, $S_{k+1} = S_k \cup T$.
+    By the induction hypothesis, $S_k$ is measurable with area $0$.
+    By \eqref{sub:exercise-1a}, $T$ is measurable with area $0$.
+    By the \larea{Additive-Property}{Additive Property}, $S_k \cup T$ is
+      measurable, $S_k \cap T$ is measurable, and
+      \begin{align}
+        a(S_{k+1})
+          & = a(S_k \cup T) \nonumber \\
+          & = a(S_k) + a(T) - a(S_k \cap T) \nonumber \\
+          & = 0 + 0 - a(S_k \cap T). \label{sub:exercise-1b-eq1}
+      \end{align}
+
+    \noindent
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      $S_k \cap T = \emptyset$.
+      Then it trivially follows that $a(S_k \cap T) = 0$.
+
+    \subparagraph{Case 2}%
+
+      $S_k \cap T \neq \emptyset$.
+      Since $T$ consists of a single point, $S_k \cap T = T$.
+      By \eqref{sub:exercise-1a}, $a(S_k \cap T) = a(T) = 0$.
+
+    \vspace{8pt}
+    \noindent
+    In both cases, \eqref{sub:exercise-1b-eq1} evaluates to $0$, implying
+      $a(S_{k+1}) = 0$ as expected.
+
+  \paragraph{Conclusion}%
+
+    By mathematical induction, it follows for all $n > 0$, a set consisting of
+    $n$ points in a plane is measurable with area $0$.
+
+\end{proof}
+
+\subsection{Exercise 1c}%
+\label{sub:exercise-1c}
+
+The union of a finite collection of line segments in a plane.
+
+\begin{proof}
+
+  We show for all $k > 0$, a set consisting of $k$ line segments in a plane is
+  measurable with area $0$.
+
+  \paragraph{Base Case}%
+
+    Consider a set $S$ consisting of a single line segment in a plane.
+    By definition of a \lrect{Real.LineSemgnet}{Line Segment}, $S$ is a
+      rectangle in which one side has dimension $0$.
+    By \larea{Choice-of-Scale}{Choice of Scale}, $S$ is measurable with area its
+      width $w$ times its height $h$.
+    Therefore $a(S) = wh = 0$.
+
+  \paragraph{Induction Step}%
+
+    Define our induction hypothesis as, "Let $k > 0$ and assume a set consisting
+      of $k$ line segments in a plane is measurable with area $0$."
+
+    Consider a set $S_{k+1}$ consisting of $k + 1$ line segments in a plane.
+    Pick an arbitrary line segment of $S_{k+1}$.
+    Denote the set containing just this line segment as $T$.
+    Denote the remaining set of line segments as $S_k$.
+    By construction, $S_{k+1} = S_k \cup T$.
+    By the induction hypothesis, $S_k$ is measurable with area $0$.
+    By the base case, $T$ is measurable with area $0$.
+    By the \larea{Additive-Property}{Additive Property}, $S_k \cup T$ is
+      measurable, $S_k \cap T$ is measurable, and
+      \begin{align}
+        a(S_{k+1})
+          & = a(S_k \cup T) \nonumber \\
+          & = a(S_k) + a(T) - a(S_k \cap T) \nonumber \\
+          & = 0 + 0 - a(S_k \cap T). \label{sub:exercise-1c-eq1}
+      \end{align}
+
+    \noindent
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      $S_k \cap T = \emptyset$.
+      Then it trivially follows that $a(S_k \cap T) = 0$.
+
+    \subparagraph{Case 2}%
+
+      $S_k \cap T \neq \emptyset$.
+      Since $T$ consists of a single point, $S_k \cap T = T$.
+      By the base case, $a(S_k \cap T) = a(T) = 0$.
+
+    \vspace{8pt}
+    \noindent
+    In both cases, \eqref{sub:exercise-1c-eq1} evaluates to $0$, implying
+      $a(S_{k+1}) = 0$ as expected.
+
+  \paragraph{Conclusion}%
+
+    By mathematical induction, it follows for all $n > 0$, a set consisting of
+    $n$ line segments in a plane is measurable with area $0$.
+
+\end{proof}
+
+\section{Exercise 2}%
+\label{sec:exercise-2}
+
+Every right triangular region is measurable because it can be obtained as the
+intersection of two rectangles. Prove that every triangular region is measurable
+and that its area is one half the product of its base and altitude.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\end{document}
