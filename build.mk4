@@ -1,0 +1,26 @@
+local mkutils = require 'mkutils'
+
+local function get_parent_dir(file)
+  local handle = io.popen(assert('dirname ' .. file))
+  local dir = handle:read('a')
+  handle:close()
+  return dir:gsub('^%s*(.-)%s*$', '%1')
+end
+
+local dir = get_parent_dir(arg[3])
+local outdir = 'build/tex/' .. dir .. '/' .. settings.input
+os.execute('mkdir -p ' .. outdir)
+
+settings.input = outdir .. '/' .. settings.input
+settings.latex_par = '-output-directory=' .. outdir
+
+Make:match('.css$', 'mv ${filename} ' .. outdir .. '/${filename}')
+Make:match('.png$', 'mv ${filename} ' .. outdir .. '/${filename}')
+Make:match('.tmp$', 'rm ${filename}')
+
+Make:match('tmp$', function(filename)
+  local basename = mkutils.remove_extension(filename)
+  for _, ext in ipairs { 'aux', 'xref', '4ct', '4tc', 'dvi', 'idv', 'lg', 'log', 'tmp' } do
+    os.remove(outdir .. '/' .. basename .. '.' .. ext)
+  end
+end)

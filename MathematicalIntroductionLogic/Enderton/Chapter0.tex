@@ -1,19 +1,20 @@
 \documentclass{article}
 
-\input{../../preamble}
+\input{preamble}
+
+\newcommand{\link}[1]{\href{/doc/MathematicalIntroductionLogic/Enderton/Chapter0.html\##1}{#1}}
 
 \begin{document}
 
-\begin{theorem}[Lemma 0A]
+\section*{Lemma 0A}%
+\label{sec:lemma-0a}
 
-  Assume that $\langle x_1, \ldots, x_m \rangle = \langle y_1, \ldots, y_m, \ldots, y_{m+k} \rangle$.
-  Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
-
-\end{theorem}
+Assume that $\langle x_1, \ldots, x_m \rangle = \langle y_1, \ldots, y_m, \ldots, y_{m+k} \rangle$.
+Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
 
 \begin{proof}
 
-  \href{Chapter0.lean}{Enderton.Chapter0.lemma_0a}
+  \link{lemma\_0a}
 
 \end{proof}
 

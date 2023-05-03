@@ -1,34 +1,35 @@
 \documentclass{article}
 
-\input{../../preamble}
+\input{preamble}
+
+\newcommand{\linkA}[1]{\href{/doc/Bookshelf/Real/Sequence/Arithmetic.html\##1}{#1}}
+\newcommand{\linkG}[1]{\href{/doc/Bookshelf/Real/Sequence/Geometric.html\##1}{#1}}
 
 \begin{document}
 
-\begin{theorem}[Sum of Arithmetic Series]
+\section*{Sum of Arithmetic Series}%
+\label{sec:sum-arithmetic-series}
 
-  Let $(a_i)_{i \geq 0}$ be an arithmetic sequence with common difference $d$.
-  Then for some $n \in \mathbb{N}$,
-  $$\sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.$$
-
-\end{theorem}
+Let $(a_i)_{i \geq 0}$ be an arithmetic sequence with common difference $d$.
+Then for some $n \in \mathbb{N}$,
+$$\sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.$$
 
 \begin{proof}
 
-  \href{Sequence/Arithmetic.lean}{Bookshelf.Real.Sequence.Arithmetic.sum_recursive_closed}
+  \linkA{Real.Arithmetic.sum\_recursive\_closed}
 
 \end{proof}
 
-\begin{theorem}[Sum of Geometric Series]
+\section*{Sum of Geometric Series}%
+\label{sec:sum-geometric-series}
 
-  Let $(a_i)_{i \geq 0}$ be a geometric sequence with common ratio $r \neq 1$.
-  Then for some $n \in \mathbb{N}$,
-  $$\sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.$$
-
-\end{theorem}
+Let $(a_i)_{i \geq 0}$ be a geometric sequence with common ratio $r \neq 1$.
+Then for some $n \in \mathbb{N}$,
+$$\sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.$$
 
 \begin{proof}
 
-  \href{Sequence/Geometric.lean}{Bookshelf.Real.Sequence.Geometric.sum_recursive_closed}
+  \linkG{Real.Geometric.sum\_recursive\_closed}
 
 \end{proof}
 

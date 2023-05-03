@@ -56,9 +56,10 @@ USAGE:
 -/
 script «doc-server» (_args) do
   let ((), config) <- StateT.run readConfig {}
-  IO.println s!"Running on `http://localhost:{config.port}`"
+  IO.println s!"Running Lean on `http://localhost:{config.port}/doc`"
+  IO.println s!"Running LaTeX on `http://localhost:{config.port}/tex`"
   _ <- IO.Process.run {
     cmd := "python3",
-    args := #["-m", "http.server", toString config.port, "-d", "build/doc"],
+    args := #["-m", "http.server", toString config.port, "-d", "build"],
   }
   return 0

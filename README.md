@@ -26,4 +26,15 @@ Run the following to build and serve this:
 
 This assumes you have `python3` available in your `$PATH`. To change how the
 server behaves, refer to the `.env` file located in the root directory of this
-project.
+project. To also serve the corresponding LaTeX files scattered throughout this
+project, first install the following:
+
+- `tex4ht`
+- `make4ht`
+- `luaxml`
+
+Afterward, you can generate the necessary HTML via:
+
+```bash
+> find . -name '*.tex' | grep -v preamble | xargs -I {} make4ht -e build.mk4 {}
+```
