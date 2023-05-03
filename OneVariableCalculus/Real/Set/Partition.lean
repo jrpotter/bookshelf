@@ -81,7 +81,6 @@ theorem subdivision_point_leq_right {p : Partition} (h : x ∈ p.xs)
   have ⟨_, ⟨_, hs⟩⟩ := self_neq_nil_imp_exists_mem.mp hx
   by_cases hz : i = ⟨p.xs.length - 1, by rw [hs]; simp⟩
   · rw [hz]
-    simp
   · refine le_of_lt (Sorted.rel_get_of_lt p.sorted ?_)
     rw [← ne_eq, Fin.ne_iff_vne] at hz
     rw [Fin.lt_iff_val_lt_val]

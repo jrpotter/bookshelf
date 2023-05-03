@@ -13,3 +13,17 @@ LaTeX when not.
 - [ ] Gustedt, Jens. Modern C. Shelter Island, NY: Manning Publications Co, 2020.
 - [ ] Ross, Sheldon. A First Course in Probability Theory. 8th ed. Pearson Prentice Hall, n.d.
 - [ ] Smullyan, Raymond M. To Mock a Mockingbird: And Other Logic Puzzles Including an Amazing Adventure in Combinatory Logic. Oxford: Oxford university press, 2000.
+
+## Documentation
+
+To generate Lean documentation, we use [doc-gen4](https://github.com/leanprover/doc-gen4).
+Run the following to build and serve this:
+
+```bash
+> lake build Bookshelf:docs
+> lake run doc-server
+```
+
+This assumes you have `python3` available in your `$PATH`. To change how the
+server behaves, refer to the `.env` file located in the root directory of this
+project.
