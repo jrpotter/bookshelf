@@ -19,7 +19,7 @@ import OneVariableCalculus.Apostol.Chapter_I_3
 -- at least one real `z` satisfying `x < z < y`.
 -- ========================================
 
-example (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
+theorem exercise1 (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
   have ⟨z, hz⟩ := exists_pos_add_of_lt' h
   refine ⟨x + z / 2, ⟨?_, ?_⟩⟩
   · have hz' : z / 2 > 0 := by
@@ -38,7 +38,7 @@ example (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
 -- such that `m < x < n`.
 -- ========================================
 
-example (x : ℝ) : ∃ m n : ℝ, m < x ∧ x < n := by
+theorem exercise2 (x : ℝ) : ∃ m n : ℝ, m < x ∧ x < n := by
   refine ⟨x - 1, ⟨x + 1, ⟨?_, ?_⟩⟩⟩ <;> norm_num
 
 -- ========================================
@@ -47,7 +47,7 @@ example (x : ℝ) : ∃ m n : ℝ, m < x ∧ x < n := by
 -- If `x > 0`, prove that there is a positive integer `n` such that `1 / n < x`.
 -- ========================================
 
-example (x : ℝ) (h : x > 0) : ∃ n : ℕ+, 1 / n < x := by
+theorem exercise3 (x : ℝ) (h : x > 0) : ∃ n : ℕ+, 1 / n < x := by
   have ⟨n, hn⟩ := @Real.exists_pnat_mul_self_geq_of_pos x 1 h
   refine ⟨n, ?_⟩
   have hr := mul_lt_mul_of_pos_right hn (show 0 < 1 / ↑↑n by norm_num)
@@ -63,7 +63,7 @@ example (x : ℝ) (h : x > 0) : ∃ n : ℕ+, 1 / n < x := by
 -- `⌊5 / 2⌋ = 2`, `⌊-8/3⌋ = -3`.
 -- ========================================
 
-example (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
+theorem exercise4 (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
   let n := Int.floor x
   refine ⟨n, ⟨?_, ?_⟩⟩
   · exact ⟨Int.floor_le x, Int.lt_floor_add_one x⟩
@@ -78,7 +78,7 @@ example (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
 -- `n` which satisfies `x ≤ n < x + 1`.
 -- ========================================
 
-example (x : ℝ) : ∃! n : ℤ, x ≤ n ∧ n < x + 1 := by
+theorem exercise5 (x : ℝ) : ∃! n : ℤ, x ≤ n ∧ n < x + 1 := by
   let n := Int.ceil x
   refine ⟨n, ⟨?_, ?_⟩⟩
   · exact ⟨Int.le_ceil x, Int.ceil_lt_add_one x⟩
@@ -101,8 +101,7 @@ example (x : ℝ) : ∃! n : ℤ, x ≤ n ∧ n < x + 1 := by
 -- are *dense* in the real-number system.
 -- ========================================
 
-example (x y : ℝ) (h : x < y) : ∃ r : ℚ, x < r ∧ r < y := by
-  sorry
+-- # TODO
 
 -- ========================================
 -- Exercise 7
@@ -111,25 +110,7 @@ example (x y : ℝ) (h : x < y) : ∃ r : ℚ, x < r ∧ r < y := by
 -- `xy`, `x / y`, and `y / x` are all irrational.
 -- ========================================
 
-example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
-  : irrational (x + y) :=
-  sorry
-
-example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
-  : irrational (x - y) :=
-  sorry
-
-example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
-  : irrational (x * y) :=
-  sorry
-
-example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
-  : y ≠ 0 → irrational (x / y) :=
-  sorry
-
-example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
-  : irrational (y / x) :=
-  sorry
+-- # TODO
 
 -- ========================================
 -- Exercise 8
@@ -137,10 +118,7 @@ example (x : ℚ) (hx : x ≠ 0) (y : ℝ) (hy : irrational y)
 -- Is the sum or product of two irrational numbers always irrational?
 -- ========================================
 
--- No. Here is a counterexample.
-
-example (hx : x = Real.sqrt 2): irrational x ∧ rational (x * x) := by
-  sorry
+-- # TODO
 
 -- ========================================
 -- Exercise 9
@@ -150,8 +128,7 @@ example (hx : x = Real.sqrt 2): irrational x ∧ rational (x * x) := by
 -- infinitely many.
 -- ========================================
 
-example (x y : ℝ) (h : x < y) : ∃ z : ℝ, irrational z ∧ x < z ∧ z < y := by
-  sorry
+-- # TODO
 
 -- ========================================
 -- Exercise 10
@@ -171,34 +148,27 @@ def is_odd (n : ℤ) := is_even (n + 1)
 -- (a) An integer cannot be both even and odd.
 -- ----------------------------------------
 
-example (n : ℤ) : is_even n = ¬ is_odd n := sorry
+-- # TODO
 
 -- ----------------------------------------
 -- (b) Every integer is either even or odd.
 -- ----------------------------------------
 
-example (n : ℤ) : is_even n ∨ is_odd n := sorry
+-- # TODO
 
 -- ----------------------------------------
 -- (c) The sum or product of two even integers is even. What can you say about
 -- the sum or product of two odd integers?
 -- ----------------------------------------
 
-example (m n : ℤ) : is_even m ∧ is_even n → is_even (m * n) := sorry
-
-example (m n : ℤ) :
-  (∃ m n : ℤ, is_odd m ∧ is_odd n ∧ is_even (m * n)) ∧
-  (∃ m n : ℤ, is_odd m ∧ is_odd n ∧ is_odd (m * n)) :=
-  sorry
+-- # TODO
 
 -- ----------------------------------------
 -- (d) If `n²` is even, so is `n`. If `a² = 2b²`, where `a` and `b` are
 -- integers, then both `a` and `b` are even.
 -- ----------------------------------------
 
-example (n : ℤ) (h : is_even (n ^ 2)) : is_even n := sorry
-
-example (a b : ℤ) (h : a ^ 2 = 2 * b ^ 2) : is_even a ∧ is_even b := sorry
+-- # TODO
 
 -- ========================================
 -- Exercise 11
@@ -210,7 +180,7 @@ example (a b : ℤ) (h : a ^ 2 = 2 * b ^ 2) : is_even a ∧ is_even b := sorry
 -- contradiction.]
 -- ========================================
 
-example : ¬ ∃ n : ℝ, rational n → n ^ 2 = 2 := sorry
+-- # TODO
 
 -- ========================================
 -- Exercise 12
@@ -222,15 +192,4 @@ example : ¬ ∃ n : ℝ, rational n → n ^ 2 = 2 := sorry
 -- least-upper-bound axiom.
 -- ========================================
 
-/--
-Shows the set of rational numbers satisfies the Archimedean property.
--/
-theorem exists_pnat_mul_self_geq_of_pos {x y : ℚ}
-  : x > 0 → ∃ n : ℕ+, n * x > y := sorry
-
-/--
-Show the Archimedean property does not imply the least-upper-bound axiom.
--/
-example (S : Set ℚ) (hne : S.Nonempty) (hbdd : BddAbove S)
-  : ¬ ∃ x, IsLUB S x :=
-  sorry
+-- # TODO
