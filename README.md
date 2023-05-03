@@ -36,5 +36,5 @@ project, first install the following:
 Afterward, you can generate the necessary HTML via:
 
 ```bash
-> find . -name '*.tex' | grep -v preamble | xargs -I {} make4ht -e build.mk4 {}
+> find . -name '*.tex' | grep -v preamble | xargs -n 1 make4ht -e build.mk4
 ```

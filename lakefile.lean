@@ -16,6 +16,7 @@ require «doc-gen4» from git
 
 @[default_target]
 lean_lib «Bookshelf» {
+  srcDir := "src",
   roots := #[
     `Bookshelf,
     `FirstCourseAbstractAlgebra,
