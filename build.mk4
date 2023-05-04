@@ -7,7 +7,7 @@ local function get_parent_dir(file)
   return dir:gsub('^%s*(.-)%s*$', '%1')
 end
 
-local dir = get_parent_dir(arg[3])
+local dir = get_parent_dir(arg[3]):sub(#"./src/")
 local outdir = 'build/tex/' .. dir .. '/' .. settings.input
 os.execute('mkdir -p ' .. outdir)
 
