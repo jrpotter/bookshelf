@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\input{preamble}
+
+\newcommand{\linkA}[1]{\href{../../../Bookshelf/Real/Sequence/Arithmetic.html\##1}{#1}}
+\newcommand{\linkG}[1]{\href{../../../Bookshelf/Real/Sequence/Geometric.html\##1}{#1}}
+
+\begin{document}
+
+\section*{Sum of Arithmetic Series}%
+\label{sec:sum-arithmetic-series}
+
+Let $(a_i)_{i \geq 0}$ be an arithmetic sequence with common difference $d$.
+Then for some $n \in \mathbb{N}$,
+$$\sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.$$
+
+\begin{proof}
+
+  \linkA{Real.Arithmetic.sum\_recursive\_closed}
+
+\end{proof}
+
+\section*{Sum of Geometric Series}%
+\label{sec:sum-geometric-series}
+
+Let $(a_i)_{i \geq 0}$ be a geometric sequence with common ratio $r \neq 1$.
+Then for some $n \in \mathbb{N}$,
+$$\sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.$$
+
+\begin{proof}
+
+  \linkG{Real.Geometric.sum\_recursive\_closed}
+
+\end{proof}
+
+\end{document}

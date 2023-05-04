@@ -1,2 +1,0 @@
-import MathematicalIntroductionLogic.Enderton
-import MathematicalIntroductionLogic.Tuple
