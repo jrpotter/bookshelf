@@ -1,10 +1,11 @@
-/-
-Chapter 0
+import Bookshelf.LTuple.Basic
+
+/-! # Exercises.Enderton.Chapter0
 
 Useful Facts About Sets
 -/
 
-import Bookshelf.LTuple.Basic
+namespace Exercises.Enderton.Chapter0
 
 /--
 The following describes a so-called "generic" tuple. Like an `LTuple`, a generic
@@ -45,9 +46,7 @@ namespace GTuple
 
 open scoped LTuple
 
--- ========================================
--- Normalization
--- ========================================
+/-! ## Normalization -/
 
 /--
 Converts an `GTuple` into "normal form".
@@ -104,9 +103,7 @@ theorem norm_snoc_eq_concat {t₁ : GTuple α (p, q)} {t₂ : LTuple α n}
   : norm (snoc t₁ t₂) = LTuple.concat t₁.norm t₂ := by
   conv => lhs; unfold norm
 
--- ========================================
--- Equality
--- ========================================
+/-! ## Equality -/
 
 /--
 Implements Boolean equality for `GTuple α n` provided `α` has decidable
@@ -115,9 +112,7 @@ equality.
 instance BEq [DecidableEq α] : BEq (GTuple α n) where
   beq t₁ t₂ := t₁.norm == t₂.norm
 
--- ========================================
--- Basic API
--- ========================================
+/-! ## Basic API -/
 
 /--
 Returns the number of entries in the `GTuple`.
@@ -176,12 +171,7 @@ def snd : GTuple α (m, n) → LTuple α n
 
 end GTuple
 
--- ========================================
--- Lemma 0A
---
--- Assume that `⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩`. Then
--- `x₁ = ⟨y₁, ..., yₖ₊₁⟩`.
--- ========================================
+/-! ## Lemma 0A -/
 
 section
 
@@ -238,8 +228,7 @@ private def cast_fst : GTuple α (n, m - 1) → LTuple α (k + 1)
 private def cast_take (ys : LTuple α (m + k)) :=
   cast (by rw [min_comm_succ_eq p]) (ys.take (k + 1))
 
-/--
-Lemma 0A
+/-- #### Lemma 0A
 
 Assume that `⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩`. Then
 `x₁ = ⟨y₁, ..., yₖ₊₁⟩`.
@@ -285,3 +274,5 @@ theorem lemma_0a (xs : GTuple α (n, m - 1)) (ys : LTuple α (m + k))
       h₂
 
 end
+
+end Exercises.Enderton.Chapter0

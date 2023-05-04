@@ -1,6 +1,11 @@
 import Bookshelf.Real.Basic
 import Bookshelf.Real.Set.Partition
 
+/-! # Bookshelf.Real.Function.Step
+
+A characterization of step functions.
+-/
+
 namespace Real.Function
 
 open Partition

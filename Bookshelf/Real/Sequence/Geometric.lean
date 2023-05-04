@@ -1,5 +1,11 @@
 import Mathlib.Data.Real.Basic
 
+/-! # Bookshelf.Real.Sequence.Geometric
+
+A characterization of a geometric sequence, i.e. a sequence with a common ratio
+between each term.
+-/
+
 namespace Real
 
 /--

@@ -1,6 +1,10 @@
+import Bookshelf.Real.Basic
 import Mathlib.Data.Real.Sqrt
 
-import Bookshelf.Real.Basic
+/-! # Bookshelf.Real.Geometry.Basic
+
+A collection of useful definitions and theorems around geometry.
+-/
 
 namespace Real
 
@@ -8,7 +12,10 @@ namespace Real
 The undirected angle at `p₂` between the line segments to `p₁` and `p₃`. If
 either of those points equals `p₂`, this is `π / 2`.
 
-PORT: `geometry.euclidean.angle`
+###### PORT
+
+This should be replaced with the original Mathlib `geometry.euclidean.angle`
+definition once ported.
 -/
 axiom angle (p₁ p₂ p₃ : ℝ²) : ℝ
 
@@ -24,10 +31,10 @@ noncomputable def dist (x y : ℝ²) :=
   Real.sqrt ((abs (y.1 - x.1)) ^ 2 + (abs (y.2 - x.2)) ^ 2)
 
 /--
-Two sets `S` and `T` are `similar` iff there exists a one-to-one correspondence
-between `S` and `T` such that the distance between any two points `P, Q ∈ S` and
-corresponding points `P', Q' ∈ T` differ by some constant `α`. In other words,
-`α|PQ| = |P'Q'|`.
+Two sets `S` and `T` are `similar` **iff** there exists a one-to-one
+correspondence between `S` and `T` such that the distance between any two points
+`P, Q ∈ S` and corresponding points `P', Q' ∈ T` differ by some constant `α`. In
+other words, `α|PQ| = |P'Q'|`.
 -/
 def similar (S T : Set ℝ²) : Prop :=
   ∃ f : ℝ² → ℝ², Function.Bijective f ∧
@@ -43,7 +50,7 @@ def congruent (S T : Set (ℝ × ℝ)) : Prop :=
       dist x y = dist (f x) (f y)
 
 /--
-Any two congruent sets must be similar to one another.
+Any two `congruent` sets must be similar to one another.
 -/
 theorem congruent_similar {S T : Set ℝ²} : congruent S T → similar S T := by
   intro hc

@@ -1,5 +1,11 @@
 import Mathlib.Data.Real.Basic
 
+/-! # Bookshelf.Real.Set.Interval
+
+A syntactic description of the various types of continuous intervals permitted
+on the real number line.
+-/
+
 /--
 Representation of a closed interval.
 -/

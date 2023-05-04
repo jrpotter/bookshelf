@@ -1,17 +1,17 @@
-/-
-Chapter 8
+/-! # Exercises.Avigad.Chapter8
 
 Induction and Recursion
 -/
 
--- ========================================
--- Exercise 1
---
--- Open a namespace `Hidden` to avoid naming conflicts, and use the equation
--- compiler to define addition, multiplication, and exponentiation on the
--- natural numbers. Then use the equation compiler to derive some of their basic
--- properties.
--- ========================================
+namespace Exercises.Avigad.Chapter8
+
+/-! #### Exercise 1
+
+Open a namespace `Hidden` to avoid naming conflicts, and use the equation
+compiler to define addition, multiplication, and exponentiation on the natural
+numbers. Then use the equation compiler to derive some of their basic
+properties.
+-/
 
 namespace ex1
 
@@ -29,13 +29,12 @@ def exp : Nat → Nat → Nat
 
 end ex1
 
--- ========================================
--- Exercise 2
---
--- Similarly, use the equation compiler to define some basic operations on lists
--- (like the reverse function) and prove theorems about lists by induction (such
--- as the fact that `reverse (reverse xs) = xs` for any list `xs`).
--- ========================================
+/-! #### Exercise 2
+
+Similarly, use the equation compiler to define some basic operations on lists
+(like the reverse function) and prove theorems about lists by induction (such as
+the fact that `reverse (reverse xs) = xs` for any list `xs`).
+-/
 
 namespace ex2
 
@@ -49,13 +48,12 @@ def reverse : List α → List α
 
 end ex2
 
--- ========================================
--- Exercise 3
---
--- Define your own function to carry out course-of-value recursion on the
--- natural numbers. Similarly, see if you can figure out how to define
--- `WellFounded.fix` on your own.
--- ========================================
+/-! #### Exercise 3
+
+Define your own function to carry out course-of-value recursion on the natural
+numbers. Similarly, see if you can figure out how to define `WellFounded.fix` on
+your own.
+-/
 
 namespace ex3
 
@@ -88,13 +86,12 @@ noncomputable def brecOn {motive : Nat → Sort u}
 
 end ex3
 
--- ========================================
--- Exercise 4
---
--- Following the examples in Section Dependent Pattern Matching, define a
--- function that will append two vectors. This is tricky; you will have to
--- define an auxiliary function.
--- ========================================
+/-! #### Exercise 4
+
+Following the examples in Section Dependent Pattern Matching, define a function
+that will append two vectors. This is tricky; you will have to define an
+auxiliary function.
+-/
 
 namespace ex4
 
@@ -116,11 +113,10 @@ end Vector
 
 end ex4
 
--- ========================================
--- Exercise 5
---
--- Consider the following type of arithmetic expressions. The ideSure, looks like RDS w
--- ========================================
+/-! #### Exercise 5
+
+Consider the following type of arithmetic expressions.
+-/
 
 namespace ex5
 
@@ -153,12 +149,13 @@ def sampleVal : Nat → Nat
 -- Try it out. You should get 47 here.
 #eval eval sampleVal sampleExpr
 
--- ----------------------------------------
--- Implement "constant fusion," a procedure that simplifies subterms like
--- `5 + 7` to `12`. Using the auxiliary function `simpConst`, define a function
--- "fuse": to simplify a plus or a times, first simplify the arguments
--- recursively, and then apply `simpConst` to try to simplify the result.
--- ----------------------------------------
+/-! ##### Constant Fusion
+
+Implement "constant fusion," a procedure that simplifies subterms like `5 + 7
+to `12`. Using the auxiliary function `simpConst`, define a function "fuse": to
+simplify a plus or a times, first simplify the arguments recursively, and then
+apply `simpConst` to try to simplify the result.
+-/
 
 def simpConst : Expr → Expr
   | plus (const n₁) (const n₂)  => const (n₁ + n₂)
@@ -208,3 +205,5 @@ theorem fuse_eq (v : Nat → Nat)
 -- The last two theorems show that the definitions preserve the value.
 
 end ex5
+
+end Exercises.Avigad.Chapter8

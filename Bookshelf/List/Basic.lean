@@ -1,27 +1,28 @@
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Tactic.NormNum
 
+/-! # Bookshelf.List.Basic
+
+Additional theorems and definitions useful in the context of `List`s.
+-/
+
 namespace List
 
--- ========================================
--- Indexing
--- ========================================
+/-! ## Indexing -/
 
 /--
-Getting an element `i` from a list is equivalent to `get`ting an element `i + 1`
-from that list as a tail.
+Getting the `(i + 1)`st entry of a `List` is equivalent to getting the `i`th
+entry of the `List`'s tail.
 -/
 theorem get_cons_succ_self_eq_get_tail_self
   : get (x :: xs) (Fin.succ i) = get xs i := by
   conv => lhs; unfold get; simp only
 
--- ========================================
--- Length
--- ========================================
+/-! ### Length -/
 
 /--
-A list is nonempty if and only if it can be written as a head concatenated with
-a tail.
+A `List` is nonempty **iff** it can be written as some head concatenated with
+some tail.
 -/
 theorem self_neq_nil_imp_exists_mem : xs ≠ [] ↔ (∃ a as, xs = a :: as) := by
   apply Iff.intro
@@ -34,7 +35,7 @@ theorem self_neq_nil_imp_exists_mem : xs ≠ [] ↔ (∃ a as, xs = a :: as) := 
     simp
 
 /--
-Only the empty list has length zero.
+A `List` is empty **iff** it has length zero.
 -/
 theorem eq_nil_iff_length_zero : xs = [] ↔ length xs = 0 := by
   apply Iff.intro
@@ -47,7 +48,7 @@ theorem eq_nil_iff_length_zero : xs = [] ↔ length xs = 0 := by
     | cons a as => simp at h
 
 /--
-If the length of a list is greater than zero, it cannot be `List.nil`.
+A `List` is nonempty **iff** it has length greater than zero.
 -/
 theorem neq_nil_iff_length_gt_zero : xs ≠ [] ↔ xs.length > 0 := by
   have : ¬xs = [] ↔ ¬length xs = 0 := Iff.not eq_nil_iff_length_zero
@@ -57,12 +58,10 @@ theorem neq_nil_iff_length_gt_zero : xs ≠ [] ↔ xs.length > 0 := by
     ← zero_lt_iff
   ] at this
 
--- ========================================
--- Membership
--- ========================================
+/-! ### Membership -/
 
 /--
-If there exists a member of a list, the list must be nonempty.
+There exists a member of a `List` **iff** the `List` is nonempty.
 -/
 theorem exists_mem_iff_neq_nil : (∃ x, x ∈ xs) ↔ xs ≠ [] := by
   apply Iff.intro
@@ -74,18 +73,18 @@ theorem exists_mem_iff_neq_nil : (∃ x, x ∈ xs) ↔ xs ≠ [] := by
     | cons a as => exact ⟨a, by simp⟩
 
 /--
-Any value that can be retrieved via `get` must be a member of the list argument.
+If `i` is a valid index of `List` `xs`, then `xs[i]` is a member of `xs`.
 -/
 theorem get_mem_self {xs : List α} {i : Fin xs.length} : get xs i ∈ xs := by
   induction xs with
   | nil => have ⟨_, hj⟩ := i; simp at hj
   | cons a as ih =>
     by_cases hk : i = ⟨0, by simp⟩
-    · -- If `i = 0`, we are `get`ting the head of our list. This element is
+    · -- If `i = 0`, we are `get`ting the head of our list. This entry is
       -- trivially a member of `xs`.
       conv => lhs; unfold get; rw [hk]; simp only
       simp
-    · -- Otherwise we are `get`ting an element in the tail. Our induction
+    · -- Otherwise we are `get`ting an entry in the tail. Our induction
       -- hypothesis closes this case.
       have ⟨k', hk'⟩ : ∃ k', i = Fin.succ k' := by
         have ni : ↑i ≠ (0 : ℕ) := fun hi => hk (Fin.ext hi)
@@ -98,8 +97,8 @@ theorem get_mem_self {xs : List α} {i : Fin xs.length} : get xs i ∈ xs := by
       exact mem_append_of_mem_right [a] ih
 
 /--
-`x` is a member of list `xs` if and only if there exists some index of `xs` that
-`x` corresponds to.
+A value `x` is a member of `List` `xs` **iff** there exists some index `i` such
+that `x = xs[i]`.
 -/
 theorem mem_iff_exists_get {xs : List α}
   : x ∈ xs ↔ ∃ i : Fin xs.length, xs.get i = x := by
@@ -117,12 +116,10 @@ theorem mem_iff_exists_get {xs : List α}
     | nil => have nh := i.2; simp at nh
     | cons a bs => rw [← hi]; exact get_mem_self
 
--- ========================================
--- Sublists
--- ========================================
+/-! ## Sublists -/
 
 /--
-Given nonempty list `xs`, `head` is equivalent to `get`ting the `0`th index.
+The first entry of a nonempty `List` has index `0`.
 -/
 theorem head_eq_get_zero {xs : List α} (h : xs ≠ [])
   : head xs h = get xs ⟨0, neq_nil_iff_length_gt_zero.mp h⟩ := by
@@ -131,8 +128,7 @@ theorem head_eq_get_zero {xs : List α} (h : xs ≠ [])
   simp
 
 /--
-Given nonempty list `xs`, `getLast xs` is equivalent to `get`ting the
-`length - 1`th index.
+The last entry of a nonempty `List` has index `1` less than its length.
 -/
 theorem getLast_eq_get_length_sub_one {xs : List α} (h : xs ≠ [])
   : getLast xs h = get xs ⟨xs.length - 1, by
@@ -155,12 +151,11 @@ theorem some_tail?_imp_cons (h : tail? xs = some ys) : ∃ x, xs = x :: ys := by
   | nil => simp at h
   | cons r rs => exact ⟨r, by simp at h; rw [h]⟩
 
--- ========================================
--- Zips
--- ========================================
+/-! ### Zips -/
 
 /--
-The length of a list zipped with its tail is the length of the tail.
+The length of a zip consisting of a `List` and its tail is the length of the
+`List`'s tail.
 -/
 theorem length_zipWith_self_tail_eq_length_sub_one
   : length (zipWith f (a :: as) as) = length as := by
@@ -170,7 +165,7 @@ theorem length_zipWith_self_tail_eq_length_sub_one
   simp only [le_add_iff_nonneg_right]
 
 /--
-The result of a `zipWith` is nonempty if and only if both arguments are
+The output `List` of a `zipWith` is nonempty **iff** both of its inputs are
 nonempty.
 -/
 theorem zipWith_nonempty_iff_args_nonempty
@@ -190,7 +185,7 @@ theorem zipWith_nonempty_iff_args_nonempty
     simp
 
 /--
-An index less than the length of a `zip` is less than the length of the left
+An index less than the length of a `zipWith` is less than the length of the left
 operand.
 -/
 theorem fin_zipWith_imp_val_lt_length_left {i : Fin (zipWith f xs ys).length}
@@ -200,7 +195,7 @@ theorem fin_zipWith_imp_val_lt_length_left {i : Fin (zipWith f xs ys).length}
   exact hi.left
 
 /--
-An index less than the length of a `zip` is less than the length of the left
+An index less than the length of a `zipWith` is less than the length of the left
 operand.
 -/
 theorem fin_zipWith_imp_val_lt_length_right {i : Fin (zipWith f xs ys).length}
@@ -209,13 +204,11 @@ theorem fin_zipWith_imp_val_lt_length_right {i : Fin (zipWith f xs ys).length}
   simp only [length_zipWith, ge_iff_le, lt_min_iff] at hi
   exact hi.right
 
--- ========================================
--- Pairwise
--- ========================================
+/-! ### Pairwise -/
 
 /--
-Given a list `xs` of length `k`, produces a list of length `k - 1` where the
-`i`th member of the resulting list is `f xs[i] xs[i + 1]`.
+Given a `List` `xs` of length `k`, this function produces a `List` of length
+`k - 1` where the `i`th member of the resulting `List` is `f xs[i] xs[i + 1]`.
 -/
 def pairwise (xs : List α) (f : α → α → β) : List β :=
   match xs.tail? with
@@ -223,8 +216,8 @@ def pairwise (xs : List α) (f : α → α → β) : List β :=
   | some ys => zipWith f xs ys
 
 /--
-If list `xs` is empty, then any `pairwise` operation on `xs` yields an empty
-list.
+If `List` `xs` is empty, then any `pairwise` operation on `xs` yields an empty
+`List`.
 -/
 theorem len_pairwise_len_nil_eq_zero {xs : List α} (h : xs = [])
   : (xs.pairwise f).length = 0 := by
@@ -248,8 +241,8 @@ theorem len_pairwise_len_cons_sub_one {xs : List α} (h : xs.length > 0)
     conv => lhs; unfold length
 
 /--
-If the `pairwise` list isn't empty, then the original list must have at least
-two elements.
+If a `pairwise`'d `List` isn't empty, then the input `List` must have at least
+two entries.
 -/
 theorem mem_pairwise_imp_length_self_ge_2 {xs : List α} (h : xs.pairwise f ≠ [])
   : xs.length ≥ 2 := by
@@ -263,8 +256,8 @@ theorem mem_pairwise_imp_length_self_ge_2 {xs : List α} (h : xs.pairwise f ≠ 
     | cons a' bs' => unfold length length; rw [add_assoc]; norm_num
 
 /--
-If `x` is a member of the pairwise'd list, there must exist two (adjacent)
-elements of the list, say `x₁` and `x₂`, such that `x = f x₁ x₂`.
+If `x` is a member of a `pairwise`'d list, there must exist two (adjacent)
+entries of the list, say `x₁` and `x₂`, such that `x = f x₁ x₂`.
 -/
 theorem mem_pairwise_imp_exists_adjacent {xs : List α} (h : x ∈ xs.pairwise f)
   : ∃ i : Fin (xs.length - 1), ∃ x₁ x₂,

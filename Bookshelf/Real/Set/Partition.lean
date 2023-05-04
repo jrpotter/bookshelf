@@ -1,7 +1,15 @@
-import Mathlib.Data.List.Sort
-
 import Bookshelf.List.Basic
 import Bookshelf.Real.Set.Interval
+import Mathlib.Data.List.Sort
+
+/-! # Bookshelf.Real.Set.Partition
+
+A description of a partition as defined in the context of stepwise functions.
+Refer to [^1] for more information.
+
+[^1]: Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an
+      Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
+-/
 
 namespace Real
 

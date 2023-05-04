@@ -1,5 +1,10 @@
 import Mathlib.Data.Real.Basic
 
+/-! # Bookshelf.Real.Set.Basic
+
+A collection of useful definitions and theorems regarding sets.
+-/
+
 namespace Real
 
 /--
@@ -10,7 +15,7 @@ def minkowski_sum (s t : Set ℝ) :=
   { x | ∃ a ∈ s, ∃ b ∈ t, x = a + b }
 
 /--
-The sum of two sets is nonempty if and only if the summands are nonempty.
+The sum of two sets is nonempty **iff** the summands are nonempty.
 -/
 def nonempty_minkowski_sum_iff_nonempty_add_nonempty {s t : Set ℝ}
   : (minkowski_sum s t).Nonempty ↔ s.Nonempty ∧ t.Nonempty := by

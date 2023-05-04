@@ -1,21 +1,34 @@
 import Mathlib.Tactic.Ring
 
+/-! # Bookshelf.LTuple.Basic
+
+The following is a representation of a (possibly empty) left-biased tuple. A
+left-biased `n`-tuple is defined recursively as follows:
+
+```
+⟨x₁, ..., xₙ⟩ = ⟨⟨x₁, ..., xₙ₋₁⟩, xₙ⟩
+```
+
+Note a `Tuple` exists in Lean already. This implementation differs in two
+notable ways:
+
+1. It is left-associative. The built-in `Tuple` instance evaluates e.g.
+  `(x₁, x₂, x₃)` as `(x₁, (x₂, x₃))` instead of `((x₁, x₂), x₃)`.
+2. Internally, the built-in `Tuple` instance is syntactic sugar for nested
+   `Prod` instances. Unlike this implementation, an `LTuple` is a homogeneous
+   collection.
+
+In general, prefer using `Prod` over `LTuple`. This exists primarily to solve
+certain theorems outlined in [^1].
+
+[^1]: Enderton, Herbert B. A Mathematical Introduction to Logic. 2nd ed. San
+      Diego: Harcourt/Academic Press, 2001.
+-/
+
 /--
-A representation of a possibly empty left-biased tuple. `n`-tuples are defined
-recursively as follows:
+#### LTuple
 
-  `⟨x₁, ..., xₙ⟩ = ⟨⟨x₁, ..., xₙ₋₁⟩, xₙ⟩`
-
-Keep in mind a tuple in Lean already exists but it differs in two ways:
-
-1. It is right associative. That is, `(x₁, x₂, x₃)` evaluates to
-   `(x₁, (x₂, x₃))` instead of `((x₁, x₂), x₃)`.
-2. Internally a tuple is syntactic sugar for nested `Prod` instances. Inputs
-   types of `Prod` are not required to be the same meaning non-homogeneous
-   collections are allowed.
-   
-In general, prefer using `Prod` over this `Tuple` definition. This exists solely
-for proving theorems outlined in Enderton's book.
+A left-biased, possibly empty, homogeneous `Tuple`-like structure..
 -/
 inductive LTuple : (α : Type u) → (size : Nat) → Type u where
   | nil : LTuple α 0
@@ -23,9 +36,7 @@ inductive LTuple : (α : Type u) → (size : Nat) → Type u where
 
 namespace LTuple
 
--- ========================================
--- Coercions
--- ========================================
+/-! ## Coercions -/
 
 scoped instance : CoeOut (LTuple α (min (m + n) m)) (LTuple α m) where
   coe := cast (by simp)
@@ -48,17 +59,19 @@ scoped instance : Coe (LTuple α (min m n + 1)) (LTuple α (min (m + 1) (n + 1))
 scoped instance : Coe (LTuple α m) (LTuple α (min (m + n) m)) where
   coe := cast (by simp)
 
--- ========================================
--- Equality
--- ========================================
+/-! ### Equality -/
 
-theorem eq_nil : @LTuple.nil α = nil := rfl
-
+/--
+Two values `a` and `b` are equal **iff** `[a] = [b]`.
+-/
 theorem eq_iff_singleton : (a = b) ↔ (snoc a nil = snoc b nil) := by
   apply Iff.intro
   · intro h; rw [h]
   · intro h; injection h
 
+/--
+Two lists are equal **iff** their heads and tails are equal.
+-/
 theorem eq_iff_snoc {t₁ t₂ : LTuple α n}
   : (a = b ∧ t₁ = t₂) ↔ (snoc t₁ a = snoc t₂ b) := by
   apply Iff.intro
@@ -74,7 +87,7 @@ equality.
 protected def hasDecEq [DecidableEq α] (t₁ t₂ : LTuple α n)
   : Decidable (Eq t₁ t₂) :=
   match t₁, t₂ with
-  | nil, nil => isTrue eq_nil
+  | nil, nil => isTrue rfl
   | snoc as a, snoc bs b =>
     match LTuple.hasDecEq as bs with
     | isFalse np => isFalse (fun h => absurd (eq_iff_snoc.mpr h).right np)
@@ -86,47 +99,43 @@ protected def hasDecEq [DecidableEq α] (t₁ t₂ : LTuple α n)
 
 instance [DecidableEq α] : DecidableEq (LTuple α n) := LTuple.hasDecEq
 
--- ========================================
--- Basic API
--- ========================================
+/-! ## Basic API -/
 
 /--
-Returns the number of entries of the `Tuple`.
+Returns the number of entries in an `LTuple`.
 -/
 def size (_ : LTuple α n) : Nat := n
 
 /--
-Returns all but the last entry of the `Tuple`.
+Returns all but the last entry of an `LTuple`.
 -/
 def init : (t : LTuple α (n + 1)) → LTuple α n
   | snoc vs _ => vs
 
 /--
-Returns the last entry of the `Tuple`.
+Returns the last entry of an `LTuple`.
 -/
 def last : LTuple α (n + 1) → α
   | snoc _ v => v
 
 /--
-Prepends an entry to the start of the `Tuple`.
+Prepends an entry to an `LTuple`.
 -/
 def cons : LTuple α n → α → LTuple α (n + 1)
   | nil, a => snoc nil a
   | snoc ts t, a => snoc (cons ts a) t
 
--- ========================================
--- Concatenation
--- ========================================
+/-! ## Concatenation -/
 
 /--
-Join two `Tuple`s together end to end.
+Joins two `LTuple`s together end to end.
 -/
 def concat : LTuple α m → LTuple α n → LTuple α (m + n)
   | is, nil => is
   | is, snoc ts t => snoc (concat is ts) t
 
 /--
-Concatenating a `Tuple` with `nil` yields the original `Tuple`.
+Concatenating an `LTuple` with `nil` yields the original `LTuple`.
 -/
 theorem self_concat_nil_eq_self (t : LTuple α m) : concat t nil = t :=
   match t with
@@ -134,7 +143,7 @@ theorem self_concat_nil_eq_self (t : LTuple α m) : concat t nil = t :=
   | snoc _ _ => rfl
 
 /--
-Concatenating `nil` with a `Tuple` yields the `Tuple`.
+Concatenating `nil` with an `LTuple` yields the original `LTuple`.
 -/
 theorem nil_concat_self_eq_self (t : LTuple α m) : concat nil t = t := by
   induction t with
@@ -158,15 +167,16 @@ theorem nil_concat_self_eq_self (t : LTuple α m) : concat nil t = t := by
       h₁
 
 /--
-Concatenating a `Tuple` to a nonempty `Tuple` moves `concat` calls closer to
-expression leaves.
+Concatenating an `LTuple` to a nonempty `LTuple` moves `concat` calls closer to
+the expression leaves.
 -/
 theorem concat_snoc_snoc_concat {bs : LTuple α n}
   : concat as (snoc bs b) = snoc (concat as bs) b :=
   rfl
 
 /--
-`snoc` is equivalent to concatenating the `init` and `last` element together.
+`snoc` is equivalent to concatenating the `init` and `last` elements of an
+`LTuple` together.
 -/
 theorem snoc_eq_init_concat_last (as : LTuple α m)
   : snoc as a = concat as (snoc nil a) := by
@@ -174,13 +184,11 @@ theorem snoc_eq_init_concat_last (as : LTuple α m)
   | nil => rfl
   | snoc _ _ => simp; unfold concat concat; rfl
 
--- ========================================
--- Initial sequences
--- ========================================
+/-! ## Initial Sequences -/
 
 /--
-Take the first `k` entries from the `Tuple` to form a new `Tuple`, or the entire
-`Tuple` if `k` exceeds the number of entries.
+Takes the first `k` entries from an `LTuple` to form a new `LTuple`, or the
+entire `LTuple` if `k` exceeds the size.
 -/
 def take (t : LTuple α n) (k : Nat) : LTuple α (min n k) :=
   if h : n ≤ k then
@@ -196,7 +204,7 @@ def take (t : LTuple α n) (k : Nat) : LTuple α (min n k) :=
     rw [min_eq_right h', min_eq_right (Nat.le_trans h' (Nat.le_succ m))]
 
 /--
-Taking no entries from any `Tuple` should yield an empty one.
+Taking no entries from any `LTuple` should yield an empty `LTuple`.
 -/
 theorem self_take_zero_eq_nil (t : LTuple α n) : take t 0 = @nil α := by
   induction t with
@@ -204,13 +212,14 @@ theorem self_take_zero_eq_nil (t : LTuple α n) : take t 0 = @nil α := by
   | snoc as a ih => unfold take; simp; rw [ih]; simp
 
 /--
-Taking any number of entries from an empty `Tuple` should yield an empty one.
+Taking any number of entries from an empty `LTuple` should yield an empty
+`LTuple`.
 -/
 theorem nil_take_zero_eq_nil (k : Nat) : (take (@nil α) k) = @nil α := by
   cases k <;> (unfold take; simp)
 
 /--
-Taking `n` entries from a `Tuple` of size `n` should yield the same `Tuple`.
+Taking `n` entries from an `LTuple` of size `n` should yield the same `LTuple`.
 -/
 theorem self_take_size_eq_self (t : LTuple α n) : take t n = t := by
   cases t with
@@ -218,8 +227,8 @@ theorem self_take_size_eq_self (t : LTuple α n) : take t n = t := by
   | snoc as a => unfold take; simp
 
 /--
-Taking all but the last entry of a `Tuple` is the same result, regardless of the
-value of the last entry.
+Taking `n - 1` elements from an `LTuple` of size `n` yields the same result,
+regardless of the last entry's value.
 -/
 theorem take_subst_last {as : LTuple α n} (a₁ a₂ : α)
   : take (snoc as a₁) n = take (snoc as a₂) n := by
@@ -227,7 +236,8 @@ theorem take_subst_last {as : LTuple α n} (a₁ a₂ : α)
   simp
 
 /--
-Taking `n` elements from a tuple of size `n + 1` is the same as invoking `init`.
+Taking `n` elements from an `LTuple` of size `n + 1` is the same as invoking
+`init`.
 -/
 theorem init_eq_take_pred (t : LTuple α (n + 1)) : take t n = init t := by
   cases t with
@@ -238,8 +248,8 @@ theorem init_eq_take_pred (t : LTuple α (n + 1)) : take t n = init t := by
     simp
 
 /--
-If two `Tuple`s are equal, then any initial sequences of those two `Tuple`s are
-also equal.
+If two `LTuple`s are equal, then any initial sequences of these two `LTuple`s
+are also equal.
 -/
 theorem eq_tuple_eq_take {t₁ t₂ : LTuple α n}
   : (t₁ = t₂) → (t₁.take k = t₂.take k) := by
@@ -247,8 +257,8 @@ theorem eq_tuple_eq_take {t₁ t₂ : LTuple α n}
   rw [h]
 
 /--
-Given a `Tuple` of size `k`, concatenating an arbitrary `Tuple` and taking `k`
-elements yields the original `Tuple`.
+Given an `LTuple` of size `k`, concatenating an arbitrary `LTuple` and taking
+`k` elements yields the original `LTuple`.
 -/
 theorem eq_take_concat {t₁ : LTuple α m} {t₂ : LTuple α n}
   : take (concat t₁ t₂) m = t₁ := by

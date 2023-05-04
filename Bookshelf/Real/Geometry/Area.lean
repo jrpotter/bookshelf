@@ -1,6 +1,15 @@
 import Bookshelf.Real.Function.Step
 import Bookshelf.Real.Geometry.Rectangle
 
+/-! # Bookshelf.Real.Geometry.Area
+
+An axiomatic foundation for the concept of *area*. These axioms are those
+outlined in [^1].
+
+[^1]: Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an
+      Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
+-/
+
 namespace Real.Geometry.Area
 
 /--

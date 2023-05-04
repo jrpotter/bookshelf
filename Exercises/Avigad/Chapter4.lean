@@ -1,32 +1,35 @@
-/-
-Chapter 4
+/-! # Exercises.Avigad.Chapter4
 
 Quantifiers and Equality
 -/
 
--- ========================================
--- Exercise 1
---
--- Prove these equivalences. You should also try to understand why the reverse
--- implication is not derivable in the last example.
--- ========================================
+/-! #### Exercise 1
+
+Prove these equivalences. You should also try to understand why the reverse
+implication is not derivable in the last example.
+-/
+
+namespace Exercises.Avigad.Chapter4
 
 namespace ex1
 
 variable (α : Type _)
 variable (p q : α → Prop)
 
-example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
+theorem forall_and
+  : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
   Iff.intro
     (fun h => ⟨fun x => And.left (h x), fun x => And.right (h x)⟩)
     (fun ⟨h₁, h₂⟩ x => ⟨h₁ x, h₂ x⟩)
 
-example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
+theorem forall_imp_distrib
+  : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
   fun h₁ h₂ x =>
     have px : p x := h₂ x
     h₁ x px
 
-example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
+theorem forall_or_distrib
+  : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
   fun h₁ x => h₁.elim
     (fun h₂ => Or.inl (h₂ x))
     (fun h₂ => Or.inr (h₂ x))
@@ -37,13 +40,12 @@ example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
 
 end ex1
 
--- ========================================
--- Exercise 2
---
--- It is often possible to bring a component of a formula outside a universal
--- quantifier, when it does not depend on the quantified variable. Try proving
--- these (one direction of the second of these requires classical logic).
--- ========================================
+/-! #### Exercise 2
+
+It is often possible to bring a component of a formula outside a universal
+quantifier, when it does not depend on the quantified variable. Try proving
+these (one direction of the second of these requires classical logic).
+-/
 
 namespace ex2
 
@@ -51,14 +53,14 @@ variable (α : Type _)
 variable (p q : α → Prop)
 variable (r : Prop)
 
-example : α → ((∀ _ : α, r) ↔ r) :=
+theorem self_imp_forall : α → ((∀ _ : α, r) ↔ r) :=
   fun a => Iff.intro (fun h => h a) (fun hr _ => hr)
 
 section
 
 open Classical
 
-example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
+theorem forall_or_right : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
   Iff.intro
     (fun h₁ => (em r).elim
       Or.inr
@@ -69,20 +71,19 @@ example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
 
 end
 
-example : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
+theorem forall_swap : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
   Iff.intro
     (fun h hr hx => h hx hr)
     (fun h hx hr => h hr hx)
 
 end ex2
 
--- ========================================
--- Exercise 3
---
--- Consider the "barber paradox," that is, the claim that in a certain town
--- there is a (male) barber that shaves all and only the men who do not shave
--- themselves. Prove that this is a contradiction.
--- ========================================
+/-! #### Exercise 3
+
+Consider the "barber paradox," that is, the claim that in a certain town there
+is a (male) barber that shaves all and only the men who do not shave themselves.
+Prove that this is a contradiction.
+-/
 
 namespace ex3
 
@@ -92,7 +93,7 @@ variable (men : Type _)
 variable (barber : men)
 variable (shaves : men → men → Prop)
 
-example (h : ∀ x : men, shaves barber x ↔ ¬shaves x x) : False :=
+theorem barber_paradox (h : ∀ x : men, shaves barber x ↔ ¬shaves x x) : False :=
   have b : shaves barber barber ↔ ¬shaves barber barber := h barber
   (em (shaves barber barber)).elim
     (fun b' => absurd b' (Iff.mp b b'))
@@ -100,18 +101,16 @@ example (h : ∀ x : men, shaves barber x ↔ ¬shaves x x) : False :=
 
 end ex3
 
--- ========================================
--- Exercise 4
---
--- Remember that, without any parameters, an expression of type `Prop` is just
--- an assertion. Fill in the definitions of `prime` and `Fermat_prime` below,
--- and construct each of the given assertions. For example, you can say that
--- there are infinitely many primes by asserting that for every natural number
--- `n`, there is a prime number greater than `n.` Goldbach’s weak conjecture
--- states that every odd number greater than `5` is the sum of three primes.
--- Look up the definition of a Fermat prime or any of the other statements, if
--- necessary.
--- ========================================
+/-! #### Exercise 4
+
+Remember that, without any parameters, an expression of type `Prop` is just an
+assertion. Fill in the definitions of `prime` and `Fermat_prime` below, and
+construct each of the given assertions. For example, you can say that there are
+infinitely many primes by asserting that for every natural number `n`, there is
+a prime number greater than `n.` Goldbach’s weak conjecture states that every
+odd number greater than `5` is the sum of three primes. Look up the definition
+of a Fermat prime or any of the other statements, if necessary.
+-/
 
 namespace ex4
 
@@ -144,11 +143,10 @@ def Fermat'sLastTheorem : Prop :=
 
 end ex4
 
--- ========================================
--- Exercise 5
---
--- Prove as many of the identities listed in Section 4.4 as you can.
--- ========================================
+/-! #### Exercise 5
+
+Prove as many of the identities listed in Section 4.4 as you can.
+-/
 
 namespace ex5
 
@@ -158,18 +156,18 @@ variable (α : Type _)
 variable (p q : α → Prop)
 variable (r s : Prop)
 
-example : (∃ _ : α, r) → r :=
+theorem exists_imp : (∃ _ : α, r) → r :=
   fun ⟨_, hr⟩ => hr
 
-example (a : α) : r → (∃ _ : α, r) :=
+theorem exists_intro (a : α) : r → (∃ _ : α, r) :=
   fun hr => ⟨a, hr⟩
 
-example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
+theorem exists_and_right : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
   Iff.intro
     (fun ⟨hx, ⟨hp, hr⟩⟩ => ⟨⟨hx, hp⟩, hr⟩)
     (fun ⟨⟨hx, hp⟩, hr⟩ => ⟨hx, ⟨hp, hr⟩⟩)
 
-example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+theorem exists_or : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
   Iff.intro
     (fun ⟨hx, hpq⟩ => hpq.elim
       (fun hp => Or.inl ⟨hx, hp⟩)
@@ -178,19 +176,19 @@ example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
       (fun ⟨hx, hp⟩ => ⟨hx, Or.inl hp⟩)
       (fun ⟨hx, hq⟩ => ⟨hx, Or.inr hq⟩))
 
-example : (∀ x, p x) ↔ ¬(∃ x, ¬p x) :=
+theorem forall_iff_not_exists : (∀ x, p x) ↔ ¬(∃ x, ¬p x) :=
   Iff.intro
     (fun h ⟨hx, np⟩ => np (h hx))
     (fun h hx => byContradiction
       fun np => h ⟨hx, np⟩)
 
-example : (∃ x, p x) ↔ ¬(∀ x, ¬p x) :=
+theorem exists_iff_not_forall : (∃ x, p x) ↔ ¬(∀ x, ¬p x) :=
   Iff.intro
     (fun ⟨hx, hp⟩ h => absurd hp (h hx))
     (fun h => byContradiction
       fun h' => h (fun (x : α) hp => h' ⟨x, hp⟩))
 
-example : (¬∃ x, p x) ↔ (∀ x, ¬p x) :=
+theorem not_exists : (¬∃ x, p x) ↔ (∀ x, ¬p x) :=
   Iff.intro
     (fun h hx hp => h ⟨hx, hp⟩)
     (fun h ⟨hx, hp⟩ => absurd hp (h hx))
@@ -202,15 +200,15 @@ theorem forall_negation : (¬∀ x, p x) ↔ (∃ x, ¬p x) :=
         fun np => h' ⟨x, np⟩))
     (fun ⟨hx, np⟩ h => absurd (h hx) np)
 
-example : (¬∀ x, p x) ↔ (∃ x, ¬p x) :=
+theorem not_forall : (¬∀ x, p x) ↔ (∃ x, ¬p x) :=
   forall_negation α p
 
-example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
+theorem forall_iff_exists_imp : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
   Iff.intro
     (fun h ⟨hx, hp⟩ => h hx hp)
     (fun h hx hp => h ⟨hx, hp⟩)
 
-example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
+theorem exists_iff_forall_imp (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
   Iff.intro
     (fun ⟨hx, hp⟩ h => hp (h hx))
     (fun h₁ => (em (∀ x, p x)).elim
@@ -220,7 +218,7 @@ example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
         match h₃ with
         | ⟨hx, hp⟩ => ⟨hx, fun hp' => absurd hp' hp⟩))
 
-example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
+theorem exists_self_iff_self_exists (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
   Iff.intro
     (fun ⟨hx, hrp⟩ hr => ⟨hx, hrp hr⟩)
     (fun h => (em r).elim
@@ -230,11 +228,10 @@ example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
 
 end ex5
 
--- ========================================
--- Exercise 6
---
--- Give a calculational proof of the theorem `log_mul` below.
--- ========================================
+/-! #### Exercise 6
+
+Give a calculational proof of the theorem `log_mul` below.
+-/
 
 namespace ex6
 
@@ -244,16 +241,21 @@ variable (exp_log_eq : ∀ {x}, x > 0 → exp (log x) = x)
 variable (exp_pos : ∀ x, exp x > 0)
 variable (exp_add : ∀ x y, exp (x + y) = exp x * exp y)
 
-example (x y z : Float) : exp (x + y + z) = exp x * exp y * exp z :=
+theorem exp_add_mul_exp (x y z : Float)
+  : exp (x + y + z) = exp x * exp y * exp z :=
   by rw [exp_add, exp_add]
 
-example (y : Float) (h : y > 0) : exp (log y) = y := exp_log_eq h
+theorem exp_log_eq_self (y : Float) (h : y > 0)
+  : exp (log y) = y := exp_log_eq h
 
 theorem log_mul {x y : Float} (hx : x > 0) (hy : y > 0) :
   log (x * y) = log x + log y :=
-calc log (x * y) = log (x * exp (log y)) := by rw [exp_log_eq hy]
-               _ = log (exp (log x) * exp (log y)) := by rw [exp_log_eq hx]
-               _ = log (exp (log x + log y)) := by rw [exp_add]
-               _ = log x + log y := by rw [log_exp_eq]
+  calc log (x * y)
+    _ = log (x * exp (log y)) := by rw [exp_log_eq hy]
+    _ = log (exp (log x) * exp (log y)) := by rw [exp_log_eq hx]
+    _ = log (exp (log x + log y)) := by rw [exp_add]
+    _ = log x + log y := by rw [log_exp_eq]
 
 end ex6
+
+end Exercises.Avigad.Chapter4

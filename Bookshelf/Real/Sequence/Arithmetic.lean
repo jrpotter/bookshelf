@@ -1,5 +1,11 @@
 import Mathlib.Data.Real.Basic
 
+/-! # Bookshelf.Real.Sequence.Arithmetic
+
+A characterization of an arithmetic sequence, i.e. a sequence with a common
+difference between each term.
+-/
+
 namespace Real
 
 /--

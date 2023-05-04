@@ -1,5 +1,15 @@
 import Bookshelf.Real.Geometry.Basic
 
+/-! # Bookshelf.Real.Geometry.Rectangle
+
+A characterization of a rectangle. This follows the definition as outlined in
+[^1]. Note that a `Point` and a `LineSegment` are both considered rectangles,
+with one or both dimensions equal to `0` respectively.
+
+[^1]: Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an
+      Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
+-/
+
 namespace Real
 
 /--
@@ -29,11 +39,17 @@ A `Rectangle` is the locus of points bounded by its edges.
 def set_def (r : Rectangle) : Set ℝ² :=
   sorry
 
+/--
+A `Rectangle`'s top side is equal in length to its bottom side.
+-/
 theorem dist_top_eq_dist_bottom (r : Rectangle)
   : dist r.top_left r.top_right = dist r.bottom_left r.bottom_right := by
   unfold top_right dist
   repeat rw [add_comm, sub_right_comm, add_sub_cancel']
 
+/--
+A `Rectangle`'s left side is equal in length to its right side.
+-/
 theorem dist_left_eq_dist_right (r : Rectangle)
   : dist r.top_left r.bottom_left = dist r.top_right r.bottom_right := by
   unfold top_right dist

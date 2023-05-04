@@ -1,5 +1,12 @@
 import Bookshelf.Real.Basic
 
+/-! # Bookshelf.Real.Rational
+
+Additional theorems and definitions useful in the context of rational numbers.
+Most of these will likely be deleted once the corresponding functions in
+`Mathlib` are ported to Lean 4.
+-/
+
 /--
 Assert that a real number is irrational.
 -/
@@ -7,8 +14,5 @@ def irrational (x : ℝ) := x ∉ Set.range RatCast.ratCast
 
 /--
 Assert that a real number is rational.
-
-Note this does *not* require the found rational to be in reduced form. Members
-of `ℚ` expect this (by proving the numerator and denominator are co-prime).
 -/
 def rational (x : ℝ) := ¬ irrational x
