@@ -16,25 +16,15 @@ LaTeX when not.
 
 ## Documentation
 
-To generate Lean documentation, we use [doc-gen4](https://github.com/leanprover/doc-gen4).
-Run the following to build and serve this:
+To generate Lean documentation, we use [bookshelf-docgen](https://github.com/jrpotter/bookshelf-docgen).
+Refer to this project on prerequisites and the run the following to build and
+serve files locally:
 
 ```bash
 > lake build Bookshelf:docs
-> lake run doc-server
+> lake run server
 ```
 
 This assumes you have `python3` available in your `$PATH`. To change how the
 server behaves, refer to the `.env` file located in the root directory of this
-project. To also serve the corresponding LaTeX files scattered throughout this
-project, first install the following:
-
-- `tex4ht`
-- `make4ht`
-- `luaxml`
-
-Afterward, you can generate the necessary HTML via:
-
-```bash
-> find . -name '*.tex' | grep -v preamble | xargs -n 1 make4ht -e build.mk4
-```
+project.

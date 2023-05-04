@@ -14,11 +14,11 @@
     "name": "lake",
     "inputRev?": "master"}},
   {"git":
-   {"url": "https://github.com/leanprover/doc-gen4",
+   {"url": "https://github.com/jrpotter/bookshelf-docgen.git",
     "subDir?": null,
-    "rev": "cf86cb481501e9f03dce5b0cb362b19cdba1824f",
+    "rev": "3facb4b93ec5b9227b013287de8c837912e814ef",
     "name": "doc-gen4",
-    "inputRev?": "cf86cb481501e9f03dce5b0cb362b19cdba1824f"}},
+    "inputRev?": "3facb4b93ec5b9227b013287de8c837912e814ef"}},
   {"git":
    {"url": "https://github.com/mhuisi/lean4-cli",
     "subDir?": null,
@@ -52,7 +52,7 @@
   {"git":
    {"url": "https://github.com/fgdorais/lean4-unicode-basic",
     "subDir?": null,
-    "rev": "be1f061688faa1dbb224773c54901661253fb4b8",
+    "rev": "ce508dcd1fd49ba15675861aafd864572a0b8252",
     "name": "UnicodeBasic",
     "inputRev?": "main"}},
   {"git":

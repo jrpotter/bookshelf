@@ -11,8 +11,8 @@ require std4 from git
   "https://github.com/leanprover/std4.git" @
     "6006307d2ceb8743fea7e00ba0036af8654d0347"
 require «doc-gen4» from git
-  "https://github.com/leanprover/doc-gen4" @
-    "cf86cb481501e9f03dce5b0cb362b19cdba1824f"
+  "https://github.com/jrpotter/bookshelf-docgen.git" @
+    "3facb4b93ec5b9227b013287de8c837912e814ef"
 
 @[default_target]
 lean_lib «Bookshelf» {
@@ -53,14 +53,13 @@ documentation has already been generated prior via
 ```
 
 USAGE:
-  lake run doc-server
+  lake run server
 -/
-script «doc-server» (_args) do
+script server (_args) do
   let ((), config) <- StateT.run readConfig {}
-  IO.println s!"Running Lean on `http://localhost:{config.port}/doc`"
-  IO.println s!"Running LaTeX on `http://localhost:{config.port}/tex`"
+  IO.println s!"Running Lean on `http://localhost:{config.port}`"
   _ <- IO.Process.run {
     cmd := "python3",
-    args := #["-m", "http.server", toString config.port, "-d", "build"],
+    args := #["-m", "http.server", toString config.port, "-d", "build/doc"],
   }
   return 0
