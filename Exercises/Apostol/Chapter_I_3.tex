@@ -3,7 +3,8 @@
 
 \input{preamble}
 
-\newcommand{\link}[1]{\href{../../../../Exercises/Apostol/Chapter_I_3.html\##1}{#1}}
+\newcommand{\ns}{Exercises.Apostol.Chapter\_I\_3.Real}
+\newcommand{\link}[1]{\href{../Chapter_I_3.html\#\ns.#1}{\ns.#1}}
 
 \begin{document}
 
@@ -15,7 +16,7 @@ is, there is a real number $L$ such that $L = \inf{S}$.
 
 \begin{proof}
 
-  \link{Real.exists\_isGLB}
+  \link{exists\_isGLB}
 
 \end{proof}
 
@@ -26,7 +27,7 @@ For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
 \begin{proof}
 
-  \link{Real.exists\_pnat\_geq\_self}
+  \link{exists\_pnat\_geq\_self}
 
 \end{proof}
 
@@ -38,7 +39,7 @@ integer $n$ such that $nx > y$.
 
 \begin{proof}
 
-  \link{Real.exists\_pnat\_mul\_self\_geq\_of\_pos}
+  \link{exists\_pnat\_mul\_self\_geq\_of\_pos}
 
 \end{proof}
 
@@ -51,7 +52,7 @@ for every integer $n \geq 1$, then $x = a$.
 
 \begin{proof}
 
-  \link{Real.forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
+  \link{forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
 
 \end{proof}
 
@@ -69,8 +70,8 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 \begin{proof}
 
   \begin{enumerate}[(a)]
-    \item \link{Real.sup\_imp\_exists\_gt\_sup\_sub\_delta}
-    \item \link{Real.inf\_imp\_exists\_lt\_inf\_add\_delta}
+    \item \link{sup\_imp\_exists\_gt\_sup\_sub\_delta}
+    \item \link{inf\_imp\_exists\_lt\_inf\_add\_delta}
   \end{enumerate}
 
 \end{proof}
@@ -91,8 +92,8 @@ $$C = \{a + b : a \in A, b \in B\}.$$
 \begin{proof}
 
   \begin{enumerate}[(a)]
-    \item \link{Real.sup\_minkowski\_sum\_eq\_sup\_add\_sup}
-    \item \link{Real.inf\_minkowski\_sum\_eq\_inf\_add\_inf}
+    \item \link{sup\_minkowski\_sum\_eq\_sup\_add\_sup}
+    \item \link{inf\_minkowski\_sum\_eq\_inf\_add\_inf}
   \end{enumerate}
 
 \end{proof}
@@ -108,7 +109,7 @@ $$\sup{S} \leq \inf{T}.$$
 
 \begin{proof}
 
-  \link{Real.forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
+  \link{forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
 
 \end{proof}
 
