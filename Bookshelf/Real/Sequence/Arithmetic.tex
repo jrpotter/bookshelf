@@ -1,0 +1,23 @@
+\documentclass{article}
+
+\input{preamble}
+
+\newcommand{\link}[1]{\lean{../../..}{Bookshelf/Real/Sequence/Arithmetic}
+  {Real.Arithmetic.#1}}
+
+\begin{document}
+
+\section*{Sum of Arithmetic Series}%
+\label{sec:sum-arithmetic-series}
+
+Let $(a_i)_{i \geq 0}$ be an arithmetic sequence with common difference $d$.
+Then for some $n \in \mathbb{N}$,
+$$\sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.$$
+
+\begin{proof}
+
+  \link{sum_recursive_closed}
+
+\end{proof}
+
+\end{document}

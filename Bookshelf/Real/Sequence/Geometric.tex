@@ -1,0 +1,23 @@
+\documentclass{article}
+
+\input{preamble}
+
+\newcommand{\link}[1]{\lean{../../..}{Bookshelf/Real/Sequence/Geometric}
+  {Real.Geometric.#1}}
+
+\begin{document}
+
+\section*{Sum of Geometric Series}%
+\label{sec:sum-geometric-series}
+
+Let $(a_i)_{i \geq 0}$ be a geometric sequence with common ratio $r \neq 1$.
+Then for some $n \in \mathbb{N}$,
+$$\sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.$$
+
+\begin{proof}
+
+  \link{sum_recursive_closed}
+
+\end{proof}
+
+\end{document}

@@ -3,8 +3,8 @@
 
 \input{preamble}
 
-\newcommand{\ns}{Exercises.Apostol.Chapter\_I\_3.Real}
-\newcommand{\link}[1]{\href{../Chapter_I_3.html\#\ns.#1}{\ns.#1}}
+\newcommand{\link}[1]{\lean{../..}{Exercises/Apostol/Chapter_I_3}
+  {Exercises.Apostol.Chapter\_I\_3.Real.#1}}
 
 \begin{document}
 
@@ -16,7 +16,7 @@ is, there is a real number $L$ such that $L = \inf{S}$.
 
 \begin{proof}
 
-  \link{exists\_isGLB}
+  \link{exists_isGLB}
 
 \end{proof}
 
@@ -27,7 +27,7 @@ For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
 \begin{proof}
 
-  \link{exists\_pnat\_geq\_self}
+  \link{exists_pnat_geq_self}
 
 \end{proof}
 
@@ -39,7 +39,7 @@ integer $n$ such that $nx > y$.
 
 \begin{proof}
 
-  \link{exists\_pnat\_mul\_self\_geq\_of\_pos}
+  \link{exists_pnat_mul_self_geq_of_pos}
 
 \end{proof}
 
@@ -52,7 +52,7 @@ for every integer $n \geq 1$, then $x = a$.
 
 \begin{proof}
 
-  \link{forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
+  \link{forall_pnat_leq_self_leq_frac_imp_eq}
 
 \end{proof}
 
@@ -70,8 +70,8 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 \begin{proof}
 
   \begin{enumerate}[(a)]
-    \item \link{sup\_imp\_exists\_gt\_sup\_sub\_delta}
-    \item \link{inf\_imp\_exists\_lt\_inf\_add\_delta}
+    \item \link{sup_imp_exists_gt_sup_sub_delta}
+    \item \link{inf_imp_exists_lt_inf_add_delta}
   \end{enumerate}
 
 \end{proof}
@@ -92,8 +92,8 @@ $$C = \{a + b : a \in A, b \in B\}.$$
 \begin{proof}
 
   \begin{enumerate}[(a)]
-    \item \link{sup\_minkowski\_sum\_eq\_sup\_add\_sup}
-    \item \link{inf\_minkowski\_sum\_eq\_inf\_add\_inf}
+    \item \link{sup_minkowski_sum_eq_sup_add_sup}
+    \item \link{inf_minkowski_sum_eq_inf_add_inf}
   \end{enumerate}
 
 \end{proof}
@@ -109,7 +109,7 @@ $$\sup{S} \leq \inf{T}.$$
 
 \begin{proof}
 
-  \link{forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
+  \link{forall_mem_le_forall_mem_imp_sup_le_inf}
 
 \end{proof}
 
