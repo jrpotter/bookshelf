@@ -17,7 +17,5 @@
 
 % The first argument refers to a relative path upward from a current file to
 % the root of the workspace (i.e. where this `preamble.tex` file is located).
-% We include an additional nesting of `..` to account for the generated `LaTeX`
-% directory automatically included when generating documentation.
-\newcommand{\lean}[3]{\href{#1/../#2.html\##3}{
+\newcommand{\lean}[3]{\href{#1/#2.html\##3}{
   \startunderscoreletter #3 \stopunderscoreletter}}
