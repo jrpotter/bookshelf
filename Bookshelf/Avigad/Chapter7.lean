@@ -1,9 +1,9 @@
-/-! # Exercises.Avigad.Chapter7
+/-! # Avigad.Chapter7
 
 Inductive Types
 -/
 
-namespace Exercises.Avigad.Chapter7
+namespace Avigad.Chapter7
 
 /-! #### Exercise 1
 
@@ -217,4 +217,4 @@ def eval_foo : Foo → List Nat → Nat
 
 end ex3
 
-end Exercises.Avigad.Chapter7
+end Avigad.Chapter7

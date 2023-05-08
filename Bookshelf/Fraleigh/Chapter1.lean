@@ -1,11 +1,11 @@
 import Mathlib.Data.Complex.Basic
 
-/-! # Exercises.Fraleign.Chapter1
+/-! # Fraleign.Chapter1
 
 Introduction and Examples
 -/
 
-namespace Exercises.Fraleign.Chapter1
+namespace Fraleign.Chapter1
 
 open Complex
 open HPow
@@ -21,4 +21,4 @@ theorem exercise1 : I^3 = 0 + (-1) * I := calc
     = I * (I * hPow I 1) := rfl
   _ = 0 + (-1) * I := by simp
 
-end Exercises.Fraleign.Chapter1
+end Fraleign.Chapter1

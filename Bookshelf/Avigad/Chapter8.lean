@@ -1,9 +1,9 @@
-/-! # Exercises.Avigad.Chapter8
+/-! # Avigad.Chapter8
 
 Induction and Recursion
 -/
 
-namespace Exercises.Avigad.Chapter8
+namespace Avigad.Chapter8
 
 /-! #### Exercise 1
 
@@ -206,4 +206,4 @@ theorem fuse_eq (v : Nat → Nat)
 
 end ex5
 
-end Exercises.Avigad.Chapter8
+end Avigad.Chapter8

@@ -1,4 +1,4 @@
-/-! # Exercises.Avigad.Chapter5
+/-! # Avigad.Chapter5
 
 Tactics
 -/
@@ -9,7 +9,7 @@ Go back to the exercises in Chapter 3 and Chapter 4 and redo as many as you can
 now with tactic proofs, using also `rw` and `simp` as appropriate.
 -/
 
-namespace Exercises.Avigad.Chapter5
+namespace Avigad.Chapter5
 
 namespace ex1
 
@@ -461,4 +461,4 @@ theorem or_and_or_and_or (p q r : Prop) (hp : p)
 
 end ex2
 
-end Exercises.Avigad.Chapter5
+end Avigad.Chapter5

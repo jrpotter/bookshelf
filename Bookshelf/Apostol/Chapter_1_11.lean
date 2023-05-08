@@ -2,9 +2,9 @@ import Mathlib.Data.Real.Basic
 
 import Common.Real.Int
 
-/-! # Exercises.Apostol.Exercises_1_11 -/
+/-! # Apostol.Chapter_1_11 -/
 
-namespace Exercises.Apostol.Exercises_1_11
+namespace Apostol.Chapter_1_11
 
 /-! ## Exercise 4
 
@@ -73,4 +73,4 @@ Exercises 4(a) and (b) to the bracket on the right.
 -/
 theorem exercise_7b : True := sorry
 
-end Exercises.Apostol.Exercises_1_11
+end Apostol.Chapter_1_11

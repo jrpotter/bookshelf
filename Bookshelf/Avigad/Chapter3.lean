@@ -1,4 +1,4 @@
-/-! # Exercises.Avigad.Chapter3
+/-! # Avigad.Chapter3
 
 Propositions and Proofs
 -/
@@ -8,7 +8,7 @@ Propositions and Proofs
 Prove the following identities.
 -/
 
-namespace Exercises.Avigad.Chapter3
+namespace Avigad.Chapter3
 
 namespace ex1
 
@@ -164,4 +164,4 @@ theorem iff_not_self (hp : p) : ¬(p ↔ ¬p) :=
 
 end ex3
 
-end Exercises.Avigad.Chapter3
+end Avigad.Chapter3

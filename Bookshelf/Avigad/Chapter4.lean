@@ -1,4 +1,4 @@
-/-! # Exercises.Avigad.Chapter4
+/-! # Avigad.Chapter4
 
 Quantifiers and Equality
 -/
@@ -9,7 +9,7 @@ Prove these equivalences. You should also try to understand why the reverse
 implication is not derivable in the last example.
 -/
 
-namespace Exercises.Avigad.Chapter4
+namespace Avigad.Chapter4
 
 namespace ex1
 
@@ -258,4 +258,4 @@ theorem log_mul {x y : Float} (hx : x > 0) (hy : y > 0) :
 
 end ex6
 
-end Exercises.Avigad.Chapter4
+end Avigad.Chapter4

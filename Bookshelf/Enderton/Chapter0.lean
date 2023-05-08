@@ -1,11 +1,11 @@
 import Common.LTuple.Basic
 
-/-! # Exercises.Enderton.Chapter0
+/-! # Enderton.Chapter0
 
 Useful Facts About Sets
 -/
 
-namespace Exercises.Enderton.Chapter0
+namespace Enderton.Chapter0
 
 /--
 The following describes a so-called "generic" tuple. Like an `LTuple`, a generic
@@ -275,4 +275,4 @@ theorem lemma_0a (xs : GTuple α (n, m - 1)) (ys : LTuple α (m + k))
 
 end
 
-end Exercises.Enderton.Chapter0
+end Enderton.Chapter0

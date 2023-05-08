@@ -1,4 +1,4 @@
-/-! # Exercises.Avigad.Chapter2
+/-! # Avigad.Chapter2
 
 Dependent Type Theory
 -/
@@ -8,7 +8,7 @@ Dependent Type Theory
 Define the function `Do_Twice`, as described in Section 2.4.
 -/
 
-namespace Exercises.Avigad.Chapter2
+namespace Avigad.Chapter2
 
 namespace ex1
 
@@ -106,4 +106,4 @@ variable (d : ex3.vec Prop 3)
 
 end ex4
 
-end Exercises.Avigad.Chapter2
+end Avigad.Chapter2
