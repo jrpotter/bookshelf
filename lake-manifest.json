@@ -16,9 +16,9 @@
   {"git":
    {"url": "https://github.com/jrpotter/bookshelf-docgen.git",
     "subDir?": null,
-    "rev": "dee1ea599fd459db8f40201a32338c606b1944e8",
+    "rev": "93aa96a2b6318d78cc505e45f6538d507ce0834c",
     "name": "doc-gen4",
-    "inputRev?": "dee1ea599fd459db8f40201a32338c606b1944e8"}},
+    "inputRev?": "93aa96a2b6318d78cc505e45f6538d507ce0834c"}},
   {"git":
    {"url": "https://github.com/mhuisi/lean4-cli",
     "subDir?": null,
@@ -52,7 +52,7 @@
   {"git":
    {"url": "https://github.com/fgdorais/lean4-unicode-basic",
     "subDir?": null,
-    "rev": "be1f061688faa1dbb224773c54901661253fb4b8",
+    "rev": "ce508dcd1fd49ba15675861aafd864572a0b8252",
     "name": "UnicodeBasic",
     "inputRev?": "main"}},
   {"git":
