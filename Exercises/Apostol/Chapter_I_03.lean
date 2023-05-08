@@ -10,8 +10,6 @@ namespace Exercises.Apostol.Chapter_I_3
 #check Archimedean
 #check Real.exists_isLUB
 
-namespace Real
-
 /-! ## The least-upper-bound axiom (completeness axiom) -/
 
 /--
@@ -464,7 +462,7 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
     intro x hx
     exact p s hs x hx
   have ⟨S_lub, hS_lub⟩ := Real.exists_isLUB S hS ⟨t, ps⟩
-  have ⟨T_glb, hT_glb⟩ := Real.exists_isGLB T hT ⟨s, pt⟩
+  have ⟨T_glb, hT_glb⟩ := exists_isGLB T hT ⟨s, pt⟩
   refine ⟨S_lub, ⟨hS_lub, ⟨T_glb, ⟨hT_glb, ?_⟩⟩⟩⟩
   -- Assume `T_glb < S_lub`. Then `∃ c, T_glb + c < S_lub` which in turn implies
   -- existence of some `x ∈ S` such that `T_glb < S_lub - c / 2 < x < S_lub`.
@@ -489,8 +487,6 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
     _ < x := hx.right
   simp at this
 
-end Real
-
 /-! ## Exercises -/
 
 /-- #### Exercise 1
@@ -498,7 +494,7 @@ end Real
 If `x` and `y` are arbitrary real numbers with `x < y`, prove that there is at
 least one real `z` satisfying `x < z < y`.
 -/
-theorem exercise1 (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
+theorem exercise_1 (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
   have ⟨z, hz⟩ := exists_pos_add_of_lt' h
   refine ⟨x + z / 2, ⟨?_, ?_⟩⟩
   · have hz' : z / 2 > 0 := by
@@ -515,15 +511,15 @@ theorem exercise1 (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
 If `x` is an arbitrary real number, prove that there are integers `m` and `n`
 such that `m < x < n`.
 -/
-theorem exercise2 (x : ℝ) : ∃ m n : ℝ, m < x ∧ x < n := by
+theorem exercise_2 (x : ℝ) : ∃ m n : ℝ, m < x ∧ x < n := by
   refine ⟨x - 1, ⟨x + 1, ⟨?_, ?_⟩⟩⟩ <;> norm_num
 
 /-- #### Exercise 3
 
 If `x > 0`, prove that there is a positive integer `n` such that `1 / n < x`.
 -/
-theorem exercise3 (x : ℝ) (h : x > 0) : ∃ n : ℕ+, 1 / n < x := by
-  have ⟨n, hn⟩ := @Real.exists_pnat_mul_self_geq_of_pos x 1 h
+theorem exercise_3 (x : ℝ) (h : x > 0) : ∃ n : ℕ+, 1 / n < x := by
+  have ⟨n, hn⟩ := @exists_pnat_mul_self_geq_of_pos x 1 h
   refine ⟨n, ?_⟩
   have hr := mul_lt_mul_of_pos_right hn (show 0 < 1 / ↑↑n by norm_num)
   conv at hr => arg 2; rw [mul_comm, ← mul_assoc]; simp
@@ -536,7 +532,7 @@ which satisfies the inequalities `n ≤ x < n + 1`. This `n` is called the
 greatest integer in `x` and is denoted by `⌊x⌋`. For example, `⌊5⌋ = 5`,
 `⌊5 / 2⌋ = 2`, `⌊-8/3⌋ = -3`.
 -/
-theorem exercise4 (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
+theorem exercise_4 (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
   let n := Int.floor x
   refine ⟨n, ⟨?_, ?_⟩⟩
   · exact ⟨Int.floor_le x, Int.lt_floor_add_one x⟩
@@ -549,7 +545,7 @@ theorem exercise4 (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
 If `x` is an arbitrary real number, prove that there is exactly one integer `n`
 which satisfies `x ≤ n < x + 1`.
 -/
-theorem exercise5 (x : ℝ) : ∃! n : ℤ, x ≤ n ∧ n < x + 1 := by
+theorem exercise_5 (x : ℝ) : ∃! n : ℤ, x ≤ n ∧ n < x + 1 := by
   let n := Int.ceil x
   refine ⟨n, ⟨?_, ?_⟩⟩
   · exact ⟨Int.le_ceil x, Int.ceil_lt_add_one x⟩
