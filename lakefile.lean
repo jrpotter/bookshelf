@@ -16,7 +16,7 @@ require «doc-gen4» from git
 
 @[default_target]
 lean_lib «Bookshelf» {
-  roots := #[`Bookshelf, `Exercises]
+  roots := #[`Common, `Exercises]
 }
 
 /--
