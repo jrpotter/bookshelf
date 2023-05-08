@@ -14,7 +14,7 @@ open Partition
 Any member of a subinterval of a partition `P` must also be a member of `P`.
 -/
 lemma mem_open_subinterval_imp_mem_partition {p : Partition}
-  (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => i(x₁, x₂)))
+  (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => Set.Ioo x₁ x₂))
   (hy : y ∈ I) : y ∈ p := by
   cases h : p.xs with
   | nil =>
@@ -50,7 +50,7 @@ structure Step where
   p : Partition
   f : ∀ x ∈ p, ℝ
   const_open_subintervals :
-    ∀ (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => i(x₁, x₂))),
+    ∀ (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => Set.Ioo x₁ x₂)),
       ∃ c : ℝ, ∀ (hy : y ∈ I),
         f y (mem_open_subinterval_imp_mem_partition hI hy) = c
 

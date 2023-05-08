@@ -1,7 +1,5 @@
 import Mathlib.Data.Real.Basic
 
-import Common.Real.Int
-
 /-! # Apostol.Chapter_1_11 -/
 
 namespace Apostol.Chapter_1_11
@@ -15,18 +13,35 @@ Prove that the greatest-integer function has the properties indicated.
 
 `⌊x + n⌋ = ⌊x⌋ + n` for every integer `n`.
 -/
-theorem exercise_4a (x : ℝ) (n : ℤ) : ⌊x + n⌋ = ⌊x⌋ + n := by
-  sorry
+theorem exercise_4a (x : ℝ) (n : ℤ) : ⌊x + n⌋ = ⌊x⌋ + n :=
+  Int.floor_add_int x n
 
-/-- ### Exercise 4b
+/-- ### Exercise 4b.1
 
 `⌊-x⌋ = -⌊x⌋` if `x` is an integer.
+-/
+theorem exercise_4b_1 (x : ℤ) : ⌊-x⌋ = -⌊x⌋ := by
+  simp only [Int.floor_int, id_eq]
+
+/-- ### Exercise 4b.2
+
 `⌊-x⌋ = -⌊x⌋ - 1` otherwise.
 -/
-theorem exercise_4b (x : ℝ)
-  : (Real.isInt x → ⌊-x⌋ = -⌊x⌋)
-  ∨ (¬Real.isInt x → ⌊-x⌋ = -⌊x⌋ - 1) := by
-  sorry
+theorem exercise_4b_2 (x : ℝ) (h : ∃ n : ℤ, x ∈ Set.Ioo ↑n (↑n + (1 : ℝ)))
+  : ⌊-x⌋ = -⌊x⌋ - 1 := by
+  rw [Int.floor_neg]
+  suffices ⌈x⌉ = ⌊x⌋ + 1 by
+    have := congrArg (HMul.hMul (-1)) this
+    simp only [neg_mul, one_mul, neg_add_rev, add_comm] at this
+    exact this
+  have ⟨n, hn⟩ := h
+  have hn' : x ∈ Set.Ico ↑n (↑n + (1 : ℝ)) :=
+    Set.mem_of_subset_of_mem Set.Ioo_subset_Ico_self hn
+  rw [Int.ceil_eq_iff, Int.floor_eq_on_Ico n x hn']
+  simp only [Int.cast_add, Int.cast_one, add_sub_cancel]
+  apply And.intro
+  · exact (Set.mem_Ioo.mp hn).left
+  · exact le_of_lt (Set.mem_Ico.mp hn').right
 
 /-- ### Exercise 4c
 

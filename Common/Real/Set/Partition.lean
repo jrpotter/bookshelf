@@ -1,7 +1,7 @@
+import Mathlib.Data.Real.Basic
 import Mathlib.Data.List.Sort
 
 import Common.List.Basic
-import Common.Real.Set.Interval
 
 /-! # Common.Real.Set.Partition
 
