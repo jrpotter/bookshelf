@@ -49,7 +49,29 @@ theorem exercise_4b_2 (x : ℝ) (h : ∃ n : ℤ, x ∈ Set.Ioo ↑n (↑n + (1 
 -/
 theorem exercise_4c (x y : ℝ)
   : ⌊x + y⌋ = ⌊x⌋ + ⌊y⌋ ∨ ⌊x + y⌋ = ⌊x⌋ + ⌊y⌋ + 1 := by
-  sorry
+  have hx : x = Int.floor x + Int.fract x := Eq.symm (add_eq_of_eq_sub' rfl)
+  have hy : y = Int.floor y + Int.fract y := Eq.symm (add_eq_of_eq_sub' rfl)
+  by_cases Int.fract x + Int.fract y < 1
+  · refine Or.inl ?_
+    rw [Int.floor_eq_iff]
+    simp only [Int.cast_add]
+    apply And.intro
+    · exact add_le_add (Int.floor_le x) (Int.floor_le y)
+    · conv => lhs; rw [hx, hy, add_add_add_comm]; arg 1; rw [add_comm]
+      rwa [add_comm, ← add_assoc, ← sub_lt_iff_lt_add', ← sub_sub, add_sub_cancel, add_sub_cancel]
+  · refine Or.inr ?_
+    rw [Int.floor_eq_iff]
+    simp only [Int.cast_add, Int.cast_one]
+    have h := le_of_not_lt h
+    apply And.intro
+    · conv => lhs; rw [← add_rotate]
+      conv => rhs; rw [hx, hy, add_add_add_comm]; arg 1; rw [add_comm]
+      rwa [← sub_le_iff_le_add', ← sub_sub, add_sub_cancel, add_sub_cancel]
+    · conv => lhs; rw [hx, hy, add_add_add_comm]; arg 1; rw [add_comm]
+      conv => lhs; rw [add_comm, ← add_assoc]
+      conv => rhs; rw [add_assoc]
+      rw [← sub_lt_iff_lt_add', ← sub_sub, add_sub_cancel, add_sub_cancel]
+      exact add_lt_add (Int.fract_lt_one x) (Int.fract_lt_one y)
 
 /-- ### Exercise 4d
 
@@ -73,7 +95,7 @@ The formulas in Exercises 4(d) and 4(e) suggest a generalization for `⌊nx⌋`.
 State and prove such a generalization.
 -/
 theorem exercise_5 (n : ℕ) (x : ℝ)
-  : ⌊n * x⌋ = 10 := by
+  : True := by
   sorry
 
 /-- ### Exercise 7b
