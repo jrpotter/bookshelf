@@ -1,8 +1,7 @@
 # bookshelf
 
 A collection on the study of the books listed below. I aim to use [Lean](https://leanprover.github.io/)
-when possible (with respect to my current level of ability) and fallback to
-LaTeX when not.
+when possible and fallback to LaTeX when not.
 
 - [ ] Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
 - [x] Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
@@ -17,7 +16,7 @@ LaTeX when not.
 ## Documentation
 
 To generate Lean documentation, we use [bookshelf-docgen](https://github.com/jrpotter/bookshelf-docgen).
-Refer to this project on prerequisites and the run the following to build and
+Refer to this project on prerequisites and then run the following to build and
 serve files locally:
 
 ```bash
