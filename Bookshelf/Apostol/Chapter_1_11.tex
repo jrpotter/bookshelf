@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage[shortlabels]{enumitem}
+\usepackage{soul, xcolor}
 
 \input{../../preamble}
 
@@ -88,9 +89,93 @@ The formulas in Exercises 4(d) and 4(e) suggest a generalization for
   $\floor{nx}$.
 State and prove such a generalization.
 
+\vspace{6pt}
+\noindent
+\hl{Note}: The stated generalization is known as "Hermite's Identity."
+
 \begin{proof}
 
   \link{exercise\_5}
+
+  \vspace{6pt}
+  \hrule
+  \vspace{6pt}
+
+  We prove that for all natural numbers $n$ and real numbers $x$, the following
+    identity holds:
+    \begin{equation}
+      \label{sec:exercise-5-eq1}
+      \tag{5.1}
+      \floor{nx} = \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}}
+    \end{equation}
+  By definition of the floor function, $x = \floor{x} + r$ for some
+    $r \in \ico{0}{1}$.
+  Define $S$ as the partition of non-overlapping subintervals
+    $$\ico{0}{\frac{1}{n}}, \ico{\frac{1}{n}}{\frac{2}{n}}, \ldots,
+      \ico{\frac{n-1}{n}}{1}.$$
+  By construction, $\cup\; S = \ico{0}{1}$.
+  Therefore there exists some $j \in \mathbb{N}$ such that
+    \begin{equation}
+      \label{sec:exercise-5-eq2}
+      \tag{5.2}
+      r \in \ico{\frac{j}{n}}{\frac{j+1}{n}}.
+    \end{equation}
+  With these definitions established, we now show the left- and right-hand sides
+    of \eqref{sec:exercise-5-eq1} evaluate to the same number.
+
+  \paragraph{Left-Hand Side}%
+
+    Consider the left-hande side of identity \eqref{sec:exercise-5-eq1}
+    By \eqref{sec:exercise-5-eq2}, $nr \in \ico{j}{j + 1}$.
+    Therefore $\floor{nr} = j$.
+    Thus
+      \begin{align*}
+        \floor{nx}
+          & = \floor{n(\floor{x} + r)} \nonumber \\
+          & = \floor{n\floor{x} + nr} \nonumber \\
+          & = \floor{n\floor{x}} + \floor{nr}. \nonumber
+            & \eqref{sub:exercise-4a} \\
+          & = \floor{n\floor{x}} + j \nonumber \\
+          & = n\floor{x} + j. \label{sec:exercise-5-eq3} \tag{5.3}
+      \end{align*}
+
+  \paragraph{Right-Hand Side}%
+
+    Now consider the right-hand side of identity \eqref{sec:exercise-5-eq1}.
+    We note each summand, by construction, is the floor of $x$ added to a
+      nonnegative number less than one.
+    Therefore each summand contributes either $\floor{x}$ or $\floor{x} + 1$ to
+      the total.
+    Letting $z$ denote the number of summands that contribute $\floor{x} + 1$,
+      we have
+      \begin{equation}
+        \label{sec:exercise-5-eq4}
+        \tag{5.4}
+        \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}} = n\floor{x} + z.
+      \end{equation}
+    The value of $z$ corresponds to the number of indices $i$ that satisfy
+      $$\frac{i}{n} \geq 1 - r.$$
+    By \eqref{sec:exercise-5-eq2}, it follows
+      \begin{align*}
+        1 - r
+          & \in \ioc{1 - \frac{j+1}{n}}{1-\frac{j}{n}} \\
+          & = \ioc{\frac{n - j - 1}{n}}{\frac{n - j}{n}}.
+      \end{align*}
+    Thus we can determine the value of $z$ by instead counting the number of
+      indices $i$ that satisfy $$\frac{i}{n} \geq \frac{n - j}{n}.$$
+    Rearranging terms, we see that $i \geq n - j$ holds for
+      $z = (n - 1) - (n - j) + 1 = j$ of the $n$ summands.
+    Substituting the value of $z$ into \eqref{sec:exercise-5-eq4} yields
+      \begin{equation}
+        \label{sec:exercise-5-eq5}
+        \tag{5.5}
+        \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}} = n\floor{x} + j.
+      \end{equation}
+
+  \paragraph{Conclusion}%
+
+    Since \eqref{sec:exercise-5-eq3} and \eqref{sec:exercise-5-eq5} agree with
+    one another, it follows identity \eqref{sec:exercise-5-eq1} holds.
 
 \end{proof}
 
@@ -108,7 +193,13 @@ Prove that the number of lattice points in $S$ is equal to the sum
 
 \begin{proof}
 
-  TODO
+  Define $S_i = \mathbb{Z} \cap \ioc{0}{f(i)}$ for all $i \in \mathbb{Z}$.
+  By definition, the set of lattice points of $S$ is given by
+    $$L = \{ (i, j) : i = a, \ldots, b \land j \in S_i \}.$$
+  By construction, it follows $$\sum_{j \in S_i} 1 = \floor{f(i)}.$$
+  Therefore $$\abs{L}
+    = \sum_{i=a}^b \sum_{j \in S_i} 1
+    = \sum_{i=1}^b \floor{f(i)}.$$
 
 \end{proof}
 

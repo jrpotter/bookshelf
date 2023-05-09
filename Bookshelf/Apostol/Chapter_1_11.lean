@@ -1,4 +1,7 @@
+import Mathlib.Algebra.BigOperators.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Finset.Basic
+import Mathlib.Tactic.LibrarySearch
 
 /-! # Apostol.Chapter_1_11 -/
 
@@ -73,21 +76,38 @@ theorem exercise_4c (x y : ℝ)
       rw [← sub_lt_iff_lt_add', ← sub_sub, add_sub_cancel, add_sub_cancel]
       exact add_lt_add (Int.fract_lt_one x) (Int.fract_lt_one y)
 
-/-- ### Exercise 4d
+namespace Hermite
 
-`⌊2x⌋ = ⌊x⌋ + ⌊x + 1/2⌋`
+/--
+Constructs a partition of `[0, 1)` that looks as follows:
+```
+[0, 1/n), [1/n, 2/n), ..., [(n-1)/n, 1)
+```
 -/
-theorem exercise_4d (x : ℝ)
-  : ⌊2 * x⌋ = ⌊x⌋ + ⌊x + 1/2⌋ := by
+def partition (n : ℕ) (i : ℕ) : Set ℝ := Set.Ico (i / n) ((i + 1) / n)
+
+/--
+The indexed union of the family of sets of a `partition` is equal to `[0, 1)`.
+-/
+theorem partition_eq_Ico_zero_one
+  : (⋃ i ∈ Finset.range n, partition n i) = Set.Ico 0 1 := by
   sorry
 
-/-- ### Exercise 4e
-
-`⌊3x⌋ = ⌊x⌋ + ⌊x + 1/3⌋ + ⌊x + 2/3⌋`
+/--
+The fractional portion of any real number is always in `[0, 1)`.
 -/
-theorem exercise_4e (x : ℝ)
-  : ⌊3 * x⌋ = ⌊x⌋ + ⌊x + 1/3⌋ + ⌊x + 2/3⌋ := by
+theorem fract_mem_Ico_zero_one (x : ℝ)
+  : Int.fract x ∈ Set.Ico 0 1 := ⟨Int.fract_nonneg x, Int.fract_lt_one x⟩
+
+/--
+The fractional portion of any real number always exists in some member of the
+indexed family of sets formed by any `partition`.
+-/
+theorem fract_mem_partition (r : ℝ) (hr : r ∈ Set.Ico 0 1)
+  : ∀ n : ℕ, ∃ j : ℕ, r ∈ Set.Ico ↑(j / n) ↑((j + 1) / n) := by
   sorry
+
+end Hermite
 
 /-- ### Exercise 5
 
@@ -95,8 +115,37 @@ The formulas in Exercises 4(d) and 4(e) suggest a generalization for `⌊nx⌋`.
 State and prove such a generalization.
 -/
 theorem exercise_5 (n : ℕ) (x : ℝ)
-  : True := by
+  : ⌊n * x⌋ = Finset.sum (Finset.range n) (fun i => ⌊x + i/n⌋) := by
+  let r := Int.fract x
+  have hx : x = ⌊x⌋ + r := Eq.symm (add_eq_of_eq_sub' rfl)
   sorry
+
+/-- ### Exercise 4d
+
+`⌊2x⌋ = ⌊x⌋ + ⌊x + 1/2⌋`
+-/
+theorem exercise_4d (x : ℝ)
+  : ⌊2 * x⌋ = ⌊x⌋ + ⌊x + 1/2⌋ := by
+  suffices ⌊x⌋ + ⌊x + 1/2⌋ = Finset.sum (Finset.range 2) (fun i => ⌊x + i/2⌋) by
+    rw [this]
+    exact exercise_5 2 x
+  unfold Finset.sum
+  simp
+  rw [add_comm]
+
+/-- ### Exercise 4e
+
+`⌊3x⌋ = ⌊x⌋ + ⌊x + 1/3⌋ + ⌊x + 2/3⌋`
+-/
+theorem exercise_4e (x : ℝ)
+  : ⌊3 * x⌋ = ⌊x⌋ + ⌊x + 1/3⌋ + ⌊x + 2/3⌋ := by
+  suffices ⌊x⌋ + ⌊x + 1/3⌋ + ⌊x + 2/3⌋ = Finset.sum (Finset.range 3) (fun i => ⌊x + i/3⌋) by
+    rw [this]
+    exact exercise_5 3 x
+  unfold Finset.sum
+  simp
+  conv => rhs; rw [← add_rotate']; arg 2; rw [add_comm]
+  rw [← add_assoc]
 
 /-- ### Exercise 7b
 
