@@ -320,8 +320,6 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
 \section{Exercise 4}%
 \label{sec:exercise-4}
 
-A point $(x, y)$ is called a \textit{lattice point} if both coordinates $x$ and
-  $y$ are integers.
 Let $P$ be a polygon whose vertices are lattice points.
 The area of $P$ is $I + \frac{1}{2}B - 1$, where $I$ denotes the number of
   lattice points inside the polygon and $B$ denotes the number on the boundary.
@@ -334,16 +332,17 @@ Prove that the formula is valid for rectangles with sides parallel to the
 
 \begin{proof}
 
-  Let $P$ be a rectangle with width $w$, height $h$, and lattice points for
-    vertices.
+  Let $P$ be a rectangle with sides parallel to the coordinate axes, with width
+    $w$, height $h$, and lattice points for vertices.
   We assume $P$ has three non-collinear points, ruling out any instances of
     points or line segments.
+
   By \larea{Choice-of-Scale}{Choice of Scale}, $P$ is measurable with area
     $a(P) = wh$.
   By construction, $P$ has $I = (w - 1)(h - 1)$ interior lattice points and
     $B = 2(w + h)$ lattice points on its boundary.
   The following shows the lattice point area formula is in agreement with
-    $a(P)$:
+    the expected result:
     \begin{align*}
       I + \frac{1}{2}B - 1
         & = (w - 1)(h - 1) + \frac{1}{2}\left[ 2(w + h) \right] - 1 \\
@@ -361,67 +360,50 @@ Prove that the formula is valid for right triangles and parallelograms.
 
 \begin{proof}
 
-  Let $T'$ be a right triangle with width $w$ and height $h$.
-  Let $T$ be the triangle $T'$ translated, rotated, and reflected such that the
-    its vertices are $(0, 0)$, $(0, w)$, and $(w, h)$, where $w \leq h$.
+  Let $P$ be a right triangle with width $w > 0$, height $h > 0$, and lattice
+    points for vertices.
+  Let $T$ be the triangle $P$ translated, rotated, and reflected such that the
+    its vertices are $(0, 0)$, $(0, w)$, and $(w, h)$.
+  Let $I_T$ and $B_T$ be the number of interior and boundary points of $T$
+    respectively.
+  Let $H_L$ denote the number of lattice points on $T$'s hypotenuse.
+
   Let $R$ be the overlapping rectangle of width $w$ and height $h$, situated
     with bottom-left corner at $(0, 0)$.
-  There are two cases to consider:
+  Let $I_R$ and $B_R$ be the number of interior and boundary points
+    of $R$ respectively.
 
-  \paragraph{Case 1}%
+  By construction, $T$ shares two sides with $R$.
+  Therefore
+    \begin{equation}
+      \label{sub:exercise-4b-eq1}
+      B_T = \frac{1}{2}B_R - 1 + H_L.
+    \end{equation}
+  Likewise,
+    \begin{equation}
+      \label{sub:exercise-4b-eq2}
+      I_T = \frac{1}{2}(I_R - H_L + 2).
+    \end{equation}
+  The following shows the lattice point area formula is in agreement with
+    the expected result:
+    \begin{align*}
+      I_T + \frac{1}{2}B_T - 1
+        & = \frac{1}{2}(I_R - H_L + 2) + \frac{1}{2}B_T - 1
+          & \eqref{sub:exercise-4b-eq2} \\
+        & = \frac{1}{2}\left[ I_R - H_L + 2 + B_T - 2 \right] \\
+        & = \frac{1}{2}\left[ I_R - H_L + B_T \right] \\
+        & = \frac{1}{2}\left[ I_R - H_L + \frac{1}{2}B_R - 1 + H_L \right]
+          & \eqref{sub:exercise-4b-eq1} \\
+        & = \frac{1}{2}\left[ I_R + \frac{1}{2}B_R - 1 \right] \\
+        & = \frac{1}{2}\left[ (w - 1)(h - 1) + \frac{1}{2}(2(w + h)) - 1 \right]
+          & \eqref{sub:exercise-4a} \\
+        & = \frac{1}{2}\left[ (w - 1)(h - 1) + w + h - 1 \right] \\
+        & = \frac{1}{2}\left[ wh - w - h + 1 + w + h - 1 \right] \\
+        & = \frac{wh}{2}.
+    \end{align*}
 
-    Suppose $h / w$ is an integral value.
-    Then there exist $w + 1$ lattice points on $T$'s hypotenuse.
-    The number of interior lattices points of $T$ is
-      \begin{align*}
-        I
-          & = \frac{1}{2}\left[ (w - 1)(h - 1) - (w - 1) \right] \\
-          & = \frac{1}{2}\left[ wh - 2w - h + 2 \right].
-      \end{align*}
-    The number of boundary lattice points of $T$ is
-      \begin{align*}
-        B
-          & = (w + 1) + h + (w - 1) \\
-          & = 2w + h.
-      \end{align*}
-    Thus
-      \begin{align*}
-        I + \frac{1}{2}B - 1
-          & = \frac{wh - 2w - h + 2}{2} + \frac{2w + h}{2} - 1 \\
-          & = \frac{wh - 2w - h + 2 + 2w + h - 2}{2} \\
-          & = \frac{wh}{2}.
-      \end{align*}
-
-  \paragraph{Case 2}%
-
-    Suppose $h / w$ is not an integral value.
-    Then there exist exactly 2 lattice points on $T$'s hypotenuse.
-    The number of interior lattice points of $T$ is
-      \begin{align*}
-        I
-          & = \frac{1}{2}\left[ (w - 1)(h - 1) \right] \\
-          & = \frac{1}{2}\left[ wh - w - h + 1 \right].
-      \end{align*}
-    The number of boundary lattice points of $T$ is
-      \begin{align*}
-        B
-          & = (w + 1) + h \\
-          & = w + h + 1.
-      \end{align*}
-    Thus
-      \begin{align*}
-        I + \frac{1}{2}B - 1
-          & = \frac{wh - w - h + 1}{2} + \frac{w + h + 1}{2} - 1 \\
-          & = \frac{wh - w - h + 1 + w + h + 1 - 2}{2} \\
-          & = \frac{wh}{2}.
-      \end{align*}
-
-  \paragraph{Conclusion}%
-
-    These cases are exhaustive and in agreement with one another.
-    Thus $$a(T) = I + \frac{1}{2}B - 1.$$
-    We do not prove this formula is valid for parallelograms here.
-    Instead, refer to \eqref{sub:exercise-4c} below.
+  We do not prove this formula is valid for parallelograms here.
+  Instead, refer to \eqref{sub:exercise-4c} below.
 
 \end{proof}
 
@@ -491,8 +473,8 @@ Use induction on the number of edges to construct a proof for general polygons.
 
 \end{proof}
 
-\subsection{Exercise 5}%
-\label{sub:exercise-5}
+\section{Exercise 5}%
+\label{sec:exercise-5}
 
 Prove that a triangle whose vertices are lattice points cannot be equilateral.
 
@@ -527,8 +509,8 @@ ways, using Exercises 2 and 4.]
 
 \end{proof}
 
-\subsection{Exercise 6}%
-\label{sub:exercise-6}
+\section{Exercise 6}%
+\label{sec:exercise-6}
 
 Let $A = \{1, 2, 3, 4, 5\}$, and let $\mathscr{M}$ denote the class of all
   subsets of $A$.

@@ -97,15 +97,14 @@ State and prove such a generalization.
 
   \link{exercise\_5}
 
-  \vspace{6pt}
+  \vspace{10pt}
   \hrule
-  \vspace{6pt}
+  \vspace{10pt}
 
   We prove that for all natural numbers $n$ and real numbers $x$, the following
     identity holds:
     \begin{equation}
       \label{sec:exercise-5-eq1}
-      \tag{5.1}
       \floor{nx} = \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}}
     \end{equation}
   By definition of the floor function, $x = \floor{x} + r$ for some
@@ -117,7 +116,6 @@ State and prove such a generalization.
   Therefore there exists some $j \in \mathbb{N}$ such that
     \begin{equation}
       \label{sec:exercise-5-eq2}
-      \tag{5.2}
       r \in \ico{\frac{j}{n}}{\frac{j+1}{n}}.
     \end{equation}
   With these definitions established, we now show the left- and right-hand sides
@@ -129,15 +127,15 @@ State and prove such a generalization.
     By \eqref{sec:exercise-5-eq2}, $nr \in \ico{j}{j + 1}$.
     Therefore $\floor{nr} = j$.
     Thus
-      \begin{align*}
+      \begin{align}
         \floor{nx}
           & = \floor{n(\floor{x} + r)} \nonumber \\
           & = \floor{n\floor{x} + nr} \nonumber \\
           & = \floor{n\floor{x}} + \floor{nr}. \nonumber
             & \eqref{sub:exercise-4a} \\
           & = \floor{n\floor{x}} + j \nonumber \\
-          & = n\floor{x} + j. \label{sec:exercise-5-eq3} \tag{5.3}
-      \end{align*}
+          & = n\floor{x} + j. \label{sec:exercise-5-eq3}
+      \end{align}
 
   \paragraph{Right-Hand Side}%
 
@@ -150,7 +148,6 @@ State and prove such a generalization.
       we have
       \begin{equation}
         \label{sec:exercise-5-eq4}
-        \tag{5.4}
         \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}} = n\floor{x} + z.
       \end{equation}
     The value of $z$ corresponds to the number of indices $i$ that satisfy
@@ -168,7 +165,6 @@ State and prove such a generalization.
     Substituting the value of $z$ into \eqref{sec:exercise-5-eq4} yields
       \begin{equation}
         \label{sec:exercise-5-eq5}
-        \tag{5.5}
         \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}} = n\floor{x} + j.
       \end{equation}
 
