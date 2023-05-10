@@ -1,7 +1,7 @@
 # bookshelf
 
-A collection on the study of the books listed below. I aim to use [Lean](https://leanprover.github.io/)
-when possible and fallback to LaTeX when not.
+A study of the books listed below. Most proofs are conducted in LaTeX. Where
+feasible, theorems are also formally proven in [Lean](https://leanprover.github.io/).
 
 - [ ] Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
 - [x] Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
@@ -15,7 +15,7 @@ when possible and fallback to LaTeX when not.
 
 ## Documentation
 
-To generate Lean documentation, we use [bookshelf-docgen](https://github.com/jrpotter/bookshelf-docgen).
+To generate documentation, we use [bookshelf-docgen](https://github.com/jrpotter/bookshelf-docgen).
 Refer to this project on prerequisites and then run the following to build and
 serve files locally:
 
@@ -27,3 +27,14 @@ serve files locally:
 This assumes you have `python3` available in your `$PATH`. To change how the
 server behaves, refer to the `.env` file located in the root directory of this
 project.
+
+A color/symbol code is used on generated PDF headers to indicate their status:
+
+* Teal coloring (with a checkmark) indicates the corresponding proof is
+  complete. That is, the proof has been written in TeX and also formally
+  verified in Lean.
+* Magenta coloring (with a spinner) indicates the corresponding proof is in
+  progress. That is, a proof in both TeX and Lean have not yet been finished,
+  but is actively being worked on.
+* Red coloring (with a warning) indicates the formal Lean proof has not yet been
+  started. It may or may not also indicate the TeX proof has been written.
