@@ -131,7 +131,7 @@ lemma leq_nat_abs_ceil_self (x : ℝ) : x ≤ Int.natAbs ⌈x⌉ := by
     unfold Int.natAbs
     have k' : k = ⌈x⌉ := rfl
     rw [←k']
-    have _ : k ≥ 0 := by  -- Hint for match below
+    have : k ≥ 0 := by  -- Hint for match below
       rw [k', ge_iff_le]
       exact Int.ceil_nonneg (ge_iff_le.mp h)
     match k with
@@ -150,12 +150,12 @@ lemma leq_nat_abs_ceil_self (x : ℝ) : x ≤ Int.natAbs ⌈x⌉ := by
 For every real `x` there exists a positive integer `n` such that `n > x`.
 -/
 theorem exists_pnat_geq_self (x : ℝ) : ∃ n : ℕ+, ↑n > x := by
-  let x' : ℕ+ := ⟨Int.natAbs ⌈x⌉ + 1, by simp⟩
-  have h : x < x' := calc x
+  let n : ℕ+ := ⟨Int.natAbs ⌈x⌉ + 1, by simp⟩
+  have : x < n := calc x
     _ ≤ Int.natAbs ⌈x⌉ := leq_nat_abs_ceil_self x
     _ < ↑↑(Int.natAbs ⌈x⌉ + 1) := by simp
-    _ = x' := rfl
-  exact ⟨x', h⟩
+    _ = n := rfl
+  exact ⟨n, this⟩
 
 /-- #### Theorem I.30
 
@@ -451,7 +451,7 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
   (hS : S.Nonempty) (hT : T.Nonempty)
   (p : ∀ s ∈ S, ∀ t ∈ T, s ≤ t)
   : ∃ (s : ℝ), IsLUB S s ∧ ∃ (t : ℝ), IsGLB T t ∧ s ≤ t := by
-  -- Sshow a supremum of `S` and an infimum of `T` exists (since each set bounds
+  -- Show a supremum of `S` and an infimum of `T` exists (since each set bounds
   -- above and below the other, respectively).
   let ⟨s, hs⟩ := hS
   let ⟨t, ht⟩ := hT

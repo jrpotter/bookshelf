@@ -12,19 +12,47 @@
 
 \header{A Set of Axioms for the Real-Number System}{Tom M. Apostol}
 
-\section*{\proceeding{Theorem I.27}}%
+\section*{\verified{Lemma 1}}%
+\hyperlabel{sec:lemma-1}%
+
+Nonempty set $S$ has supremum $L$ if and only if set $-S$ has infimum $-L$.
+
+\begin{proof}
+
+  \link{is\_lub\_neg\_set\_iff\_is\_glb\_set\_neg}
+
+  \divider
+
+  Suppose $L = \sup{S}$ and fix $x \in S$.
+  By definition of the supremum, $x \leq L$ and $L$ is the smallest value
+    satisfying this inequality.
+  Negating both sides of the inequality yields $-x \geq -L$.
+  Furthermore, $-L$ must be the largest value satisfying this inequality.
+  Therefore $-L = \inf{-S}$.
+
+\end{proof}
+
+\section*{\verified{Theorem I.27}}%
 \hyperlabel{sec:theorem-i.27}%
 
 Every nonempty set $S$ that is bounded below has a greatest lower bound; that
-is, there is a real number $L$ such that $L = \inf{S}$.
+  is, there is a real number $L$ such that $L = \inf{S}$.
 
 \begin{proof}
 
   \link{exists\_isGLB}
 
+  \divider
+
+  Let $S$ be a nonempty set bounded below by $x$.
+  Then $-S$ is nonempty and bounded above by $x$.
+  By the completeness axiom, there exists a supremum $L$ of $-S$.
+  By \nameref{sec:lemma-1}, $L$ is a supremum of $-S$ if and only if $-L$ is an
+    infimum of $S$.
+
 \end{proof}
 
-\section*{\proceeding{Theorem I.29}}%
+\section*{\verified{Theorem I.29}}%
 \hyperlabel{sec:theorem-i.29}
 
 For every real $x$ there exists a positive integer $n$ such that $n > x$.
@@ -33,13 +61,22 @@ For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
   \link{exists\_pnat\_geq\_self}
 
+  \divider
+
+  Let $n = \abs{\ceil{x}} + 1$.
+  It is trivial to see $n$ is a positive integer satisfying $n \geq 1$.
+  Thus all that remains to be shown is that $n > x$.
+  If $x$ is nonpositive, $n > x$ immediately follows from $n \geq 1$.
+  If $x$ is positive,
+    $$x = \abs{x} \leq \abs{\ceil{x}} < \abs{\ceil{x}} + 1 = n.$$
+
 \end{proof}
 
-\section*{\proceeding{Theorem I.30}}%
+\section*{\verified{Theorem I.30}}%
 \hyperlabel{sec:theorem-i.30}%
 
 If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
-integer $n$ such that $nx > y$.
+  integer $n$ such that $nx > y$.
 
 \note{This is known as the "Archimedean Property of the Reals."}
 
@@ -47,81 +84,323 @@ integer $n$ such that $nx > y$.
 
   \link{exists\_pnat\_mul\_self\_geq\_of\_pos}
 
+  \divider
+
+  Let $x > 0$ and $y$ be an arbitrary real number.
+  By \nameref{sec:theorem-i.29}, there exists a positive integer $n$ such that
+    $n > y / x$.
+  Multiplying both sides of the inequality yields $nx > y$ as expected.
+
 \end{proof}
 
-\section*{\proceeding{Theorem I.31}}%
+\section*{\verified{Theorem I.31}}%
 \hyperlabel{sec:theorem-i.31}%
 
 If three real numbers $a$, $x$, and $y$ satisfy the inequalities
-$$a \leq x \leq a + \frac{y}{n}$$
-for every integer $n \geq 1$, then $x = a$.
+  $$a \leq x \leq a + \frac{y}{n}$$ for every integer $n \geq 1$, then $x = a$.
 
 \begin{proof}
 
   \link{forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
 
+  \divider
+
+  By the trichotomy of the reals, there are three cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $x = a$.
+    Then we are immediately finished.
+
+  \paragraph{Case 2}%
+
+    Suppose $x < a$.
+    But by hypothesis, $a \leq x$.
+    Thus $a < a$, a contradiction.
+
+  \paragraph{Case 3}%
+
+    Suppose $x > a$.
+    Then there exists some $c > 0$ such that $a + c = x$.
+    By \nameref{sec:theorem-i.30}, there exists an integer $n > 0$ such that
+      $nc > y$.
+    Rearranging terms, we see $y / n < c$.
+    Therefore $a + y / n < a + c = x$.
+    But by hypothesis, $x \leq a + y / n$.
+    Thus $a + y / n < a + y / n$, a contradiction.
+
+  \paragraph{Conclusion}%
+
+    Since these cases are exhaustive and both case 2 and 3 lead to
+      contradictions, $x = a$ is the only possibility.
+
 \end{proof}
 
-\section*{\proceeding{Theorem I.32}}%
+\section*{\verified{Lemma 2}}%
+\hyperlabel{sec:lemma-2}%
+
+If three real numbers $a$, $x$, and $y$ satisfy the inequalities
+  $$a - y / n \leq x \leq a$$ for every integer $n \geq 1$, then $x = a$.
+
+\begin{proof}
+
+  \link{forall\_pnat\_frac\_leq\_self\_leq\_imp\_eq}
+
+  \divider
+
+  By the trichotomy of the reals, there are three cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $x = a$.
+    Then we are immediately finished.
+
+  \paragraph{Case 2}%
+
+    Suppose $x < a$.
+    Then there exists some $c > 0$ such that $x = a - c$.
+    By \nameref{sec:theorem-i.30}, there exists an integer $n > 0$ such that
+      $nc > y$.
+    Rearranging terms, we see that $y / n < c$.
+    Therefore $a - y / n > a - c = x$.
+    But by hypothesis, $x \geq a - y / n$.
+    Thus $a - y / n < a - y / n$, a contradiction.
+
+  \paragraph{Case 3}%
+
+    Suppose $x > a$.
+    But by hypothesis $x \leq a$.
+    Thus $a < a$, a contradiction.
+
+  \paragraph{Conclusion}%
+
+    Since these cases are exhaustive and both case 2 and 3 lead to
+      contradictions, $x = a$ is the only possibility.
+
+\end{proof}
+
+\section*{Theorem I.32}%
 \hyperlabel{sec:theorem-i.32}%
 
 Let $h$ be a given positive number and let $S$ be a set of real numbers.
-\begin{enumerate}[(a)]
-  \item If $S$ has a supremum, then for some $x$ in $S$ we have
-    $$x > \sup{S} - h.$$
-  \item If $S$ has an infimum, then for some $x$ in $S$ we have
-    $$x < \inf{S} + h.$$
-\end{enumerate}
+
+\subsection*{\verified{Theorem I.32a}}%
+\hyperlabel{sub:theorem-i.32a}%
+
+If $S$ has a supremum, then for some $x$ in $S$ we have $x > \sup{S} - h$.
 
 \begin{proof}
 
-  \  % Force space prior to *Proof.*
+  \link{sup\_imp\_exists\_gt\_sup\_sub\_delta}
 
-  \begin{enumerate}[(a)]
-    \item \link{sup\_imp\_exists\_gt\_sup\_sub\_delta}
-    \item \link{inf\_imp\_exists\_lt\_inf\_add\_delta}
-  \end{enumerate}
+  \divider
+
+  By definition of a supremum, $\sup{S}$ is the least upper bound of $S$.
+  For the sake of contradiction, suppose for all $x \in S$,
+    $x \leq \sup{S} - h$.
+  This immediately implies $\sup{S} - h$ is an upper bound of $S$.
+  But $\sup{S} - h < \sup{S}$, contradicting $\sup{S}$ being the \textit{least}
+    upper bound.
+  Therefore our original hypothesis was wrong.
+  That is, there exists some $x \in S$ such that $x > \sup{S} - h$.
 
 \end{proof}
 
-\section*{\proceeding{Theorem I.33}}%
+\subsection*{\verified{Theorem I.32b}}%
+\hyperlabel{sub:theorem-i.32b}%
+
+If $S$ has an infimum, then for some $x$ in $S$ we have $x < \inf{S} + h$.
+
+\begin{proof}
+
+  \link{inf\_imp\_exists\_lt\_inf\_add\_delta}
+
+  \divider
+
+  By definition of an infimum, $\inf{S}$ is the greatest lower bound of $S$.
+  For the sake of contradiction, suppose for all $x \in S$,
+    $x \geq \inf{S} + h$.
+  This immediately implies $\inf{S} + h$ is a lower bound of $S$.
+  But $\inf{S} + h > \inf{S}$, contradicting $\inf{S}$ being the
+    \textit{greatest} lower bound.
+  Therefore our original hypothesis was wrong.
+  That is, there exists some $x \in S$ such that $x < \inf{S} + h$.
+
+\end{proof}
+
+\section*{Theorem I.33}%
 \hyperlabel{sec:theorem-i.33}%
 
 Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
-$$C = \{a + b : a \in A, b \in B\}.$$
-
-\begin{enumerate}[(a)]
-  \item If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
-    $$\sup{C} = \sup{A} + \sup{B}.$$
-  \item If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
-    $$\inf{C} = \inf{A} + \inf{B}.$$
-\end{enumerate}
+  $$C = \{a + b : a \in A, b \in B\}.$$
 
 \note{This is known as the "Additive Property."}
 
+\subsection*{\verified{Theorem I.33a}}%
+\hyperlabel{sub:theorem-i.33a}%
+
+If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
+  $$\sup{C} = \sup{A} + \sup{B}.$$
+
 \begin{proof}
 
-  \  % Force space prior to *Proof.*
+  \link{sup\_minkowski\_sum\_eq\_sup\_add\_sup}
 
-  \begin{enumerate}[(a)]
-    \item \link{sup\_minkowski\_sum\_eq\_sup\_add\_sup}
-    \item \link{inf\_minkowski\_sum\_eq\_inf\_add\_inf}
-  \end{enumerate}
+  \divider
+
+  We prove (i) $\sup{A} + \sup{B}$ is an upper bound of $C$ and (ii)
+    $\sup{A} + \sup{B}$ is the \textit{least} upper bound of $C$.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-i.33a-i}%
+
+    Let $x \in C$.
+    By definition of $C$, there exist elements $a' \in A$ and $b' \in B$ such
+      that $x = a' + b'$.
+    By definition of a supremum, $a' \leq \sup{A}$.
+    Likewise, $b' \leq \sup{B}$.
+    Therefore $a' + b' \leq \sup{A} + \sup{B}$.
+    Since $x = a' + b'$ was arbitrarily chosen, it follows $\sup{A} + \sup{B}$
+      is an upper bound of $C$.
+
+  \paragraph{(ii)}%
+
+    Since $A$ and $B$ have supremums, $C$ is nonempty.
+    By \nameref{par:theorem-i.33a-i}, $C$ is bounded above.
+    Therefore the completeness axiom tells us $C$ has a supremum.
+    Let $n > 0$ be an integer.
+    We now prove that
+      \begin{equation}
+        \label{par:theorem-i.33a-ii-eq1}
+        \sup{C} \leq \sup{A} + \sup{B} \leq \sup{C} + 1 / n.
+      \end{equation}
+
+    \subparagraph{Left-Hand Side}%
+
+      First consider the left-hand side of \eqref{par:theorem-i.33a-ii-eq1}.
+      By \nameref{par:theorem-i.33a-i}, $\sup{A} + \sup{B}$ is an upper bound of
+        $C$.
+      Since $\sup{C}$ is the \textit{least} upper bound of $C$, it follows
+        $\sup{C} \leq \sup{A} + \sup{B}$.
+
+    \subparagraph{Right-Hand Side}%
+
+      Next consider the right-hand side of \eqref{par:theorem-i.33a-ii-eq1}.
+      By \nameref{sub:theorem-i.32a}, there exists some $a' \in A$ such that
+        $\sup{A} < a' + 1 / (2n)$.
+      Likewise, there exists some $b' \in B$ such that
+        $\sup{B} < b' + 1 / (2n)$.
+      Adding these two inequalities together shows
+        \begin{align*}
+          \sup{A} + \sup{B}
+            & < a' + b' + 1 / n \\
+            & \leq \sup{C} + 1 / n.
+        \end{align*}
+
+    \subparagraph{Conclusion}%
+
+      Applying \nameref{sec:theorem-i.31} to \eqref{par:theorem-i.33a-ii-eq1}
+        proves $\sup{C} = \sup{A} + \sup{B}$ as expected.
 
 \end{proof}
 
-\section*{\proceeding{Theorem I.34}}%
+\subsection*{\verified{Theorem I.33b}}%
+\hyperlabel{sub:theorem-i.33b}%
+
+If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
+  $$\inf{C} = \inf{A} + \inf{B}.$$
+
+\begin{proof}
+
+  \link{inf\_minkowski\_sum\_eq\_inf\_add\_inf}
+
+  \divider
+
+  We prove (i) $\inf{A} + \inf{B}$ is a lower bound of $C$ and (ii)
+    $\inf{A} + \inf{B}$ is the \textit{greatest} lower bound of $C$.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-i.33b-i}%
+
+    Let $x \in C$.
+    By definition of $C$, there exist elements $a' \in A$ and $b' \in B$ such
+      that $x = a' + b'$.
+    By definition of an infimum, $a' \geq \inf{A}$.
+    Likewise, $b' \geq \inf{B}$.
+    Therefore $a' + b' \geq \inf{A} + \inf{B}$.
+    Since $x = a' + b'$ was arbitrarily chosen, it follows $\inf{A} + \inf{B}$
+      is a lower bound of $C$.
+
+  \paragraph{(ii)}%
+
+    Since $A$ and $B$ have infimums, $C$ is nonempty.
+    By \nameref{par:theorem-i.33b-i}, $C$ is bounded below.
+    Therefore \nameref{sec:theorem-i.27} tells us $C$ has an infimum.
+    Let $n > 0$ be an integer.
+    We now prove that
+      \begin{equation}
+        \label{par:theorem-i.33b-ii-eq1}
+        \inf{C} - 1 / n \leq \inf{A} + \inf{B} \leq \inf{C}.
+      \end{equation}
+
+    \subparagraph{Right-Hand Side}%
+
+      First consider the right-hand side of \eqref{par:theorem-i.33b-ii-eq1}.
+      By \nameref{par:theorem-i.33b-i}, $\inf{A} + \inf{B}$ is a lower bound of
+        $C$.
+      Since $\inf{C}$ is the \textit{greatest} upper bound of $C$, it follows
+        $\inf{C} \geq \inf{A} + \inf{B}$.
+
+    \subparagraph{Left-Hand Side}%
+
+      Next consider the left-hand side of \eqref{par:theorem-i.33b-ii-eq1}.
+      By \nameref{sub:theorem-i.32b}, there exists some $a' \in A$ such that
+        $\inf{A} > a' - 1 / (2n)$.
+      Likewise, there exists some $b' \in B$ such that
+        $\inf{B} > b' - 1 / (2n)$.
+      Adding these two inequalities together shows
+        \begin{align*}
+          \inf{A} + \inf{B}
+            & > a' + b' - 1 / n \\
+            & \geq \inf{C} - 1 / n.
+        \end{align*}
+
+    \subparagraph{Conclusion}%
+
+      Applying \nameref{sec:lemma-2} to \eqref{par:theorem-i.33b-ii-eq1}
+        proves $\inf{C} = \inf{A} + \inf{B}$ as expected.
+
+\end{proof}
+
+\section*{\verified{Theorem I.34}}%
 \hyperlabel{sec:theorem-i.34}%
 
-Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that
-$$s \leq t$$
-for every $s$ in $S$ and every $t$ in $T$. Then $S$ has a supremum, and $T$
-has an infimum, and they satisfy the inequality
-$$\sup{S} \leq \inf{T}.$$
+Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that $$s \leq t$$
+  for every $s$ in $S$ and every $t$ in $T$. Then $S$ has a supremum, and $T$
+  has an infimum, and they satisfy the inequality $$\sup{S} \leq \inf{T}.$$
 
 \begin{proof}
 
   \link{forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
+
+  \divider
+
+  By hypothesis, $S$ and $T$ are nonempty sets.
+  Let $s \in S$ and $t \in T$.
+  Then $t$ is an upper bound of $S$ and $s$ is a lower bound of $T$.
+  By the completeness axiom, $S$ has a supremum.
+  By \nameref{sec:theorem-i.27}, $T$ has an infimum.
+  All that remains is showing $\sup{S} \leq \inf{T}$.
+
+  For the sake of contradiction, suppose $\sup{S} > \inf{T}$.
+  Then there exists some $c > 0$ such that $\sup{S} = \inf{T} + c$.
+  Therefore $\inf{T} < \sup{S} - c / 2$.
+  By \nameref{sub:theorem-i.32a}, there exists some $x \in S$ such that
+    $\sup{S} - c / 2 < x$.
+  Thus $$\inf{T} < \sup{S} - c / 2 < x.$$
+  But by hypothesis, $x \in S$ is a lower bound of $T$ meaning $x \leq \inf{T}$.
+  Therefore $x < x$, a contradiction.
+  Out original assumption is incorrect; that is, $\sup{S} \leq \inf{T}$.
 
 \end{proof}
 
