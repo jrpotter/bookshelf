@@ -17,7 +17,7 @@
 % the root of the workspace (i.e. where this `preamble.tex` file is located).
 % #1 - Path to root
 % #2 - Location
-% #3 - Namespace
+% #3 - Fragment
 % #4 - Presentation
 \newcommand{\lean}[4]{\href{#1/#2.html\##3}{#4}}
 \newcommand{\hyperlabel}[1]{%
@@ -28,6 +28,9 @@
 % Environments
 % ========================================
 
+\newenvironment{axiom}{%
+  \paragraph{\normalfont\normalsize\textit{Axiom.}}}
+  {\hfill$\square$}
 \newcommand{\divider}{%
   \vspace{10pt}
   \hrule

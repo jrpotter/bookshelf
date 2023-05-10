@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\input{../../preamble}
+
+\newcommand{\link}[2]{\lean{../..}
+  {Common/Real/Geometry/Area} % Location
+  {#1} % Fragment
+  {#2} % Presentation
+}
+
+\begin{document}
+
+\header{Axiomatic Framework of Area}{Tom M. Apostol}
+
+We assume there exists a class $\mathscr{M}$ of measurable sets in the plane and
+  a set function $a$, whose domain is $\mathscr{M}$, with the following
+  properties:
+
+\section*{\verified{Nonnegative Property}}%
+\hyperlabel{sec:nonnegative-property}%
+
+For each set $S$ in $\mathscr{M}$, we have $a(S) \geq 0$.
+
+\begin{axiom}
+
+  \link{Nonnegative-Property}{Nonnegative Property}
+
+\end{axiom}
+
+\section*{\verified{Additive Property}}%
+\hyperlabel{sec:additive-property}%
+
+If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
+  $\mathscr{M}$, and we have $a(S \cup T) = a(S) + a(T) - a(S \cap T)$.
+
+\begin{axiom}
+
+  \link{Additive-Property}{Additive Property}
+
+\end{axiom}
+
+\section*{\verified{Difference Property}}%
+\hyperlabel{sec:difference-property}%
+
+If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
+  $\mathscr{M}$, and we have $a(T - S) = a(T) - a(S)$.
+
+\begin{axiom}
+
+  \link{Difference-Property}{Difference Property}
+
+\end{axiom}
+
+\section*{\verified{Invariance Under Congruence}}%
+\hyperlabel{sec:invariance-under-congruence}%
+
+If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
+  also in $\mathscr{M}$ and we have $a(S) = a(T)$.
+
+\begin{axiom}
+
+  \link{Invariant-Under-Congruence}{Invariance Under Congruence}
+
+\end{axiom}
+
+\section*{\verified{Choice of Scale}}%
+\label{sec:choice-scale}
+
+Every rectangle $R$ is in $\mathscr{M}$.
+If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
+
+\begin{axiom}
+
+  \link{Choice-of-Scale}{Choice of Scale}
+
+\end{axiom}
+
+\section*{\proceeding{Exhaustion Property}}%
+\hyperlabel{sec:exhaustion-property}%
+
+Let $Q$ be a set that can be enclosed between two step regions $S$ and $T$, so
+  that
+  \begin{equation}
+    \label{sec:exhaustion-property-eq1}
+    S \subseteq Q \subseteq T.
+  \end{equation}
+If there is one and only one number $c$ which satisfies the inequalities
+  $$a(S) \leq c \leq a(T)$$ for all step regions $S$ and $T$ satisfying (1.1),
+  then $Q$ is measurable and $a(Q) = c$.
+
+\begin{axiom}
+
+  \link{Exhaustion-Property}{Exhaustion Property}
+
+\end{axiom}
+
+\end{document}
