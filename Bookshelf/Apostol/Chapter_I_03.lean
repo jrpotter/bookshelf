@@ -1,11 +1,11 @@
 import Common.Real.Set
 
-/-! # Apostol.Chapter_I_3
+/-! # Apostol.Chapter_I_03
 
 A Set of Axioms for the Real-Number System
 -/
 
-namespace Apostol.Chapter_I_3
+namespace Apostol.Chapter_I_03
 
 #check Archimedean
 #check Real.exists_isLUB
@@ -640,4 +640,4 @@ the Archimedean property does not imply the least-upper-bound axiom.
 ###### TODO
 -/
 
-end Apostol.Chapter_I_3
+end Apostol.Chapter_I_03
