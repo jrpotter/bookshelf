@@ -1,9 +1,9 @@
 \documentclass{article}
-\usepackage{amsmath}
+
 \usepackage{graphicx}
-\usepackage{mathrsfs}
 
 \input{../../preamble}
+
 \graphicspath{{./images/}}
 
 \newcommand{\larea}[2]{\lean{../..}{Common/Real/Geometry/Area}{#1}{#2}}
@@ -11,16 +11,18 @@
 
 \begin{document}
 
+\header{Exercises 1.7}{Tom M. Apostol}
+
 The properties of area in this set of exercises are to be deduced from the
   axioms for area stated in the foregoing section.
 
-\section{Exercise 1}%
-\label{sec:exercise-1}
+\section*{Exercise 1}%
+\hyperlabel{sec:exercise-1}%
 
 Prove that each of the following sets is measurable and has zero area:
 
-\subsection{Exercise 1a}%
-\label{sub:exercise-1a}
+\subsection*{\proceeding{Exercise 1a}}%
+\hyperlabel{sub:exercise-1a}%
 
 A set consisting of a single point.
 
@@ -36,8 +38,8 @@ A set consisting of a single point.
 
 \end{proof}
 
-\subsection{Exercise 1b}%
-\label{sub:exercise-1b}
+\subsection*{\proceeding{Exercise 1b}}%
+\hyperlabel{sub:exercise-1b}%
 
 A set consisting of a finite number of points in a plane.
 
@@ -50,7 +52,7 @@ A set consisting of a finite number of points in a plane.
   \paragraph{Base Case}%
 
     Consider a set $S$ consisting of a single point in a plane.
-    By \eqref{sub:exercise-1a}, $S$ is measurable with area $0$.
+    By \nameref{sub:exercise-1a}, $S$ is measurable with area $0$.
     Thus $P(1)$ holds.
 
   \paragraph{Induction Step}%
@@ -62,7 +64,7 @@ A set consisting of a finite number of points in a plane.
     Denote the remaining set of points as $S_k$.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
-    By \eqref{sub:exercise-1a}, $T$ is measurable with area $0$.
+    By \nameref{sub:exercise-1a}, $T$ is measurable with area $0$.
     By the \larea{Additive-Property}{Additive Property}, $S_k \cup T$ is
       measurable, $S_k \cap T$ is measurable, and
       \begin{align}
@@ -82,7 +84,7 @@ A set consisting of a finite number of points in a plane.
 
       $S_k \cap T \neq \emptyset$.
       Since $T$ consists of a single point, $S_k \cap T = T$.
-      By \eqref{sub:exercise-1a}, $a(S_k \cap T) = a(T) = 0$.
+      By \nameref{sub:exercise-1a}, $a(S_k \cap T) = a(T) = 0$.
 
     \vspace{8pt}
     \noindent
@@ -95,8 +97,8 @@ A set consisting of a finite number of points in a plane.
 
 \end{proof}
 
-\subsection{Exercise 1c}%
-\label{sub:exercise-1c}
+\subsection*{\proceeding{Exercise 1c}}%
+\hyperlabel{sub:exercise-1c}%
 
 The union of a finite collection of line segments in a plane.
 
@@ -158,8 +160,8 @@ The union of a finite collection of line segments in a plane.
 
 \end{proof}
 
-\section{Exercise 2}%
-\label{sec:exercise-2}
+\section*{\unverified{Exercise 2}}%
+\hyperlabel{sec:exercise-2}%
 
 Every right triangular region is measurable because it can be obtained as the
   intersection of two rectangles.
@@ -209,8 +211,8 @@ Prove that every triangular region is measurable and that its area is one half
 
 \end{proof}
 
-\section{Exercise 3}%
-\label{sec:exercise-3}
+\section*{\unverified{Exercise 3}}%
+\hyperlabel{sec:exercise-3}%
 
 Prove that every trapezoid and every parallelogram is measurable and derive the
   usual formulas for their areas.
@@ -232,7 +234,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Then $S$ is the union of non-overlapping rectangle $R$ of width $b_1$ and
       height $h$ with right triangle $T$ of base $b_2 - b_1$ and height $h$.
     By \larea{Choice-of-Scale}{Choice of Scale}, $R$ is measurable.
-    By \eqref{sec:exercise-2}, $T$ is measurable.
+    By \nameref{sec:exercise-2}, $T$ is measurable.
     By the \larea{Additive-Property}{Additive Property}, $R \cup T$ and $R \cap T$
       are both measurable and
       \begin{align*}
@@ -241,7 +243,8 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
           & = a(R) + a(T) - a(R \cap T) \\
           & = a(R) + a(T) & \text{by construction} \\
           & = b_1h + a(T) & \text{Choice of Scale} \\
-          & = b_1h + \frac{1}{2}(b_2 - b_1)h & \eqref{sec:exercise-2} \\
+          & = b_1h + \frac{1}{2}(b_2 - b_1)h
+            & \text{\nameref{sec:exercise-2}} \\
           & = \frac{b_1 + b_2}{2}h.
       \end{align*}
 
@@ -251,7 +254,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Then $S$ is the union of non-overlapping triangle $T$ and right trapezoid $R$.
     Let $c$ denote the length of base $T$.
     Then $R$ has longer base edge of length $b_2 - c$.
-    By \eqref{sec:exercise-2}, $T$ is measurable.
+    By \nameref{sec:exercise-2}, $T$ is measurable.
     By Case 1, $R$ is measurable.
     By the \larea{Additive-Property}{Additive Property}, $R \cup T$ and $R \cap T$
       are both measurable and
@@ -259,7 +262,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
         a(S)
           & = a(T) + a(R) - a(R \cap T) \\
           & = a(T) + a(R) & \text{by construction} \\
-          & = \frac{1}{2}ch + a(R) & \eqref{sec:exercise-2} \\
+          & = \frac{1}{2}ch + a(R) & \text{\nameref{sec:exercise-2}} \\
           & = \frac{1}{2}ch + \frac{b_1 + b_2 - c}{2}h & \text{Case 1} \\
           & = \frac{b_1 + b_2}{2}h.
       \end{align*}
@@ -291,9 +294,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     These cases are exhaustive and in agreement with one another.
     Thus $S$ is measurable and $$a(S) = \frac{b_1 + b_2}{2}h.$$
 
-  \vspace{4pt}
-  \hrule
-  \vspace{10pt}
+  \divider
 
   Let $P$ be a parallelogram with base $b$ and height $h$.
   Then $P$ is the union of non-overlapping triangle $T$ and right trapezoid $R$.
@@ -317,15 +318,15 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
 
 \end{proof}
 
-\section{Exercise 4}%
-\label{sec:exercise-4}
+\section*{Exercise 4}%
+\hyperlabel{sec:exercise-4}%
 
 Let $P$ be a polygon whose vertices are lattice points.
 The area of $P$ is $I + \frac{1}{2}B - 1$, where $I$ denotes the number of
   lattice points inside the polygon and $B$ denotes the number on the boundary.
 
-\subsection{Exercise 4a}%
-\label{sub:exercise-4a}
+\subsection*{\unverified{Exercise 4a}}%
+\hyperlabel{sub:exercise-4a}%
 
 Prove that the formula is valid for rectangles with sides parallel to the
   coordinate axes.
@@ -353,8 +354,8 @@ Prove that the formula is valid for rectangles with sides parallel to the
 
 \end{proof}
 
-\subsection{Exercise 4b}%
-\label{sub:exercise-4b}
+\subsection*{\unverified{Exercise 4b}}%
+\hyperlabel{sub:exercise-4b}%
 
 Prove that the formula is valid for right triangles and parallelograms.
 
@@ -396,19 +397,19 @@ Prove that the formula is valid for right triangles and parallelograms.
           & \eqref{sub:exercise-4b-eq1} \\
         & = \frac{1}{2}\left[ I_R + \frac{1}{2}B_R - 1 \right] \\
         & = \frac{1}{2}\left[ (w - 1)(h - 1) + \frac{1}{2}(2(w + h)) - 1 \right]
-          & \eqref{sub:exercise-4a} \\
+          & \text{\nameref{sub:exercise-4a}} \\
         & = \frac{1}{2}\left[ (w - 1)(h - 1) + w + h - 1 \right] \\
         & = \frac{1}{2}\left[ wh - w - h + 1 + w + h - 1 \right] \\
         & = \frac{wh}{2}.
     \end{align*}
 
   We do not prove this formula is valid for parallelograms here.
-  Instead, refer to \eqref{sub:exercise-4c} below.
+  Instead, refer to \nameref{sub:exercise-4c} below.
 
 \end{proof}
 
-\subsection{Exercise 4c}%
-\label{sub:exercise-4c}
+\subsection*{\unverified{Exercise 4c}}%
+\hyperlabel{sub:exercise-4c}%
 
 Use induction on the number of edges to construct a proof for general polygons.
 
@@ -421,7 +422,7 @@ Use induction on the number of edges to construct a proof for general polygons.
   \paragraph{Base Case}%
 
     A $3$-polygon is a triangle.
-    By \eqref{sub:exercise-4b}, the lattice point area formula holds.
+    By \nameref{sub:exercise-4b}, the lattice point area formula holds.
     Thus $P(3)$ holds.
 
   \paragraph{Induction Step}%
@@ -473,8 +474,8 @@ Use induction on the number of edges to construct a proof for general polygons.
 
 \end{proof}
 
-\section{Exercise 5}%
-\label{sec:exercise-5}
+\section*{\unverified{Exercise 5}}%
+\hyperlabel{sec:exercise-5}%
 
 Prove that a triangle whose vertices are lattice points cannot be equilateral.
 
@@ -487,7 +488,7 @@ ways, using Exercises 2 and 4.]
   Let $T$ be an equilateral triangle whose vertices are lattice points.
   Assume each side of $T$ has length $a$.
   Then $T$ has height $h = (a\sqrt{3}) / 2$.
-  By \eqref{sec:exercise-2},
+  By \nameref{sec:exercise-2},
     \begin{equation}
       \label{sub:exercise-5-eq1}
       \tag{5.1}
@@ -495,7 +496,7 @@ ways, using Exercises 2 and 4.]
     \end{equation}
   Let $I$ and $B$ denote the number of interior and boundary lattice points of
     $T$ respectively.
-  By \eqref{sec:exercise-4},
+  By \nameref{sec:exercise-4},
     \begin{equation}
       \label{sub:exercise-5-eq2}
       \tag{5.2}
@@ -509,8 +510,8 @@ ways, using Exercises 2 and 4.]
 
 \end{proof}
 
-\section{Exercise 6}%
-\label{sec:exercise-6}
+\section*{\unverified{Exercise 6}}%
+\hyperlabel{sec:exercise-6}%
 
 Let $A = \{1, 2, 3, 4, 5\}$, and let $\mathscr{M}$ denote the class of all
   subsets of $A$.

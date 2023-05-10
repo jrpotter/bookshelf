@@ -3,17 +3,20 @@
 \input{../../preamble}
 
 \newcommand{\link}[1]{\lean{../..}
-  {Bookshelf/Enderton/Chapter0}
-  {Enderton.Chapter0.#1}
-  {Chapter0.#1}
+  {Bookshelf/Enderton/Chapter0} % Location
+  {Enderton.Chapter0.#1} % Namespace
+  {Chapter0.#1} % Presentation
 }
 
 \begin{document}
 
-\section*{Lemma 0A}%
-\label{sec:lemma-0a}
+\header{Useful Facts About Sets}{Herbert B. Enderton}
 
-Assume that $\langle x_1, \ldots, x_m \rangle = \langle y_1, \ldots, y_m, \ldots, y_{m+k} \rangle$.
+\section{\proceeding{Lemma 0A}}%
+\hyperlabel{sec:lemma-0a}%
+
+Assume that $\langle x_1, \ldots, x_m \rangle =
+  \langle y_1, \ldots, y_m, \ldots, y_{m+k} \rangle$.
 Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
 
 \begin{proof}

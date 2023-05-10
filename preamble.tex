@@ -1,14 +1,65 @@
-\usepackage{amsfonts, amsthm}
+\usepackage{amsfonts, amsmath, amsthm}
+\usepackage[shortlabels]{enumitem}
+\usepackage{environ}
+\usepackage{fancybox}
+\usepackage{fontawesome5}
 \usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{soul, xcolor}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{xtheoreminner}{Theorem}
-\newenvironment{xtheorem}[1]{%
-  \renewcommand\thextheoreminner{#1}%
-  \xtheoreminner
-}{\endxtheoreminner}
+% ========================================
+% Linking
+% ========================================
 
 \hypersetup{colorlinks=true, urlcolor=blue}
+
+% The first argument refers to a relative path upward from a current file to
+% the root of the workspace (i.e. where this `preamble.tex` file is located).
+% #1 - Path to root
+% #2 - Location
+% #3 - Namespace
+% #4 - Presentation
+\newcommand{\lean}[4]{\href{#1/#2.html\##3}{#4}}
+\newcommand{\hyperlabel}[1]{%
+  \label{#1}%
+  \hypertarget{#1}{}}
+
+% ========================================
+% Environments
+% ========================================
+
+\newcommand{\divider}{%
+  \vspace{10pt}
+  \hrule
+  \vspace{10pt}}
+\newcommand{\header}[2]{%
+  \title{#1}
+  \author{#2}
+  \date{}
+  \maketitle}
+\newcommand{\note}[1]{%
+  \begin{center}
+    \doublebox{
+      \begin{minipage}{0.95\textwidth}
+      \vspace{2pt}
+      \hl{Note}: #1
+      \vspace{2pt}
+      \end{minipage}}
+  \end{center}}
+
+% Status of a proof. A statement/theorem is verified if both a LaTeX proof
+% and a corresponding Lean proof has been written. If a Lean proof is in
+% progress, it's in a "proceeding" state. Otherwise it is unverified.
+\DeclareRobustCommand{\verified}[1]{%
+  \texorpdfstring{\color{teal}#1\ \faCheckCircle}{#1}}
+\DeclareRobustCommand{\proceeding}[1]{%
+  \texorpdfstring{\color{magenta}#1\ \faSpinner}{#1}}
+\DeclareRobustCommand{\unverified}[1]{%
+  \texorpdfstring{\color{red}#1\ \faExclamationCircle}{#1}}
+
+% ========================================
+% Math
+% ========================================
 
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
@@ -17,6 +68,3 @@
 \newcommand{\ico}[2]{\left[#1, #2\right)}
 \newcommand{\ioc}[2]{\left(#1, #2\right]}
 \newcommand{\ioo}[2]{\left(#1, #2\right)}
-% The first argument refers to a relative path upward from a current file to
-% the root of the workspace (i.e. where this `preamble.tex` file is located).
-\newcommand{\lean}[4]{\href{#1/#2.html\##3}{#4}}
