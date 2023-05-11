@@ -14,12 +14,6 @@
     "name": "lake",
     "inputRev?": "master"}},
   {"git":
-   {"url": "https://github.com/jrpotter/bookshelf-docgen.git",
-    "subDir?": null,
-    "rev": "699f606df8f38c8abb287277df9e79669587c2b9",
-    "name": "doc-gen4",
-    "inputRev?": "699f606df8f38c8abb287277df9e79669587c2b9"}},
-  {"git":
    {"url": "https://github.com/mhuisi/lean4-cli",
     "subDir?": null,
     "rev": "5a858c32963b6b19be0d477a30a1f4b6c120be7e",
@@ -28,9 +22,9 @@
   {"git":
    {"url": "https://github.com/leanprover-community/mathlib4.git",
     "subDir?": null,
-    "rev": "d65ed3b2920dbfb0b2bf1aca2189ec177eb68980",
+    "rev": "eff4459bbf65f545383feac6b2a857a8b798d4dd",
     "name": "mathlib",
-    "inputRev?": "d65ed3b2920dbfb0b2bf1aca2189ec177eb68980"}},
+    "inputRev?": "master"}},
   {"git":
    {"url": "https://github.com/gebner/quote4",
     "subDir?": null,
@@ -58,9 +52,9 @@
   {"git":
    {"url": "https://github.com/leanprover/std4.git",
     "subDir?": null,
-    "rev": "6006307d2ceb8743fea7e00ba0036af8654d0347",
+    "rev": "f6525373c9fd639adffa259bcb98c17dfd00e61e",
     "name": "std4",
-    "inputRev?": "6006307d2ceb8743fea7e00ba0036af8654d0347"}},
+    "inputRev?": "main"}},
   {"git":
    {"url": "https://github.com/leanprover/std4",
     "subDir?": null,
