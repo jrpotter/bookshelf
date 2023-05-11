@@ -15,6 +15,7 @@
 % ========================================
 
 \hypersetup{colorlinks=true, urlcolor=blue}
+\newcommand{\leanref}[2]{\color{blue}$\pmb{\exists}\;{-}\;$\href{#1}{#2}}
 \newcommand{\hyperlabel}[1]{%
   \label{#1}%
   \hypertarget{#1}{}}
@@ -39,19 +40,32 @@
   \begin{center}
     \doublebox{
       \begin{minipage}{0.95\textwidth}
-      \vspace{2pt}
-      \hl{Note:} #1
-      \vspace{2pt}
+        \vspace{2pt}
+        \hl{Note:} #1
+        \vspace{2pt}
       \end{minipage}}
   \end{center}}
 
-% Status of a proof. A statement/theorem is verified if both a LaTeX proof
-% and a corresponding Lean proof has been written. If a Lean proof is in
-% progress, it's in a "proceeding" state. Otherwise it is unverified.
+% ========================================
+% Status
+% ========================================
+
+% Indicates a statement corresponds to an axiom or definition. There must exist
+% a corresponding `axiom` or `def` in Lean.
+\DeclareRobustCommand{\defined}[1]{%
+  \texorpdfstring{\color{cyan}\faParagraph\ #1}{#1}}
+
+% Indicates a statement has a complete proof in both LaTeX *and* Lean.
 \DeclareRobustCommand{\verified}[1]{%
   \texorpdfstring{\color{teal}\faCheckCircle\ #1}{#1}}
+
+% Indicates a statement has not been completely proven in either LaTeX or
+% Lean (or both). Progress is currently being made to correct this though.
 \DeclareRobustCommand{\proceeding}[1]{%
   \texorpdfstring{\color{magenta}\faDotCircle[regular]\ #1}{#1}}
+
+% A catch-all status for anything that doesn't fit the above categories.
+% Incomplete definitions, proofs only conducted in LaTeX, etc. belong here.
 \DeclareRobustCommand{\unverified}[1]{%
   \texorpdfstring{\color{red}\faExclamationCircle\ #1}{#1}}
 

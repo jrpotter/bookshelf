@@ -28,12 +28,14 @@ This assumes you have `python3` available in your `$PATH`. To change how the
 server behaves, refer to the `.env` file located in the root directory of this
 project.
 
-A color/symbol code is used on generated PDF headers to indicate their status:
+A color code is used on generated PDF headers to indicate their status:
 
-* Teal coloring indicates the corresponding proof is complete. That is, the
-  proof has been written in TeX and also formally verified in Lean.
-* Magenta coloring indicates the corresponding proof is in progress. That is, a
-  proof in both TeX and Lean have not yet been finished, but is actively being
-  worked on.
-* Red coloring indicates the formal Lean proof has not yet been started. It may
-  or may not also indicate the TeX proof has been written.
+* Cyan statements indicate axioms and definitions. There must exist a
+  corresponding `axiom` or `def` in Lean.
+* Teal statements indicate those with complete proofs in both LaTeX *and* Lean.
+* Magenta statements indicate those that have not been completely proven in
+  either LaTeX or Lean (or both). Progress is currently being made to correct
+  this though.
+* Red coloring is a catch-all for all statements that don't fit the above
+  categorizations. Incomplete definitions, proofs only conducted in LaTeX, etc.
+  belong here.
