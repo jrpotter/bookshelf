@@ -76,7 +76,7 @@ def nameToLink? (s : String) : HtmlM (Option String) := do
       declNameToLink name
     -- module name
     else if res.moduleNames.contains name then
-      moduleNameToLink name
+      moduleNameToHtmlLink name
     -- find similar name in the same module
     else
       match (← getCurrentName) with

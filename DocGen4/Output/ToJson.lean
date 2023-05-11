@@ -53,7 +53,7 @@ instance : ToJson JsonIndex where
 
 def JsonIndex.addModule (index : JsonIndex) (module : JsonModule) : BaseHtmlM JsonIndex := do
   let mut index := index
-  let newModule := (module.name, ← moduleNameToLink (String.toName module.name))
+  let newModule := (module.name, ← moduleNameToHtmlLink (String.toName module.name))
   let newDecls := module.declarations.map (fun d => (d.name, d))
   index := { index with
     modules := newModule :: index.modules

@@ -14,6 +14,7 @@ import DocGen4.Process.DocInfo
 import DocGen4.Process.Hierarchy
 import DocGen4.Process.InductiveInfo
 import DocGen4.Process.InstanceInfo
+import DocGen4.Process.NameExt
 import DocGen4.Process.NameInfo
 import DocGen4.Process.OpaqueInfo
 import DocGen4.Process.StructureInfo

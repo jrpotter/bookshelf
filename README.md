@@ -15,27 +15,16 @@ feasible, theorems are also formally proven in [Lean](https://leanprover.github.
 
 ## Documentation
 
-To generate documentation, we use [bookshelf-docgen](https://github.com/jrpotter/bookshelf-docgen).
-Refer to this project on prerequisites and then run the following to build and
-serve files locally:
+This project has absorbed [doc-gen4](https://github.com/leanprover/doc-gen4) to
+ease customization. In particular, the `DocGen4` module found in this project
+allows generating PDFs and including them into the navbar. To generate
+documentation and serve files locally, run the following:
 
 ```bash
 > lake build Bookshelf:docs
 > lake run server
 ```
 
-This assumes you have `python3` available in your `$PATH`. To change how the
-server behaves, refer to the `.env` file located in the root directory of this
-project.
-
-A color code is used on generated PDF headers to indicate their status:
-
-* Cyan statements indicate axioms and definitions. There must exist a
-  corresponding `axiom` or `def` in Lean.
-* Teal statements indicate those with complete proofs in both LaTeX *and* Lean.
-* Magenta statements indicate those that have not been completely proven in
-  either LaTeX or Lean (or both). Progress is currently being made to correct
-  this though.
-* Red coloring is a catch-all for all statements that don't fit the above
-  categorizations. Incomplete definitions, proofs only conducted in LaTeX, etc.
-  belong here.
+This assumes you have `pdflatex` and `python3` available in your `$PATH`. To
+change how the server behaves, refer to the `.env` file located in the root
+directory of this project.
