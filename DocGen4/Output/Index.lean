@@ -37,9 +37,9 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
         status:
         <ul>
           <li>
-            <span style="color:cyan">Cyan statements </span> indicate axioms and
-            definitions. There must exist a corresponding <code>axiom</code> or
-            <code>def</code> in Lean.
+            <span style="color:darkgray">Dark gray statements </span> indicate
+            axioms and definitions. There must exist a corresponding
+            <code>axiom</code> or <code>def</code> in Lean.
           </li>
           <li>
             <span style="color:teal">Teal statements </span> indicate those

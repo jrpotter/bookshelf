@@ -2,6 +2,8 @@
 
 \input{../../preamble}
 
+\externaldocument[C:1:07:]{Chapter_1_07}[Chapter_1_07.pdf]
+
 \newcommand{\lean}[1]{\leanref
   {./Chapter\_1\_11.html\#Apostol.Chapter\_1\_11.#1}
   {Apostol.Chapter\_1\_11.#1}}
@@ -15,7 +17,7 @@
 
 Prove that the greatest-integer function has the properties indicated:
 
-\subsection*{\proceeding{Exercise 4a}}%
+\subsection*{\verified{Exercise 4a}}%
 \label{sub:exercise-4a}
 
 $\floor{x + n} = \floor{x} + n$ for every integer $n$.
@@ -24,9 +26,19 @@ $\floor{x + n} = \floor{x} + n$ for every integer $n$.
 
   \lean{exercise\_4a}
 
+  \divider
+
+  Let $x$ be a real number and $n$ an integer.
+  Let $m = \floor{x + n}$.
+  By definition of the floor function, $m$ is the unique integer such that
+    $m \leq x + n < m + 1$.
+  Then $m - n \leq x < (m - n) + 1$.
+  That is, $m - n = \floor{x}$.
+  Rearranging terms we see that $m = \floor{x} + n$ as expected.
+
 \end{proof}
 
-\subsection*{\proceeding{Exercise 4b}}%
+\subsection*{\verified{Exercise 4b}}%
 \label{sub:exercise-4b}
 
 $\floor{-x} =
@@ -37,16 +49,45 @@ $\floor{-x} =
 
 \begin{proof}
 
-  \  % Force space prior to *Proof.*
+  \ \vspace{6pt}
 
-  \begin{enumerate}[(a)]
-    \item \lean{exercise\_4b\_1}
-    \item \lean{exercise\_4b\_2}
-  \end{enumerate}
+  \lean{exercise\_4b\_1}
+
+  \lean{exercise\_4b\_2}
+
+  \divider
+
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $x$ is an integer.
+    Then $x = \floor{x}$ and $-x = \floor{-x}$.
+    It immediately follows that $$\floor{-x} = -x = -\floor{x}.$$
+
+  \paragraph{Case 2}%
+
+    Suppose $x$ is not an integer.
+    Let $m = \floor{-x}$.
+    By definition of the floor function, $m$ is the unique integer such that
+      $m \leq -x < m + 1$.
+    Equivalently, $-m - 1 < x \leq -m$.
+    Since $x$ is not an integer, it follows $-m - 1 \leq x < -m$.
+    Then, by definition of the floor function, $\floor{x} = -m - 1$.
+    Solving for $m$ yields $$\floor{-x} = m = -\floor{x} - 1.$$
+
+  \paragraph{Conclusion}%
+
+    The above two cases are exhaustive. Thus
+      $$\floor{-x} =
+        \begin{cases}
+          -\floor{x} & \text{if } x \text{ is an integer}, \\
+          -\floor{x} - 1 & \text{otherwise}.
+        \end{cases}$$
 
 \end{proof}
 
-\subsection*{\proceeding{Exercise 4c}}%
+\subsection*{\verified{Exercise 4c}}%
 \label{sub:exercise-4c}
 
 $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
@@ -54,6 +95,40 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 \begin{proof}
 
   \lean{exercise\_4c}
+
+  \divider
+
+  Rewrite $x$ and $y$ as the sum of their floor and fractional components:
+    $x = \floor{x} + \{x\}$ and $y = \floor{y} + \{y\}$.
+  Now
+    \begin{align}
+      \floor{x + y}
+        & = \floor{\floor{x} + \{x\} + \floor{y} + \{y\}} \nonumber \\
+        & = \floor{\floor{x} + \floor{y} + \{x\} + \{y\}} \nonumber \\
+        & = \floor{x} + \floor{y} + \floor{\{x\} + \{y\}}
+        & \text{\nameref{sub:exercise-4a}} \label{sub:exercise-4c-eq1}
+    \end{align}
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $\{x\} + \{y\} < 1$.
+    Then $\floor{\{x\} + \{y\}} = 0$.
+    Substituting this value into \eqref{sub:exercise-4c-eq1} yields
+      $$\floor{x + y} = \floor{x} + \floor{y}.$$
+
+  \paragraph{Case 2}%
+
+    Suppose $\{x\} + \{y\} \geq 1$.
+    Because $\{x\}$ and $\{y\}$ are both less than $1$, $\{x\} + \{y\} < 2$.
+    Thus $\floor{\{x\} + \{y\}} = 1$.
+    Substituting this value into \eqref{sub:exercise-4c-eq1} yields
+      $$\floor{x + y} = \floor{x} + \floor{y} + 1.$$
+
+  \paragraph{Conclusion}%
+
+    Since the above two cases are exhaustive, it follows
+      $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
 \end{proof}
 
@@ -66,6 +141,11 @@ $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
 
   \lean{exercise\_4d}
 
+  \divider
+
+  This is immediately proven by applying Hermite's Identity as shown in
+    \nameref{sec:exercise-5}.
+
 \end{proof}
 
 \subsection*{\proceeding{Exercise 4e}}%
@@ -76,6 +156,11 @@ $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
 \begin{proof}
 
   \lean{exercise\_4e}
+
+  \divider
+
+  This is immediately proven by applying Hermite's Identity as shown in
+    \nameref{sec:exercise-5}.
 
 \end{proof}
 
@@ -116,7 +201,7 @@ State and prove such a generalization.
 
   \paragraph{Left-Hand Side}%
 
-    Consider the left-hande side of identity \eqref{sec:exercise-5-eq1}
+    Consider the left-hand side of identity \eqref{sec:exercise-5-eq1}.
     By \eqref{sec:exercise-5-eq2}, $nr \in \ico{j}{j + 1}$.
     Therefore $\floor{nr} = j$.
     Thus
@@ -182,13 +267,32 @@ Prove that the number of lattice points in $S$ is equal to the sum
 
 \begin{proof}
 
-  Define $S_i = \mathbb{Z} \cap \ioc{0}{f(i)}$ for all $i \in \mathbb{Z}$.
-  By definition, the set of lattice points of $S$ is given by
-    $$L = \{ (i, j) : i = a, \ldots, b \land j \in S_i \}.$$
-  By construction, it follows $$\sum_{j \in S_i} 1 = \floor{f(i)}.$$
-  Therefore $$\abs{L}
-    = \sum_{i=a}^b \sum_{j \in S_i} 1
-    = \sum_{i=1}^b \floor{f(i)}.$$
+  Let $i = a, \ldots, b$ and define $S_i = \mathbb{N} \cap \ioc{0}{f(i)}$.
+  By construction, the number of lattice points in $S$ is
+    \begin{equation}
+      \label{sec:exercise-6-eq1}
+      \sum_{n = a}^b \abs{S_n}.
+    \end{equation}
+  All that remains is to show $\abs{S_i} = \floor{f(i)}$.
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $f(i)$ is an integer.
+    Then the number of integers in $\ioc{0}{f(i)}$ is $f(i) = \floor{f(i)}$.
+
+  \paragraph{Case 2}%
+
+    Suppose $f(i)$ is not an integer.
+    Then the number of integers in $\ioc{0}{f(i)}$ is the same as that of
+      $\ioc{0}{\floor{f(i)}}$.
+    Once again, that number is $\floor{f(i)}$.
+
+  \paragraph{Conclusion}%
+
+    By cases 1 and 2, $\abs{S_i} = \floor{f(i)}$.
+    Substituting this identity into \eqref{sec:exercise-6-eq1} finishes the
+      proof.
 
 \end{proof}
 
@@ -199,6 +303,9 @@ If $a$ and $b$ are positive integers with no common factor, we have the formula
   $$\sum_{n=1}^{b-1} \floor{\frac{na}{b}} = \frac{(a - 1)(b - 1)}{2}.$$
 When $b = 1$, the sum on the left is understood to be $0$.
 
+\note{When $b = 1$, the proofs of (a) and (b) are trivial. We continue under the
+  assumption $b > 1$.}
+
 \subsection*{\unverified{Exercise 7a}}%
 \label{sub:exercise-7a}
 
@@ -207,7 +314,78 @@ Derive this result by a geometric argument, counting lattice points in a right
 
 \begin{proof}
 
-  TODO
+  Let $f \colon [1, b - 1] \rightarrow \mathbb{R}$ be given by $f(x) = ax / b$.
+  Let $S$ denote the set of points $(x, y)$ satisfying $1 \leq x \leq b - 1$,
+    $0 < y \leq f(x)$.
+  By \nameref{sec:exercise-6}, the number of lattice points of $S$ is equal to
+    the sum
+    \begin{equation}
+      \label{sub:exercise-7a-eq1}
+      \sum_{n=1}^{b-1} \floor{f(n)} = \sum_{n=1}^{b-1} \floor{\frac{na}{b}}.
+    \end{equation}
+  Define $T$ to be the triangle of width $w = b$ and height $h = f(b) = a$
+    as $$T = \{ (x, y) : 0 < x < b, 0 < y \leq f(x) \}.$$
+  By construction, $T$ does not introduce any additional lattice points.
+  Thus $S$ and $T$ have the same number of lattice points.
+  Let $H_L$ denote the number of boundary points on $T$'s hypotenuse.
+  We prove that (i) $H_L = 2$ and (ii) that $T$ has $\frac{(a - 1)(b - 1)}{2}$
+    lattice points.
+
+  \paragraph{(i)}%
+  \label{par:exercise-7a-i}
+
+    Consider the line $L$ overlapping the hypotenuse of $T$.
+    By construction, $T$'s hypotenuse has endpoints $(0, 0)$ and $(b, a)$.
+    By hypothesis, $a$ and $b$ are positive, excluding the possibility of $L$
+      being vertical.
+    Define the slope of $L$ as $$m = \frac{a}{b}.$$
+    $H_L$ coincides with the number of indices $i = 0, \ldots, b$ such that
+      $(i, i * m)$ is a lattice point.
+    But $a$ and $b$ are coprime by hypothesis and $i \leq b$.
+    Thus $i * m$ is an integer if and only if $i = 0$ or $i = b$.
+    Thus $H_L = 2$.
+
+  \paragraph{(ii)}%
+
+    Next we count the number of lattice points in $T$.
+    Let $R$ be the overlapping retangle of width $w$ and height $h$, situated
+      with bottom-left corner at $(0, 0)$.
+    Let $I_R$ denote the number of interior lattice points of $R$.
+    Let $I_T$ and $B_T$ denote the interior and boundary lattice points of $T$
+      respectively.
+    By \nameref{C:1:07:sub:exercise-4b-eq2},
+      \begin{align}
+        I_T
+          & = \frac{1}{2}(I_R - (H_L - 2)) \nonumber \\
+          & = \frac{1}{2}(I_R - (2 - 2))
+            & \text{\nameref{par:exercise-7a-i}} \nonumber \\
+            & = \frac{1}{2}I_R. & \label{sub:exercise-7a-eq2}
+      \end{align}
+    Furthermore, since both the adjacent and opposite side of $T$ are not
+      included in $T$ and there exist no lattice points on $T$'s hypotenuse
+      besides the endpoints, it follows
+      \begin{equation}
+        \label{sub:exercise-7a-eq3}
+        B_T = 0.
+      \end{equation}
+    Thus the number of lattice points of $T$ equals
+      \begin{align}
+        I_T + B_T
+          & = I_T & \eqref{sub:exercise-7a-eq3} \nonumber \\
+          & = \frac{1}{2}I_R & \eqref{sub:exercise-7a-eq2} \nonumber \\
+          & = \frac{(b - 1)(a - 1)}{2}.
+            & \text{\nameref{C:1:07:sub:exercise-4a}}
+              \label{sub:exercise-7a-eq4}
+      \end{align}
+
+  \paragraph{Conclusion}%
+
+    By \eqref{sub:exercise-7a-eq1} the number of lattice points of $S$ is equal
+      to the sum $$\sum_{n=1}^{b-1} \floor{\frac{na}{b}}.$$
+    But the number of lattice points of $S$ is the same as that of $T$.
+    By \eqref{sub:exercise-7a-eq4}, the number of lattice points in $T$ is equal
+      to $$\frac{(b - 1)(a - 1)}{2}.$$
+    Thus $$\sum_{n=1}^{b-1} \floor{\frac{na}{b}} = \frac{(a - 1)(b - 1)}{2}.$$
 
 \end{proof}
 
@@ -222,6 +400,35 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
 \begin{proof}
 
   \lean{exercise\_7b}
+
+  \divider
+
+  Let $n = 1, \ldots, b - 1$.
+  By hypothesis, $a$ and $b$ are coprime.
+  Furthermore, $n < b$ for all values of $n$.
+  Thus $an / b$ is not an integer.
+  By \nameref{sub:exercise-4b},
+    \begin{equation}
+      \label{sub:exercise-7b-eq1}
+      \floor{-\frac{an}{b}} = -\floor{\frac{an}{b}} - 1.
+    \end{equation}
+  Consider the following:
+    \begin{align*}
+      \sum_{n=1}^{b-1} \floor{\frac{na}{b}}
+        & = \sum_{n=1}^{b-1} \floor{\frac{a(b - n)}{b}} \\
+        & = \sum_{n=1}^{b-1} \floor{\frac{ab - an}{b}} \\
+        & = \sum_{n=1}^{b-1} \floor{-\frac{an}{b} + a} \\
+        & = \sum_{n=1}^{b-1} \floor{-\frac{an}{b}} + a.
+          & \text{\nameref{sub:exercise-4a}} \\
+        & = \sum_{n=1}^{b-1} -\floor{\frac{an}{b}} - 1 + a
+          & \eqref{sub:exercise-7b-eq1} \\
+        & = -\sum_{n=1}^{b-1} \floor{\frac{an}{b}} - \sum_{n=1}^{b-1} 1 +
+          \sum_{n=1}^{b-1} a \\
+        & = -\sum_{n=1}^{b-1} \floor{\frac{an}{b}} - (b - 1) + a(b - 1).
+    \end{align*}
+  Rearranging the above yields
+    $$2\sum_{n=1}^{b-1} \floor{\frac{an}{b}} = (a - 1)(b - 1).$$
+  Dividing both sides of the above identity concludes the proof.
 
 \end{proof}
 

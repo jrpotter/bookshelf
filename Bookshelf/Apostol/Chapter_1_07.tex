@@ -22,7 +22,7 @@ The properties of area in this set of exercises are to be deduced from the
 
 Prove that each of the following sets is measurable and has zero area:
 
-\subsection*{\proceeding{Exercise 1a}}%
+\subsection*{\unverified{Exercise 1a}}%
 \label{sub:exercise-1a}
 
 A set consisting of a single point.
@@ -38,7 +38,7 @@ A set consisting of a single point.
 
 \end{proof}
 
-\subsection*{\proceeding{Exercise 1b}}%
+\subsection*{\unverified{Exercise 1b}}%
 \label{sub:exercise-1b}
 
 A set consisting of a finite number of points in a plane.
@@ -97,7 +97,7 @@ A set consisting of a finite number of points in a plane.
 
 \end{proof}
 
-\subsection*{\proceeding{Exercise 1c}}%
+\subsection*{\unverified{Exercise 1c}}%
 \label{sub:exercise-1c}
 
 The union of a finite collection of line segments in a plane.
@@ -382,24 +382,19 @@ Prove that the formula is valid for right triangles and parallelograms.
   Likewise,
     \begin{equation}
       \label{sub:exercise-4b-eq2}
-      I_T = \frac{1}{2}(I_R - H_L + 2).
+      I_T = \frac{1}{2}(I_R - (H_L - 2)).
     \end{equation}
   The following shows the lattice point area formula is in agreement with
     the expected result:
     \begin{align*}
       I_T + \frac{1}{2}B_T - 1
-        & = \frac{1}{2}(I_R - H_L + 2) + \frac{1}{2}B_T - 1
+        & = \frac{1}{2}(I_R - (H_L - 2)) + \frac{1}{2}B_T - 1
           & \eqref{sub:exercise-4b-eq2} \\
-        & = \frac{1}{2}\left[ I_R - H_L + 2 + B_T - 2 \right] \\
         & = \frac{1}{2}\left[ I_R - H_L + B_T \right] \\
         & = \frac{1}{2}\left[ I_R - H_L + \frac{1}{2}B_R - 1 + H_L \right]
           & \eqref{sub:exercise-4b-eq1} \\
         & = \frac{1}{2}\left[ I_R + \frac{1}{2}B_R - 1 \right] \\
-        & = \frac{1}{2}\left[ (w - 1)(h - 1) + \frac{1}{2}(2(w + h)) - 1 \right]
-          & \text{\nameref{sub:exercise-4a}} \\
-        & = \frac{1}{2}\left[ (w - 1)(h - 1) + w + h - 1 \right] \\
-        & = \frac{1}{2}\left[ wh - w - h + 1 + w + h - 1 \right] \\
-        & = \frac{wh}{2}.
+        & = \frac{1}{2}\left[ wh \right] & \text{\nameref{sub:exercise-4a}}.
     \end{align*}
 
   We do not prove this formula is valid for parallelograms here.

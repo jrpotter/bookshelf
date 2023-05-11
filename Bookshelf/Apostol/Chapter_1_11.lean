@@ -1,11 +1,13 @@
-import Mathlib.Algebra.BigOperators.Basic
 import Mathlib.Data.Real.Basic
-import Mathlib.Data.Finset.Basic
 import Mathlib.Tactic.LibrarySearch
+
+import Common.Real.Floor
 
 /-! # Apostol.Chapter_1_11 -/
 
 namespace Apostol.Chapter_1_11
+
+open BigOperators
 
 /-! ## Exercise 4
 
@@ -76,49 +78,14 @@ theorem exercise_4c (x y : ℝ)
       rw [← sub_lt_iff_lt_add', ← sub_sub, add_sub_cancel, add_sub_cancel]
       exact add_lt_add (Int.fract_lt_one x) (Int.fract_lt_one y)
 
-namespace Hermite
-
-/--
-Constructs a partition of `[0, 1)` that looks as follows:
-```
-[0, 1/n), [1/n, 2/n), ..., [(n-1)/n, 1)
-```
--/
-def partition (n : ℕ) (i : ℕ) : Set ℝ := Set.Ico (i / n) ((i + 1) / n)
-
-/--
-The indexed union of the family of sets of a `partition` is equal to `[0, 1)`.
--/
-theorem partition_eq_Ico_zero_one
-  : (⋃ i ∈ Finset.range n, partition n i) = Set.Ico 0 1 := by
-  sorry
-
-/--
-The fractional portion of any real number is always in `[0, 1)`.
--/
-theorem fract_mem_Ico_zero_one (x : ℝ)
-  : Int.fract x ∈ Set.Ico 0 1 := ⟨Int.fract_nonneg x, Int.fract_lt_one x⟩
-
-/--
-The fractional portion of any real number always exists in some member of the
-indexed family of sets formed by any `partition`.
--/
-theorem fract_mem_partition (r : ℝ) (hr : r ∈ Set.Ico 0 1)
-  : ∀ n : ℕ, ∃ j : ℕ, r ∈ Set.Ico ↑(j / n) ↑((j + 1) / n) := by
-  sorry
-
-end Hermite
-
 /-- ### Exercise 5
 
 The formulas in Exercises 4(d) and 4(e) suggest a generalization for `⌊nx⌋`.
 State and prove such a generalization.
 -/
 theorem exercise_5 (n : ℕ) (x : ℝ)
-  : ⌊n * x⌋ = Finset.sum (Finset.range n) (fun i => ⌊x + i/n⌋) := by
-  let r := Int.fract x
-  have hx : x = ⌊x⌋ + r := Eq.symm (add_eq_of_eq_sub' rfl)
-  sorry
+  : ⌊n * x⌋ = Finset.sum (Finset.range n) (fun i => ⌊x + i/n⌋) :=
+  Real.Floor.floor_mul_eq_sum_range_floor_add_index_div n x
 
 /-- ### Exercise 4d
 
@@ -157,6 +124,9 @@ Derive the result analytically as follows: By changing the index of summation,
 note that `Σ_{n=1}^{b-1} ⌊na / b⌋ = Σ_{n=1}^{b-1} ⌊a(b - n) / b⌋`. Now apply
 Exercises 4(a) and (b) to the bracket on the right.
 -/
-theorem exercise_7b : True := sorry
+theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.coprime a b)
+  : ∑ n in (Finset.range b).filter (· > 0), ⌊n * ((a : ℕ) : ℝ) / b⌋ =
+      ((a - 1) * (b - 1)) / 2 := by
+  sorry
 
 end Apostol.Chapter_1_11
