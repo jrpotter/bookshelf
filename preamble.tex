@@ -49,11 +49,11 @@
 % and a corresponding Lean proof has been written. If a Lean proof is in
 % progress, it's in a "proceeding" state. Otherwise it is unverified.
 \DeclareRobustCommand{\verified}[1]{%
-  \texorpdfstring{\color{teal}#1\ \faCheckCircle}{#1}}
+  \texorpdfstring{\color{teal}\faCheckCircle\ #1}{#1}}
 \DeclareRobustCommand{\proceeding}[1]{%
-  \texorpdfstring{\color{magenta}#1\ \faDotCircle[regular]}{#1}}
+  \texorpdfstring{\color{magenta}\faDotCircle[regular]\ #1}{#1}}
 \DeclareRobustCommand{\unverified}[1]{%
-  \texorpdfstring{\color{red}#1\ \faExclamationCircle}{#1}}
+  \texorpdfstring{\color{red}\faExclamationCircle\ #1}{#1}}
 
 % ========================================
 % Math

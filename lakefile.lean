@@ -12,7 +12,7 @@ require std4 from git
     "6006307d2ceb8743fea7e00ba0036af8654d0347"
 require «doc-gen4» from git
   "https://github.com/jrpotter/bookshelf-docgen.git" @
-    "3f941dc8a814321498082da49f4a8430bbfbbb6c"
+    "87ecc512444afd073a2b201ef25caf3ef5fc74b1"
 
 @[default_target]
 lean_lib «Bookshelf» {
