@@ -31,7 +31,7 @@ require std4 from git
     "main"
 
 -- ========================================
--- Document Generator
+-- Documentation Generator
 -- ========================================
 
 lean_lib DocGen4

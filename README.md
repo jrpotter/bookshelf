@@ -17,7 +17,7 @@ feasible, theorems are also formally proven in [Lean](https://leanprover.github.
 
 This project has absorbed [doc-gen4](https://github.com/leanprover/doc-gen4) to
 ease customization. In particular, the `DocGen4` module found in this project
-allows generating PDFs and including them into the navbar. To generate
+allows generating PDFs and including them in the navbar. To generate
 documentation and serve files locally, run the following:
 
 ```bash
