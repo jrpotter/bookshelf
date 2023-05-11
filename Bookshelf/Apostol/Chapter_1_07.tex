@@ -6,8 +6,9 @@
 
 \graphicspath{{./images/}}
 
-\newcommand{\larea}[2]{\lean{../..}{Common/Real/Geometry/Area}{#1}{#2}}
-\newcommand{\lrect}[2]{\lean{../..}{Common/Real/Geometry/Rectangle}{#1}{#2}}
+\externaldocument[A:]
+  {../../Common/Real/Geometry/Area}
+  [../../Common/Real/Geometry/Area.pdf]
 
 \begin{document}
 
@@ -29,10 +30,9 @@ A set consisting of a single point.
 \begin{proof}
 
   Let $S$ be a set consisting of a single point.
-  By definition of a \lrect{Real.Point}{Point}, $S$ is a rectangle in which all
-    vertices coincide.
-  By \larea{Choice-of-Scale}{Choice of Scale}, $S$ is measurable with area its
-    width times its height.
+  By definition of a Point, $S$ is a rectangle in which all vertices coincide.
+  By \nameref{A:sec:choice-scale} $S$ is measurable with area its width times
+    its height.
   The width and height of $S$ is trivially zero.
   Therefore $a(S) = (0)(0) = 0$.
 
@@ -65,7 +65,7 @@ A set consisting of a finite number of points in a plane.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
     By \nameref{sub:exercise-1a}, $T$ is measurable with area $0$.
-    By the \larea{Additive-Property}{Additive Property}, $S_k \cup T$ is
+    By the \nameref{A:sec:additive-property}, $S_k \cup T$ is
       measurable, $S_k \cap T$ is measurable, and
       \begin{align}
         a(S_{k+1})
@@ -111,10 +111,10 @@ The union of a finite collection of line segments in a plane.
   \paragraph{Base Case}%
 
     Consider a set $S$ consisting of a single line segment in a plane.
-    By definition of a \lrect{Real.LineSemgnet}{Line Segment}, $S$ is a
-      rectangle in which one side has dimension $0$.
-    By \larea{Choice-of-Scale}{Choice of Scale}, $S$ is measurable with area its
-      width $w$ times its height $h$.
+    By definition of a Line Segment, $S$ is a rectangle in which one side has
+      dimension $0$.
+    By \nameref{A:sec:choice-scale}, $S$ is measurable with area its width $w$
+      times its height $h$.
     Therefore $a(S) = wh = 0$.
     Thus $P(1)$ holds.
 
@@ -128,8 +128,8 @@ The union of a finite collection of line segments in a plane.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
     By the base case, $T$ is measurable with area $0$.
-    By the \larea{Additive-Property}{Additive Property}, $S_k \cup T$ is
-      measurable, $S_k \cap T$ is measurable, and
+    By the \nameref{A:sec:additive-property}, $S_k \cup T$ is measurable,
+      $S_k \cap T$ is measurable, and
       \begin{align}
         a(S_{k+1})
           & = a(S_k \cup T) \nonumber \\
@@ -190,10 +190,10 @@ Prove that every triangular region is measurable and that its area is one half
     \centering
   \end{figure}
 
-  By \larea{Choice-of-Scale}{Choice of Scale}, both $R$ and $S$ are measurable.
+  By \nameref{A:sec:choice-scale}, both $R$ and $S$ are measurable.
   By this same axiom, $a(R) = ab$ and $a(S) = ca\sin{\theta}$.
-  By the \larea{Additive-Property}{Additive Property}, $R \cup S$ and $R \cap S$
-    are both measurable.
+  By the \nameref{A:sec:additive-property}, $R \cup S$ and $R \cap S$ are both
+    measurable.
   $a(R \cap S) = a(T)$ and $a(R \cup S)$ can be determined by noting that
     $R$'s construction implies identity $a(R) = 2a(T)$.
   Therefore
@@ -206,8 +206,8 @@ Prove that every triangular region is measurable and that its area is one half
         & = ab + ca\sin{\theta} - ca\sin{\theta} - a(T).
     \end{align*}
   Solving for $a(T)$ gives the desired identity: $$a(T) = \frac{1}{2}ab.$$
-  By \larea{Invariance-Under-Congruence}{Invariance Under Congruence},
-    $a(T') = a(T)$, concluding our proof.
+  By \nameref{A:sec:invariance-under-congruence}, $a(T') = a(T)$, concluding our
+    proof.
 
 \end{proof}
 
@@ -233,10 +233,10 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Suppose $S$ is a right trapezoid.
     Then $S$ is the union of non-overlapping rectangle $R$ of width $b_1$ and
       height $h$ with right triangle $T$ of base $b_2 - b_1$ and height $h$.
-    By \larea{Choice-of-Scale}{Choice of Scale}, $R$ is measurable.
+    By \nameref{A:sec:choice-scale}, $R$ is measurable.
     By \nameref{sec:exercise-2}, $T$ is measurable.
-    By the \larea{Additive-Property}{Additive Property}, $R \cup T$ and $R \cap T$
-      are both measurable and
+    By the \nameref{A:sec:additive-property}, $R \cup T$ and $R \cap T$ are both
+      measurable and
       \begin{align*}
         a(S)
           & = a(R \cup T) \\
@@ -256,8 +256,8 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Then $R$ has longer base edge of length $b_2 - c$.
     By \nameref{sec:exercise-2}, $T$ is measurable.
     By Case 1, $R$ is measurable.
-    By the \larea{Additive-Property}{Additive Property}, $R \cup T$ and $R \cap T$
-      are both measurable and
+    By the \nameref{A:sec:additive-property}, $R \cup T$ and $R \cap T$ are both
+      measurable and
       \begin{align*}
         a(S)
           & = a(T) + a(R) - a(R \cap T) \\
@@ -274,7 +274,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Let $c$ denote the length of base $T$.
     Reflect $T$ vertically to form another right triangle, say $T'$.
     Then $T' \cup R$ is an acute trapezoid.
-    By \larea{Invariance-Under-Congruence}{Invariance Under Congruence},
+    By \nameref{A:sec:invariance-under-congruence},
       \begin{equation}
         \label{par:exercise-3-case-3-eq1}
         \tag{3.1}
@@ -301,7 +301,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
   Let $c$ denote the length of base $T$.
   Reflect $T$ vertically to form another right triangle, say $T'$.
   Then $T' \cup R$ is an acute trapezoid.
-  By \larea{Invariance-Under-Congruence}{Invariance Under Congruence},
+  By \nameref{A:sec:invariance-under-congruence},
     \begin{equation}
       \label{par:exercise-3-eq2}
       \tag{3.2}
@@ -338,8 +338,7 @@ Prove that the formula is valid for rectangles with sides parallel to the
   We assume $P$ has three non-collinear points, ruling out any instances of
     points or line segments.
 
-  By \larea{Choice-of-Scale}{Choice of Scale}, $P$ is measurable with area
-    $a(P) = wh$.
+  By \nameref{A:sec:choice-scale}, $P$ is measurable with area $a(P) = wh$.
   By construction, $P$ has $I = (w - 1)(h - 1)$ interior lattice points and
     $B = 2(w + h)$ lattice points on its boundary.
   The following shows the lattice point area formula is in agreement with
@@ -456,8 +455,8 @@ Use induction on the number of edges to construct a proof for general polygons.
           & = a(S) + (I_T + \frac{1}{2}B_T - 1) & \text{induction hypothesis} \\
           & = a(S) + a(T). & \text{base case}
       \end{align*}
-    By the \larea{Additive-Property}{Additive Property}, $S \cup T$ is
-      measurable, $S \cap T$ is measurable, and
+    By the \nameref{A:sec:additive-property}, $S \cup T$ is measurable,
+      $S \cap T$ is measurable, and
       \begin{align*}
         a(P)
           & = a(S \cup T) \\

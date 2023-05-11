@@ -3,23 +3,18 @@
 \usepackage{environ}
 \usepackage{fancybox}
 \usepackage{fontawesome5}
-\usepackage{hyperref}
 \usepackage{mathrsfs}
-\usepackage{soul, xcolor}
+\usepackage{soul}
+\usepackage{xcolor}
+% `hyperref` comes after `xr-hyper`.
+\usepackage{xr-hyper}
+\usepackage{hyperref}
 
 % ========================================
 % Linking
 % ========================================
 
 \hypersetup{colorlinks=true, urlcolor=blue}
-
-% The first argument refers to a relative path upward from a current file to
-% the root of the workspace (i.e. where this `preamble.tex` file is located).
-% #1 - Path to root
-% #2 - Location
-% #3 - Fragment
-% #4 - Presentation
-\newcommand{\lean}[4]{\href{#1/#2.html\##3}{#4}}
 \newcommand{\hyperlabel}[1]{%
   \label{#1}%
   \hypertarget{#1}{}}
@@ -56,7 +51,7 @@
 \DeclareRobustCommand{\verified}[1]{%
   \texorpdfstring{\color{teal}#1\ \faCheckCircle}{#1}}
 \DeclareRobustCommand{\proceeding}[1]{%
-  \texorpdfstring{\color{magenta}#1\ \faSpinner}{#1}}
+  \texorpdfstring{\color{magenta}#1\ \faDotCircle[regular]}{#1}}
 \DeclareRobustCommand{\unverified}[1]{%
   \texorpdfstring{\color{red}#1\ \faExclamationCircle}{#1}}
 

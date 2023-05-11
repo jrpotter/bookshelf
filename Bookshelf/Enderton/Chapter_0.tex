@@ -2,11 +2,9 @@
 
 \input{../../preamble}
 
-\newcommand{\link}[1]{\lean{../..}
-  {Bookshelf/Enderton/Chapter\_0} % Location
-  {Enderton.Chapter\_0.#1} % Fragment
-  {Chapter\_0.#1} % Presentation
-}
+\newcommand{\lean}[1]{\href
+  {./Chapter\_0.html\#Enderton.Chapter\_0.#1}
+  {Enderton.Chapter\_0.#1}}
 
 \begin{document}
 
@@ -21,7 +19,7 @@ Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
 
 \begin{proof}
 
-  \link{lemma\_0a}
+  \lean{lemma\_0a}
 
 \end{proof}
 

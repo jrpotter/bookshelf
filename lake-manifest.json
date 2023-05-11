@@ -16,9 +16,9 @@
   {"git":
    {"url": "https://github.com/jrpotter/bookshelf-docgen.git",
     "subDir?": null,
-    "rev": "80a4dc8d508161c859dbbb455f3855e051a28890",
+    "rev": "3f941dc8a814321498082da49f4a8430bbfbbb6c",
     "name": "doc-gen4",
-    "inputRev?": "80a4dc8d508161c859dbbb455f3855e051a28890"}},
+    "inputRev?": "3f941dc8a814321498082da49f4a8430bbfbbb6c"}},
   {"git":
    {"url": "https://github.com/mhuisi/lean4-cli",
     "subDir?": null,

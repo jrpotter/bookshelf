@@ -2,11 +2,9 @@
 
 \input{../../preamble}
 
-\newcommand{\link}[1]{\lean{../..}
-  {Bookshelf/Apostol/Chapter\_I\_03} % Location
-  {Apostol.Chapter\_I\_03.#1} % Fragment
-  {Chapter\_I\_03.#1} % Presentation
-}
+\newcommand{\lean}[1]{\href
+  {./Chapter\_I\_03.html\#Apostol.Chapter\_I\_03.#1}
+  {Apostol.Chapter\_I\_03.#1}}
 
 \begin{document}
 
@@ -19,7 +17,7 @@ Nonempty set $S$ has supremum $L$ if and only if set $-S$ has infimum $-L$.
 
 \begin{proof}
 
-  \link{is\_lub\_neg\_set\_iff\_is\_glb\_set\_neg}
+  \lean{is\_lub\_neg\_set\_iff\_is\_glb\_set\_neg}
 
   \divider
 
@@ -40,7 +38,7 @@ Every nonempty set $S$ that is bounded below has a greatest lower bound; that
 
 \begin{proof}
 
-  \link{exists\_isGLB}
+  \lean{exists\_isGLB}
 
   \divider
 
@@ -59,7 +57,7 @@ For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
 \begin{proof}
 
-  \link{exists\_pnat\_geq\_self}
+  \lean{exists\_pnat\_geq\_self}
 
   \divider
 
@@ -82,7 +80,7 @@ If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
 
 \begin{proof}
 
-  \link{exists\_pnat\_mul\_self\_geq\_of\_pos}
+  \lean{exists\_pnat\_mul\_self\_geq\_of\_pos}
 
   \divider
 
@@ -101,7 +99,7 @@ If three real numbers $a$, $x$, and $y$ satisfy the inequalities
 
 \begin{proof}
 
-  \link{forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
+  \lean{forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
 
   \divider
 
@@ -144,7 +142,7 @@ If three real numbers $a$, $x$, and $y$ satisfy the inequalities
 
 \begin{proof}
 
-  \link{forall\_pnat\_frac\_leq\_self\_leq\_imp\_eq}
+  \lean{forall\_pnat\_frac\_leq\_self\_leq\_imp\_eq}
 
   \divider
 
@@ -191,7 +189,7 @@ If $S$ has a supremum, then for some $x$ in $S$ we have $x > \sup{S} - h$.
 
 \begin{proof}
 
-  \link{sup\_imp\_exists\_gt\_sup\_sub\_delta}
+  \lean{sup\_imp\_exists\_gt\_sup\_sub\_delta}
 
   \divider
 
@@ -213,7 +211,7 @@ If $S$ has an infimum, then for some $x$ in $S$ we have $x < \inf{S} + h$.
 
 \begin{proof}
 
-  \link{inf\_imp\_exists\_lt\_inf\_add\_delta}
+  \lean{inf\_imp\_exists\_lt\_inf\_add\_delta}
 
   \divider
 
@@ -244,7 +242,7 @@ If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
 
 \begin{proof}
 
-  \link{sup\_minkowski\_sum\_eq\_sup\_add\_sup}
+  \lean{sup\_minkowski\_sum\_eq\_sup\_add\_sup}
 
   \divider
 
@@ -312,7 +310,7 @@ If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
 
 \begin{proof}
 
-  \link{inf\_minkowski\_sum\_eq\_inf\_add\_inf}
+  \lean{inf\_minkowski\_sum\_eq\_inf\_add\_inf}
 
   \divider
 
@@ -381,7 +379,7 @@ Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that $$s \leq t$$
 
 \begin{proof}
 
-  \link{forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
+  \lean{forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
 
   \divider
 

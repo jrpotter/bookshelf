@@ -2,11 +2,9 @@
 
 \input{../../../preamble}
 
-\newcommand{\link}[1]{\lean{../../..}
-  {Common/Real/Sequence/Geometric} % Location
-  {Real.Geometric.#1} % Fragment
-  {Real.Geometric.#1} % Presentation
-}
+\newcommand{\lean}[1]{\href
+  {./Geometric.html\#Real.Geometric.#1}
+  {Real.Geometric.#1}}
 
 \begin{document}
 
@@ -19,7 +17,7 @@ $$\sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.$$
 
 \begin{proof}
 
-  \link{sum\_recursive\_closed}
+  \lean{sum\_recursive\_closed}
 
 \end{proof}
 

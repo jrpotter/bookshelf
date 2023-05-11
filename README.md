@@ -30,11 +30,10 @@ project.
 
 A color/symbol code is used on generated PDF headers to indicate their status:
 
-* Teal coloring (with a checkmark) indicates the corresponding proof is
-  complete. That is, the proof has been written in TeX and also formally
-  verified in Lean.
-* Magenta coloring (with a spinner) indicates the corresponding proof is in
-  progress. That is, a proof in both TeX and Lean have not yet been finished,
-  but is actively being worked on.
-* Red coloring (with a warning) indicates the formal Lean proof has not yet been
-  started. It may or may not also indicate the TeX proof has been written.
+* Teal coloring indicates the corresponding proof is complete. That is, the
+  proof has been written in TeX and also formally verified in Lean.
+* Magenta coloring indicates the corresponding proof is in progress. That is, a
+  proof in both TeX and Lean have not yet been finished, but is actively being
+  worked on.
+* Red coloring indicates the formal Lean proof has not yet been started. It may
+  or may not also indicate the TeX proof has been written.
