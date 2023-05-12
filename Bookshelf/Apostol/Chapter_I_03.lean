@@ -352,8 +352,8 @@ has a supremum, and `sup C = sup A + sup B`.
 theorem sup_minkowski_sum_eq_sup_add_sup (A B : Set ℝ) (a b : ℝ)
   (hA : A.Nonempty) (hB : B.Nonempty)
   (ha : IsLUB A a) (hb : IsLUB B b)
-  : IsLUB (Set.minkowski_sum A B) (a + b) := by
-  let C := Set.minkowski_sum A B
+  : IsLUB (Set.minkowskiSum A B) (a + b) := by
+  let C := Set.minkowskiSum A B
   -- First we show `a + b` is an upper bound of `C`.
   have hub : a + b ∈ upperBounds C := by
     rw [mem_upper_bounds_iff_forall_le]
@@ -402,8 +402,8 @@ has an infimum, and `inf C = inf A + inf B`.
 theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
   (hA : A.Nonempty) (hB : B.Nonempty)
   (ha : IsGLB A a) (hb : IsGLB B b)
-  : IsGLB (Set.minkowski_sum A B) (a + b) := by
-  let C := Set.minkowski_sum A B
+  : IsGLB (Set.minkowskiSum A B) (a + b) := by
+  let C := Set.minkowskiSum A B
   -- First we show `a + b` is a lower bound of `C`.
   have hlb : a + b ∈ lowerBounds C := by
     rw [mem_lower_bounds_iff_forall_ge]
@@ -616,10 +616,9 @@ An integer `n` is called *even* if `n = 2m` for some integer `m`, and *odd* if
 ###### TODO
 -/
 
+def isEven (n : ℤ) := ∃ m : ℤ, n = 2 * m
 
-def is_even (n : ℤ) := ∃ m : ℤ, n = 2 * m
-
-def is_odd (n : ℤ) := is_even (n + 1)
+def isOdd (n : ℤ) := isEven (n + 1)
 
 /-! #### Exercise 11
 

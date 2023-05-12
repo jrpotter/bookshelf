@@ -20,10 +20,10 @@ definition once ported.
 -/
 axiom angle (p₁ p₂ p₃ : ℝ²) : ℝ
 
-noncomputable def port_geometry_euclidean_angle (p₁ p₂ p₃ : ℝ²) :=
+noncomputable def euclideanAngle (p₁ p₂ p₃ : ℝ²) :=
   if p₁ = p₂ ∨ p₂ = p₃ then π / 2 else angle p₁ p₂ p₃
 
-notation "∠" => port_geometry_euclidean_angle
+notation "∠" => euclideanAngle
 
 /--
 Determine the distance between two points in `ℝ²`.

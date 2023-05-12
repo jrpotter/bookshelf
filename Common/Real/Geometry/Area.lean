@@ -89,7 +89,7 @@ axiom congruent_imp_area_eq_area
 -/
 
 axiom rectangle_measurable (R : Rectangle)
-  : R.set_def ∈ 𝓜
+  : R.toSet ∈ 𝓜
 
 axiom rectangle_area_eq_mul_edge_lengths (R : Rectangle)
   : area (rectangle_measurable R) = R.width * R.height
@@ -107,23 +107,23 @@ Every step region is measurable. This follows from the choice of scale axiom,
 and the fact all step regions are equivalent to the union of a collection of
 rectangles.
 -/
-theorem step_function_measurable (S : StepFunction) : S.set_def ∈ 𝓜 := by
+theorem step_function_measurable (S : StepFunction) : S.toSet ∈ 𝓜 := by
   sorry
 
-def forall_subset_between_step_imp_le_between_area (k : ℝ) (Q : Set ℝ²) :=
+def exhaustionProperty (k : ℝ) (Q : Set ℝ²) :=
   ∀ S T : StepFunction,
-    (hS : S.set_def ⊆ Q) →
-    (hT : Q ⊆ T.set_def) →
+    (hS : S.toSet ⊆ Q) →
+    (hT : Q ⊆ T.toSet) →
     area (step_function_measurable S) ≤ k ∧ k ≤ area (step_function_measurable T)
 
 axiom exhaustion_exists_unique_imp_measurable (Q : Set ℝ²)
-  : (∃! k : ℝ, forall_subset_between_step_imp_le_between_area k Q)
+  : (∃! k : ℝ, exhaustionProperty k Q)
   → Q ∈ 𝓜
 
 axiom exhaustion_exists_unique_imp_area_eq (Q : Set ℝ²)
   : ∃ k : ℝ,
-      (h : forall_subset_between_step_imp_le_between_area k Q ∧
-        (∀ x : ℝ, forall_subset_between_step_imp_le_between_area x Q → x = k))
+      (h : exhaustionProperty k Q ∧
+        (∀ x : ℝ, exhaustionProperty x Q → x = k))
     → area (exhaustion_exists_unique_imp_measurable Q ⟨k, h⟩) = k
 
 end Real.Geometry.Area

@@ -72,7 +72,7 @@ The summation of the first `n + 1` terms of an arithmetic sequence.
 
 This function calculates the sum directly.
 -/
-noncomputable def sum_closed (seq : Arithmetic) (n : Nat) : Real :=
+noncomputable def sumClosed (seq : Arithmetic) (n : Nat) : Real :=
   (n + 1) * (seq.a₀ + seq.termClosed n) / 2
 
 /--
@@ -80,9 +80,9 @@ The summation of the first `n + 1` terms of an arithmetic sequence.
 
 This function calculates the sum recursively.
 -/
-def sum_recursive : Arithmetic → Nat → Real
+def sumRecursive : Arithmetic → Nat → Real
   | seq,       0 => seq.a₀
-  | seq, (n + 1) => seq.termClosed (n + 1) + seq.sum_recursive n
+  | seq, (n + 1) => seq.termClosed (n + 1) + seq.sumRecursive n
 
 /--
 Simplify a summation of terms found in the proof of `sum_recursive_closed`.
@@ -101,16 +101,16 @@ The recursive and closed definitions of the sum of an arithmetic sequence agree
 with one another.
 -/
 theorem sum_recursive_closed (seq : Arithmetic) (n : Nat)
-  : seq.sum_recursive n = seq.sum_closed n := by
+  : seq.sumRecursive n = seq.sumClosed n := by
   induction n with
   | zero =>
-    unfold sum_recursive sum_closed termClosed
+    unfold sumRecursive sumClosed termClosed
     norm_num
   | succ n ih =>
     calc
-      seq.sum_recursive (n + 1)
-      _ = seq.termClosed (n + 1) + seq.sum_recursive n := rfl
-      _ = seq.termClosed (n + 1) + seq.sum_closed n := by rw [ih]
+      seq.sumRecursive (n + 1)
+      _ = seq.termClosed (n + 1) + seq.sumRecursive n := rfl
+      _ = seq.termClosed (n + 1) + seq.sumClosed n := by rw [ih]
       _ = seq.termClosed (n + 1) + ((n + 1) * (seq.a₀ + seq.termClosed n)) / 2 := rfl
       _ = (2 * seq.termClosed (n + 1) + n * seq.a₀ + n * seq.termClosed n + seq.a₀ + seq.termClosed n) / 2 := by ring_nf
       _ = (2 * seq.termClosed (n + 1) + n * seq.a₀ + n * (seq.termClosed (n + 1) - seq.Δ) + seq.a₀ + (seq.termClosed (n + 1) - seq.Δ)) / 2 := by rw [@term_closed_sub_succ_delta n]
@@ -118,6 +118,6 @@ theorem sum_recursive_closed (seq : Arithmetic) (n : Nat)
       _ = (2 * seq.termClosed (n + 1) + n * seq.a₀ + n * seq.termClosed (n + 1) + 2 * seq.a₀) / 2 := by rw [sub_delta_summand_eq_two_mul_a₀]
       _ = ((n + 1) + 1) * (seq.a₀ + seq.termClosed (n + 1)) / 2 := by ring_nf
       _ = (↑(n + 1) + 1) * (seq.a₀ + seq.termClosed (n + 1)) / 2 := by simp only [Nat.cast_add, Nat.cast_one]
-      _ = seq.sum_closed (n + 1) := rfl
+      _ = seq.sumClosed (n + 1) := rfl
 
 end Real.Arithmetic

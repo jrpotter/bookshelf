@@ -219,13 +219,13 @@ private lemma n_pred_m_eq_m_k : n + (m - 1) = m + k := by
   rw [←Nat.add_sub_assoc p, Nat.add_comm, Nat.add_sub_assoc (n_geq_one p q)]
   conv => lhs; rw [n_pred_eq_k p q]
 
-private def cast_norm : GTuple α (n, m - 1) → LTuple α (m + k)
+private def castNorm : GTuple α (n, m - 1) → LTuple α (m + k)
   | xs => cast (by rw [q]) xs.norm
 
-private def cast_fst : GTuple α (n, m - 1) → LTuple α (k + 1)
+private def castFst : GTuple α (n, m - 1) → LTuple α (k + 1)
   | xs => cast (by rw [n_eq_succ_k p q]) xs.fst
 
-private def cast_take (ys : LTuple α (m + k)) :=
+private def castTake (ys : LTuple α (m + k)) :=
   cast (by rw [min_comm_succ_eq p]) (ys.take (k + 1))
 
 /-- #### Lemma 0A
@@ -234,7 +234,7 @@ Assume that `⟨x₁, ..., xₘ⟩ = ⟨y₁, ..., yₘ, ..., yₘ₊ₖ⟩`. Th
 `x₁ = ⟨y₁, ..., yₖ₊₁⟩`.
 -/
 theorem lemma_0a (xs : GTuple α (n, m - 1)) (ys : LTuple α (m + k))
-  : (cast_norm q xs = ys) → (cast_fst p q xs = cast_take p ys) := by
+  : (castNorm q xs = ys) → (castFst p q xs = castTake p ys) := by
   intro h
   suffices HEq
     (cast (_ : LTuple α n = LTuple α (k + 1)) xs.fst)
@@ -257,7 +257,7 @@ theorem lemma_0a (xs : GTuple α (n, m - 1)) (ys : LTuple α (m + k))
   · exact Eq.symm (n_eq_min_comm_succ p q)
   · exact n_pred_eq_k p q
   · rw [GTuple.self_fst_eq_norm_take]
-    unfold cast_norm at h
+    unfold castNorm at h
     simp at h
     rw [←h, ←n_eq_succ_k p q]
     have h₂ := Eq.recOn

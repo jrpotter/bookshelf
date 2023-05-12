@@ -154,7 +154,7 @@ namespace StepFunction
 The set definition of a `StepFunction` is the region between the constant values
 of the function's subintervals and the real axis.
 -/
-def set_def (f : StepFunction) : Set ℝ² := sorry
+def toSet (f : StepFunction) : Set ℝ² := sorry
 
 end StepFunction
 

@@ -11,7 +11,7 @@ namespace Set
 The Minkowski sum of two sets `s` and `t` is the set
 `s + t = { a + b : a ∈ s, b ∈ t }`.
 -/
-def minkowski_sum {α : Type u} [Add α] (s t : Set α) :=
+def minkowskiSum {α : Type u} [Add α] (s t : Set α) :=
   { x | ∃ a ∈ s, ∃ b ∈ t, x = a + b }
 
 /--
@@ -19,7 +19,7 @@ The sum of two sets is nonempty **iff** the summands are nonempty.
 -/
 theorem nonempty_minkowski_sum_iff_nonempty_add_nonempty {α : Type u} [Add α]
   {s t : Set α}
-  : (minkowski_sum s t).Nonempty ↔ s.Nonempty ∧ t.Nonempty := by
+  : (minkowskiSum s t).Nonempty ↔ s.Nonempty ∧ t.Nonempty := by
   apply Iff.intro
   · intro h
     have ⟨x, hx⟩ := h

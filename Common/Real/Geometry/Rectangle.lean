@@ -28,7 +28,7 @@ namespace Rectangle
 The top-right corner of the rectangle, oriented with respect to the other
 vertices.
 -/
-def top_right (r : Rectangle) : ℝ² :=
+def topRight (r : Rectangle) : ℝ² :=
   ( r.top_left.fst + r.bottom_right.fst - r.bottom_left.fst
   , r.top_left.snd + r.bottom_right.snd - r.bottom_left.snd
   )
@@ -36,23 +36,23 @@ def top_right (r : Rectangle) : ℝ² :=
 /--
 A `Rectangle` is the locus of points bounded by its edges.
 -/
-def set_def (r : Rectangle) : Set ℝ² :=
+def toSet (r : Rectangle) : Set ℝ² :=
   sorry
 
 /--
 A `Rectangle`'s top side is equal in length to its bottom side.
 -/
 theorem dist_top_eq_dist_bottom (r : Rectangle)
-  : dist r.top_left r.top_right = dist r.bottom_left r.bottom_right := by
-  unfold top_right dist
+  : dist r.top_left r.topRight = dist r.bottom_left r.bottom_right := by
+  unfold topRight dist
   repeat rw [add_comm, sub_right_comm, add_sub_cancel']
 
 /--
 A `Rectangle`'s left side is equal in length to its right side.
 -/
 theorem dist_left_eq_dist_right (r : Rectangle)
-  : dist r.top_left r.bottom_left = dist r.top_right r.bottom_right := by
-  unfold top_right dist
+  : dist r.top_left r.bottom_left = dist r.topRight r.bottom_right := by
+  unfold topRight dist
   repeat rw [
     sub_sub_eq_add_sub,
     add_comm,
@@ -86,7 +86,7 @@ namespace Point
 /--
 A `Point` is the set consisting of just itself.
 -/
-def set_def (p : Point) : Set ℝ² := p.val.set_def
+def toSet (p : Point) : Set ℝ² := p.val.toSet
 
 /--
 The width of a `Point` is `0`.
@@ -121,7 +121,7 @@ namespace LineSegment
 A `LineSegment` `s` is the set of points corresponding to the shortest line
 segment joining the two distinct points of `s`.
 -/
-def set_def (s : LineSegment) : Set ℝ² := s.val.set_def
+def toSet (s : LineSegment) : Set ℝ² := s.val.toSet
 
 /--
 Either the width or height of a `LineSegment` is zero.
