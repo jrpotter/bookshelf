@@ -2,19 +2,18 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.List.Sort
 
 import Common.List.Basic
+import Common.Real.Basic
 
-/-! # Common.Real.Set.Partition
+/-! # Common.Real.Geometry.StepFunction
 
-A description of a partition as defined in the context of stepwise functions.
-Refer to [^1] for more information.
-
-[^1]: Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an
-      Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
+A characterization of constructs surrounding step functions.
 -/
 
 namespace Real
 
 open List
+
+/-! ## Partition -/
 
 /--
 A `Partition` is some finite subset of `[a, b]` containing points `a` and `b`.
@@ -26,6 +25,8 @@ structure Partition where
   xs : List ℝ
   sorted : Sorted LT.lt xs
   has_min_length : xs.length ≥ 2
+
+namespace Partition
 
 /--
 The length of any list associated with a `Partition` is `> 0`.
@@ -40,8 +41,6 @@ The length of any list associated with a `Partition` is `≠ 0`.
 -/
 instance (p : Partition) : NeZero (length p.xs) where
   out := LT.lt.ne' (length_gt_zero p)
-
-namespace Partition
 
 /--
 The left-most subdivision point of the `Partition`.
@@ -102,5 +101,61 @@ theorem subdivision_point_mem_partition {p : Partition} (h : x ∈ p.xs)
   : x ∈ p := ⟨subdivision_point_geq_left h, subdivision_point_leq_right h⟩
 
 end Partition
+
+/-! ## Step Functions -/
+
+/--
+Any member of a subinterval of a partition `P` must also be a member of `P`.
+-/
+lemma mem_open_subinterval_imp_mem_partition {p : Partition}
+  (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => Set.Ioo x₁ x₂))
+  (hy : y ∈ I) : y ∈ p := by
+  cases h : p.xs with
+  | nil =>
+    -- By definition, a partition must always have at least two points in the
+    -- interval. Discharge the empty case.
+    rw [h] at hI
+    cases hI
+  | cons x ys =>
+    have ⟨i, x₁, ⟨x₂, ⟨hx₁, ⟨hx₂, hI'⟩⟩⟩⟩ :=
+      List.mem_pairwise_imp_exists_adjacent hI
+    have hx₁ : x₁ ∈ p.xs := by
+      rw [hx₁]
+      let j : Fin (List.length p.xs) := ⟨i.1, Nat.lt_of_lt_pred i.2⟩
+      exact List.mem_iff_exists_get.mpr ⟨j, rfl⟩
+    have hx₂ : x₂ ∈ p.xs := by
+      rw [hx₂]
+      let j : Fin (List.length p.xs) := ⟨i.1 + 1, lt_tsub_iff_right.mp i.2⟩
+      exact List.mem_iff_exists_get.mpr ⟨j, rfl⟩
+    rw [hI'] at hy
+    apply And.intro
+    · calc p.left
+        _ ≤ x₁ := (Partition.subdivision_point_mem_partition hx₁).left
+        _ ≤ y := le_of_lt hy.left
+    · calc y
+        _ ≤ x₂ := le_of_lt hy.right
+        _ ≤ p.right := (Partition.subdivision_point_mem_partition hx₂).right
+
+/--
+A function `f` is a `StepFunction` if there exists a `Partition` `p` such that
+`f` is constant on every open subinterval of `p`.
+-/
+structure StepFunction where
+  p : Partition
+  f : ∀ x ∈ p, ℝ
+  const_open_subintervals :
+    ∀ (hI : I ∈ p.xs.pairwise (fun x₁ x₂ => Set.Ioo x₁ x₂)),
+      ∃ c : ℝ, ∀ (hy : y ∈ I),
+        f y (mem_open_subinterval_imp_mem_partition hI hy) = c
+
+namespace StepFunction
+
+/--
+The set definition of a `StepFunction` is the region between the constant values
+of the function's subintervals and the real axis.
+-/
+def set_def (f : StepFunction) : Set ℝ² := sorry
+
+end StepFunction
 
 end Real

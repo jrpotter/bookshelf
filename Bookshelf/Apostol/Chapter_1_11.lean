@@ -117,7 +117,7 @@ theorem exercise_4e (x : ℝ)
 /-- ### Exercise 7b
 
 If `a` and `b` are positive integers with no common factor, we have the formula
-`Σ_{n=1}^{b-1} ⌊na / b⌋ = ((a - 1)(b - 1)) / 2`. When `b = 1`, the sum on the
+`∑_{n=1}^{b-1} ⌊na / b⌋ = ((a - 1)(b - 1)) / 2`. When `b = 1`, the sum on the
 left is understood to be `0`.
 
 Derive the result analytically as follows: By changing the index of summation,
@@ -128,5 +128,23 @@ theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.coprime a b)
   : ∑ n in (Finset.range b).filter (· > 0), ⌊n * ((a : ℕ) : ℝ) / b⌋ =
       ((a - 1) * (b - 1)) / 2 := by
   sorry
+
+/-- ### Exercise 8
+
+Let `S` be a set of points on the real line. The *characteristic function* of
+`S` is, by definition, the function `Χ` such that `Χₛ(x) = 1` for every `x` in
+`S`, and `Χₛ(x) = 0` for those `x` not in `S`. Let `f` be a step function which
+takes the constant value `cₖ` on the `k`th open subinterval `Iₖ` of some
+partition of an interval `[a, b]`. Prove that for each `x` in the union
+`I₁ ∪ I₂ ∪ ⋯ ∪ Iₙ` we have
+
+```
+f(x) = ∑_{k=1}^n cₖΧ_{Iₖ}(x).
+```
+
+This property is described by saying that every step function is a linear
+combination of characteristic functions of intervals.
+-/
+theorem exercise_8 : True := sorry
 
 end Apostol.Chapter_1_11

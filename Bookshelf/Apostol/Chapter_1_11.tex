@@ -432,23 +432,39 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
 
 \end{proof}
 
-\section*{\unverified{Exercise 8}}%
+\section*{\proceeding{Exercise 8}}%
 \label{sec:exercise-8}
 
 Let $S$ be a set of points on the real line.
 The \textit{characteristic function} of $S$ is, by definition, the function
-  $\chi_S$ such that $\chi_S(x) = 1$ for every $x$ in $S$, and $\chi_S(x) = 0$
-  for those $x$ not in $S$.
+  $\mathcal{X}_S$ such that $\mathcal{X}_S(x) = 1$ for every $x$ in $S$, and
+  $\mathcal{X}_S(x) = 0$ for those $x$ not in $S$.
 Let $f$ be a step function which takes the constant value $c_k$ on the $k$th
   open subinterval $I_k$ of some partition of an interval $[a, b]$.
 Prove that for each $x$ in the union $I_1 \cup I_2 \cup \cdots \cup I_n$ we have
-  $$f(x) = \sum_{k=1}^n c_k\chi_{I_k}(x).$$
+  $$f(x) = \sum_{k=1}^n c_k\mathcal{X}_{I_k}(x).$$
 This property is described by saying that every step function is a linear
   combination of characteristic functions of intervals.
 
 \begin{proof}
 
-  TODO
+  Let $x \in I_1 \cup I_2 \cup \cdots \cup I_n$ and $N = \{1, \ldots, n\}$.
+  Let $k \in N$ such that $x \in I_k$.
+  Consider an arbitrary $j \in N - \{k\}$.
+  By definition of a partition, $I_j \cap I_k = \emptyset$.
+  That is, $I_j$ and $I_k$ are disjoint for all $j \in N - \{k\}$.
+  Therefore, by definition of the characteristic function,
+    $\mathcal{X}_{I_k}(x) = 1$ and $\mathcal{X}_{I_j}(x) = 0$ for all
+    $j \in N - \{k\}$.
+  Thus
+    \begin{align*}
+      f(x)
+        & = c_k \\
+        & = (c_k)(1) + \sum\nolimits_{j \in N - \{k\}} (c_j)(0) \\
+        & = c_k\mathcal{X}_{I_k}(x) +
+          \sum\nolimits_{j \in N - \{k\}} c_j\mathcal{X}_{I_j}(x) \\
+        & = \sum_{k=1}^n c_k\mathcal{X}_{I_k}(x).
+    \end{align*}
 
 \end{proof}
 

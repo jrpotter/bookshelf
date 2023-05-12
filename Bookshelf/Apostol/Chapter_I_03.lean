@@ -1,4 +1,6 @@
-import Common.Real.Set
+import Mathlib.Data.Real.Basic
+
+import Common.Set
 
 /-! # Apostol.Chapter_I_03
 
@@ -350,8 +352,8 @@ has a supremum, and `sup C = sup A + sup B`.
 theorem sup_minkowski_sum_eq_sup_add_sup (A B : Set ℝ) (a b : ℝ)
   (hA : A.Nonempty) (hB : B.Nonempty)
   (ha : IsLUB A a) (hb : IsLUB B b)
-  : IsLUB (Real.minkowski_sum A B) (a + b) := by
-  let C := Real.minkowski_sum A B
+  : IsLUB (Set.minkowski_sum A B) (a + b) := by
+  let C := Set.minkowski_sum A B
   -- First we show `a + b` is an upper bound of `C`.
   have hub : a + b ∈ upperBounds C := by
     rw [mem_upper_bounds_iff_forall_le]
@@ -365,7 +367,7 @@ theorem sup_minkowski_sum_eq_sup_add_sup (A B : Set ℝ) (a b : ℝ)
   -- Now we show `a + b` is the *least* upper bound of `C`. We know a least
   -- upper bound `c` exists; show that `c = a + b`.
   have ⟨c, hc⟩ := Real.exists_isLUB C
-    (Real.nonempty_minkowski_sum_iff_nonempty_add_nonempty.mpr ⟨hA, hB⟩)
+    (Set.nonempty_minkowski_sum_iff_nonempty_add_nonempty.mpr ⟨hA, hB⟩)
     ⟨a + b, hub⟩
   suffices (∀ n : ℕ+, c ≤ a + b ∧ a + b ≤ c + (1 / n)) by
     rwa [← forall_pnat_leq_self_leq_frac_imp_eq this] at hc
@@ -400,8 +402,8 @@ has an infimum, and `inf C = inf A + inf B`.
 theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
   (hA : A.Nonempty) (hB : B.Nonempty)
   (ha : IsGLB A a) (hb : IsGLB B b)
-  : IsGLB (Real.minkowski_sum A B) (a + b) := by
-  let C := Real.minkowski_sum A B
+  : IsGLB (Set.minkowski_sum A B) (a + b) := by
+  let C := Set.minkowski_sum A B
   -- First we show `a + b` is a lower bound of `C`.
   have hlb : a + b ∈ lowerBounds C := by
     rw [mem_lower_bounds_iff_forall_ge]
@@ -415,7 +417,7 @@ theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
   -- Now we show `a + b` is the *greatest* lower bound of `C`. We know a
   -- greatest lower bound `c` exists; show that `c = a + b`.
   have ⟨c, hc⟩ := exists_isGLB C
-    (Real.nonempty_minkowski_sum_iff_nonempty_add_nonempty.mpr ⟨hA, hB⟩)
+    (Set.nonempty_minkowski_sum_iff_nonempty_add_nonempty.mpr ⟨hA, hB⟩)
     ⟨a + b, hlb⟩
   suffices (∀ n : ℕ+, c - (1 / n) ≤ a + b ∧ a + b ≤ c) by
     rwa [← forall_pnat_frac_leq_self_leq_imp_eq this] at hc

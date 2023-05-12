@@ -1,5 +1,5 @@
-import Common.Real.Function.Step
 import Common.Real.Geometry.Rectangle
+import Common.Real.Geometry.StepFunction
 
 /-! # Common.Real.Geometry.Area
 
@@ -107,11 +107,11 @@ Every step region is measurable. This follows from the choice of scale axiom,
 and the fact all step regions are equivalent to the union of a collection of
 rectangles.
 -/
-theorem step_function_measurable (S : Function.Step) : S.set_def ∈ 𝓜 := by
+theorem step_function_measurable (S : StepFunction) : S.set_def ∈ 𝓜 := by
   sorry
 
 def forall_subset_between_step_imp_le_between_area (k : ℝ) (Q : Set ℝ²) :=
-  ∀ S T : Function.Step,
+  ∀ S T : StepFunction,
     (hS : S.set_def ⊆ Q) →
     (hT : Q ⊆ T.set_def) →
     area (step_function_measurable S) ≤ k ∧ k ≤ area (step_function_measurable T)
