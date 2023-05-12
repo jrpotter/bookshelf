@@ -35,7 +35,7 @@ The characteristic function of a set `S`.
 
 It returns `1` if the specified input belongs to `S` and `0` otherwise.
 -/
-def characteristic (S : Set α) (x : α) [Decidable (x ∈ S)]: Nat :=
+def characteristic (S : Set α) (x : α) [Decidable (x ∈ S)] : Nat :=
   if x ∈ S then 1 else 0
 
 end Set

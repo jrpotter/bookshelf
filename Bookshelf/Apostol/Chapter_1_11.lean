@@ -2,6 +2,8 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.LibrarySearch
 
 import Common.Real.Floor
+import Common.Set.Basic
+import Common.Set.Intervals.StepFunction
 
 /-! # Apostol.Chapter_1_11 -/
 
@@ -129,6 +131,10 @@ theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.coprime a b)
       ((a - 1) * (b - 1)) / 2 := by
   sorry
 
+section
+
+open Set.Intervals
+
 /-- ### Exercise 8
 
 Let `S` be a set of points on the real line. The *characteristic function* of
@@ -146,5 +152,7 @@ This property is described by saying that every step function is a linear
 combination of characteristic functions of intervals.
 -/
 theorem exercise_8 : True := sorry
+
+end
 
 end Apostol.Chapter_1_11

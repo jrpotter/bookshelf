@@ -1,5 +1,5 @@
 import Common.Real.Geometry.Rectangle
-import Common.Real.Geometry.StepFunction
+import Common.Set.Intervals.StepFunction
 
 /-! # Common.Real.Geometry.Area
 
@@ -107,23 +107,24 @@ Every step region is measurable. This follows from the choice of scale axiom,
 and the fact all step regions are equivalent to the union of a collection of
 rectangles.
 -/
-theorem step_function_measurable (S : StepFunction) : S.toSet ∈ 𝓜 := by
+theorem step_function_measurable (S : Set.Intervals.StepFunction ℝ)
+  : S.toSet ∈ 𝓜 := by
   sorry
 
-def exhaustionProperty (k : ℝ) (Q : Set ℝ²) :=
-  ∀ S T : StepFunction,
-    (hS : S.toSet ⊆ Q) →
-    (hT : Q ⊆ T.toSet) →
-    area (step_function_measurable S) ≤ k ∧ k ≤ area (step_function_measurable T)
+def forallSubsetsBetween (k : ℝ) (Q : Set ℝ²) :=
+  ∀ S T : Set.Intervals.StepFunction ℝ,
+  (hS : S.toSet ⊆ Q) →
+  (hT : Q ⊆ T.toSet) →
+  area (step_function_measurable S) ≤ k ∧ k ≤ area (step_function_measurable T)
 
 axiom exhaustion_exists_unique_imp_measurable (Q : Set ℝ²)
-  : (∃! k : ℝ, exhaustionProperty k Q)
+  : (∃! k : ℝ, forallSubsetsBetween k Q)
   → Q ∈ 𝓜
 
 axiom exhaustion_exists_unique_imp_area_eq (Q : Set ℝ²)
   : ∃ k : ℝ,
-      (h : exhaustionProperty k Q ∧
-        (∀ x : ℝ, exhaustionProperty x Q → x = k))
+      (h : forallSubsetsBetween k Q ∧
+        (∀ x : ℝ, forallSubsetsBetween x Q → x = k))
     → area (exhaustion_exists_unique_imp_measurable Q ⟨k, h⟩) = k
 
 end Real.Geometry.Area

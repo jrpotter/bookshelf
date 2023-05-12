@@ -244,8 +244,8 @@ theorem len_pairwise_len_cons_sub_one {xs : List α} (h : xs.length > 0)
 If a `pairwise`'d `List` isn't empty, then the input `List` must have at least
 two entries.
 -/
-theorem mem_pairwise_imp_length_self_ge_2 {xs : List α} (h : xs.pairwise f ≠ [])
-  : xs.length ≥ 2 := by
+theorem mem_pairwise_imp_length_self_ge_two {xs : List α}
+  (h : xs.pairwise f ≠ []) : xs.length ≥ 2 := by
   unfold pairwise tail? at h
   cases hx : xs with
   | nil => rw [hx] at h; simp at h
