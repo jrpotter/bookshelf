@@ -69,12 +69,24 @@ theorem right_ge_mem_self [Preorder α] [@DecidableRel α LT.lt]
   (p : Partition α) : ∀ x ∈ p, x ≤ p.b := by
   sorry
 
+/--
+The closed interval determined by the endpoints of the `Partition`.
+-/
+abbrev toIcc [Preorder α] [@DecidableRel α LT.lt]
+  (p : Partition α) := Set.Icc p.a p.b
+
 /-
 Return the closed subintervals determined by the `Partition`.
 -/
 def closedSubintervals [Preorder α] [@DecidableRel α LT.lt]
   (p : Partition α) : List (Set α) :=
   p.toList.pairwise (fun x₁ x₂ => Icc x₁ x₂)
+
+/--
+The open interval determined by the endpoints of the `Partition`.
+-/
+abbrev toIoo [Preorder α] [@DecidableRel α LT.lt]
+  (p : Partition α) := Set.Ioo p.a p.b
 
 /-
 Return the open subintervals determined by the `Partition`.

@@ -37,13 +37,20 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
         status:
         <ul>
           <li>
-            <span style="color:teal">Teal statements </span> are those that
-            have been proven or encoded in both LaTeX and Lean.
+            <span style="color:darkgray">Dark gray statements </span> are
+            reserved for definitions and axioms that have been encoded in both
+            LaTeX and Lean.
           </li>
           <li>
-            <span style="color:magenta">Magenta statements </span> are those
-            that have been proven or encoded in LaTeX but not yet verified in
-            Lean.
+            <span style="color:teal">Teal statements </span> are reserved for
+            statements, theorems, lemmas, etc. that have been proven in both
+            LaTeX and Lean.
+          </li>
+          <li>
+            <span style="color:magenta">Magenta statements </span> are reserved
+            for definitions, axioms, statements, theorems, lemmas, etc. that
+            have been proven or encoded in LaTeX but not yet proven or encoded
+            in Lean.
           </li>
           <li>
             <span style="color:red">Red </span> serves as a catch-all for all
