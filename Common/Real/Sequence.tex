@@ -13,31 +13,124 @@
 \section{Summations}%
 \label{sec:summations}
 
-\subsection{\unverified{Arithmetic Series}}%
+\subsection{\verified{Arithmetic Series}}%
 \label{sub:sum-arithmetic-series}
 
 Let $(a_i)_{i \geq 0}$ be an arithmetic sequence with common difference $d$.
   Then for some $n \in \mathbb{N}$,
-  $$\sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.$$
+  \begin{equation}
+    \label{sub:sum-arithmetic-series-eq1}
+    \sum_{i=0}^n a_i = \frac{(n + 1)(a_0 + a_n)}{2}.
+  \end{equation}
 
 \begin{proof}
 
   \lean{Common/Real/Sequence/Arithmetic}
     {Real.Arithmetic.sum\_recursive\_closed}
 
+  \divider
+
+  Let $(a_i)_{i \geq 0}$ be an arithmetic sequence with common difference $d$.
+  By definition, for all $k \in \mathbb{N}$,
+    \begin{equation}
+      \label{sub:sum-arithmetic-series-eq2}
+      a_k = (a_0 + kd).
+    \end{equation}
+  Define predicate $P(n)$ as "identity \eqref{sub:sum-arithmetic-series-eq1}
+    holds for value $n$."
+  We use induction to prove $P(n)$ holds for all $n \geq 0$.
+
+  \paragraph{Base Case}%
+
+    Let $k = 0$.
+    Then $$\sum_{i=0}^k a_i = a_0 = \frac{2a_0}{2} =
+      \frac{(k + 1)(a_0 + a_k)}{2}.$$
+    Therefore $P(0)$ holds.
+
+  \paragraph{Induction Step}%
+
+    Assume induction hypothesis $P(k)$ holds for some $k \geq 0$.
+    Then
+      \begin{align*}
+        \sum_{i=0}^{k+1} a_i
+          & = \sum_{i=0}^k a_i + a_{k+1} \\
+          & = \frac{(k + 1)(a_0 + a_k)}{2} + a_{k+1}
+            & \text{induction hypothesis} \\
+          & = \frac{(k + 1)(a_0 + (a_0 + kd))}{2} + (a_0 + (k + 1)d)
+            & \eqref{sub:sum-arithmetic-series-eq2} \\
+          & = \frac{(k + 1)(2a_0 + kd)}{2} + (a_0 + (k + 1)d) \\
+          & = \frac{(k + 1)(2a_0 + kd) + 2a_0 + 2(k + 1)d}{2} \\
+          & = \frac{2ka_0 + k^2d + 4a_0 + kd + 2kd + 2d}{2} \\
+          & = \frac{(k + 2)(2a_0 + kd + d)}{2} \\
+          & = \frac{(k + 2)(a_0 + a_0 + (k + 1)d)}{2} \\
+          & = \frac{(k + 2)(a_0 + a_{k+1})}{2}
+            & \eqref{sub:sum-arithmetic-series-eq2} \\
+          & = \frac{((k + 1) + 1)(a_0 + a_{k+1})}{2}.
+      \end{align*}
+    Thus $P(k)$ implies $P(k + 1)$ holds true.
+
+  \paragraph{Conclusion}%
+
+    By mathematical induction, it follows for all $n \geq 0$, $P(n)$ is true.
+
 \end{proof}
 
-\subsection{\unverified{Geometric Series}}%
+\subsection{\verified{Geometric Series}}%
 \label{sub:sum-geometric-series}
 
 Let $(a_i)_{i \geq 0}$ be a geometric sequence with common ratio $r \neq 1$.
   Then for some $n \in \mathbb{N}$,
-  $$\sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.$$
+  \begin{equation}
+    \label{sub:sum-geometric-series-eq1}
+    \sum_{i=0}^n a_i = \frac{a_0(1 - r^{n+1})}{1 - r}.
+  \end{equation}
 
 \begin{proof}
 
   \lean{Common/Real/Sequence/Geometric}
     {Real.Geometric.sum\_recursive\_closed}
+
+  \divider
+
+  Let $(a_i)_{i \geq 0}$ be a geometric sequence with common ratio $r \neq 1$.
+  By definition, for all $k \in \mathbb{N}$,
+    \begin{equation}
+      \label{sub:sum-geometric-series-eq2}
+      a_k = a_0r^k.
+    \end{equation}
+  Define predicate $P(n)$ as "identity \eqref{sub:sum-geometric-series-eq1}
+    holds for value $n$."
+  We use induction to prove $P(n)$ holds for all $n \geq 0$.
+
+  \paragraph{Base Case}%
+
+    Let $k = 0$.
+    Then $$\sum_{i=0}^k a_i = a_0 = \frac{a_0(1 - r)}{1 - r} =
+      \frac{a_0(1 - r^{k+1})}{1 - r}$$
+    Therefore $P(0)$ holds.
+
+  \paragraph{Induction Step}%
+
+    Assume induction hypothesis $P(k)$ holds for some $k \geq 0$.
+    Then
+      \begin{align*}
+        \sum_{i=0}^{k+1} a_i
+          & = \sum_{i=0}^k a_i + a_{k+1} \\
+          & = \frac{a_0(1 - r^{k+1})}{1 - r} + a_{k + 1}
+            & \text{induction hypothesis} \\
+          & = \frac{a_0(1 - r^{k+1})}{1 - r} + a_0r^{k + 1}
+            & \eqref{sub:sum-geometric-series-eq2} \\
+          & = \frac{a_0(1 - r^{k+1}) + a_0r^{k+1}(1 - r)}{1 - r} \\
+          & = \frac{a_0(1 - r^{k+1} + r^{k+1}(1 - r))}{1 - r} \\
+          & = \frac{a_0(1 - r^{k+1} + r^{k+1} - r^{k+2})}{1 - r} \\
+          & = \frac{a_0(1 - r^{k+2})}{1 - r} \\
+          & = \frac{a_0(1 - r^{(k + 1) + 1})}{1 - r}.
+      \end{align*}
+    Thus $P(k)$ implies $P(k + 1)$ holds true.
+
+  \paragraph{Conclusion}%
+
+    By mathematical induction, it follows for all $n \geq 0$, $P(n)$ is true.
 
 \end{proof}
 
