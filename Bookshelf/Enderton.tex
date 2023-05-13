@@ -1,0 +1,36 @@
+\documentclass{report}
+
+\input{../preamble}
+
+\newcommand{\lean}[2]{\leanref{../#1.html\##2}{#2}}
+\newcommand{\leanPretty}[3]{\leanref{../#1.html\##2}{#3}}
+
+\begin{document}
+
+\header
+  {A Mathematical Introduction to Logic}
+  {Herbert B. Enderton}
+
+\tableofcontents
+
+% Sets first chapter to `0` to match Enderton book.
+\setcounter{chapter}{0}
+\addtocounter{chapter}{-1}
+
+\chapter{Useful Facts About Sets}%
+\label{chap:useful-facts-about-sets}
+
+\section{\unverified{Lemma 0A}}%
+\label{sec:lemma-0a}
+
+Assume that $\langle x_1, \ldots, x_m \rangle =
+  \langle y_1, \ldots, y_m, \ldots, y_{m+k} \rangle$.
+Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Chapter\_0}{Enderton.Chapter\_0.lemma\_0a}
+
+\end{proof}
+
+\end{document}
