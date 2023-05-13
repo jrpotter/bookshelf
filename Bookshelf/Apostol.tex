@@ -51,6 +51,19 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 
 \end{definition}
 
+\section{\partial{Integral of Step Function}}%
+\label{sec:def-integral-step-function}
+
+Lset $s$ be a \nameref{sec:def-step-function} defined on $[a, b]$, and let
+  $P = \{x_0, x_1, \ldots, x_n\}$ be a \nameref{sec:def-partition} of $[a, b]$
+  such that $s$ is constant on the open subintervals of $P$.
+Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval,
+  so that $$s(x) = s_k \quad\text{if}\quad x_{k-1} < x < x_k,
+    \quad k = 1, 2, \ldots, n.$$
+The \textbf{integral of $s$ from $a$ to $b$}, denoted by the symbol
+  $\int_a^b s(x)\mathop{dx}$, is defined by the following formula:
+  $$\int_a^b s(x) \mathop{dx} = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}).$$
+
 \section{\defined{Partition}}%
 \label{sec:def-partition}
 
