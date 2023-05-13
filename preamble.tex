@@ -1,11 +1,12 @@
 \usepackage{amsfonts, amsmath, amsthm}
+\usepackage{comment}
 \usepackage[shortlabels]{enumitem}
 \usepackage{environ}
 \usepackage{fancybox}
 \usepackage{fontawesome5}
 \usepackage{mathrsfs}
 \usepackage{soul}
-\usepackage{xcolor}
+\usepackage[usenames,dvipsnames]{xcolor}
 % `hyperref` comes after `xr-hyper`.
 \usepackage{xr-hyper}
 \usepackage{hyperref}
@@ -16,6 +17,7 @@
 
 \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
 \newcommand{\leanref}[2]{\textcolor{blue}{$\pmb{\exists}\;{-}\;$}\href{#1}{#2}}
+\newcommand{\textref}[1]{\text{\nameref{#1}}}
 
 % ========================================
 % Environments
@@ -55,9 +57,9 @@
 \DeclareRobustCommand{\verified}[1]{%
   \texorpdfstring{\color{teal}\faCheckCircle\ #1}{#1}}
 \DeclareRobustCommand{\partial}[1]{%
-  \texorpdfstring{\color{magenta}\faPencil*\ #1}{#1}}
+  \texorpdfstring{\color{Fuchsia}\faPencil*\ #1}{#1}}
 \DeclareRobustCommand{\unverified}[1]{%
-  \texorpdfstring{\color{red}\faExclamationCircle\ #1}{#1}}
+  \texorpdfstring{\color{Maroon}\faExclamationCircle\ #1}{#1}}
 
 % ========================================
 % Math

@@ -47,14 +47,14 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
             LaTeX and Lean.
           </li>
           <li>
-            <span style="color:magenta">Magenta statements </span> are reserved
+            <span style="color:fuchsia">Fuchsia statements </span> are reserved
             for definitions, axioms, statements, theorems, lemmas, etc. that
             have been proven or encoded in LaTeX but not yet proven or encoded
             in Lean.
           </li>
           <li>
-            <span style="color:red">Red </span> serves as a catch-all for all
-            statements that don't fit the above categorizations. Incomplete
+            <span style="color:maroon">Maroon </span> serves as a catch-all for
+            all statements that don't fit the above categorizations. Incomplete
             definitions, statements without proof, etc. belong here.
           </li>
         </ul>
