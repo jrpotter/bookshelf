@@ -21,7 +21,7 @@ allows generating PDFs and including them in the navbar. To generate
 documentation and serve files locally, run the following:
 
 ```bash
-> lake build Bookshelf:docs
+> make docs
 > lake run server
 ```
 
