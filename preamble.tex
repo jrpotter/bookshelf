@@ -47,22 +47,20 @@
 % Status
 % ========================================
 
-% Indicates a statement corresponds to an axiom or definition. There must exist
-% a corresponding `axiom` or `def` in Lean.
+% Used for statements encoded in both LaTeX and Lean.
 \DeclareRobustCommand{\defined}[1]{%
-  \texorpdfstring{\color{darkgray}\faParagraph\ #1}{#1}}
+  \texorpdfstring{\color{teal}\faParagraph\ #1}{#1}}
 
-% Indicates a statement has a complete proof in both LaTeX *and* Lean.
+% Used for statements proven in both LaTeX and Lean.
 \DeclareRobustCommand{\verified}[1]{%
   \texorpdfstring{\color{teal}\faCheckCircle\ #1}{#1}}
 
-% Indicates a statement has not been completely proven in either LaTeX or
-% Lean (or both). Progress is currently being made to correct this though.
-\DeclareRobustCommand{\proceeding}[1]{%
-  \texorpdfstring{\color{magenta}\faDotCircle[regular]\ #1}{#1}}
+% Used for statements proven or encoded in LaTeX but not yet in Lean.
+\DeclareRobustCommand{\partial}[1]{%
+  \texorpdfstring{\color{magenta}\faPencil*\ #1}{#1}}
 
-% A catch-all status for anything that doesn't fit the above categories.
-% Incomplete definitions, proofs only conducted in LaTeX, etc. belong here.
+% A catch-all for anything that doesn't fit the above categories. Incomplete
+% definitions, statements without proof, etc. belong here.
 \DeclareRobustCommand{\unverified}[1]{%
   \texorpdfstring{\color{red}\faExclamationCircle\ #1}{#1}}
 

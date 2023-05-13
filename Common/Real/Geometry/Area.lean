@@ -94,7 +94,7 @@ axiom rectangle_measurable (R : Rectangle)
 axiom rectangle_area_eq_mul_edge_lengths (R : Rectangle)
   : area (rectangle_measurable R) = R.width * R.height
 
-/-! ## Exhaustion property
+/-! ## Exhaustion Property
 
 Let `Q` be a set that can be enclosed between two step regions `S` and `T`, so
 that (1.1) `S ⊆ Q ⊆ T`. If there is one and only one number `k` which satisfies

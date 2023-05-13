@@ -37,23 +37,18 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
         status:
         <ul>
           <li>
-            <span style="color:darkgray">Dark gray statements </span> indicate
-            axioms and definitions. There must exist a corresponding
-            <code>axiom</code> or <code>def</code> in Lean.
+            <span style="color:teal">Teal statements </span> are those that
+            have been proven or encoded in both LaTeX and Lean.
           </li>
           <li>
-            <span style="color:teal">Teal statements </span> indicate those
-            with complete proofs in both LaTeX <i>and </i> Lean.
+            <span style="color:magenta">Magenta statements </span> are those
+            that have been proven or encoded in LaTeX but not yet verified in
+            Lean.
           </li>
           <li>
-            <span style="color:magenta">Magenta statements </span> indicate
-            those that have not been completely proven in either LaTeX or Lean
-            (or both). Progress is currently being made to correct this though.
-          </li>
-          <li>
-            <span style="color:red">Red coloring </span> is a catch-all for all
+            <span style="color:red">Red </span> serves as a catch-all for all
             statements that don't fit the above categorizations. Incomplete
-            definitions, proofs only conducted in LaTeX, etc. belong here.
+            definitions, statements without proof, etc. belong here.
           </li>
         </ul>
       </p>
