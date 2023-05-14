@@ -21,10 +21,15 @@ allows generating PDFs and including them in the navbar. To generate
 documentation and serve files locally, run the following:
 
 ```bash
-> make docs
+> make docs[!]
 > lake run server
 ```
 
-This assumes you have `pdflatex` and `python3` available in your `$PATH`. To
+The `docs` build target avoids cleaning files that are expected to not change
+often (e.g. `Lean`, `Init`, and `Mathlib` related content). If you've upgraded
+Lean or Mathlib, run `make docs!` instead to generate documentation from
+scratch.
+
+Both assume you have `pdflatex` and `python3` available in your `$PATH`. To
 change how the server behaves, refer to the `.env` file located in the root
 directory of this project.
