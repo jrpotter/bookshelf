@@ -2,7 +2,7 @@ import Mathlib.Data.Set.Basic
 
 /-! # Common.Set.Basic
 
-Additional theorems and definitions useful in the context of sets.
+Additional theorems and definitions useful in the context of `Set`s.
 -/
 
 namespace Set

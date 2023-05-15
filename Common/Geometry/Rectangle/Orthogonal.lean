@@ -47,6 +47,13 @@ The bottom-right corner of the `Orthogonal` rectangle.
 def br (r : Orthogonal) : Point := ⟨r.bl.x + r.width, r.bl.y⟩
 
 /--
+The `Set` of `Point`s enclosed in the region determined by the edges of the
+`Orthogonal` rectangle. Edges of the rectangle are included in the result set.
+-/
+def toSet (r : Orthogonal) : Set Point :=
+  { p | r.bl.x ≤ p.x ∧ p.x ≤ r.br.x ∧ r.bl.y ≤ p.y ∧ p.y ≤ r.tl.y }
+
+/--
 An `Orthogonal` rectangle's top side is equal in length to its bottom side.
 -/
 theorem dist_top_eq_dist_bottom (r : Orthogonal)
