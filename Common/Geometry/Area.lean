@@ -1,5 +1,5 @@
 import Common.Geometry.Basic
-import Common.Geometry.Rectangle.Orthogonal
+import Common.Geometry.Rectangle.Skew
 import Common.Geometry.StepFunction
 
 /-! # Common.Geometry.Area

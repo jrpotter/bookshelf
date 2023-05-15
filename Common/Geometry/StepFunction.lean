@@ -1,5 +1,4 @@
 import Common.Finset
-import Common.Geometry.Point
 import Common.Geometry.Rectangle.Orthogonal
 import Common.List.Basic
 import Common.Set.Partition
@@ -34,7 +33,15 @@ def toSet (sf : StepFunction) : Set Point :=
   ⋃ i ∈ Finset.finRange sf.p.ivls.length,
     let I := sf.p.ivls[i]
     Rectangle.Orthogonal.toSet
-      ⟨{ x := I.left, y := 0 }, { x := I.right, y := sf.toFun i }⟩
+      ⟨
+        {
+          tl := ⟨I.left, sf.toFun i⟩,
+          bl := ⟨I.left, 0⟩,
+          br := ⟨I.right, 0⟩,
+          has_right_angle := sorry
+        },
+        by simp
+      ⟩
 
 end StepFunction
 

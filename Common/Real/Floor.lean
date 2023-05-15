@@ -1,7 +1,6 @@
 import Mathlib.Algebra.BigOperators.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Tactic.LibrarySearch
 
 /-! # Common.Real.Floor
 
