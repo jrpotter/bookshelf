@@ -23,30 +23,27 @@
 % Environments
 % ========================================
 
+\newcommand{\divider}{\vspace{10pt}\hrule\vspace{10pt}}
+\newcommand{\header}[2]{\title{#1}\author{#2}\date{}\maketitle}
+
 \newenvironment{axiom}{%
   \paragraph{\normalfont\normalsize\textit{Axiom.}}}
   {\hfill$\square$}
 \newenvironment{definition}{%
   \paragraph{\normalfont\normalsize\textit{Definition.}}}
   {\hfill$\square$}
-\newcommand{\divider}{%
-  \vspace{10pt}
-  \hrule
-  \vspace{10pt}}
-\newcommand{\header}[2]{%
-  \title{#1}
-  \author{#2}
-  \date{}
-  \maketitle}
-\newcommand{\note}[1]{%
+
+\newcommand{\admonition}[2]{%
   \begin{center}
     \doublebox{
       \begin{minipage}{0.95\textwidth}
         \vspace{2pt}
-        \hl{Note:} #1
+        \hl{#1} #2
         \vspace{2pt}
       \end{minipage}}
   \end{center}}
+\newcommand{\note}[1]{\admonition{Note:}{#1}}
+\newcommand{\todo}[1]{\admonition{TODO:}{#1}}
 
 % ========================================
 % Status

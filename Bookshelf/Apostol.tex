@@ -31,7 +31,7 @@ The \textbf{characteristic function} of $S$ is the function $\mathcal{X}_S$ such
 \begin{definition}
 
   \lean{Common/Set/Basic}{Set.characteristic}
-  
+
 \end{definition}
 
 \section{\defined{Infimum}}%
@@ -51,10 +51,10 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 
 \end{definition}
 
-\section{\partial{Integral of Step Function}}%
+\section{\partial{Integral of a Step Function}}%
 \label{sec:def-integral-step-function}
 
-Lset $s$ be a \nameref{sec:def-step-function} defined on $[a, b]$, and let
+Let $s$ be a \nameref{sec:def-step-function} defined on $[a, b]$, and let
   $P = \{x_0, x_1, \ldots, x_n\}$ be a \nameref{sec:def-partition} of $[a, b]$
   such that $s$ is constant on the open subintervals of $P$.
 Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval,
@@ -576,7 +576,7 @@ For each set $S$ in $\mathscr{M}$, we have $a(S) \geq 0$.
 \end{axiom}
 
 \section{\defined{Additive Property}}%
-\label{sec:additive-property}
+\label{sec:area-additive-property}
 
 If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
   $\mathscr{M}$, and we have $a(S \cup T) = a(S) + a(T) - a(S \cap T)$.
@@ -589,7 +589,7 @@ If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
 \end{axiom}
 
 \section{\defined{Difference Property}}%
-\label{sec:difference-property}
+\label{sec:area-difference-property}
 
 If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
   $\mathscr{M}$, and we have $a(T - S) = a(T) - a(S)$.
@@ -602,7 +602,7 @@ If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
 \end{axiom}
 
 \section{\defined{Invariance Under Congruence}}%
-\label{sec:invariance-under-congruence}
+\label{sec:area-invariance-under-congruence}
 
 If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
   also in $\mathscr{M}$ and we have $a(S) = a(T)$.
@@ -615,7 +615,7 @@ If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
 \end{axiom}
 
 \section{\defined{Choice of Scale}}%
-\label{sec:choice-scale}
+\label{sec:area-choice-scale}
 
 Every rectangle $R$ is in $\mathscr{M}$.
 If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
@@ -628,7 +628,7 @@ If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
 \end{axiom}
 
 \section{\partial{Exhaustion Property}}%
-\label{sec:exhaustion-property}
+\label{sec:area-exhaustion-property}
 
 Let $Q$ be a set that can be enclosed between two step regions $S$ and $T$, so
   that
@@ -664,8 +664,8 @@ A set consisting of a single point.
 
   Let $S$ be a set consisting of a single point.
   By definition of a point, $S$ is a rectangle in which all vertices coincide.
-  By \nameref{sec:choice-scale}, $S$ is measurable with area its width times
-    its height.
+  By \nameref{sec:area-choice-scale}, $S$ is measurable with area its width
+    times its height.
   The width and height of $S$ is trivially zero.
   Therefore $a(S) = (0)(0) = 0$.
 
@@ -698,7 +698,7 @@ A set consisting of a finite number of points in a plane.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
     By \nameref{sub:exercise-1.7.1a}, $T$ is measurable with area $0$.
-    By the \nameref{sec:additive-property}, $S_k \cup T$ is
+    By the \nameref{sec:area-additive-property}, $S_k \cup T$ is
       measurable, $S_k \cap T$ is measurable, and
       \begin{align}
         a(S_{k+1})
@@ -746,8 +746,8 @@ The union of a finite collection of line segments in a plane.
     Consider a set $S$ consisting of a single line segment in a plane.
     By definition of a line segment, $S$ is a rectangle in which one side has
       dimension $0$.
-    By \nameref{sec:choice-scale}, $S$ is measurable with area its width $w$
-      times its height $h$.
+    By \nameref{sec:area-choice-scale}, $S$ is measurable with area its width
+      $w$ times its height $h$.
     Therefore $a(S) = wh = 0$.
     Thus $P(1)$ holds.
 
@@ -761,7 +761,7 @@ The union of a finite collection of line segments in a plane.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
     By the base case, $T$ is measurable with area $0$.
-    By the \nameref{sec:additive-property}, $S_k \cup T$ is measurable,
+    By the \nameref{sec:area-additive-property}, $S_k \cup T$ is measurable,
       $S_k \cap T$ is measurable, and
       \begin{align}
         a(S_{k+1})
@@ -823,10 +823,10 @@ Prove that every triangular region is measurable and that its area is one half
     \centering
   \end{figure}
 
-  By \nameref{sec:choice-scale}, both $R$ and $S$ are measurable.
+  By \nameref{sec:area-choice-scale}, both $R$ and $S$ are measurable.
   By this same axiom, $a(R) = ab$ and $a(S) = ca\sin{\theta}$.
-  By the \nameref{sec:additive-property}, $R \cup S$ and $R \cap S$ are both
-    measurable.
+  By the \nameref{sec:area-additive-property}, $R \cup S$ and $R \cap S$ are
+    both measurable.
   $a(R \cap S) = a(T)$ and $a(R \cup S)$ can be determined by noting that
     $R$'s construction implies identity $a(R) = 2a(T)$.
   Therefore
@@ -839,8 +839,8 @@ Prove that every triangular region is measurable and that its area is one half
         & = ab + ca\sin{\theta} - ca\sin{\theta} - a(T).
     \end{align*}
   Solving for $a(T)$ gives the desired identity: $$a(T) = \frac{1}{2}ab.$$
-  By \nameref{sec:invariance-under-congruence}, $a(T') = a(T)$, concluding our
-    proof.
+  By \nameref{sec:area-invariance-under-congruence}, $a(T') = a(T)$, concluding
+    our proof.
 
 \end{proof}
 
@@ -866,10 +866,10 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Suppose $S$ is a right trapezoid.
     Then $S$ is the union of non-overlapping rectangle $R$ of width $b_1$ and
       height $h$ with right triangle $T$ of base $b_2 - b_1$ and height $h$.
-    By \nameref{sec:choice-scale}, $R$ is measurable.
+    By \nameref{sec:area-choice-scale}, $R$ is measurable.
     By \nameref{sec:exercise-1.7.2}, $T$ is measurable.
-    By the \nameref{sec:additive-property}, $R \cup T$ and $R \cap T$ are both
-      measurable and
+    By the \nameref{sec:area-additive-property}, $R \cup T$ and $R \cap T$ are
+      both measurable and
       \begin{align*}
         a(S)
           & = a(R \cup T) \\
@@ -888,8 +888,8 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Then $R$ has longer base edge of length $b_2 - c$.
     By \nameref{sec:exercise-1.7.2}, $T$ is measurable.
     By Case 1, $R$ is measurable.
-    By the \nameref{sec:additive-property}, $R \cup T$ and $R \cap T$ are both
-      measurable and
+    By the \nameref{sec:area-additive-property}, $R \cup T$ and $R \cap T$ are
+      both measurable and
       \begin{align*}
         a(S)
           & = a(T) + a(R) - a(R \cap T) \\
@@ -906,7 +906,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Let $c$ denote the length of base $T$.
     Reflect $T$ vertically to form another right triangle, say $T'$.
     Then $T' \cup R$ is an acute trapezoid.
-    By \nameref{sec:invariance-under-congruence},
+    By \nameref{sec:area-invariance-under-congruence},
       \begin{equation}
         \label{sec:exercise-1.7.3-eq1}
         \tag{3.1}
@@ -933,7 +933,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
   Let $c$ denote the length of base $T$.
   Reflect $T$ vertically to form another right triangle, say $T'$.
   Then $T' \cup R$ is an acute trapezoid.
-  By \nameref{sec:invariance-under-congruence},
+  By \nameref{sec:area-invariance-under-congruence},
     \begin{equation}
       \label{sec:exercise-1.7.3-eq2}
       \tag{3.2}
@@ -970,7 +970,7 @@ Prove that the formula is valid for rectangles with sides parallel to the
   We assume $P$ has three non-collinear points, ruling out any instances of
     points or line segments.
 
-  By \nameref{sec:choice-scale}, $P$ is measurable with area $a(P) = wh$.
+  By \nameref{sec:area-choice-scale}, $P$ is measurable with area $a(P) = wh$.
   By construction, $P$ has $I = (w - 1)(h - 1)$ interior lattice points and
     $B = 2(w + h)$ lattice points on its boundary.
   The following shows the lattice point area formula is in agreement with
@@ -1082,7 +1082,7 @@ Use induction on the number of edges to construct a proof for general polygons.
           & = a(S) + (I_T + \frac{1}{2}B_T - 1) & \text{induction hypothesis} \\
           & = a(S) + a(T). & \text{base case}
       \end{align*}
-    By the \nameref{sec:additive-property}, $S \cup T$ is measurable,
+    By the \nameref{sec:area-additive-property}, $S \cup T$ is measurable,
       $S \cap T$ is measurable, and
       \begin{align*}
         a(P)
@@ -1677,6 +1677,229 @@ This property is described by saying that every step function is a linear
         & = c_k\mathcal{X}_{I_k}(x) +
           \sum\nolimits_{j \in N - \{k\}} c_j\mathcal{X}_{I_j}(x) \\
         & = \sum_{k=1}^n c_k\mathcal{X}_{I_k}(x).
+    \end{align*}
+
+\end{proof}
+
+\chapter{Properties of the Integral of a Step Function}%
+\label{chap:properties-integral-step-function}
+
+\section{\partial{Additive Property}}%
+\label{sec:step-additive-property}
+
+Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval $[a, b]$.
+Then
+  $$\int_a^b \left[ s(x) + t(x) \right] \mathop{dx} =
+    \int_a^b s(x) \mathop{dx} + \int_a^b t(x) \mathop{dx}.$$
+
+\begin{proof}
+
+  Let $s$ and $t$ be step functions on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
+  Likewise, there exists a partition $P_t$ such that $t$ is constant on each
+    open subinterval of $P_t$.
+  Therefore $s + t$ is a step function with step partition
+    $$P = P_s \cup P_t = \{x_0, x_1, \ldots, x_n\},$$ the common refinement of
+    $P_s$ and $P_t$ with subdivision points $x_0$, $x_1$, $\ldots$, $x_n$.
+
+  $s$ and $t$ remain constant on every open subinterval of $P$.
+  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $P$.
+  Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $P$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b \left[ s(x) + t(x) \right] \mathop{dx}
+        & = \sum_{k=1}^n (s_k + t_k) \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n \left[ s_k \cdot (x_k - x_{k-1}) +
+                                t_k \cdot (x_k - x_{k-1}) \right] \\
+        & = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}) +
+            \sum_{k=1}^n t_k \cdot (x_k - x_{k-1}) \\
+        & = \int_a^b s(x) \mathop{dx} + \int_a^b t(x) \mathop{dx}.
+    \end{align*}
+
+\end{proof}
+
+\section{\partial{Homogeneous Property}}%
+\label{sec:step-homogeneous-property}
+
+Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
+For every real number $c$, we have
+  $$\int_a^b c \cdot s(x) \mathop{dx} = c\int_a^b s(x) \mathop{dx}.$$
+
+\begin{proof}
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
+    subinterval of $P$.
+  Then $c \cdot s$ is a step function with step partition $P$.
+
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b c \cdot s(x) \mathop{dx}
+        & = \sum_{k=1}^n (c \cdot s(x)) \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n c \cdot (s(x) \cdot (x_k - x_{k-1})) \\
+        & = c \sum_{k=1}^n s(x) \cdot (x_k - x_{k-1}) \\
+        & = c \int_a^b s(x) \mathop{dx}.
+    \end{align*}
+
+\end{proof}
+
+\section{\partial{Linearity Property}}%
+\label{sec:step-linearity-property}
+
+Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval $[a, b]$.
+For every real $c_1$ and $c_2$, we have
+  $$\int_a^b \left[ c_1s(x) + c_2t(x) \right] \mathop{dx} =
+    c_1\int_a^b s(x) \mathop{dx} + c_2\int_a^b t(x) \mathop{dx}.$$
+
+\begin{proof}
+
+  Let $s$ and $t$ be step functions on closed interval $[a, b]$.
+  Let $c_1$ and $c_2$ be real numbers.
+  Then $c_1 \cdot s$ and $c_2 \cdot t$ are step functions.
+  Then
+    \begin{align*}
+      & \int_a^b \left[ c_1s(x) + c_2t(x) \right] \mathop{dx} \\
+      & = \int_a^b c_1s(x) \mathop{dx} + \int_a^b c_2t(x) \mathop{dx}
+        & \textref{sec:step-additive-property} \\
+      & = c_1\int_a^b s(x) \mathop{dx} + c_2\int_a^b t(x). \mathop{dx}
+        & \textref{sec:step-homogeneous-property}
+    \end{align*}
+
+\end{proof}
+
+\section{\partial{Comparison Theorem}}%
+\label{sec:step-comparison-theorem}
+
+Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval $[a, b]$.
+If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
+  $$\int_a^b s(x) \mathop{dx} < \int_a^b t(x) \mathop{dx}.$$
+
+\begin{proof}
+
+  Let $s$ and $t$ be step functions on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
+  Likewise, there exists a partition $P_t$ such that $t$ is constant on each
+    open subinterval of $P_t$.
+  Let $$P = P_s \cup P_t = \{x_0, x_1, \ldots, x_n\}$$ be the common refinement
+    of $P_s$ and $P_t$ with subdivision points $x_0$, $x_1$, $\ldots$, $x_n$.
+
+  By construction, $P$ is a step partition for both $s$ and $t$.
+  Thus $s$ and $t$ remain constant on every open subinterval of $P$.
+  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $P$.
+  Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $P$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b s(x) \mathop{dx}
+        & = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}) \\
+        & < \sum_{k=1}^n t_k \cdot (x_k - x_{k-1}) & \text{by hypothesis} \\
+        & = \int_a^b t(x) \mathop{dx}.
+    \end{align*}
+
+\end{proof}
+
+\section{\partial{Additivity With Respect to the Interval of Integration}}%
+\label{sec:step-additivity-with-respect-interval-integration}
+
+Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
+Then
+  $$\int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} = 
+    \int_a^b s(x) \mathop{dx} \quad\text{if}\quad a < c < b.$$
+
+\todo{This holds for any arrangement of values $a$, $b$, and $c$.}
+
+\begin{proof}
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P$ such that $s$ is constant on each open subinterval of $P$.
+
+  Let $Q = \{x_0, x_1, \ldots, x_n\}$ be a refinement of $P$ that includes $c$
+    as a subdivision point.
+  Then $Q$ is a step partition of $s$ and there exists some $0 < i < n$ such
+    that $x_i = c$.
+  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $Q$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b s(x) \mathop{dx}
+        & = \sum_{k=1}^n s_k \cdot (x_k - x_{k - 1}) \\
+        & = \sum_{k=1}^i s_k \cdot (x_k - x_{k - 1}) +
+            \sum_{k=i+1}^n s_k \cdot (x_k - x_{k - 1}) \\
+        & = \int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx}.
+    \end{align*}
+
+\end{proof}
+
+\section{\partial{Invariance Under Translation}}%
+\label{sec:step-invariance-under-translation}
+
+Let $s$ be a step function on closed interval $[a, b]$.
+Then
+  $$\int_a^b s(x) \mathop{dx} =
+    \int_{a+c}^{b+x} s(x - c) \mathop{dx} \quad\text{for every real } c.$$
+
+\begin{proof}
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
+    subinterval of $P$.
+  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $P$.
+
+  Let $c$ be a real number.
+  Then $t(x) = s(x - c)$ is a step function on closed interval $[a + c, b + c]$
+    with partition $Q = \{x_0 + c, x_1 + c, \ldots, x_n + c\}$.
+  Furthermore, $t$ is constant on each open subinterval of $Q$.
+  Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $Q$.
+  By construction, $t_k = s_k$.
+
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_{a+c}^{b+c} s(x - c) \mathop{dx}
+        & = \int_{a+c}^{b+c} t(x) \mathop{dx} \\
+        & = \sum_{k=1}^n t_k \cdot ((x_k + c) - (x_{k - 1} + c)) \\
+        & = \sum_{k=1}^n t_k \cdot (x_k - x_{k - 1}) \\
+        & = \sum_{k=1}^n s_k \cdot (x_k - x_{k - 1}) \\
+        & = \int_a^b s(x) \mathop{dx}.
+    \end{align*}
+
+\end{proof}
+
+\section{\partial{Expansion or Contraction of the Interval of Integration}}%
+\label{sec:step-expansion-contraction-interval-integration}
+
+Let $s$ be a step function on closed interval $[a, b]$.
+Then
+  $$\int_{ka}^{kb} s \left( \frac{x}{k} \right) \mathop{dx} =
+    k \int_a^b s(x) \mathop{dx} \quad\text{for every } k > 0.$$
+
+\todo{This also holds for negative values of $k$.}
+
+\begin{proof}
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
+    subinterval of $P$.
+  Let $s_i$ denote the value of $s$ on the $i$th open subinterval of $P$.
+
+  Let $k > 0$ be a real number.
+  Then $t(x) = s(x / k)$ is a step function on closed interval $[ka, kb]$
+    with partition $Q = \{kx_0, kx_1, \ldots, kx_n\}$.
+  Furthermore, $t$ is constant on each open subinterval of $Q$.
+  Let $t_i$ denote the value of $t$ on the $i$th open subinterval of $Q$.
+  By construction, $t_i = s_i$.
+
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_{ka}^{kb} s(x / k) \mathop{dx}
+        & = \int_{ka}^{kb} t(x) \mathop{dx} \\
+        & = \sum_{i=1}^n t_i \cdot (kx_i - kx_{i-1}) \\
+        & = k \sum_{i=1}^n t_i \cdot (x_i - x_{i-1}) \\
+        & = k \sum_{i=1}^n s_i \cdot(x_i - x_{i-1}) \\
+        & = k \int_a^b s(x) \mathop{dx}.
     \end{align*}
 
 \end{proof}
