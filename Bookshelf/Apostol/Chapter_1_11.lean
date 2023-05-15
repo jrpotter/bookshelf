@@ -1,9 +1,8 @@
 import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.LibrarySearch
 
 import Common.Real.Floor
+import Common.Geometry.StepFunction
 import Common.Set.Basic
-import Common.Set.Intervals.StepFunction
 
 /-! # Apostol.Chapter_1_11 -/
 
@@ -132,8 +131,6 @@ theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.coprime a b)
   sorry
 
 section
-
-open Set.Intervals
 
 /-- ### Exercise 8
 

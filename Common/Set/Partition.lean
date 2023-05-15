@@ -4,12 +4,12 @@ import Mathlib.Data.Set.Intervals.Basic
 
 import Common.List.Basic
 
-/-! # Common.Set.Intervals.Partition
+/-! # Common.Set.Partition
 
 Additional theorems and definitions useful in the context of sets.
 -/
 
-namespace Set.Intervals
+namespace Set
 
 open List
 
@@ -134,4 +134,4 @@ theorem mem_open_subinterval_mem_closed_interval
 
 end Partition
 
-end Set.Intervals
+end Set

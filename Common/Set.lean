@@ -1,2 +1,2 @@
 import Common.Set.Basic
-import Common.Set.Intervals
+import Common.Set.Partition
