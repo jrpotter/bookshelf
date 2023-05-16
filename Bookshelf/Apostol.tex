@@ -9,6 +9,9 @@
 \newcommand{\lean}[2]{\leanref{../#1.html\##2}{#2}}
 \newcommand{\leanPretty}[3]{\leanref{../#1.html\##2}{#3}}
 
+\newcommand{\ubar}[1]{\text{\b{$#1$}}}
+\newcommand{\aliasref}[2]{\hyperref[#1]{#2}}
+
 \begin{document}
 
 \header
@@ -51,6 +54,35 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 
 \end{definition}
 
+\section{\partial{Integral of a Bounded Function}}%
+\label{sec:def-integral-bounded-function}
+
+Let $f$ be a function defined and bounded on $[a, b]$.
+Let $s$ and $t$ denote arbitrary step functions defined on $[a, b]$ such that
+  \begin{equation}
+    \label{sec:def-integral-bounded-function-eq1}
+    s(x) \leq f(x) \leq t(x)
+  \end{equation}
+  for every $x$ in $[a, b]$.
+If there is one and only one number $I$ such that
+  $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$
+  for every pair of step functions $s$ and $t$ satisfying
+  \eqref{sec:def-integral-bounded-function-eq1}, then this number $I$ is called
+  the \textbf{integral of $f$ from $a$ to $b$}, and is denoted by the symbol
+  $\int_a^b f(x) \mathop{dx}$ or by $\int_a^b f$.
+When such an $I$ exists, the function $f$ is said to be
+  \textbf{integrable on $[a, b]$}.
+
+If $a < b$, we define $\int_b^a f(x) \mathop{dx} = -\int_a^b f(x) \mathop{dx}$,
+  provided $f$ is integrable on $[a, b]$.
+We also define $\int_a^a f(x) \mathop{dx} = 0$.
+If $f$ is integrable on $[a, b]$, we say that the integral
+  $\int_a^b f(x) \mathop{dx}$ \textbf{exists}.
+
+The function $f$ is called the \textbf{integrand}, the numbers $a$ and $b$ are
+  called the \textbf{limits of integration}, and the interval $[a, b]$ the
+  \textbf{interval of integration}.
+
 \section{\partial{Integral of a Step Function}}%
 \label{sec:def-integral-step-function}
 
@@ -64,10 +96,18 @@ Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval
 The \textbf{integral of $s$ from $a$ to $b$}, denoted by the symbol
   $\int_a^b s(x)\mathop{dx}$, is defined by the following formula:
   $$\int_a^b s(x) \mathop{dx} = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}).$$
-If $a < b$, then we define
-  $$\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx}.$$
-If $a = b$, then we define
-  $$\int_a^b s(x) \mathop{dx} = 0.$$
+If $a < b$, we define $\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx}$.
+We also define $\int_a^a s(x) \mathop{dx} = 0$.
+
+\section{\partial{Lower Integral of \texorpdfstring{$f$}{f}}}%
+\label{sec:def-lower-integral-f}
+
+Let $f$ be a function bounded on $[a, b]$ and $S$ denote the set of numbers
+  $\int_a^b s(x) \mathop{dx}$ obtained as $s$ runs through all
+  \nameref{sec:def-step-function}s below $f$.
+That is, let $$S = \left\{ \int_a^b s(x) \mathop{dx} : s \leq f \right\}.$$
+The number $\sup{S}$ is called the \textbf{lower integral of $f$}.
+It is denoted as $\ubar{I}(f)$.
 
 \section{\defined{Partition}}%
 \label{sec:def-partition}
@@ -139,6 +179,16 @@ Such a number $B$ is also known as the \textbf{least upper bound}.
   \lean{Mathlib/Order/Bounds/Basic}{IsLUB}
 
 \end{definition}
+
+\section{\partial{Upper Integral of \texorpdfstring{$f$}{f}}}%
+\label{sec:def-upper-integral-f}
+
+Let $f$ be a function bounded on $[a, b]$ and $T$ denote the set of numbers
+  $\int_a^b t(x) \mathop{dx}$ obtained as $t$ runs through all
+  \nameref{sec:def-step-function}s above $f$.
+That is, let $$T = \left\{ \int_a^b t(x) \mathop{dx} : f \leq t \right\}.$$
+The number $\inf{T}$ is called the \textbf{upper integral of $f$}.
+It is denoted as $\bar{I}(f)$.
 
 \chapter{A Set of Axioms for the Real-Number System}%
 \label{chap:set-axioms-real-number-system}
@@ -2450,6 +2500,70 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
         & < \sum_{k=1}^n t_k^3 \cdot (x_k - x_{k-1}) \\
         & = \int_a^b t.
     \end{align*}
+
+\end{proof}
+
+\chapter{Upper and Lower Integrals}%
+\label{chap:upper-lower-integrals}
+
+\section{\unverified{Theorem 1.9}}%
+\label{sec:theorem-1.9}
+
+Every function $f$ which is bounded on $[a, b]$ has a lower integral
+  $\ubar{I}(f)$ and an upper integral $\overline{I}(f)$ satisfying the
+  inequalities
+  \begin{equation}
+    \label{sec:theorem-1.9-eq1}
+    \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f) \leq
+      \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}
+  \end{equation}
+  for all \nameref{sec:def-step-function}s $s$ and $t$ with $s \leq f \leq t$.
+The function $f$ is integrable on $[a, b]$ if and only if its upper and lower
+  integrals are equal, in which case we have
+  $$\int_a^b f(x) \mathop{dx} = \ubar{I}(f) = \bar{I}(f).$$
+
+\begin{proof}
+
+  Let $f$ be a function bounded on $[a, b]$.
+  We prove that (i) $f$ has a lower and upper integral satisfying
+    \eqref{sec:theorem-1.9-eq1} and (ii) that $f$ is integrable on $[a, b]$ if
+    and only if its lower and upper integrals are equal.
+
+  \paragraph{(i)}%
+
+    Because $f$ is bounded, there exists some $M > 0$ such that
+      $\abs{f(x)} \leq M$ for all $x \in [a, b]$.
+
+    Let $S$ denote the set of numbers $\int_a^b s(x) \mathop{dx}$ obtained as
+      $s$ runs through all step functions below $f$.
+    That is, let $$S = \left\{ \int_a^b s(x) \mathop{dx} : s \leq f \right\}.$$
+    Note $S$ is nonempty since, e.g. constant function $c(x) = -M$ is a member.
+
+    Likewise, let $T$ denote the set of numbers $\int_a^b t(x) \mathop{dx}$
+      obtained as $t$ runs through all step functions above $f$.
+    That is, let $$T = \left\{ \int_a^b t(x) \mathop{dx} : f \leq t \right\}.$$
+    Note $T$ is nonempty since e.g. constant function $c(x) = M$ is a member.
+
+    By construction, $s \leq t$ for every $s$ in $S$ and $t$ in $T$.
+    Therefore \nameref{sec:theorem-i.34} tells us $S$ has a
+      \nameref{sec:def-supremum}, $T$ has an \nameref{sec:def-infimum}, and
+      $\sup{S} \leq \inf{T}$.
+    By definition of the \nameref{sec:def-lower-integral-f},
+      $\ubar{I}(f) = \sup{S}$.
+    By definition of the \nameref{sec:def-upper-integral-f},
+      $\bar{I}(f) = \inf{S}$.
+    Thus \eqref{sec:theorem-1.9-eq1} holds.
+
+  \paragraph{(ii)}%
+
+    By definition of integrability, $f$ is integrable on $[a, b]$ if and only if
+      there exists one and only one number $I$ such that
+      $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$
+      for every pair of step functions $s$ and $t$ satisfying
+      \eqref{sec:def-integral-bounded-function-eq1}.
+    By \eqref{sec:theorem-1.9-eq1} and the definition of the supremum/infimum,
+      this holds if and only if $\ubar{I}(f) = \bar{I}(f)$, concluding the
+      proof.
 
 \end{proof}
 
