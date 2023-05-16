@@ -57,15 +57,17 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 Let $s$ be a \nameref{sec:def-step-function} defined on $[a, b]$, and let
   $P = \{x_0, x_1, \ldots, x_n\}$ be a \nameref{sec:def-partition} of $[a, b]$
   such that $s$ is constant on the open subintervals of $P$.
-Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval,
-  so that $$s(x) = s_k \quad\text{if}\quad x_{k-1} < x < x_k,
-    \quad k = 1, 2, \ldots, n.$$
+Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval
+  of $P$, so that
+  $$s(x) = s_k \quad\text{if}\quad x_{k-1} < x < x_k, \quad k
+         = 1, 2, \ldots, n.$$
 The \textbf{integral of $s$ from $a$ to $b$}, denoted by the symbol
   $\int_a^b s(x)\mathop{dx}$, is defined by the following formula:
   $$\int_a^b s(x) \mathop{dx} = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}).$$
-Furthermore, we define
-  $$\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx} \quad\text{and}\quad
-    \int_a^a s(x) \mathop{dx} = 0.$$
+If $a < b$, then we define
+  $$\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx}.$$
+If $a = b$, then we define
+  $$\int_a^b s(x) \mathop{dx} = 0.$$
 
 \section{\defined{Partition}}%
 \label{sec:def-partition}
@@ -1707,8 +1709,10 @@ Then
     $P_s$ and $P_t$ with subdivision points $x_0$, $x_1$, $\ldots$, $x_n$.
 
   $s$ and $t$ remain constant on every open subinterval of $P$.
-  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $P$.
-  Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
+  Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
+    $P$.
   By definition of the \nameref{sec:def-integral-step-function},
     \begin{align*}
       \int_a^b \left[ s(x) + t(x) \right] \mathop{dx}
@@ -1735,14 +1739,14 @@ For every real number $c$, we have
   By definition of a step function, there exists a \nameref{sec:def-partition}
     $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
     subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
   Then $c \cdot s$ is a step function with step partition $P$.
-
   By definition of the \nameref{sec:def-integral-step-function},
     \begin{align*}
       \int_a^b c \cdot s(x) \mathop{dx}
-        & = \sum_{k=1}^n (c \cdot s(x)) \cdot (x_k - x_{k-1}) \\
-        & = \sum_{k=1}^n c \cdot (s(x) \cdot (x_k - x_{k-1})) \\
-        & = c \sum_{k=1}^n s(x) \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n c \cdot s_k \cdot (x_k - x_{k-1}) \\
+        & = c \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}) \\
         & = c \int_a^b s(x) \mathop{dx}.
     \end{align*}
 
@@ -1791,8 +1795,10 @@ If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
 
   By construction, $P$ is a step partition for both $s$ and $t$.
   Thus $s$ and $t$ remain constant on every open subinterval of $P$.
-  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $P$.
-  Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
+  Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
+    $P$.
   By definition of the \nameref{sec:def-integral-step-function},
     \begin{align*}
       \int_a^b s(x) \mathop{dx}
@@ -1823,7 +1829,8 @@ Then
     as a subdivision point.
   Then $Q$ is a step partition of $s$ and there exists some $0 < i < n$ such
     that $x_i = c$.
-  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $Q$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $Q$.
   By definition of the \nameref{sec:def-integral-step-function},
     \begin{align*}
       \int_a^b s(x) \mathop{dx}
@@ -1857,7 +1864,8 @@ Then
   By definition of a step function, there exists a \nameref{sec:def-partition}
     $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
     subinterval of $P$.
-  Let $s_k$ denote the value of $s$ on the $k$th open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
 
   Let $c$ be a real number.
   Then $t(x) = s(x - c)$ is a step function on closed interval $[a + c, b + c]$
@@ -1938,7 +1946,7 @@ Then
 
 Let $s$ be a step function on closed interval $[a, b]$.
 Then
-  $$\int_a^b s(x) \mathop{dx} = - \int_{-b}^{-a} s(-x) \mathop{dx}.$$
+  $$\int_a^b s(x) \mathop{dx} = -\int_{-b}^{-a} s(-x) \mathop{dx}.$$
 
 \begin{proof}
 
@@ -1948,6 +1956,500 @@ Then
       -\int_a^b s(x) \mathop{dx}.$$
   Simplifying the left-hand side of the above identity, and multiplying both
     sides by $-1$ yields the desired result.
+
+\end{proof}
+
+\chapter{Exercises 1.15}%
+\label{chap:exercises-1.15}
+
+\section{Exercise 1.15.1}%
+\label{sec:exercise-1.15.1}
+
+Compute the value of each of the following integrals.
+
+\subsection{\partial{Exercise 1.15.1a}}%
+\label{sub:exercise-1.15.1a}
+
+$\int_{-1}^3 \floor{x} \mathop{dx}$.
+
+\begin{proof}
+
+  Let $s(x) = \floor{x}$ with domain $[-1, 3]$.
+  By construction, $s$ is a step function with partition
+    $P = \{-1, 0, 1, 2, 3\} = \{x_0, x_1, x_2, x_3, x_4\}$.
+  Let $s_k$ denote the constant value $s$ takes on the $k$th open subinterval of
+    $P$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_{-1}^3 \floor{x} \mathop{dx}
+        & = \sum_{k=1}^4 s_k \cdot (x_k - x_{k-1}) \\
+        & = -1 + 0 + 1 + 2 \\
+        & = 2.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.1c}}%
+\label{sub:exercise-1.15.1c}
+
+$\int_{-1}^3 \left(\floor{x} + \floor{x + \frac{1}{2}}\right) \mathop{dx}$.
+
+\begin{proof}
+
+  Let $s(x) = \floor{x} + \floor{x + \frac{1}{2}}$ with domain $[-1, 3]$.
+  By construction, $s$ is a step function with partition
+    \begin{align*}
+      P
+        & = \{-1, -\frac{1}{2}, 0, \frac{1}{2}, 1, \frac{3}{2}, 2, \frac{5}{2},
+              3\} \\
+        & = \{x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8\}.
+    \end{align*}
+  Let $s_k$ denote the constant value $s$ takes on the $k$th open subinterval of
+    $P$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_{-1}^3 \floor{x} + \floor{x + \frac{1}{2}}
+        & = \sum_{k=1}^8 s_k \cdot (x_k - x_{k-1}) \\
+        & = \frac{1}{2} \sum_{k=1}^8 s_k \\
+        & = \frac{1}{2} \left( -2 - 1 + 0 + 1 + 2 + 3 + 4 + 5 \right) \\
+        & = 6.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exericse 1.15.1e}}%
+\label{sub:exercise-1.15.1e}
+
+$\int_{-1}^3 \floor{2x} \mathop{dx}$.
+
+\begin{proof}
+
+  Let $s(x) = \floor{2x}$.
+  By \nameref{sec:hermites-identity},
+    $s(x) = \floor{x} + \floor{x + \frac{1}{2}}$.
+  Thus, by \nameref{sub:exercise-1.15.1c},
+    $$\int_{-1}^3 \floor{2x} \mathop{dx} = 6.$$
+
+\end{proof}
+
+\section{\partial{Exercise 1.15.3}}%
+\label{sec:exercise-1.15.3}
+
+Show that
+  $\int_a^b \floor{x} \mathop{dx} + \int_a^b \floor{-x} \mathop{dx} = a - b$.
+
+\begin{proof}
+
+  Let $s(x) = \floor{x}$ and $t(x) = \floor{-x}$, both with domain $[a, b]$.
+  Let $x_1$, $\ldots$, $x_{n-1}$ denote the integers found in interval $(a, b)$.
+  Then $P = \{x_0, x_1, \ldots, x_n\}$, $x_0 = a$ and $x_n = b$, is a step
+    \nameref{sec:def-partition} of both $s$ and $t$.
+  Let $s_k$ and $t_k$ denote the constant values $s$ and $t$ take on the $k$th
+    open subinterval of $P$ respectively.
+  By \nameref{sub:exercise-1.11.4b}, $\floor{-x} = -\floor{x} - 1$ for all $x$
+    in every open subinterval of $P$.
+  That is, $s_k = -t_k - 1$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b \floor{x} \mathop{dx} + \int_a^b \floor{-x} \mathop{dx}
+        & = \sum_{k=1}^n s_k (x_k - x_{k-1}) +
+            \sum_{k=1}^n t_k (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n (x_k - x_{k-1}) \cdot (s_k + t_k) \\
+        & = \sum_{k=1}^n (x_k - x_{k-1}) \cdot (-t_k - 1 + t_k) \\
+        & = \sum_{k=1}^n (x_{k-1} - x_k) \\
+        & = x_0 - x_n \\
+        & = a - b.
+    \end{align*}
+
+\end{proof}
+
+\section{Exercise 1.15.5}%
+\label{sec:exercise-1.15.5}
+
+\subsection{\partial{Exercise 1.15.5a}}%
+\label{sub:exercise-1.15.5a}
+
+Prove that $\int_0^2 \floor{t^2} \mathop{dt} = 5 - \sqrt{2} - \sqrt{3}$.
+
+\begin{proof}
+
+  Let $s(t) = \floor{t^2}$ with domain $[0, 2]$.
+  Then $s$ is a \nameref{sec:def-step-function} with partition
+    $P = \{0, 1, \sqrt{2}, \sqrt{3}, 2\} = \{x_0, x_1, \ldots, x_4\}$.
+  Let $s_k$ denote the constant value that $s$ takes in the $k$th open
+    subinterval of $P$.
+  By the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_0^2 \floor{t^2} \mathop{dt}
+        & = \sum_{k=1}^4 s_k \cdot (x_k - x_{k-1}) \\
+        & = 0 \cdot (1 - 0) + 1 \cdot (\sqrt{2} - 1) +
+            2 \cdot (\sqrt{3} - \sqrt{2}) + 3 \cdot (2 - \sqrt{3}) \\
+        & = 5 - \sqrt{2} - \sqrt{3}.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.5b}}%
+\label{sub:exercise-1.15.5b}
+
+Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
+
+\begin{proof}
+
+  Let $s(t) = \floor{t^2}$ with domain $[0, 3]$.
+  Then $s$ is a \nameref{sec:def-step-function} with \nameref{sec:def-partition}
+    \begin{align*}
+      P
+        & = \{\sqrt{0}, \sqrt{1}, \sqrt{2}, \sqrt{3}, \sqrt{4}, \sqrt{5},
+              \sqrt{6}, \sqrt{7}, \sqrt{8}, \sqrt{9}\} \\
+        & = \{x_0, x_1, \ldots, x_9\}.
+    \end{align*}
+  Let $s_k$ denote the constant value that $s$ takes in the $k$th open
+    subinterval of $P$.
+  By the \nameref{sec:def-integral-step-function},
+    \begin{align}
+      \int_0^3 \floor{t^2} \mathop{dt}
+        & = \sum_{k=1}^9 s_k \cdot (x_k - x_{k-1})
+          \nonumber \\
+        & = \sum_{k=0}^8 k \cdot (\sqrt{k + 1} - \sqrt{k}).
+          \label{sub:exercise-1.15.5b-eq1}
+    \end{align}
+  We notice $\floor{t^2}$ is symmetric about the $y$-axis.
+  Thus
+    \begin{equation}
+      \label{sub:exercise-1.15.5b-eq2}
+      \int_{-3}^0 \floor{t^2} \mathop{dt} = \int_0^3 \floor{t^2}.
+    \end{equation}
+  By \nameref{sec:step-additivity-with-respect-interval-integration},
+    \begin{align*}
+      \int_{-3}^3 \floor{t^2} \mathop{dt}
+        & = \int_{-3}^0 \floor{t^2} \mathop{dt} +
+            \int_0^3 \floor{t^2} \mathop{dt} \\
+        & = 2\int_0^3 \floor{t^2} \mathop{dt}
+          & \eqref{sub:exercise-1.15.5b-eq2} \\
+        & = 2 \left[\sum_{k=0}^8 k \cdot (\sqrt{k + 1} - \sqrt{k})\right].
+          & \eqref{sub:exercise-1.15.5b-eq1}
+    \end{align*}
+
+\end{proof}
+
+\section{Exercise 1.15.7}%
+\label{sec:exercise-1.15.7}
+
+\subsection{\partial{Exercise 1.15.7a}}%
+\label{sub:exercise-1.15.7a}
+
+Compute $\int_0^9 \floor{\sqrt{t}} \mathop{dt}$.
+
+\begin{proof}
+
+  Let $s(t) = \floor{\sqrt{t}}$ with domain $[0, 9]$.
+  Then $s$ is a \nameref{sec:def-step-function} with \nameref{sec:def-partition}
+    $P = \{0, 1, 4, 9\} = \{x_0, x_1, x_2, x_3\}$.
+  Let $s_k$ denote the constant value that $s$ takes in the $k$th open
+    subinterval of $P$.
+  By the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_0^9 \floor{\sqrt{t}} \mathop{dt}
+        & = \sum_{k=1}^3 s_k \cdot (x_k - x_{k-1}) \\
+        & = 0 \cdot (1 - 0) + 1 \cdot (4 - 1) + 2 \cdot (9 - 4) \\
+        & = 13.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.7b}}%
+\label{sub:exercise-1.15.7b}
+
+If $n$ is a positive integer, prove that
+  $$\int_0^{n^2} \floor{\sqrt{t}} \mathop{dt} = n(n - 1)(4n + 1) / 6.$$
+
+\begin{proof}
+
+  Define predicate $P(n)$ as
+    \begin{equation}
+      \label{sub:exercise-1.15.7b-eq1}
+      \int_0^{n^2} \floor{\sqrt{t}} \mathop{dt} = \frac{n(n - 1)(4n + 1)}{6}.
+    \end{equation}
+  We use induction to prove $P(n)$ holds for all integers satisfying $n > 0$.
+
+  \paragraph{Base Case}%
+
+    Let $n = 1$.
+    Define $s(t) = \floor{\sqrt{t}}$ with domain $[0, 1]$.
+    Then $s$ is a \nameref{sec:def-step-function} with
+      \nameref{sec:def-partition} $P = \{0, 1\} = \{x_0, x_1\}$.
+    Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+      $P$.
+    By definition of the \nameref{sec:def-integral-step-function}, the left-hand
+      side of \eqref{sub:exercise-1.15.7b-eq1} evaluates to
+      \begin{align*}
+        \int_0^{n^2} \floor{\sqrt{t}} \mathop{dt}
+          & = \int_0^1 \floor{\sqrt{t}} \mathop{dt} \\
+          & = \sum_{k=1}^1 s_k \cdot (x_k - x_{k-1}) \\
+          & = 0.
+      \end{align*}
+    The right-hand side of \eqref{sub:exercise-1.15.7b-eq1} likewise evaluates
+      to $0$.
+    Thus $P(1)$ holds.
+
+  \paragraph{Induction Step}%
+
+    Let $n > 0$ be a positive integer and suppose $P(n)$ is true.
+    Define $s(t) = \floor{\sqrt{t}}$ with domain $[0, (n + 1)^2]$.
+    Then $s$ is a \nameref{sec:def-step-function} with
+      \nameref{sec:def-partition}
+      \begin{align*}
+        P
+          & = \{0, 1, 4, \ldots, n^2, (n + 1)^2\} \\
+          & = \{x_0, x_1, \ldots, x_n, x_{n + 1}\}.
+      \end{align*}
+    Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+      $P$.
+    By definition of the \nameref{sec:def-integral-step-function}, it follows
+      that
+      \begin{align*}
+        & \int_0^{(n + 1)^2} s(x) \mathop{dx} \\
+        & = \sum_{k=1}^{n + 1} s_k \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}) +
+            \left[s_{n+1} \cdot (x_{n + 1} - x_n)\right] \\
+        & = \int_0^{n^2} s(x) \mathop{dx} +
+            \left[s_{n+1} \cdot (x_{n + 1} - x_n)\right] \\
+        & = \int_0^{n^2} s(x) \mathop{dx} +
+            \left[ n \cdot ((n + 1)^2 - n^2) \right] \\
+        & = \int_0^{n^2} s(x) \mathop{dx} + \left[ 2n^2 + n \right] \\
+        & = \frac{n(n - 1)(4n + 1)}{6} + 2n^2 + n
+          & \text{induction hypothesis} \\
+        & = \frac{n(n - 1)(4n + 1) + 12n^2 + 6n}{6} \\
+        & = \frac{4n^3 + 9n^2 + 5n}{6} \\
+        & = \frac{(n^2 + n)(4n + 5)}{6} \\
+        & = \frac{(n + 1)((n + 1) - 1)(4(n + 1) + 1)}{6}.
+      \end{align*}
+    Thus $P(n + 1)$ holds.
+
+  \paragraph{Conclusion}%
+
+    By mathematical induction, it follows for all positive integers $n$, $P(n)$
+      is true.
+
+\end{proof}
+
+\section{\partial{Exercise 1.15.9}}%
+\label{sec:exercise-1.15.9}
+
+Show that the following property is equivalent to
+  \nameref{sec:step-expansion-contraction-interval-integration}:
+  \begin{equation}
+    \label{sec:exercise-1.15.9-eq1}
+    \int_{ka}^{kb} f(x) \mathop{dx} = k \int_a^b f(kx) \mathop{dx}.
+  \end{equation}
+
+\begin{proof}
+
+  Let $f$ be a step function on closed interval $[a, b]$ and $k \neq 0$.
+  Applying \nameref{sec:step-expansion-contraction-interval-integration} to the
+    right-hand side of \eqref{sec:exercise-1.15.9-eq1} yields
+    $$k\int_{ka}^{kb} f(kx / k) \mathop{dx} =
+      k\left[k\int_a^b f(kx) \mathop{dx}\right].$$
+  Simplifying the left-hand side and dividing both sides by $k$ immediately
+    yields the desired result.
+
+\end{proof}
+
+\section{Exercise 1.15.11}%
+\label{sec:exercise-1.15.11}
+
+If we instead defined the integral of step functions as
+  \begin{equation*}
+    \label{sec:exercise-1.15.11-eq1}
+    \int_a^b s(x) \mathop{dx} = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}),
+  \end{equation*}
+  a new and different theory of integration would result.
+Which of the following properties would remain valid in this new theory?
+
+\subsection{\partial{Exercise 1.15.11a}}%
+\label{sub:exercise-1.15.11a}
+
+$\int_a^b s + \int_b^c s = \int_a^c s$.
+
+\note{This property mirrors
+  \nameref{sec:step-additivity-with-respect-interval-integration}}
+
+\begin{proof}
+
+  The above property is valid.
+
+  \divider
+
+  WLOG, suppose $a < b < c$.
+  Let $s$ be a step function defined on closed interval $[a, c]$.
+  By definition of a \nameref{sec:def-step-function}, there exists a
+    \nameref{sec:def-partition} such that $s$ is constant on each open
+    subinterval of $P$.
+  Let $Q = \{x_0, x_1, \ldots, x_n\}$ be a refinement of $P$ that includes $b$
+    as a subdivision point.
+  Then $Q$ is a step partition of $s$ and there exists some $0 < i < n$ such
+    that $x_i = c$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $Q$.
+  By \eqref{sec:exercise-1.15.11-eq1},
+    \begin{align*}
+      \int_a^c s
+        & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^i s_k^3 \cdot (x_k - x_{k-1}) +
+            \sum_{k=i+1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
+        & = \int_a^b s + \int_b^c s.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.11b}}%
+\label{sub:exercise-1.15.11b}
+
+$\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
+
+\note{This property mirrors the \nameref{sec:step-additive-property}.}
+
+\begin{proof}
+
+  The above property is invalid.
+
+  \divider
+
+  Let $s$ and $t$ be step functions on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
+  Likewise, there exists a partition $P_t$ such that $t$ is constant on each
+    open subinterval of $P_t$.
+  Therefore $s + t$ is a step function with step partition
+    $$P = P_s \cup P_t = \{x_0, x_1, \ldots, x_n\},$$
+    the common refinement of $P_s$ and $P_t$ with subdivision points
+    $x_0$, $x_1$, $\ldots$, $x_n$.
+
+  $s$ and $t$ remain constant on every open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P_s$.
+  Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
+    $P_t$.
+  By \eqref{sec:exercise-1.15.11-eq1},
+    \begin{align*}
+      \int_a^b s + t
+        & = \sum_{k=1}^n (s_k + t_k)^3 \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n
+            \left[ s_k^3 + 3s_k^2t_k + 3s_kt_k^2 + t_k^3 \right] \\
+        & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \;+ \\
+          & \quad\qquad
+            \sum_{k=1}^n t_k^3 \cdot (x_k - x_{k-1}) \;+ \\
+          & \quad\qquad
+            \sum_{k=1}^n (3s_k^2t_k + 3s_kt_k^2) \cdot (x_k - x_{k - 1}) \\
+        & = \int_a^b s + \int_a^b t +
+            \sum_{k=1}^n (3s_k^2t_k + 3s_kt_k^2) \cdot (x_k - x_{k - 1}).
+    \end{align*}
+  Since this last addend does not necessarily equal $0$, the desired property is
+    invalid.
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.11c}}%
+\label{sub:exercise-1.15.11c}
+
+$\int_a^b c \cdot s = c \int_a^b s$.
+
+\note{This property mirrors the \nameref{sec:step-homogeneous-property}.}
+
+\begin{proof}
+
+  The above property is invalid.
+
+  \divider
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  By definition of a step function, there exists a \nameref{sec:def-partition}
+    $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
+    subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
+  Then $c \cdot s$ is a step function with step partition $P$.
+  By \eqref{sec:exercise-1.15.11-eq1},
+    \begin{align*}
+      \int_a^b c \cdot s
+        & = \sum_{k=1}^n (c \cdot s_k)^3 \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n c^3 \cdot s_k^3 \cdot (x_k - x_{k-1}) \\
+        & = c^3 \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
+        & = c^3 \int_a^b s.
+    \end{align*}
+  Since $c^3$ does not necessarily equal $c$, the desired property is invalid.
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.11d}}%
+\label{sub:exercise-1.15.11d}
+
+$\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
+
+\note{This property mirrors \nameref{sec:step-invariance-under-translation}.}
+
+\begin{proof}
+
+  The above property is valid.
+
+  \divider
+
+  Let $s$ be a step function on closed interval $[a + c, b + c]$.
+  By definition of a \nameref{sec:def-step-function}, there exists a \nameref{sec:def-partition} $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of $P$.
+
+  Let $c$ be a real number.
+  Then $t(x) = s(x + c)$ is a step function on closed interval $[a, b]$ with partition $Q = \{x_0 - c, x_1 - c, \ldots, x_n - c\}$.
+  Furthermore, $t$ is constant on each open subinterval of $Q$.
+  Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $Q$.
+  By construction, $t_k = s_k$.
+  By \eqref{sec:exercise-1.15.11-eq1},
+    \begin{align*}
+      \int_{a+c}^{b+c} s(x) \mathop{dx}
+        & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
+        & = \sum_{k=1}^n s_k^3 \cdot ((x_k - c) - (x_{k-1} - c)) \\
+        & = \sum_{k=1}^n t_k^3 \cdot ((x_k - c) - (x_{k-1} - c)) \\
+        & = \int_a^b t(x) \mathop{dx} \\
+        & = \int_a^b s(x + c) \mathop{dx}.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 1.15.11e}}%
+\label{sub:exercise-1.15.11e}
+
+If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
+
+\note{This property mirrors the \nameref{sec:step-comparison-theorem}.}
+
+\begin{proof}
+
+  The above property is valid.
+
+  \divider
+
+  Let $s$ and $t$ be step functions on closed interval $[a, b]$.
+  By definition of a \nameref{sec:def-step-function}, there exists a \nameref{sec:def-partition}
+    $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
+  Likewise, there exists a partition $P_t$ such that $t$ is constant on each
+    open subinterval of $P_t$.
+  Let $$P = P_s \cup P_t = \{x_0, x_1, \ldots, x_n\}$$ be the common refinement
+    of $P_s$ and $P_t$ with subdivision points $x_0$, $x_1$, $\ldots$, $x_n$.
+
+  By construction, $P$ is a step partition for both $s$ and $t$.
+  Thus $s$ and $t$ remain constant on every open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
+  Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
+    $P$.
+  By \eqref{sec:exercise-1.15.11-eq1},
+    \begin{align*}
+      \int_a^b s
+        & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
+        & < \sum_{k=1}^n t_k^3 \cdot (x_k - x_{k-1}) \\
+        & = \int_a^b t.
+    \end{align*}
 
 \end{proof}
 
