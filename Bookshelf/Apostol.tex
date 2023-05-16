@@ -54,6 +54,15 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 
 \end{definition}
 
+\section{\partial{Integrable}}%
+\label{sec:def-integrable}
+
+Let $f$ be a function defined and bounded on $[a, b]$.
+$f$ is said to be \textbf{integrable} if there exists one and only one number
+  $I$ such that \eqref{sec:def-integral-bounded-function-eq2} holds.
+If $f$ is integrable on $[a, b]$, we say that the integral
+  $\int_a^b f(x) \mathop{dx}$ \textbf{exists}.
+
 \section{\partial{Integral of a Bounded Function}}%
 \label{sec:def-integral-bounded-function}
 
@@ -65,19 +74,18 @@ Let $s$ and $t$ denote arbitrary step functions defined on $[a, b]$ such that
   \end{equation}
   for every $x$ in $[a, b]$.
 If there is one and only one number $I$ such that
-  $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$
+  \begin{equation}
+    \label{sec:def-integral-bounded-function-eq2}
+    \int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}
+  \end{equation}
   for every pair of step functions $s$ and $t$ satisfying
   \eqref{sec:def-integral-bounded-function-eq1}, then this number $I$ is called
   the \textbf{integral of $f$ from $a$ to $b$}, and is denoted by the symbol
   $\int_a^b f(x) \mathop{dx}$ or by $\int_a^b f$.
-When such an $I$ exists, the function $f$ is said to be
-  \textbf{integrable on $[a, b]$}.
 
 If $a < b$, we define $\int_b^a f(x) \mathop{dx} = -\int_a^b f(x) \mathop{dx}$,
-  provided $f$ is integrable on $[a, b]$.
+  provided $f$ is \nameref{sec:def-integrable} on $[a, b]$.
 We also define $\int_a^a f(x) \mathop{dx} = 0$.
-If $f$ is integrable on $[a, b]$, we say that the integral
-  $\int_a^b f(x) \mathop{dx}$ \textbf{exists}.
 
 The function $f$ is called the \textbf{integrand}, the numbers $a$ and $b$ are
   called the \textbf{limits of integration}, and the interval $[a, b]$ the
@@ -692,8 +700,8 @@ Let $Q$ be a set that can be enclosed between two step regions $S$ and $T$, so
     S \subseteq Q \subseteq T.
   \end{equation}
 If there is one and only one number $c$ which satisfies the inequalities
-  $$a(S) \leq c \leq a(T)$$ for all step regions $S$ and $T$ satisfying (1.1),
-  then $Q$ is measurable and $a(Q) = c$.
+  $$a(S) \leq c \leq a(T)$$ for all step regions $S$ and $T$ satisfying
+  \eqref{sec:exhaustion-property-eq1}, then $Q$ is measurable and $a(Q) = c$.
 
 \begin{axiom}
 
@@ -2506,7 +2514,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \chapter{Upper and Lower Integrals}%
 \label{chap:upper-lower-integrals}
 
-\section{\unverified{Theorem 1.9}}%
+\section{\partial{Theorem 1.9}}%
 \label{sec:theorem-1.9}
 
 Every function $f$ which is bounded on $[a, b]$ has a lower integral
@@ -2518,8 +2526,8 @@ Every function $f$ which is bounded on $[a, b]$ has a lower integral
       \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}
   \end{equation}
   for all \nameref{sec:def-step-function}s $s$ and $t$ with $s \leq f \leq t$.
-The function $f$ is integrable on $[a, b]$ if and only if its upper and lower
-  integrals are equal, in which case we have
+The function $f$ is \nameref{sec:def-integrable} on $[a, b]$ if and only if
+  its upper and lower integrals are equal, in which case we have
   $$\int_a^b f(x) \mathop{dx} = \ubar{I}(f) = \bar{I}(f).$$
 
 \begin{proof}
@@ -2564,6 +2572,80 @@ The function $f$ is integrable on $[a, b]$ if and only if its upper and lower
     By \eqref{sec:theorem-1.9-eq1} and the definition of the supremum/infimum,
       this holds if and only if $\ubar{I}(f) = \bar{I}(f)$, concluding the
       proof.
+
+\end{proof}
+
+\chapter{The Area of an Ordinate Set Expressed as an Interval}%
+\label{chap:area-ordinate-set-expressed-interval}
+
+\section{Theorem 1.10}%
+\label{sec:theorem-1.10}
+
+Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on an interval
+  $[a, b]$, and let $Q$ denote the ordinate set of $f$ over $[a, b]$.
+Then $Q$ is measurable and its area is equal to the integral
+  $\int_a^b f(x) \mathop{dx}$.
+
+\begin{proof}
+
+  Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on $[a, b]$.
+  By definition of integrability, there exists one and only one number $I$ such
+    that $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$ for
+    every pair of step functions $s$ and $t$ satisfying
+    \eqref{sec:def-integral-bounded-function-eq1}.
+  In other words, $I$ is the one and only number that satisfies
+    $$a(S) \leq I \leq a(T)$$ for every pair of step regions
+    $S \subseteq Q \subseteq T$.
+  By the \nameref{sec:area-exhaustion-property}, $Q$ is measurable and its area
+    is equal to $I = \int_a^b f(x) \mathop{dx}$.
+
+\end{proof}
+
+\section{Theorem 1.11}%
+\label{sec:theorem-1.11}
+
+Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
+Then the graph of $f$, that is, the set
+  \begin{equation}
+    \label{sec:theorem-1.11-eq1}
+    \{(x, y) | a \leq x \leq b, y = f(x)\},
+  \end{equation}
+  is measurable and has area equal to $0$.
+
+\begin{proof}
+
+  Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
+  Let $$Q' = \{(x, y) \mid a \leq x \leq b, 0 \leq y < f(x)\}.$$
+  We show that (i) $Q'$ is measurable with area equal to
+    $\int_a^b f(x) \mathop{dx}$ and (ii) the graph of $f$ is meaurable with area
+    equal to $0$.
+
+  \paragraph{(i)}%
+  \label{par:theorem-1.11-i}
+
+    By definition of integrability, there exists one and only one number $I$
+      such that
+      $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$
+      for every pair of step functions $s$ and $t$ satisfying
+      \eqref{sec:def-integral-bounded-function-eq1}.
+    In other words, $I$ is the one and only number that satisfies
+      $$a(S) \leq I \leq a(T)$$ for every pair of step regions
+      $S \subseteq Q' \subseteq T$.
+    By the \nameref{sec:area-exhaustion-property}, $Q'$ is measurable and its
+      area is equal to $I = \int_a^b f(x) \mathop{dx}$.
+
+  \paragraph{(ii)}%
+
+    Let $Q$ denote the ordinate set of $f$.
+    By \nameref{sec:theorem-1.11}, $Q$ is measurable with area equal to the
+      integral $I = \int_a^b f(x) \mathop{dx}$.
+    By \nameref{par:theorem-1.11-i}, $Q'$ is measurable with area also equal to
+      $I$.
+    We note the graph of $f$, \eqref{sec:theorem-1.11-eq1}, is equal to set
+      $Q - Q'$.
+    By the \nameref{sec:area-difference-property}, $Q - Q'$ is measurable and
+      $$a(Q - Q') = a(Q) - a(Q') = I - I = 0.$$
+    Thus the graph of $f$ is measurable and has area equal to $0$.
 
 \end{proof}
 
