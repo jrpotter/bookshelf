@@ -63,6 +63,9 @@ Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval,
 The \textbf{integral of $s$ from $a$ to $b$}, denoted by the symbol
   $\int_a^b s(x)\mathop{dx}$, is defined by the following formula:
   $$\int_a^b s(x) \mathop{dx} = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}).$$
+Furthermore, we define
+  $$\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx} \quad\text{and}\quad
+    \int_a^a s(x) \mathop{dx} = 0.$$
 
 \section{\defined{Partition}}%
 \label{sec:def-partition}
@@ -1803,16 +1806,16 @@ If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
 \section{\partial{Additivity With Respect to the Interval of Integration}}%
 \label{sec:step-additivity-with-respect-interval-integration}
 
-Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
+Let $a, b, c \in \mathbb{R}$ and $s$ a \nameref{sec:def-step-function} on the
+  smallest closed interval containing them.
 Then
-  $$\int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} = 
-    \int_a^b s(x) \mathop{dx} \quad\text{if}\quad a < c < b.$$
-
-\todo{This holds for any arrangement of values $a$, $b$, and $c$.}
+  $$\int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} +
+    \int_b^a s(x) \mathop{dx} = 0.$$
 
 \begin{proof}
 
-  Let $s$ be a step function on closed interval $[a, b]$.
+  WLOG, suppose $a < c < b$ and $s$ be a step function on closed interval
+    $[a, b]$.
   By definition of a step function, there exists a \nameref{sec:def-partition}
     $P$ such that $s$ is constant on each open subinterval of $P$.
 
@@ -1828,6 +1831,14 @@ Then
         & = \sum_{k=1}^i s_k \cdot (x_k - x_{k - 1}) +
             \sum_{k=i+1}^n s_k \cdot (x_k - x_{k - 1}) \\
         & = \int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx}.
+    \end{align*}
+  Rearranging terms shows
+    \begin{align*}
+      0
+        & = \int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} -
+            \int_a^b s(x) \mathop{dx} \\
+        & = \int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} +
+            \int_b^a s(x) \mathop{dx}.
     \end{align*}
 
 \end{proof}
@@ -1873,9 +1884,7 @@ Then
 Let $s$ be a step function on closed interval $[a, b]$.
 Then
   $$\int_{ka}^{kb} s \left( \frac{x}{k} \right) \mathop{dx} =
-    k \int_a^b s(x) \mathop{dx} \quad\text{for every } k > 0.$$
-
-\todo{This also holds for negative values of $k$.}
+    k \int_a^b s(x) \mathop{dx} \quad\text{for every } k \neq 0.$$
 
 \begin{proof}
 
@@ -1885,22 +1894,60 @@ Then
     subinterval of $P$.
   Let $s_i$ denote the value of $s$ on the $i$th open subinterval of $P$.
 
-  Let $k > 0$ be a real number.
-  Then $t(x) = s(x / k)$ is a step function on closed interval $[ka, kb]$
-    with partition $Q = \{kx_0, kx_1, \ldots, kx_n\}$.
-  Furthermore, $t$ is constant on each open subinterval of $Q$.
-  Let $t_i$ denote the value of $t$ on the $i$th open subinterval of $Q$.
-  By construction, $t_i = s_i$.
+  Let $k \neq 0$ be a real number.
+  There are two cases to consider:
 
-  By definition of the \nameref{sec:def-integral-step-function},
-    \begin{align*}
-      \int_{ka}^{kb} s(x / k) \mathop{dx}
-        & = \int_{ka}^{kb} t(x) \mathop{dx} \\
-        & = \sum_{i=1}^n t_i \cdot (kx_i - kx_{i-1}) \\
-        & = k \sum_{i=1}^n t_i \cdot (x_i - x_{i-1}) \\
-        & = k \sum_{i=1}^n s_i \cdot(x_i - x_{i-1}) \\
-        & = k \int_a^b s(x) \mathop{dx}.
-    \end{align*}
+  \paragraph{Case 1}%
+
+    Suppose $k > 0$.
+    Then $t(x) = s(x / k)$ is a step function on closed interval $[ka, kb]$
+      with partition $Q = \{kx_0, kx_1, \ldots, kx_n\}$.
+    Furthermore $t_i = s_i$.
+    By definition of the \nameref{sec:def-integral-step-function},
+      \begin{align*}
+        \int_{ka}^{kb} s(x / k) \mathop{dx}
+          & = \int_{ka}^{kb} t(x) \mathop{dx} \\
+          & = \sum_{i=1}^n t_i \cdot (kx_i - kx_{i-1}) \\
+          & = k \sum_{i=1}^n t_i \cdot (x_i - x_{i-1}) \\
+          & = k \sum_{i=1}^n s_i \cdot(x_i - x_{i-1}) \\
+          & = k \int_a^b s(x) \mathop{dx}.
+      \end{align*}
+
+  \paragraph{Case 2}%
+
+    Let $k < 0$ be a real number.
+    Then $t(x) = s(x / k)$ is a step function on closed interval $[kb, ka]$
+      with partition $Q = \{kx_n, kx_{n-1}, \ldots, kx_0\}$.
+    Furthermore $t_i = s_i$.
+    By definition of the \nameref{sec:def-integral-step-function},
+      \begin{align*}
+        \int_{ka}^{kb} s(x / k) \mathop{dx}
+          & = -\int_{kb}^{ka} s(x / k) \mathop{dx} \\
+          & = -\int_{kb}^{ka} t(x) \mathop{dx} \\
+          & = -\sum_{i=1}^n t_i \cdot (kx_{i-1} - kx_i) \\
+          & = -\sum_{i=1}^n s_i \cdot (kx_{i-1} - kx_i) \\
+          & = -\sum_{i=1}^n s_i \cdot (-k) \cdot (x_i - x_{i-1}) \\
+          & = k \sum_{i=1}^n s_i \cdot (x_i - x_{i-1}) \\
+          & = k \int_a^b s(x) \mathop{dx}.
+      \end{align*}
+
+\end{proof}
+
+\section{\partial{Reflection Property}}%
+\label{sec:step-reflection-property}
+
+Let $s$ be a step function on closed interval $[a, b]$.
+Then
+  $$\int_a^b s(x) \mathop{dx} = - \int_{-b}^{-a} s(-x) \mathop{dx}.$$
+
+\begin{proof}
+
+  Let $k = -1$.
+  By \nameref{sec:step-expansion-contraction-interval-integration},
+    $$\int_{-a}^{-b} s \left( \frac{x}{-1} \right) =
+      -\int_a^b s(x) \mathop{dx}.$$
+  Simplifying the left-hand side of the above identity, and multiplying both
+    sides by $-1$ yields the desired result.
 
 \end{proof}
 
