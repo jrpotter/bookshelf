@@ -1,6 +1,8 @@
 \usepackage{amsfonts, amsmath, amsthm}
+\usepackage{bigfoot}
 \usepackage{comment}
 \usepackage[shortlabels]{enumitem}
+\usepackage{etoolbox}
 \usepackage{environ}
 \usepackage{fancybox}
 \usepackage{fontawesome5}
@@ -11,23 +13,63 @@
 \usepackage{xr-hyper}
 \usepackage{hyperref}
 
+% Open "private" namespace.
+\makeatletter
+
+% ========================================
+% General
+% ========================================
+
+\newcommand{\header}[2]{\title{#1}\author{#2}\date{}\maketitle}
+
+% ========================================
+% Dividers
+% ========================================
+
+\newcommand\@linespace{\vspace{10pt}}
+\newcommand\linedivider{\@linespace\hrule\@linespace}
+\WithSuffix\newcommand\linedivider*{\@linespace\hrule}
+\newcommand\suitdivider{$$\spadesuit\spadesuit\spadesuit$$}
+
 % ========================================
 % Linking
 % ========================================
 
 \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
-\newcommand{\leanref}[2]{\textcolor{blue}{$\pmb{\exists}\;{-}\;$}\href{#1}{#2}}
 \newcommand{\textref}[1]{\text{\nameref{#1}}}
 
+\newcommand\@leanlink[4]{%
+  \textcolor{blue}{$\pmb{\exists}\;{-}\;$}\href{#1/#2.html\##3}{#4}}
+
+% Reference to an anchor of Lean documentation.
+\newcommand\leanref[3]{%
+  \@leanlink{#1}{#2}{#3}{#3}\vspace{10pt}}
+\WithSuffix\newcommand\leanref*[3]{%
+  \@leanlink{#1}{#2}{#3}{#3}}
+
+% Variant that allows customizing display text.
+\newcommand\leanpref[4]{%
+  \@leanlink{#1}{#2}{#3}{#4}\vspace{10pt}}
+\WithSuffix\newcommand\leanpref*[4]{%
+  \@leanlink{#1}{#2}{#3}{#4}}
+
+% Macro to build all Lean related commands relative to a specified directory.
+\newcommand\makeleancommands[1]{%
+  \newcommand\lean[2]{%
+    \leanref{#1}{##1}{##2}}
+  \WithSuffix\newcommand\lean*[2]{%
+    \leanref*{#1}{##1}{##2}}
+  \newcommand\leanp[3]{%
+    \leanpref{#1}{##1}{##2}{##3}}
+  \WithSuffix\newcommand\leanp*[3]{%
+    \leanpref*{#1}{##1}{##2}{##3}}
+}
+
 % ========================================
-% Environments
+% Admonitions
 % ========================================
 
-\newcommand{\divider}{\vspace{10pt}\hrule\vspace{10pt}}
-\newcommand{\header}[2]{\title{#1}\author{#2}\date{}\maketitle}
-
-% Admonitions.
-\newcommand{\admonition}[2]{%
+\newcommand{\@admonition}[2]{%
   \begin{center}
     \doublebox{
       \begin{minipage}{0.95\textwidth}
@@ -36,26 +78,33 @@
         \vspace{2pt}
       \end{minipage}}
   \end{center}}
-\newcommand{\note}[1]{\admonition{Note:}{#1}}
-\newcommand{\todo}[1]{\admonition{TODO:}{#1}}
 
-% Statements.
-\newenvironment{axiom}{%
-  \paragraph{\normalfont\normalsize\textit{Axiom.}}}
-  {\hfill$\square$}
-\newenvironment{definition}{%
-  \paragraph{\normalfont\normalsize\textit{Definition.}}}
-  {\hfill$\square$}
+\newcommand{\note}[1]{\@admonition{Note:}{#1}}
+\newcommand{\todo}[1]{\@admonition{TODO:}{#1}}
+
+% ========================================
+% Statements
+% ========================================
+
+\newcommand\@statement[1]{%
+  \linedivider*\paragraph{\normalfont\normalsize\textit{#1.}}}
+
+\newenvironment{axiom}{\@statement{Axiom}}{\hfill$\square$}
+\newenvironment{definition}{\@statement{Definition}}{\hfill$\square$}
+\renewenvironment{proof}{\@statement{Proof}}{\hfill$\square$}
 
 \newtheorem{lemmainner}{Lemma}
-\newenvironment{lemma}[1]{%
-  \renewcommand\thelemmainner{#1}%
-  \lemmainner
+\newenvironment{lemma}[1][]{%
+  \ifstrempty{#1}
+    {\lemmainner}
+    {\renewcommand\thelemmainner{#1}\lemmainner}
 }{\endlemmainner}
+
 \newtheorem{theoreminner}{Theorem}
-\newenvironment{theorem}[1]{%
-  \renewcommand\thetheoreminner{#1}%
-  \theoreminner
+\newenvironment{theorem}[1][]{%
+  \ifstrempty{#1}
+    {\theoreminner}
+    {\renewcommand\thetheoreminner{#1}\theoreminner}
 }{\endtheoreminner}
 
 % ========================================
@@ -82,3 +131,7 @@
 \newcommand{\ico}[2]{\left[#1, #2\right)}
 \newcommand{\ioc}[2]{\left(#1, #2\right]}
 \newcommand{\ioo}[2]{\left(#1, #2\right)}
+\newcommand{\ubar}[1]{\text{\b{$#1$}}}
+
+% Close off "private" namespace.
+\makeatother

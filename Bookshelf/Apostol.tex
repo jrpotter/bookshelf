@@ -1,14 +1,10 @@
 \documentclass{report}
 
 \usepackage{graphicx}
-
-\input{../preamble}
-
 \graphicspath{{./Apostol/images/}}
 
-\newcommand{\lean}[2]{\leanref{../#1.html\##2}{#2}}
-\newcommand{\leanPretty}[3]{\leanref{../#1.html\##2}{#3}}
-\newcommand{\ubar}[1]{\text{\b{$#1$}}}
+\input{../preamble}
+\makeleancommands{..}
 
 \begin{document}
 
@@ -228,7 +224,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \section{\verified{Lemma 1}}%
 \label{sec:lemma-1}
 
-\begin{lemma}{1}
+\begin{lemma}[1]
 
   Nonempty set $S$ has supremum $L$ if and only if set $-S$ has infimum $-L$.
 
@@ -238,8 +234,6 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.is\_lub\_neg\_set\_iff\_is\_glb\_set\_neg}
-
-  \divider
 
   Suppose $L = \sup{S}$ and fix $x \in S$.
   By definition of the \nameref{sec:def-supremum}, $x \leq L$ and $L$ is the
@@ -253,7 +247,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \section{\verified{Theorem I.27}}%
 \label{sec:theorem-i.27}
 
-\begin{theorem}{I.27}
+\begin{theorem}[I.27]
 
   Every nonempty set $S$ that is bounded below has a greatest lower bound; that
     is, there is a real number $L$ such that $L = \inf{S}$.
@@ -264,8 +258,6 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.exists\_isGLB}
-
-  \divider
 
   Let $S$ be a nonempty set bounded below by $x$.
   Then $-S$ is nonempty and bounded above by $x$.
@@ -279,7 +271,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \section{\verified{Theorem I.29}}%
 \label{sec:theorem-i.29}
 
-\begin{theorem}{I.29}
+\begin{theorem}[I.29]
 
   For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
@@ -289,8 +281,6 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.exists\_pnat\_geq\_self}
-
-  \divider
 
   Let $n = \abs{\ceil{x}} + 1$.
   It is trivial to see $n$ is a positive integer satisfying $n \geq 1$.
@@ -305,7 +295,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \label{sec:archimedean-property-reals}
 \label{sec:theorem-i.30}
 
-\begin{theorem}{I.30}
+\begin{theorem}[I.30]
 
   If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
     integer $n$ such that $nx > y$.
@@ -317,8 +307,6 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.exists\_pnat\_mul\_self\_geq\_of\_pos}
 
-  \divider
-
   Let $x > 0$ and $y$ be an arbitrary real number.
   By \nameref{sec:theorem-i.29}, there exists a positive integer $n$ such that
     $n > y / x$.
@@ -329,7 +317,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \section{\verified{Theorem I.31}}%
 \label{sec:theorem-i.31}
 
-\begin{theorem}{I.31}
+\begin{theorem}[I.31]
 
   If three real numbers $a$, $x$, and $y$ satisfy the inequalities
     $$a \leq x \leq a + \frac{y}{n}$$ for every integer $n \geq 1$, then
@@ -341,8 +329,6 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
-
-  \divider
 
   By the trichotomy of the reals, there are three cases to consider:
 
@@ -378,7 +364,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \section{\verified{Lemma 2}}%
 \label{sec:lemma-2}
 
-\begin{lemma}{2}
+\begin{lemma}[2]
 
   If three real numbers $a$, $x$, and $y$ satisfy the inequalities
     $$a - y / n \leq x \leq a$$ for every integer $n \geq 1$, then $x = a$.
@@ -389,8 +375,6 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.forall\_pnat\_frac\_leq\_self\_leq\_imp\_eq}
-
-  \divider
 
   By the trichotomy of the reals, there are three cases to consider:
 
@@ -431,7 +415,7 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 \subsection{\verified{Theorem I.32a}}%
 \label{sub:theorem-i.32a}
 
-\begin{theorem}{I.32a}
+\begin{theorem}[I.32a]
 
   If $S$ has a supremum, then for some $x$ in $S$ we have $x > \sup{S} - h$.
 
@@ -441,8 +425,6 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.sup\_imp\_exists\_gt\_sup\_sub\_delta}
-
-  \divider
 
   By definition of a \nameref{sec:def-supremum}, $\sup{S}$ is the least upper
     bound of $S$.
@@ -459,7 +441,7 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 \subsection{\verified{Theorem I.32b}}%
 \label{sub:theorem-i.32b}
 
-\begin{theorem}{I.32b}
+\begin{theorem}[I.32b]
 
   If $S$ has an infimum, then for some $x$ in $S$ we have $x < \inf{S} + h$.
 
@@ -469,8 +451,6 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.inf\_imp\_exists\_lt\_inf\_add\_delta}
-
-  \divider
 
   By definition of an \nameref{sec:def-infimum}, $\inf{S}$ is the greatest lower
     bound of $S$.
@@ -495,7 +475,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 \subsection{\verified{Theorem I.33a}}%
 \label{sub:theorem-i.33a}
 
-\begin{theorem}{I.33a}
+\begin{theorem}[I.33a]
 
   If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
     $$\sup{C} = \sup{A} + \sup{B}.$$
@@ -506,8 +486,6 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.sup\_minkowski\_sum\_eq\_sup\_add\_sup}
-
-  \divider
 
   We prove (i) $\sup{A} + \sup{B}$ is an upper bound of $C$ and (ii)
     $\sup{A} + \sup{B}$ is the \textit{least} upper bound of $C$.
@@ -568,7 +546,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 \subsection{\verified{Theorem I.33b}}%
 \label{sub:theorem-i.33b}
 
-\begin{theorem}{I.33b}
+\begin{theorem}[I.33b]
 
   If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
     $$\inf{C} = \inf{A} + \inf{B}.$$
@@ -579,8 +557,6 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.inf\_minkowski\_sum\_eq\_inf\_add\_inf}
-
-  \divider
 
   We prove (i) $\inf{A} + \inf{B}$ is a lower bound of $C$ and (ii)
     $\inf{A} + \inf{B}$ is the \textit{greatest} lower bound of $C$.
@@ -641,7 +617,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 \section{\verified{Theorem I.34}}%
 \label{sec:theorem-i.34}
 
-\begin{theorem}{I.34}
+\begin{theorem}[I.34]
 
   Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that $$s \leq t$$
     for every $s$ in $S$ and every $t$ in $T$. Then $S$ has a supremum, and $T$
@@ -653,8 +629,6 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
-
-  \divider
 
   By hypothesis, $S$ and $T$ are nonempty sets.
   Let $s \in S$ and $t \in T$.
@@ -689,7 +663,7 @@ For each set $S$ in $\mathscr{M}$, we have $a(S) \geq 0$.
 
 \begin{axiom}
 
-  \leanPretty{Common/Geometry/Area}{Nonnegative-Property}
+  \leanp{Common/Geometry/Area}{Nonnegative-Property}
     {Nonnegative Property}
 
 \end{axiom}
@@ -702,7 +676,7 @@ If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
 
 \begin{axiom}
 
-  \leanPretty{Common/Geometry/Area}{Additive-Property}
+  \leanp{Common/Geometry/Area}{Additive-Property}
     {Additive Property}
 
 \end{axiom}
@@ -715,7 +689,7 @@ If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
 
 \begin{axiom}
 
-  \leanPretty{Common/Geometry/Area}{Difference-Property}
+  \leanp{Common/Geometry/Area}{Difference-Property}
     {Difference Property}
 
 \end{axiom}
@@ -728,7 +702,7 @@ If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
 
 \begin{axiom}
 
-  \leanPretty{Common/Geometry/Area}{Invariance-Under-Congruence}
+  \leanp{Common/Geometry/Area}{Invariance-Under-Congruence}
     {Invariance Under Congruence}
 
 \end{axiom}
@@ -741,7 +715,7 @@ If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
 
 \begin{axiom}
 
-  \leanPretty{Common/Geometry/Area}{Choice-of-Scale}
+  \leanp{Common/Geometry/Area}{Choice-of-Scale}
     {Choice of Scale}
 
 \end{axiom}
@@ -761,7 +735,7 @@ If there is one and only one number $c$ which satisfies the inequalities
 
 \begin{axiom}
 
-  \leanPretty{Common/Geometry/Area}{Exhaustion-Property}
+  \leanp{Common/Geometry/Area}{Exhaustion-Property}
     {Exhaustion Property}
 
 \end{axiom}
@@ -1045,7 +1019,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     These cases are exhaustive and in agreement with one another.
     Thus $S$ is measurable and $$a(S) = \frac{b_1 + b_2}{2}h.$$
 
-  \divider
+  \suitdivider
 
   Let $P$ be a parallelogram with base $b$ and height $h$.
   Then $P$ is the union of non-overlapping triangle $T$ and right trapezoid $R$.
@@ -1355,8 +1329,6 @@ $\floor{x + n} = \floor{x} + n$ for every integer $n$.
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4a}
 
-  \divider
-
   Let $x$ be a real number and $n$ an integer.
   Let $m = \floor{x + n}$.
   By definition of the floor function, $m$ is the unique integer such that
@@ -1380,13 +1352,11 @@ $\floor{-x} =
 
   \ \vspace{6pt}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \lean*{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4b\_1}
 
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4b\_2}
-
-  \divider
 
   There are two cases to consider:
 
@@ -1427,8 +1397,6 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4c}
-
-  \divider
 
   Rewrite $x$ and $y$ as the sum of their floor and fractional components:
     $x = \floor{x} + \{x\}$ and $y = \floor{y} + \{y\}$.
@@ -1474,8 +1442,6 @@ $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4d}
 
-  \divider
-
   This is immediately proven by applying \nameref{sec:hermites-identity}.
 
 \end{proof}
@@ -1489,8 +1455,6 @@ $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
 
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4e}
-
-  \divider
 
   This is immediately proven by applying \nameref{sec:hermites-identity}.
 
@@ -1507,8 +1471,6 @@ State and prove such a generalization.
 
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_5}
-
-  \divider
 
   We prove that for all natural numbers $n$ and real numbers $x$, the following
     identity holds:
@@ -1734,8 +1696,6 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_7b}
 
-  \divider
-
   Let $n = 1, \ldots, b - 1$.
   By hypothesis, $a$ and $b$ are coprime.
   Furthermore, $n < b$ for all values of $n$.
@@ -1807,7 +1767,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-additive-property}
 \label{sec:theorem-1.2}
 
-\begin{theorem}{1.2}
+\begin{theorem}[1.2]
 
   Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
     $[a, b]$.
@@ -1850,7 +1810,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-homogeneous-property}
 \label{sec:theorem-1.3}
 
-\begin{theorem}{1.3}
+\begin{theorem}[1.3]
 
   Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
   For every real number $c$, we have
@@ -1881,7 +1841,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-linearity-property}
 \label{sec:theorem-1.4}
 
-\begin{theorem}{1.4}
+\begin{theorem}[1.4]
 
   Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
     $[a, b]$.
@@ -1911,7 +1871,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-comparison-theorem}
 \label{sec:theorem-1.5}
 
-\begin{theorem}{1.5}
+\begin{theorem}[1.5]
 
   Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
     $[a, b]$.
@@ -1950,7 +1910,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-additivity-with-respect-interval-integration}
 \label{sec:theorem-1.6}
 
-\begin{theorem}{1.6}
+\begin{theorem}[1.6]
 
   Let $a, b, c \in \mathbb{R}$ and $s$ a \nameref{sec:def-step-function} on the
     smallest closed interval containing them.
@@ -1996,7 +1956,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-invariance-under-translation}
 \label{sec:theorem-1.7}
 
-\begin{theorem}{1.7}
+\begin{theorem}[1.7]
 
   Let $s$ be a step function on closed interval $[a, b]$.
   Then
@@ -2037,7 +1997,7 @@ This property is described by saying that every step function is a linear
 \label{sec:step-expansion-contraction-interval-integration}
 \label{sec:theorem-1.8}
 
-\begin{theorem}{1.8}
+\begin{theorem}[1.8]
 
   Let $s$ be a step function on closed interval $[a, b]$.
   Then
@@ -2425,13 +2385,13 @@ Which of the following properties would remain valid in this new theory?
 $\int_a^b s + \int_b^c s = \int_a^c s$.
 
 \note{This property mirrors
-  \nameref{sec:step-additivity-with-respect-interval-integration}}
+  \nameref{sec:step-additivity-with-respect-interval-integration}.}
 
 \begin{proof}
 
-  The above property is valid.
+  The above property is \textbf{valid}.
 
-  \divider
+  \vspace{6pt}
 
   WLOG, suppose $a < b < c$.
   Let $s$ be a step function defined on closed interval $[a, c]$.
@@ -2464,9 +2424,9 @@ $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
 
 \begin{proof}
 
-  The above property is invalid.
+  The above property is \textbf{invalid}.
 
-  \divider
+  \vspace{6pt}
 
   Let $s$ and $t$ be step functions on closed interval $[a, b]$.
   By definition of a step function, there exists a \nameref{sec:def-partition}
@@ -2511,9 +2471,9 @@ $\int_a^b c \cdot s = c \int_a^b s$.
 
 \begin{proof}
 
-  The above property is invalid.
+  The above property is \textbf{invalid}.
 
-  \divider
+  \vspace{6pt}
 
   Let $s$ be a step function on closed interval $[a, b]$.
   By definition of a step function, there exists a \nameref{sec:def-partition}
@@ -2543,9 +2503,9 @@ $\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
 
 \begin{proof}
 
-  The above property is valid.
+  The above property is \textbf{valid}.
 
-  \divider
+  \vspace{6pt}
 
   Let $s$ be a step function on closed interval $[a + c, b + c]$.
   By definition of a \nameref{sec:def-step-function}, there exists a \nameref{sec:def-partition} $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open subinterval of $P$.
@@ -2577,9 +2537,9 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \begin{proof}
 
-  The above property is valid.
+  The above property is \textbf{valid}.
 
-  \divider
+  \vspace{6pt}
 
   Let $s$ and $t$ be step functions on closed interval $[a, b]$.
   By definition of a \nameref{sec:def-step-function}, there exists a \nameref{sec:def-partition}
@@ -2611,7 +2571,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \section{\partial{Theorem 1.9}}%
 \label{sec:theorem-1.9}
 
-\begin{theorem}{1.9}
+\begin{theorem}[1.9]
 
   Every function $f$ which is bounded on $[a, b]$ has a lower integral
     $\ubar{I}(f)$ and an upper integral $\overline{I}(f)$ satisfying the
@@ -2677,7 +2637,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \label{sec:measurability-ordinate-sets}
 \label{sec:theorem-1.10}
 
-\begin{theorem}{1.10}
+\begin{theorem}[1.10]
 
   Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on an interval
     $[a, b]$, and let $Q$ denote the ordinate set of $f$ over $[a, b]$.
@@ -2705,7 +2665,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \label{sec:measurability-graph-nonnegative-function}
 \label{sec:theorem-1.11}
 
-\begin{theorem}{1.11}
+\begin{theorem}[1.11]
 
   Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
   Then the graph of $f$, that is, the set
@@ -2761,7 +2721,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \label{sec:integrability-bounded-monotonic-functions}
 \label{sec:theorem-1.12}
 
-\begin{theorem}{1.12}
+\begin{theorem}[1.12]
 
   If $f$ is \nameref{sec:def-monotonic} on a closed interval $[a, b]$, then $f$
     is \nameref{sec:def-integrable} on $[a, b]$.
@@ -2867,7 +2827,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \label{sec:calculation-integral-bounded-monotonic-function}
 \label{sec:theorem-1.13}
 
-\begin{theorem}{1.13}
+\begin{theorem}[1.13]
 
   Assume $f$ is increasing on a closed interval $[a, b]$.
   Let $x_k = a + k(b - a) / n$ for $k = 0, 1, \ldots, n$.
