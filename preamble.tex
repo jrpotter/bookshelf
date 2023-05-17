@@ -26,13 +26,7 @@
 \newcommand{\divider}{\vspace{10pt}\hrule\vspace{10pt}}
 \newcommand{\header}[2]{\title{#1}\author{#2}\date{}\maketitle}
 
-\newenvironment{axiom}{%
-  \paragraph{\normalfont\normalsize\textit{Axiom.}}}
-  {\hfill$\square$}
-\newenvironment{definition}{%
-  \paragraph{\normalfont\normalsize\textit{Definition.}}}
-  {\hfill$\square$}
-
+% Admonitions.
 \newcommand{\admonition}[2]{%
   \begin{center}
     \doublebox{
@@ -44,6 +38,25 @@
   \end{center}}
 \newcommand{\note}[1]{\admonition{Note:}{#1}}
 \newcommand{\todo}[1]{\admonition{TODO:}{#1}}
+
+% Statements.
+\newenvironment{axiom}{%
+  \paragraph{\normalfont\normalsize\textit{Axiom.}}}
+  {\hfill$\square$}
+\newenvironment{definition}{%
+  \paragraph{\normalfont\normalsize\textit{Definition.}}}
+  {\hfill$\square$}
+
+\newtheorem{lemmainner}{Lemma}
+\newenvironment{lemma}[1]{%
+  \renewcommand\thelemmainner{#1}%
+  \lemmainner
+}{\endlemmainner}
+\newtheorem{theoreminner}{Theorem}
+\newenvironment{theorem}[1]{%
+  \renewcommand\thetheoreminner{#1}%
+  \theoreminner
+}{\endtheoreminner}
 
 % ========================================
 % Status

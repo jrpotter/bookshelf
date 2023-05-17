@@ -8,9 +8,7 @@
 
 \newcommand{\lean}[2]{\leanref{../#1.html\##2}{#2}}
 \newcommand{\leanPretty}[3]{\leanref{../#1.html\##2}{#3}}
-
 \newcommand{\ubar}[1]{\text{\b{$#1$}}}
-\newcommand{\aliasref}[2]{\hyperref[#1]{#2}}
 
 \begin{document}
 
@@ -107,8 +105,8 @@ The \textbf{integral of $s$ from $a$ to $b$}, denoted by the symbol
 If $a < b$, we define $\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx}$.
 We also define $\int_a^a s(x) \mathop{dx} = 0$.
 
-\section{\partial{Lower Integral of \texorpdfstring{$f$}{f}}}%
-\label{sec:def-lower-integral-f}
+\section{\partial{Lower Integral}}%
+\label{sec:def-lower-integral}
 
 Let $f$ be a function bounded on $[a, b]$ and $S$ denote the set of numbers
   $\int_a^b s(x) \mathop{dx}$ obtained as $s$ runs through all
@@ -116,6 +114,20 @@ Let $f$ be a function bounded on $[a, b]$ and $S$ denote the set of numbers
 That is, let $$S = \left\{ \int_a^b s(x) \mathop{dx} : s \leq f \right\}.$$
 The number $\sup{S}$ is called the \textbf{lower integral of $f$}.
 It is denoted as $\ubar{I}(f)$.
+
+\section{\partial{Monotonic}}%
+\label{sec:def-monotonic}
+
+A function $f$ is called \textbf{monotonic} on set $S$ if it is increasing on
+  $S$ or if it is decreasing on $S$.
+$f$ is said to be \textbf{strictly monotonic} if it is strictly increasing on
+  $S$ or strictly decreasing on $S$.
+
+A function $f$ is said to be \textbf{piecewise monotonic} on an interval if its
+  graph consists of a finite number of monotonic pieces.
+In other words, $f$ is piecewise monotonic on $[a, b]$ if there is a
+  \nameref{sec:def-partition} of $[a, b]$ such that $f$ is monotonic on each of
+  the open subintervals of $P$.
 
 \section{\defined{Partition}}%
 \label{sec:def-partition}
@@ -188,8 +200,8 @@ Such a number $B$ is also known as the \textbf{least upper bound}.
 
 \end{definition}
 
-\section{\partial{Upper Integral of \texorpdfstring{$f$}{f}}}%
-\label{sec:def-upper-integral-f}
+\section{\partial{Upper Integral}}%
+\label{sec:def-upper-integral}
 
 Let $f$ be a function bounded on $[a, b]$ and $T$ denote the set of numbers
   $\int_a^b t(x) \mathop{dx}$ obtained as $t$ runs through all
@@ -216,7 +228,11 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 \section{\verified{Lemma 1}}%
 \label{sec:lemma-1}
 
-Nonempty set $S$ has supremum $L$ if and only if set $-S$ has infimum $-L$.
+\begin{lemma}{1}
+
+  Nonempty set $S$ has supremum $L$ if and only if set $-S$ has infimum $-L$.
+
+\end{lemma}
 
 \begin{proof}
 
@@ -237,8 +253,12 @@ Nonempty set $S$ has supremum $L$ if and only if set $-S$ has infimum $-L$.
 \section{\verified{Theorem I.27}}%
 \label{sec:theorem-i.27}
 
-Every nonempty set $S$ that is bounded below has a greatest lower bound; that
-  is, there is a real number $L$ such that $L = \inf{S}$.
+\begin{theorem}{I.27}
+
+  Every nonempty set $S$ that is bounded below has a greatest lower bound; that
+    is, there is a real number $L$ such that $L = \inf{S}$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -259,7 +279,11 @@ Every nonempty set $S$ that is bounded below has a greatest lower bound; that
 \section{\verified{Theorem I.29}}%
 \label{sec:theorem-i.29}
 
-For every real $x$ there exists a positive integer $n$ such that $n > x$.
+\begin{theorem}{I.29}
+
+  For every real $x$ there exists a positive integer $n$ such that $n > x$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -279,11 +303,14 @@ For every real $x$ there exists a positive integer $n$ such that $n > x$.
 
 \section{\verified{Archimedean Property of the Reals}}%
 \label{sec:archimedean-property-reals}
+\label{sec:theorem-i.30}
 
-If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
-  integer $n$ such that $nx > y$.
+\begin{theorem}{I.30}
 
-\note{This is known as the "Archimedean Property of the Reals."}
+  If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
+    integer $n$ such that $nx > y$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -302,8 +329,13 @@ If $x > 0$ and if $y$ is an arbitrary real number, there exists a positive
 \section{\verified{Theorem I.31}}%
 \label{sec:theorem-i.31}
 
-If three real numbers $a$, $x$, and $y$ satisfy the inequalities
-  $$a \leq x \leq a + \frac{y}{n}$$ for every integer $n \geq 1$, then $x = a$.
+\begin{theorem}{I.31}
+
+  If three real numbers $a$, $x$, and $y$ satisfy the inequalities
+    $$a \leq x \leq a + \frac{y}{n}$$ for every integer $n \geq 1$, then
+    $x = a$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -346,8 +378,12 @@ If three real numbers $a$, $x$, and $y$ satisfy the inequalities
 \section{\verified{Lemma 2}}%
 \label{sec:lemma-2}
 
-If three real numbers $a$, $x$, and $y$ satisfy the inequalities
-  $$a - y / n \leq x \leq a$$ for every integer $n \geq 1$, then $x = a$.
+\begin{lemma}{2}
+
+  If three real numbers $a$, $x$, and $y$ satisfy the inequalities
+    $$a - y / n \leq x \leq a$$ for every integer $n \geq 1$, then $x = a$.
+
+\end{lemma}
 
 \begin{proof}
 
@@ -395,7 +431,11 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 \subsection{\verified{Theorem I.32a}}%
 \label{sub:theorem-i.32a}
 
-If $S$ has a supremum, then for some $x$ in $S$ we have $x > \sup{S} - h$.
+\begin{theorem}{I.32a}
+
+  If $S$ has a supremum, then for some $x$ in $S$ we have $x > \sup{S} - h$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -419,7 +459,11 @@ If $S$ has a supremum, then for some $x$ in $S$ we have $x > \sup{S} - h$.
 \subsection{\verified{Theorem I.32b}}%
 \label{sub:theorem-i.32b}
 
-If $S$ has an infimum, then for some $x$ in $S$ we have $x < \inf{S} + h$.
+\begin{theorem}{I.32b}
+
+  If $S$ has an infimum, then for some $x$ in $S$ we have $x < \inf{S} + h$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -451,8 +495,12 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 \subsection{\verified{Theorem I.33a}}%
 \label{sub:theorem-i.33a}
 
-If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
-  $$\sup{C} = \sup{A} + \sup{B}.$$
+\begin{theorem}{I.33a}
+
+  If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
+    $$\sup{C} = \sup{A} + \sup{B}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -520,8 +568,12 @@ If each of $A$ and $B$ has a supremum, then $C$ has a supremum, and
 \subsection{\verified{Theorem I.33b}}%
 \label{sub:theorem-i.33b}
 
-If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
-  $$\inf{C} = \inf{A} + \inf{B}.$$
+\begin{theorem}{I.33b}
+
+  If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
+    $$\inf{C} = \inf{A} + \inf{B}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -589,9 +641,13 @@ If each of $A$ and $B$ has an infimum, then $C$ has an infimum, and
 \section{\verified{Theorem I.34}}%
 \label{sec:theorem-i.34}
 
-Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that $$s \leq t$$
-  for every $s$ in $S$ and every $t$ in $T$. Then $S$ has a supremum, and $T$
-  has an infimum, and they satisfy the inequality $$\sup{S} \leq \inf{T}.$$
+\begin{theorem}{I.34}
+
+  Given two nonempty subsets $S$ and $T$ of $\mathbb{R}$ such that $$s \leq t$$
+    for every $s$ in $S$ and every $t$ in $T$. Then $S$ has a supremum, and $T$
+    has an infimum, and they satisfy the inequality $$\sup{S} \leq \inf{T}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1749,11 +1805,17 @@ This property is described by saying that every step function is a linear
 
 \section{\partial{Additive Property}}%
 \label{sec:step-additive-property}
+\label{sec:theorem-1.2}
 
-Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval $[a, b]$.
-Then
-  $$\int_a^b \left[ s(x) + t(x) \right] \mathop{dx} =
-    \int_a^b s(x) \mathop{dx} + \int_a^b t(x) \mathop{dx}.$$
+\begin{theorem}{1.2}
+
+  Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
+    $[a, b]$.
+  Then
+    $$\int_a^b \left[ s(x) + t(x) \right] \mathop{dx} =
+      \int_a^b s(x) \mathop{dx} + \int_a^b t(x) \mathop{dx}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1786,10 +1848,15 @@ Then
 
 \section{\partial{Homogeneous Property}}%
 \label{sec:step-homogeneous-property}
+\label{sec:theorem-1.3}
 
-Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
-For every real number $c$, we have
-  $$\int_a^b c \cdot s(x) \mathop{dx} = c\int_a^b s(x) \mathop{dx}.$$
+\begin{theorem}{1.3}
+
+  Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
+  For every real number $c$, we have
+    $$\int_a^b c \cdot s(x) \mathop{dx} = c\int_a^b s(x) \mathop{dx}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1812,11 +1879,17 @@ For every real number $c$, we have
 
 \section{\partial{Linearity Property}}%
 \label{sec:step-linearity-property}
+\label{sec:theorem-1.4}
 
-Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval $[a, b]$.
-For every real $c_1$ and $c_2$, we have
-  $$\int_a^b \left[ c_1s(x) + c_2t(x) \right] \mathop{dx} =
-    c_1\int_a^b s(x) \mathop{dx} + c_2\int_a^b t(x) \mathop{dx}.$$
+\begin{theorem}{1.4}
+
+  Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
+    $[a, b]$.
+  For every real $c_1$ and $c_2$, we have
+    $$\int_a^b \left[ c_1s(x) + c_2t(x) \right] \mathop{dx} =
+      c_1\int_a^b s(x) \mathop{dx} + c_2\int_a^b t(x) \mathop{dx}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1836,10 +1909,16 @@ For every real $c_1$ and $c_2$, we have
 
 \section{\partial{Comparison Theorem}}%
 \label{sec:step-comparison-theorem}
+\label{sec:theorem-1.5}
 
-Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval $[a, b]$.
-If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
-  $$\int_a^b s(x) \mathop{dx} < \int_a^b t(x) \mathop{dx}.$$
+\begin{theorem}{1.5}
+
+  Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
+    $[a, b]$.
+  If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
+    $$\int_a^b s(x) \mathop{dx} < \int_a^b t(x) \mathop{dx}.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1869,12 +1948,17 @@ If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
 
 \section{\partial{Additivity With Respect to the Interval of Integration}}%
 \label{sec:step-additivity-with-respect-interval-integration}
+\label{sec:theorem-1.6}
 
-Let $a, b, c \in \mathbb{R}$ and $s$ a \nameref{sec:def-step-function} on the
-  smallest closed interval containing them.
-Then
-  $$\int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} +
-    \int_b^a s(x) \mathop{dx} = 0.$$
+\begin{theorem}{1.6}
+
+  Let $a, b, c \in \mathbb{R}$ and $s$ a \nameref{sec:def-step-function} on the
+    smallest closed interval containing them.
+  Then
+    $$\int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} +
+      \int_b^a s(x) \mathop{dx} = 0.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1910,11 +1994,16 @@ Then
 
 \section{\partial{Invariance Under Translation}}%
 \label{sec:step-invariance-under-translation}
+\label{sec:theorem-1.7}
 
-Let $s$ be a step function on closed interval $[a, b]$.
-Then
-  $$\int_a^b s(x) \mathop{dx} =
-    \int_{a+c}^{b+x} s(x - c) \mathop{dx} \quad\text{for every real } c.$$
+\begin{theorem}{1.7}
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  Then
+    $$\int_a^b s(x) \mathop{dx} =
+      \int_{a+c}^{b+x} s(x - c) \mathop{dx} \quad\text{for every real } c.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -1946,11 +2035,16 @@ Then
 
 \section{\partial{Expansion or Contraction of the Interval of Integration}}%
 \label{sec:step-expansion-contraction-interval-integration}
+\label{sec:theorem-1.8}
 
-Let $s$ be a step function on closed interval $[a, b]$.
-Then
-  $$\int_{ka}^{kb} s \left( \frac{x}{k} \right) \mathop{dx} =
-    k \int_a^b s(x) \mathop{dx} \quad\text{for every } k \neq 0.$$
+\begin{theorem}{1.8}
+
+  Let $s$ be a step function on closed interval $[a, b]$.
+  Then
+    $$\int_{ka}^{kb} s \left( \frac{x}{k} \right) \mathop{dx} =
+      k \int_a^b s(x) \mathop{dx} \quad\text{for every } k \neq 0.$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -2511,24 +2605,28 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\chapter{Upper and Lower Integrals}%
-\label{chap:upper-lower-integrals}
+\chapter{Theorey of Integrability}%
+\label{chap:theory-integrability}
 
 \section{\partial{Theorem 1.9}}%
 \label{sec:theorem-1.9}
 
-Every function $f$ which is bounded on $[a, b]$ has a lower integral
-  $\ubar{I}(f)$ and an upper integral $\overline{I}(f)$ satisfying the
-  inequalities
-  \begin{equation}
-    \label{sec:theorem-1.9-eq1}
-    \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f) \leq
-      \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}
-  \end{equation}
-  for all \nameref{sec:def-step-function}s $s$ and $t$ with $s \leq f \leq t$.
-The function $f$ is \nameref{sec:def-integrable} on $[a, b]$ if and only if
-  its upper and lower integrals are equal, in which case we have
-  $$\int_a^b f(x) \mathop{dx} = \ubar{I}(f) = \bar{I}(f).$$
+\begin{theorem}{1.9}
+
+  Every function $f$ which is bounded on $[a, b]$ has a lower integral
+    $\ubar{I}(f)$ and an upper integral $\overline{I}(f)$ satisfying the
+    inequalities
+    \begin{equation}
+      \label{sec:theorem-1.9-eq1}
+      \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f) \leq
+        \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}
+    \end{equation}
+    for all \nameref{sec:def-step-function}s $s$ and $t$ with $s \leq f \leq t$.
+  The function $f$ is \nameref{sec:def-integrable} on $[a, b]$ if and only if
+    its upper and lower integrals are equal, in which case we have
+    $$\int_a^b f(x) \mathop{dx} = \ubar{I}(f) = \bar{I}(f).$$
+
+\end{theorem}
 
 \begin{proof}
 
@@ -2556,9 +2654,9 @@ The function $f$ is \nameref{sec:def-integrable} on $[a, b]$ if and only if
     Therefore \nameref{sec:theorem-i.34} tells us $S$ has a
       \nameref{sec:def-supremum}, $T$ has an \nameref{sec:def-infimum}, and
       $\sup{S} \leq \inf{T}$.
-    By definition of the \nameref{sec:def-lower-integral-f},
+    By definition of the \nameref{sec:def-lower-integral},
       $\ubar{I}(f) = \sup{S}$.
-    By definition of the \nameref{sec:def-upper-integral-f},
+    By definition of the \nameref{sec:def-upper-integral},
       $\bar{I}(f) = \inf{S}$.
     Thus \eqref{sec:theorem-1.9-eq1} holds.
 
@@ -2575,16 +2673,18 @@ The function $f$ is \nameref{sec:def-integrable} on $[a, b]$ if and only if
 
 \end{proof}
 
-\chapter{The Area of an Ordinate Set Expressed as an Interval}%
-\label{chap:area-ordinate-set-expressed-interval}
-
-\section{\partial{Theorem 1.10}}%
+\section{\partial{Measurability of Ordinate Sets}}%
+\label{sec:measurability-ordinate-sets}
 \label{sec:theorem-1.10}
 
-Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on an interval
-  $[a, b]$, and let $Q$ denote the ordinate set of $f$ over $[a, b]$.
-Then $Q$ is measurable and its area is equal to the integral
-  $\int_a^b f(x) \mathop{dx}$.
+\begin{theorem}{1.10}
+
+  Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on an interval
+    $[a, b]$, and let $Q$ denote the ordinate set of $f$ over $[a, b]$.
+  Then $Q$ is measurable and its area is equal to the integral
+    $\int_a^b f(x) \mathop{dx}$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -2601,16 +2701,21 @@ Then $Q$ is measurable and its area is equal to the integral
 
 \end{proof}
 
-\section{\partial{Theorem 1.11}}%
+\section{\partial{Measurability of the Graph of a Nonnegative Function}}%
+\label{sec:measurability-graph-nonnegative-function}
 \label{sec:theorem-1.11}
 
-Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
-Then the graph of $f$, that is, the set
-  \begin{equation}
-    \label{sec:theorem-1.11-eq1}
-    \{(x, y) | a \leq x \leq b, y = f(x)\},
-  \end{equation}
-  is measurable and has area equal to $0$.
+\begin{theorem}{1.11}
+
+  Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
+  Then the graph of $f$, that is, the set
+    \begin{equation}
+      \label{sec:measurability-graph-nonnegative-function-eq1}
+      \{(x, y) \mid a \leq x \leq b, y = f(x)\},
+    \end{equation}
+    is measurable and has area equal to $0$.
+
+\end{theorem}
 
 \begin{proof}
 
@@ -2621,7 +2726,7 @@ Then the graph of $f$, that is, the set
     equal to $0$.
 
   \paragraph{(i)}%
-  \label{par:theorem-1.11-i}
+  \label{par:measurability-graph-nonnegative-function-i}
 
     By definition of integrability, there exists one and only one number $I$
       such that
@@ -2637,15 +2742,146 @@ Then the graph of $f$, that is, the set
   \paragraph{(ii)}%
 
     Let $Q$ denote the ordinate set of $f$.
-    By \nameref{sec:theorem-1.11}, $Q$ is measurable with area equal to the
-      integral $I = \int_a^b f(x) \mathop{dx}$.
-    By \nameref{par:theorem-1.11-i}, $Q'$ is measurable with area also equal to
-      $I$.
-    We note the graph of $f$, \eqref{sec:theorem-1.11-eq1}, is equal to set
+    By \nameref{sec:measurability-ordinate-sets}, $Q$ is measurable with area
+      equal to the integral $I = \int_a^b f(x) \mathop{dx}$.
+    By \nameref{par:measurability-graph-nonnegative-function-i}, $Q'$ is
+      measurable with area also equal to $I$.
+    We note the graph of $f$,
+      \eqref{sec:measurability-graph-nonnegative-function-eq1}, is equal to set
       $Q - Q'$.
     By the \nameref{sec:area-difference-property}, $Q - Q'$ is measurable and
       $$a(Q - Q') = a(Q) - a(Q') = I - I = 0.$$
     Thus the graph of $f$ is measurable and has area equal to $0$.
+
+\end{proof}
+
+\section
+  [\partial{Integrability of Bounded Monotonic Functions}]
+  {\partial{Integrability of Bounded Monotonic \texorpdfstring{\\}{}Functions}}
+\label{sec:integrability-bounded-monotonic-functions}
+\label{sec:theorem-1.12}
+
+\begin{theorem}{1.12}
+
+  If $f$ is \nameref{sec:def-monotonic} on a closed interval $[a, b]$, then $f$
+    is \nameref{sec:def-integrable} on $[a, b]$.
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $f$ be a monotonic function on closed interval $[a, b]$.
+  That is to say, either $f$ is increasing on $[a, b]$ or $f$ is decreasing on
+    $[a, b]$.
+  Because $f$ is on a closed interval, it is bounded.
+  By \nameref{sec:theorem-1.9}, $f$ has a \nameref{sec:def-lower-integral}
+    $\ubar{I}(f)$, $f$ has an \nameref{sec:def-upper-integral} $\bar{I}(f)$,
+    and $f$ is integrable if and only if $\ubar{I}(f) = \bar{I}(f)$.
+
+  Consider a partition $P = \{x_0, x_1, \ldots, x_n\}$ of $[a, b]$ in which
+    $x_k - x_{k-1} = (b - a) / n$ for each $k = 1, \ldots, n$.
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $f$ is increasing.
+    Let $s$ be the step function below $f$ with constant value $f(x_{k-1})$
+      on every $k$th open subinterval of $P$.
+    Let $t$ be the step function above $f$ with constant value $f(x_k)$
+      on every $k$th open subinterval of $P$.
+    Then, by \eqref{sec:theorem-1.9-eq1}, it follows
+      \begin{equation}
+        \label{sec:integrability-bounded-monotonic-functions-eq1}
+        \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f)
+          \leq \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}.
+      \end{equation}
+    By definition of the \nameref{sec:def-integral-step-function},
+      \begin{align*}
+        \int_a^b s(x) \mathop{dx}
+          & = \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right] \\
+        \int_a^b t(x) \mathop{dx}
+          & = \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right].
+      \end{align*}
+    Thus
+      \begin{align*}
+        \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx}
+          & = \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right] -
+              \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right] \\
+          & = \left[\frac{b - a}{n}\right] \sum_{k=1}^n f(x_k) - f(x_{k-1}) \\
+          & = \frac{(b - a)(f(b) - f(a))}{n}.
+      \end{align*}
+    By \eqref{sec:integrability-bounded-monotonic-functions-eq1},
+      \begin{align*}
+        \ubar{I}(f)
+          & \leq \bar{I}(f) \\
+          & \leq \int_a^b t(x) \mathop{dx} \\
+          & = \int_a^b s(x) \mathop{dx} + \frac{(b - a)(f(b) - f(a))}{n} \\
+          & \leq \ubar{I}(f) + \frac{(b - a)(f(b) - f(a))}{n}.
+      \end{align*}
+    Since the above holds for all positive integers $n$,
+      \nameref{sec:theorem-i.31} indicates $\ubar{I}(f) = \bar{I}(f)$.
+
+  \paragraph{Case 2}%
+
+    Suppose $f$ is decreasing.
+    Let $s$ be the step function below $f$ with constant value $f(x_k)$
+      on every $k$th open subinterval of $P$.
+    Let $t$ be the step function above $f$ with constant value $f(x_{k-1})$
+      on every $k$th open subinterval of $P$.
+    Then, by \eqref{sec:theorem-1.9-eq1}, it follows
+      \begin{equation}
+        \label{sec:integrability-bounded-monotonic-functions-eq2}
+        \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f)
+          \leq \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}.
+      \end{equation}
+    By definition of the \nameref{sec:def-integral-step-function},
+      \begin{align*}
+        \int_a^b s(x) \mathop{dx}
+          & = \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right] \\
+        \int_a^b t(x) \mathop{dx}
+          & = \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right].
+      \end{align*}
+    Thus
+      \begin{align*}
+        \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx}
+          & = \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right] -
+              \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right] \\
+          & = \left[\frac{b - a}{n}\right] \sum_{k=1}^n f(x_{k-1}) - f(x_k) \\
+          & = \frac{(b - a)(f(a) - f(b))}{n}.
+      \end{align*}
+    By \eqref{sec:integrability-bounded-monotonic-functions-eq2},
+      \begin{align*}
+        \ubar{I}(f)
+          & \leq \bar{I}(f) \\
+          & \leq \int_a^b t(x) \mathop{dx} \\
+          & = \int_a^b s(x) \mathop{dx} + \frac{(b - a)(f(a) - f(b))}{n} \\
+          & \leq \ubar{I}(f) + \frac{(b - a)(f(a) - f(b))}{n}.
+      \end{align*}
+    Since the above holds for all positive integers $n$,
+      \nameref{sec:theorem-i.31} indicates $\ubar{I}(f) = \bar{I}(f)$.
+
+\end{proof}
+
+\section{\unverified{%
+  Calculation of the Integral of a Bounded Monotonic Function}}%
+\label{sec:calculation-integral-bounded-monotonic-function}
+\label{sec:theorem-1.13}
+
+\begin{theorem}{1.13}
+
+  Assume $f$ is increasing on a closed interval $[a, b]$.
+  Let $x_k = a + k(b - a) / n$ for $k = 0, 1, \ldots, n$.
+  If $I$ is any number which satisfies the inequalities
+    $$\frac{b - a}{n} \sum_{k=0}^{n-1} f(x_k)
+      \leq I \leq
+      \frac{b - a}{n} \sum_{k=1}^n f(x_k)$$
+    for every integer $n \geq 1$, then $I = \int_a^b f(x) \mathop{dx}$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
