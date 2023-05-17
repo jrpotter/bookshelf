@@ -2670,7 +2670,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
   Then the graph of $f$, that is, the set
     \begin{equation}
-      \label{sec:measurability-graph-nonnegative-function-eq1}
+      \label{sec:theorem-1.11-eq1}
       \{(x, y) \mid a \leq x \leq b, y = f(x)\},
     \end{equation}
     is measurable and has area equal to $0$.
@@ -2686,7 +2686,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
     equal to $0$.
 
   \paragraph{(i)}%
-  \label{par:measurability-graph-nonnegative-function-i}
+  \label{par:theorem-1.11-i}
 
     By definition of integrability, there exists one and only one number $I$
       such that
@@ -2704,10 +2704,9 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
     Let $Q$ denote the ordinate set of $f$.
     By \nameref{sec:measurability-ordinate-sets}, $Q$ is measurable with area
       equal to the integral $I = \int_a^b f(x) \mathop{dx}$.
-    By \nameref{par:measurability-graph-nonnegative-function-i}, $Q'$ is
+    By \nameref{par:theorem-1.11-i}, $Q'$ is
       measurable with area also equal to $I$.
-    We note the graph of $f$,
-      \eqref{sec:measurability-graph-nonnegative-function-eq1}, is equal to set
+    We note the graph of $f$, \eqref{sec:theorem-1.11-eq1}, is equal to set
       $Q - Q'$.
     By the \nameref{sec:area-difference-property}, $Q - Q'$ is measurable and
       $$a(Q - Q') = a(Q) - a(Q') = I - I = 0.$$
@@ -2751,7 +2750,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       on every $k$th open subinterval of $P$.
     Then, by \eqref{sec:theorem-1.9-eq1}, it follows
       \begin{equation}
-        \label{sec:integrability-bounded-monotonic-functions-eq1}
+        \label{sec:theorem-1.12-eq1}
         \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f)
           \leq \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}.
       \end{equation}
@@ -2770,7 +2769,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
           & = \left[\frac{b - a}{n}\right] \sum_{k=1}^n f(x_k) - f(x_{k-1}) \\
           & = \frac{(b - a)(f(b) - f(a))}{n}.
       \end{align*}
-    By \eqref{sec:integrability-bounded-monotonic-functions-eq1},
+    By \eqref{sec:theorem-1.12-eq1},
       \begin{align*}
         \ubar{I}(f)
           & \leq \bar{I}(f) \\
@@ -2790,7 +2789,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       on every $k$th open subinterval of $P$.
     Then, by \eqref{sec:theorem-1.9-eq1}, it follows
       \begin{equation}
-        \label{sec:integrability-bounded-monotonic-functions-eq2}
+        \label{sec:theorem-1.12-eq2}
         \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f)
           \leq \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}.
       \end{equation}
@@ -2809,7 +2808,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
           & = \left[\frac{b - a}{n}\right] \sum_{k=1}^n f(x_{k-1}) - f(x_k) \\
           & = \frac{(b - a)(f(a) - f(b))}{n}.
       \end{align*}
-    By \eqref{sec:integrability-bounded-monotonic-functions-eq2},
+    By \eqref{sec:theorem-1.12-eq2},
       \begin{align*}
         \ubar{I}(f)
           & \leq \bar{I}(f) \\
@@ -2822,9 +2821,9 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\section{\unverified{%
-  Calculation of the Integral of a Bounded Monotonic Function}}%
-\label{sec:calculation-integral-bounded-monotonic-function}
+\section{\partial{%
+  Calculation of the Integral of a Bounded Increasing Function}}%
+\label{sec:calculation-integral-bounded-increasing-function}
 \label{sec:theorem-1.13}
 
 \begin{theorem}[1.13]
@@ -2832,10 +2831,154 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   Assume $f$ is increasing on a closed interval $[a, b]$.
   Let $x_k = a + k(b - a) / n$ for $k = 0, 1, \ldots, n$.
   If $I$ is any number which satisfies the inequalities
-    $$\frac{b - a}{n} \sum_{k=0}^{n-1} f(x_k)
-      \leq I \leq
-      \frac{b - a}{n} \sum_{k=1}^n f(x_k)$$
+    \begin{equation}
+      \label{sec:theorem-1.13-eq1}
+      \frac{b - a}{n} \sum_{k=0}^{n-1} f(x_k)
+        \leq I \leq
+        \frac{b - a}{n} \sum_{k=1}^n f(x_k)
+    \end{equation}
     for every integer $n \geq 1$, then $I = \int_a^b f(x) \mathop{dx}$.
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $f$ be increasing on a closed interval $[a, b]$ and $I$ be a number
+    satisfying \eqref{sec:theorem-1.13-eq1}.
+  Let $s$ be the step function below $f$ with constant value $f(x_{k-1})$
+    on every $k$th open subinterval of $P$.
+  Let $t$ be the step function above $f$ with constant value $f(x_k)$
+    on every $k$th open subinterval of $P$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b s(x) \mathop{dx}
+        & = \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right] \\
+        & = \sum_{k=0}^{n-1} f(x_k)\left[\frac{b - a}{n}\right] \\
+      \int_a^b t(x) \mathop{dx}
+        & = \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right].
+    \end{align*}
+  Therefore \eqref{sec:theorem-1.13-eq1} can alternatively be written as
+    \begin{equation}
+      \label{sec:theorem-1.13-eq2}
+      \int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}.
+    \end{equation}
+  By \nameref{sec:theorem-1.12}, $f$ is integrable.
+  Therefore \nameref{sec:theorem-1.9} indicates $f$ satisfies
+    \begin{equation}
+      \label{sec:theorem-1.13-eq3}
+      \int_a^b s(x) \mathop{dx}
+        \leq \int_a^b f(x) \mathop{dx}
+        \leq \int_a^b t(x) \mathop{dx}.
+    \end{equation}
+  Manipulating \eqref{sec:theorem-1.13-eq2} and \eqref{sec:theorem-1.13-eq3}
+    together yields
+    \begin{align*}
+      I - \int_a^b f(x) \mathop{dx}
+        & \leq \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx}, \\
+      \int_a^b f(x) \mathop{dx} - I
+        & \leq \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx}.
+    \end{align*}
+  Combining the above inequalities in turn yields
+    \begin{align*}
+      0
+        & \leq \abs{\int_a^b f(x) \mathop{dx} - I} \\
+        & \leq \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx} \\
+        & = \sum_{k=1}^n f(x_k) \left[ \frac{b - a}{n} \right] -
+            \sum_{k=1}^n f(x_{k-1}) \left[ \frac{b - a}{n} \right] \\
+        & = \frac{b - a}{n} \sum_{k=1}^n f(x_k) - f(x_{k-1}) \\
+        & = \frac{(b - a)(f(b) - f(a))}{n}.
+    \end{align*}
+  The above chain of inequalities holds for all positive integers $n \geq 1$,
+    meaning \nameref{sec:theorem-i.31} applies.
+  Thus $$\abs{\int_a^b f(x) \mathop{dx} - I} = 0,$$ which immediately implies
+    the desired result.
+
+\end{proof}
+
+\section{\partial{%
+  Calculation of the Integral of a Bounded Decreasing Function}}%
+\label{sec:calculation-integral-bounded-decreasing-function}
+\label{sec:theorem-1.14}
+
+\begin{theorem}[1.14]
+
+  Assume $f$ is descreasing on $[a, b]$.
+  Let $x_k = a + k(b - a) / n$ for $k = 0, 1, \ldots, n$.
+  If $I$ is any number which satisfies the inequalities
+    \begin{equation}
+      \label{sec:theorem-1.14-eq1}
+      \frac{b - a}{n} \sum_{k=1}^n f(x_k)
+        \leq I \leq
+        \frac{b - a}{n} \sum_{k=0}^{n-1} f(x_k)
+    \end{equation}
+    for every integer $n \geq 1$, then $I = \int_a^b f(x) \mathop{dx}$.
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $f$ be decreasing on a closed interval $[a, b]$ and $I$ be a number
+    satisfying \eqref{sec:theorem-1.14-eq1}.
+  Let $s$ be the step function below $f$ with constant value $f(x_k)$
+    on every $k$th open subinterval of $P$.
+  Let $t$ be the step function above $f$ with constant value $f(x_{k-1})$
+    on every $k$th open subinterval of $P$.
+  By definition of the \nameref{sec:def-integral-step-function},
+    \begin{align*}
+      \int_a^b s(x) \mathop{dx}
+        & = \sum_{k=1}^n f(x_k) \left[\frac{b - a}{n}\right] \\
+      \int_a^b t(x) \mathop{dx}
+        & = \sum_{k=1}^n f(x_{k-1}) \left[\frac{b - a}{n}\right] \\
+        & = \sum_{k=0}^{n-1} f(x) \left[\frac{b - a}{n}\right].
+    \end{align*}
+  Therefore \eqref{sec:theorem-1.14-eq1} can alternatively be written as
+    \begin{equation}
+      \label{sec:theorem-1.14-eq2}
+      \int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}.
+    \end{equation}
+  By \nameref{sec:theorem-1.12}, $f$ is integrable.
+  Therefore \nameref{sec:theorem-1.9} indicates $f$ satisfies
+    \begin{equation}
+      \label{sec:theorem-1.14-eq3}
+      \int_a^b s(x) \mathop{dx}
+        \leq \int_a^b f(x) \mathop{dx}
+        \leq \int_a^b t(x) \mathop{dx}.
+    \end{equation}
+  Manipulating \eqref{sec:theorem-1.14-eq2} and \eqref{sec:theorem-1.14-eq3}
+    together yields
+    \begin{align*}
+      I - \int_a^b f(x) \mathop{dx}
+        & \leq \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx}, \\
+      \int_a^b f(x) \mathop{dx} - I
+        & \leq \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx}.
+    \end{align*}
+  Combining the above inequalities in turn yields
+    \begin{align*}
+      0
+        & \leq \abs{\int_a^b f(x) \mathop{dx} - I} \\
+        & \leq \int_a^b t(x) \mathop{dx} - \int_a^b s(x) \mathop{dx} \\
+        & = \sum_{k=1}^n f(x_k) \left[ \frac{b - a}{n} \right] -
+            \sum_{k=1}^n f(x_{k-1}) \left[ \frac{b - a}{n} \right] \\
+        & = \frac{b - a}{n} \sum_{k=1}^n f(x_k) - f(x_{k-1}) \\
+        & = \frac{(b - a)(f(b) - f(a))}{n}.
+    \end{align*}
+  The above chain of inequalities holds for all positive integers $n \geq 1$,
+    meaning \nameref{sec:theorem-i.31} applies.
+  Thus $$\abs{\int_a^b f(x) \mathop{dx} - I} = 0,$$ which immediately implies
+    the desired result.
+
+\end{proof}
+
+\section{\unverified{%
+  Calculation of the Integral \texorpdfstring{$\int_0^b x^p \mathop{dx}$}{int-x-p}
+  when \texorpdfstring{$p$}{p} is a Positive Integer}}%
+\label{sec:calculation-integral-int-x-p-p-positive-integer}
+\label{sec:theorem-1.15}
+
+\begin{theorem}[1.15]
+
+  If $p$ is a positive integer and $b > 0$, we have
+    $$\int_0^b x^p \mathop{dx} = \frac{b^{p+1}}{p+1}.$$
 
 \end{theorem}
 
