@@ -14,11 +14,14 @@
 
 \tableofcontents
 
+\begingroup
+\renewcommand\thechapter{G}
+
 \chapter{Glossary}%
 \label{chap:glossary}
 
 \section{\defined{Characteristic Function}}%
-\label{sec:def-characteristic-function}
+\label{def:characteristic-function}
 
 Let $S$ be a set of points on the real line.
 The \textbf{characteristic function} of $S$ is the function $\mathcal{X}_S$ such
@@ -32,7 +35,7 @@ The \textbf{characteristic function} of $S$ is the function $\mathcal{X}_S$ such
 \end{definition}
 
 \section{\defined{Infimum}}%
-\label{sec:def-infimum}
+\label{def:infimum}
 
 A number $B$ is called an \textbf{infimum} of a nonempty set $S$ if $B$ has
   the following two properties:
@@ -49,36 +52,36 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 \end{definition}
 
 \section{\partial{Integrable}}%
-\label{sec:def-integrable}
+\label{def:integrable}
 
 Let $f$ be a function defined and bounded on $[a, b]$.
 $f$ is said to be \textbf{integrable} if there exists one and only one number
-  $I$ such that \eqref{sec:def-integral-bounded-function-eq2} holds.
+  $I$ such that \eqref{def:integral-bounded-function-eq2} holds.
 If $f$ is integrable on $[a, b]$, we say that the integral
   $\int_a^b f(x) \mathop{dx}$ \textbf{exists}.
 
 \section{\partial{Integral of a Bounded Function}}%
-\label{sec:def-integral-bounded-function}
+\label{def:integral-bounded-function}
 
 Let $f$ be a function defined and bounded on $[a, b]$.
 Let $s$ and $t$ denote arbitrary step functions defined on $[a, b]$ such that
   \begin{equation}
-    \label{sec:def-integral-bounded-function-eq1}
+    \label{def:integral-bounded-function-eq1}
     s(x) \leq f(x) \leq t(x)
   \end{equation}
   for every $x$ in $[a, b]$.
 If there is one and only one number $I$ such that
   \begin{equation}
-    \label{sec:def-integral-bounded-function-eq2}
+    \label{def:integral-bounded-function-eq2}
     \int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}
   \end{equation}
   for every pair of step functions $s$ and $t$ satisfying
-  \eqref{sec:def-integral-bounded-function-eq1}, then this number $I$ is called
+  \eqref{def:integral-bounded-function-eq1}, then this number $I$ is called
   the \textbf{integral of $f$ from $a$ to $b$}, and is denoted by the symbol
   $\int_a^b f(x) \mathop{dx}$ or by $\int_a^b f$.
 
 If $a < b$, we define $\int_b^a f(x) \mathop{dx} = -\int_a^b f(x) \mathop{dx}$,
-  provided $f$ is \nameref{sec:def-integrable} on $[a, b]$.
+  provided $f$ is \nameref{def:integrable} on $[a, b]$.
 We also define $\int_a^a f(x) \mathop{dx} = 0$.
 
 The function $f$ is called the \textbf{integrand}, the numbers $a$ and $b$ are
@@ -86,10 +89,10 @@ The function $f$ is called the \textbf{integrand}, the numbers $a$ and $b$ are
   \textbf{interval of integration}.
 
 \section{\partial{Integral of a Step Function}}%
-\label{sec:def-integral-step-function}
+\label{def:integral-step-function}
 
-Let $s$ be a \nameref{sec:def-step-function} defined on $[a, b]$, and let
-  $P = \{x_0, x_1, \ldots, x_n\}$ be a \nameref{sec:def-partition} of $[a, b]$
+Let $s$ be a \nameref{def:step-function} defined on $[a, b]$, and let
+  $P = \{x_0, x_1, \ldots, x_n\}$ be a \nameref{def:partition} of $[a, b]$
   such that $s$ is constant on the open subintervals of $P$.
 Denote by $s_k$ the constant value that $s$ takes in the $k$th open subinterval
   of $P$, so that
@@ -102,17 +105,17 @@ If $a < b$, we define $\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx}$.
 We also define $\int_a^a s(x) \mathop{dx} = 0$.
 
 \section{\partial{Lower Integral}}%
-\label{sec:def-lower-integral}
+\label{def:lower-integral}
 
 Let $f$ be a function bounded on $[a, b]$ and $S$ denote the set of numbers
   $\int_a^b s(x) \mathop{dx}$ obtained as $s$ runs through all
-  \nameref{sec:def-step-function}s below $f$.
+  \nameref{def:step-function}s below $f$.
 That is, let $$S = \left\{ \int_a^b s(x) \mathop{dx} : s \leq f \right\}.$$
 The number $\sup{S}$ is called the \textbf{lower integral of $f$}.
 It is denoted as $\ubar{I}(f)$.
 
 \section{\partial{Monotonic}}%
-\label{sec:def-monotonic}
+\label{def:monotonic}
 
 A function $f$ is called \textbf{monotonic} on set $S$ if it is increasing on
   $S$ or if it is decreasing on $S$.
@@ -122,11 +125,11 @@ $f$ is said to be \textbf{strictly monotonic} if it is strictly increasing on
 A function $f$ is said to be \textbf{piecewise monotonic} on an interval if its
   graph consists of a finite number of monotonic pieces.
 In other words, $f$ is piecewise monotonic on $[a, b]$ if there is a
-  \nameref{sec:def-partition} of $[a, b]$ such that $f$ is monotonic on each of
+  \nameref{def:partition} of $[a, b]$ such that $f$ is monotonic on each of
   the open subintervals of $P$.
 
 \section{\defined{Partition}}%
-\label{sec:def-partition}
+\label{def:partition}
 
 Let $[a, b]$ be a closed interval decomposed into $n$ subintervals by inserting
   $n - 1$ points of subdivision, say $x_1$, $x_2$, $\ldots$, $x_{n-1}$, subject
@@ -148,9 +151,9 @@ A collection of points satisfying \eqref{sec:partition-eq1} is called a
 \end{definition}
 
 \section{\partial{Refinement}}%
-\label{sec:def-refinement}
+\label{def:refinement}
 
-Let $P$ be a \nameref{sec:def-partition} of closed interval $[a, b]$.
+Let $P$ be a \nameref{def:partition} of closed interval $[a, b]$.
 A \textbf{refinement} $P'$ of $P$ is a partition formed by adjoining more
   subdivision points to those already in $P$.
 
@@ -158,10 +161,10 @@ $P'$ is said to be \textbf{finer than} $P$. The union of two partitions $P_1$
   and $P_2$ is called the \textbf{common refinement} of $P_1$ and $P_2$.
 
 \section{\defined{Step Function}}%
-\label{sec:def-step-function}
+\label{def:step-function}
 
 A function $s$, whose domain is a closed interval $[a, b]$, is called a
-  \textbf{step function} if there is a \nameref{sec:def-partition}
+  \textbf{step function} if there is a \nameref{def:partition}
   $P = \{x_0, x_1, \ldots, x_n\}$ of $[a, b]$ such that $s$ is constant on each
   open subinterval of $P$.
 That is to say, for each $k = 1, 2, \ldots, n$, there is a real number $s_k$
@@ -180,7 +183,7 @@ That is to say, for each $k = 1, 2, \ldots, n$, there is a real number $s_k$
 \end{definition}
 
 \section{\defined{Supremum}}%
-\label{sec:def-supremum}
+\label{def:supremum}
 
 A number $B$ is called a \textbf{supremum} of a nonempty set $S$ if $B$ has
   the following two properties:
@@ -197,14 +200,16 @@ Such a number $B$ is also known as the \textbf{least upper bound}.
 \end{definition}
 
 \section{\partial{Upper Integral}}%
-\label{sec:def-upper-integral}
+\label{def:upper-integral}
 
 Let $f$ be a function bounded on $[a, b]$ and $T$ denote the set of numbers
   $\int_a^b t(x) \mathop{dx}$ obtained as $t$ runs through all
-  \nameref{sec:def-step-function}s above $f$.
+  \nameref{def:step-function}s above $f$.
 That is, let $$T = \left\{ \int_a^b t(x) \mathop{dx} : f \leq t \right\}.$$
 The number $\inf{T}$ is called the \textbf{upper integral of $f$}.
 It is denoted as $\bar{I}(f)$.
+
+\endgroup
 
 \chapter{A Set of Axioms for the Real-Number System}%
 \label{chap:set-axioms-real-number-system}
@@ -236,7 +241,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
     {Apostol.Chapter\_I\_03.is\_lub\_neg\_set\_iff\_is\_glb\_set\_neg}
 
   Suppose $L = \sup{S}$ and fix $x \in S$.
-  By definition of the \nameref{sec:def-supremum}, $x \leq L$ and $L$ is the
+  By definition of the \nameref{def:supremum}, $x \leq L$ and $L$ is the
     smallest value satisfying this inequality.
   Negating both sides of the inequality yields $-x \geq -L$.
   Furthermore, $-L$ must be the largest value satisfying this inequality.
@@ -244,7 +249,8 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
 \end{proof}
 
-\section{\verified{Theorem I.27}}%
+\section{\verified{Existence of a Greatest Lower Bound}}
+\label{sec:existence-greatest-lower-bound}
 \label{sec:theorem-i.27}
 
 \begin{theorem}[I.27]
@@ -262,13 +268,14 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
   Let $S$ be a nonempty set bounded below by $x$.
   Then $-S$ is nonempty and bounded above by $x$.
   By the \nameref{sec:completeness-axiom}, there exists a
-    \nameref{sec:def-supremum} $L$ of $-S$.
+    \nameref{def:supremum} $L$ of $-S$.
   By \nameref{sec:lemma-1}, $L$ is a supremum of $-S$ if and only if $-L$ is an
     infimum of $S$.
 
 \end{proof}
 
-\section{\verified{Theorem I.29}}%
+\section{\verified{Positive Integers Unbounded Above}}%
+\label{sec:positive-integers-unbounded-above}
 \label{sec:theorem-i.29}
 
 \begin{theorem}[I.29]
@@ -407,7 +414,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
 \end{proof}
 
-\section{Theorem I.32}%
+\section{\verified{Theorem I.32}}%
 \label{sec:theorem-i.32}
 
 Let $h$ be a given positive number and let $S$ be a set of real numbers.
@@ -426,7 +433,7 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.sup\_imp\_exists\_gt\_sup\_sub\_delta}
 
-  By definition of a \nameref{sec:def-supremum}, $\sup{S}$ is the least upper
+  By definition of a \nameref{def:supremum}, $\sup{S}$ is the least upper
     bound of $S$.
   For the sake of contradiction, suppose for all $x \in S$,
     $x \leq \sup{S} - h$.
@@ -452,7 +459,7 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
   \lean{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.inf\_imp\_exists\_lt\_inf\_add\_delta}
 
-  By definition of an \nameref{sec:def-infimum}, $\inf{S}$ is the greatest lower
+  By definition of an \nameref{def:infimum}, $\inf{S}$ is the greatest lower
     bound of $S$.
   For the sake of contradiction, suppose for all $x \in S$,
     $x \geq \inf{S} + h$.
@@ -464,7 +471,8 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 
 \end{proof}
 
-\section{Theorem I.33}%
+\section{\verified{Additive Property of Supremums and Infimums}}%
+\label{sec:additive-property-supremums-infimums}
 \label{sec:theorem-i.33}
 
 Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
@@ -496,7 +504,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
     Let $x \in C$.
     By definition of $C$, there exist elements $a' \in A$ and $b' \in B$ such
       that $x = a' + b'$.
-    By definition of a \nameref{sec:def-supremum}, $a' \leq \sup{A}$.
+    By definition of a \nameref{def:supremum}, $a' \leq \sup{A}$.
     Likewise, $b' \leq \sup{B}$.
     Therefore $a' + b' \leq \sup{A} + \sup{B}$.
     Since $x = a' + b'$ was arbitrarily chosen, it follows $\sup{A} + \sup{B}$
@@ -567,7 +575,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
     Let $x \in C$.
     By definition of $C$, there exist elements $a' \in A$ and $b' \in B$ such
       that $x = a' + b'$.
-    By definition of an \nameref{sec:def-infimum}, $a' \geq \inf{A}$.
+    By definition of an \nameref{def:infimum}, $a' \geq \inf{A}$.
     Likewise, $b' \geq \inf{B}$.
     Therefore $a' + b' \geq \inf{A} + \inf{B}$.
     Since $x = a' + b'$ was arbitrarily chosen, it follows $\inf{A} + \inf{B}$
@@ -649,15 +657,18 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
 \end{proof}
 
-\chapter{The Concept of Area as a Set Function}%
-\label{chap:concept-area-set-function}
+\chapter{The Concepts of Integral Calculus}%
+\label{chap:concepts-integral-calculus}
+
+\section{The Concept of Area as a Set Function}%
+\label{sec:concept-area-set-function}
 
 We assume there exists a class $\mathscr{M}$ of measurable sets in the plane and
   a set function $a$, whose domain is $\mathscr{M}$, with the following
   properties:
 
-\section{\defined{Nonnegative Property}}%
-\label{sec:nonnegative-property}
+\subsection{\defined{Nonnegative Property}}%
+\label{sub:nonnegative-property}
 
 For each set $S$ in $\mathscr{M}$, we have $a(S) \geq 0$.
 
@@ -668,8 +679,8 @@ For each set $S$ in $\mathscr{M}$, we have $a(S) \geq 0$.
 
 \end{axiom}
 
-\section{\defined{Additive Property}}%
-\label{sec:area-additive-property}
+\subsection{\defined{Additive Property}}%
+\label{sub:area-additive-property}
 
 If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
   $\mathscr{M}$, and we have $a(S \cup T) = a(S) + a(T) - a(S \cap T)$.
@@ -681,8 +692,8 @@ If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
 
 \end{axiom}
 
-\section{\defined{Difference Property}}%
-\label{sec:area-difference-property}
+\subsection{\defined{Difference Property}}%
+\label{sub:area-difference-property}
 
 If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
   $\mathscr{M}$, and we have $a(T - S) = a(T) - a(S)$.
@@ -694,8 +705,8 @@ If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
 
 \end{axiom}
 
-\section{\defined{Invariance Under Congruence}}%
-\label{sec:area-invariance-under-congruence}
+\subsection{\defined{Invariance Under Congruence}}%
+\label{sub:area-invariance-under-congruence}
 
 If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
   also in $\mathscr{M}$ and we have $a(S) = a(T)$.
@@ -707,8 +718,8 @@ If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
 
 \end{axiom}
 
-\section{\defined{Choice of Scale}}%
-\label{sec:area-choice-scale}
+\subsection{\defined{Choice of Scale}}%
+\label{sub:area-choice-scale}
 
 Every rectangle $R$ is in $\mathscr{M}$.
 If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
@@ -720,18 +731,18 @@ If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
 
 \end{axiom}
 
-\section{\partial{Exhaustion Property}}%
-\label{sec:area-exhaustion-property}
+\subsection{\partial{Exhaustion Property}}%
+\label{sub:area-exhaustion-property}
 
 Let $Q$ be a set that can be enclosed between two step regions $S$ and $T$, so
   that
   \begin{equation}
-    \label{sec:exhaustion-property-eq1}
+    \label{sub:exhaustion-property-eq1}
     S \subseteq Q \subseteq T.
   \end{equation}
 If there is one and only one number $c$ which satisfies the inequalities
   $$a(S) \leq c \leq a(T)$$ for all step regions $S$ and $T$ satisfying
-  \eqref{sec:exhaustion-property-eq1}, then $Q$ is measurable and $a(Q) = c$.
+  \eqref{sub:exhaustion-property-eq1}, then $Q$ is measurable and $a(Q) = c$.
 
 \begin{axiom}
 
@@ -740,16 +751,16 @@ If there is one and only one number $c$ which satisfies the inequalities
 
 \end{axiom}
 
-\chapter{Exercises 1.7}%
-\label{chap:exercises-1.7}
+\section{Exercises 1.7}%
+\label{sec:exercises-1.7}
 
-\section{Exercise 1.7.1}%
-\label{sec:exercise-1.7.1}
+\subsection{\partial{Exercise 1.7.1}}%
+\label{sub:exercise-1.7.1}
 
 Prove that each of the following sets is measurable and has zero area:
 
-\subsection{\partial{Exercise 1.7.1a}}%
-\label{sub:exercise-1.7.1a}
+\subsubsection{\partial{Exercise 1.7.1a}}%
+\label{ssub:exercise-1.7.1a}
 
 A set consisting of a single point.
 
@@ -757,15 +768,15 @@ A set consisting of a single point.
 
   Let $S$ be a set consisting of a single point.
   By definition of a point, $S$ is a rectangle in which all vertices coincide.
-  By \nameref{sec:area-choice-scale}, $S$ is measurable with area its width
+  By \nameref{sub:area-choice-scale}, $S$ is measurable with area its width
     times its height.
   The width and height of $S$ is trivially zero.
   Therefore $a(S) = (0)(0) = 0$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.1b}}%
-\label{sub:exercise-1.7.1b}
+\subsubsection{\partial{Exercise 1.7.1b}}%
+\label{ssub:exercise-1.7.1b}
 
 A set consisting of a finite number of points in a plane.
 
@@ -778,7 +789,7 @@ A set consisting of a finite number of points in a plane.
   \paragraph{Base Case}%
 
     Consider a set $S$ consisting of a single point in a plane.
-    By \nameref{sub:exercise-1.7.1a}, $S$ is measurable with area $0$.
+    By \nameref{ssub:exercise-1.7.1a}, $S$ is measurable with area $0$.
     Thus $P(1)$ holds.
 
   \paragraph{Induction Step}%
@@ -790,14 +801,14 @@ A set consisting of a finite number of points in a plane.
     Denote the remaining set of points as $S_k$.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
-    By \nameref{sub:exercise-1.7.1a}, $T$ is measurable with area $0$.
-    By the \nameref{sec:area-additive-property}, $S_k \cup T$ is
+    By \nameref{ssub:exercise-1.7.1a}, $T$ is measurable with area $0$.
+    By the \nameref{sub:area-additive-property}, $S_k \cup T$ is
       measurable, $S_k \cap T$ is measurable, and
       \begin{align}
         a(S_{k+1})
           & = a(S_k \cup T) \nonumber \\
           & = a(S_k) + a(T) - a(S_k \cap T) \nonumber \\
-          & = 0 + 0 - a(S_k \cap T). \label{sub:exercise-1.7.1b-eq1}
+          & = 0 + 0 - a(S_k \cap T). \label{ssub:exercise-1.7.1b-eq1}
       \end{align}
     There are two cases to consider:
 
@@ -810,11 +821,11 @@ A set consisting of a finite number of points in a plane.
 
       $S_k \cap T \neq \emptyset$.
       Since $T$ consists of a single point, $S_k \cap T = T$.
-      By \nameref{sub:exercise-1.7.1a}, $a(S_k \cap T) = a(T) = 0$.
+      By \nameref{ssub:exercise-1.7.1a}, $a(S_k \cap T) = a(T) = 0$.
 
     \vspace{8pt}
     \noindent
-    In both cases, \eqref{sub:exercise-1.7.1b-eq1} evaluates to $0$, implying
+    In both cases, \eqref{ssub:exercise-1.7.1b-eq1} evaluates to $0$, implying
       $P(k + 1)$ as expected.
 
   \paragraph{Conclusion}%
@@ -823,8 +834,8 @@ A set consisting of a finite number of points in a plane.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.1c}}%
-\label{sub:exercise-1.7.1c}
+\subsubsection{\partial{Exercise 1.7.1c}}%
+\label{ssub:exercise-1.7.1c}
 
 The union of a finite collection of line segments in a plane.
 
@@ -839,7 +850,7 @@ The union of a finite collection of line segments in a plane.
     Consider a set $S$ consisting of a single line segment in a plane.
     By definition of a line segment, $S$ is a rectangle in which one side has
       dimension $0$.
-    By \nameref{sec:area-choice-scale}, $S$ is measurable with area its width
+    By \nameref{sub:area-choice-scale}, $S$ is measurable with area its width
       $w$ times its height $h$.
     Therefore $a(S) = wh = 0$.
     Thus $P(1)$ holds.
@@ -854,13 +865,13 @@ The union of a finite collection of line segments in a plane.
     By construction, $S_{k+1} = S_k \cup T$.
     By the induction hypothesis, $S_k$ is measurable with area $0$.
     By the base case, $T$ is measurable with area $0$.
-    By the \nameref{sec:area-additive-property}, $S_k \cup T$ is measurable,
+    By the \nameref{sub:area-additive-property}, $S_k \cup T$ is measurable,
       $S_k \cap T$ is measurable, and
       \begin{align}
         a(S_{k+1})
           & = a(S_k \cup T) \nonumber \\
           & = a(S_k) + a(T) - a(S_k \cap T) \nonumber \\
-          & = 0 + 0 - a(S_k \cap T). \label{sub:exercise-1.7.1c-eq1}
+          & = 0 + 0 - a(S_k \cap T). \label{ssub:exercise-1.7.1c-eq1}
       \end{align}
     There are two cases to consider:
 
@@ -877,7 +888,7 @@ The union of a finite collection of line segments in a plane.
 
     \vspace{8pt}
     \noindent
-    In both cases, \eqref{sub:exercise-1.7.1c-eq1} evaluates to $0$, implying
+    In both cases, \eqref{ssub:exercise-1.7.1c-eq1} evaluates to $0$, implying
       $P(k + 1)$ as expected.
 
   \paragraph{Conclusion}%
@@ -886,8 +897,8 @@ The union of a finite collection of line segments in a plane.
 
 \end{proof}
 
-\section{\partial{Exercise 1.7.2}}%
-\label{sec:exercise-1.7.2}
+\subsection{\partial{Exercise 1.7.2}}%
+\label{sub:exercise-1.7.2}
 
 Every right triangular region is measurable because it can be obtained as the
   intersection of two rectangles.
@@ -916,9 +927,9 @@ Prove that every triangular region is measurable and that its area is one half
     \centering
   \end{figure}
 
-  By \nameref{sec:area-choice-scale}, both $R$ and $S$ are measurable.
+  By \nameref{sub:area-choice-scale}, both $R$ and $S$ are measurable.
   By this same axiom, $a(R) = ab$ and $a(S) = ca\sin{\theta}$.
-  By the \nameref{sec:area-additive-property}, $R \cup S$ and $R \cap S$ are
+  By the \nameref{sub:area-additive-property}, $R \cup S$ and $R \cap S$ are
     both measurable.
   $a(R \cap S) = a(T)$ and $a(R \cup S)$ can be determined by noting that
     $R$'s construction implies identity $a(R) = 2a(T)$.
@@ -932,13 +943,13 @@ Prove that every triangular region is measurable and that its area is one half
         & = ab + ca\sin{\theta} - ca\sin{\theta} - a(T).
     \end{align*}
   Solving for $a(T)$ gives the desired identity: $$a(T) = \frac{1}{2}ab.$$
-  By \nameref{sec:area-invariance-under-congruence}, $a(T') = a(T)$, concluding
+  By \nameref{sub:area-invariance-under-congruence}, $a(T') = a(T)$, concluding
     our proof.
 
 \end{proof}
 
-\section{\partial{Exercise 1.7.3}}%
-\label{sec:exercise-1.7.3}
+\subsection{\partial{Exercise 1.7.3}}%
+\label{sub:exercise-1.7.3}
 
 Prove that every trapezoid and every parallelogram is measurable and derive the
   usual formulas for their areas.
@@ -959,9 +970,9 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Suppose $S$ is a right trapezoid.
     Then $S$ is the union of non-overlapping rectangle $R$ of width $b_1$ and
       height $h$ with right triangle $T$ of base $b_2 - b_1$ and height $h$.
-    By \nameref{sec:area-choice-scale}, $R$ is measurable.
-    By \nameref{sec:exercise-1.7.2}, $T$ is measurable.
-    By the \nameref{sec:area-additive-property}, $R \cup T$ and $R \cap T$ are
+    By \nameref{sub:area-choice-scale}, $R$ is measurable.
+    By \nameref{sub:exercise-1.7.2}, $T$ is measurable.
+    By the \nameref{sub:area-additive-property}, $R \cup T$ and $R \cap T$ are
       both measurable and
       \begin{align*}
         a(S)
@@ -969,7 +980,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
           & = a(R) + a(T) - a(R \cap T) \\
           & = a(R) + a(T) & \text{by construction} \\
           & = b_1h + a(T) & \text{Choice of Scale} \\
-          & = b_1h + \frac{1}{2}(b_2 - b_1)h & \textref{sec:exercise-1.7.2} \\
+          & = b_1h + \frac{1}{2}(b_2 - b_1)h & \textref{sub:exercise-1.7.2} \\
           & = \frac{b_1 + b_2}{2}h.
       \end{align*}
 
@@ -979,15 +990,15 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Then $S$ is the union of non-overlapping triangle $T$ and right trapezoid $R$.
     Let $c$ denote the length of base $T$.
     Then $R$ has longer base edge of length $b_2 - c$.
-    By \nameref{sec:exercise-1.7.2}, $T$ is measurable.
+    By \nameref{sub:exercise-1.7.2}, $T$ is measurable.
     By Case 1, $R$ is measurable.
-    By the \nameref{sec:area-additive-property}, $R \cup T$ and $R \cap T$ are
+    By the \nameref{sub:area-additive-property}, $R \cup T$ and $R \cap T$ are
       both measurable and
       \begin{align*}
         a(S)
           & = a(T) + a(R) - a(R \cap T) \\
           & = a(T) + a(R) & \text{by construction} \\
-          & = \frac{1}{2}ch + a(R) & \textref{sec:exercise-1.7.2} \\
+          & = \frac{1}{2}ch + a(R) & \textref{sub:exercise-1.7.2} \\
           & = \frac{1}{2}ch + \frac{b_1 + b_2 - c}{2}h & \text{Case 1} \\
           & = \frac{b_1 + b_2}{2}h.
       \end{align*}
@@ -999,9 +1010,9 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
     Let $c$ denote the length of base $T$.
     Reflect $T$ vertically to form another right triangle, say $T'$.
     Then $T' \cup R$ is an acute trapezoid.
-    By \nameref{sec:area-invariance-under-congruence},
+    By \nameref{sub:area-invariance-under-congruence},
       \begin{equation}
-        \label{sec:exercise-1.7.3-eq1}
+        \label{sub:exercise-1.7.3-eq1}
         \tag{3.1}
         a(T' \cup R) = a(T \cup R).
       \end{equation}
@@ -1009,7 +1020,7 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
       meaning
       \begin{align*}
         a(T \cup R)
-          & = a(T' \cup R) & \eqref{sec:exercise-1.7.3-eq1} \\
+          & = a(T' \cup R) & \eqref{sub:exercise-1.7.3-eq1} \\
           & = \frac{b_1 - c + b_2 + c}{2}h & \text{Case 2} \\
           & = \frac{b_1 + b_2}{2}h.
       \end{align*}
@@ -1026,32 +1037,31 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
   Let $c$ denote the length of base $T$.
   Reflect $T$ vertically to form another right triangle, say $T'$.
   Then $T' \cup R$ is an acute trapezoid.
-  By \nameref{sec:area-invariance-under-congruence},
+  By \nameref{sub:area-invariance-under-congruence},
     \begin{equation}
-      \label{sec:exercise-1.7.3-eq2}
-      \tag{3.2}
+      \label{sub:exercise-1.7.3-eq2}
       a(T' \cup R) = a(T \cup R).
     \end{equation}
   By construction, $T' \cup R$ has height $h$ and bases $b - c$ and $b + c$
     meaning
     \begin{align*}
       a(T \cup R)
-        & = a(T' \cup R) & \eqref{sec:exercise-1.7.3-eq2} \\
+        & = a(T' \cup R) & \eqref{sub:exercise-1.7.3-eq2} \\
         & = \frac{b - c + b + c}{2}h & \text{Area of Trapezoid} \\
         & = bh.
     \end{align*}
 
 \end{proof}
 
-\section{Exercise 1.7.4}%
-\label{sec:exercise-1.7.4}
+\subsection{\partial{Exercise 1.7.4}}%
+\label{sub:exercise-1.7.4}
 
 Let $P$ be a polygon whose vertices are lattice points.
 The area of $P$ is $I + \frac{1}{2}B - 1$, where $I$ denotes the number of
   lattice points inside the polygon and $B$ denotes the number on the boundary.
 
-\subsection{\partial{Exercise 1.7.4a}}%
-\label{sub:exercise-1.7.4a}
+\subsubsection{\partial{Exercise 1.7.4a}}%
+\label{ssub:exercise-1.7.4a}
 
 Prove that the formula is valid for rectangles with sides parallel to the
   coordinate axes.
@@ -1063,7 +1073,7 @@ Prove that the formula is valid for rectangles with sides parallel to the
   We assume $P$ has three non-collinear points, ruling out any instances of
     points or line segments.
 
-  By \nameref{sec:area-choice-scale}, $P$ is measurable with area $a(P) = wh$.
+  By \nameref{sub:area-choice-scale}, $P$ is measurable with area $a(P) = wh$.
   By construction, $P$ has $I = (w - 1)(h - 1)$ interior lattice points and
     $B = 2(w + h)$ lattice points on its boundary.
   The following shows the lattice point area formula is in agreement with
@@ -1078,8 +1088,8 @@ Prove that the formula is valid for rectangles with sides parallel to the
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.4b}}%
-\label{sub:exercise-1.7.4b}
+\subsubsection{\partial{Exercise 1.7.4b}}%
+\label{ssub:exercise-1.7.4b}
 
 Prove that the formula is valid for right triangles and parallelograms.
 
@@ -1101,12 +1111,12 @@ Prove that the formula is valid for right triangles and parallelograms.
   By construction, $T$ shares two sides with $R$.
   Therefore
     \begin{equation}
-      \label{sub:exercise-1.7.4b-eq1}
+      \label{ssub:exercise-1.7.4b-eq1}
       B_T = \frac{1}{2}B_R - 1 + H_L.
     \end{equation}
   Likewise,
     \begin{equation}
-      \label{sub:exercise-1.7.4b-eq2}
+      \label{ssub:exercise-1.7.4b-eq2}
       I_T = \frac{1}{2}(I_R - (H_L - 2)).
     \end{equation}
   The following shows the lattice point area formula is in agreement with
@@ -1114,21 +1124,21 @@ Prove that the formula is valid for right triangles and parallelograms.
     \begin{align*}
       I_T + \frac{1}{2}B_T - 1
         & = \frac{1}{2}(I_R - (H_L - 2)) + \frac{1}{2}B_T - 1
-          & \eqref{sub:exercise-1.7.4b-eq2} \\
+          & \eqref{ssub:exercise-1.7.4b-eq2} \\
         & = \frac{1}{2}\left[ I_R - H_L + B_T \right] \\
         & = \frac{1}{2}\left[ I_R - H_L + \frac{1}{2}B_R - 1 + H_L \right]
-          & \eqref{sub:exercise-1.7.4b-eq1} \\
+          & \eqref{ssub:exercise-1.7.4b-eq1} \\
         & = \frac{1}{2}\left[ I_R + \frac{1}{2}B_R - 1 \right] \\
-        & = \frac{1}{2}\left[ wh \right] & \textref{sub:exercise-1.7.4a}.
+        & = \frac{1}{2}\left[ wh \right] & \textref{ssub:exercise-1.7.4a}.
     \end{align*}
 
   We do not prove this formula is valid for parallelograms here.
-  Instead, refer to \nameref{sub:exercise-1.7.4c} below.
+  Instead, refer to \nameref{ssub:exercise-1.7.4c} below.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.4c}}%
-\label{sub:exercise-1.7.4c}
+\subsubsection{\partial{Exercise 1.7.4c}}%
+\label{ssub:exercise-1.7.4c}
 
 Use induction on the number of edges to construct a proof for general polygons.
 
@@ -1141,7 +1151,7 @@ Use induction on the number of edges to construct a proof for general polygons.
   \paragraph{Base Case}%
 
     A $3$-polygon is a triangle.
-    By \nameref{sub:exercise-1.7.4b}, the lattice point area formula holds.
+    By \nameref{ssub:exercise-1.7.4b}, the lattice point area formula holds.
     Thus $P(3)$ holds.
 
   \paragraph{Induction Step}%
@@ -1175,7 +1185,7 @@ Use induction on the number of edges to construct a proof for general polygons.
           & = a(S) + (I_T + \frac{1}{2}B_T - 1) & \text{induction hypothesis} \\
           & = a(S) + a(T). & \text{base case}
       \end{align*}
-    By the \nameref{sec:area-additive-property}, $S \cup T$ is measurable,
+    By the \nameref{sub:area-additive-property}, $S \cup T$ is measurable,
       $S \cap T$ is measurable, and
       \begin{align*}
         a(P)
@@ -1193,8 +1203,8 @@ Use induction on the number of edges to construct a proof for general polygons.
 
 \end{proof}
 
-\section{\partial{Exercise 1.7.5}}%
-\label{sec:exercise-1.7.5}
+\subsection{\partial{Exercise 1.7.5}}%
+\label{sub:exercise-1.7.5}
 
 Prove that a triangle whose vertices are lattice points cannot be equilateral.
 
@@ -1207,7 +1217,7 @@ ways, using Exercises 2 and 4.]
   Let $T$ be an equilateral triangle whose vertices are lattice points.
   Assume each side of $T$ has length $a$.
   Then $T$ has height $h = (a\sqrt{3}) / 2$.
-  By \nameref{sec:exercise-1.7.2},
+  By \nameref{sub:exercise-1.7.2},
     \begin{equation}
       \label{sub:exercise-1.7.5-eq1}
       \tag{5.1}
@@ -1215,7 +1225,7 @@ ways, using Exercises 2 and 4.]
     \end{equation}
   Let $I$ and $B$ denote the number of interior and boundary lattice points of
     $T$ respectively.
-  By \nameref{sec:exercise-1.7.4},
+  By \nameref{sub:exercise-1.7.4},
     \begin{equation}
       \label{sub:exercise-1.7.5-eq2}
       \tag{5.2}
@@ -1229,8 +1239,8 @@ ways, using Exercises 2 and 4.]
 
 \end{proof}
 
-\section{\partial{Exercise 1.7.6}}%
-\label{sec:exercise-1.7.6}
+\subsection{\partial{Exercise 1.7.6}}%
+\label{sub:exercise-1.7.6}
 
 Let $A = \{1, 2, 3, 4, 5\}$, and let $\mathscr{M}$ denote the class of all
   subsets of $A$.
@@ -1311,16 +1321,16 @@ Prove that the set function $n$ satisfies the first three axioms for area.
 
 \end{proof}
 
-\chapter{Exercises 1.11}%
-\label{chap:exercises-1-11}
+\section{Exercises 1.11}%
+\label{sec:exercises-1-11}
 
-\section{Exercise 1.11.4}%
-\label{sec:exercise-1.11.4}
+\subsection{\partial{Exercise 1.11.4}}%
+\label{sub:exercise-1.11.4}
 
 Prove that the greatest-integer function has the properties indicated:
 
-\subsection{\verified{Exercise 1.11.4a}}%
-\label{sub:exercise-1.11.4a}
+\subsubsection{\verified{Exercise 1.11.4a}}%
+\label{ssub:exercise-1.11.4a}
 
 $\floor{x + n} = \floor{x} + n$ for every integer $n$.
 
@@ -1339,8 +1349,8 @@ $\floor{x + n} = \floor{x} + n$ for every integer $n$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 1.11.4b}}%
-\label{sub:exercise-1.11.4b}
+\subsubsection{\verified{Exercise 1.11.4b}}%
+\label{ssub:exercise-1.11.4b}
 
 $\floor{-x} =
   \begin{cases}
@@ -1388,8 +1398,8 @@ $\floor{-x} =
 
 \end{proof}
 
-\subsection{\verified{Exercise 1.11.4c}}%
-\label{sub:exercise-1.11.4c}
+\subsubsection{\verified{Exercise 1.11.4c}}%
+\label{ssub:exercise-1.11.4c}
 
 $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
@@ -1406,7 +1416,7 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
         & = \floor{\floor{x} + \{x\} + \floor{y} + \{y\}} \nonumber \\
         & = \floor{\floor{x} + \floor{y} + \{x\} + \{y\}} \nonumber \\
         & = \floor{x} + \floor{y} + \floor{\{x\} + \{y\}}
-          & \textref{sub:exercise-1.11.4a} \label{sub:exercise-1.11.4c-eq1}
+          & \textref{ssub:exercise-1.11.4a} \label{ssub:exercise-1.11.4c-eq1}
     \end{align}
   There are two cases to consider:
 
@@ -1414,7 +1424,7 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
     Suppose $\{x\} + \{y\} < 1$.
     Then $\floor{\{x\} + \{y\}} = 0$.
-    Substituting this value into \eqref{sub:exercise-1.11.4c-eq1} yields
+    Substituting this value into \eqref{ssub:exercise-1.11.4c-eq1} yields
       $$\floor{x + y} = \floor{x} + \floor{y}.$$
 
   \paragraph{Case 2}%
@@ -1422,7 +1432,7 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
     Suppose $\{x\} + \{y\} \geq 1$.
     Because $\{x\}$ and $\{y\}$ are both less than $1$, $\{x\} + \{y\} < 2$.
     Thus $\floor{\{x\} + \{y\}} = 1$.
-    Substituting this value into \eqref{sub:exercise-1.11.4c-eq1} yields
+    Substituting this value into \eqref{ssub:exercise-1.11.4c-eq1} yields
       $$\floor{x + y} = \floor{x} + \floor{y} + 1.$$
 
   \paragraph{Conclusion}%
@@ -1432,8 +1442,8 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.11.4d}}%
-\label{sub:exercise-1.11.4d}
+\subsubsection{\partial{Exercise 1.11.4d}}%
+\label{ssub:exercise-1.11.4d}
 
 $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
 
@@ -1442,12 +1452,12 @@ $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4d}
 
-  This is immediately proven by applying \nameref{sec:hermites-identity}.
+  This is immediately proven by applying \nameref{sub:hermites-identity}.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.11.4e}}%
-\label{sub:exercise-1.11.4e}
+\subsubsection{\partial{Exercise 1.11.4e}}%
+\label{ssub:exercise-1.11.4e}
 
 $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
 
@@ -1456,12 +1466,13 @@ $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
   \lean{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4e}
 
-  This is immediately proven by applying \nameref{sec:hermites-identity}.
+  This is immediately proven by applying \nameref{sub:hermites-identity}.
 
 \end{proof}
 
-\section{\partial{Hermite's Identity}}%
-\label{sec:hermites-identity}
+\subsection{\partial{Hermite's Identity}}%
+\label{sub:hermites-identity}
+\label{sub:exercise-1.11.5}
 
 The formulas in Exercises 4(d) and 4(e) suggest a generalization for
   $\floor{nx}$.
@@ -1475,7 +1486,7 @@ State and prove such a generalization.
   We prove that for all natural numbers $n$ and real numbers $x$, the following
     identity holds:
     \begin{equation}
-      \label{sec:exercise-1.11.5-eq1}
+      \label{sub:exercise-1.11.5-eq1}
       \floor{nx} = \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}}
     \end{equation}
   By definition of the floor function, $x = \floor{x} + r$ for some
@@ -1486,16 +1497,16 @@ State and prove such a generalization.
   By construction, $\cup\; S = \ico{0}{1}$.
   Therefore there exists some $j \in \mathbb{N}$ such that
     \begin{equation}
-      \label{sec:exercise-1.11.5-eq2}
+      \label{sub:exercise-1.11.5-eq2}
       r \in \ico{\frac{j}{n}}{\frac{j+1}{n}}.
     \end{equation}
   With these definitions established, we now show the left- and right-hand sides
-    of \eqref{sec:exercise-1.11.5-eq1} evaluate to the same number.
+    of \eqref{sub:exercise-1.11.5-eq1} evaluate to the same number.
 
   \paragraph{Left-Hand Side}%
 
-    Consider the left-hand side of identity \eqref{sec:exercise-1.11.5-eq1}.
-    By \eqref{sec:exercise-1.11.5-eq2}, $nr \in \ico{j}{j + 1}$.
+    Consider the left-hand side of identity \eqref{sub:exercise-1.11.5-eq1}.
+    By \eqref{sub:exercise-1.11.5-eq2}, $nr \in \ico{j}{j + 1}$.
     Therefore $\floor{nr} = j$.
     Thus
       \begin{align}
@@ -1503,15 +1514,15 @@ State and prove such a generalization.
           & = \floor{n(\floor{x} + r)} \nonumber \\
           & = \floor{n\floor{x} + nr} \nonumber \\
           & = \floor{n\floor{x}} + \floor{nr}. \nonumber
-            & \textref{sub:exercise-1.11.4a} \\
+            & \textref{ssub:exercise-1.11.4a} \\
           & = \floor{n\floor{x}} + j \nonumber \\
-          & = n\floor{x} + j. \label{sec:exercise-1.11.5-eq3}
+          & = n\floor{x} + j. \label{sub:exercise-1.11.5-eq3}
       \end{align}
 
   \paragraph{Right-Hand Side}%
 
     Now consider the right-hand side of identity
-      \eqref{sec:exercise-1.11.5-eq1}.
+      \eqref{sub:exercise-1.11.5-eq1}.
     We note each summand, by construction, is the floor of $x$ added to a
       nonnegative number less than one.
     Therefore each summand contributes either $\floor{x}$ or $\floor{x} + 1$ to
@@ -1519,12 +1530,12 @@ State and prove such a generalization.
     Letting $z$ denote the number of summands that contribute $\floor{x} + 1$,
       we have
       \begin{equation}
-        \label{sec:exercise-1.11.5-eq4}
+        \label{sub:exercise-1.11.5-eq4}
         \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}} = n\floor{x} + z.
       \end{equation}
     The value of $z$ corresponds to the number of indices $i$ that satisfy
       $$\frac{i}{n} \geq 1 - r.$$
-    By \eqref{sec:exercise-1.11.5-eq2}, it follows
+    By \eqref{sub:exercise-1.11.5-eq2}, it follows
       \begin{align*}
         1 - r
           & \in \ioc{1 - \frac{j+1}{n}}{1-\frac{j}{n}} \\
@@ -1534,22 +1545,22 @@ State and prove such a generalization.
       indices $i$ that satisfy $$\frac{i}{n} \geq \frac{n - j}{n}.$$
     Rearranging terms, we see that $i \geq n - j$ holds for
       $z = (n - 1) - (n - j) + 1 = j$ of the $n$ summands.
-    Substituting the value of $z$ into \eqref{sec:exercise-1.11.5-eq4} yields
+    Substituting the value of $z$ into \eqref{sub:exercise-1.11.5-eq4} yields
       \begin{equation}
-        \label{sec:exercise-1.11.5-eq5}
+        \label{sub:exercise-1.11.5-eq5}
         \sum_{i=0}^{n-1} \floor{x + \frac{i}{n}} = n\floor{x} + j.
       \end{equation}
 
   \paragraph{Conclusion}%
 
-    Since \eqref{sec:exercise-1.11.5-eq3} and \eqref{sec:exercise-1.11.5-eq5}
+    Since \eqref{sub:exercise-1.11.5-eq3} and \eqref{sub:exercise-1.11.5-eq5}
       agree with one another, it follows identity
-      \eqref{sec:exercise-1.11.5-eq1} holds.
+      \eqref{sub:exercise-1.11.5-eq1} holds.
 
 \end{proof}
 
-\section{\partial{Exercise 1.11.6}}%
-\label{sec:exercise-1.11.6}
+\subsection{\partial{Exercise 1.11.6}}%
+\label{sub:exercise-1.11.6}
 
 Recall that a lattice point $(x, y)$ in the plane is one whose coordinates are
   integers.
@@ -1565,7 +1576,7 @@ Prove that the number of lattice points in $S$ is equal to the sum
   Let $i = a, \ldots, b$ and define $S_i = \mathbb{N} \cap \ioc{0}{f(i)}$.
   By construction, the number of lattice points in $S$ is
     \begin{equation}
-      \label{sec:exercise-1.11.6-eq1}
+      \label{sub:exercise-1.11.6-eq1}
       \sum_{n = a}^b \abs{S_n}.
     \end{equation}
   All that remains is to show $\abs{S_i} = \floor{f(i)}$.
@@ -1586,13 +1597,13 @@ Prove that the number of lattice points in $S$ is equal to the sum
   \paragraph{Conclusion}%
 
     By cases 1 and 2, $\abs{S_i} = \floor{f(i)}$.
-    Substituting this identity into \eqref{sec:exercise-1.11.6-eq1} finishes the
+    Substituting this identity into \eqref{sub:exercise-1.11.6-eq1} finishes the
       proof.
 
 \end{proof}
 
-\section{Exercise 1.11.7}%
-\label{sec:exercise-1.11.7}
+\subsection{\partial{Exercise 1.11.7}}%
+\label{sub:exercise-1.11.7}
 
 If $a$ and $b$ are positive integers with no common factor, we have the formula
   $$\sum_{n=1}^{b-1} \floor{\frac{na}{b}} = \frac{(a - 1)(b - 1)}{2}.$$
@@ -1601,8 +1612,8 @@ When $b = 1$, the sum on the left is understood to be $0$.
 \note{When $b = 1$, the proofs of (a) and (b) are trivial. We continue under the
   assumption $b > 1$.}
 
-\subsection{\partial{Exercise 1.11.7a}}%
-\label{sub:exercise-1.11.7a}
+\subsubsection{\partial{Exercise 1.11.7a}}%
+\label{ssub:exercise-1.11.7a}
 
 Derive this result by a geometric argument, counting lattice points in a right
   triangle.
@@ -1612,10 +1623,10 @@ Derive this result by a geometric argument, counting lattice points in a right
   Let $f \colon [1, b - 1] \rightarrow \mathbb{R}$ be given by $f(x) = ax / b$.
   Let $S$ denote the set of points $(x, y)$ satisfying $1 \leq x \leq b - 1$,
     $0 < y \leq f(x)$.
-  By \nameref{sec:exercise-1.11.6}, the number of lattice points of $S$ is equal
+  By \nameref{sub:exercise-1.11.6}, the number of lattice points of $S$ is equal
     to the sum
     \begin{equation}
-      \label{sub:exercise-1.11.7a-eq1}
+      \label{ssub:exercise-1.11.7a-eq1}
       \sum_{n=1}^{b-1} \floor{f(n)} = \sum_{n=1}^{b-1} \floor{\frac{na}{b}}.
     \end{equation}
   Define $T$ to be the triangle of width $w = b$ and height $h = f(b) = a$
@@ -1648,43 +1659,43 @@ Derive this result by a geometric argument, counting lattice points in a right
     Let $I_R$ denote the number of interior lattice points of $R$.
     Let $I_T$ and $B_T$ denote the interior and boundary lattice points of $T$
       respectively.
-    By \nameref{sub:exercise-1.7.4b-eq2},
+    By \nameref{ssub:exercise-1.7.4b-eq2},
       \begin{align}
         I_T
           & = \frac{1}{2}(I_R - (H_L - 2)) \nonumber \\
           & = \frac{1}{2}(I_R - (2 - 2))
             & \textref{par:exercise-1.11.7a-i} \nonumber \\
-          & = \frac{1}{2}I_R. & \label{sub:exercise-1.11.7a-eq2}
+          & = \frac{1}{2}I_R. & \label{ssub:exercise-1.11.7a-eq2}
       \end{align}
     Furthermore, since both the adjacent and opposite side of $T$ are not
       included in $T$ and there exist no lattice points on $T$'s hypotenuse
       besides the endpoints, it follows
       \begin{equation}
-        \label{sub:exercise-1.11.7a-eq3}
+        \label{ssub:exercise-1.11.7a-eq3}
         B_T = 0.
       \end{equation}
     Thus the number of lattice points of $T$ equals
       \begin{align}
         I_T + B_T
-          & = I_T & \eqref{sub:exercise-1.11.7a-eq3} \nonumber \\
-          & = \frac{1}{2}I_R & \eqref{sub:exercise-1.11.7a-eq2} \nonumber \\
+          & = I_T & \eqref{ssub:exercise-1.11.7a-eq3} \nonumber \\
+          & = \frac{1}{2}I_R & \eqref{ssub:exercise-1.11.7a-eq2} \nonumber \\
           & = \frac{(b - 1)(a - 1)}{2}.
-            & \textref{sub:exercise-1.7.4a} \label{sub:exercise-1.11.7a-eq4}
+            & \textref{ssub:exercise-1.7.4a} \label{ssub:exercise-1.11.7a-eq4}
       \end{align}
 
   \paragraph{Conclusion}%
 
-    By \eqref{sub:exercise-1.11.7a-eq1} the number of lattice points of $S$ is
+    By \eqref{ssub:exercise-1.11.7a-eq1} the number of lattice points of $S$ is
       equal to the sum $$\sum_{n=1}^{b-1} \floor{\frac{na}{b}}.$$
     But the number of lattice points of $S$ is the same as that of $T$.
-    By \eqref{sub:exercise-1.11.7a-eq4}, the number of lattice points in $T$ is
+    By \eqref{ssub:exercise-1.11.7a-eq4}, the number of lattice points in $T$ is
       equal to $$\frac{(b - 1)(a - 1)}{2}.$$
     Thus $$\sum_{n=1}^{b-1} \floor{\frac{na}{b}} = \frac{(a - 1)(b - 1)}{2}.$$
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.11.7b}}%
-\label{sub:exercise-1.11.7b}
+\subsubsection{\partial{Exercise 1.11.7b}}%
+\label{ssub:exercise-1.11.7b}
 
 Derive the result analytically as follows:
 By changing the index of summation, note that
@@ -1700,9 +1711,9 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
   By hypothesis, $a$ and $b$ are coprime.
   Furthermore, $n < b$ for all values of $n$.
   Thus $an / b$ is not an integer.
-  By \nameref{sub:exercise-1.11.4b},
+  By \nameref{ssub:exercise-1.11.4b},
     \begin{equation}
-      \label{sub:exercise-1.11.7b-eq1}
+      \label{ssub:exercise-1.11.7b-eq1}
       \floor{-\frac{an}{b}} = -\floor{\frac{an}{b}} - 1.
     \end{equation}
   Consider the following:
@@ -1712,9 +1723,9 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
         & = \sum_{n=1}^{b-1} \floor{\frac{ab - an}{b}} \\
         & = \sum_{n=1}^{b-1} \floor{-\frac{an}{b} + a} \\
         & = \sum_{n=1}^{b-1} \floor{-\frac{an}{b}} + a.
-          & \textref{sub:exercise-1.11.4a} \\
+          & \textref{ssub:exercise-1.11.4a} \\
         & = \sum_{n=1}^{b-1} -\floor{\frac{an}{b}} - 1 + a
-          & \eqref{sub:exercise-1.11.7b-eq1} \\
+          & \eqref{ssub:exercise-1.11.7b-eq1} \\
         & = -\sum_{n=1}^{b-1} \floor{\frac{an}{b}} - \sum_{n=1}^{b-1} 1 +
           \sum_{n=1}^{b-1} a \\
         & = -\sum_{n=1}^{b-1} \floor{\frac{an}{b}} - (b - 1) + a(b - 1).
@@ -1725,12 +1736,12 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
 
 \end{proof}
 
-\section{\partial{Exercise 1.11.8}}%
-\label{sec:exercise-1.11.8}
+\subsection{\partial{Exercise 1.11.8}}%
+\label{sub:exercise-1.11.8}
 
 Let $S$ be a set of points on the real line.
-Let $\mathcal{X}_S$ denote the \nameref{sec:def-characteristic-function} of $S$.
-Let $f$ be a \nameref{sec:def-step-function} which takes the constant value
+Let $\mathcal{X}_S$ denote the \nameref{def:characteristic-function} of $S$.
+Let $f$ be a \nameref{def:step-function} which takes the constant value
   $c_k$ on the $k$th open subinterval $I_k$ of some partition of an interval
   $[a, b]$.
 Prove that for each $x$ in the union $I_1 \cup I_2 \cup \cdots \cup I_n$ we have
@@ -1743,7 +1754,7 @@ This property is described by saying that every step function is a linear
   Let $x \in I_1 \cup I_2 \cup \cdots \cup I_n$ and $N = \{1, \ldots, n\}$.
   Let $k \in N$ such that $x \in I_k$.
   Consider an arbitrary $j \in N - \{k\}$.
-  By definition of a nameref{sec:def-partition}, $I_j \cap I_k = \emptyset$.
+  By definition of a nameref{def:partition}, $I_j \cap I_k = \emptyset$.
   That is, $I_j$ and $I_k$ are disjoint for all $j \in N - \{k\}$.
   Therefore, by definition of the characteristic function,
     $\mathcal{X}_{I_k}(x) = 1$ and $\mathcal{X}_{I_j}(x) = 0$ for all
@@ -1760,16 +1771,16 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\chapter{Properties of the Integral of a Step Function}%
-\label{chap:properties-integral-step-function}
+\section{Properties of the Integral of a Step Function}%
+\label{sec:properties-integral-step-function}
 
-\section{\partial{Additive Property}}%
-\label{sec:step-additive-property}
-\label{sec:theorem-1.2}
+\subsection{\partial{Additive Property}}%
+\label{sub:step-additive-property}
+\label{sub:theorem-1.2}
 
 \begin{theorem}[1.2]
 
-  Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
+  Let $s$ and $t$ be \nameref{def:step-function}s on closed interval
     $[a, b]$.
   Then
     $$\int_a^b \left[ s(x) + t(x) \right] \mathop{dx} =
@@ -1780,7 +1791,7 @@ This property is described by saying that every step function is a linear
 \begin{proof}
 
   Let $s$ and $t$ be step functions on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
   Likewise, there exists a partition $P_t$ such that $t$ is constant on each
     open subinterval of $P_t$.
@@ -1793,7 +1804,7 @@ This property is described by saying that every step function is a linear
     $P$.
   Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
     $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b \left[ s(x) + t(x) \right] \mathop{dx}
         & = \sum_{k=1}^n (s_k + t_k) \cdot (x_k - x_{k-1}) \\
@@ -1806,13 +1817,13 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\section{\partial{Homogeneous Property}}%
-\label{sec:step-homogeneous-property}
-\label{sec:theorem-1.3}
+\subsection{\partial{Homogeneous Property}}%
+\label{sub:step-homogeneous-property}
+\label{sub:theorem-1.3}
 
 \begin{theorem}[1.3]
 
-  Let $s$ be a \nameref{sec:def-step-function} on closed interval $[a, b]$.
+  Let $s$ be a \nameref{def:step-function} on closed interval $[a, b]$.
   For every real number $c$, we have
     $$\int_a^b c \cdot s(x) \mathop{dx} = c\int_a^b s(x) \mathop{dx}.$$
 
@@ -1821,13 +1832,13 @@ This property is described by saying that every step function is a linear
 \begin{proof}
 
   Let $s$ be a step function on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
     subinterval of $P$.
   Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
     $P$.
   Then $c \cdot s$ is a step function with step partition $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b c \cdot s(x) \mathop{dx}
         & = \sum_{k=1}^n c \cdot s_k \cdot (x_k - x_{k-1}) \\
@@ -1837,13 +1848,13 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\section{\partial{Linearity Property}}%
-\label{sec:step-linearity-property}
-\label{sec:theorem-1.4}
+\subsection{\partial{Linearity Property}}%
+\label{sub:step-linearity-property}
+\label{sub:theorem-1.4}
 
 \begin{theorem}[1.4]
 
-  Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
+  Let $s$ and $t$ be \nameref{def:step-function}s on closed interval
     $[a, b]$.
   For every real $c_1$ and $c_2$, we have
     $$\int_a^b \left[ c_1s(x) + c_2t(x) \right] \mathop{dx} =
@@ -1860,20 +1871,20 @@ This property is described by saying that every step function is a linear
     \begin{align*}
       & \int_a^b \left[ c_1s(x) + c_2t(x) \right] \mathop{dx} \\
       & = \int_a^b c_1s(x) \mathop{dx} + \int_a^b c_2t(x) \mathop{dx}
-        & \textref{sec:step-additive-property} \\
+        & \textref{sub:step-additive-property} \\
       & = c_1\int_a^b s(x) \mathop{dx} + c_2\int_a^b t(x). \mathop{dx}
-        & \textref{sec:step-homogeneous-property}
+        & \textref{sub:step-homogeneous-property}
     \end{align*}
 
 \end{proof}
 
-\section{\partial{Comparison Theorem}}%
-\label{sec:step-comparison-theorem}
-\label{sec:theorem-1.5}
+\subsection{\partial{Comparison Theorem}}%
+\label{sub:step-comparison-theorem}
+\label{sub:theorem-1.5}
 
 \begin{theorem}[1.5]
 
-  Let $s$ and $t$ be \nameref{sec:def-step-function}s on closed interval
+  Let $s$ and $t$ be \nameref{def:step-function}s on closed interval
     $[a, b]$.
   If $s(x) < t(x)$ for every $x$ in $[a, b]$, then
     $$\int_a^b s(x) \mathop{dx} < \int_a^b t(x) \mathop{dx}.$$
@@ -1883,7 +1894,7 @@ This property is described by saying that every step function is a linear
 \begin{proof}
 
   Let $s$ and $t$ be step functions on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
   Likewise, there exists a partition $P_t$ such that $t$ is constant on each
     open subinterval of $P_t$.
@@ -1896,7 +1907,7 @@ This property is described by saying that every step function is a linear
     $P$.
   Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
     $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b s(x) \mathop{dx}
         & = \sum_{k=1}^n s_k \cdot (x_k - x_{k-1}) \\
@@ -1906,13 +1917,13 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\section{\partial{Additivity With Respect to the Interval of Integration}}%
-\label{sec:step-additivity-with-respect-interval-integration}
-\label{sec:theorem-1.6}
+\subsection{\partial{Additivity With Respect to the Interval of Integration}}%
+\label{sub:step-additivity-with-respect-interval-integration}
+\label{sub:theorem-1.6}
 
 \begin{theorem}[1.6]
 
-  Let $a, b, c \in \mathbb{R}$ and $s$ a \nameref{sec:def-step-function} on the
+  Let $a, b, c \in \mathbb{R}$ and $s$ a \nameref{def:step-function} on the
     smallest closed interval containing them.
   Then
     $$\int_a^c s(x) \mathop{dx} + \int_c^b s(x) \mathop{dx} +
@@ -1924,7 +1935,7 @@ This property is described by saying that every step function is a linear
 
   WLOG, suppose $a < c < b$ and $s$ be a step function on closed interval
     $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P$ such that $s$ is constant on each open subinterval of $P$.
 
   Let $Q = \{x_0, x_1, \ldots, x_n\}$ be a refinement of $P$ that includes $c$
@@ -1933,7 +1944,7 @@ This property is described by saying that every step function is a linear
     that $x_i = c$.
   Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
     $Q$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b s(x) \mathop{dx}
         & = \sum_{k=1}^n s_k \cdot (x_k - x_{k - 1}) \\
@@ -1952,9 +1963,9 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\section{\partial{Invariance Under Translation}}%
-\label{sec:step-invariance-under-translation}
-\label{sec:theorem-1.7}
+\subsection{\partial{Invariance Under Translation}}%
+\label{sub:step-invariance-under-translation}
+\label{sub:theorem-1.7}
 
 \begin{theorem}[1.7]
 
@@ -1968,7 +1979,7 @@ This property is described by saying that every step function is a linear
 \begin{proof}
 
   Let $s$ be a step function on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
     subinterval of $P$.
   Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
@@ -1981,7 +1992,7 @@ This property is described by saying that every step function is a linear
   Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $Q$.
   By construction, $t_k = s_k$.
 
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_{a+c}^{b+c} s(x - c) \mathop{dx}
         & = \int_{a+c}^{b+c} t(x) \mathop{dx} \\
@@ -1993,9 +2004,9 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\section{\partial{Expansion or Contraction of the Interval of Integration}}%
-\label{sec:step-expansion-contraction-interval-integration}
-\label{sec:theorem-1.8}
+\subsection{\partial{Expansion or Contraction of the Interval of Integration}}%
+\label{sub:step-expansion-contraction-interval-integration}
+\label{sub:theorem-1.8}
 
 \begin{theorem}[1.8]
 
@@ -2009,7 +2020,7 @@ This property is described by saying that every step function is a linear
 \begin{proof}
 
   Let $s$ be a step function on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
     subinterval of $P$.
   Let $s_i$ denote the value of $s$ on the $i$th open subinterval of $P$.
@@ -2023,7 +2034,7 @@ This property is described by saying that every step function is a linear
     Then $t(x) = s(x / k)$ is a step function on closed interval $[ka, kb]$
       with partition $Q = \{kx_0, kx_1, \ldots, kx_n\}$.
     Furthermore $t_i = s_i$.
-    By definition of the \nameref{sec:def-integral-step-function},
+    By definition of the \nameref{def:integral-step-function},
       \begin{align*}
         \int_{ka}^{kb} s(x / k) \mathop{dx}
           & = \int_{ka}^{kb} t(x) \mathop{dx} \\
@@ -2039,7 +2050,7 @@ This property is described by saying that every step function is a linear
     Then $t(x) = s(x / k)$ is a step function on closed interval $[kb, ka]$
       with partition $Q = \{kx_n, kx_{n-1}, \ldots, kx_0\}$.
     Furthermore $t_i = s_i$.
-    By definition of the \nameref{sec:def-integral-step-function},
+    By definition of the \nameref{def:integral-step-function},
       \begin{align*}
         \int_{ka}^{kb} s(x / k) \mathop{dx}
           & = -\int_{kb}^{ka} s(x / k) \mathop{dx} \\
@@ -2053,8 +2064,8 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\section{\partial{Reflection Property}}%
-\label{sec:step-reflection-property}
+\subsection{\partial{Reflection Property}}%
+\label{sub:step-reflection-property}
 
 Let $s$ be a step function on closed interval $[a, b]$.
 Then
@@ -2063,7 +2074,7 @@ Then
 \begin{proof}
 
   Let $k = -1$.
-  By \nameref{sec:step-expansion-contraction-interval-integration},
+  By \nameref{sub:step-expansion-contraction-interval-integration},
     $$\int_{-a}^{-b} s \left( \frac{x}{-1} \right) =
       -\int_a^b s(x) \mathop{dx}.$$
   Simplifying the left-hand side of the above identity, and multiplying both
@@ -2071,16 +2082,16 @@ Then
 
 \end{proof}
 
-\chapter{Exercises 1.15}%
-\label{chap:exercises-1.15}
+\section{Exercises 1.15}%
+\label{sec:exercises-1.15}
 
-\section{Exercise 1.15.1}%
-\label{sec:exercise-1.15.1}
+\subsection{\partial{Exercise 1.15.1}}%
+\label{sub:exercise-1.15.1}
 
 Compute the value of each of the following integrals.
 
-\subsection{\partial{Exercise 1.15.1a}}%
-\label{sub:exercise-1.15.1a}
+\subsubsection{\partial{Exercise 1.15.1a}}%
+\label{ssub:exercise-1.15.1a}
 
 $\int_{-1}^3 \floor{x} \mathop{dx}$.
 
@@ -2091,7 +2102,7 @@ $\int_{-1}^3 \floor{x} \mathop{dx}$.
     $P = \{-1, 0, 1, 2, 3\} = \{x_0, x_1, x_2, x_3, x_4\}$.
   Let $s_k$ denote the constant value $s$ takes on the $k$th open subinterval of
     $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_{-1}^3 \floor{x} \mathop{dx}
         & = \sum_{k=1}^4 s_k \cdot (x_k - x_{k-1}) \\
@@ -2101,8 +2112,8 @@ $\int_{-1}^3 \floor{x} \mathop{dx}$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.1c}}%
-\label{sub:exercise-1.15.1c}
+\subsubsection{\partial{Exercise 1.15.1c}}%
+\label{ssub:exercise-1.15.1c}
 
 $\int_{-1}^3 \left(\floor{x} + \floor{x + \frac{1}{2}}\right) \mathop{dx}$.
 
@@ -2118,7 +2129,7 @@ $\int_{-1}^3 \left(\floor{x} + \floor{x + \frac{1}{2}}\right) \mathop{dx}$.
     \end{align*}
   Let $s_k$ denote the constant value $s$ takes on the $k$th open subinterval of
     $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_{-1}^3 \floor{x} + \floor{x + \frac{1}{2}}
         & = \sum_{k=1}^8 s_k \cdot (x_k - x_{k-1}) \\
@@ -2129,23 +2140,23 @@ $\int_{-1}^3 \left(\floor{x} + \floor{x + \frac{1}{2}}\right) \mathop{dx}$.
 
 \end{proof}
 
-\subsection{\partial{Exericse 1.15.1e}}%
-\label{sub:exercise-1.15.1e}
+\subsubsection{\partial{Exericse 1.15.1e}}%
+\label{ssub:exercise-1.15.1e}
 
 $\int_{-1}^3 \floor{2x} \mathop{dx}$.
 
 \begin{proof}
 
   Let $s(x) = \floor{2x}$.
-  By \nameref{sec:hermites-identity},
+  By \nameref{sub:hermites-identity},
     $s(x) = \floor{x} + \floor{x + \frac{1}{2}}$.
-  Thus, by \nameref{sub:exercise-1.15.1c},
+  Thus, by \nameref{ssub:exercise-1.15.1c},
     $$\int_{-1}^3 \floor{2x} \mathop{dx} = 6.$$
 
 \end{proof}
 
-\section{\partial{Exercise 1.15.3}}%
-\label{sec:exercise-1.15.3}
+\subsection{\partial{Exercise 1.15.3}}%
+\label{sub:exercise-1.15.3}
 
 Show that
   $\int_a^b \floor{x} \mathop{dx} + \int_a^b \floor{-x} \mathop{dx} = a - b$.
@@ -2155,13 +2166,13 @@ Show that
   Let $s(x) = \floor{x}$ and $t(x) = \floor{-x}$, both with domain $[a, b]$.
   Let $x_1$, $\ldots$, $x_{n-1}$ denote the integers found in interval $(a, b)$.
   Then $P = \{x_0, x_1, \ldots, x_n\}$, $x_0 = a$ and $x_n = b$, is a step
-    \nameref{sec:def-partition} of both $s$ and $t$.
+    \nameref{def:partition} of both $s$ and $t$.
   Let $s_k$ and $t_k$ denote the constant values $s$ and $t$ take on the $k$th
     open subinterval of $P$ respectively.
-  By \nameref{sub:exercise-1.11.4b}, $\floor{-x} = -\floor{x} - 1$ for all $x$
+  By \nameref{ssub:exercise-1.11.4b}, $\floor{-x} = -\floor{x} - 1$ for all $x$
     in every open subinterval of $P$.
   That is, $s_k = -t_k - 1$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b \floor{x} \mathop{dx} + \int_a^b \floor{-x} \mathop{dx}
         & = \sum_{k=1}^n s_k (x_k - x_{k-1}) +
@@ -2175,22 +2186,22 @@ Show that
 
 \end{proof}
 
-\section{Exercise 1.15.5}%
-\label{sec:exercise-1.15.5}
+\subsection{\partial{Exercise 1.15.5}}%
+\label{sub:exercise-1.15.5}
 
-\subsection{\partial{Exercise 1.15.5a}}%
-\label{sub:exercise-1.15.5a}
+\subsubsection{\partial{Exercise 1.15.5a}}%
+\label{ssub:exercise-1.15.5a}
 
 Prove that $\int_0^2 \floor{t^2} \mathop{dt} = 5 - \sqrt{2} - \sqrt{3}$.
 
 \begin{proof}
 
   Let $s(t) = \floor{t^2}$ with domain $[0, 2]$.
-  Then $s$ is a \nameref{sec:def-step-function} with partition
+  Then $s$ is a \nameref{def:step-function} with partition
     $P = \{0, 1, \sqrt{2}, \sqrt{3}, 2\} = \{x_0, x_1, \ldots, x_4\}$.
   Let $s_k$ denote the constant value that $s$ takes in the $k$th open
     subinterval of $P$.
-  By the \nameref{sec:def-integral-step-function},
+  By the \nameref{def:integral-step-function},
     \begin{align*}
       \int_0^2 \floor{t^2} \mathop{dt}
         & = \sum_{k=1}^4 s_k \cdot (x_k - x_{k-1}) \\
@@ -2201,15 +2212,15 @@ Prove that $\int_0^2 \floor{t^2} \mathop{dt} = 5 - \sqrt{2} - \sqrt{3}$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.5b}}%
-\label{sub:exercise-1.15.5b}
+\subsubsection{\partial{Exercise 1.15.5b}}%
+\label{ssub:exercise-1.15.5b}
 
 Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
 
 \begin{proof}
 
   Let $s(t) = \floor{t^2}$ with domain $[0, 3]$.
-  Then $s$ is a \nameref{sec:def-step-function} with \nameref{sec:def-partition}
+  Then $s$ is a \nameref{def:step-function} with \nameref{def:partition}
     \begin{align*}
       P
         & = \{\sqrt{0}, \sqrt{1}, \sqrt{2}, \sqrt{3}, \sqrt{4}, \sqrt{5},
@@ -2218,7 +2229,7 @@ Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
     \end{align*}
   Let $s_k$ denote the constant value that $s$ takes in the $k$th open
     subinterval of $P$.
-  By the \nameref{sec:def-integral-step-function},
+  By the \nameref{def:integral-step-function},
     \begin{align}
       \int_0^3 \floor{t^2} \mathop{dt}
         & = \sum_{k=1}^9 s_k \cdot (x_k - x_{k-1})
@@ -2232,7 +2243,7 @@ Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
       \label{sub:exercise-1.15.5b-eq2}
       \int_{-3}^0 \floor{t^2} \mathop{dt} = \int_0^3 \floor{t^2}.
     \end{equation}
-  By \nameref{sec:step-additivity-with-respect-interval-integration},
+  By \nameref{sub:step-additivity-with-respect-interval-integration},
     \begin{align*}
       \int_{-3}^3 \floor{t^2} \mathop{dt}
         & = \int_{-3}^0 \floor{t^2} \mathop{dt} +
@@ -2245,22 +2256,22 @@ Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
 
 \end{proof}
 
-\section{Exercise 1.15.7}%
-\label{sec:exercise-1.15.7}
+\subsection{\partial{Exercise 1.15.7}}%
+\label{sub:exercise-1.15.7}
 
-\subsection{\partial{Exercise 1.15.7a}}%
-\label{sub:exercise-1.15.7a}
+\subsubsection{\partial{Exercise 1.15.7a}}%
+\label{ssub:exercise-1.15.7a}
 
 Compute $\int_0^9 \floor{\sqrt{t}} \mathop{dt}$.
 
 \begin{proof}
 
   Let $s(t) = \floor{\sqrt{t}}$ with domain $[0, 9]$.
-  Then $s$ is a \nameref{sec:def-step-function} with \nameref{sec:def-partition}
+  Then $s$ is a \nameref{def:step-function} with \nameref{def:partition}
     $P = \{0, 1, 4, 9\} = \{x_0, x_1, x_2, x_3\}$.
   Let $s_k$ denote the constant value that $s$ takes in the $k$th open
     subinterval of $P$.
-  By the \nameref{sec:def-integral-step-function},
+  By the \nameref{def:integral-step-function},
     \begin{align*}
       \int_0^9 \floor{\sqrt{t}} \mathop{dt}
         & = \sum_{k=1}^3 s_k \cdot (x_k - x_{k-1}) \\
@@ -2270,8 +2281,8 @@ Compute $\int_0^9 \floor{\sqrt{t}} \mathop{dt}$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.7b}}%
-\label{sub:exercise-1.15.7b}
+\subsubsection{\partial{Exercise 1.15.7b}}%
+\label{ssub:exercise-1.15.7b}
 
 If $n$ is a positive integer, prove that
   $$\int_0^{n^2} \floor{\sqrt{t}} \mathop{dt} = n(n - 1)(4n + 1) / 6.$$
@@ -2289,11 +2300,11 @@ If $n$ is a positive integer, prove that
 
     Let $n = 1$.
     Define $s(t) = \floor{\sqrt{t}}$ with domain $[0, 1]$.
-    Then $s$ is a \nameref{sec:def-step-function} with
-      \nameref{sec:def-partition} $P = \{0, 1\} = \{x_0, x_1\}$.
+    Then $s$ is a \nameref{def:step-function} with \nameref{def:partition}
+      $P = \{0, 1\} = \{x_0, x_1\}$.
     Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
       $P$.
-    By definition of the \nameref{sec:def-integral-step-function}, the left-hand
+    By definition of the \nameref{def:integral-step-function}, the left-hand
       side of \eqref{sub:exercise-1.15.7b-eq1} evaluates to
       \begin{align*}
         \int_0^{n^2} \floor{\sqrt{t}} \mathop{dt}
@@ -2309,8 +2320,7 @@ If $n$ is a positive integer, prove that
 
     Let $n > 0$ be a positive integer and suppose $P(n)$ is true.
     Define $s(t) = \floor{\sqrt{t}}$ with domain $[0, (n + 1)^2]$.
-    Then $s$ is a \nameref{sec:def-step-function} with
-      \nameref{sec:def-partition}
+    Then $s$ is a \nameref{def:step-function} with \nameref{def:partition}
       \begin{align*}
         P
           & = \{0, 1, 4, \ldots, n^2, (n + 1)^2\} \\
@@ -2318,7 +2328,7 @@ If $n$ is a positive integer, prove that
       \end{align*}
     Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
       $P$.
-    By definition of the \nameref{sec:def-integral-step-function}, it follows
+    By definition of the \nameref{def:integral-step-function}, it follows
       that
       \begin{align*}
         & \int_0^{(n + 1)^2} s(x) \mathop{dx} \\
@@ -2346,21 +2356,21 @@ If $n$ is a positive integer, prove that
 
 \end{proof}
 
-\section{\partial{Exercise 1.15.9}}%
-\label{sec:exercise-1.15.9}
+\subsection{\partial{Exercise 1.15.9}}%
+\label{sub:exercise-1.15.9}
 
 Show that the following property is equivalent to
-  \nameref{sec:step-expansion-contraction-interval-integration}:
+  \nameref{sub:step-expansion-contraction-interval-integration}:
   \begin{equation}
-    \label{sec:exercise-1.15.9-eq1}
+    \label{sub:exercise-1.15.9-eq1}
     \int_{ka}^{kb} f(x) \mathop{dx} = k \int_a^b f(kx) \mathop{dx}.
   \end{equation}
 
 \begin{proof}
 
   Let $f$ be a step function on closed interval $[a, b]$ and $k \neq 0$.
-  Applying \nameref{sec:step-expansion-contraction-interval-integration} to the
-    right-hand side of \eqref{sec:exercise-1.15.9-eq1} yields
+  Applying \nameref{sub:step-expansion-contraction-interval-integration} to the
+    right-hand side of \eqref{sub:exercise-1.15.9-eq1} yields
     $$k\int_{ka}^{kb} f(kx / k) \mathop{dx} =
       k\left[k\int_a^b f(kx) \mathop{dx}\right].$$
   Simplifying the left-hand side and dividing both sides by $k$ immediately
@@ -2368,24 +2378,24 @@ Show that the following property is equivalent to
 
 \end{proof}
 
-\section{Exercise 1.15.11}%
-\label{sec:exercise-1.15.11}
+\subsection{\partial{Exercise 1.15.11}}%
+\label{sub:exercise-1.15.11}
 
 If we instead defined the integral of step functions as
   \begin{equation*}
-    \label{sec:exercise-1.15.11-eq1}
+    \label{sub:exercise-1.15.11-eq1}
     \int_a^b s(x) \mathop{dx} = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}),
   \end{equation*}
   a new and different theory of integration would result.
 Which of the following properties would remain valid in this new theory?
 
-\subsection{\partial{Exercise 1.15.11a}}%
-\label{sub:exercise-1.15.11a}
+\subsubsection{\partial{Exercise 1.15.11a}}%
+\label{ssub:exercise-1.15.11a}
 
 $\int_a^b s + \int_b^c s = \int_a^c s$.
 
 \note{This property mirrors
-  \nameref{sec:step-additivity-with-respect-interval-integration}.}
+  \nameref{sub:step-additivity-with-respect-interval-integration}.}
 
 \begin{proof}
 
@@ -2395,8 +2405,8 @@ $\int_a^b s + \int_b^c s = \int_a^c s$.
 
   WLOG, suppose $a < b < c$.
   Let $s$ be a step function defined on closed interval $[a, c]$.
-  By definition of a \nameref{sec:def-step-function}, there exists a
-    \nameref{sec:def-partition} such that $s$ is constant on each open
+  By definition of a \nameref{def:step-function}, there exists a
+    \nameref{def:partition} such that $s$ is constant on each open
     subinterval of $P$.
   Let $Q = \{x_0, x_1, \ldots, x_n\}$ be a refinement of $P$ that includes $b$
     as a subdivision point.
@@ -2404,7 +2414,7 @@ $\int_a^b s + \int_b^c s = \int_a^c s$.
     that $x_i = c$.
   Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
     $Q$.
-  By \eqref{sec:exercise-1.15.11-eq1},
+  By \eqref{sub:exercise-1.15.11-eq1},
     \begin{align*}
       \int_a^c s
         & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
@@ -2415,12 +2425,12 @@ $\int_a^b s + \int_b^c s = \int_a^c s$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.11b}}%
-\label{sub:exercise-1.15.11b}
+\subsubsection{\partial{Exercise 1.15.11b}}%
+\label{ssub:exercise-1.15.11b}
 
 $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
 
-\note{This property mirrors the \nameref{sec:step-additive-property}.}
+\note{This property mirrors the \nameref{sub:step-additive-property}.}
 
 \begin{proof}
 
@@ -2429,7 +2439,7 @@ $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
   \vspace{6pt}
 
   Let $s$ and $t$ be step functions on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
   Likewise, there exists a partition $P_t$ such that $t$ is constant on each
     open subinterval of $P_t$.
@@ -2443,7 +2453,7 @@ $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
     $P_s$.
   Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
     $P_t$.
-  By \eqref{sec:exercise-1.15.11-eq1},
+  By \eqref{sub:exercise-1.15.11-eq1},
     \begin{align*}
       \int_a^b s + t
         & = \sum_{k=1}^n (s_k + t_k)^3 \cdot (x_k - x_{k-1}) \\
@@ -2462,12 +2472,12 @@ $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.11c}}%
-\label{sub:exercise-1.15.11c}
+\subsubsection{\partial{Exercise 1.15.11c}}%
+\label{ssub:exercise-1.15.11c}
 
 $\int_a^b c \cdot s = c \int_a^b s$.
 
-\note{This property mirrors the \nameref{sec:step-homogeneous-property}.}
+\note{This property mirrors the \nameref{sub:step-homogeneous-property}.}
 
 \begin{proof}
 
@@ -2476,13 +2486,13 @@ $\int_a^b c \cdot s = c \int_a^b s$.
   \vspace{6pt}
 
   Let $s$ be a step function on closed interval $[a, b]$.
-  By definition of a step function, there exists a \nameref{sec:def-partition}
+  By definition of a step function, there exists a \nameref{def:partition}
     $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open
     subinterval of $P$.
   Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
     $P$.
   Then $c \cdot s$ is a step function with step partition $P$.
-  By \eqref{sec:exercise-1.15.11-eq1},
+  By \eqref{sub:exercise-1.15.11-eq1},
     \begin{align*}
       \int_a^b c \cdot s
         & = \sum_{k=1}^n (c \cdot s_k)^3 \cdot (x_k - x_{k-1}) \\
@@ -2494,12 +2504,12 @@ $\int_a^b c \cdot s = c \int_a^b s$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.11d}}%
-\label{sub:exercise-1.15.11d}
+\subsubsection{\partial{Exercise 1.15.11d}}%
+\label{ssub:exercise-1.15.11d}
 
 $\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
 
-\note{This property mirrors \nameref{sec:step-invariance-under-translation}.}
+\note{This property mirrors \nameref{sub:step-invariance-under-translation}.}
 
 \begin{proof}
 
@@ -2508,15 +2518,19 @@ $\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
   \vspace{6pt}
 
   Let $s$ be a step function on closed interval $[a + c, b + c]$.
-  By definition of a \nameref{sec:def-step-function}, there exists a \nameref{sec:def-partition} $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is constant on each open subinterval of $P$.
-  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of $P$.
+  By definition of a \nameref{def:step-function}, there exists a
+    \nameref{def:partition} $P = \{x_0, x_1, \ldots, x_n\}$ such that $s$ is
+    constant on each open subinterval of $P$.
+  Let $s_k$ denote the constant value of $s$ on the $k$th open subinterval of
+    $P$.
 
   Let $c$ be a real number.
-  Then $t(x) = s(x + c)$ is a step function on closed interval $[a, b]$ with partition $Q = \{x_0 - c, x_1 - c, \ldots, x_n - c\}$.
+  Then $t(x) = s(x + c)$ is a step function on closed interval $[a, b]$ with
+    partition $Q = \{x_0 - c, x_1 - c, \ldots, x_n - c\}$.
   Furthermore, $t$ is constant on each open subinterval of $Q$.
   Let $t_k$ denote the value of $t$ on the $k$th open subinterval of $Q$.
   By construction, $t_k = s_k$.
-  By \eqref{sec:exercise-1.15.11-eq1},
+  By \eqref{sub:exercise-1.15.11-eq1},
     \begin{align*}
       \int_{a+c}^{b+c} s(x) \mathop{dx}
         & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
@@ -2528,12 +2542,12 @@ $\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.11e}}%
-\label{sub:exercise-1.15.11e}
+\subsubsection{\partial{Exercise 1.15.11e}}%
+\label{ssub:exercise-1.15.11e}
 
 If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
-\note{This property mirrors the \nameref{sec:step-comparison-theorem}.}
+\note{This property mirrors the \nameref{sub:step-comparison-theorem}.}
 
 \begin{proof}
 
@@ -2542,8 +2556,9 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   \vspace{6pt}
 
   Let $s$ and $t$ be step functions on closed interval $[a, b]$.
-  By definition of a \nameref{sec:def-step-function}, there exists a \nameref{sec:def-partition}
-    $P_s$ such that $s$ is constant on each open subinterval of $P_s$.
+  By definition of a \nameref{def:step-function}, there exists a
+    \nameref{def:partition} $P_s$ such that $s$ is constant on each open
+    subinterval of $P_s$.
   Likewise, there exists a partition $P_t$ such that $t$ is constant on each
     open subinterval of $P_t$.
   Let $$P = P_s \cup P_t = \{x_0, x_1, \ldots, x_n\}$$ be the common refinement
@@ -2555,7 +2570,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
     $P$.
   Let $t_k$ denote the constant value of $t$ on the $k$th open subinterval of
     $P$.
-  By \eqref{sec:exercise-1.15.11-eq1},
+  By \eqref{sub:exercise-1.15.11-eq1},
     \begin{align*}
       \int_a^b s
         & = \sum_{k=1}^n s_k^3 \cdot (x_k - x_{k-1}) \\
@@ -2565,11 +2580,11 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\chapter{Theorey of Integrability}%
-\label{chap:theory-integrability}
+\section{Upper and Lower Integrals}%
+\label{sec:upper-lower-integrals}
 
-\section{\partial{Theorem 1.9}}%
-\label{sec:theorem-1.9}
+\subsection{\partial{Theorem 1.9}}%
+\label{sub:theorem-1.9}
 
 \begin{theorem}[1.9]
 
@@ -2577,12 +2592,12 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
     $\ubar{I}(f)$ and an upper integral $\overline{I}(f)$ satisfying the
     inequalities
     \begin{equation}
-      \label{sec:theorem-1.9-eq1}
+      \label{sub:theorem-1.9-eq1}
       \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f) \leq
         \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}
     \end{equation}
-    for all \nameref{sec:def-step-function}s $s$ and $t$ with $s \leq f \leq t$.
-  The function $f$ is \nameref{sec:def-integrable} on $[a, b]$ if and only if
+    for all \nameref{def:step-function}s $s$ and $t$ with $s \leq f \leq t$.
+  The function $f$ is \nameref{def:integrable} on $[a, b]$ if and only if
     its upper and lower integrals are equal, in which case we have
     $$\int_a^b f(x) \mathop{dx} = \ubar{I}(f) = \bar{I}(f).$$
 
@@ -2592,7 +2607,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
   Let $f$ be a function bounded on $[a, b]$.
   We prove that (i) $f$ has a lower and upper integral satisfying
-    \eqref{sec:theorem-1.9-eq1} and (ii) that $f$ is integrable on $[a, b]$ if
+    \eqref{sub:theorem-1.9-eq1} and (ii) that $f$ is integrable on $[a, b]$ if
     and only if its lower and upper integrals are equal.
 
   \paragraph{(i)}%
@@ -2612,13 +2627,11 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
     By construction, $s \leq t$ for every $s$ in $S$ and $t$ in $T$.
     Therefore \nameref{sec:theorem-i.34} tells us $S$ has a
-      \nameref{sec:def-supremum}, $T$ has an \nameref{sec:def-infimum}, and
+      \nameref{def:supremum}, $T$ has an \nameref{def:infimum}, and
       $\sup{S} \leq \inf{T}$.
-    By definition of the \nameref{sec:def-lower-integral},
-      $\ubar{I}(f) = \sup{S}$.
-    By definition of the \nameref{sec:def-upper-integral},
-      $\bar{I}(f) = \inf{S}$.
-    Thus \eqref{sec:theorem-1.9-eq1} holds.
+    By definition of the \nameref{def:lower-integral}, $\ubar{I}(f) = \sup{S}$.
+    By definition of the \nameref{def:upper-integral}, $\bar{I}(f) = \inf{S}$.
+    Thus \eqref{sub:theorem-1.9-eq1} holds.
 
   \paragraph{(ii)}%
 
@@ -2626,20 +2639,22 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       there exists one and only one number $I$ such that
       $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$
       for every pair of step functions $s$ and $t$ satisfying
-      \eqref{sec:def-integral-bounded-function-eq1}.
-    By \eqref{sec:theorem-1.9-eq1} and the definition of the supremum/infimum,
+      \eqref{def:integral-bounded-function-eq1}.
+    By \eqref{sub:theorem-1.9-eq1} and the definition of the supremum/infimum,
       this holds if and only if $\ubar{I}(f) = \bar{I}(f)$, concluding the
       proof.
 
 \end{proof}
 
-\section{\partial{Measurability of Ordinate Sets}}%
-\label{sec:measurability-ordinate-sets}
-\label{sec:theorem-1.10}
+\section{The Area of an Ordinate Set Expressed as an Integral}%
+\label{sec:area-ordinate-set-expressed-integral}
+
+\subsection{\partial{Theorem 1.10}}%
+\label{sub:theorem-1.10}
 
 \begin{theorem}[1.10]
 
-  Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on an interval
+  Let $f$ be a nonnegative function, \nameref{def:integrable} on an interval
     $[a, b]$, and let $Q$ denote the ordinate set of $f$ over $[a, b]$.
   Then $Q$ is measurable and its area is equal to the integral
     $\int_a^b f(x) \mathop{dx}$.
@@ -2648,29 +2663,28 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \begin{proof}
 
-  Let $f$ be a nonnegative function, \nameref{sec:def-integrable} on $[a, b]$.
+  Let $f$ be a nonnegative function, \nameref{def:integrable} on $[a, b]$.
   By definition of integrability, there exists one and only one number $I$ such
     that $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$ for
     every pair of step functions $s$ and $t$ satisfying
-    \eqref{sec:def-integral-bounded-function-eq1}.
+    \eqref{def:integral-bounded-function-eq1}.
   In other words, $I$ is the one and only number that satisfies
     $$a(S) \leq I \leq a(T)$$ for every pair of step regions
     $S \subseteq Q \subseteq T$.
-  By the \nameref{sec:area-exhaustion-property}, $Q$ is measurable and its area
+  By the \nameref{sub:area-exhaustion-property}, $Q$ is measurable and its area
     is equal to $I = \int_a^b f(x) \mathop{dx}$.
 
 \end{proof}
 
-\section{\partial{Measurability of the Graph of a Nonnegative Function}}%
-\label{sec:measurability-graph-nonnegative-function}
-\label{sec:theorem-1.11}
+\subsection{\partial{Theorem 1.11}}%
+\label{sub:theorem-1.11}
 
 \begin{theorem}[1.11]
 
   Let $f$ be a nonnegative function, integrable on an interval $[a, b]$.
   Then the graph of $f$, that is, the set
     \begin{equation}
-      \label{sec:theorem-1.11-eq1}
+      \label{sub:theorem-1.11-eq1}
       \{(x, y) \mid a \leq x \leq b, y = f(x)\},
     \end{equation}
     is measurable and has area equal to $0$.
@@ -2692,38 +2706,40 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       such that
       $$\int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}$$
       for every pair of step functions $s$ and $t$ satisfying
-      \eqref{sec:def-integral-bounded-function-eq1}.
+      \eqref{def:integral-bounded-function-eq1}.
     In other words, $I$ is the one and only number that satisfies
       $$a(S) \leq I \leq a(T)$$ for every pair of step regions
       $S \subseteq Q' \subseteq T$.
-    By the \nameref{sec:area-exhaustion-property}, $Q'$ is measurable and its
+    By the \nameref{sub:area-exhaustion-property}, $Q'$ is measurable and its
       area is equal to $I = \int_a^b f(x) \mathop{dx}$.
 
   \paragraph{(ii)}%
 
     Let $Q$ denote the ordinate set of $f$.
-    By \nameref{sec:measurability-ordinate-sets}, $Q$ is measurable with area
-      equal to the integral $I = \int_a^b f(x) \mathop{dx}$.
+    By \nameref{sub:theorem-1.10}, $Q$ is measurable with area equal to the
+      integral $I = \int_a^b f(x) \mathop{dx}$.
     By \nameref{par:theorem-1.11-i}, $Q'$ is
       measurable with area also equal to $I$.
-    We note the graph of $f$, \eqref{sec:theorem-1.11-eq1}, is equal to set
+    We note the graph of $f$, \eqref{sub:theorem-1.11-eq1}, is equal to set
       $Q - Q'$.
-    By the \nameref{sec:area-difference-property}, $Q - Q'$ is measurable and
+    By the \nameref{sub:area-difference-property}, $Q - Q'$ is measurable and
       $$a(Q - Q') = a(Q) - a(Q') = I - I = 0.$$
     Thus the graph of $f$ is measurable and has area equal to $0$.
 
 \end{proof}
 
 \section
-  [\partial{Integrability of Bounded Monotonic Functions}]
-  {\partial{Integrability of Bounded Monotonic \texorpdfstring{\\}{}Functions}}
+  [Integrability of Bounded Monotonic Functions]
+  {Integrability of Bounded Monotonic \texorpdfstring{\\}{}Functions}
 \label{sec:integrability-bounded-monotonic-functions}
-\label{sec:theorem-1.12}
+
+\subsection{\partial{Theorem 1.12}}%
+\label{sub:theorem-1.12}
 
 \begin{theorem}[1.12]
 
-  If $f$ is \nameref{sec:def-monotonic} on a closed interval $[a, b]$, then $f$
-    is \nameref{sec:def-integrable} on $[a, b]$.
+  If $f$ is \nameref{def:monotonic} on a closed interval $[a, b]$, then $f$
+    is \nameref{def:integrable} on $[a, b]$.
 
 \end{theorem}
 
@@ -2733,8 +2749,8 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   That is to say, either $f$ is increasing on $[a, b]$ or $f$ is decreasing on
     $[a, b]$.
   Because $f$ is on a closed interval, it is bounded.
-  By \nameref{sec:theorem-1.9}, $f$ has a \nameref{sec:def-lower-integral}
-    $\ubar{I}(f)$, $f$ has an \nameref{sec:def-upper-integral} $\bar{I}(f)$,
+  By \nameref{sub:theorem-1.9}, $f$ has a \nameref{def:lower-integral}
+    $\ubar{I}(f)$, $f$ has an \nameref{def:upper-integral} $\bar{I}(f)$,
     and $f$ is integrable if and only if $\ubar{I}(f) = \bar{I}(f)$.
 
   Consider a partition $P = \{x_0, x_1, \ldots, x_n\}$ of $[a, b]$ in which
@@ -2748,13 +2764,13 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       on every $k$th open subinterval of $P$.
     Let $t$ be the step function above $f$ with constant value $f(x_k)$
       on every $k$th open subinterval of $P$.
-    Then, by \eqref{sec:theorem-1.9-eq1}, it follows
+    Then, by \eqref{sub:theorem-1.9-eq1}, it follows
       \begin{equation}
-        \label{sec:theorem-1.12-eq1}
+        \label{sub:theorem-1.12-eq1}
         \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f)
           \leq \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}.
       \end{equation}
-    By definition of the \nameref{sec:def-integral-step-function},
+    By definition of the \nameref{def:integral-step-function},
       \begin{align*}
         \int_a^b s(x) \mathop{dx}
           & = \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right] \\
@@ -2769,7 +2785,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
           & = \left[\frac{b - a}{n}\right] \sum_{k=1}^n f(x_k) - f(x_{k-1}) \\
           & = \frac{(b - a)(f(b) - f(a))}{n}.
       \end{align*}
-    By \eqref{sec:theorem-1.12-eq1},
+    By \eqref{sub:theorem-1.12-eq1},
       \begin{align*}
         \ubar{I}(f)
           & \leq \bar{I}(f) \\
@@ -2787,13 +2803,13 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       on every $k$th open subinterval of $P$.
     Let $t$ be the step function above $f$ with constant value $f(x_{k-1})$
       on every $k$th open subinterval of $P$.
-    Then, by \eqref{sec:theorem-1.9-eq1}, it follows
+    Then, by \eqref{sub:theorem-1.9-eq1}, it follows
       \begin{equation}
-        \label{sec:theorem-1.12-eq2}
+        \label{sub:theorem-1.12-eq2}
         \int_a^b s(x) \mathop{dx} \leq \ubar{I}(f)
           \leq \bar{I}(f) \leq \int_a^b t(x) \mathop{dx}.
       \end{equation}
-    By definition of the \nameref{sec:def-integral-step-function},
+    By definition of the \nameref{def:integral-step-function},
       \begin{align*}
         \int_a^b s(x) \mathop{dx}
           & = \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right] \\
@@ -2808,7 +2824,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
           & = \left[\frac{b - a}{n}\right] \sum_{k=1}^n f(x_{k-1}) - f(x_k) \\
           & = \frac{(b - a)(f(a) - f(b))}{n}.
       \end{align*}
-    By \eqref{sec:theorem-1.12-eq2},
+    By \eqref{sub:theorem-1.12-eq2},
       \begin{align*}
         \ubar{I}(f)
           & \leq \bar{I}(f) \\
@@ -2821,10 +2837,8 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\section{\partial{%
-  Calculation of the Integral of a Bounded Increasing Function}}%
-\label{sec:calculation-integral-bounded-increasing-function}
-\label{sec:theorem-1.13}
+\subsection{\partial{Theorem 1.13}}%
+\label{sub:theorem-1.13}
 
 \begin{theorem}[1.13]
 
@@ -2832,7 +2846,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   Let $x_k = a + k(b - a) / n$ for $k = 0, 1, \ldots, n$.
   If $I$ is any number which satisfies the inequalities
     \begin{equation}
-      \label{sec:theorem-1.13-eq1}
+      \label{sub:theorem-1.13-eq1}
       \frac{b - a}{n} \sum_{k=0}^{n-1} f(x_k)
         \leq I \leq
         \frac{b - a}{n} \sum_{k=1}^n f(x_k)
@@ -2844,12 +2858,12 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \begin{proof}
 
   Let $f$ be increasing on a closed interval $[a, b]$ and $I$ be a number
-    satisfying \eqref{sec:theorem-1.13-eq1}.
+    satisfying \eqref{sub:theorem-1.13-eq1}.
   Let $s$ be the step function below $f$ with constant value $f(x_{k-1})$
     on every $k$th open subinterval of $P$.
   Let $t$ be the step function above $f$ with constant value $f(x_k)$
     on every $k$th open subinterval of $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b s(x) \mathop{dx}
         & = \sum_{k=1}^n f(x_{k-1})\left[\frac{b - a}{n}\right] \\
@@ -2857,20 +2871,20 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
       \int_a^b t(x) \mathop{dx}
         & = \sum_{k=1}^n f(x_k)\left[\frac{b - a}{n}\right].
     \end{align*}
-  Therefore \eqref{sec:theorem-1.13-eq1} can alternatively be written as
+  Therefore \eqref{sub:theorem-1.13-eq1} can alternatively be written as
     \begin{equation}
-      \label{sec:theorem-1.13-eq2}
+      \label{sub:theorem-1.13-eq2}
       \int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}.
     \end{equation}
-  By \nameref{sec:theorem-1.12}, $f$ is integrable.
-  Therefore \nameref{sec:theorem-1.9} indicates $f$ satisfies
+  By \nameref{sub:theorem-1.12}, $f$ is integrable.
+  Therefore \nameref{sub:theorem-1.9} indicates $f$ satisfies
     \begin{equation}
-      \label{sec:theorem-1.13-eq3}
+      \label{sub:theorem-1.13-eq3}
       \int_a^b s(x) \mathop{dx}
         \leq \int_a^b f(x) \mathop{dx}
         \leq \int_a^b t(x) \mathop{dx}.
     \end{equation}
-  Manipulating \eqref{sec:theorem-1.13-eq2} and \eqref{sec:theorem-1.13-eq3}
+  Manipulating \eqref{sub:theorem-1.13-eq2} and \eqref{sub:theorem-1.13-eq3}
     together yields
     \begin{align*}
       I - \int_a^b f(x) \mathop{dx}
@@ -2895,10 +2909,8 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\section{\partial{%
-  Calculation of the Integral of a Bounded Decreasing Function}}%
-\label{sec:calculation-integral-bounded-decreasing-function}
-\label{sec:theorem-1.14}
+\subsection{\partial{Theorem 1.14}}%
+\label{sub:theorem-1.14}
 
 \begin{theorem}[1.14]
 
@@ -2906,7 +2918,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   Let $x_k = a + k(b - a) / n$ for $k = 0, 1, \ldots, n$.
   If $I$ is any number which satisfies the inequalities
     \begin{equation}
-      \label{sec:theorem-1.14-eq1}
+      \label{sub:theorem-1.14-eq1}
       \frac{b - a}{n} \sum_{k=1}^n f(x_k)
         \leq I \leq
         \frac{b - a}{n} \sum_{k=0}^{n-1} f(x_k)
@@ -2918,12 +2930,12 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \begin{proof}
 
   Let $f$ be decreasing on a closed interval $[a, b]$ and $I$ be a number
-    satisfying \eqref{sec:theorem-1.14-eq1}.
+    satisfying \eqref{sub:theorem-1.14-eq1}.
   Let $s$ be the step function below $f$ with constant value $f(x_k)$
     on every $k$th open subinterval of $P$.
   Let $t$ be the step function above $f$ with constant value $f(x_{k-1})$
     on every $k$th open subinterval of $P$.
-  By definition of the \nameref{sec:def-integral-step-function},
+  By definition of the \nameref{def:integral-step-function},
     \begin{align*}
       \int_a^b s(x) \mathop{dx}
         & = \sum_{k=1}^n f(x_k) \left[\frac{b - a}{n}\right] \\
@@ -2931,20 +2943,20 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
         & = \sum_{k=1}^n f(x_{k-1}) \left[\frac{b - a}{n}\right] \\
         & = \sum_{k=0}^{n-1} f(x) \left[\frac{b - a}{n}\right].
     \end{align*}
-  Therefore \eqref{sec:theorem-1.14-eq1} can alternatively be written as
+  Therefore \eqref{sub:theorem-1.14-eq1} can alternatively be written as
     \begin{equation}
-      \label{sec:theorem-1.14-eq2}
+      \label{sub:theorem-1.14-eq2}
       \int_a^b s(x) \mathop{dx} \leq I \leq \int_a^b t(x) \mathop{dx}.
     \end{equation}
-  By \nameref{sec:theorem-1.12}, $f$ is integrable.
-  Therefore \nameref{sec:theorem-1.9} indicates $f$ satisfies
+  By \nameref{sub:theorem-1.12}, $f$ is integrable.
+  Therefore \nameref{sub:theorem-1.9} indicates $f$ satisfies
     \begin{equation}
-      \label{sec:theorem-1.14-eq3}
+      \label{sub:theorem-1.14-eq3}
       \int_a^b s(x) \mathop{dx}
         \leq \int_a^b f(x) \mathop{dx}
         \leq \int_a^b t(x) \mathop{dx}.
     \end{equation}
-  Manipulating \eqref{sec:theorem-1.14-eq2} and \eqref{sec:theorem-1.14-eq3}
+  Manipulating \eqref{sub:theorem-1.14-eq2} and \eqref{sub:theorem-1.14-eq3}
     together yields
     \begin{align*}
       I - \int_a^b f(x) \mathop{dx}
@@ -2969,11 +2981,11 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\section{\unverified{%
-  Calculation of the Integral \texorpdfstring{$\int_0^b x^p \mathop{dx}$}{int-x-p}
-  when \texorpdfstring{$p$}{p} is a Positive Integer}}%
-\label{sec:calculation-integral-int-x-p-p-positive-integer}
-\label{sec:theorem-1.15}
+\subsection{\unverified{%
+  Integral of \texorpdfstring{$\int_0^b x^p \mathop{dx}$}{int-x-p} when
+    \texorpdfstring{$p$}{p} is a Positive Integer}}%
+\label{sub:calculation-integral-int-x-p-p-positive-integer}
+\label{sub:theorem-1.15}
 
 \begin{theorem}[1.15]
 

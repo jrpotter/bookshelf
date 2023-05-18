@@ -5,16 +5,21 @@
 
 \begin{document}
 
-\header
-  {A Mathematical Introduction to Logic}
-  {Herbert B. Enderton}
+\header{A Mathematical Introduction to Logic}{Herbert B. Enderton}
 
 \tableofcontents
 
-% Sets first chapter to `0` to match Enderton book.
+\begingroup
+\renewcommand\thechapter{G}
+
+\chapter{Glossary}%
+\label{chap:glossary}
+
+\endgroup
+
+% Reset counter to mirror Enderton's book.
 \setcounter{chapter}{0}
 \addtocounter{chapter}{-1}
-
 \chapter{Useful Facts About Sets}%
 \label{chap:useful-facts-about-sets}
 
