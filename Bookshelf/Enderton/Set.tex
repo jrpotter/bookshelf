@@ -1,0 +1,190 @@
+\documentclass{report}
+
+\input{../../preamble}
+\makeleancommands{../..}
+
+\begin{document}
+
+\header{Elements of Set Theory}{Herbert B. Enderton}
+
+\tableofcontents
+
+\begingroup
+\renewcommand\thechapter{R}
+\setcounter{chapter}{0}
+\addtocounter{chapter}{-1}
+
+\chapter{Reference}%
+\label{chap:reference}
+
+\section{\defined{Powerset}}%
+\label{ref:powerset}
+
+The \textbf{powerset} of some set $A$ is the set of all subsets of $A$.
+
+\begin{definition}
+
+  \lean{Mathlib/Init/Set}{Set.powerset}
+
+\end{definition}
+
+\section{\defined{Principle of Extensionality}}%
+\label{ref:principle-extensionality}
+
+If $A$ and $B$ are sets such that for every object $t$,
+  $$t \in A \quad\text{iff}\quad t \in B,$$
+  then $A = B$.
+
+\begin{axiom}
+
+  \lean{Mathlib/Init/Set}{Set.ext}
+
+\end{axiom}
+
+\endgroup
+
+\chapter{Introduction}%
+\label{chap:introduction}
+
+\section{Baby Set Theory}%
+\label{sec:baby-set-theory}
+
+\subsection{\partial{Exercise 1}}%
+\label{sub:baby-set-theory-1}
+
+Which of the following become true when "$\in$" is inserted in place of the
+  blank?
+Which become true when "$\subseteq$" is inserted?
+
+\subsubsection{\partial{Exercise 1a}}%
+\label{ssub:baby-set-theory-1a}
+
+$\{\emptyset\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
+
+\begin{proof}
+
+  Because the \textit{object} $\{\emptyset\}$ is a member of the right-hand set,
+    the statement is \textbf{true} in the case of "$\in$".
+
+  Because the \textit{members} of $\{\emptyset\}$ are all members of the
+    right-hand set, the statement is also \textbf{true} in the case of
+    "$\subseteq$".
+
+\end{proof}
+
+\subsubsection{\partial{Exercise 1b}}%
+\label{ssub:baby-set-theory-1b}
+
+$\{\emptyset\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
+
+\begin{proof}
+
+  Because the \textit{object} $\{\emptyset\}$ is not a member of the right-hand
+    set, the statement is \textbf{false} in the case of "$\in$".
+
+  Because the \textit{members} of $\{\emptyset\}$ are all members of the
+    right-hand set, the statement is \textbf{true} in the case of "$\subseteq$".
+
+\end{proof}
+
+\subsubsection{\partial{Exercise 1c}}%
+\label{ssub:baby-set-theory-1c}
+
+$\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
+
+\begin{proof}
+
+  Because the \textit{object} $\{\{\emptyset\}\}$ is not a member of the
+    right-hand set, the statement is \textbf{false} in the case of "$\in$".
+
+  Because the \textit{members} of $\{\{\emptyset\}\}$ are all members of the
+    right-hand set, the statement is \textbf{true} in the case of "$\subseteq$".
+
+\end{proof}
+
+\subsubsection{\partial{Exercise 1d}}%
+\label{ssub:baby-set-theory-1d}
+
+$\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
+
+\begin{proof}
+
+  Because the \textit{object} $\{\{\emptyset\}\}$ is a member of the right-hand
+    set, the statement is \textbf{true} in the case of "$\in$".
+
+  Because the \textit{members} of $\{\{\emptyset\}\}$ are not all members of the
+    right-hand set, the statement is \textbf{false} in the case of
+    "$\subseteq$".
+
+\end{proof}
+
+\subsubsection{\partial{Exercise 1e}}%
+\label{ssub:baby-set-theory-1e}
+
+$\{\{\emptyset\}\} \_\_ \{\emptyset, \{\emptyset, \{\emptyset\}\}\}$.
+
+\begin{proof}
+
+  Because the \textit{object} $\{\{\emptyset\}\}$ is not a member of the
+    right-hand set, the statement is \textbf{false} in the case of "$\in$".
+
+  Because the \textit{members} of $\{\{\emptyset\}\}$ are not all members of the
+    right-hand set, the statement is \textbf{false} in the case of
+    "$\subseteq$".
+
+\end{proof}
+
+\subsection{\partial{Exercise 2}}%
+\label{sub:baby-set-theory-2}
+
+Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
+  $\{\{\emptyset\}\}$ are equal to each other.
+
+\begin{proof}
+
+  By the \nameref{ref:principle-extensionality}, $\emptyset$ is only equal to
+    $\emptyset$.
+  This immediately shows it is not equal to the other two.
+  Now consider object $\emptyset$.
+  This object is a member of $\{\emptyset\}$ but is not a member of
+    $\{\{\emptyset\}\}$.
+  Again, by the \nameref{ref:principle-extensionality}, these two sets must be
+    different.
+
+\end{proof}
+
+\subsection{\partial{Exercise 3}}%
+\label{sub:baby-set-theory-3}
+
+Show that if $B \subseteq C$, then $\mathscr{P} B \subseteq \mathscr{P} C$.
+
+\begin{proof}
+
+  Let $x \in \mathscr{P} B$.
+  By definition of the \nameref{ref:powerset}, $x$ is a subset of $B$.
+  By hypothesis, $B \subseteq C$.
+  Then $x \subseteq C$.
+  Again by definition of the \nameref{ref:powerset}, it follows
+    $x \in \mathscr{P} C$.
+
+\end{proof}
+
+\subsection{\partial{Exercise 4}}%
+\label{sub:baby-set-theory-4}
+
+Assume that $x$ and $y$ are members of a set $B$.
+Show that $\{\{x\}, \{x, y\}\} \in \mathscr{P}\mathscr{P} B.$
+
+\begin{proof}
+
+  Let $x$ and $y$ be members of set $B$.
+  Then $\{x\}$ and $\{x, y\}$ are subsets of $B$.
+  By definition of the \nameref{ref:powerset}, $\{x\}$ and $\{x, y\}$ are
+    members of $\mathscr{P} B$.
+  Then $\{\{x\}, \{x, y\}\}$ is a subset of $\mathscr{P} B$.
+  By definition of the \nameref{ref:powerset}, $\{\{x\}, \{x, y\}\}$ is a member
+    of $\mathscr{P}\mathscr{P} B$.
+
+\end{proof}
+
+\end{document}
