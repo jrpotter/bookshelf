@@ -49,22 +49,22 @@ If $A$ and $B$ are sets such that for every object $t$,
 \section{Baby Set Theory}%
 \label{sec:baby-set-theory}
 
-\subsection{\verified{Exercise 1}}%
-\label{sub:baby-set-theory-1}
+\subsection{\verified{Exercise 1.1}}%
+\label{sub:exercise-1.1}
 
 Which of the following become true when "$\in$" is inserted in place of the
   blank?
 Which become true when "$\subseteq$" is inserted?
 
-\subsubsection{\verified{Exercise 1a}}%
-\label{ssub:baby-set-theory-1a}
+\subsubsection{\verified{Exercise 1.1a}}%
+\label{ssub:exercise-1.1a}
 
 $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_1a}
+    {Enderton.Set.Chapter\_1.exercise\_1\_1a}
 
   Because the \textit{object} $\{\emptyset\}$ is a member of the right-hand set,
     the statement is \textbf{true} in the case of "$\in$".
@@ -75,15 +75,15 @@ $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 
 \end{proof}
 
-\subsubsection{\verified{Exercise 1b}}%
-\label{ssub:baby-set-theory-1b}
+\subsubsection{\verified{Exercise 1.1b}}%
+\label{ssub:exercise-1.11b}
 
 $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_1b}
+    {Enderton.Set.Chapter\_1.exercise\_1\_1b}
 
   Because the \textit{object} $\{\emptyset\}$ is not a member of the right-hand
     set, the statement is \textbf{false} in the case of "$\in$".
@@ -93,15 +93,15 @@ $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 
 \end{proof}
 
-\subsubsection{\verified{Exercise 1c}}%
-\label{ssub:baby-set-theory-1c}
+\subsubsection{\verified{Exercise 1.1c}}%
+\label{ssub:exercise-1.1c}
 
 $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_1c}
+    {Enderton.Set.Chapter\_1.exercise\_1\_1c}
 
   Because the \textit{object} $\{\{\emptyset\}\}$ is not a member of the
     right-hand set, the statement is \textbf{false} in the case of "$\in$".
@@ -111,15 +111,15 @@ $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 
 \end{proof}
 
-\subsubsection{\verified{Exercise 1d}}%
-\label{ssub:baby-set-theory-1d}
+\subsubsection{\verified{Exercise 1.1d}}%
+\label{ssub:exercise-1.1d}
 
 $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_1d}
+    {Enderton.Set.Chapter\_1.exercise\_1\_1d}
 
   Because the \textit{object} $\{\{\emptyset\}\}$ is a member of the right-hand
     set, the statement is \textbf{true} in the case of "$\in$".
@@ -130,15 +130,15 @@ $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 
 \end{proof}
 
-\subsubsection{\verified{Exercise 1e}}%
-\label{ssub:baby-set-theory-1e}
+\subsubsection{\verified{Exercise 1.1e}}%
+\label{ssub:exercise-1.1e}
 
 $\{\{\emptyset\}\} \_\_ \{\emptyset, \{\emptyset, \{\emptyset\}\}\}$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_1e}
+    {Enderton.Set.Chapter\_1.exercise\_1\_1e}
 
   Because the \textit{object} $\{\{\emptyset\}\}$ is not a member of the
     right-hand set, the statement is \textbf{false} in the case of "$\in$".
@@ -149,8 +149,8 @@ $\{\{\emptyset\}\} \_\_ \{\emptyset, \{\emptyset, \{\emptyset\}\}\}$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 2}}%
-\label{sub:baby-set-theory-2}
+\subsection{\verified{Exercise 1.2}}%
+\label{sub:exercise-1.2}
 
 Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
   $\{\{\emptyset\}\}$ are equal to each other.
@@ -158,7 +158,7 @@ Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_2}
+    {Enderton.Set.Chapter\_1.exercise\_1\_2}
 
   By the \nameref{ref:principle-extensionality}, $\emptyset$ is only equal to
     $\emptyset$.
@@ -171,43 +171,176 @@ Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
 
 \end{proof}
 
-\subsection{\verified{Exercise 3}}%
-\label{sub:baby-set-theory-3}
+\subsection{\verified{Exercise 1.3}}%
+\label{sub:exercise-1.3}
 
-Show that if $B \subseteq C$, then $\mathscr{P} B \subseteq \mathscr{P} C$.
+Show that if $B \subseteq C$, then $\powerset{B} \subseteq \powerset{C}$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3}
+    {Enderton.Set.Chapter\_1.exercise\_1\_3}
 
-  Let $x \in \mathscr{P} B$.
+  Let $x \in \powerset{B}$.
   By definition of the \nameref{ref:powerset}, $x$ is a subset of $B$.
   By hypothesis, $B \subseteq C$.
   Then $x \subseteq C$.
   Again by definition of the \nameref{ref:powerset}, it follows
-    $x \in \mathscr{P} C$.
+    $x \in \powerset{C}$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4}}%
-\label{sub:baby-set-theory-4}
+\subsection{\verified{Exercise 1.4}}%
+\label{sub:exercise-1.4}
 
 Assume that $x$ and $y$ are members of a set $B$.
-Show that $\{\{x\}, \{x, y\}\} \in \mathscr{P}\mathscr{P} B.$
+Show that $\{\{x\}, \{x, y\}\} \in \powerset{\powerset{B}}.$
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_4}
+    {Enderton.Set.Chapter\_1.exercise\_1\_4}
 
   Let $x$ and $y$ be members of set $B$.
   Then $\{x\}$ and $\{x, y\}$ are subsets of $B$.
   By definition of the \nameref{ref:powerset}, $\{x\}$ and $\{x, y\}$ are
-    members of $\mathscr{P} B$.
-  Then $\{\{x\}, \{x, y\}\}$ is a subset of $\mathscr{P} B$.
+    members of $\powerset{B}$.
+  Then $\{\{x\}, \{x, y\}\}$ is a subset of $\powerset{B}$.
   By definition of the \nameref{ref:powerset}, $\{\{x\}, \{x, y\}\}$ is a member
-    of $\mathscr{P}\mathscr{P} B$.
+    of $\powerset{\powerset{B}}$.
+
+\end{proof}
+
+\section{Sets - An Informal View}%
+\label{sec:sets-informal-view}
+
+\subsection{\partial{Exercise 2.1}}%
+\label{sub:exercise-2.1}
+
+Define the rank of a set $c$ to be the least $\alpha$ such that
+  $c \subseteq V_\alpha$.
+Compute the rank of $\{\{\emptyset\}\}$.
+Compute the rank of
+  $\{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}$.
+
+\begin{proof}
+
+  We first compute the values of $V_n$ for $0 \leq n \leq 3$ under the
+    assumption the set of atoms $A$ at the bottom of the hierarchy is empty.
+  \begin{align*}
+    V_0 & = \emptyset \\
+    V_1 & = V_0 \cup \powerset{V_0} \\
+        & = \emptyset \cup \{\emptyset\} \\
+        & = \{\emptyset\} \\
+    V_2 & = V_1 \cup \powerset{V_1} \\
+        & = \{\emptyset\} \cup \powerset{\{\emptyset\}} \\
+        & = \{\emptyset\} \cup \{\emptyset, \{\emptyset\}\} \\
+        & = \{\emptyset, \{\emptyset\}\} \\
+    V_3 & = V_2 \cup \powerset{V_2} \\
+        & = \{\emptyset, \{\emptyset\}\} \cup
+            \powerset{\{\emptyset, \{\emptyset\}\}} \\
+        & = \{\emptyset, \{\emptyset\}\} \cup
+            \{\emptyset,
+              \{\emptyset\},
+              \{\{\emptyset\}\},
+              \{\emptyset, \{\emptyset\}\}\} \\
+        & = \{\emptyset,
+              \{\emptyset\},
+              \{\{\emptyset\}\},
+              \{\emptyset, \{\emptyset\}\}\}
+  \end{align*}
+  It then immediately follows $\{\{\emptyset\}\}$ has rank $2$ and
+    $\{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}$ has rank $3$.
+
+\end{proof}
+
+\subsection{\partial{Exercise 2.2}}%
+\label{sub:exercise-2.2}
+
+We have stated that $V_{\alpha + 1} = A \cup \powerset{V_\alpha}$.
+Prove this at least for $\alpha < 3$.
+
+\begin{proof}
+
+  Let $A$ be the set of atoms in our set hierarchy.
+  Let $P(n)$ be the predicate, "$V_{n + 1} = A \cup \powerset{V_n}$."
+  We prove $P(n)$ holds true for all natural numbers $n \geq 1$ via induction.
+
+  \paragraph{Base Case}%
+
+    Let $n = 1$.
+    By definition, $V_1 = V_0 \cup \powerset{V_0}$.
+    By definition, $V_0 = A$.
+    Therefore $V_1 = A \cup \powerset{V_0}$.
+    This proves $P(1)$ holds true.
+
+  \paragraph{Induction Step}%
+
+    Suppose $P(n)$ holds true for some $n \geq 1$.
+    Consider $V_{n+1}$.
+    By definition, $V_{n+1} = V_n \cup \powerset{V_n}$.
+    Therefore, by the induction hypothesis,
+      \begin{align}
+        V_{n+1}
+          & = V_n \cup \powerset{V_n}
+            \nonumber \\
+          & = (A \cup \powerset{V_{n-1}}) \cup \powerset{V_n}
+            \nonumber \\
+          & = A \cup (\powerset{V_{n-1}} \cup \powerset{V_n})
+            \label{sub:exercise-2.2-eq1}
+      \end{align}
+    But $V_{n-1}$ is a subset of $V_n$.
+    \nameref{sub:exercise-1.3} then implies
+      $\powerset{V_{n-1}} \subseteq \powerset{V_n}$.
+    This means \eqref{sub:exercise-2.2-eq1} can be simplified to
+      $$V_{n+1} = A \cup \powerset{V_n},$$
+    proving $P(n+1)$ holds true.
+
+  \paragraph{Conclusion}%
+
+    By mathematical induction, it follows for all $n \geq 1$, $P(n)$ is true.
+
+\end{proof}
+
+\subsection{\partial{Exercise 2.3}}%
+\label{sub:exercise-2.3}
+
+List all the members of $V_3$.
+List all the members of $V_4$.
+(It is to be assumed here that there are no atoms.)
+
+\begin{proof}
+
+  As seen in the proof of \nameref{sub:exercise-2.1},
+    $$V_3 = \{
+        \emptyset,
+        \{\emptyset\},
+        \{\{\emptyset\}\},
+        \{\emptyset, \{\emptyset\}\}
+    \}.$$
+  By \nameref{sub:exercise-2.2}, $V_4 = \powerset{V_3}$ (since it is assumed
+    there are no atoms).
+  Thus
+    \begin{align*}
+      & V_4 = \{ \\
+      & \qquad \emptyset, \\
+      & \qquad \{\emptyset\}, \\
+      & \qquad \{\{\emptyset\}\}, \\
+      & \qquad \{\{\{\emptyset\}\}\}, \\
+      & \qquad \{\{\emptyset, \{\emptyset\}\}\}, \\
+      & \qquad \{\emptyset, \{\emptyset\}\}, \\
+      & \qquad \{\emptyset, \{\{\emptyset\}\}\}, \\
+      & \qquad \{\emptyset, \{\emptyset, \{\emptyset\}\}\}, \\
+      & \qquad \{\{\emptyset\}, \{\{\emptyset\}\}\}, \\
+      & \qquad \{\{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}, \\
+      & \qquad \{\{\{\emptyset\}\}, \{\emptyset, \{\emptyset\}\}\}, \\
+      & \qquad \{\emptyset, \{\emptyset\}, \{\{\emptyset\}\}\}, \\
+      & \qquad \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}, \\
+      & \qquad \{\emptyset, \{\{\emptyset\}\}, \{\emptyset, \{\emptyset\}\}\} \\
+      & \qquad \{\{\emptyset\}, \{\{\emptyset\}\}, \{\emptyset, \{\emptyset\}\}\}, \\
+      & \qquad \{\emptyset, \{\emptyset\}, \{\{\emptyset\}\}, \{\emptyset, \{\emptyset\}\}\} \\
+      & \}.
+    \end{align*}
 
 \end{proof}
 

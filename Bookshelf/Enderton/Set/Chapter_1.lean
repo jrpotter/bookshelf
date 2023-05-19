@@ -9,7 +9,7 @@ Introduction
 
 namespace Enderton.Set.Chapter_1
 
-/-! ### Exercise 1
+/-! ### Exercise 1.1
 
 Which of the following become true when "∈" is inserted in place of the blank?
 Which become true when "⊆" is inserted?
@@ -21,19 +21,19 @@ The `∅` does not equal the singleton set containing `∅`.
 lemma empty_ne_singleton_empty (h : ∅ = ({∅} : Set (Set α))) : False :=
   absurd h (Ne.symm $ Set.singleton_ne_empty (∅ : Set α))
 
-/-- #### Exercise 1a
+/-- #### Exercise 1.1a
 
 `{∅} ___ {∅, {∅}}`
 -/
-theorem exercise_1a
+theorem exercise_1_1a
   : {∅} ∈ ({∅, {∅}} : Set (Set (Set α)))
   ∧ {∅} ⊆ ({∅, {∅}} : Set (Set (Set α))) := ⟨by simp, by simp⟩
 
-/-- #### Exercise 1b
+/-- #### Exercise 1.1b
 
 `{∅} ___ {∅, {{∅}}}`
 -/
-theorem exercise_1b
+theorem exercise_1_1b
   : {∅} ∉ ({∅, {{∅}}}: Set (Set (Set (Set α))))
   ∧ {∅} ⊆ ({∅, {{∅}}}: Set (Set (Set (Set α)))) := by
   refine ⟨?_, by simp⟩
@@ -41,19 +41,19 @@ theorem exercise_1b
   simp at h
   exact empty_ne_singleton_empty h
 
-/-- #### Exercise 1c
+/-- #### Exercise 1.1c
 
 `{{∅}} ___ {∅, {∅}}`
 -/
-theorem exercise_1c
+theorem exercise_1_1c
   : {{∅}} ∉ ({∅, {∅}} : Set (Set (Set (Set α))))
   ∧ {{∅}} ⊆ ({∅, {∅}} : Set (Set (Set (Set α)))) := ⟨by simp, by simp⟩
 
-/-- #### Exercise 1d
+/-- #### Exercise 1.1d
 
 `{{∅}} ___ {∅, {{∅}}}`
 -/
-theorem exercise_1d
+theorem exercise_1_1d
   : {{∅}} ∈ ({∅, {{∅}}} : Set (Set (Set (Set α))))
   ∧ ¬ {{∅}} ⊆ ({∅, {{∅}}} : Set (Set (Set (Set α)))) := by
   refine ⟨by simp, ?_⟩
@@ -61,11 +61,11 @@ theorem exercise_1d
   simp at h
   exact empty_ne_singleton_empty h
 
-/-- #### Exercise 1e
+/-- #### Exercise 1.1e
 
 `{{∅}} ___ {∅, {∅, {∅}}}`
 -/
-theorem exercise_1e
+theorem exercise_1_1e
   : {{∅}} ∉ ({∅, {∅, {∅}}} : Set (Set (Set (Set α))))
   ∧ ¬ {{∅}} ⊆ ({∅, {∅, {∅}}} : Set (Set (Set (Set α)))) := by
   apply And.intro
@@ -81,12 +81,12 @@ theorem exercise_1e
     have nh := h {∅}
     simp at nh
 
-/-- ### Exercise 2
+/-- ### Exercise 1.2
 
 Show that no two of the three sets `∅`, `{∅}`, and `{{∅}}` are equal to each
 other.
 -/
-theorem exercise_2
+theorem exercise_1_2
   : ∅ ≠ ({∅} : Set (Set α))
   ∧ ∅ ≠ ({{∅}} : Set (Set (Set α)))
   ∧ {∅} ≠ ({{∅}} : Set (Set (Set α))) := by
@@ -99,22 +99,22 @@ theorem exercise_2
     simp at h
     exact empty_ne_singleton_empty h
 
-/-- ### Exercise 3
+/-- ### Exercise 1.3
 
 Show that if `B ⊆ C`, then `𝓟 B ⊆ 𝓟 C`.
 -/
-theorem exercise_3 (h : B ⊆ C) : Set.powerset B ⊆ Set.powerset C := by
+theorem exercise_1_3 (h : B ⊆ C) : Set.powerset B ⊆ Set.powerset C := by
   unfold Set.powerset
   simp
   intro x hx
   exact Set.Subset.trans hx h
 
-/-- ### Exercise 4
+/-- ### Exercise 1.4
 
 Assume that `x` and `y` are members of a set `B`. Show that
 `{{x}, {x, y}} ∈ 𝓟 𝓟 B`.
 -/
-theorem exercise_4 (x y : α) (hx : x ∈ B) (hy : y ∈ B)
+theorem exercise_1_4 (x y : α) (hx : x ∈ B) (hy : y ∈ B)
   : {{x}, {x, y}} ∈ Set.powerset (Set.powerset B) := by
   unfold Set.powerset
   simp only [Set.mem_singleton_iff, Set.mem_setOf_eq]
