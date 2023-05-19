@@ -17,6 +17,32 @@
 \chapter{Reference}%
 \label{chap:reference}
 
+\section{\partial{Empty Set Axiom}}%
+\label{ref:empty-set-axiom}
+
+There is a set having no members:
+  $$\exists\; B, \forall\; x, x \not\in B.$$
+
+\section{\defined{Extensionality Axiom}}%
+\label{ref:extensionality-axiom}
+
+If two sets have exactly the same members, then they are equal:
+  $$\forall\; A, \forall\; B,
+      \left[\forall\; x, (x \in A \iff x \in B) \Rightarrow A = B\right].$$
+
+\begin{axiom}
+
+  \lean{Mathlib/Init/Set}{Set.ext}
+
+\end{axiom}
+
+\section{\partial{Pairing Axiom}}%
+\label{ref:pairing-axiom}
+
+For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
+  $$\forall\; u, \forall\; v, \exists\; B, \forall\; x,
+      (x \in B \iff x = u \text{ or } x = v).$$
+
 \section{\defined{Powerset}}%
 \label{ref:powerset}
 
@@ -28,18 +54,19 @@ The \textbf{powerset} of some set $A$ is the set of all subsets of $A$.
 
 \end{definition}
 
-\section{\defined{Principle of Extensionality}}%
-\label{ref:principle-extensionality}
+\section{\partial{Power Set Axiom}}%
+\label{ref:power-set-axiom}
 
-If $A$ and $B$ are sets such that for every object $t$,
-  $$t \in A \quad\text{iff}\quad t \in B,$$
-  then $A = B$.
+For any set $a$, there is a set whose members are exactly the subsets of $a$:
+  $$\forall\; a, \exists\; B, \forall\; x, (x \in B \iff x \subseteq a).$$
 
-\begin{axiom}
+\section{\partial{Union Axiom, Preliminary Form}}%
+\label{ref:union-axiom-preliminary-form}
 
-  \lean{Mathlib/Init/Set}{Set.ext}
-
-\end{axiom}
+For any sets $a$ and $b$, there is a set whose members are those sets belonging
+  either to $a$ or to $b$ (or both):
+  $$\forall\; a, \forall\; b, \exists\; B, \forall\; x,
+      (x \in B \iff x \in a \text{ or } x \in b).$$
 
 \endgroup
 
@@ -160,13 +187,13 @@ Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
   \lean{Bookshelf/Enderton/Set/Chapter\_1}
     {Enderton.Set.Chapter\_1.exercise\_1\_2}
 
-  By the \nameref{ref:principle-extensionality}, $\emptyset$ is only equal to
+  By the \nameref{ref:extensionality-axiom}, $\emptyset$ is only equal to
     $\emptyset$.
   This immediately shows it is not equal to the other two.
   Now consider object $\emptyset$.
   This object is a member of $\{\emptyset\}$ but is not a member of
     $\{\{\emptyset\}\}$.
-  Again, by the \nameref{ref:principle-extensionality}, these two sets must be
+  Again, by the \nameref{ref:extensionality-axiom}, these two sets must be
     different.
 
 \end{proof}
