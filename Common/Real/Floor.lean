@@ -55,7 +55,7 @@ theorem partition_subset_Ico_zero_one
     zero_lt_one,
     not_true,
     ge_iff_le,
-    Set.unionᵢ_subset_iff
+    Set.iUnion_subset_iff
   ]
   intro i hi x hx
   have hn : (0 : ℝ) < n := calc (0 : ℝ)
@@ -83,7 +83,7 @@ theorem partition_subset_Ico_zero_one
 theorem Ico_zero_one_subset_partition
   : Set.Ico 0 1 ⊆ (⋃ i ∈ Finset.range n, partition n i) := by
   intro x hx
-  simp only [Finset.mem_range, Set.mem_unionᵢ, exists_prop]
+  simp only [Finset.mem_range, Set.mem_iUnion, exists_prop]
   unfold partition
   exact fract_mem_partition x hx n
 
