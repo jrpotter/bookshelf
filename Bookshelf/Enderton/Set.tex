@@ -21,14 +21,14 @@
 \label{ref:empty-set-axiom}
 
 There is a set having no members:
-  $$\exists\; B, \forall\; x, x \not\in B.$$
+  $$\exists B, \forall x, x \not\in B.$$
 
 \section{\defined{Extensionality Axiom}}%
 \label{ref:extensionality-axiom}
 
 If two sets have exactly the same members, then they are equal:
-  $$\forall\; A, \forall\; B,
-      \left[\forall\; x, (x \in A \iff x \in B) \Rightarrow A = B\right].$$
+  $$\forall A, \forall B,
+      \left[\forall x, (x \in A \iff x \in B) \Rightarrow A = B\right].$$
 
 \begin{axiom}
 
@@ -36,17 +36,24 @@ If two sets have exactly the same members, then they are equal:
 
 \end{axiom}
 
+\section{\partial{Pair Set}}%
+\label{ref:pair-set}
+
+For any sets $u$ and $v$, the \textbf{pair set $\{u, v\}$} is the set whose
+  only members are $u$ and $v$.
+
 \section{\partial{Pairing Axiom}}%
 \label{ref:pairing-axiom}
 
 For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
-  $$\forall\; u, \forall\; v, \exists\; B, \forall\; x,
+  $$\forall u, \forall v, \exists B, \forall x,
       (x \in B \iff x = u \text{ or } x = v).$$
 
-\section{\defined{Powerset}}%
-\label{ref:powerset}
+\section{\defined{Power Set}}%
+\label{ref:power-set}
 
-The \textbf{powerset} of some set $A$ is the set of all subsets of $A$.
+For any set $a$, the \textbf{power set $\powerset{a}$} is the set whose members
+  are exactly the subsets of $a$.
 
 \begin{definition}
 
@@ -58,14 +65,28 @@ The \textbf{powerset} of some set $A$ is the set of all subsets of $A$.
 \label{ref:power-set-axiom}
 
 For any set $a$, there is a set whose members are exactly the subsets of $a$:
-  $$\forall\; a, \exists\; B, \forall\; x, (x \in B \iff x \subseteq a).$$
+  $$\forall a, \exists B, \forall x, (x \in B \iff x \subseteq a).$$
+
+\section{\partial{Subset Axioms}}%
+\label{ref:subset-axioms}
+
+For each formula $\phi$ not containing $B$, the following is an axiom:
+  $$\forall t_1, \cdots \forall t_k, \forall c,
+      \exists B, \forall x, (x \in B \iff x \in c \land \phi).$$
+
+\section{\partial{Union Axiom}}%
+\label{ref:union-axiom}
+
+For any set $A$, there exists a set $B$ whose elements are exactly the members
+  of the members of $A$:
+  $$\forall A, \exists B, \forall x \left[ x \in B \iff (\exists b \in A) x \in b \right]$$
 
 \section{\partial{Union Axiom, Preliminary Form}}%
 \label{ref:union-axiom-preliminary-form}
 
 For any sets $a$ and $b$, there is a set whose members are those sets belonging
   either to $a$ or to $b$ (or both):
-  $$\forall\; a, \forall\; b, \exists\; B, \forall\; x,
+  $$\forall a, \forall b, \exists B, \forall x,
       (x \in B \iff x \in a \text{ or } x \in b).$$
 
 \endgroup
@@ -209,10 +230,10 @@ Show that if $B \subseteq C$, then $\powerset{B} \subseteq \powerset{C}$.
     {Enderton.Set.Chapter\_1.exercise\_1\_3}
 
   Let $x \in \powerset{B}$.
-  By definition of the \nameref{ref:powerset}, $x$ is a subset of $B$.
+  By definition of the \nameref{ref:power-set}, $x$ is a subset of $B$.
   By hypothesis, $B \subseteq C$.
   Then $x \subseteq C$.
-  Again by definition of the \nameref{ref:powerset}, it follows
+  Again by definition of the \nameref{ref:power-set}, it follows
     $x \in \powerset{C}$.
 
 \end{proof}
@@ -230,11 +251,11 @@ Show that $\{\{x\}, \{x, y\}\} \in \powerset{\powerset{B}}.$
 
   Let $x$ and $y$ be members of set $B$.
   Then $\{x\}$ and $\{x, y\}$ are subsets of $B$.
-  By definition of the \nameref{ref:powerset}, $\{x\}$ and $\{x, y\}$ are
+  By definition of the \nameref{ref:power-set}, $\{x\}$ and $\{x, y\}$ are
     members of $\powerset{B}$.
   Then $\{\{x\}, \{x, y\}\}$ is a subset of $\powerset{B}$.
-  By definition of the \nameref{ref:powerset}, $\{\{x\}, \{x, y\}\}$ is a member
-    of $\powerset{\powerset{B}}$.
+  By definition of the \nameref{ref:power-set}, $\{\{x\}, \{x, y\}\}$ is a
+    member of $\powerset{\powerset{B}}$.
 
 \end{proof}
 
@@ -368,6 +389,192 @@ List all the members of $V_4$.
       & \qquad \{\emptyset, \{\emptyset\}, \{\{\emptyset\}\}, \{\emptyset, \{\emptyset\}\}\} \\
       & \}.
     \end{align*}
+
+\end{proof}
+
+\chapter{Axioms and Operations}%
+\label{chap:axioms-operations}
+
+\section{Axioms}%
+\label{sec:axioms}
+
+\subsection{\unverified{Theorem 2A}}%
+\label{sub:theorem-2a}
+
+\begin{theorem}[2A]
+
+  There is no set to which every set belongs.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Theorem 2B}}%
+\label{sub:theorem-2b}
+
+\begin{theorem}[2B]
+
+  For any nonempty set $A$, there exists a unique set $B$ such that for any
+    $x$, $$x \in B \iff x \text{ belongs to every member of } A.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\section{Exercises 3}%
+\label{sec:exercises-3}
+
+\subsection{\unverified{Exercise 3.1}}%
+\label{sub:exercise-3.1}
+
+Assume that $A$ is the set of integers divisible by $4$.
+Similarly assume that $B$ and $C$ are the sets of integers divisible by $9$ and
+  $10$, respectively.
+What is in $A \cap B \cap C$?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.2}}%
+\label{sub:exercise-3.2}
+
+Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
+  $A \neq B$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.3}}%
+\label{sub:exercise-3.3}
+
+Show that every member of a set $A$ is a subset of $\bigcup A$.
+(This was stated as an example in this section.)
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.4}}%
+\label{sub:exercise-3.4}
+
+Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.5}}%
+\label{sub:exercise-3.5}
+
+Assume that every member of $\mathscr{A}$ is a subset of $B$.
+Show that $\bigcup \mathscr{A} \subseteq B$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.6a}}%
+\label{sub:exercise-3.6a}
+
+Show that for any set $A$, $\bigcup \powerset{A} = A$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.6b}}%
+\label{sub:exercise-3.6b}
+
+Show that $A \subseteq \powerset{\bigcup A}$.
+Under what conditions does equality hold?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.7a}}%
+\label{sub:exercise-3.7a}
+
+Show that for any sets $A$ and $B$,
+  $$\powerset{A} \cap \powerset{B} = \powerset(A \cap B).$$
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.7b}}%
+\label{sub:exercise-3.7b}
+
+Show that $\powerset{A} \cup \powerset{B} \subseteq \powerset(A \cup B)$.
+Under what conditions does equality hold?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.8}}%
+\label{sub:exercise-3.8}
+
+Show that there is no set to which every singleton (that is, every set of the
+  form $\{x\}$) belongs.
+[\textit{Suggestion}: Show that from such a set, we could construct a set to
+  which every set belonged.]
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.9}}%
+\label{sub:exercise-3.9}
+
+Give an example of sets $a$ and $B$ for which $a \in B$ but
+  $\powerset{A} \not\in \powerset{B}$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 3.10}}%
+\label{sub:exercise-3.10}
+
+Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
+[\textit{Suggestion}: If you need help, look in the Appendix.]
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
