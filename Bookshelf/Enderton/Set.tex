@@ -50,7 +50,7 @@ For any sets $u$ and $v$, the \textbf{pair set $\{u, v\}$} is the set whose
 
 \begin{definition}
 
-  \ % Add space
+  \statementpadding
 
   \lean*{Mathlib/Init/Set}{Set.insert}
 
@@ -67,7 +67,7 @@ For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
 
 \begin{axiom}
 
-  \ % Add space
+  \statementpadding
 
   \lean*{Mathlib/Init/Set}{Set.insert}
 
@@ -448,22 +448,31 @@ List all the members of $V_4$.
 \section{Axioms}%
 \label{sec:axioms}
 
-\subsection{\unverified{Theorem 2A}}%
+\subsection{\partial{Theorem 2A}}%
 \label{sub:theorem-2a}
 
 \begin{theorem}[2A]
 
   There is no set to which every set belongs.
 
+  \note{This was revisited after reading Enderton's proof prior.}
+
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  Let $A$ be an arbitrary set.
+  Define $B = \{ x \in A \mid x \not\in x \}$.
+  By the \nameref{ref:subset-axioms}, $B$ is a set.
+  Then $$B \in B \iff B \in A \land B \not\in B.$$
+  If $B \in A$, then $B \in B \iff B \not\in B$, a contradiction.
+  Thus $B \not\in A$.
+  Since this process holds for any set $A$, there must exist no set to which
+    every set belongs.
 
 \end{proof}
 
-\subsection{\unverified{Theorem 2B}}%
+\subsection{\partial{Theorem 2B}}%
 \label{sub:theorem-2b}
 
 \begin{theorem}[2B]
@@ -475,7 +484,16 @@ List all the members of $V_4$.
 
 \begin{proof}
 
-  TODO
+  Suppose $A$ is a nonempty set.
+  This ensures the statement we are trying to prove does not vacuously hold for
+    all sets $x$ (which would yield a contradiction due to
+    \nameref{sub:theorem-2b}).
+  By the \nameref{ref:union-axiom}, $\bigcup A$ is a set.
+  Define $$B = \{ x \in \bigcup A \mid (\forall b \in A), x \in b \}.$$
+  By the \nameref{ref:subset-axioms}, $B$ is indeed a set.
+  By construction,
+    $$\forall x, x \in B \iff x \text{ belongs to every member of } A.$$
+  By the \nameref{ref:extensionality-axiom}, $B$ is unique.
 
 \end{proof}
 
@@ -721,7 +739,7 @@ Under what conditions does equality hold?
 
 \begin{proof}
 
-  \  % Add space.
+  \statementpadding
 
   \lean*{Bookshelf/Enderton/Set/Chapter\_1}
     {Enderton.Set.Chapter\_1.exercise\_3\_7b\_i}
@@ -850,6 +868,406 @@ Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
     $$\powerset{\powerset{\bigcup B}} =
       \{ y \mid y \subseteq \powerset{\bigcup B} \}.$$
   Therefore $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
+
+\end{proof}
+
+\section{Algebra of Sets}%
+\label{sec:algebra-sets}
+
+\subsection{\verified{Commutative Laws}}%
+\label{sub:commutative-laws}
+
+For any sets $A$ and $B$,
+  \begin{align*}
+    A \cup B = B \cup A \\
+    A \cap B = B \cap A
+  \end{align*}
+
+\begin{proof}
+
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.union\_comm}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_comm}
+
+  Let $A$ and $B$ be sets.
+  We show (i) $A \cup B = B \cup A$ and then (ii) $A \cap B = B \cap A$.
+
+  \paragraph{(i)}%
+
+    By the definition of the union of sets,
+      $A \cup B = \{ x \mid x \in A \lor x \in B \}$.
+    Since $\lor$ is commutative, it follows
+      \begin{align*}
+        A \cup B
+          & = \{ x \mid x \in A \lor x \in B \} \\
+          & = \{ x \mid x \in B \lor x \in A \} \\
+          & = B \cup A,
+      \end{align*}
+      where the last equality follows again from the definition of the union of
+      sets.
+
+  \paragraph{(ii)}%
+
+    By the definition of the intersection of sets,
+      $A \cap B = \{ x \mid x \in A \land x \in B \}$.
+    Since $\land$ is commutative, it follows
+      \begin{align*}
+        A \cap B
+          & = \{ x \mid x \in A \land x \in B \} \\
+          & = \{ x \mid x \in B \land x \in A \} \\
+          & = B \land A,
+      \end{align*}
+      where the last equality follows again from the definition of the
+      intersection of sets.
+
+\end{proof}
+
+\subsection{\unverified{Associative Laws}}%
+\label{sub:associative-laws}
+
+For any sets $A$, $B$ and $C$,
+  \begin{align*}
+    A \cup (B \cup C) & = (A \cup B) \cup C \\
+    (A \cup B) \cup C & = A \cup (B \cup C)
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Distributive Laws}}%
+\label{sub:distributive-laws}
+
+For any sets $A$, $B$, and $C$,
+  \begin{align*}
+    A \cap (B \cup C) & = (A \cap B) \cup (A \cap C) \\
+    A \cup (B \cap C) & = (A \cup B) \cap (A \cup C)
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{De Morgan's Laws}}%
+\label{sub:de-morgans-laws}
+
+For any sets $A$, $B$, and $C$,
+  \begin{align*}
+    C - (A \cup B) & = (C - A) \cap (C - B) \\
+    C - (A \cap B) & = (C - A) \cup (C - B)
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{
+  Identities Involving \texorpdfstring{$\emptyset$}{the Empty Set}}}%
+\label{sub:identitives-involving-empty-set}
+
+For any set $A$,
+  \begin{align*}
+    A \cup \emptyset & = A \\
+    A \cap \emptyset & = \emptyset \\
+    A \cap (C - A) & = \emptyset
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Monotonicity}}%
+\label{sub:monotonicity}
+
+For any sets $A$, $B$, and $C$,
+  \begin{align*}
+    A \subseteq B & \Rightarrow A \cup C \subseteq B \cup C \\
+    A \subseteq B & \Rightarrow A \cap C \subseteq B \cap C \\
+    A \subseteq B & \Rightarrow \bigcup A \subseteq \bigcup B
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Anti-monotonicity}}%
+\label{sub:anti-monotonicity}
+
+For any sets $A$, $B$, and $C$,
+  \begin{align*}
+    A \subseteq B & \Rightarrow C - B \subseteq C - A \\
+    \emptyset \neq A \subseteq B & \Rightarrow \bigcap B \subseteq \bigcap A.
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{General Distributive Laws}}%
+\label{sub:general-distributive-laws}
+
+For any sets $A$ and $\mathscr{B}$,
+  \begin{align*}
+    A \cup \bigcap \mathscr{B} & =
+      \bigcap\; \{ A \cup X \mid X \in \mathscr{B} \}
+        \quad\text{for}\quad \mathscr{B} \neq \emptyset \\
+    A \cap \bigcup \mathscr{B} & =
+      \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{General De Morgan's Laws}}%
+\label{sub:general-de-morgans-laws}
+
+For any set $C$ and $\mathscr{A} \neq \emptyset$,
+  \begin{align*}
+    C - \bigcup \mathscr{A} & = \bigcap\; \{ C - X \mid X \in \mathscr{A} \} \\
+    C - \bigcap \mathscr{A} & = \bigcup\; \{ C - X \mid X \in \mathscr{A} \}
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\section{Exercises 4}%
+\label{sec:exercises-4}
+
+\subsection{\unverified{Exercise 4.11}}%
+\label{sub:exercise-4.11}
+
+Show that for any sets $A$ and $B$,
+  $$A = (A \cap B) \cup (A - B) \quad\text{and}\quad
+    A \cup (B - A) = A \cup B.$$
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.12}}%
+\label{sub:exercise-4.12}
+
+Verify the following identity (one of De Morgan's laws):
+  $$C - (A \cap B) = (C - A) \cup (C - B).$$
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.13}}%
+\label{sub:exercise-4.13}
+
+Show that if $A \subseteq B$, then $C - B \subseteq C - A$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.14}}%
+\label{sub:exercise-4.14}
+
+Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
+  different from $(A - B) - C$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.15}}%
+\label{sub:exercise-4.15}
+
+Define the symmetric difference $A + B$ of sets $A$ and $B$ to be the set
+  $(A - B) \cup (B - A)$.
+
+\subsubsection{\unverified{Exercise 4.15a}}%
+\label{ssub:exercise-4.15a}
+
+Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsubsection{\unverified{Exercise 4.15b}}%
+\label{ssub:exercise-4.15b}
+
+Show that $A + (B + C) = (A + B) + C$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.16}}%
+\label{sub:exercise-4.16}
+
+Simplify:
+  $$[(A \cup B \cup C) \cap (A \cup B)] - [(A \cup (B - C)) \cap A].$$
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.17}}%
+\label{sub:exercise-4.17}
+
+Show that the following four conditions are equivalent.
+
+\begin{enumerate}[(a)]
+  \item $A \subseteq B$,
+  \item $A - B = \emptyset$,
+  \item $A \cup B = B$,
+  \item $A \cap B = A$.
+\end{enumerate}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.18}}%
+\label{sub:exercise-4.18}
+
+Assume that $A$ and $B$ are subsets of $S$.
+List all of the different sets that can be made from these three by use of the
+  binary operations $\cup$, $\cap$, and $-$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.19}}%
+\label{sub:exercise-4.19}
+
+Is $\powerset{(A - B)}$ always equal to $\powerset{A} - \powerset{B}$?
+Is it ever equal to $\powerset{A} - \powerset{B}$?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.20}}%
+\label{sub:exercise-4.20}
+
+Let $A$, $B$, and $C$ be sets such that $A \cup B = A \cup C$ and
+  $A \cap B = A \cap C$.
+Show that $B = C$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.21}}%
+\label{sub:exercise-4.21}
+
+Show that $\bigcup (A \cup B) = \bigcup A \cup \bigcup B$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.22}}%
+\label{sub:exercise-4.22}
+
+Show that if $A$ and $B$ are nonempty sets, then
+  $\bigcap (A \cup B) = \bigcap A \cap \bigcap B$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.23}}%
+\label{sub:exercise-4.23}
+
+Show that if $\mathscr{B}$ is nonempty, then
+  $A \cup \bigcap \mathscr{B} = \bigcap\; \{A \cup X \mid X \in \mathscr{B} \}$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.24a}}%
+\label{sub:exercise-4.24a}
+
+Show that if $\mathscr{A}$ is nonempty, then
+  $\powerset{\bigcap A} = \bigcap\; \{\powerset{X} \mid X \in \mathscr{A} \}$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.24b}}%
+\label{sub:exercise-4.24b}
+
+Show that
+  $$\bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \} \subseteq
+    \powerset{\bigcup A}.$$
+Under what conditions does equality hold?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 4.25}}%
+\label{sub:exercise-4.25}
+
+Is $A \cup \bigcup \mathscr{B}$ always the same as
+  $\bigcup\; \{ A \cup X \mid X \in \mathscr{B} \}$?
+If not, then under what conditions does equality hold?
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
