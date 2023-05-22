@@ -17,11 +17,17 @@
 \chapter{Reference}%
 \label{chap:reference}
 
-\section{\partial{Empty Set Axiom}}%
+\section{\defined{Empty Set Axiom}}%
 \label{ref:empty-set-axiom}
 
 There is a set having no members:
   $$\exists B, \forall x, x \not\in B.$$
+
+\begin{axiom}
+
+  \lean*{Mathlib/Init/Set}{Set.emptyCollection}
+
+\end{axiom}
 
 \section{\defined{Extensionality Axiom}}%
 \label{ref:extensionality-axiom}
@@ -32,22 +38,42 @@ If two sets have exactly the same members, then they are equal:
 
 \begin{axiom}
 
-  \lean{Mathlib/Init/Set}{Set.ext}
+  \lean*{Mathlib/Init/Set}{Set.ext}
 
 \end{axiom}
 
-\section{\partial{Pair Set}}%
+\section{\defined{Pair Set}}%
 \label{ref:pair-set}
 
 For any sets $u$ and $v$, the \textbf{pair set $\{u, v\}$} is the set whose
   only members are $u$ and $v$.
 
-\section{\partial{Pairing Axiom}}%
+\begin{definition}
+
+  \ % Add space
+
+  \lean*{Mathlib/Init/Set}{Set.insert}
+
+  \lean*{Mathlib/Init/Set}{Set.singleton}
+
+\end{definition}
+
+\section{\defined{Pairing Axiom}}%
 \label{ref:pairing-axiom}
 
 For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
   $$\forall u, \forall v, \exists B, \forall x,
       (x \in B \iff x = u \text{ or } x = v).$$
+
+\begin{axiom}
+
+  \ % Add space
+
+  \lean*{Mathlib/Init/Set}{Set.insert}
+
+  \lean*{Mathlib/Init/Set}{Set.singleton}
+
+\end{axiom}
 
 \section{\defined{Power Set}}%
 \label{ref:power-set}
@@ -57,37 +83,61 @@ For any set $a$, the \textbf{power set $\powerset{a}$} is the set whose members
 
 \begin{definition}
 
-  \lean{Mathlib/Init/Set}{Set.powerset}
+  \lean*{Mathlib/Init/Set}{Set.powerset}
 
 \end{definition}
 
-\section{\partial{Power Set Axiom}}%
+\section{\defined{Power Set Axiom}}%
 \label{ref:power-set-axiom}
 
 For any set $a$, there is a set whose members are exactly the subsets of $a$:
   $$\forall a, \exists B, \forall x, (x \in B \iff x \subseteq a).$$
 
-\section{\partial{Subset Axioms}}%
+\begin{axiom}
+
+  \lean*{Mathlib/Init/Set}{Set.powerset}
+
+\end{axiom}
+
+\section{\defined{Subset Axioms}}%
 \label{ref:subset-axioms}
 
 For each formula $\phi$ not containing $B$, the following is an axiom:
   $$\forall t_1, \cdots \forall t_k, \forall c,
       \exists B, \forall x, (x \in B \iff x \in c \land \phi).$$
 
-\section{\partial{Union Axiom}}%
+\begin{axiom}
+
+  \lean*{Mathlib/Init/Set}{Set.Subset}
+
+\end{axiom}
+
+\section{\defined{Union Axiom}}%
 \label{ref:union-axiom}
 
 For any set $A$, there exists a set $B$ whose elements are exactly the members
   of the members of $A$:
   $$\forall A, \exists B, \forall x \left[ x \in B \iff (\exists b \in A) x \in b \right]$$
 
-\section{\partial{Union Axiom, Preliminary Form}}%
+\begin{axiom}
+
+  \lean*{Mathlib/Data/Set/Lattice}{Set.sUnion}
+
+\end{axiom}
+
+\section{\defined{Union Axiom, Preliminary Form}}%
 \label{ref:union-axiom-preliminary-form}
 
 For any sets $a$ and $b$, there is a set whose members are those sets belonging
   either to $a$ or to $b$ (or both):
   $$\forall a, \forall b, \exists B, \forall x,
       (x \in B \iff x \in a \text{ or } x \in b).$$
+
+\begin{axiom}
+
+  \lean*{Mathlib/Init/Set}{Set.union}
+
+\end{axiom}
 
 \endgroup
 
