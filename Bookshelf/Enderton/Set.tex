@@ -897,49 +897,80 @@ For any sets $A$ and $B$,
   \paragraph{(i)}%
 
     By the definition of the union of sets,
-      $A \cup B = \{ x \mid x \in A \lor x \in B \}$.
-    Since $\lor$ is commutative, it follows
       \begin{align*}
         A \cup B
           & = \{ x \mid x \in A \lor x \in B \} \\
           & = \{ x \mid x \in B \lor x \in A \} \\
-          & = B \cup A,
+          & = B \cup A.
       \end{align*}
-      where the last equality follows again from the definition of the union of
-      sets.
 
   \paragraph{(ii)}%
 
     By the definition of the intersection of sets,
-      $A \cap B = \{ x \mid x \in A \land x \in B \}$.
-    Since $\land$ is commutative, it follows
       \begin{align*}
         A \cap B
           & = \{ x \mid x \in A \land x \in B \} \\
           & = \{ x \mid x \in B \land x \in A \} \\
-          & = B \land A,
+          & = B \land A.
       \end{align*}
-      where the last equality follows again from the definition of the
-      intersection of sets.
 
 \end{proof}
 
-\subsection{\unverified{Associative Laws}}%
+\subsection{\verified{Associative Laws}}%
 \label{sub:associative-laws}
 
 For any sets $A$, $B$ and $C$,
   \begin{align*}
     A \cup (B \cup C) & = (A \cup B) \cup C \\
-    (A \cup B) \cup C & = A \cup (B \cup C)
+    A \cap (B \cap C) & = (A \cap B) \cap C
   \end{align*}
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.union\_assoc}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_assoc}
+
+  Let $A$, $B$, and $C$ be sets.
+  We show (i) $A \cup (B \cup C) = (A \cup B) \cup C$ and then (ii)
+    $A \cap (B \cap C) = (A \cap B) \cap C$.
+
+  \paragraph{(i)}%
+
+    By the definition of the union of sets,
+      \begin{align*}
+        A \cup (B \cup C)
+          & = \{ x \mid x \in A \lor x \in (B \cup C) \} \\
+          & = \{ x \mid x \in A \lor x \in \{ y \mid y \in B \lor C \}\} \\
+          & = \{ x \mid x \in A \lor (x \in B \lor x \in C) \} \\
+          & = \{ x \mid (x \in A \lor x \in B) \lor x \in C \} \\
+          & = \{ x \mid x \in \{ y \mid y \in A \lor y \in B \} \lor
+                        x \in C \} \\
+          & = \{ x \mid x \in (A \cup B) \lor x \in C \} \\
+          & = (A \cup B) \cup C.
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By the definition of the intersection of sets,
+      \begin{align*}
+        A \cap (B \cap C)
+          & = \{ x \mid x \in A \land x \in (B \cap C) \} \\
+          & = \{ x \mid x \in A \land
+                        x \in \{ y \mid y \in B \land y \in C \}\} \\
+          & = \{ x \mid x \in A \land (x \in B \land x \in C) \} \\
+          & = \{ x \mid (x \in A \land x \in B) \land x \in C \} \\
+          & = \{ x \mid x \in \{ y \mid y \in A \land y \in B \} \land
+                        x \in C \} \\
+          & = \{ x \mid x \in (A \cap B) \land x \in C \} \\
+          & = (A \cap B) \cap C.
+      \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{Distributive Laws}}%
+\subsection{\verified{Distributive Laws}}%
 \label{sub:distributive-laws}
 
 For any sets $A$, $B$, and $C$,
@@ -950,11 +981,49 @@ For any sets $A$, $B$, and $C$,
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.inter\_distrib\_left}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.union\_distrib\_left}
+
+  Let $A$, $B$, and $C$ be sets.
+  We show (i) $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ and then (ii)
+    $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+
+  \paragraph{(i)}%
+
+    By the definition of the union and intersection of sets,
+      \begin{align*}
+        A \cap (B \cup C)
+          & = \{ x \mid x \in A \land x \in B \cup C \} \\
+          & = \{ x \mid x \in A \land
+                        x \in \{ y \mid y \in B \lor y \in C \}\} \\
+          & = \{ x \mid x \in A \land (x \in B \lor x \in C) \} \\
+          & = \{ x \mid (x \in A \land x \in B) \lor
+                        (x \in A \land x \in C) \} \\
+          & = \{ x \mid x \in A \cap B \lor x \in A \cap C \} \\
+          & = (A \cap B) \cup (A \cap C).
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By the definition of the union and intersection of sets,
+      \begin{align*}
+        A \cup (B \cap C)
+          & = \{ x \mid x \in A \lor x \in B \cap C \} \\
+          & = \{ x \mid x \in A \lor
+                        x \in \{ y \mid y \in B \land y \in C \}\} \\
+          & = \{ x \mid x \in A \lor (x \in B \land x \in C) \} \\
+          & = \{ x \mid (x \in A \lor x \in B) \land
+                        (x \in A \lor x \in C) \} \\
+          & = \{ x \mid x \in A \cup B \land x \in A \cup C \} \\
+          & = (A \cup B) \cap (A \cup C).
+      \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{De Morgan's Laws}}%
+\subsection{\verified{De Morgan's Laws}}%
 \label{sub:de-morgans-laws}
 
 For any sets $A$, $B$, and $C$,
@@ -965,11 +1034,51 @@ For any sets $A$, $B$, and $C$,
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.diff\_inter\_diff}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.diff\_inter}
+
+  Let $A$, $B$, and $C$ be sets.
+  We show (i) $C - (A \cup B) = (C - A) \cap (C - B)$ and then (ii)
+    $C - (A \cap B) = (C - A) \cup (C - B)$.
+
+  \paragraph{(i)}%
+
+    By definition of the union, intersection, and relative complements of sets,
+      \begin{align*}
+        C - (A \cup B)
+          & = \{ x \mid x \in C \land x \not\in A \cup B \} \\
+          & = \{ x \mid x \in C \land
+                        x \not\in \{ y \mid y \in A \lor y \in B \}\} \\
+          & = \{ x \mid x \in C \land \neg(x \in A \lor x \in B) \} \\
+          & = \{ x \mid x \in C \land (x \not\in A \land x \not\in B) \} \\
+          & = \{ x \mid (x \in C \land x \not\in A) \land
+                        (x \in C \land x \not\in B) \} \\
+          & = \{ x \mid x \in (C - A) \land x \in (C - B) \} \\
+          & = (C - A) \cap (C - B).
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By definition of the union, intersection, and relative complements of sets,
+      \begin{align*}
+        C - (A \cap B)
+          & = \{ x \mid x \in C \land x \not\in A \cap B \} \\
+          & = \{ x \mid x \in C \land
+                        x \not\in \{ y \mid y \in A \land y \in B \}\} \\
+          & = \{ x \mid x \in C \land \neg(x \in A \land x \in B) \} \\
+          & = \{ x \mid x \in C \land (x \not\in A \lor x \not\in B) \} \\
+          & = \{ x \mid (x \in C \land x \not\in A) \lor
+                        (x \in C \land x \not\in B) \} \\
+          & = \{ x \mid x \in (C - A) \lor x \in (C - B) \} \\
+          & = (C - A) \cup (C - B).
+      \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{
+\subsection{\verified{%
   Identities Involving \texorpdfstring{$\emptyset$}{the Empty Set}}}%
 \label{sub:identitives-involving-empty-set}
 
@@ -982,7 +1091,55 @@ For any set $A$,
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.union\_empty}
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.inter\_empty}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_diff\_self}
+
+  Let $A$ be an arbitrary set. We prove (i) that $A \cup \emptyset = A$, (ii)
+    $A \cap \emptyset = \emptyset$, and (iii) $A \cap (C - A) = \emptyset$.
+
+  \paragraph{(i)}%
+
+    By definition of the emptyset and union of sets,
+      \begin{align*}
+        A \cup \emptyset
+          & = \{ x \mid x \in A \lor x \in \emptyset \} \\
+          & = \{ x \mid x \in A \lor F \} \\
+          & = \{ x \mid x \in A \} \\
+          & = A.
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By definition of the emptyset and intersection of sets,
+      \begin{align*}
+        A \cap \emptyset
+          & = \{ x \mid x \in A \land x \in \emptyset \} \\
+          & = \{ x \mid x \in A \land F \} \\
+          & = \{ x \mid F \} \\
+          & = \{ x \mid x \neq x \} \\
+          & = \emptyset.
+      \end{align*}
+
+  \paragraph{(iii)}%
+
+    By definition of the emptyset, and the intersection and relative complement
+      of sets,
+      \begin{align*}
+        A \cap (C - A)
+          & = \{ x \mid x \in A \land x \in C - A \} \\
+          & = \{ x \mid x \in A \land
+                        x \in \{ y \mid y \in C \land y \not\in A \}\} \\
+          & = \{ x \mid x \in A \land (x \in C \land x \not\in A) \} \\
+          & = \{ x \mid x \in C \land F \} \\
+          & = \{ x \mid F \} \\
+          & = \{ x \mid x \neq x \} \\
+          & = \emptyset.
+      \end{align*}
 
 \end{proof}
 
