@@ -29,7 +29,7 @@
 \newcommand\@linespace{\vspace{10pt}}
 \newcommand\linedivider{\@linespace\hrule\@linespace}
 \WithSuffix\newcommand\linedivider*{\@linespace\hrule}
-\newcommand\suitdivider{$$\spadesuit\spadesuit\spadesuit$$}
+\newcommand\suitdivider{$$\spadesuit\;\spadesuit\;\spadesuit$$}
 
 % ========================================
 % Linking
@@ -89,6 +89,7 @@
 \newcommand\@statement[1]{%
   \linedivider*\paragraph{\normalfont\normalsize\textit{#1.}}}
 
+\newenvironment{answer}{\@statement{Answer}}{\hfill$\square$}
 \newenvironment{axiom}{\@statement{Axiom}}{\hfill$\square$}
 \newenvironment{definition}{\@statement{Definition}}{\hfill$\square$}
 \renewenvironment{proof}{\@statement{Proof}}{\hfill$\square$}
@@ -131,7 +132,7 @@
 \newcommand{\ico}[2]{\left[#1, #2\right)}
 \newcommand{\ioc}[2]{\left(#1, #2\right]}
 \newcommand{\ioo}[2]{\left(#1, #2\right)}
-\newcommand{\powerset}[1]{\mathscr{P}\,#1}
+\newcommand{\powerset}[1]{\mathscr{P}#1}
 \newcommand{\ubar}[1]{\text{\b{$#1$}}}
 
 \let\oldemptyset\emptyset

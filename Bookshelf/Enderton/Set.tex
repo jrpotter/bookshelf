@@ -432,7 +432,7 @@ List all the members of $V_4$.
 \section{Exercises 3}%
 \label{sec:exercises-3}
 
-\subsection{\unverified{Exercise 3.1}}%
+\subsection{\verified{Exercise 3.1}}%
 \label{sub:exercise-3.1}
 
 Assume that $A$ is the set of integers divisible by $4$.
@@ -440,25 +440,31 @@ Similarly assume that $B$ and $C$ are the sets of integers divisible by $9$ and
   $10$, respectively.
 What is in $A \cap B \cap C$?
 
-\begin{proof}
+\begin{answer}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_1}
 
-\end{proof}
+  The set of integers divisible by $4$, $9$, and $10$.
 
-\subsection{\unverified{Exercise 3.2}}%
+\end{answer}
+
+\subsection{\verified{Exercise 3.2}}%
 \label{sub:exercise-3.2}
 
 Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
   $A \neq B$.
 
-\begin{proof}
+\begin{answer}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_2}
 
-\end{proof}
+  Let $A = \{\{1\}, \{2\}\}$ and $B = \{\{1, 2\}\}$.
 
-\subsection{\unverified{Exercise 3.3}}%
+\end{answer}
+
+\subsection{\verified{Exercise 3.3}}%
 \label{sub:exercise-3.3}
 
 Show that every member of a set $A$ is a subset of $\bigcup A$.
@@ -466,22 +472,38 @@ Show that every member of a set $A$ is a subset of $\bigcup A$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_3}
+
+  Let $x \in A$.
+  By definition, $$\bigcup A = \{ y \mid (\exists b \in A) y \in b\}.$$
+  Then $\{ y \mid y \in x\} \subseteq \bigcup A$.
+  But $\{ y \mid y \in x\} = x$.
+  Thus $x \subseteq \bigcup A$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.4}}%
+\subsection{\verified{Exercise 3.4}}%
 \label{sub:exercise-3.4}
 
 Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_4}
+
+  Let $A$ and $B$ be sets such that $A \subseteq B$.
+  Let $x \in \bigcup A$.
+  By definition of the union, there exists some $b \in A$ such that $x \in b$.
+  By definition of the subset, $b \in B$.
+  This immediatley implies $x \in \bigcup B$.
+  Since this holds for all $x \in \bigcup A$, it follows
+    $\bigcup A \subseteq \bigcup B$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.5}}%
+\subsection{\verified{Exercise 3.5}}%
 \label{sub:exercise-3.5}
 
 Assume that every member of $\mathscr{A}$ is a subset of $B$.
@@ -489,22 +511,61 @@ Show that $\bigcup \mathscr{A} \subseteq B$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_5}
+
+  Let $x \in \bigcup \mathscr{A}$.
+  By definition,
+    $$\bigcup \mathscr{A} = \{ y \mid (\exists b \in A)y \in b \}.$$
+  Then there exists some $b \in A$ such that $x \in b$.
+  By hypothesis, $b \subseteq B$.
+  Thus $x$ must also be a member of $B$.
+  Since this holds for all $x \in \bigcup \mathscr{A}$, it follows
+    $\bigcup \mathscr{A} \subseteq B$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.6a}}%
+\subsection{\verified{Exercise 3.6a}}%
 \label{sub:exercise-3.6a}
 
 Show that for any set $A$, $\bigcup \powerset{A} = A$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_6a}
+
+  We prove that (i) $\bigcup \powerset{A} \subseteq A$ and (ii)
+    $A \subseteq \bigcup \powerset{A}$.
+
+  \paragraph{(i)}%
+  \label{par:exercise-3.6a-i}
+
+    By definition, the \nameref{ref:power-set} of $A$ is the set of all subsets
+      of $A$.
+    In other words, every member of $\powerset{A}$ is a subset of $A$.
+    By \nameref{sub:exercise-3.5}, $\bigcup \powerset{A} \subseteq A$.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-3.6a-ii}
+
+    Let $x \in A$.
+    By definition of the power set of $A$, $\{x\} \in \powerset{A}$. 
+    By definition of the union,
+      $$\bigcup \powerset{A} =
+        \{ y \mid (\exists b \in \powerset{A}), y \in b).$$
+    Since $x \in \{x\}$ and $\{x\} \in \powerset{A}$, it follows
+      $x \in \bigcup \powerset{A}$.
+    Thus $A \subseteq \bigcup \powerset{A}$.
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:exercise-3.6a-i} and \nameref{par:exercise-3.6a-ii},
+      $\bigcup \powerset{A} = A$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.6b}}%
+\subsection{\verified{Exercise 3.6b}}%
 \label{sub:exercise-3.6b}
 
 Show that $A \subseteq \powerset{\bigcup A}$.
@@ -512,35 +573,176 @@ Under what conditions does equality hold?
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_6b}
+
+  Let $x \in A$.
+  By \nameref{sub:exercise-3.3}, $x$ is a subset of $\bigcup A$.
+  By the definition of the \nameref{ref:power-set},
+    $$\powerset{\bigcup A} = \{ y \mid y \subseteq \bigcup A \}.$$
+  Therefore $x \in \powerset{\bigcup A}$.
+  Since this holds for all $x \in A$, $A \subseteq \powerset{\bigcup A}$.
+
+  \suitdivider
+
+  We show equality holds if and only if there exists some set $B$ such that
+    $A = \powerset{B}$.
+
+  \paragraph{($\Rightarrow$)}%
+  \label{par:exercise-3.6b-right}
+
+    Suppose $A = \powerset{\bigcup A}$.
+    Then our statement immediately follows by settings $B = \bigcup A$.
+
+  \paragraph{($\Leftarrow$)}%
+  \label{par:exercise-3.6b-left}
+
+    Suppose there exists some set $B$ such that $A = \powerset{B}$.
+    Therefore
+      \begin{align*}
+        \powerset{\bigcup A}
+          & = \powerset{\left(\bigcup {\powerset {B}}\right)} \\
+          & = \powerset{B} & \textref{sub:exercise-3.6a} \\
+          & = A.
+      \end{align*}
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:exercise-3.6b-right} and \nameref{par:exercise-3.6b-left},
+      $A = \powerset{\bigcup A}$ if and only if there exists some set $B$ such
+      that $A = \powerset{B}$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.7a}}%
+\subsection{\verified{Exercise 3.7a}}%
 \label{sub:exercise-3.7a}
 
 Show that for any sets $A$ and $B$,
-  $$\powerset{A} \cap \powerset{B} = \powerset(A \cap B).$$
+  $$\powerset{A} \cap \powerset{B} = \powerset{(A \cap B)}.$$
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_7a}
+
+  Let $A$ and $B$ be arbitrary sets. We show that
+    $\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}$ and then
+    show that $\powerset{A} \cap \powerset{B} \supseteq \powerset{(A \cap B)}$.
+
+  \paragraph{($\subseteq$)}%
+
+    Let $x \in \powerset{A} \cap \powerset{B}$.
+    That is, $x \in \powerset{A}$ and $x \in \powerset{B}$.
+    By the definition of the \nameref{ref:power-set},
+      \begin{align*}
+        \powerset{A} & = \{ y \mid y \subseteq A \} \\
+        \powerset{B} & = \{ y \mid y \subseteq B \}
+      \end{align*}
+    Thus $x \subseteq A$ and $x \subseteq B$, meaning $x \subseteq A \cap B$.
+    But then $x \in \powerset{(A \cap B)}$, the set of all subsets of
+      $A \cap B$.
+    Since this holds for all $x \in \powerset{A} \cap \powerset{B}$, it follows
+      $$\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}.$$
+
+  \paragraph{($\supseteq$)}%
+
+    Let $x \in \powerset{(A \cap B)}$.
+    By the definition of the \nameref{ref:power-set},
+      $$\powerset{(A \cap B)} = \{ y \mid y \subseteq A \cap B \}.$$
+    Thus $x \subseteq A \cap B$, meaning $x \subseteq A$ and $x \subseteq B$.
+    But this implies $x \in \powerset{A}$, the set of all subsets of $A$.
+    Likewise $x \in \powerset{B}$, the set of all subsets of $B$.
+    Thus $x \in \powerset{A} \cap \powerset{B}$.
+    Since this holds for all $x \in \powerset{(A \cap B)}$, it follows
+      $$\powerset{(A \cap B)} \subseteq \powerset{A} \cap \powerset{B}.$$
+
+  \paragraph{Conclusion}%
+
+    Since each side of our identity is a subset of the other,
+      $$\powerset{(A \cap B)} = \powerset{A} \cap \powerset{B}.$$
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.7b}}%
+\subsection{\verified{Exercise 3.7b}}%
 \label{sub:exercise-3.7b}
 
-Show that $\powerset{A} \cup \powerset{B} \subseteq \powerset(A \cup B)$.
+Show that $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$.
 Under what conditions does equality hold?
 
 \begin{proof}
 
-  TODO
+  \  % Add space.
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_7b\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_7b\_ii}
+
+  Let $x \in \powerset{A} \cup \powerset{B}$.
+  By definition, $x \in \powerset{A}$ or $x \in \powerset{B}$ (or both).
+  By the definition of the \nameref{ref:power-set},
+    \begin{align*}
+      \powerset{A} &= \{ y \mid y \subseteq A \} \\
+      \powerset{B} &= \{ y \mid y \subseteq B \}.
+    \end{align*}
+  Thus $x \subseteq A$ or $x \subseteq B$.
+  Therefore $x \subseteq A \cup B$.
+  But then $x \in \powerset{(A \cup B)}$, the set of all subsets of $A \cup B$.
+
+  \suitdivider
+
+  We show equality holds if and only if one of $A$ or $B$ is a subset of the
+    other.
+
+  \paragraph{($\Rightarrow$)}%
+  \label{par:exercise-3.7b-right}
+
+    Suppose
+      \begin{equation}
+        \label{sub:exercise-3.7b-eq1}
+        \powerset{A} \cup \powerset{B} = \powerset{(A \cup B)}.
+      \end{equation}
+    By the definition of the \nameref{ref:power-set},
+      $A \cup B \in \powerset{(A \cup B)}$.
+    Then \eqref{sub:exercise-3.7b-eq1} implies
+      $A \cup B \in \powerset{A} \cup \powerset{B}$.
+    That is, $A \cup B \in \powerset{A}$ or $A \cup B \in \powerset{B}$ (or
+      both).
+
+    For the sake of contradiction, suppose $A \not\subseteq B$ and
+      $B \not\subseteq A$.
+    Then there exists an element $x \in A$ such that $x \not\in B$ and there
+      exists an element $y \in B$ such that $y \not\in A$.
+    But then $A \cup B \not\in \powerset{A}$ since $y$ cannot be a member of a
+      member of $\powerset{A}$.
+    Likewise, $A \cup B \not\in \powerset{B}$ since $x$ cannot be a member of a
+      member of $\powerset{B}$.
+    Therefore our assumption is incorrect.
+    In other words, $A \subseteq B$ or $B \subseteq A$.
+
+  \paragraph{($\Leftarrow$)}%
+  \label{par:exercise-3.7b-left}
+
+    WLOG, suppose $A \subseteq B$.
+    Then, by \nameref{sub:exercise-1.3}, $\powerset{A} \subseteq \powerset{B}$.
+    Thus
+      \begin{align*}
+        \powerset{A} \cup \powerset{B}
+          & = \powerset{B} \\
+          & = \powerset{A \cup B}.
+      \end{align*}
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:exercise-3.7b-right} and \nameref{par:exercise-3.7b-left},
+      it follows
+      $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$ if and
+      only if $A \subseteq B$ or $B \subseteq A$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.8}}%
+\subsection{\partial{Exercise 3.8}}%
 \label{sub:exercise-3.8}
 
 Show that there is no set to which every singleton (that is, every set of the
@@ -550,23 +752,37 @@ Show that there is no set to which every singleton (that is, every set of the
 
 \begin{proof}
 
-  TODO
+  We proceed by contradiction.
+  Suppose there existed a set $A$ consisting of every singleton.
+  Then the \nameref{ref:union-axiom} suggests $\bigcup A$ is a set.
+  But this set is precisely the class of all sets, which is \textit{not} a set.
+  Thus our original assumption was incorrect.
+  That is, there is no set to which every singleton belongs.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 3.9}}%
+\subsection{\verified{Exercise 3.9}}%
 \label{sub:exercise-3.9}
 
 Give an example of sets $a$ and $B$ for which $a \in B$ but
-  $\powerset{A} \not\in \powerset{B}$.
+  $\powerset{a} \not\in \powerset{B}$.
 
-\begin{proof}
+\begin{answer}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_9}
 
-\end{proof}
+  Let $a = \{1\}$ and $B = \{\{1\}\}$.
+  Then
+    \begin{align*}
+      \powerset{a} & = \{\emptyset, \{1\}\} \\
+      \powerset{B} & = \{\emptyset, \{\{1\}\}\}.
+    \end{align*}
+  It immediately follows that $\powerset{a} \not\in \powerset{B}$.
 
-\subsection{\unverified{Exercise 3.10}}%
+\end{answer}
+
+\subsection{\verified{Exercise 3.10}}%
 \label{sub:exercise-3.10}
 
 Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
@@ -574,7 +790,16 @@ Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_1}
+    {Enderton.Set.Chapter\_1.exercise\_3\_10}
+
+  Suppose $a \in B$.
+  By \nameref{sub:exercise-3.3}, $a \subseteq \bigcup B$.
+  By \nameref{sub:exercise-1.3}, $\powerset{a} \subseteq \powerset{\bigcup B}$.
+  By the definition of the \nameref{ref:power-set},
+    $$\powerset{\powerset{\bigcup B}} =
+      \{ y \mid y \subseteq \powerset{\bigcup B} \}.$$
+  Therefore $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
 
 \end{proof}
 
