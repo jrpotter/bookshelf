@@ -112,6 +112,18 @@ For each formula $\phi$ not containing $B$, the following is an axiom:
 
 \end{axiom}
 
+\section{\defined{Symmetric Difference}}%
+\label{ref:symmetric-difference}
+
+The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
+  $(A - B) \cup (B - A)$.
+
+\begin{definition}
+
+  \lean*{Mathlib/Data/Set/Basic}{symmDiff\_def}
+
+\end{definition}
+
 \section{\defined{Union Axiom}}%
 \label{ref:union-axiom}
 
@@ -1404,10 +1416,64 @@ For any set $C$ and $\mathscr{A} \neq \emptyset$,
 
 \end{proof}
 
+\subsection{\verified{%
+  \texorpdfstring{$\cap$/$-$}{Intersection/Difference} Associativity}}%
+\label{sub:intersection-difference-associativity}
+
+Let $A$, $B$, and $C$ be sets.
+Then $A \cap (B - C) = (A \cap B) - C$.
+
+\begin{proof}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_diff\_assoc}
+
+  Let $A$, $B$, and $C$ be sets.
+  By definition of the intersection and relative complement of sets,
+    \begin{align*}
+      A \cap (B - C)
+        & = \{ x \mid x \in A \land x \in B - C \} \\
+        & = \{ x \mid x \in A \land (x \in B \land x \not\in C) \} \\
+        & = \{ x \mid (x \in A \land x \in B) \land x \not\in C \} \\
+        & = \{ x \mid x \in A \cap B \land x \not \in C \} \\
+        & = (A \cap B) - C.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\verified{Nonmembership of Symmetric Difference}}
+\label{sub:nonmembership-symmetric-difference}
+
+Let $A$ and $B$ be sets. $x \not\in A + B$ if and only if either
+  $x \in A \cap B$ or $x \not\in A \cup B$.
+
+\begin{proof}
+
+  \lean{Common/Set/Basic}{Set.not\_mem\_symm\_diff\_inter\_or\_not\_union}
+
+  By definition of the \nameref{ref:symmetric-difference},
+    \begin{align*}
+      x \not\in A + B
+        & = \neg(x \in A + B) \\
+        & = \neg[x \in (A - B) \cup (B - A)] \\
+        & = \neg[x \in (A - B) \lor x \in (B - A)] \\
+        & = \neg[(x \in A \land x \not\in B) \lor
+          (x \in B \land x \not\in A)] \\
+        & = \neg(x \in A \land x \not\in B) \land
+          \neg(x \in B \land x \not\in A) \\
+        & = (x \not\in A \lor x \in B) \land (x \not\in B \lor x \in A) \\
+        & = ((x \not\in A \lor x \in B) \land x \not\in B) \lor
+          ((x \not\in A \lor x \in B) \land x \in A) \\
+        & = (x \not\in A \land x \not\in B) \lor (x \in B \land x \in A) \\
+        & = \neg(x \in A \lor x \in B) \lor (x \in B \land x \in A) \\
+        & = x \not\in A \cup B \text{ or } x \in A \cap B.
+    \end{align*}
+
+\end{proof}
+
 \section{Exercises 4}%
 \label{sec:exercises-4}
 
-\subsection{\unverified{Exercise 4.11}}%
+\subsection{\verified{Exercise 4.11}}%
 \label{sub:exercise-4.11}
 
 Show that for any sets $A$ and $B$,
@@ -1416,11 +1482,60 @@ Show that for any sets $A$ and $B$,
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_11\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_11\_ii}
+
+  \noindent Let $A$ and $B$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A = (A \cap B) \cup (A - B)$
+      \item $A \cup (B - A) = A \cup B$
+    \end{enumerate}
+
+  \paragraph{(i)}%
+
+    By definition of the intersection, union, and relative complements of sets,
+      \begin{align*}
+        (A \cap B) \cup (A - B)
+          & = \{ x \mid x \in A \cap B \lor x \in A - B \} \\
+          & = \{ x \mid x \in \{ y \mid y \in A \land y \in B \} \lor
+            x \in A - B \} \\
+          & = \{ x \mid (x \in A \land x \in B) \lor x \in A - B \} \\
+          & = \{ x \mid (x \in A \land x \in B) \lor
+            x \in \{ y \mid y \in A \land y \not\in B \} \} \\
+          & = \{ x \mid (x \in A \land x \in B) \lor
+            (x \in A \land x \not\in B) \} \\
+          & = \{ x \mid x \in A \lor (x \in B \land x \not\in B) \} \\
+          & = \{ x \mid x \in A \lor F \} \\
+          & = \{ x \mid x \in A \} \\
+          & = A.
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By definition of the union and relative complements of sets,
+      \begin{align*}
+        A \cup (B - A)
+          & = \{ x \mid x \in A \lor x \in B - A \} \\
+          & = \{ x \mid x \in A \lor
+            x \in \{ y \mid y \in B \land y \not\in A \} \} \\
+          & = \{ x \mid x \in A \lor (x \in B \land x \not\in A) \} \\
+          & = \{ x \mid (x \in A \lor x \in B) \land
+            (x \in A \lor x \not\in A) \} \\
+          & = \{ x \mid (x \in A \lor x \in B) \land T \} \\
+          & = \{ x \mid x \in A \lor x \in B \} \\
+          & = \{ x \mid x \in A \cup B \} \\
+          & = A \cup B.
+      \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.12}}%
+\subsection{\verified{Exercise 4.12}}%
 \label{sub:exercise-4.12}
 
 Verify the following identity (one of De Morgan's laws):
@@ -1428,22 +1543,22 @@ Verify the following identity (one of De Morgan's laws):
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{sub:de-morgans-laws}.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.13}}%
+\subsection{\verified{Exercise 4.13}}%
 \label{sub:exercise-4.13}
 
 Show that if $A \subseteq B$, then $C - B \subseteq C - A$.
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{sub:anti-monotonicity}.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.14}}%
+\subsection{\verified{Exercise 4.14}}%
 \label{sub:exercise-4.14}
 
 Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
@@ -1451,35 +1566,157 @@ Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_14}
+
+  Let $A = \{1, 2, 3\}$, $B = \{2, 3, 4\}$, and $C = \{3, 4, 5\}$.
+  Then
+    \begin{align*}
+      A - (B - C)
+        & = \{1, 2, 3\} - (\{2, 3, 4\} - \{3, 4, 5\}) \\
+        & = \{1, 2, 3\} - \{2\} \\
+        & = \{1, 3\}
+    \end{align*}
+    but
+    \begin{align*}
+      (A - B) - C
+        & = (\{1, 2, 3\} - \{2, 3, 4\}) - \{3, 4, 5\} \\
+        & = \{1\} - \{3, 4, 5\} \\
+        & = \{1\}.
+    \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.15}}%
-\label{sub:exercise-4.15}
-
-Define the symmetric difference $A + B$ of sets $A$ and $B$ to be the set
-  $(A - B) \cup (B - A)$.
-
-\subsubsection{\unverified{Exercise 4.15a}}%
-\label{ssub:exercise-4.15a}
+\subsection{\verified{Exercise 4.15a}}%
+\label{sub:exercise-4.15a}
 
 Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 
 \begin{proof}
 
-  TODO
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_symmDiff\_distrib\_left}
+
+  By definition of the intersection, \nameref{ref:symmetric-difference}, and
+    relative complement of sets,
+    \begin{align*}
+      (A & \cap B) + (A \cap C) \\
+        & = [(A \cap B) - (A \cap C)] \cup [(A \cap C) - (A \cap B)] \\
+        & = [(A \cap B) - A] \\
+          & \qquad \cup [(A \cap B) - C] \\
+          & \qquad \cup [(A \cap C) - A] \\
+          & \qquad \cup [(A \cap C) - B]
+          & \textref{sub:de-morgans-laws} \\
+        & = [A \cap (B - A)] \\
+          & \qquad \cup [A \cap (B - C)] \\
+          & \qquad \cup [A \cap (C - A)] \\
+          & \qquad \cup [A \cap (C - B)]
+          & \textref{sub:intersection-difference-associativity} \\
+        & = \emptyset \\
+          & \qquad \cup [A \cap (B - C)] \\
+          & \qquad \cup \emptyset \\
+          & \qquad \cup [A \cap (C - B)]
+          & \textref{sub:identitives-involving-empty-set} \\
+        & = [A \cap (B - C)] \cup [A \cap (C - B)] \\
+        & = A \cap [(B - C) \cup (C - B)]
+          & \textref{sub:distributive-laws} \\
+        & = A \cap (B + C).
+    \end{align*}
 
 \end{proof}
 
-\subsubsection{\unverified{Exercise 4.15b}}%
-\label{ssub:exercise-4.15b}
+\subsection{\verified{Exercise 4.15b}}%
+\label{sub:exercise-4.15b}
 
 Show that $A + (B + C) = (A + B) + C$.
 
 \begin{proof}
 
-  TODO
+  \lean{Mathlib/Data/Set/Basic}{Set.symmDiff\_assoc}
+
+  \noindent Let $A$, $B$, and $C$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A + (B + C) \subseteq (A + B) + C$
+      \item $(A + B) + C \subseteq A + (B + C)$
+    \end{enumerate}
+
+  \paragraph{(i)}%
+  \label{par:exercise-4.15b-i}
+
+    Let $x \in A + (B + C)$.
+    Then $x$ is in $A$ or in $B + C$, but not both.
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $x \in A$ and $x \not\in B + C$.
+      Then, by \nameref{sub:nonmembership-symmetric-difference},
+        (a) $x \in B \cap C$ or (b) $x \not\in B \cup C$.
+      Suppose (a) was true.
+      That is, $x \in B$ and $x \in C$.
+      Since $x$ is a member of $A$ and $B$, $x \not\in (A + B)$.
+      Since $x$ is not a member of $A + B$ but is a member of $C$,
+        $x \in (A + B) + C$.
+      Now suppose (b) was true.
+      That is, $x \not\in B$ and $x \not\in C$.
+      Since $x$ is a member of $A$ but not $B$, $x \in (A + B)$.
+      Since $x$ is a member of $A + B$ but not $C$, $x \in (A + B) + C$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $x \in B + C$ and $x \not\in A$.
+      Then (a) $x \in B$ or (b) $x \in C$ but not both.
+      Suppose (a) was true.
+      That is, $x \in B$ and $x \not\in C$.
+      Since $x$ is not a member of $A$ and is a member of $B$, $x \in A + B$.
+      Since $x$ is a member of $A + B$ but not $C$, $x \in (A + B) + C$.
+      Now suppose (b) was true.
+      That is, $x \not\in B$ and $x \in C$.
+      Since $x$ is not a member of $A$ nor a member of $B$, $x \not\in A + B$.
+      Since $x$ is not a member of $A + B$ but is a member of $C$,
+        $x \in (A + B) + C$.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-4.15b-ii}
+
+    Let $x \in (A + B) + C$.
+    Then $x$ is in $A + B$ or in $C$, but not both.
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $x \in A + B$ and $x \not\in C$.
+      Then (a) $x \in A$ or (b) $x \in B$ but not both.
+      Suppose (a) was true.
+      That is, $x \in A$ and $x \not\in B$.
+      Since $x$ is not a member of $B$ nor $C$, $x \not\in B + C$.
+      Since $x$ is not a member of $B + C$ but is a member of $A$,
+        $x \in A + (B + C)$.
+      Now Suppose (b) was true.
+      That is, $x \not\in A$ and $x \in B$.
+      Since $x$ is a member of $B$ and not of $C$, then $x \in B + C$.
+      Since $x$ is a member of $B + C$ and not of $A$, $x \in A + (B + C)$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $x \not\in A + B$ and $x \in C$.
+      Then, by \nameref{sub:nonmembership-symmetric-difference},
+        (a) $x \in A \cap B$ or (b) $x \not\in A \cup B$.
+      Suppose (a) was true.
+      That is, $x \in A \land x \in B$.
+      Since $x$ is a member of $B$ and $C$, $x \not\in B + C$.
+      Since $x$ is not a member of $B + C$ but is a member of $A$,
+        $x \in A + (B + C)$.
+      Now suppose (b) was true.
+      That is, $x \not\in A$ and $x \not\in B$.
+      Since $x$ is not a member of $B$ but is a member of $C$, $x \in B + C$.
+      Since $x$ is a member of $B + C$ but not of $A$, $x \in A + (B + C)$.
+
+  \paragraph{Conclusion}%
+
+    In both \nameref{par:exercise-4.15b-i} and \nameref{par:exercise-4.15b-ii},
+      the subcases are exhaustive and prove the desired subset relation.
+    Therefore $A + (B + C) = (A + B) + C$.
 
 \end{proof}
 

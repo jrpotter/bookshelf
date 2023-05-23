@@ -1,5 +1,7 @@
 import Mathlib.Data.Set.Basic
 
+import Common.Logic.Basic
+
 /-! # Common.Set.Basic
 
 Additional theorems and definitions useful in the context of `Set`s.
@@ -86,5 +88,58 @@ theorem mem_mem_imp_pair_subset {x y : α}
     rwa [hx']
   · intro hy'
     rwa [hy']
+
+/-! ## Symmetric Difference -/
+
+/--
+`x` is a member of the `symmDiff` of `A` and `B` **iff** `x ∈ A ∧ x ∉ B` or
+`x ∉ A ∧ x ∈ B`.
+-/
+theorem mem_symm_diff_iff_exclusive_mem {A B : Set α}
+  : x ∈ (A ∆ B) ↔ (x ∈ A ∧ x ∉ B) ∨ (x ∉ A ∧ x ∈ B) := by
+  unfold symmDiff
+  apply Iff.intro
+  · intro hx
+    simp at hx
+    conv => arg 2; rw [and_comm]
+    exact hx
+  · intro hx
+    simp
+    conv => arg 2; rw [and_comm]
+    exact hx
+
+/--
+`x` is not a member of the `symmDiff` of `A` and `B` **iff** `x ∈ A ∩ B` or
+`x ∉ A ∪ B`.
+
+This is the contraposition of `mem_symm_diff_iff_exclusive_mem`.
+-/
+theorem not_mem_symm_diff_inter_or_not_union {A B : Set α}
+  : x ∉ (A ∆ B) ↔ (x ∈ A ∩ B) ∨ (x ∉ A ∪ B) := by
+  unfold symmDiff
+  simp
+  rw [
+    not_or_de_morgan,
+    not_and_de_morgan, not_and_de_morgan,
+    not_not, not_not,
+    not_or_de_morgan
+  ]
+  apply Iff.intro
+  · intro hx
+    apply Or.elim hx.left
+    · intro nA
+      exact Or.elim hx.right
+        (fun nB => Or.inr ⟨nA, nB⟩)
+        (fun hA => absurd hA nA)
+    · intro hB
+      apply Or.elim hx.right
+        (fun nB => absurd hB nB)
+        (fun hA => Or.inl ⟨hA, hB⟩)
+  · intro hx
+    apply Or.elim hx
+    · intro hy
+      exact ⟨Or.inr hy.right, Or.inr hy.left⟩
+    · intro hy
+      exact ⟨Or.inl hy.left, Or.inl hy.right⟩
 
 end Set

@@ -1,7 +1,9 @@
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Lattice
+import Mathlib.Tactic.LibrarySearch
 
 import Bookshelf.Enderton.Set.Chapter_1
+import Common.Logic.Basic
 import Common.Set.Basic
 
 /-! # Enderton.Chapter_2
@@ -198,7 +200,7 @@ theorem exercise_3_7b_ii
   apply Iff.intro
   · intro h
     by_contra nh
-    rw [not_or] at nh
+    rw [not_or_de_morgan] at nh
     have ⟨a, hA⟩ := Set.not_subset.mp nh.left
     have ⟨b, hB⟩ := Set.not_subset.mp nh.right
     rw [Set.ext_iff] at h
@@ -280,5 +282,140 @@ theorem exercise_3_10 (ha : a ∈ B)
   conv => rhs; unfold Set.powerset
   rw [← hb, Set.mem_setOf_eq]
   exact h₂
+
+/-- ### Exercise 4.11 (i)
+
+Show that for any sets `A` and `B`, `A = (A ∩ B) ∪ (A - B)`.
+-/
+theorem exercise_4_11_i {A B : Set α}
+  : A = (A ∩ B) ∪ (A \ B) := by
+  unfold Union.union Set.instUnionSet Set.union
+  unfold SDiff.sdiff Set.instSDiffSet Set.diff
+  unfold Inter.inter Set.instInterSet Set.inter
+  unfold Membership.mem Set.instMembershipSet Set.Mem setOf
+  simp only
+  suffices ∀ x, (A x ∧ (B x ∨ ¬B x)) = A x by
+    conv => rhs; ext x; rw [← and_or_left, this]
+  intro x
+  refine propext ?_
+  apply Iff.intro
+  · intro hx
+    exact hx.left
+  · intro hx
+    exact ⟨hx, em (B x)⟩
+
+/-- ### Exercise 4.11 (ii)
+
+Show that for any sets `A` and `B`, `A ∪ (B - A) = A ∪ B`.
+-/
+theorem exercise_4_11_ii {A B : Set α}
+  : A ∪ (B \ A) = A ∪ B := by
+  unfold Union.union Set.instUnionSet Set.union
+  unfold SDiff.sdiff Set.instSDiffSet Set.diff
+  unfold Membership.mem Set.instMembershipSet Set.Mem setOf
+  simp only
+  suffices ∀ x, ((A x ∨ B x) ∧ (A x ∨ ¬A x)) = (A x ∨ B x) by
+    conv => lhs; ext x; rw [or_and_left, this x]
+  intro x
+  refine propext ?_
+  apply Iff.intro
+  · intro hx
+    exact hx.left
+  · intro hx
+    exact ⟨hx, em (A x)⟩
+
+section
+
+variable {A B C : Set ℕ}
+
+variable {hA : A = {1, 2, 3}}
+variable {hB : B = {2, 3, 4}}
+variable {hC : C = {3, 4, 5}}
+
+lemma right_diff_eq_insert_one_three : A \ (B \ C) = {1, 3} := by
+  rw [hA, hB, hC]
+  ext x
+  apply Iff.intro
+  · intro hx
+    unfold SDiff.sdiff Set.instSDiffSet Set.diff at hx
+    unfold Membership.mem Set.instMembershipSet Set.Mem setOf at hx
+    unfold insert Set.instInsertSet Set.insert setOf at hx
+    have ⟨ha, hb⟩ := hx
+    rw [not_and_de_morgan, not_or_de_morgan] at hb
+    simp only [Set.mem_singleton_iff, not_not] at hb
+    refine Or.elim ha Or.inl ?_
+    intro hy
+    apply Or.elim hb
+    · intro hz
+      exact Or.elim hy (absurd · hz.left) Or.inr
+    · intro hz
+      refine Or.elim hz Or.inr ?_
+      intro hz₁
+      apply Or.elim hy <;> apply Or.elim hz₁ <;>
+      · intro hz₂ hz₃
+        rw [hz₂] at hz₃
+        simp at hz₃
+  · intro hx
+    unfold SDiff.sdiff Set.instSDiffSet Set.diff
+    unfold Membership.mem Set.instMembershipSet Set.Mem setOf
+    unfold insert Set.instInsertSet Set.insert setOf
+    apply Or.elim hx
+    · intro hy
+      refine ⟨Or.inl hy, ?_⟩
+      intro hz
+      rw [hy] at hz
+      unfold Membership.mem Set.instMembershipSet Set.Mem at hz
+      unfold singleton Set.instSingletonSet Set.singleton setOf at hz
+      simp only at hz
+    · intro hy
+      refine ⟨Or.inr (Or.inr hy), ?_⟩
+      intro hz
+      have hzr := hz.right
+      rw [not_or_de_morgan] at hzr
+      exact absurd hy hzr.left
+
+lemma left_diff_eq_singleton_one : (A \ B) \ C = {1} := by
+  rw [hA, hB, hC]
+  ext x
+  apply Iff.intro
+  · intro hx
+    unfold SDiff.sdiff Set.instSDiffSet Set.diff at hx
+    unfold Membership.mem Set.instMembershipSet Set.Mem setOf at hx
+    unfold insert Set.instInsertSet Set.insert setOf at hx
+    have ⟨⟨ha, hb⟩, hc⟩ := hx
+    rw [not_or_de_morgan] at hb hc
+    apply Or.elim ha
+    · simp 
+    · intro hy
+      apply Or.elim hy
+      · intro hz
+        exact absurd hz hb.left
+      · intro hz
+        exact absurd hz hc.left
+  · intro hx
+    refine ⟨⟨Or.inl hx, ?_⟩, ?_⟩ <;>
+    · intro hy
+      cases hy with
+      | inl y => rw [hx] at y; simp at y
+      | inr hz => cases hz with
+        | inl y => rw [hx] at y; simp at y
+        | inr y => rw [hx] at y; simp at y
+
+/-- ### Exercise 4.14
+
+Show by example that for some sets `A`, `B`, and `C`, the set `A - (B - C)` is
+different from `(A - B) - C`.
+-/
+theorem exercise_4_14 : A \ (B \ C) ≠ (A \ B) \ C := by
+  rw [
+    @right_diff_eq_insert_one_three A B C hA hB hC,
+    @left_diff_eq_singleton_one A B C hA hB hC
+  ]
+  intro h
+  rw [Set.ext_iff] at h
+  have := h 3
+  simp at this
+
+end
 
 end Enderton.Set.Chapter_2
