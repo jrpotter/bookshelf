@@ -510,8 +510,8 @@ What is in $A \cap B \cap C$?
 
 \begin{answer}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_1}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_1}
 
   The set of integers divisible by $4$, $9$, and $10$.
 
@@ -525,8 +525,8 @@ Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
 
 \begin{answer}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_2}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_2}
 
   Let $A = \{\{1\}, \{2\}\}$ and $B = \{\{1, 2\}\}$.
 
@@ -540,8 +540,8 @@ Show that every member of a set $A$ is a subset of $\bigcup A$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_3}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_3}
 
   Let $x \in A$.
   By definition, $$\bigcup A = \{ y \mid (\exists b \in A) y \in b\}.$$
@@ -558,8 +558,8 @@ Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_4}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_4}
 
   Let $A$ and $B$ be sets such that $A \subseteq B$.
   Let $x \in \bigcup A$.
@@ -579,8 +579,8 @@ Show that $\bigcup \mathscr{A} \subseteq B$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_5}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_5}
 
   Let $x \in \bigcup \mathscr{A}$.
   By definition,
@@ -600,8 +600,8 @@ Show that for any set $A$, $\bigcup \powerset{A} = A$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_6a}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_6a}
 
   We prove that (i) $\bigcup \powerset{A} \subseteq A$ and (ii)
     $A \subseteq \bigcup \powerset{A}$.
@@ -641,8 +641,8 @@ Under what conditions does equality hold?
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_6b}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_6b}
 
   Let $x \in A$.
   By \nameref{sub:exercise-3.3}, $x$ is a subset of $\bigcup A$.
@@ -690,8 +690,8 @@ Show that for any sets $A$ and $B$,
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_7a}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_7a}
 
   Let $A$ and $B$ be arbitrary sets. We show that
     $\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}$ and then
@@ -741,11 +741,11 @@ Under what conditions does equality hold?
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_7b\_i}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_7b\_i}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_7b\_ii}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_7b\_ii}
 
   Let $x \in \powerset{A} \cup \powerset{B}$.
   By definition, $x \in \powerset{A}$ or $x \in \powerset{B}$ (or both).
@@ -837,8 +837,8 @@ Give an example of sets $a$ and $B$ for which $a \in B$ but
 
 \begin{answer}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_9}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_9}
 
   Let $a = \{1\}$ and $B = \{\{1\}\}$.
   Then
@@ -858,8 +858,8 @@ Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_1}
-    {Enderton.Set.Chapter\_1.exercise\_3\_10}
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_3\_10}
 
   Suppose $a \in B$.
   By \nameref{sub:exercise-3.3}, $a \subseteq \bigcup B$.
@@ -891,8 +891,12 @@ For any sets $A$ and $B$,
 
   \lean{Mathlib/Data/Set/Basic}{Set.inter\_comm}
 
-  Let $A$ and $B$ be sets.
-  We show (i) $A \cup B = B \cup A$ and then (ii) $A \cap B = B \cap A$.
+  \noindent Let $A$ and $B$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A \cup B = B \cup A$
+      \item $A \cap B = B \cap A$.
+    \end{enumerate}
 
   \paragraph{(i)}%
 
@@ -933,9 +937,12 @@ For any sets $A$, $B$ and $C$,
 
   \lean{Mathlib/Data/Set/Basic}{Set.inter\_assoc}
 
-  Let $A$, $B$, and $C$ be sets.
-  We show (i) $A \cup (B \cup C) = (A \cup B) \cup C$ and then (ii)
-    $A \cap (B \cap C) = (A \cap B) \cap C$.
+  \noindent Let $A$, $B$, and $C$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A \cup (B \cup C) = (A \cup B) \cup C$
+      \item $A \cap (B \cap C) = (A \cap B) \cap C$
+    \end{enumerate}
 
   \paragraph{(i)}%
 
@@ -987,9 +994,12 @@ For any sets $A$, $B$, and $C$,
 
   \lean{Mathlib/Data/Set/Basic}{Set.union\_distrib\_left}
 
-  Let $A$, $B$, and $C$ be sets.
-  We show (i) $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ and then (ii)
-    $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+  \noindent Let $A$, $B$, and $C$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+      \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+    \end{enumerate}
 
   \paragraph{(i)}%
 
@@ -1040,9 +1050,12 @@ For any sets $A$, $B$, and $C$,
 
   \lean{Mathlib/Data/Set/Basic}{Set.diff\_inter}
 
-  Let $A$, $B$, and $C$ be sets.
-  We show (i) $C - (A \cup B) = (C - A) \cap (C - B)$ and then (ii)
-    $C - (A \cap B) = (C - A) \cup (C - B)$.
+  \noindent Let $A$, $B$, and $C$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $C - (A \cup B) = (C - A) \cap (C - B)$
+      \item $C - (A \cap B) = (C - A) \cup (C - B)$
+    \end{enumerate}
 
   \paragraph{(i)}%
 
@@ -1099,8 +1112,13 @@ For any set $A$,
 
   \lean{Mathlib/Data/Set/Basic}{Set.inter\_diff\_self}
 
-  Let $A$ be an arbitrary set. We prove (i) that $A \cup \emptyset = A$, (ii)
-    $A \cap \emptyset = \emptyset$, and (iii) $A \cap (C - A) = \emptyset$.
+  \noindent Let $A$ be an arbitrary set.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A \cup \emptyset = A$
+      \item $A \cap \emptyset = \emptyset$
+      \item $A \cap (C - A) = \emptyset$
+    \end{enumerate}
 
   \paragraph{(i)}%
 
@@ -1143,7 +1161,7 @@ For any set $A$,
 
 \end{proof}
 
-\subsection{\unverified{Monotonicity}}%
+\subsection{\verified{Monotonicity}}%
 \label{sub:monotonicity}
 
 For any sets $A$, $B$, and $C$,
@@ -1155,11 +1173,68 @@ For any sets $A$, $B$, and $C$,
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.union\_subset\_union\_left}
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.inter\_subset\_inter\_left}
+
+  \lean{Mathlib/Data/Set/Lattice}{Set.sUnion\_mono}
+
+  \noindent Let $A$, $B$, and $C$ be arbitrary sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A \subseteq B \Rightarrow A \cup C \subseteq B \cup C$
+      \item $A \subseteq B \Rightarrow A \cap C \subseteq B \cap C$
+      \item $A \subseteq B \Rightarrow \bigcup A \subseteq \bigcup B$
+    \end{enumerate}
+
+  \paragraph{(i)}%
+
+    Suppose $A \subseteq B$.
+    Let $x \in A \cup C$.
+    There are two cases to consider.
+
+    \subparagraph{Case 1}%
+
+      Suppose $x \in A$.
+      Then, by definition of the subset, $x \in B$.
+      Therefore $x \in B \cup C$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $x \in C$.
+      Then $x$ is trivially a member of $B \cup C$.
+
+    \subparagraph{Conclusion}%
+
+      Since these cases are exhaustive and both imply $x \in B \cup C$, it
+        follows $A \cup C \subseteq B \cup C$.
+
+  \paragraph{(ii)}%
+
+    Suppose $A \subseteq B$.
+    Let $x \in A \cap C$.
+    Then, by definition of the intersection of sets, $x \in A$ and $x \in C$.
+    By definition of the subset, $x \in A$ implies $x \in B$.
+    Therefore $x \in B$ and $x \in C$.
+    That is, $x \in B \cap C$.
+    Since this holds for arbitrary $x \in A \cap C$, it follows
+      $A \cap C \subseteq B \cap C$.
+
+  \paragraph{(iii)}%
+
+    Suppose $A \subseteq B$.
+    Let $x \in \bigcup A$.
+    Then, by definition of the union of sets, there exists some $b \in A$ such
+      that $x \in b$.
+    By definition of the subset, $b \in B$ as well.
+    Another application of the definition of the union of sets immediately
+      implies that $x$ is a member of $\bigcup B$.
 
 \end{proof}
 
-\subsection{\unverified{Anti-monotonicity}}%
+\subsection{\verified{Anti-monotonicity}}%
 \label{sub:anti-monotonicity}
 
 For any sets $A$, $B$, and $C$,
@@ -1170,11 +1245,46 @@ For any sets $A$, $B$, and $C$,
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Mathlib/Data/Set/Basic}{Set.diff\_subset\_diff\_right}
+
+  \lean{Mathlib/Data/Set/Lattice}{Set.sInter\_subset\_sInter}
+
+  \noindent Let $A$, $B$, and $C$ be arbitrary sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $A \subseteq B \Rightarrow C - B \subseteq C - A$
+      \item $\emptyset \neq A \subseteq B \Rightarrow
+             \bigcap B \subseteq \bigcap A$
+    \end{enumerate}
+
+  \paragraph{(i)}%
+
+    Suppose $A \subseteq B$.
+    Let $x \in C - B$.
+    By definition of the relative complement, $x \in C$ and $x \not\in B$.
+    Then $x$ cannot be a member of $A$, since otherwise this would contradict
+      our subset hypothesis.
+    That is, $x \in C$ and $x \not\in A$.
+    Therefore $x \in C - A$.
+    Since this holds for arbitrary $x \in C - B$, it follows that
+      $C - B \subseteq C - A$.
+
+  \paragraph{(ii)}%
+
+    Suppose $A \neq \emptyset$ and $A \subseteq B$.
+    Then $B \neq \emptyset$.
+    Let $x \in \bigcap B$.
+    By definition of the intersection of sets, for all $b \in B$, $x \in b$.
+    But then, by definition of the subset, for all $a \in A$, $x \in a$.
+    Therefore $x \in \bigcap A$.
+    Since this holds for arbitrary $x \in \bigcap B$, it follows that
+      $\bigcap B \subseteq \bigcap A$.
 
 \end{proof}
 
-\subsection{\unverified{General Distributive Laws}}%
+\subsection{\partial{General Distributive Laws}}%
 \label{sub:general-distributive-laws}
 
 For any sets $A$ and $\mathscr{B}$,
@@ -1188,11 +1298,53 @@ For any sets $A$ and $\mathscr{B}$,
 
 \begin{proof}
 
-  TODO
+  Let $A$ and $\mathscr{B}$ be sets.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item For $\mathscr{B} \neq \emptyset$,
+        $A \cup \bigcap \mathscr{B} =
+         \bigcap\; \{ A \cup X \mid X \in \mathscr{B} \}$.
+      \item $A \cap \bigcup \mathscr{B} =
+             \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}$
+    \end{enumerate}
+
+  \paragraph{(i)}%
+
+    Suppose $\mathscr{B}$ is nonempty.
+    Then $\bigcap \mathscr{B}$ is defined.
+    By definition of the union and intersection of sets,
+      \begin{align*}
+        A \cup \bigcap \mathscr{B}
+          & = \{ x \mid x \in A \lor x \in \bigcap \mathscr{B} \} \\
+          & = \{ x \mid x \in A \lor
+            x \in \{ y \mid (\forall b \in \mathscr{B}), y \in b \}\} \\
+          & = \{ x \mid x \in A \lor (\forall b \in \mathscr{B}), x \in b \} \\
+          & = \{ x \mid \forall b \in \mathscr{B}, x \in A \lor x \in b \} \\
+          & = \{ x \mid \forall b \in \mathscr{B}, x \in A \cup b \} \\
+          & = \{ x \mid
+            x \in \bigcap\; \{ A \cup X \mid X \in \mathscr{B} \}\} \\
+          & = \bigcap\; \{ A \cup X \mid X \in \mathscr{B} \}.
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By definition of the intersection and union of sets,
+      \begin{align*}
+        A \cap \bigcup \mathscr{B}
+          & = \{ x \mid x \in A \land x \in \bigcup \mathscr{B} \} \\
+          & = \{ x \mid x \in A \land
+            x \in \{ y \mid (\exists b \in \mathscr{B}), y \in b \}\} \\
+          & = \{ x \mid x \in A \land (\exists b \in \mathscr{B}), x \in b \} \\
+          & = \{ x \mid \exists b \in \mathscr{B}, x \in A \land x \in b \} \\
+          & = \{ x \mid \exists b \in \mathscr{B} x \in A \cap b \} \\
+          & = \{ x \mid
+            x \in \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}\} \\
+          & = \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}.
+      \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{General De Morgan's Laws}}%
+\subsection{\partial{General De Morgan's Laws}}%
 \label{sub:general-de-morgans-laws}
 
 For any set $C$ and $\mathscr{A} \neq \emptyset$,
@@ -1203,7 +1355,52 @@ For any set $C$ and $\mathscr{A} \neq \emptyset$,
 
 \begin{proof}
 
-  TODO
+  Let $C$ and $\mathscr{A}$ be sets such that $\mathscr{A} \neq \emptyset$.
+  We prove that
+    \begin{enumerate}[(i)]
+      \item $C - \bigcup \mathscr{A} =
+        \bigcap\; \{ C - X \mid X \in \mathscr{A} \}$
+      \item $C - \bigcap \mathscr{A} =
+          \bigcup\; \{ C - X \mid X \in \mathscr{A} \}$
+    \end{enumerate}
+
+  \paragraph{(i)}%
+
+    By definition of the relative complement, union, and intersection of sets,
+      \begin{align*}
+        C - \bigcup \mathscr{A}
+          & = \{ x \mid x \in C \land x \not\in \bigcup \mathscr{A} \} \\
+          & = \{ x \mid x \in C \land
+            x \not\in \{ y \mid (\exists b \in \mathscr{A}) y \in b \}\} \\
+          & = \{ x \mid x \in C \land
+            \neg(\exists b \in \mathscr{A}, x \in b) \} \\
+          & = \{ x \mid x \in C \land
+            (\forall b \in \mathscr{A}, x \not\in b) \} \\
+          & = \{ x \mid
+            \forall b \in \mathscr{A}, x \in C \land x \not\in b \} \\
+          & = \{ x \mid \forall b \in \mathscr{A}, x \in C - b \} \\
+          & = \{ x \mid x \in \bigcap\; \{ C - X \mid X \in \mathscr{A} \} \\
+          & = \bigcap\; \{ C - X \mid X \in \mathscr{A} \}.
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    By definition of the relative complement, union, and intersection of sets,
+      \begin{align*}
+        C - \bigcap \mathscr{A}
+          & = \{ x \mid x \in C \land x \not\in \bigcap \mathscr{A} \} \\
+          & = \{ x \mid x \in C \land
+            x \not\in \{ y \mid (\forall b \in \mathscr{A}) y \in b \}\} \\
+          & = \{ x \mid x \in C \land
+            \neg(\forall b \in \mathscr{A}, x \in b) \} \\
+          & = \{ x \mid x \in C \land
+            \exists b \in \mathscr{A}, x \not\in b \} \\
+          & = \{ x \mid
+            \exists b \in \mathscr{A}, x \in C \land x \not\in b \} \\
+          & = \{ x \mid \exists b \in \mathscr{A}, x \in C - b \} \\
+          & = \{ x \mid x \in \bigcup\; \{ C - X \mid X \in \mathscr{A} \} \} \\
+          & = \bigcup\; \{ C - X \mid X \in \mathscr{A} \}.
+      \end{align*}
 
 \end{proof}
 
