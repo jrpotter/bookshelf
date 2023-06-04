@@ -1,5 +1,8 @@
 \documentclass{report}
 
+\usepackage{graphicx}
+\graphicspath{{./Set/images/}}
+
 \input{../../preamble}
 \makeleancommands{../..}
 
@@ -1720,7 +1723,7 @@ Show that $A + (B + C) = (A + B) + C$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.16}}%
+\subsection{\verified{Exercise 4.16}}%
 \label{sub:exercise-4.16}
 
 Simplify:
@@ -1728,11 +1731,26 @@ Simplify:
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_16}
+
+  Let $A$, $B$, and $C$ be arbitrary sets.
+  Then
+    \begin{align*}
+      [(A \cup B \cup C) \cap (A \cup B)] & - [(A \cup (B - C)) \cap A] \\
+        & = [A \cup B] - [A] \\
+        & = \{ x \mid x \in (A \cup B) \land x \not\in A \} \\
+        & = \{ x \mid x \in \{ y \mid y \in A \lor y \in B \} \land x \not\in A \} \\
+        & = \{ x \mid (x \in A \lor x \in B) \land x \not\in A \} \\\
+        & = \{ x \mid (x \in A \land x \not\in A) \lor (x \in B \land x \not\in A) \} \\
+        & = \{ x \mid F \lor (X \in B \land x \not\in A) \} \\
+        & = \{ x \mid x \in B \land x \not\in A \} \\
+        & = B - A.
+    \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.17}}%
+\subsection{\verified{Exercise 4.17}}%
 \label{sub:exercise-4.17}
 
 Show that the following four conditions are equivalent.
@@ -1746,11 +1764,58 @@ Show that the following four conditions are equivalent.
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_17\_i}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_17\_ii}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_17\_iii}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_17\_iv}
+
+  Let $A$ and $B$ be arbitrary sets.
+  We show that (i) $(a) \Rightarrow (b)$, (ii) $(b) \Rightarrow (c)$, (iii)
+    $(c) \Rightarrow (d)$, and (iv) $(d) \Rightarrow (a)$.
+
+  \paragraph{(i)}%
+
+    Suppose $A \subseteq B$.
+    That is, $\forall t, t \in A \Rightarrow t \in B$.
+    Then there is no element such that $t \in A$ and $t \not\in B$.
+    By definition of the relative complement, this immediately implies
+      $A - B = \emptyset$.
+
+  \paragraph{(ii)}%
+
+    Suppose $A - B = \emptyset$.
+    By definition of the relative complement,
+      $$A - B = \emptyset = \{ x \mid x \in A \land x \not\in B \}.$$
+    Then, for all $t$,
+      $\neg(t \in A \land t \not\in B) = t \not\in A \lor t \in B$.
+    This implies, by definition of the subset, that $A \subseteq B$.
+    It then immediately follows that $A \cup B = B$.
+
+  \paragraph{(iii)}%
+
+    Suppose $A \cup B = B$.
+    Then there is no member of $A$ that is not a member of $B$.
+    In other words, $A \subseteq B$.
+    This immediately implies $A \cap B = A$.
+
+  \paragraph{(iv)}%
+
+    Suppose $A \cap B = A$.
+    Then every member of $A$ is a member of $B$.
+    This immediately implies $A \subseteq B$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.18}}%
+\subsection{\partial{Exercise 4.18}}%
 \label{sub:exercise-4.18}
 
 Assume that $A$ and $B$ are subsets of $S$.
@@ -1759,11 +1824,30 @@ List all of the different sets that can be made from these three by use of the
 
 \begin{proof}
 
-  TODO
+  We can reason about this diagrammatically:
+
+  \begin{figure}[ht]
+    \includegraphics[width=0.6\textwidth]{venn-diagram}
+    \centering
+  \end{figure}
+
+  In the above diagram, we assume the left circle corresponds to set $A$ and the
+    right circle corresponds to $B$.
+  The the possible sets we can make via the specified operators are:
+
+  \begin{itemize}
+    \item $A - B$, the left circle excluding the overlapping region.
+    \item $A \cap B$, the overlapping region.
+    \item $B - A$, the right circle excluding the overlapping region.
+    \item $(A \cup B) \cap A$, the left circle.
+    \item $(A \cup B) \cap B$, the right circle.
+    \item $(A - B) \cup (B - A)$, the symmetric difference.
+    \item $A \cup B$, the entire diagram.
+  \end{itemize}
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.19}}%
+\subsection{\verified{Exercise 4.19}}%
 \label{sub:exercise-4.19}
 
 Is $\powerset{(A - B)}$ always equal to $\powerset{A} - \powerset{B}$?
@@ -1771,11 +1855,35 @@ Is it ever equal to $\powerset{A} - \powerset{B}$?
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_19}
+
+  Let $A$ and $B$ be arbitrary sets.
+  We show (i) that $\emptyset \in \powerset{(A - B})$ and (ii)
+    $\emptyset \not\in \powerset{A} - \powerset{B}$.
+
+  \paragraph{(i)}%
+  \label{par:exercise-4.19-i}
+
+    By definition of the \nameref{ref:power-set},
+      $$\powerset{(A - B)} = \{ x \mid x \subseteq A - B \}.$$
+    But $\emptyset$ is a subset of \textit{every} set.
+    Thus $\emptyset \in \powerset{(A - B)}$.
+
+  \paragraph{(ii)}%
+
+    By the same reasoning found in \nameref{par:exercise-4.19-i},
+      $\emptyset \in \powerset{A}$ and $\emptyset \in \powerset{B}$.
+    But then, by definition of the relative complement,
+      $\emptyset \not\in \powerset{A} - \powerset{B}$.
+
+  \paragraph{Conclusion}%
+
+    By the \nameref{ref:extensionality-axiom}, the two sets are never equal.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.20}}%
+\subsection{\verified{Exercise 4.20}}%
 \label{sub:exercise-4.20}
 
 Let $A$, $B$, and $C$ be sets such that $A \cup B = A \cup C$ and
@@ -1784,22 +1892,95 @@ Show that $B = C$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_20}
+
+  Let $A$, $B$, and $C$ be arbitrary sets.
+  By the \nameref{ref:extensionality-axiom}, $B = C$ if and only if for all sets
+    $x$, $x \in B \iff x \in C$.
+  We prove both directions of this biconditional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $x \in B$.
+    Then there are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Assume $x \in A$.
+      Then $x \in A \cap B$.
+      By hypothesis, $A \cap B = A \cap C$.
+      Thus $x \in A \cap C$ immediately implying $x \in C$.
+
+    \subparagraph{Case 2}%
+
+      Assume $x \not\in A$.
+      Then $x \in A \cup B$.
+      By hypothesis, $A \cup B = A \cup C$.
+      Thus $x \in A \cup C$.
+      Since $x \not\in A$, it follows $x \in C$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $x \in C$.
+    Then there are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Assume $x \in A$.
+      Then $x \in A \cap C$.
+      By hypothesis, $A \cap B = A \cap C$.
+      Thus $x \in A \cap B$, immediately implying $x \in B$.
+
+    \subparagraph{Case 2}%
+
+      Assume $x \not\in A$.
+      Then $x \in A \cup C$.
+      By hypothesis, $A \cup B = A \cup C$.
+      Thus $x \in A \cup B$.
+      Since $x \not\in A$, it follows $x \in B$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.21}}%
+\subsection{\verified{Exercise 4.21}}%
 \label{sub:exercise-4.21}
 
 Show that $\bigcup (A \cup B) = \bigcup A \cup \bigcup B$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_21}
+
+  Let $A$ and $B$ be arbitrary sets.
+  By the \nameref{ref:extensionality-axiom}, the specified equality holds if and
+    only if for all sets $x$,
+    $$x \in \bigcup (A \cup B) \iff x \in \bigcup A \cup \bigcup B.$$
+  We prove both directions of this biconditional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $x \in \bigcup (A \cup B)$.
+    By definition of the union of sets, there exists some $b \in A \cup B$ such
+      that $x \in b$.
+    If $b \in A$, then $x \in \bigcup A$ and $x \in \bigcup A \cup \bigcup B$.
+    Alternatively, if $b \in B$, then $x \in \bigcup B$ and
+      $x \in \bigcup A \cup \bigcup B$.
+    Regardless, $x$ is in the target set.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $x \in \bigcup A \cup \bigcup B$.
+    Then $x \in \bigcup A$ or $x \in \bigcup B$.
+    WLOG, suppose $x \in \bigcup A$.
+    By definition of the union of sets, there exists some $b \in A$ such that
+      $x \in b$.
+    But then $b \in A \cup B$ meaning $x$ is also a member of
+      $\bigcup (A \cup B)$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.22}}%
+\subsection{\verified{Exercise 4.22}}%
 \label{sub:exercise-4.22}
 
 Show that if $A$ and $B$ are nonempty sets, then
@@ -1807,11 +1988,39 @@ Show that if $A$ and $B$ are nonempty sets, then
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_22}
+
+  Let $A$ and $B$ be arbitrary, nonempty sets.
+  By the \nameref{ref:extensionality-axiom}, the specified equality holds if and
+    only if for all sets $x$,
+    \begin{equation}
+      \label{sub:exercise-4.22-eq1}
+      x \in \bigcap (A \cup B) \iff x \in \bigcap A \cap \bigcap B.
+    \end{equation}
+  We prove both directions of this biconditional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $x \in \bigcap (A \cup B)$.
+    Then for all $b \in A \cup B$, $x \in B$.
+    In other words, for every member $b_1$ of $A$ and every member $b_2$ of $B$,
+      $x$ is a member of both $b_1$ and $b_2$.
+    But that implies $x \in \bigcap A$ and $x \in \bigcap B$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $x \in \bigcap A \cap \bigcap B$.
+    That is, $x \in \bigcap A$ and $x \in \bigcap B$.
+    By definition of the intersection of sets, forall sets $b$, if $b \in A$,
+      then $x \in b$.
+    Likewise, if $b \in B$, then $x \in b$.
+    In other words, if $b$ is a member of either $A$ or $B$, $x \in b$.
+    That immediately implies $x \in \bigcap (A \cup B$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.23}}%
+\subsection{\partial{Exercise 4.23}}%
 \label{sub:exercise-4.23}
 
 Show that if $\mathscr{B}$ is nonempty, then
@@ -1819,46 +2028,186 @@ Show that if $\mathscr{B}$ is nonempty, then
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{sub:general-distributive-laws}.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.24a}}%
+\subsection{\verified{Exercise 4.24a}}%
 \label{sub:exercise-4.24a}
 
 Show that if $\mathscr{A}$ is nonempty, then
-  $\powerset{\bigcap A} = \bigcap\; \{\powerset{X} \mid X \in \mathscr{A} \}$.
+  $\powerset{\bigcap\mathscr{A}} =
+    \bigcap\; \{\powerset{X} \mid X \in \mathscr{A} \}$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_24a}
+
+  Suppose $\mathscr{A}$ is a nonempty set.
+  Then $\bigcap \mathscr{A}$ is well-defined.
+  Therefore
+    \begin{align*}
+      \powerset{\bigcap\mathscr{A}}
+        & = \{ x \mid x \subseteq \bigcap \mathscr{A} \}
+          & \textref{ref:power-set} \\
+        & = \{ x \mid x \subseteq
+          \{ y \mid \forall X \in \mathscr{A}, y \in X \} \}
+          & \text{def'n intersection} \\
+        & = \{ x \mid \forall t \in x,
+          t \in \{ y \mid \forall X \in \mathscr{A}, y \in X \} \}
+          & \text{def'n subset} \\
+        & = \{ x \mid \forall t \in x,
+          (\forall X \in \mathscr{A}, t \in X) \} \\
+        & = \{ x \mid \forall X \in \mathscr{A},
+          (\forall t \in x, t \in X) \} \\
+        & = \{ x \mid \forall X \in \mathscr{A}, x \subseteq X \} \\
+        & = \{ x \mid \forall X \in \mathscr{A}, x \in \powerset{X} \}
+          & \textref{ref:power-set-axiom} \\
+        & = \{ x \mid
+          \forall t \in \{ \powerset{X} \mid X \in \mathscr{A} \}, x \in t \} \\
+        & = \bigcap\; \{\powerset{X} \mid X \in \mathscr{A}\}.
+    \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.24b}}%
+\subsection{\verified{Exercise 4.24b}}%
 \label{sub:exercise-4.24b}
 
 Show that
-  $$\bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \} \subseteq
-    \powerset{\bigcup A}.$$
+  \begin{equation}
+    \label{sub:exercise-4.24b-eq1}
+    \bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \} \subseteq
+      \powerset{\bigcup\mathscr{A}}.
+  \end{equation}
 Under what conditions does equality hold?
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_24b}
+
+  We first prove \eqref{sub:exercise-4.24b-eq1}.
+  Let $x \in \bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \}$.
+  By definition of the union of sets,
+    $(\exists X \in \mathscr{A}), x \in \powerset{X}$.
+  By definition of the \nameref{ref:power-set}, $x \subseteq X$.
+  By \nameref{sub:exercise-3.3}, $X \subseteq \bigcup \mathscr{A}$.
+  Therefore $x \subseteq \bigcup \mathscr{A}$, proving
+    $x \in \powerset{\mathscr{A}}$ as expected.
+
+  \suitdivider
+
+  \noindent
+  We show $\powerset{\bigcup A} \subseteq 
+    \bigcup\;\{ \powerset{X} \mid X \in \mathscr{A} \}$ if and only if
+    $\bigcup\mathscr{A} \in \mathscr{A}$.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $\powerset{\bigcup\mathscr{A}} \subseteq
+      \bigcup\;\{ \powerset{X} \mid X \in \mathscr{A} \}$.
+    By definition of the \nameref{ref:power-set},
+      $\bigcup\mathscr{A} \in \powerset{\bigcup\mathscr{A}}$.
+    By hypothesis, $\bigcup\mathscr{A} \in 
+      \bigcup\;\{ \powerset{X} \mid X \in \mathscr{A} \}$.
+    By definition of the union of sets, there exists some $X \in \mathscr{A}$
+      such that $\bigcup\mathscr{A} \in \powerset{X}$.
+    That is, $\bigcup\mathscr{A} \subseteq X$.
+    But $\bigcup\mathscr{A}$ cannot be a proper subset of $X$ since
+      $X \in \mathscr{A}$.
+    Thus $\bigcup\mathscr{A} = X$.
+    This proves $\bigcup\mathscr{A} \in
+      \bigcup\;\{ \powerset{X} \mid X \in \mathscr{A} \}$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $\bigcup\mathscr{A} \in A$.
+    Let $x \in \powerset{\bigcup\mathscr{A}}$.
+    Since $\bigcup\mathscr{A} \in \mathscr{A}$, it immediately follows that
+      $x \in \{\powerset{X} \mid X \in \mathscr{A}\}$.
+
+  \paragraph{Conclusion}%
+
+    Equality follows immediately from this fact in conjunction with the proof
+      of \eqref{sub:exercise-4.24b-eq1}.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 4.25}}%
+\subsection{\verified{Exercise 4.25}}%
 \label{sub:exercise-4.25}
 
 Is $A \cup \bigcup \mathscr{B}$ always the same as
-  $\bigcup\; \{ A \cup X \mid X \in \mathscr{B} \}$?
+  $\bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}$?
 If not, then under what conditions does equality hold?
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_4\_25}
+
+  We prove that
+    \begin{equation}
+      \label{sub:exercise-4.25-eq1}
+      A \cup \bigcup \mathscr{B} =
+        \bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}
+    \end{equation}
+    if and only if $A = \emptyset$ or $\mathscr{B} \neq \emptyset$.
+  We prove both directions of this biconditional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose \eqref{sub:exercise-4.25-eq1} holds true.
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $B \neq \emptyset$.
+      Then $A = \emptyset \lor \mathscr{B} \neq \emptyset$ holds trivially.
+
+    \subparagraph{Case 2}%
+
+      Suppose $B = \emptyset$.
+      Then $$A \cup \bigcup \mathscr{B} = A \cup \bigcup \emptyset = A$$ and
+        $$
+          \bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}
+            = \bigcup \emptyset \\
+            = \emptyset.
+        $$
+      Then by hypothesis \eqref{sub:exercise-4.25-eq1}, $A = \emptyset$.
+      Then $A = \emptyset \lor \mathscr{B} \neq \emptyset$ holds trivially.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $A = \emptyset$ or $\mathscr{B} \neq \emptyset$.
+    There are two cases to consider:
+
+    \paragraph{Case 1}%
+
+      Suppose $A = \emptyset$.
+      Then $A \cup \bigcup \mathscr{B} = \bigcup{\mathscr{B}}$.
+      Likewise,
+        $$
+          \bigcup \{ A \cup X \mid X \in \mathscr{B} \}
+            = \bigcup \{ X \mid X \in \mathscr{B} \} \\
+            = \bigcup \mathscr{B}.
+        $$
+      Therefore \eqref{sub:exercise-4.25-eq1} holds.
+
+    \paragraph{Case 2}%
+
+      Suppose $B \neq \emptyset$.
+      Then
+        \begin{align*}
+          A \cup \bigcup\mathscr{B}
+            & = \{ x \mid x \in A \lor x \in \bigcup\mathscr{B} \} \\
+            & = \{ x \mid x \in A \lor (\exists b \in \mathscr{B}) x \in b \} \\
+            & = \{ x \mid (\exists b \in \mathscr{B}) x \in A \lor x \in b \} \\
+            & = \{ x \mid (\exists b \in \mathscr{B}) x \in A \cup b \} \\
+            & = \{ x \mid x \in \bigcup \{ A \cup X \mid X \in \mathscr{B} \} \\
+            & = \bigcup \{ A \cup X \mid X \in \mathscr{B} \}.
+        \end{align*}
+      Therefore \eqref{sub:exercise-4.25-eq1} holds.
 
 \end{proof}
 

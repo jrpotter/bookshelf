@@ -89,6 +89,14 @@ theorem mem_mem_imp_pair_subset {x y : α}
   · intro hy'
     rwa [hy']
 
+/-! ## Powerset -/
+
+/--
+Every `Set` is a member of its own powerset.
+-/
+theorem self_mem_powerset_self {A : Set α}
+  : A ∈ 𝒫 A := subset_self A
+
 /-! ## Symmetric Difference -/
 
 /--
@@ -116,8 +124,7 @@ This is the contraposition of `mem_symm_diff_iff_exclusive_mem`.
 -/
 theorem not_mem_symm_diff_inter_or_not_union {A B : Set α}
   : x ∉ (A ∆ B) ↔ (x ∈ A ∩ B) ∨ (x ∉ A ∪ B) := by
-  unfold symmDiff
-  simp
+  show ¬(x ∈ A ∧ ¬x ∈ B ∨ x ∈ B ∧ ¬x ∈ A) ↔ x ∈ A ∧ x ∈ B ∨ ¬(x ∈ A ∨ x ∈ B)
   rw [
     not_or_de_morgan,
     not_and_de_morgan, not_and_de_morgan,
@@ -125,16 +132,12 @@ theorem not_mem_symm_diff_inter_or_not_union {A B : Set α}
     not_or_de_morgan
   ]
   apply Iff.intro
-  · intro hx
-    apply Or.elim hx.left
+  · intro nx
+    apply Or.elim nx.left
     · intro nA
-      exact Or.elim hx.right
-        (fun nB => Or.inr ⟨nA, nB⟩)
-        (fun hA => absurd hA nA)
+      exact Or.elim nx.right (Or.inr ⟨nA, ·⟩) (absurd · nA)
     · intro hB
-      apply Or.elim hx.right
-        (fun nB => absurd hB nB)
-        (fun hA => Or.inl ⟨hA, hB⟩)
+      exact Or.elim nx.right (absurd hB ·) (Or.inl ⟨·, hB⟩)
   · intro hx
     apply Or.elim hx
     · intro hy
