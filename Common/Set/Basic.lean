@@ -44,6 +44,37 @@ It returns `1` if the specified input belongs to `S` and `0` otherwise.
 def characteristic (S : Set α) (x : α) [Decidable (x ∈ S)] : Nat :=
   if x ∈ S then 1 else 0
 
+/-! ## Equality -/
+
+/--
+If `{x, y} = {x}` then `x = y`.
+-/
+theorem pair_eq_singleton_mem_imp_eq_self {x y : α}
+  (h : {x, y} = ({x} : Set α)) : y = x := by
+  rw [Set.ext_iff] at h
+  have := h y
+  simp at this
+  exact this
+
+/--
+If `{x, y} = {z}` then `x = y = z`.
+-/
+theorem pair_eq_singleton_mem_imp_eq_all {x y z : α}
+  (h : {x, y} = ({z} : Set α)) : x = z ∧ y = z := by
+  have h' := h
+  rw [Set.ext_iff] at h'
+  have hz := h' z
+  simp at hz
+  apply Or.elim hz
+  · intro hzx
+    rw [← hzx] at h
+    have := pair_eq_singleton_mem_imp_eq_self h
+    exact ⟨hzx.symm, this⟩
+  · intro hzy
+    rw [← hzy, Set.pair_comm] at h
+    have := pair_eq_singleton_mem_imp_eq_self h
+    exact ⟨this, hzy.symm⟩
+
 /-! ## Subsets -/
 
 /--

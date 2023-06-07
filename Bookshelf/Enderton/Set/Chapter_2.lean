@@ -1,6 +1,5 @@
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Lattice
-import Mathlib.Tactic.LibrarySearch
 
 import Bookshelf.Enderton.Set.Chapter_1
 import Common.Logic.Basic

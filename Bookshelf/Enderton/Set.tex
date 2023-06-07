@@ -45,6 +45,18 @@ If two sets have exactly the same members, then they are equal:
 
 \end{axiom}
 
+\section{\defined{Ordered Pair}}%
+\label{ref:ordered-pair}
+
+For any sets $u$ and $v$, the \textbf{ordered pair} $\left< u, v \right>$ is
+  the set $\{\{u\}, \{u, v\}\}$.
+
+\begin{definition}
+
+  \lean*{Common/Set/OrderedPair}{OrderedPair}
+
+\end{definition}
+
 \section{\defined{Pair Set}}%
 \label{ref:pair-set}
 
@@ -2208,6 +2220,87 @@ If not, then under what conditions does equality hold?
             & = \bigcup \{ A \cup X \mid X \in \mathscr{B} \}.
         \end{align*}
       Therefore \eqref{sub:exercise-4.25-eq1} holds.
+
+\end{proof}
+
+\chapter{Relations and Functions}%
+\label{chap:relations-functions}
+
+\section{Ordered Pairs}%
+\label{sec:ordered-pairs}
+
+\subsection{\verified{Theorem 3A}}%
+\label{sub:theorem-3a}
+
+\begin{theorem}
+
+  For any sets $x$, $y$, $u$, and $v$,
+    \begin{equation}
+      \label{sub:theorem-3a-eq1}
+      \left< u, v \right> = \left< x, y \right> \iff u = x \land v = y.
+    \end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+  \lean{Common/Set/OrderedPair}{Set.OrderedPair.ext\_iff}
+
+  Let $x$, $y$, $u$, and $v$ be arbitrary sets.
+
+  \paragraph{($\Leftarrow$)}%
+
+    This follows trivially.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $\left< u, v \right> = \left< x, y \right>$.
+    Then, by definition of an \nameref{ref:ordered-pair},
+      \begin{equation}
+        \label{sub:theorem-3a-eq2}
+        \{\{u\}, \{u, v\}\} = \{\{x\}, \{x, y\}\}.
+      \end{equation}
+    By the \nameref{ref:extensionality-axiom}, it follows
+      $\{u\} \in \{\{x\}, \{x, y\}\}$ and
+      $\{u, v\} \in \{\{x\}, \{x, y\}\}$.
+    That is,
+      $$\{u\} = \{x\} \quad\text{or}\quad \{u\} = \{x, y\}$$
+      and
+      $$\{u, v\} = \{x\} \quad\text{or}\quad \{u, v\} = \{x, y\}.$$
+    There are 4 cases to consider:
+
+    \paragraph{Case 1}%
+
+      Suppose $\{u\} = \{x\}$ and $\{u, v\} = \{x\}$.
+      The former identity implies $u = x$.
+      The latter identity implies $u = v = x$.
+      Then \eqref{sub:theorem-3a-eq2} simplifies to
+        $$\{\{u\}\} = \{\{x\}, \{x, y\}\},$$ meaning $x = y$.
+      Thus $v = y$ as well.
+
+    \paragraph{Case 2}%
+
+      Suppose $\{u\} = \{x\}$ and $\{u, v\} = \{x, y\}$.
+      The former identity implies $u = x$.
+      Substituting into the latter identity yields $\{u, v\} = \{u, y\}$.
+      This holds if and only if $v = y$.
+
+    \paragraph{Case 3}%
+
+      Suppose $\{u\} = \{x, y\}$ and $\{u, v\} = \{x\}$.
+      The former identity implies $x = y = u$.
+      Substituting into the latter yields $\{u, v\} = \{u\}$.
+      Thus $u = v$ which in turn implies $v = y$.
+
+    \paragraph{Case 4}%
+      Suppose $\{u\} = \{x, y\}$ and $\{u, v\} = \{x, y\}$.
+      The former identity implies $x = y = u$.
+      Substituting into the latter yields $\{u, v\} = \{u\}$.
+      This implies $v = u$ which in turn implies $v = y$.
+
+    \paragraph{Conclusion}%
+
+      These cases are exhaustive and each implies that $u = x$ and $v = y$.
 
 \end{proof}
 
