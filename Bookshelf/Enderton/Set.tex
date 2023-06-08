@@ -2232,7 +2232,7 @@ If not, then under what conditions does equality hold?
 \subsection{\verified{Theorem 3A}}%
 \label{sub:theorem-3a}
 
-\begin{theorem}
+\begin{theorem}[3A]
 
   For any sets $x$, $y$, $u$, and $v$,
     \begin{equation}
@@ -2301,6 +2301,65 @@ If not, then under what conditions does equality hold?
     \paragraph{Conclusion}%
 
       These cases are exhaustive and each implies that $u = x$ and $v = y$.
+
+\end{proof}
+
+\subsection{\verified{Lemma 3B}}%
+\label{sub:lemma-3b}
+
+\begin{theorem}[3B]
+
+  If $x \in C$ and $y \in C$, then
+    $\left< x, y \right> \in \powerset{\powerset{C}}$.
+
+\end{theorem}
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3b}
+
+  Let $C$ be an arbitrary set and $x, y \in C$.
+  Then, by definition of the \nameref{ref:power-set},
+    $\{x\}$ and $\{x, y\}$ are members of $\powerset{C}$.
+  Likewise, $\{\{x\}, \{x, y\}\}$ is a member of $\powerset{\powerset{C}}$.
+  By definition of an \nameref{ref:ordered-pair},
+    $\left< x, y \right> = \{\{x\}, \{x, y\}\}$.
+  This concludes our proof.
+
+\end{proof}
+
+\subsection{\verified{Cartesian Product}}%
+\label{sub:corollary-3c}
+\label{sub:cartesian-product}
+
+\begin{theorem}[3C]
+
+  For any sets $A$ and $B$, there is a set whose members are exactly the
+    pairs $\left< x, y \right>$ with $x \in A$ and $y \in B$.
+
+\end{theorem}
+
+\begin{proof}
+
+  \lean*{Mathlib/SetTheory/ZFC/Basic}{Set.prod}
+
+  \note{The above Lean proof is a definition (i.e. an axiom). It does not prove
+    such a set's existence from first principles.}
+
+  Define $C = A \cup B$.
+  Then for all $x \in A$ and for all $y \in B$, $x$ and $y$ are both in $C$.
+  By \nameref{sub:lemma-3b}, it follows that
+    $\left< x, y \right> \in \powerset{\powerset{C}}$.
+  The \nameref{ref:power-set-axiom} indicates $\powerset{\powerset{C}}$ is
+    indeed a set.
+  Therefore the \nameref{ref:subset-axioms} are applicable.
+  This implies the existence of a set $D$ such that
+    $$\forall z, (z \in D \iff z \in \powerset{\powerset{C}} \land
+      (\exists x, \exists y, x \in A \land y \in B \land
+        z = \left< x, y \right>)).$$
+  By construction $D$ is the set whose members are exactly the pairs
+    $\left< x, y \right>$ with $x \in A$ and $y \in B$.
 
 \end{proof}
 
