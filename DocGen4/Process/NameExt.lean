@@ -37,7 +37,7 @@ def cmp (n₁ n₂ : NameExt) : Ordering :=
 
 def getString! : NameExt → String
   | ⟨str _ s, .html⟩ => s
-  | ⟨str _ s, .pdf⟩ => s ++ "_pdf"
+  | ⟨str _ s, .pdf⟩ => s ++ ".pdf"
   | _       => unreachable!
 
 end NameExt
