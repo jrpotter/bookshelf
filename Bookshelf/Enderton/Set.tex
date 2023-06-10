@@ -2363,4 +2363,114 @@ If not, then under what conditions does equality hold?
 
 \end{proof}
 
+\section{Exercises 5}%
+\label{sec:exercises-5}
+
+\subsection{\verified{Exercise 5.1}}%
+\label{sub:exercise-5.1}
+
+Suppose that we attempted to generalize the Kuratowski definitions of ordered
+  pairs to ordered triples by defining
+  $$\left< x, y, z \right>^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
+Show that this definition is unsuccessful by giving examples of objects
+  $u$, $v$, $w$, $x$, $y$, $z$ with
+  $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but with either
+  $y \neq v$ or $z \neq w$ (or both).
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_5\_1}
+
+  Let $x = 1$, $y = 1$, and $z = 2$.
+  Let $u = 1$, $v = 2$, and $w = 2$.
+  Then
+    \begin{align*}
+      \left< x, y, z \right>^*
+        & = \{\{x\}, \{x, y\}, \{x, y, z\}\} \\
+        & = \{\{1\}, \{1, 1\}, \{1, 1, 2\}\} \\
+        & = \{\{1\}, \{1, 2\}\}.
+    \end{align*}
+  Likewise
+    \begin{align*}
+      \left< u, v, w \right>^*
+        & = \{\{u\}, \{u, v\}, \{u, v, w\}\} \\
+        & = \{\{1\}, \{1, 2\}, \{1, 2, 2\}\} \\
+        & = \{\{1\}, \{1, 2\}\}.
+    \end{align*}
+  Thus $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but $y \neq v$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 5.2a}}%
+\label{sub:exercise-5.2a}
+
+Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_5\_2a}
+
+  Let $A$, $B$, and $C$ be arbitrary sets.
+  Then by definition of the \nameref{sub:cartesian-product} and union of sets,
+    \begin{align*}
+      A \times (B \cup C)
+        & = \{ \left< x, y \right> \mid x \in A \land y \in (B \cup C) \} \\
+        & = \{ \left< x, y \right> \mid
+          x \in A \land (y \in B \lor y \in C) \} \\
+        & = \{ \left< x, y \right> \mid
+          (x \in A \land y \in B) \lor (x \in A \land y \in C) \} \\
+        & = \{ \left< x, y \right> \mid (x \in A \land y \in B) \} \cup
+          \{ \left< x, y \right> \mid (x \in A \land y \in C) \} \\
+        & = (A \times B) \cup (A \times C).
+    \end{align*}
+
+\end{proof}
+
+\subsection{\verified{Exercise 5.2b}}%
+\label{sub:exercise-5.2b}
+
+Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_5\_2b}
+
+  Let $A$, $B$, and $C$ be arbitrary sets such that $A \neq \emptyset$.
+  By definition of the \nameref{sub:cartesian-product},
+    \begin{align}
+      A \times B & = \{ \left< x, y \right> \mid x \in A \land y \in B \}
+        & \label{sub:exercise-5.2b-eq1} \\
+      A \times C & = \{ \left< x, y \right> \mid x \in A \land y \in C \}.
+        & \label{sub:exercise-5.2b-eq2}
+    \end{align}
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $B \neq \emptyset$.
+    Then $A \times B \neq \emptyset$ and $A \times C \neq \emptyset$.
+    Let $\left< x, y \right> \in A \times B$.
+    By \eqref{sub:exercise-5.2b-eq1}, $x \in A$ and $y \in B$.
+    By the \nameref{ref:extensionality-axiom},
+      $$\left< x, y \right> \in A \times B \iff \left< x, y \right> \in A \times C.$$
+    Therefore $\left< x, y \right> \in A \times C$.
+    By \eqref{sub:exercise-5.2b-eq2}, $x \in A$ and $y \in C$.
+    Since membership of $y$ in $B$ and in $C$ holds biconditionally, the
+      \nameref{ref:extensionality-axiom} indicates $B = C$.
+
+  \paragraph{Case 2}%
+
+    Suppose $B = \emptyset$.
+    Then there is no $\left< x, y \right>$ such that $x \in A$ and $y \in B$.
+    Thus $A \times B = \emptyset$ and $A \times C = \emptyset$.
+    But then there cannot exist an $\left< x, y \right>$ such that $x \in A$
+      and $y \in C$ either.
+    Since $A \neq \emptyset$, it must be the case that $C = \emptyset$.
+    Thus $B = C$.
+
+\end{proof}
+
 \end{document}

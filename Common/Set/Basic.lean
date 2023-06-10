@@ -1,4 +1,5 @@
 import Mathlib.Data.Set.Basic
+import Mathlib.SetTheory.ZFC.Basic
 
 import Common.Logic.Basic
 
@@ -127,6 +128,42 @@ Every `Set` is a member of its own powerset.
 -/
 theorem self_mem_powerset_self {A : Set α}
   : A ∈ 𝒫 A := subset_self A
+
+/-! ## Cartesian Product -/
+
+/--
+For any `Set` `A`, `∅ × A = ∅`.
+-/
+theorem prod_left_emptyset_eq_emptyset {A : Set α}
+  : Set.prod (∅ : Set α) A = ∅ := by
+  unfold prod
+  simp only [mem_empty_iff_false, false_and, setOf_false]
+
+/--
+For any `Set` `A`, `A × ∅ = ∅`.
+-/
+theorem prod_right_emptyset_eq_emptyset {A : Set α}
+  : Set.prod A (∅ : Set α) = ∅ := by
+  unfold prod
+  simp only [mem_empty_iff_false, and_false, setOf_false]
+
+/--
+For any `Set`s `A` and `B`, if both `A` and `B` are nonempty, then `A × B` is
+also nonempty.
+-/
+theorem prod_nonempty_nonempty_imp_nonempty_prod {A B : Set α}
+  : A ≠ ∅ ∧ B ≠ ∅ ↔ Set.prod A B ≠ ∅ := by
+  apply Iff.intro
+  · intro nAB h
+    have ⟨a, ha⟩ := nonempty_iff_ne_empty.mpr nAB.left
+    have ⟨b, hb⟩ := nonempty_iff_ne_empty.mpr nAB.right
+    rw [Set.ext_iff] at h
+    exact (h (a, b)).mp ⟨ha, hb⟩
+  · intro h
+    rw [← nonempty_iff_ne_empty] at h
+    have ⟨(a, b), ⟨ha, hb⟩⟩ := h
+    rw [← nonempty_iff_ne_empty, ← nonempty_iff_ne_empty]
+    exact ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
 
 /-! ## Symmetric Difference -/
 
