@@ -2244,7 +2244,8 @@ If not, then under what conditions does equality hold?
 
 \begin{proof}
 
-  \lean{Common/Set/OrderedPair}{Set.OrderedPair.ext\_iff}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.OrderedPair.ext\_iff}
 
   Let $x$, $y$, $u$, and $v$ be arbitrary sets.
 
@@ -2518,7 +2519,7 @@ Show that there is no set to which every ordered pair belongs.
 
 \end{proof}
 
-\subsection{\partial{Exercise 5.5a}}%
+\subsection{\unverified{Exercise 5.5a}}%
 \label{sub:exercise-5.5a}
 
 Assume that $A$ and $B$ are given sets, and show that there exists a set $C$
@@ -2581,12 +2582,15 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
 
 \end{proof}
 
-\subsection{\partial{Exercise 5.5b}}%
+\subsection{\verified{Exercise 5.5b}}%
 \label{sub:exercise-5.5b}
 
 With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_5\_5b}
 
   Let $A$ and $B$ be arbitrary sets.
   We want to show that
@@ -2594,19 +2598,38 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
       \label{sub:exercise-5.5b-eq1}
       A \times B = \bigcup\; \{\{x\} \times B \mid x \in A\}.
     \end{equation}
-  Note that \nameref{sub:cartesian-product} and \nameref{sub:exercise-5.5a}
-    prove the left- and right-hand sides of \eqref{sub:exercise-5.5b-eq1} are
-    sets respectively.
-  Then
-    \begin{align*}
-      A \times B
-        & = \{ y \mid \exists x \in A, \exists b \in B, y = \left< x, b \right> \} \\
-        & = \{ y \mid \exists b \in B, \exists x \in A, y = \left< x, b \right> \} \\
-        & = \{ y \mid \exists b \in B, y \in \{ \left< x, b \right> \mid x \in A \} \} \\
-        & = \{ y \mid y \in \{ \left< x, b \right> \mid x \in A \land b \in B \} \} \\
-        & = \{ y \mid \exists z \in \{\{x\} \times B \mid x \in A \}, y \in z \} \\
-        & = \bigcup \{\{x\} \times B \mid x \in A \}.
-    \end{align*}
+  The left-hand side of \eqref{sub:exercise-5.5b-eq1} is a set by virtue of
+    \nameref{sub:cartesian-product}.
+  The right-hand side of \eqref{sub:exercise-5.5b-eq1} is a set by virtue of
+    \nameref{sub:exercise-5.5a}.
+  We prove the set on each side is a subset of the other.
+
+  \paragraph{($\subseteq$)}%
+
+    Let $c \in A \times B$.
+    Then there exists some $a \in A$ and $b \in B$ such that
+      $c = \left< a, b \right>$.
+    Thus $c \in \{a\} \times B$.
+    We also note $\{a\} \times B \in \{\{x\} \times B \mid x \in A\}$,
+      specifically when $x = a$.
+    Therefore, by the \nameref{ref:union-axiom},
+      $c \in \bigcup\;\{\{x\} \times B \mid x \in A\}$.
+
+  \paragraph{($\supseteq$)}%
+
+    Let $c \in \bigcup\; \{\{x\} \times B \mid x \in A\}$.
+    By the \nameref{ref:union-axiom}, there exists some
+      $b \in \{\{x\} \times B \mid x \in A\}$ such that $c \in b$.
+    Then there exists some $x \in A$ such that $b = \{x\} \times B$.
+    Therefore $c \in \{x\} \times B$.
+    But $x \in A$ meaning $c \in A \times B$ as well.
+
+  \paragraph{Conclusion}%
+
+    Since we have shown
+      $A \times B \subseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$ and
+      $A \times B \supseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$, it
+      follows \eqref{sub:exercise-5.5b-eq1} is a true identity.
 
 \end{proof}
 

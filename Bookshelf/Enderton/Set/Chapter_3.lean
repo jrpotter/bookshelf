@@ -1,8 +1,7 @@
 import Mathlib.Data.Set.Basic
-import Mathlib.SetTheory.ZFC.Basic
 
+import Common.Logic.Basic
 import Common.Set.Basic
-import Common.Set.OrderedPair
 
 /-! # Enderton.Chapter_3
 
@@ -11,13 +10,107 @@ Relations and Functions
 
 namespace Enderton.Set.Chapter_3
 
+/-! ## Ordered Pairs -/
+
 /--
+Kazimierz Kuratowski's definition of an ordered pair.
+-/
+def OrderedPair (x : α) (y : β) : Set (Set (α ⊕ β)) :=
+  {{Sum.inl x}, {Sum.inl x, Sum.inr y}}
+
+namespace OrderedPair
+
+/--
+For any sets `x`, `y`, `u`, and `v`, `⟨u, v⟩ = ⟨x, y⟩` **iff** `u = x ∧ v = y`.
+-/
+theorem ext_iff {x u : α} {y v : β}
+  : (OrderedPair x y = OrderedPair u v) ↔ (x = u ∧ y = v) := by
+  unfold OrderedPair
+  apply Iff.intro
+  · intro h
+    have hu := Set.ext_iff.mp h {Sum.inl u}
+    have huv := Set.ext_iff.mp h {Sum.inl u, Sum.inr v}
+    simp only [
+      Set.mem_singleton_iff,
+      Set.mem_insert_iff,
+      true_or,
+      iff_true
+    ] at hu
+    simp only [
+      Set.mem_singleton_iff,
+      Set.mem_insert_iff,
+      or_true,
+      iff_true
+    ] at huv
+    apply Or.elim hu
+    · apply Or.elim huv
+      · -- #### Case 1
+        -- `{u} = {x}` and `{u, v} = {x}`.
+        intro huv_x hu_x
+        rw [Set.singleton_eq_singleton_iff] at hu_x
+        rw [hu_x] at huv_x
+        have hx_v := Set.pair_eq_singleton_mem_imp_eq_self huv_x
+        rw [hu_x, hx_v] at h
+        simp only [Set.mem_singleton_iff, Set.insert_eq_of_mem] at h
+        have := Set.pair_eq_singleton_mem_imp_eq_self $
+          Set.pair_eq_singleton_mem_imp_eq_self h
+        rw [← hx_v] at this
+        injection hu_x with p
+        injection this with q
+        exact ⟨p.symm, q⟩
+      · -- #### Case 2
+        -- `{u} = {x}` and `{u, v} = {x, y}`.
+        intro huv_xy hu_x
+        rw [Set.singleton_eq_singleton_iff] at hu_x
+        rw [hu_x] at huv_xy
+        by_cases hx_v : Sum.inl x = Sum.inr v
+        · rw [hx_v] at huv_xy
+          simp at huv_xy
+          have := Set.pair_eq_singleton_mem_imp_eq_self huv_xy.symm
+          injection hu_x with p
+          injection this with q
+          exact ⟨p.symm, q⟩
+        · rw [Set.ext_iff] at huv_xy
+          have := huv_xy (Sum.inr v)
+          simp at this
+          injection hu_x with p
+          exact ⟨p.symm, this.symm⟩
+    · apply Or.elim huv
+      · -- #### Case 3
+        -- `{u} = {x, y}` and `{u, v} = {x}`.
+        intro huv_x _
+        rw [Set.ext_iff] at huv_x
+        have hv_x := huv_x (Sum.inr v)
+        simp only [
+          Set.mem_singleton_iff,
+          Set.mem_insert_iff,
+          or_true,
+          true_iff
+        ] at hv_x
+      · -- #### Case 4
+        -- `{u} = {x, y}` and `{u, v} = {x, y}`.
+        intro _ hu_xy
+        rw [Set.ext_iff] at hu_xy
+        have hy_u := hu_xy (Sum.inr y)
+        simp only [
+          Set.mem_singleton_iff,
+          Set.mem_insert_iff,
+          or_true,
+          iff_true
+        ] at hy_u
+  · intro h
+    rw [h.left, h.right]
+
+end OrderedPair
+
+/-- ### Theorem 3B
+
 If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
-theorem theorem_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
-  : Set.OrderedPair x y ∈ 𝒫 𝒫 C := by
-  have hxs : {x} ⊆ C := Set.singleton_subset_iff.mpr hx
-  have hxys : {x, y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
+theorem theorem_3b {C : Set (α ⊕ α)} (hx : Sum.inl x ∈ C) (hy : Sum.inr y ∈ C)
+  : OrderedPair x y ∈ 𝒫 𝒫 C := by
+  have hxs : {Sum.inl x} ⊆ C := Set.singleton_subset_iff.mpr hx
+  have hxys : {Sum.inl x, Sum.inr y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
   exact Set.mem_mem_imp_pair_subset hxs hxys
 
 /-- ### Exercise 5.1
@@ -25,7 +118,8 @@ theorem theorem_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
 Suppose that we attempted to generalize the Kuratowski definitions of ordered
 pairs to ordered triples by defining
 ```
-⟨x, y, z⟩* = {{x}, {x, y}, {x, y, z}}.
+⟨x, y, z⟩* = {{x}, {x, y}, {x, y, z}}.open Set
+
 ```
 Show that this definition is unsuccessful by giving examples of objects `u`,
 `v`, `w`, `x`, `y`, `z` with `⟨x, y, z⟩* = ⟨u, v, w⟩*` but with either `y ≠ v`
@@ -114,5 +208,54 @@ theorem exercise_5_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
         exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
       · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
         exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+
+/-- ### Exercise 5.5a
+
+Assume that `A` and `B` are given sets, and show that there exists a set `C`
+such that for any `y`,
+```
+y ∈ C ↔ y = {x} × B for some x in A.
+```
+In other words, show that `{{x} × B | x ∈ A}` is a set.
+-/
+theorem exercise_5_5a {A : Set α} {B : Set β}
+  : ∃ C : Set (Set (α × β)),
+      y ∈ C ↔ ∃ x ∈ A, y = Set.prod {x} B := by
+  sorry
+
+/-- ### Exercise 5.5b
+
+With `A`, `B`, and `C` as above, show that `A × B = ∪ C`.
+-/
+theorem exercise_5_5b {A : Set α} (B : Set β)
+  : Set.prod A B = ⋃₀ {Set.prod ({x} : Set α) B | x ∈ A} := by
+  suffices Set.prod A B ⊆ ⋃₀ {Set.prod {x} B | x ∈ A} ∧
+           ⋃₀ {Set.prod {x} B | x ∈ A} ⊆ Set.prod A B from
+    Set.Subset.antisymm_iff.mpr this
+  apply And.intro
+  · show ∀ t, t ∈ Set.prod A B → t ∈ ⋃₀ {Set.prod {x} B | x ∈ A}
+    intro t h
+    simp only [Set.mem_setOf_eq] at h
+    unfold Set.sUnion sSup Set.instSupSetSet
+    simp only [Set.mem_setOf_eq, exists_exists_and_eq_and]
+    unfold Set.prod at h
+    simp only [Set.mem_setOf_eq] at h
+    refine ⟨t.fst, ⟨h.left, ?_⟩⟩
+    unfold Set.prod
+    simp only [Set.mem_singleton_iff, Set.mem_setOf_eq, true_and]
+    exact h.right
+  · show ∀ t, t ∈ ⋃₀ {Set.prod {x} B | x ∈ A} → t ∈ Set.prod A B
+    unfold Set.prod
+    intro t ht
+    simp only [
+      Set.mem_singleton_iff,
+      Set.mem_sUnion,
+      Set.mem_setOf_eq,
+      exists_exists_and_eq_and
+    ] at ht
+    have ⟨a, ⟨h, ⟨ha, hb⟩⟩⟩ := ht
+    simp only [Set.mem_setOf_eq]
+    rw [← ha] at h
+    exact ⟨h, hb⟩
 
 end Enderton.Set.Chapter_3
