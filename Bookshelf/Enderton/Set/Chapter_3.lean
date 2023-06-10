@@ -115,14 +115,4 @@ theorem exercise_5_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
       · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
         exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
 
-/-- ### Exercise 5.5b
-
-With `A`, `B`, and `C` as above, show that `A × B = ⋃ C`.
--/
-theorem exercise_5_5b {A : Set α} {B : Set β}
-  : Set.prod A B = ⋃₀ {Set.prod {x} B | x ∈ A} := by
-  -- TODO: `Set.OrderedPair` should allow two different types.
-  -- TODO: We can cast `(α × β)` up into type `Set (Set (α ⊕ β))`.
-  sorry
-
 end Enderton.Set.Chapter_3

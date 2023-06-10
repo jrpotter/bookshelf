@@ -91,7 +91,7 @@ theorem exercise_3_3 {A : Set (Set α)}
 
 Show that if `A ⊆ B`, then `⋃ A ⊆ ⋃ B`.
 -/
-theorem exercise_3_4 (h : A ⊆ B) : ⋃₀ A ⊆ ⋃₀ B := by
+theorem exercise_3_4 {A B : Set (Set α)} (h : A ⊆ B) : ⋃₀ A ⊆ ⋃₀ B := by
   show ∀ x ∈ { a | ∃ t, t ∈ A ∧ a ∈ t }, x ∈ { a | ∃ t, t ∈ B ∧ a ∈ t }
   intro x hx
   rw [Set.mem_setOf_eq] at hx
@@ -103,7 +103,8 @@ theorem exercise_3_4 (h : A ⊆ B) : ⋃₀ A ⊆ ⋃₀ B := by
 
 Assume that every member of `𝓐` is a subset of `B`. Show that `⋃ 𝓐 ⊆ B`.
 -/
-theorem exercise_3_5 (h : ∀ x ∈ 𝓐, x ⊆ B) : ⋃₀ 𝓐 ⊆ B := by
+theorem exercise_3_5 {𝓐 : Set (Set α)} (h : ∀ x ∈ 𝓐, x ⊆ B)
+  : ⋃₀ 𝓐 ⊆ B := by
   show ∀ y ∈ { a | ∃ t, t ∈ 𝓐 ∧ a ∈ t }, y ∈ B
   intro y hy
   rw [Set.mem_setOf_eq] at hy
@@ -267,7 +268,7 @@ theorem exercise_3_9 (ha : a = {1}) (hB : B = {{1}})
 
 Show that if `a ∈ B`, then `𝓟 a ∈ 𝓟 𝓟 ⋃ B`.
 -/
-theorem exercise_3_10 (ha : a ∈ B)
+theorem exercise_3_10 {B : Set (Set α)} (ha : a ∈ B)
   : 𝒫 a ∈ 𝒫 (𝒫 (⋃₀ B)) := by
   have h₁ := exercise_3_3 a ha
   have h₂ := Chapter_1.exercise_1_3 h₁

@@ -7,11 +7,16 @@ namespace Set
 
 /--
 Kazimierz Kuratowski's definition of an ordered pair.
+
+Like `Set`, this is a homogeneous structure.
 -/
 def OrderedPair (x y : α) : Set (Set α) := {{x}, {x, y}}
 
 namespace OrderedPair
 
+/--
+For any sets `x`, `y`, `u`, and `v`, `⟨u, v⟩ = ⟨x, y⟩` **iff** `u = x ∧ v = y`.
+-/
 theorem ext_iff
   : (OrderedPair x y = OrderedPair u v) ↔ (x = u ∧ y = v) := by
   unfold OrderedPair
