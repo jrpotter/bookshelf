@@ -2473,4 +2473,141 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
 
 \end{proof}
 
+\subsection{\verified{Exercise 5.3}}%
+\label{sub:exercise-5.3}
+
+Show that $A \times \bigcup \mathscr{B} =
+  \bigcup\;\{ A \times X \mid X \in \mathscr{B} \}$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_5\_3}
+
+  Let $A$ and $\mathscr{B}$ be arbitrary sets.
+  By definition of the \nameref{sub:cartesian-product} and the union of sets,
+  \begin{align*}
+    A \times \bigcup\mathscr{B}
+      & = \{ \left< x, y \right> \mid
+        x \in A \land y \in \bigcup\mathscr{B} \} \\
+      & = \{ \left< x, y \right> \mid
+        x \in A \land (\exists b \in \mathscr{B}), y \in b \} \\
+      & = \{ \left< x, y \right> \mid
+        (\exists b \in \mathscr{B}), x \in A \land y \in b \} \\
+      & = \bigcup\; \{ A \times X \mid X \in \mathscr{B} \}.
+  \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 5.4}}%
+\label{sub:exercise-5.4}
+
+Show that there is no set to which every ordered pair belongs.
+
+\begin{proof}
+
+  For the sake of contradiction, suppose there exists a set $A$ to which every
+    ordered pair belongs.
+  That is, for all sets $x$ and $y$, $\left< x, y \right> = \{\{x\}, \{x, y\}\}$
+    is a member of $A$.
+  By the \nameref{ref:union-axiom}, it follows that $\bigcup\bigcup A$ is the
+    set to which every set belongs.
+  But \nameref{sub:theorem-2a} shows this is impossible.
+  Thus our original assumption was wrong; there exists no set to which every
+    ordered pair belongs.
+
+\end{proof}
+
+\subsection{\partial{Exercise 5.5a}}%
+\label{sub:exercise-5.5a}
+
+Assume that $A$ and $B$ are given sets, and show that there exists a set $C$
+  such that for any $y$,
+  $$y \in C \iff y = \{x\} \times B \text{ for some } x \text{ in } A.$$
+In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
+
+\begin{proof}
+
+  Let $A$ and $B$ be arbitrary sets.
+  Also let $x \in A$.
+  By definition of the \nameref{sub:cartesian-product},
+    \begin{equation}
+      \label{sub:exercise-5.5a-eq1}
+      \{x\} \times B = \{ \left< x, b \right> \mid b \in B \}.
+    \end{equation}
+  If $B = \emptyset$ then $\{x\} \times B$ trivially evaluates to the empty set,
+    which is a set by virtue of the \nameref{ref:empty-set-axiom}.
+  Therefore we continue under the assumption $B \neq \emptyset$.
+
+  We prove that (i)
+    $\{x\} \times B \subseteq \powerset{\powerset{(\{x\} \cup B)}}$ and then
+    (ii) that $\{x\} \times B$ is a set.
+
+  \paragraph{(i)}%
+  \label{par:exercise-5.5a-i}
+
+    Let $t \in \{x\} \times B$.
+    By \eqref{sub:exercise-5.5a-eq1} and definition of an
+      \nameref{ref:ordered-pair}, there exists a $b \in B$ such that
+      $$t = \left< x, b \right> = \{\{x\}, \{x, b\}\}.$$
+    It trivially holds that
+      $$\{x\} \subseteq \{x\} \cup B \quad\text{and}\quad
+        \{x, b\} \subseteq \{x\} \cup B.$$
+    Therefore, by definition of the \nameref{ref:power-set},
+      $$\{x\} \in \powerset{(\{x\} \cup B)} \quad\text{and}\quad
+        \{x, b\} \in \powerset{(\{x\} \cup B)}.$$
+    But then $\{\{x\}, \{x, b\}\} \subseteq \powerset{(\{x\} \cup B)}$.
+    Another application of the definition of the \nameref{ref:power-set} implies
+      that $$\{\{x\}, \{x, b\}\} \in \powerset{\powerset{(\{x\} \cup B)}}.$$
+    Since this holds for all sets $t$,
+      $\{x\} \times B \subseteq \powerset{\powerset{(\{x\} \cup B)}}$.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-5.5a-ii}
+
+    By the \nameref{ref:subset-axioms}, there exists a set $C$ such that for any
+      set $y$, $$y \in C \iff
+        y \in \powerset{\powerset{(\{x\} \cup B)}} \land
+        (\exists b \in B, y = \left< x, b \right>).$$
+    The above equation and \eqref{sub:exercise-5.5a-eq1} implies $C$ contains
+      only ordered pairs of the desired form.
+    By \nameref{par:exercise-5.5a-i}, $C$ contains them all.
+
+  \paragraph{Conclusion}%
+
+    Since $x$ was an arbitrarily chosen member of $A$,
+      \nameref{par:exercise-5.5a-ii} immediately implies that
+      $\{\{x\} \times B \mid x \in A\}$ is indeed a set.
+
+\end{proof}
+
+\subsection{\partial{Exercise 5.5b}}%
+\label{sub:exercise-5.5b}
+
+With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
+
+\begin{proof}
+
+  Let $A$ and $B$ be arbitrary sets.
+  We want to show that
+    \begin{equation}
+      \label{sub:exercise-5.5b-eq1}
+      A \times B = \bigcup\; \{\{x\} \times B \mid x \in A\}.
+    \end{equation}
+  Note that \nameref{sub:cartesian-product} and \nameref{sub:exercise-5.5a}
+    prove the left- and right-hand sides of \eqref{sub:exercise-5.5b-eq1} are
+    sets respectively.
+  Then
+    \begin{align*}
+      A \times B
+        & = \{ y \mid \exists x \in A, \exists b \in B, y = \left< x, b \right> \} \\
+        & = \{ y \mid \exists b \in B, \exists x \in A, y = \left< x, b \right> \} \\
+        & = \{ y \mid \exists b \in B, y \in \{ \left< x, b \right> \mid x \in A \} \} \\
+        & = \{ y \mid y \in \{ \left< x, b \right> \mid x \in A \land b \in B \} \} \\
+        & = \{ y \mid \exists z \in \{\{x\} \times B \mid x \in A \}, y \in z \} \\
+        & = \bigcup \{\{x\} \times B \mid x \in A \}.
+    \end{align*}
+
+\end{proof}
+
 \end{document}

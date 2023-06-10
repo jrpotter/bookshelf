@@ -135,7 +135,7 @@ theorem self_mem_powerset_self {A : Set α}
 For any `Set` `A`, `∅ × A = ∅`.
 -/
 theorem prod_left_emptyset_eq_emptyset {A : Set α}
-  : Set.prod (∅ : Set α) A = ∅ := by
+  : Set.prod (∅ : Set β) A = ∅ := by
   unfold prod
   simp only [mem_empty_iff_false, false_and, setOf_false]
 
@@ -143,7 +143,7 @@ theorem prod_left_emptyset_eq_emptyset {A : Set α}
 For any `Set` `A`, `A × ∅ = ∅`.
 -/
 theorem prod_right_emptyset_eq_emptyset {A : Set α}
-  : Set.prod A (∅ : Set α) = ∅ := by
+  : Set.prod A (∅ : Set β) = ∅ := by
   unfold prod
   simp only [mem_empty_iff_false, and_false, setOf_false]
 
@@ -151,7 +151,7 @@ theorem prod_right_emptyset_eq_emptyset {A : Set α}
 For any `Set`s `A` and `B`, if both `A` and `B` are nonempty, then `A × B` is
 also nonempty.
 -/
-theorem prod_nonempty_nonempty_imp_nonempty_prod {A B : Set α}
+theorem prod_nonempty_nonempty_imp_nonempty_prod {A : Set α} {B : Set β}
   : A ≠ ∅ ∧ B ≠ ∅ ↔ Set.prod A B ≠ ∅ := by
   apply Iff.intro
   · intro nAB h

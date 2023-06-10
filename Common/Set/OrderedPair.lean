@@ -12,7 +12,7 @@ def OrderedPair (x y : α) : Set (Set α) := {{x}, {x, y}}
 
 namespace OrderedPair
 
-theorem ext_iff {x y u v : α}
+theorem ext_iff
   : (OrderedPair x y = OrderedPair u v) ↔ (x = u ∧ y = v) := by
   unfold OrderedPair
   apply Iff.intro

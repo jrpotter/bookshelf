@@ -46,7 +46,7 @@ theorem exercise_5_1 {x y z u v w : ℕ}
 
 Show that `A × (B ∪ C) = (A × B) ∪ (A × C)`.
 -/
-theorem exercise_5_2a {A B C : Set α}
+theorem exercise_5_2a {A : Set α} {B C : Set β}
   : Set.prod A (B ∪ C) = (Set.prod A B) ∪ (Set.prod A C) := by
   calc Set.prod A (B ∪ C)
     _ = { p | p.1 ∈ A ∧ p.2 ∈ B ∪ C } := rfl
@@ -62,7 +62,7 @@ theorem exercise_5_2a {A B C : Set α}
 
 Show that if `A × B = A × C` and `A ≠ ∅`, then `B = C`.
 -/
-theorem exercise_5_2b {A B C : Set α}
+theorem exercise_5_2b {A : Set α} {B C : Set β}
   (h : Set.prod A B = Set.prod A C) (hA : Set.Nonempty A)
   : B = C := by
   by_cases hB : Set.Nonempty B
@@ -86,5 +86,43 @@ theorem exercise_5_2b {A B C : Set α}
     have ⟨a, ha⟩ := hA
     have ⟨c, hc⟩ := Set.nonempty_iff_ne_empty.mpr (Ne.symm nC)
     exact (h (a, c)).mpr ⟨ha, hc⟩
+
+/-- ### Exercise 5.3
+
+Show that `A × ⋃ 𝓑 = ⋃ {A × X | X ∈ 𝓑}`.
+-/
+theorem exercise_5_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
+  : Set.prod A (⋃₀ 𝓑) = ⋃₀ {Set.prod A X | X ∈ 𝓑} := by
+  calc Set.prod A (⋃₀ 𝓑)
+    _ = { p | p.1 ∈ A ∧ p.2 ∈ ⋃₀ 𝓑} := rfl
+    _ = { p | p.1 ∈ A ∧ ∃ b ∈ 𝓑, p.2 ∈ b } := rfl
+    _ = { p | ∃ b ∈ 𝓑, p.1 ∈ A ∧ p.2 ∈ b } := by
+      ext x
+      rw [Set.mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨h₁, ⟨b, h₂⟩⟩
+        exact ⟨b, ⟨h₂.left, ⟨h₁, h₂.right⟩⟩⟩
+      · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+        exact ⟨h₂, ⟨b, ⟨h₁, h₃⟩⟩⟩
+    _ = ⋃₀ { Set.prod A p | p ∈ 𝓑 } := by
+      ext x
+      rw [Set.mem_setOf_eq]
+      unfold Set.sUnion sSup Set.instSupSetSet
+      simp only [Set.mem_setOf_eq, exists_exists_and_eq_and]
+      apply Iff.intro
+      · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+        exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+      · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+        exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+
+/-- ### Exercise 5.5b
+
+With `A`, `B`, and `C` as above, show that `A × B = ⋃ C`.
+-/
+theorem exercise_5_5b {A : Set α} {B : Set β}
+  : Set.prod A B = ⋃₀ {Set.prod {x} B | x ∈ A} := by
+  -- TODO: `Set.OrderedPair` should allow two different types.
+  -- TODO: We can cast `(α × β)` up into type `Set (Set (α ⊕ β))`.
+  sorry
 
 end Enderton.Set.Chapter_3
