@@ -2519,66 +2519,58 @@ Show that there is no set to which every ordered pair belongs.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 5.5a}}%
+\subsection{\verified{Exercise 5.5a}}%
 \label{sub:exercise-5.5a}
 
 Assume that $A$ and $B$ are given sets, and show that there exists a set $C$
   such that for any $y$,
-  $$y \in C \iff y = \{x\} \times B \text{ for some } x \text{ in } A.$$
+  \begin{equation}
+    \label{sub:exercise-5.5a-eq1}
+    y \in C \iff y = \{x\} \times B \text{ for some } x \text{ in } A.
+  \end{equation}
 In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
 
 \begin{proof}
 
-  Let $A$ and $B$ be arbitrary sets.
-  Also let $x \in A$.
-  By definition of the \nameref{sub:cartesian-product},
-    \begin{equation}
-      \label{sub:exercise-5.5a-eq1}
-      \{x\} \times B = \{ \left< x, b \right> \mid b \in B \}.
-    \end{equation}
-  If $B = \emptyset$ then $\{x\} \times B$ trivially evaluates to the empty set,
-    which is a set by virtue of the \nameref{ref:empty-set-axiom}.
-  Therefore we continue under the assumption $B \neq \emptyset$.
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_5\_5a}
 
-  We prove that (i)
-    $\{x\} \times B \subseteq \powerset{\powerset{(\{x\} \cup B)}}$ and then
-    (ii) that $\{x\} \times B$ is a set.
+  Let $a \in A$.
+  By the \nameref{ref:pairing-axiom}, $\{a\}$ is a set.
+  By \nameref{sub:cartesian-product}, $\{a\} \times B$ is a set.
+  Again by the \nameref{ref:pairing-axiom}, $\{\{a\} \times B\}$ is a set.
 
-  \paragraph{(i)}%
-  \label{par:exercise-5.5a-i}
+  Next, by another application of \nameref{sub:cartesian-product}, $A \times B$
+    is a set.
+  By the \nameref{ref:power-set-axiom}, $\powerset{(A \times B)}$ is a set.
+  Thus, by the \nameref{ref:subset-axioms}, the following is also a set:
+    $$C = \{ y \in \powerset{(A \times B)} \mid
+      \exists a \in A, \forall x, \left[ x \in y \iff
+        \exists b \in B, x = \left< a, b \right> \right] \}.$$
+  We now show that $C$ satisfies \eqref{sub:exercise-5.5a-eq1}.
 
-    Let $t \in \{x\} \times B$.
-    By \eqref{sub:exercise-5.5a-eq1} and definition of an
-      \nameref{ref:ordered-pair}, there exists a $b \in B$ such that
-      $$t = \left< x, b \right> = \{\{x\}, \{x, b\}\}.$$
-    It trivially holds that
-      $$\{x\} \subseteq \{x\} \cup B \quad\text{and}\quad
-        \{x, b\} \subseteq \{x\} \cup B.$$
-    Therefore, by definition of the \nameref{ref:power-set},
-      $$\{x\} \in \powerset{(\{x\} \cup B)} \quad\text{and}\quad
-        \{x, b\} \in \powerset{(\{x\} \cup B)}.$$
-    But then $\{\{x\}, \{x, b\}\} \subseteq \powerset{(\{x\} \cup B)}$.
-    Another application of the definition of the \nameref{ref:power-set} implies
-      that $$\{\{x\}, \{x, b\}\} \in \powerset{\powerset{(\{x\} \cup B)}}.$$
-    Since this holds for all sets $t$,
-      $\{x\} \times B \subseteq \powerset{\powerset{(\{x\} \cup B)}}$.
+  \paragraph{($\Rightarrow$)}%
 
-  \paragraph{(ii)}%
-  \label{par:exercise-5.5a-ii}
+    Suppose $y \in C$.
+    Then there exists some $a \in A$ such that
+      $$\forall x, \left[ x \in y \iff
+        \exists b \in B, x = \left< a, b \right> \right].$$
+    By the \nameref{ref:extensionality-axiom},
+      \begin{align*}
+        y
+          & = \{ \left< a, b \right> \mid b \in B \} \\
+          & = \{ \left< x, b \right> \mid x \in \{a\} \land b \in B \} \\
+          & = \{ \{a\} \times B \}.
+      \end{align*}
 
-    By the \nameref{ref:subset-axioms}, there exists a set $C$ such that for any
-      set $y$, $$y \in C \iff
-        y \in \powerset{\powerset{(\{x\} \cup B)}} \land
-        (\exists b \in B, y = \left< x, b \right>).$$
-    The above equation and \eqref{sub:exercise-5.5a-eq1} implies $C$ contains
-      only ordered pairs of the desired form.
-    By \nameref{par:exercise-5.5a-i}, $C$ contains them all.
+  \paragraph{($\Leftarrow$)}%
 
-  \paragraph{Conclusion}%
-
-    Since $x$ was an arbitrarily chosen member of $A$,
-      \nameref{par:exercise-5.5a-ii} immediately implies that
-      $\{\{x\} \times B \mid x \in A\}$ is indeed a set.
+    Suppose $y = \{a\} \times B$ for some $a \in A$.
+    By \nameref{sub:cartesian-product}, $x \in \{a\} \times B$ if and only if
+      $\exists b \in B$ such that $x = \left< a, b \right>$.
+    But then $x \in y$ if and only if $\exists b \in B$ such that
+      $x = \left< a, b \right>$.
+    This immediately proves $y \in C$.
 
 \end{proof}
 
@@ -2630,6 +2622,89 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
       $A \times B \subseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$ and
       $A \times B \supseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$, it
       follows \eqref{sub:exercise-5.5b-eq1} is a true identity.
+
+\end{proof}
+
+\section{Relations}%
+\label{sec:relations}
+
+\subsection{\verified{Theorem 3D}}%
+\label{sub:theorem-3d}
+
+\begin{theorem}[3D]
+
+  If $\left< x, y \right> \in A$, then $x$ and $y$ belong to $\bigcup\bigcup A$.
+
+\end{theorem}
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3d}
+
+  Let $A$ be a set and $\left< x, y \right> \in A$.
+  By definition of an \nameref{ref:ordered-pair},
+    $$\left< x, y \right> = \{\{x\}, \{x, y\}\}.$$
+  By \nameref{sub:exercise-3.3}, $\{\{x\}, \{x, y\}\} \subseteq \bigcup A$.
+  Then $\{x, y\} \in \bigcup A$.
+  Another application of \nameref{sub:exercise-3.3} implies
+    $\{x, y\} \subseteq \bigcup\bigcup A$.
+  Therefore $x, y \in \bigcup\bigcup A$.
+
+\end{proof}
+
+\section{Exercises 6}%
+\label{sec:exercises-6}
+
+\subsection{\unverified{Exercise 6.6}}%
+\label{sub:exercise-6.6}
+
+Show that a set $A$ is a relation iff
+  $A \subseteq \textop{dom} A \times \textop{ran} A$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 6.7}}%
+\label{sub:exercise-6.7}
+
+Show that if $R$ is a relation, then $\textop{fld} R = \bigcup\bigcup R$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 6.8}}%
+\label{sub:exercise-6.8}
+
+Show that for any set $\mathscr{A}$:
+  \begin{align*}
+    \textop{dom} \bigcup{\mathscr{A}}
+      & = \bigcup\; \{ \textop{dom} R \mid R \in \mathscr{A} \},
+    \textop{ran} \bigcup{\mathscr{A}}
+      & = \bigcup\; \{ \textop{ran} R \mid R \in \mathscr{A} \}.
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Exercise 6.9}}%
+\label{sub:exercise-6.9}
+
+Discuss the result of replacing the union operation by the intersection
+  operation in the preceding problem.
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 

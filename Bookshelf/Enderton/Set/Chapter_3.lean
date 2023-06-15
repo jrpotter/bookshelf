@@ -1,5 +1,6 @@
 import Mathlib.Data.Set.Basic
 
+import Bookshelf.Enderton.Set.Chapter_2
 import Common.Logic.Basic
 import Common.Set.Basic
 
@@ -221,7 +222,61 @@ In other words, show that `{{x} × B | x ∈ A}` is a set.
 theorem exercise_5_5a {A : Set α} {B : Set β}
   : ∃ C : Set (Set (α × β)),
       y ∈ C ↔ ∃ x ∈ A, y = Set.prod {x} B := by
-  sorry
+  let C := {y ∈ 𝒫 (Set.prod A B) | ∃ a ∈ A, ∀ x, (x ∈ y ↔ ∃ b ∈ B, x = (a, b))}
+  refine ⟨C, ?_⟩
+  apply Iff.intro
+  · intro hC
+    simp only [Set.mem_setOf_eq] at hC
+    have ⟨_, ⟨a, ⟨ha, h⟩⟩⟩ := hC
+    refine ⟨a, ⟨ha, ?_⟩⟩
+    ext x
+    apply Iff.intro
+    · intro hxy
+      unfold Set.prod
+      simp only [Set.mem_singleton_iff, Set.mem_setOf_eq]
+      have ⟨b, ⟨hb, hx⟩⟩ := (h x).mp hxy
+      rw [Prod.ext_iff] at hx
+      simp only at hx
+      rw [← hx.right] at hb
+      exact ⟨hx.left, hb⟩
+    · intro hx
+      simp only [Set.mem_singleton_iff, Set.mem_setOf_eq] at hx
+      have := (h (a, x.snd)).mpr ⟨x.snd, ⟨hx.right, rfl⟩⟩
+      have hxab : x = (a, x.snd) := by
+        ext <;> simp
+        exact hx.left
+      rwa [← hxab] at this
+  · intro ⟨x, ⟨hx, hy⟩⟩
+    show y ∈ 𝒫 Set.prod A B ∧ ∃ a, a ∈ A ∧
+           ∀ (x : α × β), x ∈ y ↔ ∃ b, b ∈ B ∧ x = (a, b)
+    apply And.intro
+    · simp only [Set.mem_powerset_iff]
+      rw [hy]
+      unfold Set.prod
+      simp only [
+        Set.mem_singleton_iff,
+        Set.setOf_subset_setOf,
+        and_imp,
+        Prod.forall
+      ]
+      intro a b ha hb
+      exact ⟨by rw [ha]; exact hx, hb⟩
+    · refine ⟨x, ⟨hx, ?_⟩⟩
+      intro p
+      apply Iff.intro
+      · intro hab
+        rw [hy] at hab
+        unfold Set.prod at hab
+        simp only [Set.mem_singleton_iff, Set.mem_setOf_eq] at hab
+        exact ⟨p.2, ⟨hab.right, by ext; exact hab.left; simp⟩⟩
+      · intro ⟨b, ⟨hb, hab⟩⟩
+        rw [hy]
+        unfold Set.prod
+        simp only [Set.mem_singleton_iff, Set.mem_setOf_eq]
+        rw [Prod.ext_iff] at hab
+        simp only at hab
+        rw [hab.right]
+        exact ⟨hab.left, hb⟩
 
 /-- ### Exercise 5.5b
 
@@ -257,5 +312,20 @@ theorem exercise_5_5b {A : Set α} (B : Set β)
     simp only [Set.mem_setOf_eq]
     rw [← ha] at h
     exact ⟨h, hb⟩
+
+/-- ### Theorem 3D
+
+If `⟨x, y⟩ ∈ A`, then `x` and `y` belong to `⋃ ⋃ A`.
+-/
+theorem theorem_3d {A : Set (Set (Set (α ⊕ α)))} (h : OrderedPair x y ∈ A)
+  : Sum.inl x ∈ ⋃₀ (⋃₀ A) ∧ Sum.inr y ∈ ⋃₀ (⋃₀ A) := by
+  have hp : OrderedPair x y ⊆ ⋃₀ A := Chapter_2.exercise_3_3 (OrderedPair x y) h
+  have hp' : ∀ t, t ∈ {{Sum.inl x}, {Sum.inl x, Sum.inr y}} → t ∈ ⋃₀ A := hp
+
+  have hq := hp' {Sum.inl x, Sum.inr y} (by simp)
+  have hq' := Chapter_2.exercise_3_3 {Sum.inl x, Sum.inr y} hq
+
+  have : ∀ t, t ∈ {Sum.inl x, Sum.inr y} → t ∈ ⋃₀ (⋃₀ A) := hq'
+  exact ⟨this (Sum.inl x) (by simp), this (Sum.inr y) (by simp)⟩
 
 end Enderton.Set.Chapter_3
