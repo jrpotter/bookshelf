@@ -328,4 +328,22 @@ theorem theorem_3d {A : Set (Set (Set (α ⊕ α)))} (h : OrderedPair x y ∈ A)
   have : ∀ t, t ∈ {Sum.inl x, Sum.inr y} → t ∈ ⋃₀ (⋃₀ A) := hq'
   exact ⟨this (Sum.inl x) (by simp), this (Sum.inr y) (by simp)⟩
 
+/-- ### Exercise 6.6
+
+Show that a set `A` is a relation **iff** `A ⊆ dom A × ran A`.
+-/
+theorem exercise_6_6 {A : Set (α × β)}
+  : A ⊆ Set.prod (Prod.fst '' A) (Prod.snd '' A) := by
+  show ∀ t, t ∈ A → t ∈ Set.prod (Prod.fst '' A) (Prod.snd '' A)
+  intro (a, b) ht
+  unfold Set.prod
+  simp only [
+    Set.mem_image,
+    Prod.exists,
+    exists_and_right,
+    exists_eq_right,
+    Set.mem_setOf_eq
+  ]
+  exact ⟨⟨b, ht⟩, ⟨a, ht⟩⟩
+
 end Enderton.Set.Chapter_3

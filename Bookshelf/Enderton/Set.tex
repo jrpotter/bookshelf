@@ -6,6 +6,10 @@
 \input{../../preamble}
 \makeleancommands{../..}
 
+\newcommand{\dom}[1]{\textop{dom}{#1}}
+\newcommand{\fld}[1]{\textop{fld}{#1}}
+\newcommand{\ran}[1]{\textop{ran}{#1}}
+
 \begin{document}
 
 \header{Elements of Set Theory}{Herbert B. Enderton}
@@ -44,6 +48,32 @@ If two sets have exactly the same members, then they are equal:
   \lean*{Mathlib/Init/Set}{Set.ext}
 
 \end{axiom}
+
+\section{\defined{Function}}%
+\label{ref:function}
+
+A \textbf{function} is a relation $F$ such that for each $x$ in $\dom{F}$ there
+  is only one $y$ such that $xFy$.
+We say that $F$ is a function \textbf{from $A$ into $B$} or that $F$
+  \textbf{maps $A$ into $B$} (written $F \colon A \rightarrow B$) iff $F$ is a
+  function, $\dom{F} = A$, and $\ran{F} \subseteq B$.
+If $\ran{F} = B$, then $F$ is a function from \textbf{$A$ onto $B$}.
+
+A function $F$ is \textbf{one-to-one} iff for each $y \in \ran{F}$ there is only
+  one $x$ such that $xFy$.
+One-to-one functions are sometimes called \textbf{injections}.
+
+\begin{definition}
+
+  \statementpadding
+
+  \lean*{Mathlib/Init/Function}{Function.Injective}
+
+  \lean*{Mathlib/Init/Function}{Function.Surjective}
+
+  \lean*{Mathlib/Init/Function}{Function.Bijective}
+
+\end{definition}
 
 \section{\defined{Ordered Pair}}%
 \label{ref:ordered-pair}
@@ -113,6 +143,30 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
   \lean*{Mathlib/Init/Set}{Set.powerset}
 
 \end{axiom}
+
+\section{\defined{Relation}}%
+\label{ref:relation}
+
+A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
+Given relation $R$, the \textbf{domain} of $R$ ($\dom{R}$), the \textbf{range}
+  of $R$ ($\ran{R}$), and the \textbf{field} of $R$ ($\fld{R}$) is given by
+  \begin{align*}
+    x \in \dom{R} & \iff \exists y \left< x, y \right> \in R, \\
+    x \in \ran{R} & \iff \exists t \left< t, x \right> \in R, \\
+    \fld{R} & = \dom{R} \cup \ran{R}.
+  \end{align*}
+
+\begin{definition}
+
+  \statementpadding
+
+  \lean*{Mathlib/Data/Rel}{Rel}
+
+  \lean*{Mathlib/Data/Rel}{Rel.dom}
+
+  \lean*{Mathlib/Data/Rel}{Rel.codom}
+
+\end{definition}
 
 \section{\defined{Subset Axioms}}%
 \label{ref:subset-axioms}
@@ -2656,26 +2710,82 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
 \section{Exercises 6}%
 \label{sec:exercises-6}
 
-\subsection{\unverified{Exercise 6.6}}%
+\subsection{\verified{Exercise 6.6}}%
 \label{sub:exercise-6.6}
 
-Show that a set $A$ is a relation iff
-  $A \subseteq \textop{dom} A \times \textop{ran} A$.
+Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_6\_6}
+
+  Let $A$ be a set.
+  We prove the forward and reverse direction of the bidirectional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $A$ is a \nameref{ref:relation}.
+    We show for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
+    Let $a \in A$.
+    Since $A$ is a relation, $a$ is an ordered pair.
+    Then there exists some sets $x$ and $y$ such that $a = \left< x, y \right>$.
+    By definition of the domain and range of $A$, $x \in \dom{A}$ and
+      $y \in \ran{A}$.
+    Thus $a = \left< x, y \right> \in \dom{A} \times \ran{A}$ as well.
+    This proves $A \subseteq \dom{A} \times \ran{A}$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $A \subseteq \dom{A} \times \ran{A}$.
+    Then for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
+    Therefore $a$ is an ordered pair.
+    Since this holds for all $a \in A$, it follows $A$ is a relation.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 6.7}}%
+\subsection{\partial{Exercise 6.7}}%
 \label{sub:exercise-6.7}
 
-Show that if $R$ is a relation, then $\textop{fld} R = \bigcup\bigcup R$.
+Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
 
 \begin{proof}
 
-  TODO
+  Let $R$ be a \nameref{ref:relation}.
+  We show that (i) $\fld{R} \subseteq \bigcup\bigcup R$ and (ii) that
+    $\bigcup\bigcup R \subseteq \fld{R}$.
+
+  \paragraph{(i)}%
+  \label{par:exercise-6.7-i}
+
+    Let $x \in \fld{R} = \dom{R} \cup \ran{R}$.
+    That is, $x \in \dom{R}$ or $x \in \ran{R}$.
+
+    If $x \in \dom{R}$, then there exists some $y$ such that
+      $\left< x, y \right> = \{\{x\}, \{x, y\}\} \in R$.
+    Then $\{x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
+
+    On the other hand, if $x \in \ran{R}$, then there exists some $t$ such that
+      $\left< t, x \right> = \{\{t\}, \{t, x\}\} \in R$.
+    Then $\{t, x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-6.7-ii}
+
+    Let $t \in \bigcup\bigcup R$.
+    Then there exists some member $T \in \bigcup R$ such that $t \in T$.
+    Likewise there exists some member $T' \in R$ such that $T \in T'$.
+    By definition of a relation,
+      $T' = \left< x, y \right> = \{\{x\}, \{x, y\}\}$ for some sets $x$ and
+      $y$.
+    Thus $t = x$ or $t = y$.
+    By \nameref{sub:exercise-6.6}, $t \in \dom{R}$ or $t \in \ran{R}$.
+    In other words, $t \in \fld{R}$.
+
+  \paragraph{Conclusion}%
+
+    Since \nameref{par:exercise-6.7-i} and \nameref{par:exercise-6.7-ii} hold,
+      $\fld{R} = \bigcup\bigcup{R}$.
 
 \end{proof}
 
@@ -2683,12 +2793,14 @@ Show that if $R$ is a relation, then $\textop{fld} R = \bigcup\bigcup R$.
 \label{sub:exercise-6.8}
 
 Show that for any set $\mathscr{A}$:
-  \begin{align*}
-    \textop{dom} \bigcup{\mathscr{A}}
-      & = \bigcup\; \{ \textop{dom} R \mid R \in \mathscr{A} \},
-    \textop{ran} \bigcup{\mathscr{A}}
-      & = \bigcup\; \{ \textop{ran} R \mid R \in \mathscr{A} \}.
-  \end{align*}
+  \begin{align}
+    \dom{\bigcup{\mathscr{A}}}
+      & = \bigcup\; \{ \dom{R} \mid R \in \mathscr{A} \},
+      & \label{sub:exercise-6.8-eq1} \\
+    \ran{\bigcup{\mathscr{A}}}
+      & = \bigcup\; \{ \ran{R} \mid R \in \mathscr{A} \}.
+      & \label{sub:exercise-6.8-eq2}
+  \end{align}
 
 \begin{proof}
 
@@ -2701,6 +2813,129 @@ Show that for any set $\mathscr{A}$:
 
 Discuss the result of replacing the union operation by the intersection
   operation in the preceding problem.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\section{Exercises 7}%
+\label{sec:exercises-7}
+
+\subsection{\unverified{Exercise 7.10}}%
+\label{sub:exercise-7.10}
+
+Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
+  integer $m$ less than $4$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\section{Functions}%
+\label{sec:functions}
+
+\subsection{\unverified{Theorem 3E}}%
+\label{sub:theorem-3e}
+
+\begin{theorem}[3E]
+
+  For a set $F$, $\dom{F^{-1}} = \ran{F}$ and $\ran{F^{-1}} = \dom{F}$.
+  For a relation $F$, $(F^{-1})^{-1} = F$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Theorem 3F}}%
+\label{sub:theorem-3f}
+
+\begin{theorem}[3F]
+
+  For a set $F$, $F^{-1}$ is a function iff $F$ is single-rooted.
+  A relation $F$ is a function iff $F^{-1}$ is single-rooted.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Theorem 3G}}%
+\label{sub:theorem-3g}
+
+\begin{theorem}[3G]
+
+  Assume that $F$ is a one-to-one function.
+  If $x \in \dom{F}$, then $F^{-1}(F(x)) = x$.
+  If $y \in \ran{F}$, then $F(F^{-1}(y)) = y$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Theorem 3H}}%
+\label{sub:theorem-3h}
+
+\begin{theorem}[3H]
+
+  Assume that $F$ and $G$ are functions.
+  Then $F \circ G$ is a function, its domain is
+    $$\{x \in \dom{G} \mid G(x) \in \dom{F}\},$$ and for $x$ in its domain,
+    $(F \circ G)(x) = F(G(x))$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Theorem 3I}}%
+\label{sub:theorem-3i}
+
+\begin{theorem}[3I]
+
+  For any sets $F$ and $G$, $$(F \circ G)^{-1} = G^{-1} \circ F^{-1}.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Theorem 3J}}%
+\label{sub:theorem-3j}
+
+\begin{theorem}[3J]
+
+  Assume that $F \colon A \rightarrow B$, and that $A$ is nonempty.
+  \begin{enumerate}[(a)]
+    \item There exists a function $G \colon B \rightarrow A$ (a "left inverse")
+      such that $G \circ F$ is the identity function $I_A$ on $A$ iff $F$ is
+      one-to-one.
+    \item There exists a function $H \colon B \rightarrow A$ (a "right inverse")
+      such that $F \circ H$ is the identity function $I_B$ on $B$ iff $F$ maps
+      $A$ onto $B$.
+  \end{enumerate}
+
+\end{theorem}
 
 \begin{proof}
 
