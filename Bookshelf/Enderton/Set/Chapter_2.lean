@@ -80,7 +80,7 @@ Show that every member of a set `A` is a subset of `U A`. (This was stated as an
 example in this section.)
 -/
 theorem exercise_3_3 {A : Set (Set α)}
-  : ∀ x ∈ A, x ⊆ Set.sUnion A := by
+  : ∀ x ∈ A, x ⊆ ⋃₀ A := by
   intro x hx
   show ∀ y ∈ x, y ∈ { a | ∃ t, t ∈ A ∧ a ∈ t }
   intro y hy

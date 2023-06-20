@@ -1,8 +1,6 @@
-import Mathlib.Data.Set.Basic
-
 import Bookshelf.Enderton.Set.Chapter_2
-import Common.Logic.Basic
-import Common.Set.Basic
+import Common.Set.OrderedPair
+import Common.Set.Relation
 
 /-! # Enderton.Chapter_3
 
@@ -11,107 +9,14 @@ Relations and Functions
 
 namespace Enderton.Set.Chapter_3
 
-/-! ## Ordered Pairs -/
-
-/--
-Kazimierz Kuratowski's definition of an ordered pair.
--/
-def OrderedPair (x : α) (y : β) : Set (Set (α ⊕ β)) :=
-  {{Sum.inl x}, {Sum.inl x, Sum.inr y}}
-
-namespace OrderedPair
-
-/--
-For any sets `x`, `y`, `u`, and `v`, `⟨u, v⟩ = ⟨x, y⟩` **iff** `u = x ∧ v = y`.
--/
-theorem ext_iff {x u : α} {y v : β}
-  : (OrderedPair x y = OrderedPair u v) ↔ (x = u ∧ y = v) := by
-  unfold OrderedPair
-  apply Iff.intro
-  · intro h
-    have hu := Set.ext_iff.mp h {Sum.inl u}
-    have huv := Set.ext_iff.mp h {Sum.inl u, Sum.inr v}
-    simp only [
-      Set.mem_singleton_iff,
-      Set.mem_insert_iff,
-      true_or,
-      iff_true
-    ] at hu
-    simp only [
-      Set.mem_singleton_iff,
-      Set.mem_insert_iff,
-      or_true,
-      iff_true
-    ] at huv
-    apply Or.elim hu
-    · apply Or.elim huv
-      · -- #### Case 1
-        -- `{u} = {x}` and `{u, v} = {x}`.
-        intro huv_x hu_x
-        rw [Set.singleton_eq_singleton_iff] at hu_x
-        rw [hu_x] at huv_x
-        have hx_v := Set.pair_eq_singleton_mem_imp_eq_self huv_x
-        rw [hu_x, hx_v] at h
-        simp only [Set.mem_singleton_iff, Set.insert_eq_of_mem] at h
-        have := Set.pair_eq_singleton_mem_imp_eq_self $
-          Set.pair_eq_singleton_mem_imp_eq_self h
-        rw [← hx_v] at this
-        injection hu_x with p
-        injection this with q
-        exact ⟨p.symm, q⟩
-      · -- #### Case 2
-        -- `{u} = {x}` and `{u, v} = {x, y}`.
-        intro huv_xy hu_x
-        rw [Set.singleton_eq_singleton_iff] at hu_x
-        rw [hu_x] at huv_xy
-        by_cases hx_v : Sum.inl x = Sum.inr v
-        · rw [hx_v] at huv_xy
-          simp at huv_xy
-          have := Set.pair_eq_singleton_mem_imp_eq_self huv_xy.symm
-          injection hu_x with p
-          injection this with q
-          exact ⟨p.symm, q⟩
-        · rw [Set.ext_iff] at huv_xy
-          have := huv_xy (Sum.inr v)
-          simp at this
-          injection hu_x with p
-          exact ⟨p.symm, this.symm⟩
-    · apply Or.elim huv
-      · -- #### Case 3
-        -- `{u} = {x, y}` and `{u, v} = {x}`.
-        intro huv_x _
-        rw [Set.ext_iff] at huv_x
-        have hv_x := huv_x (Sum.inr v)
-        simp only [
-          Set.mem_singleton_iff,
-          Set.mem_insert_iff,
-          or_true,
-          true_iff
-        ] at hv_x
-      · -- #### Case 4
-        -- `{u} = {x, y}` and `{u, v} = {x, y}`.
-        intro _ hu_xy
-        rw [Set.ext_iff] at hu_xy
-        have hy_u := hu_xy (Sum.inr y)
-        simp only [
-          Set.mem_singleton_iff,
-          Set.mem_insert_iff,
-          or_true,
-          iff_true
-        ] at hy_u
-  · intro h
-    rw [h.left, h.right]
-
-end OrderedPair
-
 /-- ### Theorem 3B
 
 If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
-theorem theorem_3b {C : Set (α ⊕ α)} (hx : Sum.inl x ∈ C) (hy : Sum.inr y ∈ C)
+theorem theorem_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
   : OrderedPair x y ∈ 𝒫 𝒫 C := by
-  have hxs : {Sum.inl x} ⊆ C := Set.singleton_subset_iff.mpr hx
-  have hxys : {Sum.inl x, Sum.inr y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
+  have hxs : {x} ⊆ C := Set.singleton_subset_iff.mpr hx
+  have hxys : {x, y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
   exact Set.mem_mem_imp_pair_subset hxs hxys
 
 /-- ### Exercise 5.1
@@ -317,23 +222,20 @@ theorem exercise_5_5b {A : Set α} (B : Set β)
 
 If `⟨x, y⟩ ∈ A`, then `x` and `y` belong to `⋃ ⋃ A`.
 -/
-theorem theorem_3d {A : Set (Set (Set (α ⊕ α)))} (h : OrderedPair x y ∈ A)
-  : Sum.inl x ∈ ⋃₀ (⋃₀ A) ∧ Sum.inr y ∈ ⋃₀ (⋃₀ A) := by
-  have hp : OrderedPair x y ⊆ ⋃₀ A := Chapter_2.exercise_3_3 (OrderedPair x y) h
-  have hp' : ∀ t, t ∈ {{Sum.inl x}, {Sum.inl x, Sum.inr y}} → t ∈ ⋃₀ A := hp
-
-  have hq := hp' {Sum.inl x, Sum.inr y} (by simp)
-  have hq' := Chapter_2.exercise_3_3 {Sum.inl x, Sum.inr y} hq
-
-  have : ∀ t, t ∈ {Sum.inl x, Sum.inr y} → t ∈ ⋃₀ (⋃₀ A) := hq'
-  exact ⟨this (Sum.inl x) (by simp), this (Sum.inr y) (by simp)⟩
+theorem theorem_3d {A : Set (Set (Set α))} (h : OrderedPair x y ∈ A)
+  : x ∈ ⋃₀ (⋃₀ A) ∧ y ∈ ⋃₀ (⋃₀ A) := by
+  have hp := Chapter_2.exercise_3_3 (OrderedPair x y) h
+  unfold OrderedPair at hp  
+  have hq : {x, y} ∈ ⋃₀ A := hp (by simp)
+  have : {x, y} ⊆ ⋃₀ ⋃₀ A := Chapter_2.exercise_3_3 {x, y} hq
+  exact ⟨this (by simp), this (by simp)⟩
 
 /-- ### Exercise 6.6
 
 Show that a set `A` is a relation **iff** `A ⊆ dom A × ran A`.
 -/
-theorem exercise_6_6 {A : Set (α × β)}
-  : A ⊆ Set.prod (Prod.fst '' A) (Prod.snd '' A) := by
+theorem exercise_6_6 {A : Set.Relation α}
+  : A ⊆ Set.prod (A.dom) (A.ran) := by
   show ∀ t, t ∈ A → t ∈ Set.prod (Prod.fst '' A) (Prod.snd '' A)
   intro (a, b) ht
   unfold Set.prod
@@ -345,5 +247,86 @@ theorem exercise_6_6 {A : Set (α × β)}
     Set.mem_setOf_eq
   ]
   exact ⟨⟨b, ht⟩, ⟨a, ht⟩⟩
+
+/-- ### Exercise 6.7
+
+Show that if `R` is a relation, then `fld R = ⋃ ⋃ R`.
+-/
+theorem exercise_6_7 {R : Set.Relation α}
+  : R.fld = ⋃₀ ⋃₀ R.toOrderedPairs := by
+  let img := R.toOrderedPairs
+  suffices R.fld ⊆ ⋃₀ ⋃₀ img ∧ ⋃₀ ⋃₀ img ⊆ R.fld from
+    Set.Subset.antisymm_iff.mpr this
+
+  apply And.intro
+  · show ∀ x, x ∈ R.fld → x ∈ ⋃₀ ⋃₀ img
+    intro x hx
+    apply Or.elim hx
+    · intro hd
+      unfold Set.Relation.dom Prod.fst at hd
+      simp only [
+        Set.mem_image, Prod.exists, exists_and_right, exists_eq_right
+      ] at hd
+      have ⟨y, hp⟩ := hd
+      have hm : OrderedPair x y ∈ R.image (fun p => OrderedPair p.1 p.2) := by
+        unfold Set.image
+        simp only [Prod.exists, Set.mem_setOf_eq]
+        exact ⟨x, ⟨y, ⟨hp, rfl⟩⟩⟩
+      unfold OrderedPair at hm
+      have : {x} ∈ ⋃₀ img := Chapter_2.exercise_3_3 {{x}, {x, y}} hm (by simp)
+      exact (Chapter_2.exercise_3_3 {x} this) (show x ∈ {x} by rfl)
+    · intro hr
+      unfold Set.Relation.ran Prod.snd at hr
+      simp only [Set.mem_image, Prod.exists, exists_eq_right] at hr
+      have ⟨t, ht⟩ := hr
+      have hm : OrderedPair t x ∈ R.image (fun p => OrderedPair p.1 p.2) := by
+        simp only [Set.mem_image, Prod.exists]
+        exact ⟨t, ⟨x, ⟨ht, rfl⟩⟩⟩
+      unfold OrderedPair at hm
+      have : {t, x} ∈ ⋃₀ img := Chapter_2.exercise_3_3 {{t}, {t, x}} hm
+        (show {t, x} ∈ {{t}, {t, x}} by simp)
+      exact Chapter_2.exercise_3_3 {t, x} this (show x ∈ {t, x} by simp)
+
+  · show ∀ t, t ∈ ⋃₀ ⋃₀ img → t ∈ Set.Relation.fld R
+    intro t ht
+    have ⟨T, hT⟩ : ∃ T ∈ ⋃₀ img, t ∈ T := ht
+    have ⟨T', hT'⟩ : ∃ T' ∈ img, T ∈ T' := hT.left
+    dsimp at hT'
+    unfold Set.Relation.toOrderedPairs at hT'
+    simp only [Set.mem_image, Prod.exists] at hT'
+    have ⟨x, ⟨y, ⟨p, hp⟩⟩⟩ := hT'.left
+    have hr := hT'.right
+    rw [← hp] at hr
+    unfold OrderedPair at hr
+    simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at hr
+
+    -- Use `exercise_6_6` to prove that if `t = x` then `t ∈ dom R` and if
+    -- `t = y` then `t ∈ ran R`.
+    have hxy_mem : t = x ∨ t = y → t ∈ Set.Relation.fld R := by
+      intro ht
+      have hz : R ⊆ Set.prod (R.dom) (R.ran) := exercise_6_6
+      have : (x, y) ∈ Set.prod (R.dom) (R.ran) := hz p
+      unfold Set.prod at this
+      simp at this
+      apply Or.elim ht
+      · intro ht'
+        rw [← ht'] at this
+        exact Or.inl this.left
+      · intro ht'
+        rw [← ht'] at this
+        exact Or.inr this.right
+
+    -- Eliminate `T = {x} ∨ T = {x, y}`.
+    apply Or.elim hr
+    · intro hx
+      have := hT.right
+      rw [hx] at this
+      simp only [Set.mem_singleton_iff] at this
+      exact hxy_mem (Or.inl this)
+    · intro hxy
+      have := hT.right
+      rw [hxy] at this
+      simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
+      exact hxy_mem this
 
 end Enderton.Set.Chapter_3

@@ -1,7 +1,6 @@
-import Mathlib.Data.Set.Basic
-import Mathlib.SetTheory.ZFC.Basic
-
 import Common.Logic.Basic
+import Mathlib.Data.Set.Basic
+import Mathlib.Data.Set.Prod
 
 /-! # Common.Set.Basic
 
