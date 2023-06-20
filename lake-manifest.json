@@ -8,9 +8,15 @@
     "name": "CMark",
     "inputRev?": "main"}},
   {"git":
+   {"url": "https://github.com/EdAyers/ProofWidgets4",
+    "subDir?": null,
+    "rev": "c43db94a8f495dad37829e9d7ad65483d68c86b8",
+    "name": "proofwidgets",
+    "inputRev?": "v0.0.11"}},
+  {"git":
    {"url": "https://github.com/leanprover/lake",
     "subDir?": null,
-    "rev": "0d4da61cbfe65f19ac7070c2c9f62f36db529c4c",
+    "rev": "6601a21f624e445f51200e563cf9c549bdebe46c",
     "name": "lake",
     "inputRev?": "master"}},
   {"git":
@@ -22,7 +28,7 @@
   {"git":
    {"url": "https://github.com/leanprover-community/mathlib4.git",
     "subDir?": null,
-    "rev": "47535ddd6cff5cf523b8914a5269639641b9bb54",
+    "rev": "e6dcb5445cacb4f329ab8faa078f746368bc5d3b",
     "name": "mathlib",
     "inputRev?": "master"}},
   {"git":
@@ -52,12 +58,12 @@
   {"git":
    {"url": "https://github.com/leanprover/std4.git",
     "subDir?": null,
-    "rev": "176b4657e21ea6f5a1517c625ee97e89acad0126",
+    "rev": "e68aa8f5fe47aad78987df45f99094afbcb5e936",
     "name": "std4",
     "inputRev?": "main"}},
   {"git":
    {"url": "https://github.com/leanprover/std4",
     "subDir?": null,
-    "rev": "6932c4ea52914dc6b0488944e367459ddc4d01a6",
+    "rev": "e68aa8f5fe47aad78987df45f99094afbcb5e936",
     "name": "std",
     "inputRev?": "main"}}]}

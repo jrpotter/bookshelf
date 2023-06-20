@@ -92,6 +92,7 @@ partial def fromArrayExt (names : Array NameExt) : Hierarchy :=
 def baseDirBlackList : HashSet String :=
   HashSet.fromArray #[
     "404.html",
+    "color-scheme.js",
     "declaration-data.js",
     "declarations",
     "find",
