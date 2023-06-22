@@ -329,4 +329,107 @@ theorem exercise_6_7 {R : Set.Relation α}
       simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
       exact hxy_mem this
 
+/-- ### Exercise 6.8i
+
+Show that for any set `𝓐`:
+```
+dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
+```
+-/
+theorem exercise_6_8_i {A : Set (Set.Relation α)}
+  : Set.Relation.dom (⋃₀ A) = ⋃₀ { Set.Relation.dom R | R ∈ A } := by
+  ext x
+  unfold Set.Relation.dom Prod.fst
+  simp only [
+    Set.mem_image,
+    Set.mem_sUnion,
+    Prod.exists,
+    exists_and_right,
+    exists_eq_right,
+    Set.mem_setOf_eq,
+    exists_exists_and_eq_and
+  ]
+  apply Iff.intro
+  · intro ⟨y, ⟨t, ⟨ht, hx⟩⟩⟩
+    exact ⟨t, ⟨ht, ⟨y, hx⟩⟩⟩
+  · intro ⟨t, ⟨ht, ⟨y, hx⟩⟩⟩
+    exact ⟨y, ⟨t, ⟨ht, hx⟩⟩⟩
+
+/-- ### Exercise 6.8ii
+
+Show that for any set `𝓐`:
+```
+ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
+```
+-/
+theorem exercise_6_8_ii {A : Set (Set.Relation α)}
+  : Set.Relation.ran (⋃₀ A) = ⋃₀ { Set.Relation.ran R | R ∈ A } := by
+  ext x
+  unfold Set.Relation.ran Prod.snd
+  simp only [
+    Set.mem_image,
+    Set.mem_sUnion,
+    Prod.exists,
+    exists_eq_right,
+    Set.mem_setOf_eq,
+    exists_exists_and_eq_and
+  ]
+  apply Iff.intro
+  · intro ⟨t, ⟨y, ⟨hy, ht⟩⟩⟩
+    exact ⟨y, ⟨hy, ⟨t, ht⟩⟩⟩
+  · intro ⟨y, ⟨hy, ⟨t, ht⟩⟩⟩
+    exact ⟨t, ⟨y, ⟨hy, ht⟩⟩⟩
+
+/-- ## Exercise 6.9i
+
+Discuss the result of replacing the union operation by the intersection
+operation in the preceding problem.
+```
+dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
+```
+-/
+theorem exercise_6_9_i {A : Set (Set.Relation α)}
+  : Set.Relation.dom (⋂₀ A) ⊆ ⋂₀ { Set.Relation.dom R | R ∈ A } := by
+  show ∀ x, x ∈ Set.Relation.dom (⋂₀ A) → x ∈ ⋂₀ { Set.Relation.dom R | R ∈ A }
+  unfold Set.Relation.dom Prod.fst
+  simp only [
+    Set.mem_image,
+    Set.mem_sInter,
+    Prod.exists,
+    exists_and_right,
+    exists_eq_right,
+    Set.mem_setOf_eq,
+    forall_exists_index,
+    and_imp,
+    forall_apply_eq_imp_iff₂
+  ]
+  intro _ y hy R hR
+  exact ⟨y, hy R hR⟩
+
+/-- ## Exercise 6.9ii
+
+Discuss the result of replacing the union operation by the intersection
+operation in the preceding problem.
+```
+ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
+```
+-/
+theorem exercise_6_9_ii {A : Set (Set.Relation α)}
+  : Set.Relation.ran (⋂₀ A) ⊆ ⋂₀ { Set.Relation.ran R | R ∈ A } := by
+  show ∀ x, x ∈ Set.Relation.ran (⋂₀ A) → x ∈ ⋂₀ { Set.Relation.ran R | R ∈ A }
+  unfold Set.Relation.ran Prod.snd
+  simp only [
+    Set.mem_image,
+    Set.mem_sInter,
+    Prod.exists,
+    exists_and_right,
+    exists_eq_right,
+    Set.mem_setOf_eq,
+    forall_exists_index,
+    and_imp,
+    forall_apply_eq_imp_iff₂
+  ]
+  intro _ y hy R hR
+  exact ⟨y, hy R hR⟩
+
 end Enderton.Set.Chapter_3

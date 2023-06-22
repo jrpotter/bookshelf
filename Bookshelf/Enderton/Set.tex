@@ -2792,36 +2792,127 @@ Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 6.8}}%
+\subsection{\verified{Exercise 6.8}}%
 \label{sub:exercise-6.8}
 
 Show that for any set $\mathscr{A}$:
   \begin{align}
     \dom{\bigcup{\mathscr{A}}}
-      & = \bigcup\; \{ \dom{R} \mid R \in \mathscr{A} \},
+      & = \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \},
       & \label{sub:exercise-6.8-eq1} \\
     \ran{\bigcup{\mathscr{A}}}
-      & = \bigcup\; \{ \ran{R} \mid R \in \mathscr{A} \}.
+      & = \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}.
       & \label{sub:exercise-6.8-eq2}
   \end{align}
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_6\_8\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_6\_8\_ii}
+
+  We prove (i) \eqref{sub:exercise-6.8-eq1} and then (ii)
+    \eqref{sub:exercise-6.8-eq2}.
+
+  \paragraph{(i)}%
+
+    Let $x \in \dom{\bigcup{\mathscr{A}}}$.
+    By definition of a domain, there exists some $y$ such that
+      $\left< x, y \right> \in \bigcup{\mathscr{A}}$.
+    By definition of the union of sets,
+      $\exists y, \exists R \in \mathscr{A}, \left< x, y \right> \in R$.
+    Equivalently,
+      $\exists R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
+    By another application of the definition of a domain,
+      $\exists R \in \mathscr{A}, x \in \dom{R}$.
+    By another application of the definition of the union of sets,
+      $x \in \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
+    Since membership of these two sets holds biconditionally, it follows
+      \eqref{sub:exercise-6.8-eq1} holds.
+
+  \paragraph{(ii)}%
+
+    Let $x \in \ran{\bigcup{\mathscr{A}}}$.
+    By definition of a range, there exists some $t$ such that
+      $\left< t, x \right> \in \bigcup{\mathscr{A}}$.
+    By definition of the union of sets,
+      $\exists t, \exists R \in \mathscr{A}, \left< t, x \right> \in R$.
+    Equivalently,
+      $\exists R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
+    By another application of the definition of a range,
+      $\exists R \in \mathscr{A}, x \in \ran{R}$.
+    By another application of the definition of the union of sets,
+      $x \in \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
+    Since membership of these two sets holds biconditionally, it follows
+      \eqref{sub:exercise-6.8-eq2} holds.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 6.9}}%
+\subsection{\verified{Exercise 6.9}}%
 \label{sub:exercise-6.9}
 
 Discuss the result of replacing the union operation by the intersection
   operation in the preceding problem.
 
-\begin{proof}
+\begin{answer}
 
-  TODO
+  \statementpadding
 
-\end{proof}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_6\_9\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_6\_9\_ii}
+
+  Replacing the union operation with the intersection problem produces the
+    following relationships
+    \begin{align}
+      \dom{\bigcap{\mathscr{A}}}
+        & \subseteq \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \},
+        & \label{sub:exercise-6.9-eq1} \\
+      \ran{\bigcap{\mathscr{A}}}
+        & \subseteq \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}.
+        & \label{sub:exercise-6.9-eq2}
+    \end{align}
+
+  We prove (i) \eqref{sub:exercise-6.9-eq1} and then (ii)
+    \eqref{sub:exercise-6.9-eq2}.
+
+  \paragraph{(i)}%
+
+    Let $x \in \dom{\bigcap{\mathscr{A}}}$.
+    By definition of the domain of a set,
+      $\exists y, \left< x, y \right> \in \bigcap{\mathscr{A}}$.
+    By definition of the intersection of sets,
+      $\exists y, \forall R \in \mathscr{A}, \left< x, y \right> \in R$.
+    But this implies that
+      $\forall R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
+    By another application of the definition of the domain of a set,
+      $\forall R \in \mathscr{A}, x \in \dom{R}$.
+    By another application of the intersection of sets,
+      $x \in \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
+      Thus \eqref{sub:exercise-6.9-eq1} holds.
+
+  \paragraph{(ii)}%
+
+    Let $x \in \ran{\bigcap{\mathscr{A}}}$.
+    By definition of the range of a set,
+      $\exists t, \left< t, x \right> \in \bigcap{\mathscr{A}}$.
+    By definition of the intersection of sets,
+      $\exists t, \forall R \in \mathscr{A}, \left< t, x \right> \in R$.
+    But this implies that
+      $\forall R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
+    By another application of the definition of the domain of a set,
+      $\forall R \in \mathscr{A}, x \in \ran{R}$.
+    By another application of the intersection of sets,
+      $x \in \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
+      Thus \eqref{sub:exercise-6.9-eq2} holds.
+
+\end{answer}
 
 \section{Exercises 7}%
 \label{sec:exercises-7}
