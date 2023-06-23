@@ -24,6 +24,24 @@
 \chapter{Reference}%
 \label{chap:reference}
 
+\section{\partial{Composition}}%
+\label{ref:composition}
+
+The \textbf{composition} of sets $F$ and $G$ is
+  $$F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.$$
+
+\section{\defined{Domain}}%
+\label{ref:domain}
+
+Given \nameref{ref:relation} $R$, the \textbf{domain} of $R$, denoted $\dom{R}$,
+  is given by $$x \in \dom{R} \iff \exists y \left< x, y \right> \in R.$$
+
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.dom}
+
+\end{definition}
+
 \section{\defined{Empty Set Axiom}}%
 \label{ref:empty-set-axiom}
 
@@ -48,6 +66,18 @@ If two sets have exactly the same members, then they are equal:
   \lean*{Mathlib/Init/Set}{Set.ext}
 
 \end{axiom}
+
+\section{\defined{Field}}%
+\label{ref:field}
+
+Given \nameref{ref:relation} $R$, the \textbf{field} of $R$, denoted $\fld{R}$,
+  is given by $$\fld{R} = \dom{R} \cup \ran{R}.$$
+
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.fld}
+
+\end{definition}
 
 \section{\defined{Function}}%
 \label{ref:function}
@@ -74,6 +104,23 @@ One-to-one functions are sometimes called \textbf{injections}.
   \lean*{Mathlib/Init/Function}{Function.Bijective}
 
 \end{definition}
+
+\section{\partial{Image}}%
+\label{ref:image}
+
+Let $A$ and $F$ be arbitrary sets.
+The \textbf{image of $A$ under $F$} is the set
+  \begin{align*}
+    F[A]
+      & = \ran{(F \restriction A)} \\
+      & = \{v \mid (\exists u \in A) uFv\}.
+  \end{align*}
+
+\section{\partial{Inverse}}%
+\label{ref:inverse}
+
+The \textbf{inverse} of a set $F$ is the set
+  $$F^{-1} = \{\left< u, v \right> \mid vFu\}.$$
 
 \section{\defined{Ordered Pair}}%
 \label{ref:ordered-pair}
@@ -144,29 +191,34 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
 
 \end{axiom}
 
+\section{\defined{Range}}%
+\label{ref:range}
+
+Given \nameref{ref:relation} $R$, the \textbf{range} of $R$, denoted $\ran{R}$,
+  is given by $$x \in \ran{R} \iff \exists t \left< t, x \right> \in R.$$
+
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.ran}
+
+\end{definition}
+
 \section{\defined{Relation}}%
 \label{ref:relation}
 
 A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
-Given relation $R$, the \textbf{domain} of $R$ ($\dom{R}$), the \textbf{range}
-  of $R$ ($\ran{R}$), and the \textbf{field} of $R$ ($\fld{R}$) is given by
-  \begin{align*}
-    x \in \dom{R} & \iff \exists y \left< x, y \right> \in R, \\
-    x \in \ran{R} & \iff \exists t \left< t, x \right> \in R, \\
-    \fld{R} & = \dom{R} \cup \ran{R}.
-  \end{align*}
 
 \begin{definition}
 
-  \statementpadding
-
-  \lean*{Mathlib/Data/Rel}{Rel}
-
-  \lean*{Mathlib/Data/Rel}{Rel.dom}
-
-  \lean*{Mathlib/Data/Rel}{Rel.codom}
+  \lean*{Common/Set/Relation}{Set.Relation}
 
 \end{definition}
+
+\section{\partial{Restriction}}%
+\label{ref:restriction}
+
+The \textbf{restriction} of a set $F$ to set $A$ is the set
+  $$F \restriction A = \{\left< u, v \right> \mid uFv \land u \in A\}.$$
 
 \section{\defined{Subset Axioms}}%
 \label{ref:subset-axioms}
@@ -2730,8 +2782,8 @@ Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
     Let $a \in A$.
     Since $A$ is a relation, $a$ is an ordered pair.
     Then there exists some sets $x$ and $y$ such that $a = \left< x, y \right>$.
-    By definition of the domain and range of $A$, $x \in \dom{A}$ and
-      $y \in \ran{A}$.
+    By the definition of the \nameref{ref:domain} and \nameref{ref:range} of
+      $A$, $x \in \dom{A}$ and $y \in \ran{A}$.
     Thus $a = \left< x, y \right> \in \dom{A} \times \ran{A}$ as well.
     This proves $A \subseteq \dom{A} \times \ran{A}$.
 
@@ -2885,14 +2937,14 @@ Discuss the result of replacing the union operation by the intersection
   \paragraph{(i)}%
 
     Let $x \in \dom{\bigcap{\mathscr{A}}}$.
-    By definition of the domain of a set,
+    By definition of the \nameref{ref:domain} of a set,
       $\exists y, \left< x, y \right> \in \bigcap{\mathscr{A}}$.
     By definition of the intersection of sets,
       $\exists y, \forall R \in \mathscr{A}, \left< x, y \right> \in R$.
     But this implies that
       $\forall R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
-    By another application of the definition of the domain of a set,
-      $\forall R \in \mathscr{A}, x \in \dom{R}$.
+    By another application of the definition of the \nameref{ref:domain} of a
+      set, $\forall R \in \mathscr{A}, x \in \dom{R}$.
     By another application of the intersection of sets,
       $x \in \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
       Thus \eqref{sub:exercise-6.9-eq1} holds.
@@ -2900,14 +2952,14 @@ Discuss the result of replacing the union operation by the intersection
   \paragraph{(ii)}%
 
     Let $x \in \ran{\bigcap{\mathscr{A}}}$.
-    By definition of the range of a set,
+    By definition of the \nameref{ref:range} of a set,
       $\exists t, \left< t, x \right> \in \bigcap{\mathscr{A}}$.
     By definition of the intersection of sets,
       $\exists t, \forall R \in \mathscr{A}, \left< t, x \right> \in R$.
     But this implies that
       $\forall R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
-    By another application of the definition of the domain of a set,
-      $\forall R \in \mathscr{A}, x \in \ran{R}$.
+    By another application of the definition of the \nameref{ref:range} of a
+      set, $\forall R \in \mathscr{A}, x \in \ran{R}$.
     By another application of the intersection of sets,
       $x \in \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
       Thus \eqref{sub:exercise-6.9-eq2} holds.
@@ -2945,19 +2997,50 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 \section{Functions}%
 \label{sec:functions}
 
-\subsection{\unverified{Theorem 3E}}%
+\subsection{\partial{Theorem 3E}}%
 \label{sub:theorem-3e}
 
 \begin{theorem}[3E]
 
-  For a set $F$, $\dom{F^{-1}} = \ran{F}$ and $\ran{F^{-1}} = \dom{F}$.
+  For a set $F$, $\dom{(F^{-1})} = \ran{F}$ and $\ran{(F^{-1})} = \dom{F}$.
   For a relation $F$, $(F^{-1})^{-1} = F$.
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  We prove that (i) $\dom{(F^{-1})} = \ran{F}$, (ii) $\ran{(F^{-1})} = \dom{F}$,
+    and (iii) $(F^{-1})^{-1} = F$.
+
+  \paragraph{(i)}%
+
+    By definition of the \nameref{ref:domain}, $x \in \dom{(F^{-1})}$ if and
+      only if there exists some $y$ such that $\left< x, y \right> \in F^{-1}$.
+    By definition of the \nameref{ref:inverse} of a set,
+      $\left< y, x \right> \in F$.
+    By definition of the \nameref{ref:range}, $x \in \ran{F}$.
+    Since each step holds biconditionally, it follows
+      $\dom{(F^{-1})} = \ran{F}$ as expected.
+
+  \paragraph{(ii)}%
+
+    By definition of the \nameref{ref:range}, $x \in \ran{(F^{-1})}$ if and
+      only if there exists some $t$ such that $\left< t, x \right> \in F^{-1}$.
+    By definition of the \nameref{ref:inverse} of a set,
+      $\left< x, t \right> \in F$.
+    By definition of the \nameref{ref:domain}, $x \in \dom{F}$.
+    Since each step holds biconditionally, it follows
+      $\ran{(F^{-1})} = \dom{F}$.
+
+  \paragraph{(iii)}%
+
+    By definition of the \nameref{ref:inverse} of a set,
+      \begin{align*}
+        (F^{-1})^{-1}
+          & = \{\left< u, v \right> \mid \left< v, u \right> \in F^{-1}\} \\
+          & = \{\left< u, v \right> \mid \left< u, v \right> \in F\} \\
+          & = F.
+      \end{align*}
 
 \end{proof}
 
