@@ -2917,17 +2917,30 @@ Discuss the result of replacing the union operation by the intersection
 \section{Exercises 7}%
 \label{sec:exercises-7}
 
-\subsection{\unverified{Exercise 7.10}}%
+\subsection{\partial{Exercise 7.10}}%
 \label{sub:exercise-7.10}
 
 Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
   integer $m$ less than $4$.
 
-\begin{proof}
+\begin{answer}
 
-  TODO
+  Let $\left< x_1, x_2, x_3, x_4 \right>$ denote an arbitrary $4$-tuple.
+  Then
+    \begin{align}
+      \left< x_1, x_2, x_3, x_4 \right>
+        & = \left< \left< x_1, x_2, x_3 \right>, x_4 \right>
+          & \label{sub:exercise-7.10-eq1} \\
+        & = \left< \left< \left< x_1, x_2 \right>, x_3 \right>, x_4 \right>
+          & \label{sub:exercise-7.10-eq2}
+    \end{align}
+  Here \eqref{sub:exercise-7.10-eq1} is an equivalent ordered $2$-tuple and
+    \eqref{sub:exercise-7.10-eq2} is an equivalent ordered $3$-tuple.
+  Furthermore, $\left< x_1, x_2, x_3, x_4 \right> =
+    \left< \left< x_1, x_2, x_3, x_4 \right> \right>$, showing it can be
+    represented as an ordered $1$-tuple as well.
 
-\end{proof}
+\end{answer}
 
 \section{Functions}%
 \label{sec:functions}
