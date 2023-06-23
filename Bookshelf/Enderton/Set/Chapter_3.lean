@@ -100,20 +100,20 @@ theorem exercise_5_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
       ext x
       rw [Set.mem_setOf_eq]
       apply Iff.intro
-      · intro ⟨h₁, ⟨b, h₂⟩⟩
-        exact ⟨b, ⟨h₂.left, ⟨h₁, h₂.right⟩⟩⟩
-      · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
-        exact ⟨h₂, ⟨b, ⟨h₁, h₃⟩⟩⟩
+      · intro ⟨h₁, b, h₂⟩
+        exact ⟨b, h₂.left, h₁, h₂.right⟩
+      · intro ⟨b, h₁, h₂, h₃⟩
+        exact ⟨h₂, b, h₁, h₃⟩
     _ = ⋃₀ { Set.prod A p | p ∈ 𝓑 } := by
       ext x
       rw [Set.mem_setOf_eq]
       unfold Set.sUnion sSup Set.instSupSetSet
       simp only [Set.mem_setOf_eq, exists_exists_and_eq_and]
       apply Iff.intro
-      · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
-        exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
-      · intro ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
-        exact ⟨b, ⟨h₁, ⟨h₂, h₃⟩⟩⟩
+      · intro ⟨b, h₁, h₂, h₃⟩
+        exact ⟨b, h₁, h₂, h₃⟩
+      · intro ⟨b, h₁, h₂, h₃⟩
+        exact ⟨b, h₁, h₂, h₃⟩
 
 /-- ### Exercise 5.5a
 
@@ -268,7 +268,7 @@ theorem exercise_6_7 {R : Set.Relation α}
         Set.mem_image, Prod.exists, exists_and_right, exists_eq_right
       ] at hd
       have ⟨y, hp⟩ := hd
-      have hm : OrderedPair x y ∈ R.image (fun p => OrderedPair p.1 p.2) := by
+      have hm : OrderedPair x y ∈ Set.image (fun p => OrderedPair p.1 p.2) R := by
         unfold Set.image
         simp only [Prod.exists, Set.mem_setOf_eq]
         exact ⟨x, ⟨y, ⟨hp, rfl⟩⟩⟩
@@ -279,7 +279,7 @@ theorem exercise_6_7 {R : Set.Relation α}
       unfold Set.Relation.ran Prod.snd at hr
       simp only [Set.mem_image, Prod.exists, exists_eq_right] at hr
       have ⟨t, ht⟩ := hr
-      have hm : OrderedPair t x ∈ R.image (fun p => OrderedPair p.1 p.2) := by
+      have hm : OrderedPair t x ∈ Set.image (fun p => OrderedPair p.1 p.2) R := by
         simp only [Set.mem_image, Prod.exists]
         exact ⟨t, ⟨x, ⟨ht, rfl⟩⟩⟩
       unfold OrderedPair at hm
@@ -329,7 +329,7 @@ theorem exercise_6_7 {R : Set.Relation α}
       simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
       exact hxy_mem this
 
-/-- ### Exercise 6.8i
+/-- ### Exercise 6.8 (i)
 
 Show that for any set `𝓐`:
 ```
@@ -350,12 +350,12 @@ theorem exercise_6_8_i {A : Set (Set.Relation α)}
     exists_exists_and_eq_and
   ]
   apply Iff.intro
-  · intro ⟨y, ⟨t, ⟨ht, hx⟩⟩⟩
-    exact ⟨t, ⟨ht, ⟨y, hx⟩⟩⟩
-  · intro ⟨t, ⟨ht, ⟨y, hx⟩⟩⟩
-    exact ⟨y, ⟨t, ⟨ht, hx⟩⟩⟩
+  · intro ⟨y, t, ht, hx⟩
+    exact ⟨t, ht, y, hx⟩
+  · intro ⟨t, ht, y, hx⟩
+    exact ⟨y, t, ht, hx⟩
 
-/-- ### Exercise 6.8ii
+/-- ### Exercise 6.8 (ii)
 
 Show that for any set `𝓐`:
 ```
@@ -380,7 +380,7 @@ theorem exercise_6_8_ii {A : Set (Set.Relation α)}
   · intro ⟨y, ⟨hy, ⟨t, ht⟩⟩⟩
     exact ⟨t, ⟨y, ⟨hy, ht⟩⟩⟩
 
-/-- ## Exercise 6.9i
+/-- ### Exercise 6.9 (i)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -406,7 +406,7 @@ theorem exercise_6_9_i {A : Set (Set.Relation α)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- ## Exercise 6.9ii
+/-- ### Exercise 6.9 (ii)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -431,5 +431,87 @@ theorem exercise_6_9_ii {A : Set (Set.Relation α)}
   ]
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
+
+/-- ### Theorem 3E (i)
+
+For a set `F`, `dom F⁻¹ = ran F`.
+-/
+theorem theorem_3e_i {F : Set.Relation α}
+  : Set.Relation.dom (F.inv) = Set.Relation.ran F := by
+  ext x
+  unfold Set.Relation.dom Set.Relation.ran Set.Relation.inv
+  simp only [
+    Prod.exists,
+    Set.mem_image,
+    Set.mem_setOf_eq,
+    Prod.mk.injEq,
+    exists_and_right,
+    exists_eq_right
+  ]
+  apply Iff.intro
+  · intro ⟨y, a, _, h⟩
+    rw [← h.right.left]
+    exact ⟨a, h.left⟩
+  · intro ⟨y, hy⟩
+    exact ⟨y, y, x, hy, rfl, rfl⟩
+
+/-- ### Theorem 3E (ii)
+
+For a set `F`, `ran F⁻¹ = dom F`.
+-/
+theorem theorem_3e_ii {F : Set.Relation α}
+  : Set.Relation.ran (F.inv) = Set.Relation.dom F := by
+  ext x
+  unfold Set.Relation.dom Set.Relation.ran Set.Relation.inv
+  simp only [
+    Prod.exists,
+    Set.mem_image,
+    Set.mem_setOf_eq,
+    Prod.mk.injEq,
+    exists_eq_right,
+    exists_and_right
+  ]
+  apply Iff.intro
+  · intro ⟨a, y, b, h⟩
+    rw [← h.right.right]
+    exact ⟨b, h.left⟩
+  · intro ⟨y, hy⟩
+    exact ⟨y, x, y, hy, rfl, rfl⟩
+
+/-- ### Theorem 3E (iii)
+
+For a set `F`, `(F⁻¹)⁻¹ = F`.
+-/
+theorem theorem_3e_iii {F : Set.Relation α}
+  : F.inv.inv = F := by
+  unfold Set.Relation.inv
+  simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
+  ext x
+  apply Iff.intro
+  · intro hx
+    have ⟨a₁, b₁, ⟨⟨a₂, b₂, h₁⟩, h₂⟩⟩ := hx
+    rw [← h₂, ← h₁.right.right, ← h₁.right.left]
+    exact h₁.left
+  · intro hx
+    have (p, q) := x
+    refine ⟨q, p, ⟨?_, ?_⟩⟩
+    · exact ⟨p, q, hx, rfl, rfl⟩
+    · rfl
+
+/-- ### Theorem 3F (i)
+
+For a set `F`, `F⁻¹` is a function **iff** `F` is single-rooted.
+-/
+theorem theorem_3f_i {F : Set.Relation α}
+  : Set.Relation.isSingleValued F.inv ↔ Set.Relation.isSingleRooted F := by
+  sorry
+
+/-- ### Theorem 3F (ii)
+
+For a relation `F`, `F` is a function **iff** `F⁻¹` is single-rooted.
+-/
+theorem theorem_3f_ii {F : Set.Relation α}
+  : Set.Relation.isSingleValued F ↔ Set.Relation.isSingleRooted F.inv := by
+  sorry
 
 end Enderton.Set.Chapter_3

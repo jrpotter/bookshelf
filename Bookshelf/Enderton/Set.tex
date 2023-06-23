@@ -24,11 +24,17 @@
 \chapter{Reference}%
 \label{chap:reference}
 
-\section{\partial{Composition}}%
+\section{\defined{Composition}}%
 \label{ref:composition}
 
 The \textbf{composition} of sets $F$ and $G$ is
   $$F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.$$
+
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.comp}
+
+\end{definition}
 
 \section{\defined{Domain}}%
 \label{ref:domain}
@@ -105,7 +111,7 @@ One-to-one functions are sometimes called \textbf{injections}.
 
 \end{definition}
 
-\section{\partial{Image}}%
+\section{\defined{Image}}%
 \label{ref:image}
 
 Let $A$ and $F$ be arbitrary sets.
@@ -116,11 +122,23 @@ The \textbf{image of $A$ under $F$} is the set
       & = \{v \mid (\exists u \in A) uFv\}.
   \end{align*}
 
-\section{\partial{Inverse}}%
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.image}
+
+\end{definition}
+
+\section{\defined{Inverse}}%
 \label{ref:inverse}
 
 The \textbf{inverse} of a set $F$ is the set
   $$F^{-1} = \{\left< u, v \right> \mid vFu\}.$$
+
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.inv}
+
+\end{definition}
 
 \section{\defined{Ordered Pair}}%
 \label{ref:ordered-pair}
@@ -214,11 +232,17 @@ A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 
 \end{definition}
 
-\section{\partial{Restriction}}%
+\section{\defined{Restriction}}%
 \label{ref:restriction}
 
 The \textbf{restriction} of a set $F$ to set $A$ is the set
   $$F \restriction A = \{\left< u, v \right> \mid uFv \land u \in A\}.$$
+
+\begin{definition}
+
+  \lean*{Common/Set/Relation}{Set.Relation.restriction}
+
+\end{definition}
 
 \section{\defined{Subset Axioms}}%
 \label{ref:subset-axioms}
@@ -2997,7 +3021,7 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 \section{Functions}%
 \label{sec:functions}
 
-\subsection{\partial{Theorem 3E}}%
+\subsection{\verified{Theorem 3E}}%
 \label{sub:theorem-3e}
 
 \begin{theorem}[3E]
@@ -3008,6 +3032,17 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 \end{theorem}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3e\_i}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3e\_ii}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3e\_iii}
 
   We prove that (i) $\dom{(F^{-1})} = \ran{F}$, (ii) $\ran{(F^{-1})} = \dom{F}$,
     and (iii) $(F^{-1})^{-1} = F$.
@@ -3055,6 +3090,14 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 \end{theorem}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3f\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3f\_ii}
 
   TODO
 

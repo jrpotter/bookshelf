@@ -38,10 +38,50 @@ The field of a `Relation`.
 def fld (R : Relation α) : Set α := dom R ∪ ran R
 
 /--
+The inverse of a `Relation`.
+-/
+def inv (R : Relation α) : Relation α := { (p.2, p.1) | p ∈ R }
+
+/--
+The composition of two `Relation`s.
+-/
+def comp (F G : Relation α) : Relation α :=
+  { p | ∃ t, (p.1, t) ∈ G ∧ (t, p.2) ∈ F}
+
+/--
+The restriction of a `Relation` to a `Set`.
+-/
+def restriction (R : Relation α) (A : Set α) : Relation α :=
+  { p ∈ R | p.1 ∈ A } 
+
+/--
+The image of a `Relation` under a `Set`.
+-/
+def image (R : Relation α) (A : Set α) : Set α :=
+  { y | ∃ u ∈ A, (u, y) ∈ R }
+
+/--
+A `Relation` `R` is said to be single-rooted **iff** for all `y ∈ ran R`, there
+exists exactly one `x` such that `⟨x, y⟩ ∈ R`.
+-/
+def isSingleRooted (R : Relation α) : Prop :=
+  ∀ y ∈ R.ran, ∃! x, x ∈ R.dom ∧ (x, y) ∈ R
+
+/--
+A `Relation` `R` is said to be single-valued **iff** for all `x ∈ dom R`, there
+exists exactly one `y` such that `⟨x, y⟩ ∈ R`.
+
+Notice, a `Relation` that is single-valued is a function.
+-/
+def isSingleValued (R : Relation α) : Prop :=
+  ∀ x ∈ R.dom, ∃! y, y ∈ R.ran ∧ (x, y) ∈ R
+
+/--
 Convert a `Relation` into an equivalent representation using `OrderedPair`s.
 -/
 def toOrderedPairs (R : Relation α) : Set (Set (Set α)) :=
-  R.image (fun (x, y) => OrderedPair x y)
+  -- Notice here we are using `Set.image` and *not* `Set.Relation.image`.
+  Set.image (fun (x, y) => OrderedPair x y) R
 
 end Relation
 
