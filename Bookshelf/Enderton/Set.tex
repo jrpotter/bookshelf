@@ -90,6 +90,8 @@ Given \nameref{ref:relation} $R$, the \textbf{field} of $R$, denoted $\fld{R}$,
 
 A \textbf{function} is a relation $F$ such that for each $x$ in $\dom{F}$ there
   is only one $y$ such that $xFy$.
+In other words, $F$ is \textbf{single-valued}.
+
 We say that $F$ is a function \textbf{from $A$ into $B$} or that $F$
   \textbf{maps $A$ into $B$} (written $F \colon A \rightarrow B$) iff $F$ is a
   function, $\dom{F} = A$, and $\ran{F} \subseteq B$.
@@ -3079,7 +3081,7 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
 \end{proof}
 
-\subsection{\unverified{Theorem 3F}}%
+\subsection{\partial{Theorem 3F}}%
 \label{sub:theorem-3f}
 
 \begin{theorem}[3F]
@@ -3099,11 +3101,98 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
   \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.theorem\_3f\_ii}
 
-  TODO
+  We prove that (i) any set $F$, $F^{-1}$ is a function iff $F$ is
+    single-rooted and (ii) any relation $F$ is a function iff $F^{-1}$ is
+    single-rooted.
+
+  \paragraph{(i)}%
+  \label{par:theorem-3f-i}
+
+    Let $F$ be any set.
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $F^{-1}$ is a \nameref{ref:function}.
+      By definition, for each $x \in \dom{(F^{-1})}$, there is only one $y$
+        such that $\left< x, y \right> \in F^{-1}$.
+      By definition of the \nameref{ref:inverse} of $F$,
+        $F^{-1} = \{\left< u, v \right> \mid vFu\}$.
+      Then for each $x \in \ran{F}$, there exists exactly one $y$ such that
+        $\left< y, x \right> \in F$.
+      This definitionally means $F$ is single-rooted.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $F$ is single-rooted.
+      By definition, for each $x \in \ran{F}$, there is only one $t$ such that
+        $\left< t, x \right> \in F$.
+      By definition of the \nameref{ref:inverse} of $F$,
+        $F^{-1} = \{\left< u, v \right> \mid vFu\}$.
+      Then for each $x \in \dom{(F^{-1})}$ there exists exactly one $t$ such
+        that $\left< x, t \right> \in F^{-1}$.
+      This definitionally means $F^{-1}$ is a function.
+
+  \paragraph{(ii)}%
+
+    Let $F$ be a \nameref{ref:relation}.
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $F$ is a function.
+      By \nameref{sub:theorem-3e}, $F = (F^{-1})^{-1}$.
+      Then by \nameref{par:theorem-3f-i}, $F^{-1}$ is single-rooted.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $F^{-1}$ is single-rooted.
+      Then by \nameref{par:theorem-3f-i}, $(F^{-1})^{-1}$ is a function.
+      By \nameref{sub:theorem-3e}, $(F^{-1})^{-1} = F$.
+      Thus $F$ is a function.
 
 \end{proof}
 
-\subsection{\unverified{Theorem 3G}}%
+\subsection{\partial{Lemma 1}}%
+\label{sub:lemma-1}
+
+Assume that $F$ is a one-to-one function.
+Then $F^{-1}$ is a one-to-one function.
+
+\begin{proof}
+
+  We prove that (i) $F^{-1}$ is a function and (ii) $F^{-1}$ is single-rooted.
+
+  \paragraph{(i)}%
+  \label{par:lemma-1-i}
+
+    By hypothesis, $F$ is one-to-one.
+    This means it is single-rooted, i.e. for all $x \in \ran{F}$, there exists
+      exactly one $t$ such that $\left< t, x \right> \in F$.
+    By definition of the \nameref{ref:inverse} of $F$,
+      $\left< x, t \right> \in F^{-1}$.
+    But then for all $x \in \dom{(F^{-1})}$, there exists exactly one $t$ such
+      that $\left< x, t \right> \in F^{-1}$.
+    Thus $F^{-1}$ is a function.
+
+  \paragraph{(ii)}%
+  \label{par:lemma-1-ii}
+
+    By hypothesis, $F$ is single-valued.
+    That is, for all $x \in \dom{F}$, there exists exactly one $y$ such that
+      $\left< x, y \right> \in F$.
+    By definition of the \nameref{ref:inverse} of $F$,
+      $\left< y, x \right> \in F^{-1}$.
+    But then for all $x \in \ran{(F^{-1})}$, there exists exactly one $y$ such
+      that $\left< y, x \right> \in F^{-1}$.
+    Thus $F^{-1}$ is single-rooted.
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:lemma-1-i} and \nameref{par:lemma-1-ii}, $F^{-1}$ is
+      a one-to-one function.
+
+\end{proof}
+
+\subsection{\partial{Theorem 3G}}%
 \label{sub:theorem-3g}
 
 \begin{theorem}[3G]
@@ -3116,7 +3205,17 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
 \begin{proof}
 
-  TODO
+  Suppose $F$ is a one-to-one \nameref{ref:function}.
+  Then \nameref{sub:lemma-1} indicates $F^{-1}$ is a one-to-one function with
+    domain $\ran{F}$ and range $\dom{F}$.
+
+  For all $x \in \dom{F}$, $\left< x, F(x) \right> \in F$.
+  Then $\left< F(x), x \right> \in F^{-1}$.
+  Since $F^{-1}$ is single-valued, $F^{-1}(F(x)) = x$ is well-defined.
+
+  For all $y \in \ran{F}$, $\left< y, F^{-1}(y) \right> \in F^{-1}$.
+  Then $\left< F^{-1}(y), y \right> \in F$.
+  Since $F$ is single-valued, $F(F^{-1}(y)) = y$ is also well-defined.
 
 \end{proof}
 
