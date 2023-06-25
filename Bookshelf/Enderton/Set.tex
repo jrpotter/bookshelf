@@ -3037,14 +3037,14 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.theorem\_3e\_i}
+  \lean*{Common/Set/Relation}
+    {Set.Relation.dom\_inv\_eq\_ran\_self}
 
-  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.theorem\_3e\_ii}
+  \lean*{Common/Set/Relation}
+    {Set.Relation.ran\_inv\_eq\_dom\_self}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.theorem\_3e\_iii}
+  \lean{Common/Set/Relation}
+    {Set.Relation.inv\_inv\_eq\_self}
 
   We prove that (i) $\dom{(F^{-1})} = \ran{F}$, (ii) $\ran{(F^{-1})} = \dom{F}$,
     and (iii) $(F^{-1})^{-1} = F$.
@@ -3081,7 +3081,7 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
 \end{proof}
 
-\subsection{\partial{Theorem 3F}}%
+\subsection{\verified{Theorem 3F}}%
 \label{sub:theorem-3f}
 
 \begin{theorem}[3F]
@@ -3095,11 +3095,11 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.theorem\_3f\_i}
+  \lean*{Common/Set/Relation}
+    {Set.Relation.single\_valued\_inv\_iff\_single\_rooted\_self}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.theorem\_3f\_ii}
+  \lean{Common/Set/Relation}
+    {Set.Relation.single\_valued\_self\_iff\_single\_rooted\_inv}
 
   We prove that (i) any set $F$, $F^{-1}$ is a function iff $F$ is
     single-rooted and (ii) any relation $F$ is a function iff $F^{-1}$ is
@@ -3151,13 +3151,15 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
 \end{proof}
 
-\subsection{\partial{Lemma 1}}%
+\subsection{\verified{Lemma 1}}%
 \label{sub:lemma-1}
 
-Assume that $F$ is a one-to-one function.
-Then $F^{-1}$ is a one-to-one function.
+For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
+
+  \lean{Common/Set/Relation}
+    {Set.Relation.one\_to\_one\_self\_iff\_one\_to\_one\_inv}
 
   We prove that (i) $F^{-1}$ is a function and (ii) $F^{-1}$ is single-rooted.
 
@@ -3211,11 +3213,11 @@ Then $F^{-1}$ is a one-to-one function.
 
   For all $x \in \dom{F}$, $\left< x, F(x) \right> \in F$.
   Then $\left< F(x), x \right> \in F^{-1}$.
-  Since $F^{-1}$ is single-valued, $F^{-1}(F(x)) = x$ is well-defined.
+  Since $F^{-1}$ is single-valued, $F^{-1}(F(x)) = x$.
 
   For all $y \in \ran{F}$, $\left< y, F^{-1}(y) \right> \in F^{-1}$.
   Then $\left< F^{-1}(y), y \right> \in F$.
-  Since $F$ is single-valued, $F(F^{-1}(y)) = y$ is also well-defined.
+  Since $F$ is single-valued, $F(F^{-1}(y)) = y$.
 
 \end{proof}
 

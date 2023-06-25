@@ -432,86 +432,22 @@ theorem exercise_6_9_ii {A : Set (Set.Relation α)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- ### Theorem 3E (i)
+/-- ### Theorem 3G (i)
 
-For a set `F`, `dom F⁻¹ = ran F`.
+Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
-theorem theorem_3e_i {F : Set.Relation α}
-  : Set.Relation.dom (F.inv) = Set.Relation.ran F := by
-  ext x
-  unfold Set.Relation.dom Set.Relation.ran Set.Relation.inv
-  simp only [
-    Prod.exists,
-    Set.mem_image,
-    Set.mem_setOf_eq,
-    Prod.mk.injEq,
-    exists_and_right,
-    exists_eq_right
-  ]
-  apply Iff.intro
-  · intro ⟨y, a, _, h⟩
-    rw [← h.right.left]
-    exact ⟨a, h.left⟩
-  · intro ⟨y, hy⟩
-    exact ⟨y, y, x, hy, rfl, rfl⟩
-
-/-- ### Theorem 3E (ii)
-
-For a set `F`, `ran F⁻¹ = dom F`.
--/
-theorem theorem_3e_ii {F : Set.Relation α}
-  : Set.Relation.ran (F.inv) = Set.Relation.dom F := by
-  ext x
-  unfold Set.Relation.dom Set.Relation.ran Set.Relation.inv
-  simp only [
-    Prod.exists,
-    Set.mem_image,
-    Set.mem_setOf_eq,
-    Prod.mk.injEq,
-    exists_eq_right,
-    exists_and_right
-  ]
-  apply Iff.intro
-  · intro ⟨a, y, b, h⟩
-    rw [← h.right.right]
-    exact ⟨b, h.left⟩
-  · intro ⟨y, hy⟩
-    exact ⟨y, x, y, hy, rfl, rfl⟩
-
-/-- ### Theorem 3E (iii)
-
-For a set `F`, `(F⁻¹)⁻¹ = F`.
--/
-theorem theorem_3e_iii {F : Set.Relation α}
-  : F.inv.inv = F := by
-  unfold Set.Relation.inv
-  simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
-  ext x
-  apply Iff.intro
-  · intro hx
-    have ⟨a₁, b₁, ⟨⟨a₂, b₂, h₁⟩, h₂⟩⟩ := hx
-    rw [← h₂, ← h₁.right.right, ← h₁.right.left]
-    exact h₁.left
-  · intro hx
-    have (p, q) := x
-    refine ⟨q, p, ⟨?_, ?_⟩⟩
-    · exact ⟨p, q, hx, rfl, rfl⟩
-    · rfl
-
-/-- ### Theorem 3F (i)
-
-For a set `F`, `F⁻¹` is a function **iff** `F` is single-rooted.
--/
-theorem theorem_3f_i {F : Set.Relation α}
-  : Set.Relation.isSingleValued F.inv ↔ Set.Relation.isSingleRooted F := by
+theorem theorem_3g_i {F : Set.Relation α}
+  (hF : Set.Relation.isOneToOne F) (hx : x ∈ F.dom)
+  : ∃! y, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
   sorry
 
-/-- ### Theorem 3F (ii)
+/-- ### Theorem 3G (ii)
 
-For a relation `F`, `F` is a function **iff** `F⁻¹` is single-rooted.
+Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
-theorem theorem_3f_ii {F : Set.Relation α}
-  : Set.Relation.isSingleValued F ↔ Set.Relation.isSingleRooted F.inv := by
+theorem theorem_3g_ii {F : Set.Relation α}
+  (hF : Set.Relation.isOneToOne F) (hy : x ∈ F.ran)
+  : ∃! x, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
   sorry
 
 end Enderton.Set.Chapter_3
