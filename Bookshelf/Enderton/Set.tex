@@ -3221,25 +3221,63 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\unverified{Theorem 3H}}%
+\subsection{\partial{Theorem 3H}}%
 \label{sub:theorem-3h}
 
 \begin{theorem}[3H]
 
   Assume that $F$ and $G$ are functions.
   Then $F \circ G$ is a function, its domain is
-    $$\{x \in \dom{G} \mid G(x) \in \dom{F}\},$$ and for $x$ in its domain,
-    $(F \circ G)(x) = F(G(x))$.
+    \begin{equation}
+      \label{sub:theorem-3h-eq1}
+      \{x \in \dom{G} \mid G(x) \in \dom{F}\},
+    \end{equation}
+    and for $x$ in its domain, $(F \circ G)(x) = F(G(x))$.
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  Let $F$ and $G$ be \nameref{ref:function}s.
+  By definition of the \nameref{ref:composition} of $F$ and $G$,
+    \begin{equation}
+      \label{sub:theorem-3h-eq2}
+      F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.
+    \end{equation}
+  By construction, $F \circ G$ is a relation.
+  By the definition of the \nameref{ref:domain} of a relation,
+    $x \in \dom{(F \circ G)}$ if and only if there exists some $y$ such that
+    $\left< x, y \right> \in F \circ G$.
+  We prove that (i) $F \circ G$ is a function with domain satisfying
+    \eqref{sub:theorem-3h-eq1}, and (ii) $(F \circ G)(x) = F(G(x))$.
+
+  \paragraph{(i)}%
+  \label{par:theorem-3h-i}
+
+    By \eqref{sub:theorem-3h-eq2}, there exists some $t$ such that
+      $\left< x, t \right> \in G$ and $\left< t, y \right> \in F$.
+    Since $G$ is single-valued, $t$ is uniquely determined by $x$.
+    Since $F$ is single-valued, $y$ is uniquely determined by $t$.
+    Therefore, by transitivity, $y$ is uniquely determined by $x$.
+    Thus $F \circ G$ is single-valued, i.e. $F \circ G$ is a function.
+
+    Furthermore, by definition of function application, $t = G(x)$.
+    Thus
+      $$\left< x, G(x) \right> \in G \quad\text{and}\quad
+        \left< G(x), y \right> \in F.$$
+    This immediately implies \eqref{sub:theorem-3h-eq1} holds true.
+
+  \paragraph{(ii)}%
+
+    Let $x \in \dom{(F \circ G)}$.
+    By definition, $\left< x, (F \circ G)(x) \right> \in F \circ G$.
+    Then \eqref{sub:theorem-3h-eq2} implies $(F \circ G)(x)$ satisfies
+      $\left< G(x), (F \circ G)(x) \right> \in F$.
+    This is equivalent to saying $F(G(x)) = (F \circ G)(x)$ as expected.
 
 \end{proof}
 
-\subsection{\unverified{Theorem 3I}}%
+\subsection{\partial{Theorem 3I}}%
 \label{sub:theorem-3i}
 
 \begin{theorem}[3I]
@@ -3250,11 +3288,21 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  TODO
+  By definition of the \nameref{ref:composition} of $F$ and $G$,
+    $$F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.$$
+  By definition of the \nameref{ref:inverse} of a function,
+    \begin{align*}
+      (F \circ G)^{-1}
+        & = \{\left< u, v \right> \mid \exists t (vGt \land tFu)\} \\
+        & = \{\left< u, v \right> \mid \exists t (tFu \land vGt)\} \\
+        & = \{\left< u, v \right> \mid
+          \exists t \left[ u(F^{-1})t \land t(G^{-1})v \right]\} \\
+        & = G^{-1} \circ F^{-1}.
+    \end{align*}
 
 \end{proof}
 
-\subsection{\unverified{Theorem 3J}}%
+\subsection{\partial{Theorem 3J}}%
 \label{sub:theorem-3j}
 
 \begin{theorem}[3J]
@@ -3273,7 +3321,64 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  TODO
+  Let $F$ be a \nameref{ref:function} from nonempty set $A$ to set $B$.
+
+  \paragraph{(a)}%
+
+    We prove there exists a function $G \colon B \rightarrow A$ such that
+      $G \circ F = I_A$ if and only if $F$ is one-to-one.
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $G \colon B \rightarrow A$ is a function satisfying
+        $G \circ F = I_A$.
+      To prove function $F$ is one-to-one, it is sufficient to prove $F$ is
+        single-rooted.
+      Let $y \in \ran{F}$.
+      Then there there exists some $x_1 \in \dom{F}$ such that $F(x_1) = y$.
+      Suppose there exists another $x_2 \in \dom{F}$ such that $F(x_2) = y$.
+      Then $G(F(x_1)) = G(y) = G(F(x_2))$.
+      But $G \circ F = I_A$ so $x_1 = x_2$.
+      Thus, for all $y \in \ran{F}$, there exists only one $x$ such that
+        $\left< x, y \right> \in F$.
+      That is, $F$ is single-rooted as expected.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $F$ is one-to-one.
+      Then by \nameref{sub:lemma-1}, $F^{-1} \colon B \rightarrow A$ is also
+        one-to-one.
+      We show that $F^{-1} \circ F = I_A$.
+      Let $x \in \dom{F}$.
+      By \nameref{sub:theorem-3h}, $(F^{-1} \circ F)(x) = F^{-1}(F(x))$.
+      By \nameref{sub:theorem-3g}, $F^{-1}(F(x)) = x$.
+      Thus $F^{-1} \circ F = I_A$.
+
+  \paragraph{(b)}%
+
+    We prove there exists a function $H \colon B \rightarrow A$ such that
+      $F \circ H = I_B$ if and only if $F$ maps $A$ onto $B$.
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $H \colon B \rightarrow A$ is a function satisfying
+        $F \circ H = I_B$.
+      To prove $F$ maps $A$ onto $B$, we must prove $\ran{F} = B$.
+      But for all $y \in B$, $F(H(y)) = y$.
+      Thus $y \in \ran{F}$ meaning $B \subseteq \ran{F}$.
+      Since $F$ maps $A$ into $B$ by hypothesis, $\ran{F} \subseteq B$.
+      Thus $\ran{F} = B$ as expected.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $F$ maps $A$ onto $B$.
+      That is, $\ran{F} = B$.
+      We show that $F^{-1} \colon B \rightarrow A$ satisfies
+        $F \circ F^{-1} = I_B$.
+      Let $y \in \ran{F}$.
+      By \nameref{sub:theorem-3h}, $(F \circ F^{-1})(y) = F(F^{-1}(y))$.
+      By \nameref{sub:theorem-3g}, $F(F^{-1}(y)) = y$.
+      Thus $F \circ F^{-1} = I_B$.
 
 \end{proof}
 
