@@ -3229,7 +3229,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\partial{Theorem 3H}}%
+\subsection{\verified{Theorem 3H}}%
 \label{sub:theorem-3h}
 
 \begin{theorem}[3H]
@@ -3245,6 +3245,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Common/Set/Relation}
+    {Set.Relation.single\_valued\_comp\_is\_single\_valued}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3h\_dom}
 
   Let $F$ and $G$ be \nameref{ref:function}s.
   By definition of the \nameref{ref:composition} of $F$ and $G$,

@@ -159,14 +159,6 @@ theorem ran_inv_eq_dom_self {F : Set.Relation α}
   · intro ⟨y, hy⟩
     exact ⟨y, x, y, hy, rfl, rfl⟩
 
-/-! ## Composition -/
-
-/--
-The composition of two `Relation`s.
--/
-def comp (F G : Relation α) : Relation α :=
-  { p | ∃ t, (p.1, t) ∈ G ∧ (t, p.2) ∈ F}
-
 /-! ## Restriction -/
 
 /--
@@ -294,6 +286,84 @@ theorem one_to_one_self_iff_one_to_one_inv {R : Relation α}
   apply Iff.intro <;>
   · intro ⟨hx, hy⟩
     exact ⟨hy, hx⟩
+
+
+/-! ## Composition -/
+
+/--
+The composition of two `Relation`s.
+-/
+def comp (F G : Relation α) : Relation α :=
+  { p | ∃ t : α, (p.1, t) ∈ G ∧ (t, p.2) ∈ F}
+
+/--
+If `x ∈ dom (F ∘ G)`, then `x ∈ dom G`.
+-/
+theorem dom_comp_imp_dom_self {F G : Relation α}
+  : x ∈ dom (comp F G) → x ∈ dom G := by
+  unfold dom comp
+  simp only [
+    mem_image,
+    mem_setOf_eq,
+    Prod.exists,
+    exists_and_right,
+    exists_eq_right,
+    forall_exists_index
+  ]
+  intro y t ht
+  exact ⟨t, ht.left⟩
+
+/--
+If `y ∈ ran (F ∘ G)`, then `y ∈ ran F`.
+-/
+theorem ran_comp_imp_ran_self {F G : Relation α}
+  : y ∈ ran (comp F G) → y ∈ ran F := by
+  unfold ran comp
+  simp only [
+    mem_image,
+    mem_setOf_eq,
+    Prod.exists,
+    exists_eq_right,
+    forall_exists_index
+  ]
+  intro x t ht
+  exact ⟨t, ht.right⟩
+
+/--
+The composition of two functions is itself a function.
+-/
+theorem single_valued_comp_is_single_valued {F G : Relation α}
+  (hF : isSingleValued F) (hG : isSingleValued G)
+  : isSingleValued (comp F G) := by
+  unfold isSingleValued
+  intro x hx
+  have ⟨y, hxy⟩ := dom_exists hx
+  have hy := mem_pair_imp_snd_mem_ran hxy
+  refine ⟨y, ⟨hy, hxy⟩, ?_⟩
+  simp only [and_imp]
+
+  intro y₁ _ hxy₁
+  unfold comp at hxy hxy₁
+  simp only [mem_setOf_eq] at hxy hxy₁
+  have ⟨t₁, ht₁⟩ := hxy
+  have ⟨t₂, ht₂⟩ := hxy₁
+
+  -- First show `t₁ = t₂` and then show `y = y₁`.
+  have t_eq : t₁ = t₂ := by
+    unfold isSingleValued at hG
+    have ⟨t', ht'⟩ := hG x (mem_pair_imp_fst_mem_dom ht₁.left)
+    simp only [and_imp] at ht'
+    have ht₁' := ht'.right t₁ (mem_pair_imp_snd_mem_ran ht₁.left) ht₁.left
+    have ht₂' := ht'.right t₂ (mem_pair_imp_snd_mem_ran ht₂.left) ht₂.left
+    rw [ht₁', ht₂']
+
+  unfold isSingleValued at hF
+  rw [t_eq] at ht₁
+  have ⟨y', hy'⟩ := hF t₂ (mem_pair_imp_fst_mem_dom ht₁.right)
+  simp only [and_imp] at hy'
+  have hk₁ := hy'.right y (mem_pair_imp_snd_mem_ran ht₁.right) ht₁.right
+  have hk₂ := hy'.right y₁ (mem_pair_imp_snd_mem_ran ht₂.right) ht₂.right
+  rw [hk₁, hk₂]
 
 /-! ## Ordered Pairs -/
 

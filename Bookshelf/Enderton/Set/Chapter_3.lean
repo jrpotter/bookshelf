@@ -291,7 +291,7 @@ theorem exercise_6_7 {R : Set.Relation α}
     intro t ht
     have ⟨T, hT⟩ : ∃ T ∈ ⋃₀ img, t ∈ T := ht
     have ⟨T', hT'⟩ : ∃ T' ∈ img, T ∈ T' := hT.left
-    dsimp at hT'
+    dsimp only at hT'
     unfold Set.Relation.toOrderedPairs at hT'
     simp only [Set.mem_image, Prod.exists] at hT'
     have ⟨x, ⟨y, ⟨p, hp⟩⟩⟩ := hT'.left
@@ -329,6 +329,10 @@ theorem exercise_6_7 {R : Set.Relation α}
       simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
       exact hxy_mem this
 
+section
+
+open Set.Relation
+
 /-- ### Exercise 6.8 (i)
 
 Show that for any set `𝓐`:
@@ -337,9 +341,9 @@ dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
 ```
 -/
 theorem exercise_6_8_i {A : Set (Set.Relation α)}
-  : Set.Relation.dom (⋃₀ A) = ⋃₀ { Set.Relation.dom R | R ∈ A } := by
+  : dom (⋃₀ A) = ⋃₀ { dom R | R ∈ A } := by
   ext x
-  unfold Set.Relation.dom Prod.fst
+  unfold dom Prod.fst
   simp only [
     Set.mem_image,
     Set.mem_sUnion,
@@ -363,9 +367,9 @@ ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
 ```
 -/
 theorem exercise_6_8_ii {A : Set (Set.Relation α)}
-  : Set.Relation.ran (⋃₀ A) = ⋃₀ { Set.Relation.ran R | R ∈ A } := by
+  : ran (⋃₀ A) = ⋃₀ { ran R | R ∈ A } := by
   ext x
-  unfold Set.Relation.ran Prod.snd
+  unfold ran Prod.snd
   simp only [
     Set.mem_image,
     Set.mem_sUnion,
@@ -389,9 +393,9 @@ dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
 ```
 -/
 theorem exercise_6_9_i {A : Set (Set.Relation α)}
-  : Set.Relation.dom (⋂₀ A) ⊆ ⋂₀ { Set.Relation.dom R | R ∈ A } := by
-  show ∀ x, x ∈ Set.Relation.dom (⋂₀ A) → x ∈ ⋂₀ { Set.Relation.dom R | R ∈ A }
-  unfold Set.Relation.dom Prod.fst
+  : dom (⋂₀ A) ⊆ ⋂₀ { dom R | R ∈ A } := by
+  show ∀ x, x ∈ dom (⋂₀ A) → x ∈ ⋂₀ { dom R | R ∈ A }
+  unfold dom Prod.fst
   simp only [
     Set.mem_image,
     Set.mem_sInter,
@@ -415,9 +419,9 @@ ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
 ```
 -/
 theorem exercise_6_9_ii {A : Set (Set.Relation α)}
-  : Set.Relation.ran (⋂₀ A) ⊆ ⋂₀ { Set.Relation.ran R | R ∈ A } := by
-  show ∀ x, x ∈ Set.Relation.ran (⋂₀ A) → x ∈ ⋂₀ { Set.Relation.ran R | R ∈ A }
-  unfold Set.Relation.ran Prod.snd
+  : ran (⋂₀ A) ⊆ ⋂₀ { ran R | R ∈ A } := by
+  show ∀ x, x ∈ ran (⋂₀ A) → x ∈ ⋂₀ { ran R | R ∈ A }
+  unfold ran Prod.snd
   simp only [
     Set.mem_image,
     Set.mem_sInter,
@@ -437,27 +441,70 @@ theorem exercise_6_9_ii {A : Set (Set.Relation α)}
 Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
 theorem theorem_3g_i {α : Type _} {x y : α} {F : Set.Relation α}
-  (hF : Set.Relation.isOneToOne F) (hx : x ∈ Set.Relation.dom F)
+  (hF : isOneToOne F) (hx : x ∈ dom F)
   : ∃! y, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
-  simp only [Set.Relation.mem_self_comm_mem_inv, and_self]
-  have ⟨y, hy⟩ := Set.Relation.dom_exists hx
+  simp only [mem_self_comm_mem_inv, and_self]
+  have ⟨y, hy⟩ := dom_exists hx
   refine ⟨y, hy, ?_⟩
   intro y₁ hy₁
-  unfold Set.Relation.isOneToOne at hF
-  exact (Set.Relation.single_valued_eq_unique hF.left hy hy₁).symm
+  unfold isOneToOne at hF
+  exact (single_valued_eq_unique hF.left hy hy₁).symm
 
 /-- ### Theorem 3G (ii)
 
 Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
 theorem theorem_3g_ii {F : Set.Relation α}
-  (hF : Set.Relation.isOneToOne F) (hy : y ∈ F.ran)
+  (hF : isOneToOne F) (hy : y ∈ F.ran)
   : ∃! x, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
-  simp only [Set.Relation.mem_self_comm_mem_inv, and_self]
-  have ⟨x, hx⟩ := Set.Relation.ran_exists hy
+  simp only [mem_self_comm_mem_inv, and_self]
+  have ⟨x, hx⟩ := ran_exists hy
   refine ⟨x, hx, ?_⟩
   intro x₁ hx₁
-  unfold Set.Relation.isOneToOne at hF
-  exact (Set.Relation.single_rooted_eq_unique hF.right hx hx₁).symm
+  unfold isOneToOne at hF
+  exact (single_rooted_eq_unique hF.right hx hx₁).symm
+
+/-- ### Theorem 3H
+
+Assume that `F` and `G` are functions. Then
+```
+dom (F ∘ G) = {x ∈ dom G | G(x) ∈ dom F}.
+```
+-/
+theorem theorem_3h_dom {F G : Set.Relation α}
+  (_ : isSingleValued F) (hG : isSingleValued G)
+  : dom (comp F G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F } := by
+  let rhs := {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F }
+  suffices dom (comp F G) ⊆ rhs ∧ rhs ⊆ dom (comp F G) from
+    Set.Subset.antisymm_iff.mpr this
+  apply And.intro
+  · show ∀ t, t ∈ dom (comp F G) → t ∈ rhs
+    intro t ht
+    simp only [Set.mem_setOf_eq]
+    have ⟨z, hz⟩ := dom_exists ht
+    refine ⟨dom_comp_imp_dom_self ht, ?_⟩
+    simp only [Set.mem_setOf_eq] at hz
+    have ⟨a, ha⟩ := hz
+    unfold dom
+    simp only [Set.mem_image, Prod.exists, exists_and_right, exists_eq_right]
+    unfold ExistsUnique
+    simp only [and_imp, forall_exists_index]
+    refine ⟨a, ⟨ha.left, z, ha.right⟩, ?_⟩
+    intro y₁ hy₁
+    exact fun _ _ => single_valued_eq_unique hG hy₁ ha.left
+  · show ∀ t, t ∈ rhs → t ∈ dom (comp F G)
+    intro t ht
+    simp only [Set.mem_setOf_eq] at ht
+    unfold dom
+    simp only [Set.mem_image, Prod.exists, exists_and_right, exists_eq_right]
+    have ⟨a, ha⟩ := ht.right
+    simp at ha
+    have ⟨b, hb⟩ := dom_exists ha.left.right
+    refine ⟨b, ?_⟩
+    unfold comp
+    simp only [Set.mem_setOf_eq]
+    exact ⟨a, ha.left.left, hb⟩
+
+end
 
 end Enderton.Set.Chapter_3
