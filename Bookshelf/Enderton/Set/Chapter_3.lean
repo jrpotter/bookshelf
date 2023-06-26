@@ -436,18 +436,28 @@ theorem exercise_6_9_ii {A : Set (Set.Relation α)}
 
 Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
-theorem theorem_3g_i {F : Set.Relation α}
-  (hF : Set.Relation.isOneToOne F) (hx : x ∈ F.dom)
+theorem theorem_3g_i {α : Type _} {x y : α} {F : Set.Relation α}
+  (hF : Set.Relation.isOneToOne F) (hx : x ∈ Set.Relation.dom F)
   : ∃! y, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
-  sorry
+  simp only [Set.Relation.mem_self_comm_mem_inv, and_self]
+  have ⟨y, hy⟩ := Set.Relation.dom_exists hx
+  refine ⟨y, hy, ?_⟩
+  intro y₁ hy₁
+  unfold Set.Relation.isOneToOne at hF
+  exact (Set.Relation.single_valued_eq_unique hF.left hy hy₁).symm
 
 /-- ### Theorem 3G (ii)
 
 Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
 theorem theorem_3g_ii {F : Set.Relation α}
-  (hF : Set.Relation.isOneToOne F) (hy : x ∈ F.ran)
+  (hF : Set.Relation.isOneToOne F) (hy : y ∈ F.ran)
   : ∃! x, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
-  sorry
+  simp only [Set.Relation.mem_self_comm_mem_inv, and_self]
+  have ⟨x, hx⟩ := Set.Relation.ran_exists hy
+  refine ⟨x, hx, ?_⟩
+  intro x₁ hx₁
+  unfold Set.Relation.isOneToOne at hF
+  exact (Set.Relation.single_rooted_eq_unique hF.right hx hx₁).symm
 
 end Enderton.Set.Chapter_3

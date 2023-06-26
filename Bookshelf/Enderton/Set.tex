@@ -3194,7 +3194,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\partial{Theorem 3G}}%
+\subsection{\verified{Theorem 3G}}%
 \label{sub:theorem-3g}
 
 \begin{theorem}[3G]
@@ -3206,6 +3206,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3g\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3g\_ii}
 
   Suppose $F$ is a one-to-one \nameref{ref:function}.
   Then \nameref{sub:lemma-1} indicates $F^{-1}$ is a one-to-one function with

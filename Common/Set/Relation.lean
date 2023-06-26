@@ -43,7 +43,7 @@ theorem mem_pair_imp_fst_mem_dom {R : Relation α} (h : (x, y) ∈ R)
 If `x ∈ dom R`, there exists some `y` such that `⟨x, y⟩ ∈ R`.
 -/
 theorem dom_exists {R : Relation α} (hx : x ∈ R.dom)
-  : ∃ y, (x, y) ∈ R := by
+  : ∃ y : α, (x, y) ∈ R := by
   unfold dom at hx
   simp only [mem_image, Prod.exists, exists_and_right, exists_eq_right] at hx
   exact hx
@@ -63,7 +63,7 @@ theorem mem_pair_imp_snd_mem_ran {R : Relation α} (h : (x, y) ∈ R)
 If `x ∈ ran R`, there exists some `t` such that `⟨t, x⟩ ∈ R`.
 -/
 theorem ran_exists {R : Relation α} (hx : x ∈ R.ran)
-  : ∃ t, (t, x) ∈ R := by
+  : ∃ t : α, (t, x) ∈ R := by
   unfold ran at hx
   simp only [mem_image, Prod.exists, exists_eq_right] at hx
   exact hx
@@ -193,6 +193,21 @@ def isSingleRooted (R : Relation α) : Prop :=
   ∀ y ∈ R.ran, ∃! x, x ∈ R.dom ∧ (x, y) ∈ R
 
 /--
+A single-rooted `Relation` should map the same output to the same input.
+-/
+theorem single_rooted_eq_unique {R : Relation α} {x₁ x₂ y : α}
+  (hR : isSingleRooted R)
+  : (x₁, y) ∈ R → (x₂, y) ∈ R → x₁ = x₂ := by
+  intro hx₁ hx₂
+  unfold isSingleRooted at hR
+  have := hR y (mem_pair_imp_snd_mem_ran hx₁)
+  have ⟨y₁, hy₁⟩ := this
+  simp only [and_imp] at hy₁
+  have h₁ := hy₁.right x₁ (mem_pair_imp_fst_mem_dom hx₁) hx₁
+  have h₂ := hy₁.right x₂ (mem_pair_imp_fst_mem_dom hx₂) hx₂
+  rw [h₁, h₂]
+
+/--
 A `Relation` `R` is said to be single-valued **iff** for all `x ∈ dom R`, there
 exists exactly one `y` such that `⟨x, y⟩ ∈ R`.
 
@@ -200,6 +215,21 @@ Notice, a `Relation` that is single-valued is a function.
 -/
 def isSingleValued (R : Relation α) : Prop :=
   ∀ x ∈ R.dom, ∃! y, y ∈ R.ran ∧ (x, y) ∈ R
+
+/--
+A single-valued `Relation` should map the same input to the same output.
+-/
+theorem single_valued_eq_unique {R : Relation α} {x y₁ y₂ : α}
+  (hR : isSingleValued R)
+  : (x, y₁) ∈ R → (x, y₂) ∈ R → y₁ = y₂ := by
+  intro hy₁ hy₂
+  unfold isSingleValued at hR
+  have := hR x (mem_pair_imp_fst_mem_dom hy₁)
+  have ⟨x₁, hx₁⟩ := this
+  simp only [and_imp] at hx₁
+  have h₁ := hx₁.right y₁ (mem_pair_imp_snd_mem_ran hy₁) hy₁
+  have h₂ := hx₁.right y₂ (mem_pair_imp_snd_mem_ran hy₂) hy₂
+  rw [h₁, h₂]
 
 /--
 For a set `F`, `F⁻¹` is a function **iff** `F` is single-rooted.
