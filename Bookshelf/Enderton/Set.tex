@@ -3293,7 +3293,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\partial{Theorem 3I}}%
+\subsection{\verified{Theorem 3I}}%
 \label{sub:theorem-3i}
 
 \begin{theorem}[3I]
@@ -3303,6 +3303,9 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \lean{Common/Set/Relation}
+    {Set.Relation.comp\_inv\_eq\_inv\_comp\_inv}
 
   By definition of the \nameref{ref:composition} of $F$ and $G$,
     $$F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.$$

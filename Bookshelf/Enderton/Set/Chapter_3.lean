@@ -66,7 +66,7 @@ theorem exercise_5_2b {A : Set α} {B C : Set β}
   (h : Set.prod A B = Set.prod A C) (hA : Set.Nonempty A)
   : B = C := by
   by_cases hB : Set.Nonempty B
-  · suffices B ⊆ C ∧ C ⊆ B from Set.Subset.antisymm_iff.mpr this
+  · rw [Set.Subset.antisymm_iff]
     have ⟨a, ha⟩ := hA
     apply And.intro
     · show ∀ t, t ∈ B → t ∈ C
@@ -189,9 +189,7 @@ With `A`, `B`, and `C` as above, show that `A × B = ∪ C`.
 -/
 theorem exercise_5_5b {A : Set α} (B : Set β)
   : Set.prod A B = ⋃₀ {Set.prod ({x} : Set α) B | x ∈ A} := by
-  suffices Set.prod A B ⊆ ⋃₀ {Set.prod {x} B | x ∈ A} ∧
-           ⋃₀ {Set.prod {x} B | x ∈ A} ⊆ Set.prod A B from
-    Set.Subset.antisymm_iff.mpr this
+  rw [Set.Subset.antisymm_iff]
   apply And.intro
   · show ∀ t, t ∈ Set.prod A B → t ∈ ⋃₀ {Set.prod {x} B | x ∈ A}
     intro t h
@@ -255,9 +253,7 @@ Show that if `R` is a relation, then `fld R = ⋃ ⋃ R`.
 theorem exercise_6_7 {R : Set.Relation α}
   : R.fld = ⋃₀ ⋃₀ R.toOrderedPairs := by
   let img := R.toOrderedPairs
-  suffices R.fld ⊆ ⋃₀ ⋃₀ img ∧ ⋃₀ ⋃₀ img ⊆ R.fld from
-    Set.Subset.antisymm_iff.mpr this
-
+  rw [Set.Subset.antisymm_iff]
   apply And.intro
   · show ∀ x, x ∈ R.fld → x ∈ ⋃₀ ⋃₀ img
     intro x hx
@@ -440,8 +436,8 @@ theorem exercise_6_9_ii {A : Set (Set.Relation α)}
 
 Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
-theorem theorem_3g_i {α : Type _} {x y : α} {F : Set.Relation α}
-  (hF : isOneToOne F) (hx : x ∈ dom F)
+theorem theorem_3g_i {F : Set.Relation α}
+  (hF : F.isOneToOne) (hx : x ∈ dom F)
   : ∃! y, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
   simp only [mem_self_comm_mem_inv, and_self]
   have ⟨y, hy⟩ := dom_exists hx
@@ -455,7 +451,7 @@ theorem theorem_3g_i {α : Type _} {x y : α} {F : Set.Relation α}
 Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
 theorem theorem_3g_ii {F : Set.Relation α}
-  (hF : isOneToOne F) (hy : y ∈ F.ran)
+  (hF : F.isOneToOne) (hy : y ∈ F.ran)
   : ∃! x, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
   simp only [mem_self_comm_mem_inv, and_self]
   have ⟨x, hx⟩ := ran_exists hy
@@ -472,13 +468,12 @@ dom (F ∘ G) = {x ∈ dom G | G(x) ∈ dom F}.
 ```
 -/
 theorem theorem_3h_dom {F G : Set.Relation α}
-  (_ : isSingleValued F) (hG : isSingleValued G)
-  : dom (comp F G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F } := by
+  (_ : F.isSingleValued) (hG : G.isSingleValued)
+  : dom (F.comp G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F } := by
   let rhs := {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F }
-  suffices dom (comp F G) ⊆ rhs ∧ rhs ⊆ dom (comp F G) from
-    Set.Subset.antisymm_iff.mpr this
+  rw [Set.Subset.antisymm_iff]
   apply And.intro
-  · show ∀ t, t ∈ dom (comp F G) → t ∈ rhs
+  · show ∀ t, t ∈ dom (F.comp G) → t ∈ rhs
     intro t ht
     simp only [Set.mem_setOf_eq]
     have ⟨z, hz⟩ := dom_exists ht
@@ -492,7 +487,7 @@ theorem theorem_3h_dom {F G : Set.Relation α}
     refine ⟨a, ⟨ha.left, z, ha.right⟩, ?_⟩
     intro y₁ hy₁
     exact fun _ _ => single_valued_eq_unique hG hy₁ ha.left
-  · show ∀ t, t ∈ rhs → t ∈ dom (comp F G)
+  · show ∀ t, t ∈ rhs → t ∈ dom (F.comp G)
     intro t ht
     simp only [Set.mem_setOf_eq] at ht
     unfold dom
@@ -504,6 +499,30 @@ theorem theorem_3h_dom {F G : Set.Relation α}
     unfold comp
     simp only [Set.mem_setOf_eq]
     exact ⟨a, ha.left.left, hb⟩
+
+/-- ### Theorem 3J (a)
+
+Assume that `F : A → B`, and that `A` is nonempty. There exists a function
+`G : B → A` (a "left inverse") such that `G ∘ F` is the identity function on `A`
+**iff** `F` is one-to-one.
+-/
+theorem theorem_3j_a {F : Set.Relation α} {A B : Set α}
+  (hF : F.mapsInto A B) (hA : Set.Nonempty A)
+  : (∃ G : Set.Relation α,
+      G.mapsInto B A ∧ (∀ p ∈ G.comp F, p.1 = p.2)) ↔ F.isOneToOne := by
+  sorry
+
+/-- ### Theorem 3J (b)
+
+Assume that `F : A → B`, and that `A` is nonempty. There exists a function
+`H : B → A` (a "right inverse") such that `F ∘ H` is the identity function on
+`B` **iff** `F` maps `A` onto `B`.
+-/
+theorem theorem_3j_b {F : Set.Relation α} {A B : Set α}
+  (hF : F.mapsInto A B) (hA : Set.Nonempty A)
+  : (∃ H : Set.Relation α,
+      H.mapsInto B A ∧ (∀ p ∈ F.comp H, p.1 = p.2)) ↔ F.mapsOnto A B := by
+  sorry
 
 end
 

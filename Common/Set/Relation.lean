@@ -99,7 +99,7 @@ The inverse of the inverse of a `Relation` is the `Relation`.
 @[simp]
 theorem inv_inv_eq_self (R : Relation α)
   : R.inv.inv = R := by
-  unfold Set.Relation.inv
+  unfold inv
   simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
   ext x
   apply Iff.intro
@@ -117,10 +117,10 @@ theorem inv_inv_eq_self (R : Relation α)
 For a set `F`, `dom F⁻¹ = ran F`.
 -/
 @[simp]
-theorem dom_inv_eq_ran_self {F : Set.Relation α}
-  : Set.Relation.dom (F.inv) = Set.Relation.ran F := by
+theorem dom_inv_eq_ran_self {F : Relation α}
+  : dom (F.inv) = ran F := by
   ext x
-  unfold Set.Relation.dom Set.Relation.ran Set.Relation.inv
+  unfold dom ran inv
   simp only [
     Prod.exists,
     Set.mem_image,
@@ -140,10 +140,10 @@ theorem dom_inv_eq_ran_self {F : Set.Relation α}
 For a set `F`, `ran F⁻¹ = dom F`.
 -/
 @[simp]
-theorem ran_inv_eq_dom_self {F : Set.Relation α}
-  : Set.Relation.ran (F.inv) = Set.Relation.dom F := by
+theorem ran_inv_eq_dom_self {F : Relation α}
+  : ran (F.inv) = dom F := by
   ext x
-  unfold Set.Relation.dom Set.Relation.ran Set.Relation.inv
+  unfold dom ran inv
   simp only [
     Prod.exists,
     Set.mem_image,
@@ -188,7 +188,7 @@ def isSingleRooted (R : Relation α) : Prop :=
 A single-rooted `Relation` should map the same output to the same input.
 -/
 theorem single_rooted_eq_unique {R : Relation α} {x₁ x₂ y : α}
-  (hR : isSingleRooted R)
+  (hR : R.isSingleRooted)
   : (x₁, y) ∈ R → (x₂, y) ∈ R → x₁ = x₂ := by
   intro hx₁ hx₂
   unfold isSingleRooted at hR
@@ -212,7 +212,7 @@ def isSingleValued (R : Relation α) : Prop :=
 A single-valued `Relation` should map the same input to the same output.
 -/
 theorem single_valued_eq_unique {R : Relation α} {x y₁ y₂ : α}
-  (hR : isSingleValued R)
+  (hR : R.isSingleValued)
   : (x, y₁) ∈ R → (x, y₂) ∈ R → y₁ = y₂ := by
   intro hy₁ hy₂
   unfold isSingleValued at hR
@@ -227,7 +227,7 @@ theorem single_valued_eq_unique {R : Relation α} {x y₁ y₂ : α}
 For a set `F`, `F⁻¹` is a function **iff** `F` is single-rooted.
 -/
 theorem single_valued_inv_iff_single_rooted_self {F : Set.Relation α}
-  : isSingleValued F.inv ↔ isSingleRooted F := by
+  : F.inv.isSingleValued ↔ F.isSingleRooted := by
   apply Iff.intro
   · intro hF
     unfold isSingleValued at hF
@@ -261,7 +261,7 @@ theorem single_valued_inv_iff_single_rooted_self {F : Set.Relation α}
 For a relation `F`, `F` is a function **iff** `F⁻¹` is single-rooted.
 -/
 theorem single_valued_self_iff_single_rooted_inv {F : Set.Relation α}
-  : Set.Relation.isSingleValued F ↔ Set.Relation.isSingleRooted F.inv := by
+  : F.isSingleValued ↔ F.inv.isSingleRooted := by
   conv => lhs; rw [← inv_inv_eq_self F]
   rw [single_valued_inv_iff_single_rooted_self]
 
@@ -269,13 +269,13 @@ theorem single_valued_self_iff_single_rooted_inv {F : Set.Relation α}
 A `Relation` `R` is one-to-one if it is a single-rooted function.
 -/
 def isOneToOne (R : Relation α) : Prop :=
-  isSingleValued R ∧ isSingleRooted R
+  R.isSingleValued ∧ R.isSingleRooted
 
 /--
 A `Relation` is one-to-one **iff** it's inverse is.
 -/
 theorem one_to_one_self_iff_one_to_one_inv {R : Relation α}
-  : isOneToOne R ↔ isOneToOne R.inv := by
+  : R.isOneToOne ↔ R.inv.isOneToOne := by
   unfold isOneToOne isSingleValued isSingleRooted
   conv => rhs; simp only [
     dom_inv_eq_ran_self,
@@ -300,7 +300,7 @@ def comp (F G : Relation α) : Relation α :=
 If `x ∈ dom (F ∘ G)`, then `x ∈ dom G`.
 -/
 theorem dom_comp_imp_dom_self {F G : Relation α}
-  : x ∈ dom (comp F G) → x ∈ dom G := by
+  : x ∈ dom (F.comp G) → x ∈ dom G := by
   unfold dom comp
   simp only [
     mem_image,
@@ -317,7 +317,7 @@ theorem dom_comp_imp_dom_self {F G : Relation α}
 If `y ∈ ran (F ∘ G)`, then `y ∈ ran F`.
 -/
 theorem ran_comp_imp_ran_self {F G : Relation α}
-  : y ∈ ran (comp F G) → y ∈ ran F := by
+  : y ∈ ran (F.comp G) → y ∈ ran F := by
   unfold ran comp
   simp only [
     mem_image,
@@ -333,8 +333,8 @@ theorem ran_comp_imp_ran_self {F G : Relation α}
 The composition of two functions is itself a function.
 -/
 theorem single_valued_comp_is_single_valued {F G : Relation α}
-  (hF : isSingleValued F) (hG : isSingleValued G)
-  : isSingleValued (comp F G) := by
+  (hF : F.isSingleValued) (hG : G.isSingleValued)
+  : (F.comp G).isSingleValued := by
   unfold isSingleValued
   intro x hx
   have ⟨y, hxy⟩ := dom_exists hx
@@ -364,6 +364,63 @@ theorem single_valued_comp_is_single_valued {F G : Relation α}
   have hk₁ := hy'.right y (mem_pair_imp_snd_mem_ran ht₁.right) ht₁.right
   have hk₂ := hy'.right y₁ (mem_pair_imp_snd_mem_ran ht₂.right) ht₂.right
   rw [hk₁, hk₂]
+
+/--
+For `Relation`s `F` and `G`, `(F ∘ G)⁻¹ = G⁻¹ ∘ F⁻¹`.
+-/
+theorem comp_inv_eq_inv_comp_inv {F G : Relation α}
+  : (F.comp G).inv = G.inv.comp F.inv := by
+  calc (F.comp G).inv
+  _ = {p | ∃ t, (p.2, t) ∈ G ∧ (t, p.1) ∈ F} := by
+    rw [Set.Subset.antisymm_iff]
+    apply And.intro
+    · unfold inv comp
+      intro t ht
+      simp only [mem_setOf_eq, Prod.exists] at ht
+      have ⟨a, b, ⟨⟨p, hp⟩, hab⟩⟩ := ht
+      rw [← hab]
+      exact ⟨p, hp⟩
+    · unfold inv comp
+      intro (a, b) ⟨p, hp⟩
+      simp only [mem_setOf_eq, Prod.exists, Prod.mk.injEq]
+      exact ⟨b, a, ⟨p, hp⟩, rfl, rfl⟩
+  _ = {p | ∃ t, (t, p.1) ∈ F ∧ (p.2, t) ∈ G} := by
+    rw [Set.Subset.antisymm_iff]
+    apply And.intro
+    · intro (a, b) ht
+      simp only [mem_setOf_eq] at *
+      have ⟨t, p, q⟩ := ht
+      exact ⟨t, q, p⟩
+    · intro (a, b) ht
+      simp only [mem_setOf_eq] at *
+      have ⟨t, p, q⟩ := ht
+      exact ⟨t, q, p⟩
+  _ = {p | ∃ t, (p.1, t) ∈ F.inv ∧ (t, p.2) ∈ G.inv } := by
+    rw [Set.Subset.antisymm_iff]
+    apply And.intro
+    · intro (a, b) ht
+      simp only [mem_setOf_eq] at *
+      have ⟨t, p, q⟩ := ht
+      refine ⟨t, ?_, ?_⟩ <;> rwa [mem_self_comm_mem_inv]
+    · intro (a, b) ht
+      simp only [mem_setOf_eq] at *
+      have ⟨t, p, q⟩ := ht
+      refine ⟨t, ?_, ?_⟩ <;> rwa [← mem_self_comm_mem_inv]
+  _ = comp (inv G) (inv F) := rfl
+
+/--
+Indicates `Relation` `F` is a function from `A` to `B`.
+
+This is usually denoted as `F : A → B`.
+-/
+def mapsInto (F : Relation α) (A B : Set α) :=
+  F.isSingleValued ∧ dom F = A ∧ ran F ⊆ B
+
+/--
+Indicates `Relation` `F` is a function from `A` to `ran F = B`.
+-/
+def mapsOnto (F : Relation α) (A B : Set α) :=
+  F.isSingleValued ∧ dom F = A ∧ ran F = B
 
 /-! ## Ordered Pairs -/
 
