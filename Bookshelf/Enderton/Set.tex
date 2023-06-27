@@ -24,6 +24,12 @@
 \chapter{Reference}%
 \label{chap:reference}
 
+\section{\partial{Axiom of Choice, First Form}}%
+\label{ref:axiom-of-choice-1}
+
+For any relation $R$ there is a function $H \subseteq R$ with
+  $\dom{H} = \dom{R}$.
+
 \section{\defined{Composition}}%
 \label{ref:composition}
 
@@ -3333,7 +3339,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
       one-to-one.
     \item There exists a function $H \colon B \rightarrow A$ (a "right inverse")
       such that $F \circ H$ is the identity function $I_B$ on $B$ iff $F$ maps
-      $A$ onto $B$.
+      $A$ \textit{onto} $B$.
   \end{enumerate}
 
 \end{theorem}
@@ -3349,55 +3355,117 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
     \subparagraph{($\Rightarrow$)}%
 
-      Suppose $G \colon B \rightarrow A$ is a function satisfying
-        $G \circ F = I_A$.
-      To prove function $F$ is one-to-one, it is sufficient to prove $F$ is
-        single-rooted.
+      Let $G \colon B \rightarrow A$ such that $G \circ F = I_A$.
+      All that remains is to prove $F$ is single-valued.
       Let $y \in \ran{F}$.
-      Then there there exists some $x_1 \in \dom{F}$ such that $F(x_1) = y$.
-      Suppose there exists another $x_2 \in \dom{F}$ such that $F(x_2) = y$.
-      Then $G(F(x_1)) = G(y) = G(F(x_2))$.
-      But $G \circ F = I_A$ so $x_1 = x_2$.
-      Thus, for all $y \in \ran{F}$, there exists only one $x$ such that
-        $\left< x, y \right> \in F$.
-      That is, $F$ is single-rooted as expected.
+      By definition of the \nameref{ref:range} of a function, there exists some
+        $x$ such that $\left< x, y \right> \in F$.
+      Suppose $x_1, x_2 \in \dom{F}$ such that
+        $\left< x_1, y \right>, \left< x_2, y \right> \in F$.
+      Then $F(x_1) = F(x_2) = y$.
+      Then $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
+      Thus $x_1 = x_2$.
 
     \subparagraph{($\Leftarrow$)}%
 
-      Suppose $F$ is one-to-one.
-      Then by \nameref{sub:lemma-1}, $F^{-1} \colon B \rightarrow A$ is also
-        one-to-one.
-      We show that $F^{-1} \circ F = I_A$.
-      Let $x \in \dom{F}$.
-      By \nameref{sub:theorem-3h}, $(F^{-1} \circ F)(x) = F^{-1}(F(x))$.
-      By \nameref{sub:theorem-3g}, $F^{-1}(F(x)) = x$.
-      Thus $F^{-1} \circ F = I_A$.
+      Let $F$ be one-to-one.
+      Since $A$ is nonempty, there exists some $a \in A$.
+      Let $G \colon B \rightarrow A$ be given by
+        $$G(y) = \begin{cases}
+          F^{-1}(y) & \text{if } y \in \ran{F} \\
+          a & \text{otherwise}.
+        \end{cases}$$
+      $G$ is a function by virtue of \nameref{sub:lemma-1} and choice of mapping
+        for all values $y \not\in \ran{F}$.
+      Furthermore, for all $x \in A$, $F(x) \in \ran{F}$.
+      Thus $(G \circ F)(x) = G(F(x)) = F^{-1}(F(x)) = x$ by
+        \nameref{sub:theorem-3g}.
 
   \paragraph{(b)}%
 
     We prove there exists a function $H \colon B \rightarrow A$ such that
-      $F \circ H = I_B$ if and only if $F$ maps $A$ onto $B$.
+      $F \circ H = I_A$ if and only if $F$ maps $A$ onto $B$.
 
     \subparagraph{($\Rightarrow$)}%
 
-      Suppose $H \colon B \rightarrow A$ is a function satisfying
-        $F \circ H = I_B$.
-      To prove $F$ maps $A$ onto $B$, we must prove $\ran{F} = B$.
-      But for all $y \in B$, $F(H(y)) = y$.
-      Thus $y \in \ran{F}$ meaning $B \subseteq \ran{F}$.
-      Since $F$ maps $A$ into $B$ by hypothesis, $\ran{F} \subseteq B$.
-      Thus $\ran{F} = B$ as expected.
+      Suppose $H \colon B \rightarrow A$ such that $F \circ H = I_A$.
+      All that remains is to prove $\ran{F} = B$.
+      Note that $\ran{F} \subseteq B$ by hypothesis.
+      Let $y \in B$.
+      But $F(H(y)) = y$ meaning $y \in \ran{F}$.
+      Thus $B \subseteq \ran{F}$.
+      Since $\ran{F} \subseteq B$ and $B \subseteq \ran{F}$, $\ran{F} = B$.
 
     \subparagraph{($\Leftarrow$)}%
 
-      Suppose $F$ maps $A$ onto $B$.
-      That is, $\ran{F} = B$.
-      We show that $F^{-1} \colon B \rightarrow A$ satisfies
-        $F \circ F^{-1} = I_B$.
-      Let $y \in \ran{F}$.
-      By \nameref{sub:theorem-3h}, $(F \circ F^{-1})(y) = F(F^{-1}(y))$.
-      By \nameref{sub:theorem-3g}, $F(F^{-1}(y)) = y$.
-      Thus $F \circ F^{-1} = I_B$.
+      Suppose $F$ maps $A$ \textit{onto} $B$.
+      By definition of maps onto, $\ran{F} = B$.
+      Then for all $y \in B$, there exists some $x \in A$ such that
+        $\left< x, y \right> \in F$.
+      Notice though that $F^{-1}[\{y\}]$ may not be a singleton set.
+      Then there is no obvious way to \textit{choose} an element from each
+        preimage to form a function.
+      By the \nameref{ref:axiom-of-choice-1}, there exists a function
+        $H \subseteq F^{-1}$ such that $\dom{H} = \dom{F^{-1}} = B$.
+      For all $y \in B$, $\left< y, H(y) \right> \in H \subseteq F^{-1}$
+        meaning $\left< H(y), y \right> \in F$.
+      Thus $F(H(y)) = y$ as expected.
+
+\end{proof}
+
+\subsection{\unverified{Theorem 3K}}%
+\label{sub:theorem-3k}
+
+\begin{theorem}[3K]
+
+  The following hold for any sets. ($F$ need not be a function.)
+
+  \begin{enumerate}[(a)]
+    \item The image of a union is the union of the images:
+      $$F[A \cup B] = F[A] \cup F[B] \quad\text{and}\quad
+        F\left[\bigcup{\mathscr{A}}\right] =
+          \bigcup\;\{F[A] \mid A \in \mathscr{A}\}.$$
+    \item The image of an intersection is included in the intersection of the
+      images:
+      $$F[A \cap B] \subseteq F[A] \cap F[B] \quad\text{and}\quad
+        F\left[\bigcap\mathscr{A}\right] \subseteq
+          \bigcap\;\{F[A] \mid A \in \mathscr{A}\}$$
+      for nonempty $\mathscr{A}$.
+      Equality holds if $F$ is single-rooted.
+    \item The image of a difference includes the difference of the images:
+      $$F[A] - F[B] \subseteq F[A - B].$$
+      Equality holds if $F$ is single-rooted.
+  \end{enumerate}
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\unverified{Corollary 3L}}%
+\label{sub:corollary-3l}
+
+\begin{theorem}[3L]
+
+  For any function $G$ and sets $A$, $B$, and $\mathscr{A}$:
+  \begin{align*}
+    G^{-1}\left[\bigcup\mathscr{A}\right]
+      & = \bigcup\;\{G^{-1}[A] \mid A \in \mathscr{A}\}, \\
+    G^{-1}\left[\bigcap\mathscr{A}\right]
+      & = \bigcap\;\{G^{-1}[A] \mid A \in \mathscr{A}\}
+      \text{ for } \mathscr{A} \neq \emptyset, \\
+    G^{-1}[A - B]
+      & = G^{-1}[A] - G^{-1}[B].
+  \end{align*}
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
