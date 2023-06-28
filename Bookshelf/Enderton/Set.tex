@@ -9,6 +9,7 @@
 \newcommand{\dom}[1]{\textop{dom}{#1}}
 \newcommand{\fld}[1]{\textop{fld}{#1}}
 \newcommand{\ran}[1]{\textop{ran}{#1}}
+\newcommand{\img}[2]{#1\left\llbracket#2\right\rrbracket}
 
 \begin{document}
 
@@ -125,7 +126,7 @@ One-to-one functions are sometimes called \textbf{injections}.
 Let $A$ and $F$ be arbitrary sets.
 The \textbf{image of $A$ under $F$} is the set
   \begin{align*}
-    F[A]
+    \img{F}{A}
       & = \ran{(F \restriction A)} \\
       & = \{v \mid (\exists u \in A) uFv\}.
   \end{align*}
@@ -3413,59 +3414,233 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\unverified{Theorem 3K}}%
-\label{sub:theorem-3k}
+\subsection{\partial{Theorem 3K(a)}}%
+\label{sub:theorem-3k-a}
 
-\begin{theorem}[3K]
+\begin{theorem}[3K(a)]
 
   The following hold for any sets. ($F$ need not be a function.)
-
-  \begin{enumerate}[(a)]
-    \item The image of a union is the union of the images:
-      $$F[A \cup B] = F[A] \cup F[B] \quad\text{and}\quad
-        F\left[\bigcup{\mathscr{A}}\right] =
-          \bigcup\;\{F[A] \mid A \in \mathscr{A}\}.$$
-    \item The image of an intersection is included in the intersection of the
-      images:
-      $$F[A \cap B] \subseteq F[A] \cap F[B] \quad\text{and}\quad
-        F\left[\bigcap\mathscr{A}\right] \subseteq
-          \bigcap\;\{F[A] \mid A \in \mathscr{A}\}$$
-      for nonempty $\mathscr{A}$.
-      Equality holds if $F$ is single-rooted.
-    \item The image of a difference includes the difference of the images:
-      $$F[A] - F[B] \subseteq F[A - B].$$
-      Equality holds if $F$ is single-rooted.
-  \end{enumerate}
+  The image of a union is the union of the images:
+    \begin{equation}
+      \label{sub:theorem-3k-a-eq1}
+      \img{F}{A \cup B} = \img{F}{A} \cup \img{F}{B}
+    \end{equation}
+    and
+    \begin{equation}
+      \label{sub:theorem-3k-a-eq2}
+      \img{F}{\bigcup{\mathscr{A}}} =
+        \bigcup\;\{\img{F}{A} \mid A \in \mathscr{A}\}.
+    \end{equation}
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  Let $F$, $A$, $B$, and $\mathscr{A}$ be arbitrary sets.
+  We prove (i) \eqref{sub:theorem-3k-a-eq1} and (ii)
+    \eqref{sub:theorem-3k-a-eq2}.
+
+  \paragraph{(i)}%
+
+    By definition of the \nameref{ref:image} of a set:
+      \begin{align*}
+        \img{F}{A \cup B}
+          & = \{v \mid \exists u, u \in A \cup B \land uFv\} \\
+          & = \{v \mid \exists u,
+            (u \in A \land uFv) \lor (u \in B \land uFv)\} \\
+          & = \{v \mid (\exists u \in A) uFv\} \cup
+            \{v \mid (\exists u \in B) uFv\} \\
+          & = \img{F}{A} \cup \img{F}{B}.
+      \end{align*}
+
+  \paragraph{(ii)}%
+
+    We prove that both sides of \eqref{sub:theorem-3k-a-eq2} is a subset of the
+      other.
+
+    \subparagraph{($\subseteq$)}%
+
+      Let $v \in \img{F}{\bigcup{\mathscr{A}}}$.
+      By definition of the \nameref{ref:image} of a set, there exists a set $u$
+        such that $u \in \bigcup{\mathscr{A}} \land uFv$.
+      Then, by definition of the union of sets, there exists some
+        $A \in \mathscr{A}$ such that $u \in A$.
+      Therefore $v \in \img{F}{A}$ meaning
+        $v \in \bigcup\{\img{F}{A} \mid A \in \mathscr{A}\}$.
+
+    \subparagraph{($\supseteq$)}%
+
+      Let $v \in \bigcup\{\img{F}{A} \mid A \in \mathscr{A}\}$.
+      Then there exists some $b \in \{\img{F}{A} \mid A \in \mathscr{A}\}$ such
+        that $v \in b$.
+      In other words, there exists some $A \in \mathscr{A}$ such that
+        $v \in b = \img{F}{A}$.
+      By definition of the \nameref{ref:image} of a set, there exists a set $u$
+        such that $u \in A \land uFv$.
+      But this implies that $u \in \bigcup{\mathscr{A}} \land uFv$.
+      Therefore $v \in \img{F}{\bigcup{\mathscr{A}}}$.
 
 \end{proof}
 
-\subsection{\unverified{Corollary 3L}}%
+\subsection{\partial{Theorem 3K(b)}}%
+\label{sub:theorem-3k-b}
+
+\begin{theorem}[3K(b)]
+
+  The following hold for any sets. ($F$ need not be a function.)
+  The image of an intersection is included in the intersection of the images:
+    \begin{equation}
+      \label{sub:theorem-3k-b-eq1}
+      \img{F}{A \cap B} \subseteq \img{F}{A} \cap \img{F}{B}
+    \end{equation}
+    and
+    \begin{equation}
+      \label{sub:theorem-3k-b-eq2}
+      \img{F}{\bigcap\mathscr{A}} \subseteq
+        \bigcap\;\{\img{F}{A} \mid A \in \mathscr{A}\}.
+    \end{equation}
+    Equality holds if $F$ is single-rooted.
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $F$, $A$, $B$, and $\mathscr{A}$ be arbitrary sets.
+  We first prove (i) \eqref{sub:theorem-3k-b-eq1} and (ii)
+    \eqref{sub:theorem-3k-b-eq2}.
+  Then, assuming $F$ is single-rooted, we prove both (iii)
+    \eqref{sub:theorem-3k-b-eq1} and (iv) \eqref{sub:theorem-3k-b-eq2} hold
+    under equality.
+
+  \paragraph{(i)}%
+  \label{par:theorem-3k-b-i}
+
+    Let $v \in \img{F}{A \cap B}$.
+    By definition of the \nameref{ref:image} of a set,
+      $\exists u \in A \cap B, uFv$.
+    Then $u \in A \land uFv$ and $u \in B \land uFv$.
+    Therefore $v \in \img{F}{A} \cap \img{F}{B}$.
+
+  \paragraph{(ii)}%
+  \label{par:theorem-3k-b-ii}
+
+    Let $v \in \img{F}{\bigcap{\mathscr{A}}}$.
+    By definition of the \nameref{ref:image} of a set,
+      $\exists u \in \bigcap{\mathscr{A}}, uFv$.
+    Then $\exists u, (\forall A \in \mathscr{A}, u \in A) \land uFv$.
+    This implies that $\forall A \in \mathscr{A}, \exists u \in A, uFv$.
+    Then $\forall A \in \mathscr{A}, v \in \img{F}{A}$.
+    Thus $v \in \bigcap\{\img{F}{A} \mid A \in \mathscr{A}\}$.
+
+  \paragraph{(iii)}%
+
+    Suppose $F$ is single-rooted.
+    By \nameref{par:theorem-3k-b-i},
+      $$\img{F}{A \cap B} \subseteq \img{F}{A} \cap \img{F}{B}.$$
+    All that remains is showing
+      $$\img{F}{A} \cap \img{F}{B} \subseteq \img{F}{A \cap B}.$$
+    Let $v \in \img{F}{A} \cap \img{F}{B}$.
+    Then $v \in \img{F}{A}$ and $v \in \img{F}{B}$.
+    That is, $\exists u \in A, uFv$ and $\exists w \in B, wFv$.
+    Since $F$ is single rooted, it follows $u = w$.
+    Thus $u \in A \cap B \land uFv$ meaning $v \in \img{F}{A \cap B}$.
+
+  \paragraph{(iv)}%
+
+    Suppose $F$ is single-rooted.
+    By \nameref{par:theorem-3k-b-ii},
+      $$\img{F}{\bigcap\mathscr{A}} \subseteq
+        \bigcap\;\{\img{F}{A} \mid A \in \mathscr{A}\}.$$
+    All that remains is showing
+      $$\bigcap\;\{\img{F}{A} \mid A \in \mathscr{A}\} \subseteq
+        \img{F}{\bigcap\mathscr{A}}.$$
+    Let $v \in \bigcap\;\{\img{F}{A} \mid A \in \mathscr{A}\}$.
+    Then $\forall A \in \mathscr{A}, v \in \img{F}{A}$.
+    By definition of the \nameref{ref:image} of a set,
+      $\forall A \in \mathscr{A}, \exists u \in A, uFv$.
+    Since $F$ is single-rooted, it follows that
+      $\exists u, \forall A \in \mathscr{A}, u \in A \land uFv$.
+    Equivalently, $\exists u \in \bigcap{A}, uFv$.
+    Thus $v \in \img{F}{\bigcap{A}}$.
+
+\end{proof}
+
+\subsection{\partial{Theorem 3K(c)}}%
+\label{sub:theorem-3k-c}
+
+\begin{theorem}[3K(c)]
+
+  The following hold for any sets. ($F$ need not be a function.)
+  The image of a difference includes the difference of the images:
+    \begin{equation}
+      \label{sub:theorem-3k-c-eq1}
+      \img{F}{A} - \img{F}{B} \subseteq \img{F}{A - B}.
+    \end{equation}
+  Equality holds if $F$ is single-rooted.
+
+\end{theorem}
+
+\begin{proof}
+
+  We prove that (i) \eqref{sub:theorem-3k-c-eq1} holds and (ii) equality holds
+    if $F$ is single-rooted.
+
+  \paragraph{(i)}%
+  \label{par:theorem-3k-c-i}
+
+    Let $v \in \img{F}{A} - \img{F}{B}$.
+    By definition of the difference of two sets,
+      $v \in \img{F}{A}$ and $v \not\in \img{F}{B}$.
+    By definition of the \nameref{ref:image} of a set, there exists a set
+      $u \in A$ such that $\left< u, v \right> \in F$.
+    Likewise, $\forall w \in B, \left< w, v \right> \not\in F$.
+    Thus $u \not\in B$, since otherwise we get an immediate contradiction.
+    Therefore $u \in A - B$ meaning $v \in \img{F}{A - B}$.
+
+  \paragraph{(ii)}%
+
+    Suppose $F$ is single-rooted.
+    By \nameref{par:theorem-3k-c-i},
+      $$\img{F}{A} - \img{F}{B} \subseteq \img{F}{A - B}.$$
+    All that remains is showing
+      $$\img{F}{A - B} \subseteq \img{F}{A} - \img{F}{B}.$$
+    Let $v \in \img{F}{A - B}$.
+    By definition of the \nameref{ref:image} of a set, there exists a set
+      $u \in A - B$ such that $uFv$.
+    Then $u \in A$ and $u \not\in B$.
+    The former membership relation implies $v \in \img{F}{A}$.
+    The latter implies $v \not\in \img{F}{B}$ since $F$ being single-rooted
+      would otherwise invoke an immediate contradiction.
+    Thus $v \in \img{F}{A} - \img{F}{B}$.
+
+\end{proof}
+
+\subsection{\partial{Corollary 3L}}%
 \label{sub:corollary-3l}
 
 \begin{theorem}[3L]
 
   For any function $G$ and sets $A$, $B$, and $\mathscr{A}$:
-  \begin{align*}
-    G^{-1}\left[\bigcup\mathscr{A}\right]
-      & = \bigcup\;\{G^{-1}[A] \mid A \in \mathscr{A}\}, \\
+  \begin{align}
+    G^{-1}\left\llbracket\bigcup\mathscr{A}\right\rrbracket
+      & = \bigcup\;\{G^{-1}[A] \mid A \in \mathscr{A}\},
+      \label{sub:corollary-3l-eq1} \\
     G^{-1}\left[\bigcap\mathscr{A}\right]
       & = \bigcap\;\{G^{-1}[A] \mid A \in \mathscr{A}\}
-      \text{ for } \mathscr{A} \neq \emptyset, \\
-    G^{-1}[A - B]
-      & = G^{-1}[A] - G^{-1}[B].
-  \end{align*}
+      \text{ for } \mathscr{A} \neq \emptyset,
+      \label{sub:corollary-3l-eq2} \\
+    G^{-1}[A - B] & = G^{-1}[A] - G^{-1}[B].
+      \label{sub:corollary-3l-eq3}
+  \end{align}
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  \nameref{sub:theorem-3k-a} implies \eqref{sub:corollary-3l-eq1}.
+  Because the inverse of a function is always single-rooted,
+    \nameref{sub:theorem-3k-b} implies \eqref{sub:corollary-3l-eq2}.
+  Likewise \nameref{sub:theorem-3k-c} implies \eqref{sub:corollary-3l-eq3}.
 
 \end{proof}
 
