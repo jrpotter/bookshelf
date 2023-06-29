@@ -2,7 +2,7 @@ import Bookshelf.Enderton.Set.Chapter_2
 import Bookshelf.Enderton.Set.OrderedPair
 import Bookshelf.Enderton.Set.Relation
 
-/-! # Enderton.Chapter_3
+/-! # Enderton.Set.Chapter_3
 
 Relations and Functions
 -/

@@ -1,6 +1,6 @@
 import Common.Set.Basic
 
-/-! # Ordered Pairs
+/-! # Enderton.Set.OrderedPair
 
 A representation of an ordered pair in basic set theory. Like `Set`, it is
 assumed an ordered pair is homogeneous.

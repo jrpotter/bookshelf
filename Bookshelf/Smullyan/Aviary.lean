@@ -1,4 +1,4 @@
-/-! # Common.Combinator.Aviary
+/-! # Smullyan.Aviary
 
 A collection of combinator birds representable in Lean. Certain duplicators,
 e.g. mockingbirds, are not directly expressible since they would require
@@ -7,10 +7,6 @@ encoding a signature in which an argument has types `α` *and* `α → α`.
 Duplicators that are included, e.g. the warbler, are not exactly correct
 considering they still have the same limitation described above during actual
 use. Their inclusion here serves more as pseudo-documentation than anything.
-
-[^1]: Smullyan, Raymond M. To Mock a Mockingbird: And Other Logic Puzzles
-      Including an Amazing Adventure in Combinatory Logic. Oxford: Oxford
-      university press, 2000.
 -/
 
 /-- #### Bald Eagle

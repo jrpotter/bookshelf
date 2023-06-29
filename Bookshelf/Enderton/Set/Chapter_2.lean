@@ -2,7 +2,7 @@ import Bookshelf.Enderton.Set.Chapter_1
 import Common.Set.Basic
 import Mathlib.Data.Set.Lattice
 
-/-! # Enderton.Chapter_2
+/-! # Enderton.Set.Chapter_2
 
 Axioms and Operations
 -/

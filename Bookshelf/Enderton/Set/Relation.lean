@@ -1,6 +1,6 @@
 import Bookshelf.Enderton.Set.OrderedPair
 
-/-! # Relations
+/-! # Enderton.Set.Relation
 
 A representation of a relation, i.e. a set of ordered pairs. Like `Set`, it is
 assumed a relation is homogeneous.

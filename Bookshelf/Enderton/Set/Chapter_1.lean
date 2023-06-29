@@ -1,6 +1,6 @@
 import Mathlib.Data.Set.Basic
 
-/-! # Enderton.Chapter_1
+/-! # Enderton.Set.Chapter_1
 
 Introduction
 -/
