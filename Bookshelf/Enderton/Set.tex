@@ -73,6 +73,12 @@ There is a set having no members:
 
 \end{axiom}
 
+\section{\partial{Equivalence Relation}}%
+\label{ref:equivalence-relation}
+
+Relation $R$ is an \textbf{equivalence relation} if and only if $R$ is a binary
+  relation that is reflexive, symmetric, and transitive.
+
 \section{\defined{Extensionality Axiom}}%
 \label{ref:extensionality-axiom}
 
@@ -236,6 +242,12 @@ Given \nameref{ref:relation} $R$, the \textbf{range} of $R$, denoted $\ran{R}$,
 
 \end{definition}
 
+\section{\partial{Reflexive Relation}}%
+\label{ref:reflexive-relation}
+
+A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
+  $x \in A$.
+
 \section{\defined{Relation}}%
 \label{ref:relation}
 
@@ -272,6 +284,12 @@ For each formula $\phi$ not containing $B$, the following is an axiom:
 
 \end{axiom}
 
+\section{\partial{Symmetric Relation}}%
+\label{ref:symmetric-relation}
+
+A binary relation $R$ is \textbf{symmetric} on $A$ if and only if whenever
+  $xRy$ then $yRx$.
+
 \section{\defined{Symmetric Difference}}%
 \label{ref:symmetric-difference}
 
@@ -283,6 +301,12 @@ The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
   \lean*{Mathlib/Data/Set/Basic}{symmDiff\_def}
 
 \end{definition}
+
+\section{\partial{Transitive Relation}}%
+\label{ref:transitive-relation}
+
+A binary relation $R$ is \textbf{transitive} on $A$ if and only if whenever
+  $xRy$ and $yRz$, then $xRz$.
 
 \section{\defined{Union Axiom}}%
 \label{ref:union-axiom}
@@ -3145,6 +3169,25 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   Because the inverse of a function is always single-rooted,
     \nameref{sub:theorem-3k-b} implies \eqref{sub:corollary-3l-eq2}.
   Likewise \nameref{sub:theorem-3k-c} implies \eqref{sub:corollary-3l-eq3}.
+
+\end{proof}
+
+\section{Equivalence Relations}%
+\label{sec:equivalence-relations}
+
+\subsection{\unverified{Theorem 3M}}%
+\label{sub:theorem-3m}
+
+\begin{theorem}[3M]
+
+  If $R$ is a symmetric and transitive relation, then $R$ is an equivalence
+    relation on $\fld{R}$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 

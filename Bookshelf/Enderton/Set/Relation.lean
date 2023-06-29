@@ -1,6 +1,4 @@
-import Common.Set.OrderedPair
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Prod
+import Bookshelf.Enderton.Set.OrderedPair
 
 /-! # Relations
 

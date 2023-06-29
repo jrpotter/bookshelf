@@ -1,6 +1,6 @@
 import Bookshelf.Enderton.Set.Chapter_2
-import Common.Set.OrderedPair
-import Common.Set.Relation
+import Bookshelf.Enderton.Set.OrderedPair
+import Bookshelf.Enderton.Set.Relation
 
 /-! # Enderton.Chapter_3
 

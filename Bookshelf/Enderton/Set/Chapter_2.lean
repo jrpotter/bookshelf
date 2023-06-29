@@ -1,9 +1,6 @@
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Lattice
-
 import Bookshelf.Enderton.Set.Chapter_1
-import Common.Logic.Basic
 import Common.Set.Basic
+import Mathlib.Data.Set.Lattice
 
 /-! # Enderton.Chapter_2
 
