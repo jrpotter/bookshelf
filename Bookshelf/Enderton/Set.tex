@@ -316,8 +316,8 @@ For any sets $a$ and $b$, there is a set whose members are those sets belonging
 \chapter{Introduction}%
 \label{chap:introduction}
 
-\section{Baby Set Theory}%
-\label{sec:baby-set-theory}
+\section{Exercises 1}%
+\label{sec:exercises-1}
 
 \subsection{\verified{Exercise 1.1}}%
 \label{sub:exercise-1.1}
@@ -481,11 +481,8 @@ Show that $\{\{x\}, \{x, y\}\} \in \powerset{\powerset{B}}.$
 
 \end{proof}
 
-\section{Sets - An Informal View}%
-\label{sec:sets-informal-view}
-
-\subsection{\partial{Exercise 2.1}}%
-\label{sub:exercise-2.1}
+\subsection{\partial{Exercise 1.5}}%
+\label{sub:exercise-1.5}
 
 Define the rank of a set $c$ to be the least $\alpha$ such that
   $c \subseteq V_\alpha$.
@@ -524,8 +521,8 @@ Compute the rank of
 
 \end{proof}
 
-\subsection{\partial{Exercise 2.2}}%
-\label{sub:exercise-2.2}
+\subsection{\partial{Exercise 1.6}}%
+\label{sub:exercise-1.6}
 
 We have stated that $V_{\alpha + 1} = A \cup \powerset{V_\alpha}$.
 Prove this at least for $\alpha < 3$.
@@ -557,12 +554,12 @@ Prove this at least for $\alpha < 3$.
           & = (A \cup \powerset{V_{n-1}}) \cup \powerset{V_n}
             \nonumber \\
           & = A \cup (\powerset{V_{n-1}} \cup \powerset{V_n})
-            \label{sub:exercise-2.2-eq1}
+            \label{sub:exercise-1.6-eq1}
       \end{align}
     But $V_{n-1}$ is a subset of $V_n$.
     \nameref{sub:exercise-1.3} then implies
       $\powerset{V_{n-1}} \subseteq \powerset{V_n}$.
-    This means \eqref{sub:exercise-2.2-eq1} can be simplified to
+    This means \eqref{sub:exercise-1.6-eq1} can be simplified to
       $$V_{n+1} = A \cup \powerset{V_n},$$
     proving $P(n+1)$ holds true.
 
@@ -572,8 +569,8 @@ Prove this at least for $\alpha < 3$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 2.3}}%
-\label{sub:exercise-2.3}
+\subsection{\partial{Exercise 1.7}}%
+\label{sub:exercise-1.7}
 
 List all the members of $V_3$.
 List all the members of $V_4$.
@@ -581,14 +578,14 @@ List all the members of $V_4$.
 
 \begin{proof}
 
-  As seen in the proof of \nameref{sub:exercise-2.1},
+  As seen in the proof of \nameref{sub:exercise-1.5},
     $$V_3 = \{
         \emptyset,
         \{\emptyset\},
         \{\{\emptyset\}\},
         \{\emptyset, \{\emptyset\}\}
     \}.$$
-  By \nameref{sub:exercise-2.2}, $V_4 = \powerset{V_3}$ (since it is assumed
+  By \nameref{sub:exercise-1.6}, $V_4 = \powerset{V_3}$ (since it is assumed
     there are no atoms).
   Thus
     \begin{align*}
@@ -666,380 +663,6 @@ List all the members of $V_4$.
   By construction,
     $$\forall x, x \in B \iff x \text{ belongs to every member of } A.$$
   By the \nameref{ref:extensionality-axiom}, $B$ is unique.
-
-\end{proof}
-
-\section{Exercises 3}%
-\label{sec:exercises-3}
-
-\subsection{\verified{Exercise 3.1}}%
-\label{sub:exercise-3.1}
-
-Assume that $A$ is the set of integers divisible by $4$.
-Similarly assume that $B$ and $C$ are the sets of integers divisible by $9$ and
-  $10$, respectively.
-What is in $A \cap B \cap C$?
-
-\begin{answer}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_1}
-
-  The set of integers divisible by $4$, $9$, and $10$.
-
-\end{answer}
-
-\subsection{\verified{Exercise 3.2}}%
-\label{sub:exercise-3.2}
-
-Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
-  $A \neq B$.
-
-\begin{answer}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_2}
-
-  Let $A = \{\{1\}, \{2\}\}$ and $B = \{\{1, 2\}\}$.
-
-\end{answer}
-
-\subsection{\verified{Exercise 3.3}}%
-\label{sub:exercise-3.3}
-
-Show that every member of a set $A$ is a subset of $\bigcup A$.
-(This was stated as an example in this section.)
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_3}
-
-  Let $x \in A$.
-  By definition, $$\bigcup A = \{ y \mid (\exists b \in A) y \in b\}.$$
-  Then $\{ y \mid y \in x\} \subseteq \bigcup A$.
-  But $\{ y \mid y \in x\} = x$.
-  Thus $x \subseteq \bigcup A$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.4}}%
-\label{sub:exercise-3.4}
-
-Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_4}
-
-  Let $A$ and $B$ be sets such that $A \subseteq B$.
-  Let $x \in \bigcup A$.
-  By definition of the union, there exists some $b \in A$ such that $x \in b$.
-  By definition of the subset, $b \in B$.
-  This immediatley implies $x \in \bigcup B$.
-  Since this holds for all $x \in \bigcup A$, it follows
-    $\bigcup A \subseteq \bigcup B$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.5}}%
-\label{sub:exercise-3.5}
-
-Assume that every member of $\mathscr{A}$ is a subset of $B$.
-Show that $\bigcup \mathscr{A} \subseteq B$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_5}
-
-  Let $x \in \bigcup \mathscr{A}$.
-  By definition,
-    $$\bigcup \mathscr{A} = \{ y \mid (\exists b \in A)y \in b \}.$$
-  Then there exists some $b \in A$ such that $x \in b$.
-  By hypothesis, $b \subseteq B$.
-  Thus $x$ must also be a member of $B$.
-  Since this holds for all $x \in \bigcup \mathscr{A}$, it follows
-    $\bigcup \mathscr{A} \subseteq B$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.6a}}%
-\label{sub:exercise-3.6a}
-
-Show that for any set $A$, $\bigcup \powerset{A} = A$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_6a}
-
-  We prove that (i) $\bigcup \powerset{A} \subseteq A$ and (ii)
-    $A \subseteq \bigcup \powerset{A}$.
-
-  \paragraph{(i)}%
-  \label{par:exercise-3.6a-i}
-
-    By definition, the \nameref{ref:power-set} of $A$ is the set of all subsets
-      of $A$.
-    In other words, every member of $\powerset{A}$ is a subset of $A$.
-    By \nameref{sub:exercise-3.5}, $\bigcup \powerset{A} \subseteq A$.
-
-  \paragraph{(ii)}%
-  \label{par:exercise-3.6a-ii}
-
-    Let $x \in A$.
-    By definition of the power set of $A$, $\{x\} \in \powerset{A}$. 
-    By definition of the union,
-      $$\bigcup \powerset{A} =
-        \{ y \mid (\exists b \in \powerset{A}), y \in b).$$
-    Since $x \in \{x\}$ and $\{x\} \in \powerset{A}$, it follows
-      $x \in \bigcup \powerset{A}$.
-    Thus $A \subseteq \bigcup \powerset{A}$.
-
-  \paragraph{Conclusion}%
-
-    By \nameref{par:exercise-3.6a-i} and \nameref{par:exercise-3.6a-ii},
-      $\bigcup \powerset{A} = A$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.6b}}%
-\label{sub:exercise-3.6b}
-
-Show that $A \subseteq \powerset{\bigcup A}$.
-Under what conditions does equality hold?
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_6b}
-
-  Let $x \in A$.
-  By \nameref{sub:exercise-3.3}, $x$ is a subset of $\bigcup A$.
-  By the definition of the \nameref{ref:power-set},
-    $$\powerset{\bigcup A} = \{ y \mid y \subseteq \bigcup A \}.$$
-  Therefore $x \in \powerset{\bigcup A}$.
-  Since this holds for all $x \in A$, $A \subseteq \powerset{\bigcup A}$.
-
-  \suitdivider
-
-  We show equality holds if and only if there exists some set $B$ such that
-    $A = \powerset{B}$.
-
-  \paragraph{($\Rightarrow$)}%
-  \label{par:exercise-3.6b-right}
-
-    Suppose $A = \powerset{\bigcup A}$.
-    Then our statement immediately follows by settings $B = \bigcup A$.
-
-  \paragraph{($\Leftarrow$)}%
-  \label{par:exercise-3.6b-left}
-
-    Suppose there exists some set $B$ such that $A = \powerset{B}$.
-    Therefore
-      \begin{align*}
-        \powerset{\bigcup A}
-          & = \powerset{\left(\bigcup {\powerset {B}}\right)} \\
-          & = \powerset{B} & \textref{sub:exercise-3.6a} \\
-          & = A.
-      \end{align*}
-
-  \paragraph{Conclusion}%
-
-    By \nameref{par:exercise-3.6b-right} and \nameref{par:exercise-3.6b-left},
-      $A = \powerset{\bigcup A}$ if and only if there exists some set $B$ such
-      that $A = \powerset{B}$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.7a}}%
-\label{sub:exercise-3.7a}
-
-Show that for any sets $A$ and $B$,
-  $$\powerset{A} \cap \powerset{B} = \powerset{(A \cap B)}.$$
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_7a}
-
-  Let $A$ and $B$ be arbitrary sets. We show that
-    $\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}$ and then
-    show that $\powerset{A} \cap \powerset{B} \supseteq \powerset{(A \cap B)}$.
-
-  \paragraph{($\subseteq$)}%
-
-    Let $x \in \powerset{A} \cap \powerset{B}$.
-    That is, $x \in \powerset{A}$ and $x \in \powerset{B}$.
-    By the definition of the \nameref{ref:power-set},
-      \begin{align*}
-        \powerset{A} & = \{ y \mid y \subseteq A \} \\
-        \powerset{B} & = \{ y \mid y \subseteq B \}
-      \end{align*}
-    Thus $x \subseteq A$ and $x \subseteq B$, meaning $x \subseteq A \cap B$.
-    But then $x \in \powerset{(A \cap B)}$, the set of all subsets of
-      $A \cap B$.
-    Since this holds for all $x \in \powerset{A} \cap \powerset{B}$, it follows
-      $$\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}.$$
-
-  \paragraph{($\supseteq$)}%
-
-    Let $x \in \powerset{(A \cap B)}$.
-    By the definition of the \nameref{ref:power-set},
-      $$\powerset{(A \cap B)} = \{ y \mid y \subseteq A \cap B \}.$$
-    Thus $x \subseteq A \cap B$, meaning $x \subseteq A$ and $x \subseteq B$.
-    But this implies $x \in \powerset{A}$, the set of all subsets of $A$.
-    Likewise $x \in \powerset{B}$, the set of all subsets of $B$.
-    Thus $x \in \powerset{A} \cap \powerset{B}$.
-    Since this holds for all $x \in \powerset{(A \cap B)}$, it follows
-      $$\powerset{(A \cap B)} \subseteq \powerset{A} \cap \powerset{B}.$$
-
-  \paragraph{Conclusion}%
-
-    Since each side of our identity is a subset of the other,
-      $$\powerset{(A \cap B)} = \powerset{A} \cap \powerset{B}.$$
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.7b}}%
-\label{sub:exercise-3.7b}
-
-Show that $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$.
-Under what conditions does equality hold?
-
-\begin{proof}
-
-  \statementpadding
-
-  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_7b\_i}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_7b\_ii}
-
-  Let $x \in \powerset{A} \cup \powerset{B}$.
-  By definition, $x \in \powerset{A}$ or $x \in \powerset{B}$ (or both).
-  By the definition of the \nameref{ref:power-set},
-    \begin{align*}
-      \powerset{A} &= \{ y \mid y \subseteq A \} \\
-      \powerset{B} &= \{ y \mid y \subseteq B \}.
-    \end{align*}
-  Thus $x \subseteq A$ or $x \subseteq B$.
-  Therefore $x \subseteq A \cup B$.
-  But then $x \in \powerset{(A \cup B)}$, the set of all subsets of $A \cup B$.
-
-  \suitdivider
-
-  We show equality holds if and only if one of $A$ or $B$ is a subset of the
-    other.
-
-  \paragraph{($\Rightarrow$)}%
-  \label{par:exercise-3.7b-right}
-
-    Suppose
-      \begin{equation}
-        \label{sub:exercise-3.7b-eq1}
-        \powerset{A} \cup \powerset{B} = \powerset{(A \cup B)}.
-      \end{equation}
-    By the definition of the \nameref{ref:power-set},
-      $A \cup B \in \powerset{(A \cup B)}$.
-    Then \eqref{sub:exercise-3.7b-eq1} implies
-      $A \cup B \in \powerset{A} \cup \powerset{B}$.
-    That is, $A \cup B \in \powerset{A}$ or $A \cup B \in \powerset{B}$ (or
-      both).
-
-    For the sake of contradiction, suppose $A \not\subseteq B$ and
-      $B \not\subseteq A$.
-    Then there exists an element $x \in A$ such that $x \not\in B$ and there
-      exists an element $y \in B$ such that $y \not\in A$.
-    But then $A \cup B \not\in \powerset{A}$ since $y$ cannot be a member of a
-      member of $\powerset{A}$.
-    Likewise, $A \cup B \not\in \powerset{B}$ since $x$ cannot be a member of a
-      member of $\powerset{B}$.
-    Therefore our assumption is incorrect.
-    In other words, $A \subseteq B$ or $B \subseteq A$.
-
-  \paragraph{($\Leftarrow$)}%
-  \label{par:exercise-3.7b-left}
-
-    WLOG, suppose $A \subseteq B$.
-    Then, by \nameref{sub:exercise-1.3}, $\powerset{A} \subseteq \powerset{B}$.
-    Thus
-      \begin{align*}
-        \powerset{A} \cup \powerset{B}
-          & = \powerset{B} \\
-          & = \powerset{A \cup B}.
-      \end{align*}
-
-  \paragraph{Conclusion}%
-
-    By \nameref{par:exercise-3.7b-right} and \nameref{par:exercise-3.7b-left},
-      it follows
-      $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$ if and
-      only if $A \subseteq B$ or $B \subseteq A$.
-
-\end{proof}
-
-\subsection{\partial{Exercise 3.8}}%
-\label{sub:exercise-3.8}
-
-Show that there is no set to which every singleton (that is, every set of the
-  form $\{x\}$) belongs.
-[\textit{Suggestion}: Show that from such a set, we could construct a set to
-  which every set belonged.]
-
-\begin{proof}
-
-  We proceed by contradiction.
-  Suppose there existed a set $A$ consisting of every singleton.
-  Then the \nameref{ref:union-axiom} suggests $\bigcup A$ is a set.
-  But this set is precisely the class of all sets, which is \textit{not} a set.
-  Thus our original assumption was incorrect.
-  That is, there is no set to which every singleton belongs.
-
-\end{proof}
-
-\subsection{\verified{Exercise 3.9}}%
-\label{sub:exercise-3.9}
-
-Give an example of sets $a$ and $B$ for which $a \in B$ but
-  $\powerset{a} \not\in \powerset{B}$.
-
-\begin{answer}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_9}
-
-  Let $a = \{1\}$ and $B = \{\{1\}\}$.
-  Then
-    \begin{align*}
-      \powerset{a} & = \{\emptyset, \{1\}\} \\
-      \powerset{B} & = \{\emptyset, \{\{1\}\}\}.
-    \end{align*}
-  It immediately follows that $\powerset{a} \not\in \powerset{B}$.
-
-\end{answer}
-
-\subsection{\verified{Exercise 3.10}}%
-\label{sub:exercise-3.10}
-
-Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
-[\textit{Suggestion}: If you need help, look in the Appendix.]
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_3\_10}
-
-  Suppose $a \in B$.
-  By \nameref{sub:exercise-3.3}, $a \subseteq \bigcup B$.
-  By \nameref{sub:exercise-1.3}, $\powerset{a} \subseteq \powerset{\bigcup B}$.
-  By the definition of the \nameref{ref:power-set},
-    $$\powerset{\powerset{\bigcup B}} =
-      \{ y \mid y \subseteq \powerset{\bigcup B} \}.$$
-  Therefore $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
 
 \end{proof}
 
@@ -1630,11 +1253,382 @@ Let $A$ and $B$ be sets. $x \not\in A + B$ if and only if either
 
 \end{proof}
 
-\section{Exercises 4}%
-\label{sec:exercises-4}
+\section{Exercises 2}%
+\label{sec:exercises-2}
 
-\subsection{\verified{Exercise 4.11}}%
-\label{sub:exercise-4.11}
+\subsection{\verified{Exercise 2.1}}%
+\label{sub:exercise-2.1}
+
+Assume that $A$ is the set of integers divisible by $4$.
+Similarly assume that $B$ and $C$ are the sets of integers divisible by $9$ and
+  $10$, respectively.
+What is in $A \cap B \cap C$?
+
+\begin{answer}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_1}
+
+  The set of integers divisible by $4$, $9$, and $10$.
+
+\end{answer}
+
+\subsection{\verified{Exercise 2.2}}%
+\label{sub:exercise-2.2}
+
+Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
+  $A \neq B$.
+
+\begin{answer}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_2}
+
+  Let $A = \{\{1\}, \{2\}\}$ and $B = \{\{1, 2\}\}$.
+
+\end{answer}
+
+\subsection{\verified{Exercise 2.3}}%
+\label{sub:exercise-2.3}
+
+Show that every member of a set $A$ is a subset of $\bigcup A$.
+(This was stated as an example in this section.)
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_3}
+
+  Let $x \in A$.
+  By definition, $$\bigcup A = \{ y \mid (\exists b \in A) y \in b\}.$$
+  Then $\{ y \mid y \in x\} \subseteq \bigcup A$.
+  But $\{ y \mid y \in x\} = x$.
+  Thus $x \subseteq \bigcup A$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.4}}%
+\label{sub:exercise-2.4}
+
+Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_4}
+
+  Let $A$ and $B$ be sets such that $A \subseteq B$.
+  Let $x \in \bigcup A$.
+  By definition of the union, there exists some $b \in A$ such that $x \in b$.
+  By definition of the subset, $b \in B$.
+  This immediatley implies $x \in \bigcup B$.
+  Since this holds for all $x \in \bigcup A$, it follows
+    $\bigcup A \subseteq \bigcup B$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.5}}%
+\label{sub:exercise-2.5}
+
+Assume that every member of $\mathscr{A}$ is a subset of $B$.
+Show that $\bigcup \mathscr{A} \subseteq B$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_5}
+
+  Let $x \in \bigcup \mathscr{A}$.
+  By definition,
+    $$\bigcup \mathscr{A} = \{ y \mid (\exists b \in A)y \in b \}.$$
+  Then there exists some $b \in A$ such that $x \in b$.
+  By hypothesis, $b \subseteq B$.
+  Thus $x$ must also be a member of $B$.
+  Since this holds for all $x \in \bigcup \mathscr{A}$, it follows
+    $\bigcup \mathscr{A} \subseteq B$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.6a}}%
+\label{sub:exercise-2.6a}
+
+Show that for any set $A$, $\bigcup \powerset{A} = A$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_6a}
+
+  We prove that (i) $\bigcup \powerset{A} \subseteq A$ and (ii)
+    $A \subseteq \bigcup \powerset{A}$.
+
+  \paragraph{(i)}%
+  \label{par:exercise-2.6a-i}
+
+    By definition, the \nameref{ref:power-set} of $A$ is the set of all subsets
+      of $A$.
+    In other words, every member of $\powerset{A}$ is a subset of $A$.
+    By \nameref{sub:exercise-2.5}, $\bigcup \powerset{A} \subseteq A$.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-2.6a-ii}
+
+    Let $x \in A$.
+    By definition of the power set of $A$, $\{x\} \in \powerset{A}$. 
+    By definition of the union,
+      $$\bigcup \powerset{A} =
+        \{ y \mid (\exists b \in \powerset{A}), y \in b).$$
+    Since $x \in \{x\}$ and $\{x\} \in \powerset{A}$, it follows
+      $x \in \bigcup \powerset{A}$.
+    Thus $A \subseteq \bigcup \powerset{A}$.
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:exercise-2.6a-i} and \nameref{par:exercise-2.6a-ii},
+      $\bigcup \powerset{A} = A$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.6b}}%
+\label{sub:exercise-2.6b}
+
+Show that $A \subseteq \powerset{\bigcup A}$.
+Under what conditions does equality hold?
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_6b}
+
+  Let $x \in A$.
+  By \nameref{sub:exercise-2.3}, $x$ is a subset of $\bigcup A$.
+  By the definition of the \nameref{ref:power-set},
+    $$\powerset{\bigcup A} = \{ y \mid y \subseteq \bigcup A \}.$$
+  Therefore $x \in \powerset{\bigcup A}$.
+  Since this holds for all $x \in A$, $A \subseteq \powerset{\bigcup A}$.
+
+  \suitdivider
+
+  We show equality holds if and only if there exists some set $B$ such that
+    $A = \powerset{B}$.
+
+  \paragraph{($\Rightarrow$)}%
+  \label{par:exercise-2.6b-right}
+
+    Suppose $A = \powerset{\bigcup A}$.
+    Then our statement immediately follows by settings $B = \bigcup A$.
+
+  \paragraph{($\Leftarrow$)}%
+  \label{par:exercise-2.6b-left}
+
+    Suppose there exists some set $B$ such that $A = \powerset{B}$.
+    Therefore
+      \begin{align*}
+        \powerset{\bigcup A}
+          & = \powerset{\left(\bigcup {\powerset {B}}\right)} \\
+          & = \powerset{B} & \textref{sub:exercise-2.6a} \\
+          & = A.
+      \end{align*}
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:exercise-2.6b-right} and \nameref{par:exercise-2.6b-left},
+      $A = \powerset{\bigcup A}$ if and only if there exists some set $B$ such
+      that $A = \powerset{B}$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.7a}}%
+\label{sub:exercise-2.7a}
+
+Show that for any sets $A$ and $B$,
+  $$\powerset{A} \cap \powerset{B} = \powerset{(A \cap B)}.$$
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_7a}
+
+  Let $A$ and $B$ be arbitrary sets. We show that
+    $\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}$ and then
+    show that $\powerset{A} \cap \powerset{B} \supseteq \powerset{(A \cap B)}$.
+
+  \paragraph{($\subseteq$)}%
+
+    Let $x \in \powerset{A} \cap \powerset{B}$.
+    That is, $x \in \powerset{A}$ and $x \in \powerset{B}$.
+    By the definition of the \nameref{ref:power-set},
+      \begin{align*}
+        \powerset{A} & = \{ y \mid y \subseteq A \} \\
+        \powerset{B} & = \{ y \mid y \subseteq B \}
+      \end{align*}
+    Thus $x \subseteq A$ and $x \subseteq B$, meaning $x \subseteq A \cap B$.
+    But then $x \in \powerset{(A \cap B)}$, the set of all subsets of
+      $A \cap B$.
+    Since this holds for all $x \in \powerset{A} \cap \powerset{B}$, it follows
+      $$\powerset{A} \cap \powerset{B} \subseteq \powerset{(A \cap B)}.$$
+
+  \paragraph{($\supseteq$)}%
+
+    Let $x \in \powerset{(A \cap B)}$.
+    By the definition of the \nameref{ref:power-set},
+      $$\powerset{(A \cap B)} = \{ y \mid y \subseteq A \cap B \}.$$
+    Thus $x \subseteq A \cap B$, meaning $x \subseteq A$ and $x \subseteq B$.
+    But this implies $x \in \powerset{A}$, the set of all subsets of $A$.
+    Likewise $x \in \powerset{B}$, the set of all subsets of $B$.
+    Thus $x \in \powerset{A} \cap \powerset{B}$.
+    Since this holds for all $x \in \powerset{(A \cap B)}$, it follows
+      $$\powerset{(A \cap B)} \subseteq \powerset{A} \cap \powerset{B}.$$
+
+  \paragraph{Conclusion}%
+
+    Since each side of our identity is a subset of the other,
+      $$\powerset{(A \cap B)} = \powerset{A} \cap \powerset{B}.$$
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.7b}}%
+\label{sub:exercise-2.7b}
+
+Show that $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$.
+Under what conditions does equality hold?
+
+\begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_7b\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_7b\_ii}
+
+  Let $x \in \powerset{A} \cup \powerset{B}$.
+  By definition, $x \in \powerset{A}$ or $x \in \powerset{B}$ (or both).
+  By the definition of the \nameref{ref:power-set},
+    \begin{align*}
+      \powerset{A} &= \{ y \mid y \subseteq A \} \\
+      \powerset{B} &= \{ y \mid y \subseteq B \}.
+    \end{align*}
+  Thus $x \subseteq A$ or $x \subseteq B$.
+  Therefore $x \subseteq A \cup B$.
+  But then $x \in \powerset{(A \cup B)}$, the set of all subsets of $A \cup B$.
+
+  \suitdivider
+
+  We show equality holds if and only if one of $A$ or $B$ is a subset of the
+    other.
+
+  \paragraph{($\Rightarrow$)}%
+  \label{par:exercise-2.7b-right}
+
+    Suppose
+      \begin{equation}
+        \label{sub:exercise-2.7b-eq1}
+        \powerset{A} \cup \powerset{B} = \powerset{(A \cup B)}.
+      \end{equation}
+    By the definition of the \nameref{ref:power-set},
+      $A \cup B \in \powerset{(A \cup B)}$.
+    Then \eqref{sub:exercise-2.7b-eq1} implies
+      $A \cup B \in \powerset{A} \cup \powerset{B}$.
+    That is, $A \cup B \in \powerset{A}$ or $A \cup B \in \powerset{B}$ (or
+      both).
+
+    For the sake of contradiction, suppose $A \not\subseteq B$ and
+      $B \not\subseteq A$.
+    Then there exists an element $x \in A$ such that $x \not\in B$ and there
+      exists an element $y \in B$ such that $y \not\in A$.
+    But then $A \cup B \not\in \powerset{A}$ since $y$ cannot be a member of a
+      member of $\powerset{A}$.
+    Likewise, $A \cup B \not\in \powerset{B}$ since $x$ cannot be a member of a
+      member of $\powerset{B}$.
+    Therefore our assumption is incorrect.
+    In other words, $A \subseteq B$ or $B \subseteq A$.
+
+  \paragraph{($\Leftarrow$)}%
+  \label{par:exercise-2.7b-left}
+
+    WLOG, suppose $A \subseteq B$.
+    Then, by \nameref{sub:exercise-1.3}, $\powerset{A} \subseteq \powerset{B}$.
+    Thus
+      \begin{align*}
+        \powerset{A} \cup \powerset{B}
+          & = \powerset{B} \\
+          & = \powerset{A \cup B}.
+      \end{align*}
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:exercise-2.7b-right} and \nameref{par:exercise-2.7b-left},
+      it follows
+      $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$ if and
+      only if $A \subseteq B$ or $B \subseteq A$.
+
+\end{proof}
+
+\subsection{\partial{Exercise 2.8}}%
+\label{sub:exercise-2.8}
+
+Show that there is no set to which every singleton (that is, every set of the
+  form $\{x\}$) belongs.
+[\textit{Suggestion}: Show that from such a set, we could construct a set to
+  which every set belonged.]
+
+\begin{proof}
+
+  We proceed by contradiction.
+  Suppose there existed a set $A$ consisting of every singleton.
+  Then the \nameref{ref:union-axiom} suggests $\bigcup A$ is a set.
+  But this set is precisely the class of all sets, which is \textit{not} a set.
+  Thus our original assumption was incorrect.
+  That is, there is no set to which every singleton belongs.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.9}}%
+\label{sub:exercise-2.9}
+
+Give an example of sets $a$ and $B$ for which $a \in B$ but
+  $\powerset{a} \not\in \powerset{B}$.
+
+\begin{answer}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_9}
+
+  Let $a = \{1\}$ and $B = \{\{1\}\}$.
+  Then
+    \begin{align*}
+      \powerset{a} & = \{\emptyset, \{1\}\} \\
+      \powerset{B} & = \{\emptyset, \{\{1\}\}\}.
+    \end{align*}
+  It immediately follows that $\powerset{a} \not\in \powerset{B}$.
+
+\end{answer}
+
+\subsection{\verified{Exercise 2.10}}%
+\label{sub:exercise-2.10}
+
+Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
+[\textit{Suggestion}: If you need help, look in the Appendix.]
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_10}
+
+  Suppose $a \in B$.
+  By \nameref{sub:exercise-2.3}, $a \subseteq \bigcup B$.
+  By \nameref{sub:exercise-1.3}, $\powerset{a} \subseteq \powerset{\bigcup B}$.
+  By the definition of the \nameref{ref:power-set},
+    $$\powerset{\powerset{\bigcup B}} =
+      \{ y \mid y \subseteq \powerset{\bigcup B} \}.$$
+  Therefore $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 2.11}}%
+\label{sub:exercise-2.11}
 
 Show that for any sets $A$ and $B$,
   $$A = (A \cap B) \cup (A - B) \quad\text{and}\quad
@@ -1645,10 +1639,10 @@ Show that for any sets $A$ and $B$,
   \statementpadding
 
   \lean*{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_11\_i}
+    {Enderton.Set.Chapter\_2.exercise\_2\_11\_i}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_11\_ii}
+    {Enderton.Set.Chapter\_2.exercise\_2\_11\_ii}
 
   \noindent Let $A$ and $B$ be sets.
   We prove that
@@ -1695,8 +1689,8 @@ Show that for any sets $A$ and $B$,
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.12}}%
-\label{sub:exercise-4.12}
+\subsection{\verified{Exercise 2.12}}%
+\label{sub:exercise-2.12}
 
 Verify the following identity (one of De Morgan's laws):
   $$C - (A \cap B) = (C - A) \cup (C - B).$$
@@ -1707,8 +1701,8 @@ Verify the following identity (one of De Morgan's laws):
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.13}}%
-\label{sub:exercise-4.13}
+\subsection{\verified{Exercise 2.13}}%
+\label{sub:exercise-2.13}
 
 Show that if $A \subseteq B$, then $C - B \subseteq C - A$.
 
@@ -1718,8 +1712,8 @@ Show that if $A \subseteq B$, then $C - B \subseteq C - A$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.14}}%
-\label{sub:exercise-4.14}
+\subsection{\verified{Exercise 2.14}}%
+\label{sub:exercise-2.14}
 
 Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
   different from $(A - B) - C$.
@@ -1727,7 +1721,7 @@ Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_14}
+    {Enderton.Set.Chapter\_2.exercise\_2\_14}
 
   Let $A = \{1, 2, 3\}$, $B = \{2, 3, 4\}$, and $C = \{3, 4, 5\}$.
   Then
@@ -1747,8 +1741,8 @@ Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.15a}}%
-\label{sub:exercise-4.15a}
+\subsection{\verified{Exercise 2.15a}}%
+\label{sub:exercise-2.15a}
 
 Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 
@@ -1784,8 +1778,8 @@ Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.15b}}%
-\label{sub:exercise-4.15b}
+\subsection{\verified{Exercise 2.15b}}%
+\label{sub:exercise-2.15b}
 
 Show that $A + (B + C) = (A + B) + C$.
 
@@ -1801,7 +1795,7 @@ Show that $A + (B + C) = (A + B) + C$.
     \end{enumerate}
 
   \paragraph{(i)}%
-  \label{par:exercise-4.15b-i}
+  \label{par:exercise-2.15b-i}
 
     Let $x \in A + (B + C)$.
     Then $x$ is in $A$ or in $B + C$, but not both.
@@ -1837,7 +1831,7 @@ Show that $A + (B + C) = (A + B) + C$.
         $x \in (A + B) + C$.
 
   \paragraph{(ii)}%
-  \label{par:exercise-4.15b-ii}
+  \label{par:exercise-2.15b-ii}
 
     Let $x \in (A + B) + C$.
     Then $x$ is in $A + B$ or in $C$, but not both.
@@ -1874,14 +1868,14 @@ Show that $A + (B + C) = (A + B) + C$.
 
   \paragraph{Conclusion}%
 
-    In both \nameref{par:exercise-4.15b-i} and \nameref{par:exercise-4.15b-ii},
+    In both \nameref{par:exercise-2.15b-i} and \nameref{par:exercise-2.15b-ii},
       the subcases are exhaustive and prove the desired subset relation.
     Therefore $A + (B + C) = (A + B) + C$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.16}}%
-\label{sub:exercise-4.16}
+\subsection{\verified{Exercise 2.16}}%
+\label{sub:exercise-2.16}
 
 Simplify:
   $$[(A \cup B \cup C) \cap (A \cup B)] - [(A \cup (B - C)) \cap A].$$
@@ -1889,7 +1883,7 @@ Simplify:
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_16}
+    {Enderton.Set.Chapter\_2.exercise\_2\_16}
 
   Let $A$, $B$, and $C$ be arbitrary sets.
   Then
@@ -1907,8 +1901,8 @@ Simplify:
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.17}}%
-\label{sub:exercise-4.17}
+\subsection{\verified{Exercise 2.17}}%
+\label{sub:exercise-2.17}
 
 Show that the following four conditions are equivalent.
 
@@ -1924,16 +1918,16 @@ Show that the following four conditions are equivalent.
   \statementpadding
 
   \lean*{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_17\_i}
+    {Enderton.Set.Chapter\_2.exercise\_2\_17\_i}
 
   \lean*{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_17\_ii}
+    {Enderton.Set.Chapter\_2.exercise\_2\_17\_ii}
 
   \lean*{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_17\_iii}
+    {Enderton.Set.Chapter\_2.exercise\_2\_17\_iii}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_17\_iv}
+    {Enderton.Set.Chapter\_2.exercise\_2\_17\_iv}
 
   Let $A$ and $B$ be arbitrary sets.
   We show that (i) $(a) \Rightarrow (b)$, (ii) $(b) \Rightarrow (c)$, (iii)
@@ -1972,8 +1966,8 @@ Show that the following four conditions are equivalent.
 
 \end{proof}
 
-\subsection{\partial{Exercise 4.18}}%
-\label{sub:exercise-4.18}
+\subsection{\partial{Exercise 2.18}}%
+\label{sub:exercise-2.18}
 
 Assume that $A$ and $B$ are subsets of $S$.
 List all of the different sets that can be made from these three by use of the
@@ -2004,8 +1998,8 @@ List all of the different sets that can be made from these three by use of the
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.19}}%
-\label{sub:exercise-4.19}
+\subsection{\verified{Exercise 2.19}}%
+\label{sub:exercise-2.19}
 
 Is $\powerset{(A - B)}$ always equal to $\powerset{A} - \powerset{B}$?
 Is it ever equal to $\powerset{A} - \powerset{B}$?
@@ -2013,14 +2007,14 @@ Is it ever equal to $\powerset{A} - \powerset{B}$?
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_19}
+    {Enderton.Set.Chapter\_2.exercise\_2\_19}
 
   Let $A$ and $B$ be arbitrary sets.
   We show (i) that $\emptyset \in \powerset{(A - B})$ and (ii)
     $\emptyset \not\in \powerset{A} - \powerset{B}$.
 
   \paragraph{(i)}%
-  \label{par:exercise-4.19-i}
+  \label{par:exercise-2.19-i}
 
     By definition of the \nameref{ref:power-set},
       $$\powerset{(A - B)} = \{ x \mid x \subseteq A - B \}.$$
@@ -2029,7 +2023,7 @@ Is it ever equal to $\powerset{A} - \powerset{B}$?
 
   \paragraph{(ii)}%
 
-    By the same reasoning found in \nameref{par:exercise-4.19-i},
+    By the same reasoning found in \nameref{par:exercise-2.19-i},
       $\emptyset \in \powerset{A}$ and $\emptyset \in \powerset{B}$.
     But then, by definition of the relative complement,
       $\emptyset \not\in \powerset{A} - \powerset{B}$.
@@ -2040,8 +2034,8 @@ Is it ever equal to $\powerset{A} - \powerset{B}$?
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.20}}%
-\label{sub:exercise-4.20}
+\subsection{\verified{Exercise 2.20}}%
+\label{sub:exercise-2.20}
 
 Let $A$, $B$, and $C$ be sets such that $A \cup B = A \cup C$ and
   $A \cap B = A \cap C$.
@@ -2050,7 +2044,7 @@ Show that $B = C$.
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_20}
+    {Enderton.Set.Chapter\_2.exercise\_2\_20}
 
   Let $A$, $B$, and $C$ be arbitrary sets.
   By the \nameref{ref:extensionality-axiom}, $B = C$ if and only if for all sets
@@ -2099,15 +2093,15 @@ Show that $B = C$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.21}}%
-\label{sub:exercise-4.21}
+\subsection{\verified{Exercise 2.21}}%
+\label{sub:exercise-2.21}
 
 Show that $\bigcup (A \cup B) = \bigcup A \cup \bigcup B$.
 
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_21}
+    {Enderton.Set.Chapter\_2.exercise\_2\_21}
 
   Let $A$ and $B$ be arbitrary sets.
   By the \nameref{ref:extensionality-axiom}, the specified equality holds if and
@@ -2137,8 +2131,8 @@ Show that $\bigcup (A \cup B) = \bigcup A \cup \bigcup B$.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.22}}%
-\label{sub:exercise-4.22}
+\subsection{\verified{Exercise 2.22}}%
+\label{sub:exercise-2.22}
 
 Show that if $A$ and $B$ are nonempty sets, then
   $\bigcap (A \cup B) = \bigcap A \cap \bigcap B$.
@@ -2146,13 +2140,13 @@ Show that if $A$ and $B$ are nonempty sets, then
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_22}
+    {Enderton.Set.Chapter\_2.exercise\_2\_22}
 
   Let $A$ and $B$ be arbitrary, nonempty sets.
   By the \nameref{ref:extensionality-axiom}, the specified equality holds if and
     only if for all sets $x$,
     \begin{equation}
-      \label{sub:exercise-4.22-eq1}
+      \label{sub:exercise-2.22-eq1}
       x \in \bigcap (A \cup B) \iff x \in \bigcap A \cap \bigcap B.
     \end{equation}
   We prove both directions of this biconditional.
@@ -2177,8 +2171,8 @@ Show that if $A$ and $B$ are nonempty sets, then
 
 \end{proof}
 
-\subsection{\partial{Exercise 4.23}}%
-\label{sub:exercise-4.23}
+\subsection{\partial{Exercise 2.23}}%
+\label{sub:exercise-2.23}
 
 Show that if $\mathscr{B}$ is nonempty, then
   $A \cup \bigcap \mathscr{B} = \bigcap\; \{A \cup X \mid X \in \mathscr{B} \}$.
@@ -2189,8 +2183,8 @@ Show that if $\mathscr{B}$ is nonempty, then
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.24a}}%
-\label{sub:exercise-4.24a}
+\subsection{\verified{Exercise 2.24a}}%
+\label{sub:exercise-2.24a}
 
 Show that if $\mathscr{A}$ is nonempty, then
   $\powerset{\bigcap\mathscr{A}} =
@@ -2199,7 +2193,7 @@ Show that if $\mathscr{A}$ is nonempty, then
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_24a}
+    {Enderton.Set.Chapter\_2.exercise\_2\_24a}
 
   Suppose $\mathscr{A}$ is a nonempty set.
   Then $\bigcap \mathscr{A}$ is well-defined.
@@ -2228,12 +2222,12 @@ Show that if $\mathscr{A}$ is nonempty, then
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.24b}}%
-\label{sub:exercise-4.24b}
+\subsection{\verified{Exercise 2.24b}}%
+\label{sub:exercise-2.24b}
 
 Show that
   \begin{equation}
-    \label{sub:exercise-4.24b-eq1}
+    \label{sub:exercise-2.24b-eq1}
     \bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \} \subseteq
       \powerset{\bigcup\mathscr{A}}.
   \end{equation}
@@ -2242,14 +2236,14 @@ Under what conditions does equality hold?
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_24b}
+    {Enderton.Set.Chapter\_2.exercise\_2\_24b}
 
-  We first prove \eqref{sub:exercise-4.24b-eq1}.
+  We first prove \eqref{sub:exercise-2.24b-eq1}.
   Let $x \in \bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \}$.
   By definition of the union of sets,
     $(\exists X \in \mathscr{A}), x \in \powerset{X}$.
   By definition of the \nameref{ref:power-set}, $x \subseteq X$.
-  By \nameref{sub:exercise-3.3}, $X \subseteq \bigcup \mathscr{A}$.
+  By \nameref{sub:exercise-2.3}, $X \subseteq \bigcup \mathscr{A}$.
   Therefore $x \subseteq \bigcup \mathscr{A}$, proving
     $x \in \powerset{\mathscr{A}}$ as expected.
 
@@ -2287,12 +2281,12 @@ Under what conditions does equality hold?
   \paragraph{Conclusion}%
 
     Equality follows immediately from this fact in conjunction with the proof
-      of \eqref{sub:exercise-4.24b-eq1}.
+      of \eqref{sub:exercise-2.24b-eq1}.
 
 \end{proof}
 
-\subsection{\verified{Exercise 4.25}}%
-\label{sub:exercise-4.25}
+\subsection{\verified{Exercise 2.25}}%
+\label{sub:exercise-2.25}
 
 Is $A \cup \bigcup \mathscr{B}$ always the same as
   $\bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}$?
@@ -2301,11 +2295,11 @@ If not, then under what conditions does equality hold?
 \begin{proof}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.exercise\_4\_25}
+    {Enderton.Set.Chapter\_2.exercise\_2\_25}
 
   We prove that
     \begin{equation}
-      \label{sub:exercise-4.25-eq1}
+      \label{sub:exercise-2.25-eq1}
       A \cup \bigcup \mathscr{B} =
         \bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}
     \end{equation}
@@ -2314,7 +2308,7 @@ If not, then under what conditions does equality hold?
 
   \paragraph{($\Rightarrow$)}%
 
-    Suppose \eqref{sub:exercise-4.25-eq1} holds true.
+    Suppose \eqref{sub:exercise-2.25-eq1} holds true.
     There are two cases to consider:
 
     \subparagraph{Case 1}%
@@ -2331,7 +2325,7 @@ If not, then under what conditions does equality hold?
             = \bigcup \emptyset \\
             = \emptyset.
         $$
-      Then by hypothesis \eqref{sub:exercise-4.25-eq1}, $A = \emptyset$.
+      Then by hypothesis \eqref{sub:exercise-2.25-eq1}, $A = \emptyset$.
       Then $A = \emptyset \lor \mathscr{B} \neq \emptyset$ holds trivially.
 
   \paragraph{($\Leftarrow$)}%
@@ -2349,7 +2343,7 @@ If not, then under what conditions does equality hold?
             = \bigcup \{ X \mid X \in \mathscr{B} \} \\
             = \bigcup \mathscr{B}.
         $$
-      Therefore \eqref{sub:exercise-4.25-eq1} holds.
+      Therefore \eqref{sub:exercise-2.25-eq1} holds.
 
     \paragraph{Case 2}%
 
@@ -2364,7 +2358,7 @@ If not, then under what conditions does equality hold?
             & = \{ x \mid x \in \bigcup \{ A \cup X \mid X \in \mathscr{B} \} \\
             & = \bigcup \{ A \cup X \mid X \in \mathscr{B} \}.
         \end{align*}
-      Therefore \eqref{sub:exercise-4.25-eq1} holds.
+      Therefore \eqref{sub:exercise-2.25-eq1} holds.
 
 \end{proof}
 
@@ -2509,267 +2503,6 @@ If not, then under what conditions does equality hold?
 
 \end{proof}
 
-\section{Exercises 5}%
-\label{sec:exercises-5}
-
-\subsection{\verified{Exercise 5.1}}%
-\label{sub:exercise-5.1}
-
-Suppose that we attempted to generalize the Kuratowski definitions of ordered
-  pairs to ordered triples by defining
-  $$\left< x, y, z \right>^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
-Show that this definition is unsuccessful by giving examples of objects
-  $u$, $v$, $w$, $x$, $y$, $z$ with
-  $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but with either
-  $y \neq v$ or $z \neq w$ (or both).
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_5\_1}
-
-  Let $x = 1$, $y = 1$, and $z = 2$.
-  Let $u = 1$, $v = 2$, and $w = 2$.
-  Then
-    \begin{align*}
-      \left< x, y, z \right>^*
-        & = \{\{x\}, \{x, y\}, \{x, y, z\}\} \\
-        & = \{\{1\}, \{1, 1\}, \{1, 1, 2\}\} \\
-        & = \{\{1\}, \{1, 2\}\}.
-    \end{align*}
-  Likewise
-    \begin{align*}
-      \left< u, v, w \right>^*
-        & = \{\{u\}, \{u, v\}, \{u, v, w\}\} \\
-        & = \{\{1\}, \{1, 2\}, \{1, 2, 2\}\} \\
-        & = \{\{1\}, \{1, 2\}\}.
-    \end{align*}
-  Thus $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but $y \neq v$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 5.2a}}%
-\label{sub:exercise-5.2a}
-
-Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_5\_2a}
-
-  Let $A$, $B$, and $C$ be arbitrary sets.
-  Then by definition of the \nameref{sub:cartesian-product} and union of sets,
-    \begin{align*}
-      A \times (B \cup C)
-        & = \{ \left< x, y \right> \mid x \in A \land y \in (B \cup C) \} \\
-        & = \{ \left< x, y \right> \mid
-          x \in A \land (y \in B \lor y \in C) \} \\
-        & = \{ \left< x, y \right> \mid
-          (x \in A \land y \in B) \lor (x \in A \land y \in C) \} \\
-        & = \{ \left< x, y \right> \mid (x \in A \land y \in B) \} \cup
-          \{ \left< x, y \right> \mid (x \in A \land y \in C) \} \\
-        & = (A \times B) \cup (A \times C).
-    \end{align*}
-
-\end{proof}
-
-\subsection{\verified{Exercise 5.2b}}%
-\label{sub:exercise-5.2b}
-
-Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_5\_2b}
-
-  Let $A$, $B$, and $C$ be arbitrary sets such that $A \neq \emptyset$.
-  By definition of the \nameref{sub:cartesian-product},
-    \begin{align}
-      A \times B & = \{ \left< x, y \right> \mid x \in A \land y \in B \}
-        & \label{sub:exercise-5.2b-eq1} \\
-      A \times C & = \{ \left< x, y \right> \mid x \in A \land y \in C \}.
-        & \label{sub:exercise-5.2b-eq2}
-    \end{align}
-  There are two cases to consider:
-
-  \paragraph{Case 1}%
-
-    Suppose $B \neq \emptyset$.
-    Then $A \times B \neq \emptyset$ and $A \times C \neq \emptyset$.
-    Let $\left< x, y \right> \in A \times B$.
-    By \eqref{sub:exercise-5.2b-eq1}, $x \in A$ and $y \in B$.
-    By the \nameref{ref:extensionality-axiom},
-      $$\left< x, y \right> \in A \times B \iff \left< x, y \right> \in A \times C.$$
-    Therefore $\left< x, y \right> \in A \times C$.
-    By \eqref{sub:exercise-5.2b-eq2}, $x \in A$ and $y \in C$.
-    Since membership of $y$ in $B$ and in $C$ holds biconditionally, the
-      \nameref{ref:extensionality-axiom} indicates $B = C$.
-
-  \paragraph{Case 2}%
-
-    Suppose $B = \emptyset$.
-    Then there is no $\left< x, y \right>$ such that $x \in A$ and $y \in B$.
-    Thus $A \times B = \emptyset$ and $A \times C = \emptyset$.
-    But then there cannot exist an $\left< x, y \right>$ such that $x \in A$
-      and $y \in C$ either.
-    Since $A \neq \emptyset$, it must be the case that $C = \emptyset$.
-    Thus $B = C$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 5.3}}%
-\label{sub:exercise-5.3}
-
-Show that $A \times \bigcup \mathscr{B} =
-  \bigcup\;\{ A \times X \mid X \in \mathscr{B} \}$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_5\_3}
-
-  Let $A$ and $\mathscr{B}$ be arbitrary sets.
-  By definition of the \nameref{sub:cartesian-product} and the union of sets,
-  \begin{align*}
-    A \times \bigcup\mathscr{B}
-      & = \{ \left< x, y \right> \mid
-        x \in A \land y \in \bigcup\mathscr{B} \} \\
-      & = \{ \left< x, y \right> \mid
-        x \in A \land (\exists b \in \mathscr{B}), y \in b \} \\
-      & = \{ \left< x, y \right> \mid
-        (\exists b \in \mathscr{B}), x \in A \land y \in b \} \\
-      & = \bigcup\; \{ A \times X \mid X \in \mathscr{B} \}.
-  \end{align*}
-
-\end{proof}
-
-\subsection{\partial{Exercise 5.4}}%
-\label{sub:exercise-5.4}
-
-Show that there is no set to which every ordered pair belongs.
-
-\begin{proof}
-
-  For the sake of contradiction, suppose there exists a set $A$ to which every
-    ordered pair belongs.
-  That is, for all sets $x$ and $y$, $\left< x, y \right> = \{\{x\}, \{x, y\}\}$
-    is a member of $A$.
-  By the \nameref{ref:union-axiom}, it follows that $\bigcup\bigcup A$ is the
-    set to which every set belongs.
-  But \nameref{sub:theorem-2a} shows this is impossible.
-  Thus our original assumption was wrong; there exists no set to which every
-    ordered pair belongs.
-
-\end{proof}
-
-\subsection{\verified{Exercise 5.5a}}%
-\label{sub:exercise-5.5a}
-
-Assume that $A$ and $B$ are given sets, and show that there exists a set $C$
-  such that for any $y$,
-  \begin{equation}
-    \label{sub:exercise-5.5a-eq1}
-    y \in C \iff y = \{x\} \times B \text{ for some } x \text{ in } A.
-  \end{equation}
-In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_5\_5a}
-
-  Let $a \in A$.
-  By the \nameref{ref:pairing-axiom}, $\{a\}$ is a set.
-  By \nameref{sub:cartesian-product}, $\{a\} \times B$ is a set.
-  Again by the \nameref{ref:pairing-axiom}, $\{\{a\} \times B\}$ is a set.
-
-  Next, by another application of \nameref{sub:cartesian-product}, $A \times B$
-    is a set.
-  By the \nameref{ref:power-set-axiom}, $\powerset{(A \times B)}$ is a set.
-  Thus, by the \nameref{ref:subset-axioms}, the following is also a set:
-    $$C = \{ y \in \powerset{(A \times B)} \mid
-      \exists a \in A, \forall x, \left[ x \in y \iff
-        \exists b \in B, x = \left< a, b \right> \right] \}.$$
-  We now show that $C$ satisfies \eqref{sub:exercise-5.5a-eq1}.
-
-  \paragraph{($\Rightarrow$)}%
-
-    Suppose $y \in C$.
-    Then there exists some $a \in A$ such that
-      $$\forall x, \left[ x \in y \iff
-        \exists b \in B, x = \left< a, b \right> \right].$$
-    By the \nameref{ref:extensionality-axiom},
-      \begin{align*}
-        y
-          & = \{ \left< a, b \right> \mid b \in B \} \\
-          & = \{ \left< x, b \right> \mid x \in \{a\} \land b \in B \} \\
-          & = \{ \{a\} \times B \}.
-      \end{align*}
-
-  \paragraph{($\Leftarrow$)}%
-
-    Suppose $y = \{a\} \times B$ for some $a \in A$.
-    By \nameref{sub:cartesian-product}, $x \in \{a\} \times B$ if and only if
-      $\exists b \in B$ such that $x = \left< a, b \right>$.
-    But then $x \in y$ if and only if $\exists b \in B$ such that
-      $x = \left< a, b \right>$.
-    This immediately proves $y \in C$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 5.5b}}%
-\label{sub:exercise-5.5b}
-
-With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_5\_5b}
-
-  Let $A$ and $B$ be arbitrary sets.
-  We want to show that
-    \begin{equation}
-      \label{sub:exercise-5.5b-eq1}
-      A \times B = \bigcup\; \{\{x\} \times B \mid x \in A\}.
-    \end{equation}
-  The left-hand side of \eqref{sub:exercise-5.5b-eq1} is a set by virtue of
-    \nameref{sub:cartesian-product}.
-  The right-hand side of \eqref{sub:exercise-5.5b-eq1} is a set by virtue of
-    \nameref{sub:exercise-5.5a}.
-  We prove the set on each side is a subset of the other.
-
-  \paragraph{($\subseteq$)}%
-
-    Let $c \in A \times B$.
-    Then there exists some $a \in A$ and $b \in B$ such that
-      $c = \left< a, b \right>$.
-    Thus $c \in \{a\} \times B$.
-    We also note $\{a\} \times B \in \{\{x\} \times B \mid x \in A\}$,
-      specifically when $x = a$.
-    Therefore, by the \nameref{ref:union-axiom},
-      $c \in \bigcup\;\{\{x\} \times B \mid x \in A\}$.
-
-  \paragraph{($\supseteq$)}%
-
-    Let $c \in \bigcup\; \{\{x\} \times B \mid x \in A\}$.
-    By the \nameref{ref:union-axiom}, there exists some
-      $b \in \{\{x\} \times B \mid x \in A\}$ such that $c \in b$.
-    Then there exists some $x \in A$ such that $b = \{x\} \times B$.
-    Therefore $c \in \{x\} \times B$.
-    But $x \in A$ meaning $c \in A \times B$ as well.
-
-  \paragraph{Conclusion}%
-
-    Since we have shown
-      $A \times B \subseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$ and
-      $A \times B \supseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$, it
-      follows \eqref{sub:exercise-5.5b-eq1} is a true identity.
-
-\end{proof}
-
 \section{Relations}%
 \label{sec:relations}
 
@@ -2790,248 +2523,13 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
   Let $A$ be a set and $\left< x, y \right> \in A$.
   By definition of an \nameref{ref:ordered-pair},
     $$\left< x, y \right> = \{\{x\}, \{x, y\}\}.$$
-  By \nameref{sub:exercise-3.3}, $\{\{x\}, \{x, y\}\} \subseteq \bigcup A$.
+  By \nameref{sub:exercise-2.3}, $\{\{x\}, \{x, y\}\} \subseteq \bigcup A$.
   Then $\{x, y\} \in \bigcup A$.
-  Another application of \nameref{sub:exercise-3.3} implies
+  Another application of \nameref{sub:exercise-2.3} implies
     $\{x, y\} \subseteq \bigcup\bigcup A$.
   Therefore $x, y \in \bigcup\bigcup A$.
 
 \end{proof}
-
-\section{Exercises 6}%
-\label{sec:exercises-6}
-
-\subsection{\verified{Exercise 6.6}}%
-\label{sub:exercise-6.6}
-
-Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_6\_6}
-
-  Let $A$ be a set.
-  We prove the forward and reverse direction of the bidirectional.
-
-  \paragraph{($\Rightarrow$)}%
-
-    Suppose $A$ is a \nameref{ref:relation}.
-    We show for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
-    Let $a \in A$.
-    Since $A$ is a relation, $a$ is an ordered pair.
-    Then there exists some sets $x$ and $y$ such that $a = \left< x, y \right>$.
-    By the definition of the \nameref{ref:domain} and \nameref{ref:range} of
-      $A$, $x \in \dom{A}$ and $y \in \ran{A}$.
-    Thus $a = \left< x, y \right> \in \dom{A} \times \ran{A}$ as well.
-    This proves $A \subseteq \dom{A} \times \ran{A}$.
-
-  \paragraph{($\Leftarrow$)}%
-
-    Suppose $A \subseteq \dom{A} \times \ran{A}$.
-    Then for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
-    Therefore $a$ is an ordered pair.
-    Since this holds for all $a \in A$, it follows $A$ is a relation.
-
-\end{proof}
-
-\subsection{\verified{Exercise 6.7}}%
-\label{sub:exercise-6.7}
-
-Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
-
-\begin{proof}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_6\_7}
-
-  Let $R$ be a \nameref{ref:relation}.
-  We show that (i) $\fld{R} \subseteq \bigcup\bigcup R$ and (ii) that
-    $\bigcup\bigcup R \subseteq \fld{R}$.
-
-  \paragraph{(i)}%
-  \label{par:exercise-6.7-i}
-
-    Let $x \in \fld{R} = \dom{R} \cup \ran{R}$.
-    That is, $x \in \dom{R}$ or $x \in \ran{R}$.
-
-    If $x \in \dom{R}$, then there exists some $y$ such that
-      $\left< x, y \right> = \{\{x\}, \{x, y\}\} \in R$.
-    Then $\{x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
-
-    On the other hand, if $x \in \ran{R}$, then there exists some $t$ such that
-      $\left< t, x \right> = \{\{t\}, \{t, x\}\} \in R$.
-    Then $\{t, x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
-
-  \paragraph{(ii)}%
-  \label{par:exercise-6.7-ii}
-
-    Let $t \in \bigcup\bigcup R$.
-    Then there exists some member $T \in \bigcup R$ such that $t \in T$.
-    Likewise there exists some member $T' \in R$ such that $T \in T'$.
-    By definition of a relation,
-      $T' = \left< x, y \right> = \{\{x\}, \{x, y\}\}$ for some sets $x$ and
-      $y$.
-    Thus $t = x$ or $t = y$.
-    By \nameref{sub:exercise-6.6}, $t \in \dom{R}$ or $t \in \ran{R}$.
-    In other words, $t \in \fld{R}$.
-
-  \paragraph{Conclusion}%
-
-    Since \nameref{par:exercise-6.7-i} and \nameref{par:exercise-6.7-ii} hold,
-      $\fld{R} = \bigcup\bigcup{R}$.
-
-\end{proof}
-
-\subsection{\verified{Exercise 6.8}}%
-\label{sub:exercise-6.8}
-
-Show that for any set $\mathscr{A}$:
-  \begin{align}
-    \dom{\bigcup{\mathscr{A}}}
-      & = \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \},
-      & \label{sub:exercise-6.8-eq1} \\
-    \ran{\bigcup{\mathscr{A}}}
-      & = \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}.
-      & \label{sub:exercise-6.8-eq2}
-  \end{align}
-
-\begin{proof}
-
-  \statementpadding
-
-  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_6\_8\_i}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_6\_8\_ii}
-
-  We prove (i) \eqref{sub:exercise-6.8-eq1} and then (ii)
-    \eqref{sub:exercise-6.8-eq2}.
-
-  \paragraph{(i)}%
-
-    Let $x \in \dom{\bigcup{\mathscr{A}}}$.
-    By definition of a domain, there exists some $y$ such that
-      $\left< x, y \right> \in \bigcup{\mathscr{A}}$.
-    By definition of the union of sets,
-      $\exists y, \exists R \in \mathscr{A}, \left< x, y \right> \in R$.
-    Equivalently,
-      $\exists R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
-    By another application of the definition of a domain,
-      $\exists R \in \mathscr{A}, x \in \dom{R}$.
-    By another application of the definition of the union of sets,
-      $x \in \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
-    Since membership of these two sets holds biconditionally, it follows
-      \eqref{sub:exercise-6.8-eq1} holds.
-
-  \paragraph{(ii)}%
-
-    Let $x \in \ran{\bigcup{\mathscr{A}}}$.
-    By definition of a range, there exists some $t$ such that
-      $\left< t, x \right> \in \bigcup{\mathscr{A}}$.
-    By definition of the union of sets,
-      $\exists t, \exists R \in \mathscr{A}, \left< t, x \right> \in R$.
-    Equivalently,
-      $\exists R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
-    By another application of the definition of a range,
-      $\exists R \in \mathscr{A}, x \in \ran{R}$.
-    By another application of the definition of the union of sets,
-      $x \in \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
-    Since membership of these two sets holds biconditionally, it follows
-      \eqref{sub:exercise-6.8-eq2} holds.
-
-\end{proof}
-
-\subsection{\verified{Exercise 6.9}}%
-\label{sub:exercise-6.9}
-
-Discuss the result of replacing the union operation by the intersection
-  operation in the preceding problem.
-
-\begin{answer}
-
-  \statementpadding
-
-  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_6\_9\_i}
-
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_6\_9\_ii}
-
-  Replacing the union operation with the intersection problem produces the
-    following relationships
-    \begin{align}
-      \dom{\bigcap{\mathscr{A}}}
-        & \subseteq \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \},
-        & \label{sub:exercise-6.9-eq1} \\
-      \ran{\bigcap{\mathscr{A}}}
-        & \subseteq \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}.
-        & \label{sub:exercise-6.9-eq2}
-    \end{align}
-
-  We prove (i) \eqref{sub:exercise-6.9-eq1} and then (ii)
-    \eqref{sub:exercise-6.9-eq2}.
-
-  \paragraph{(i)}%
-
-    Let $x \in \dom{\bigcap{\mathscr{A}}}$.
-    By definition of the \nameref{ref:domain} of a set,
-      $\exists y, \left< x, y \right> \in \bigcap{\mathscr{A}}$.
-    By definition of the intersection of sets,
-      $\exists y, \forall R \in \mathscr{A}, \left< x, y \right> \in R$.
-    But this implies that
-      $\forall R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
-    By another application of the definition of the \nameref{ref:domain} of a
-      set, $\forall R \in \mathscr{A}, x \in \dom{R}$.
-    By another application of the intersection of sets,
-      $x \in \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
-      Thus \eqref{sub:exercise-6.9-eq1} holds.
-
-  \paragraph{(ii)}%
-
-    Let $x \in \ran{\bigcap{\mathscr{A}}}$.
-    By definition of the \nameref{ref:range} of a set,
-      $\exists t, \left< t, x \right> \in \bigcap{\mathscr{A}}$.
-    By definition of the intersection of sets,
-      $\exists t, \forall R \in \mathscr{A}, \left< t, x \right> \in R$.
-    But this implies that
-      $\forall R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
-    By another application of the definition of the \nameref{ref:range} of a
-      set, $\forall R \in \mathscr{A}, x \in \ran{R}$.
-    By another application of the intersection of sets,
-      $x \in \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
-      Thus \eqref{sub:exercise-6.9-eq2} holds.
-
-\end{answer}
-
-\section{Exercises 7}%
-\label{sec:exercises-7}
-
-\subsection{\partial{Exercise 7.10}}%
-\label{sub:exercise-7.10}
-
-Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
-  integer $m$ less than $4$.
-
-\begin{answer}
-
-  Let $\left< x_1, x_2, x_3, x_4 \right>$ denote an arbitrary $4$-tuple.
-  Then
-    \begin{align}
-      \left< x_1, x_2, x_3, x_4 \right>
-        & = \left< \left< x_1, x_2, x_3 \right>, x_4 \right>
-          & \label{sub:exercise-7.10-eq1} \\
-        & = \left< \left< \left< x_1, x_2 \right>, x_3 \right>, x_4 \right>
-          & \label{sub:exercise-7.10-eq2}
-    \end{align}
-  Here \eqref{sub:exercise-7.10-eq1} is an equivalent ordered $2$-tuple and
-    \eqref{sub:exercise-7.10-eq2} is an equivalent ordered $3$-tuple.
-  Furthermore, $\left< x_1, x_2, x_3, x_4 \right> =
-    \left< \left< x_1, x_2, x_3, x_4 \right> \right>$, showing it can be
-    represented as an ordered $1$-tuple as well.
-
-\end{answer}
 
 \section{Functions}%
 \label{sec:functions}
@@ -3650,11 +3148,498 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\section{Exercise 8}%
-\label{sec:exercise-8}
+\section{Exercises 3}%
+\label{sec:exercises-3}
 
-\subsection{\unverified{Exercise 8.11}}%
-\label{sub:exercise-8.11}
+\subsection{\verified{Exercise 3.1}}%
+\label{sub:exercise-3.1}
+
+Suppose that we attempted to generalize the Kuratowski definitions of ordered
+  pairs to ordered triples by defining
+  $$\left< x, y, z \right>^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
+Show that this definition is unsuccessful by giving examples of objects
+  $u$, $v$, $w$, $x$, $y$, $z$ with
+  $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but with either
+  $y \neq v$ or $z \neq w$ (or both).
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_1}
+
+  Let $x = 1$, $y = 1$, and $z = 2$.
+  Let $u = 1$, $v = 2$, and $w = 2$.
+  Then
+    \begin{align*}
+      \left< x, y, z \right>^*
+        & = \{\{x\}, \{x, y\}, \{x, y, z\}\} \\
+        & = \{\{1\}, \{1, 1\}, \{1, 1, 2\}\} \\
+        & = \{\{1\}, \{1, 2\}\}.
+    \end{align*}
+  Likewise
+    \begin{align*}
+      \left< u, v, w \right>^*
+        & = \{\{u\}, \{u, v\}, \{u, v, w\}\} \\
+        & = \{\{1\}, \{1, 2\}, \{1, 2, 2\}\} \\
+        & = \{\{1\}, \{1, 2\}\}.
+    \end{align*}
+  Thus $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but $y \neq v$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.2a}}%
+\label{sub:exercise-3.2a}
+
+Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_2a}
+
+  Let $A$, $B$, and $C$ be arbitrary sets.
+  Then by definition of the \nameref{sub:cartesian-product} and union of sets,
+    \begin{align*}
+      A \times (B \cup C)
+        & = \{ \left< x, y \right> \mid x \in A \land y \in (B \cup C) \} \\
+        & = \{ \left< x, y \right> \mid
+          x \in A \land (y \in B \lor y \in C) \} \\
+        & = \{ \left< x, y \right> \mid
+          (x \in A \land y \in B) \lor (x \in A \land y \in C) \} \\
+        & = \{ \left< x, y \right> \mid (x \in A \land y \in B) \} \cup
+          \{ \left< x, y \right> \mid (x \in A \land y \in C) \} \\
+        & = (A \times B) \cup (A \times C).
+    \end{align*}
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.2b}}%
+\label{sub:exercise-3.2b}
+
+Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_2b}
+
+  Let $A$, $B$, and $C$ be arbitrary sets such that $A \neq \emptyset$.
+  By definition of the \nameref{sub:cartesian-product},
+    \begin{align}
+      A \times B & = \{ \left< x, y \right> \mid x \in A \land y \in B \}
+        & \label{sub:exercise-3.2b-eq1} \\
+      A \times C & = \{ \left< x, y \right> \mid x \in A \land y \in C \}.
+        & \label{sub:exercise-3.2b-eq2}
+    \end{align}
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $B \neq \emptyset$.
+    Then $A \times B \neq \emptyset$ and $A \times C \neq \emptyset$.
+    Let $\left< x, y \right> \in A \times B$.
+    By \eqref{sub:exercise-3.2b-eq1}, $x \in A$ and $y \in B$.
+    By the \nameref{ref:extensionality-axiom},
+      $$\left< x, y \right> \in A \times B \iff \left< x, y \right> \in A \times C.$$
+    Therefore $\left< x, y \right> \in A \times C$.
+    By \eqref{sub:exercise-3.2b-eq2}, $x \in A$ and $y \in C$.
+    Since membership of $y$ in $B$ and in $C$ holds biconditionally, the
+      \nameref{ref:extensionality-axiom} indicates $B = C$.
+
+  \paragraph{Case 2}%
+
+    Suppose $B = \emptyset$.
+    Then there is no $\left< x, y \right>$ such that $x \in A$ and $y \in B$.
+    Thus $A \times B = \emptyset$ and $A \times C = \emptyset$.
+    But then there cannot exist an $\left< x, y \right>$ such that $x \in A$
+      and $y \in C$ either.
+    Since $A \neq \emptyset$, it must be the case that $C = \emptyset$.
+    Thus $B = C$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.3}}%
+\label{sub:exercise-3.3}
+
+Show that $A \times \bigcup \mathscr{B} =
+  \bigcup\;\{ A \times X \mid X \in \mathscr{B} \}$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_3}
+
+  Let $A$ and $\mathscr{B}$ be arbitrary sets.
+  By definition of the \nameref{sub:cartesian-product} and the union of sets,
+  \begin{align*}
+    A \times \bigcup\mathscr{B}
+      & = \{ \left< x, y \right> \mid
+        x \in A \land y \in \bigcup\mathscr{B} \} \\
+      & = \{ \left< x, y \right> \mid
+        x \in A \land (\exists b \in \mathscr{B}), y \in b \} \\
+      & = \{ \left< x, y \right> \mid
+        (\exists b \in \mathscr{B}), x \in A \land y \in b \} \\
+      & = \bigcup\; \{ A \times X \mid X \in \mathscr{B} \}.
+  \end{align*}
+
+\end{proof}
+
+\subsection{\partial{Exercise 3.4}}%
+\label{sub:exercise-3.4}
+
+Show that there is no set to which every ordered pair belongs.
+
+\begin{proof}
+
+  For the sake of contradiction, suppose there exists a set $A$ to which every
+    ordered pair belongs.
+  That is, for all sets $x$ and $y$, $\left< x, y \right> = \{\{x\}, \{x, y\}\}$
+    is a member of $A$.
+  By the \nameref{ref:union-axiom}, it follows that $\bigcup\bigcup A$ is the
+    set to which every set belongs.
+  But \nameref{sub:theorem-2a} shows this is impossible.
+  Thus our original assumption was wrong; there exists no set to which every
+    ordered pair belongs.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.5a}}%
+\label{sub:exercise-3.5a}
+
+Assume that $A$ and $B$ are given sets, and show that there exists a set $C$
+  such that for any $y$,
+  \begin{equation}
+    \label{sub:exercise-3.5a-eq1}
+    y \in C \iff y = \{x\} \times B \text{ for some } x \text{ in } A.
+  \end{equation}
+In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_5a}
+
+  Let $a \in A$.
+  By the \nameref{ref:pairing-axiom}, $\{a\}$ is a set.
+  By \nameref{sub:cartesian-product}, $\{a\} \times B$ is a set.
+  Again by the \nameref{ref:pairing-axiom}, $\{\{a\} \times B\}$ is a set.
+
+  Next, by another application of \nameref{sub:cartesian-product}, $A \times B$
+    is a set.
+  By the \nameref{ref:power-set-axiom}, $\powerset{(A \times B)}$ is a set.
+  Thus, by the \nameref{ref:subset-axioms}, the following is also a set:
+    $$C = \{ y \in \powerset{(A \times B)} \mid
+      \exists a \in A, \forall x, \left[ x \in y \iff
+        \exists b \in B, x = \left< a, b \right> \right] \}.$$
+  We now show that $C$ satisfies \eqref{sub:exercise-3.5a-eq1}.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $y \in C$.
+    Then there exists some $a \in A$ such that
+      $$\forall x, \left[ x \in y \iff
+        \exists b \in B, x = \left< a, b \right> \right].$$
+    By the \nameref{ref:extensionality-axiom},
+      \begin{align*}
+        y
+          & = \{ \left< a, b \right> \mid b \in B \} \\
+          & = \{ \left< x, b \right> \mid x \in \{a\} \land b \in B \} \\
+          & = \{ \{a\} \times B \}.
+      \end{align*}
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $y = \{a\} \times B$ for some $a \in A$.
+    By \nameref{sub:cartesian-product}, $x \in \{a\} \times B$ if and only if
+      $\exists b \in B$ such that $x = \left< a, b \right>$.
+    But then $x \in y$ if and only if $\exists b \in B$ such that
+      $x = \left< a, b \right>$.
+    This immediately proves $y \in C$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.5b}}%
+\label{sub:exercise-3.5b}
+
+With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_5b}
+
+  Let $A$ and $B$ be arbitrary sets.
+  We want to show that
+    \begin{equation}
+      \label{sub:exercise-3.5b-eq1}
+      A \times B = \bigcup\; \{\{x\} \times B \mid x \in A\}.
+    \end{equation}
+  The left-hand side of \eqref{sub:exercise-3.5b-eq1} is a set by virtue of
+    \nameref{sub:cartesian-product}.
+  The right-hand side of \eqref{sub:exercise-3.5b-eq1} is a set by virtue of
+    \nameref{sub:exercise-3.5a}.
+  We prove the set on each side is a subset of the other.
+
+  \paragraph{($\subseteq$)}%
+
+    Let $c \in A \times B$.
+    Then there exists some $a \in A$ and $b \in B$ such that
+      $c = \left< a, b \right>$.
+    Thus $c \in \{a\} \times B$.
+    We also note $\{a\} \times B \in \{\{x\} \times B \mid x \in A\}$,
+      specifically when $x = a$.
+    Therefore, by the \nameref{ref:union-axiom},
+      $c \in \bigcup\;\{\{x\} \times B \mid x \in A\}$.
+
+  \paragraph{($\supseteq$)}%
+
+    Let $c \in \bigcup\; \{\{x\} \times B \mid x \in A\}$.
+    By the \nameref{ref:union-axiom}, there exists some
+      $b \in \{\{x\} \times B \mid x \in A\}$ such that $c \in b$.
+    Then there exists some $x \in A$ such that $b = \{x\} \times B$.
+    Therefore $c \in \{x\} \times B$.
+    But $x \in A$ meaning $c \in A \times B$ as well.
+
+  \paragraph{Conclusion}%
+
+    Since we have shown
+      $A \times B \subseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$ and
+      $A \times B \supseteq \bigcup\; \{\{x\} \times B \mid x \in A\}$, it
+      follows \eqref{sub:exercise-3.5b-eq1} is a true identity.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.6}}%
+\label{sub:exercise-3.6}
+
+Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_6}
+
+  Let $A$ be a set.
+  We prove the forward and reverse direction of the bidirectional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $A$ is a \nameref{ref:relation}.
+    We show for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
+    Let $a \in A$.
+    Since $A$ is a relation, $a$ is an ordered pair.
+    Then there exists some sets $x$ and $y$ such that $a = \left< x, y \right>$.
+    By the definition of the \nameref{ref:domain} and \nameref{ref:range} of
+      $A$, $x \in \dom{A}$ and $y \in \ran{A}$.
+    Thus $a = \left< x, y \right> \in \dom{A} \times \ran{A}$ as well.
+    This proves $A \subseteq \dom{A} \times \ran{A}$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $A \subseteq \dom{A} \times \ran{A}$.
+    Then for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
+    Therefore $a$ is an ordered pair.
+    Since this holds for all $a \in A$, it follows $A$ is a relation.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.7}}%
+\label{sub:exercise-3.7}
+
+Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_7}
+
+  Let $R$ be a \nameref{ref:relation}.
+  We show that (i) $\fld{R} \subseteq \bigcup\bigcup R$ and (ii) that
+    $\bigcup\bigcup R \subseteq \fld{R}$.
+
+  \paragraph{(i)}%
+  \label{par:exercise-3.7-i}
+
+    Let $x \in \fld{R} = \dom{R} \cup \ran{R}$.
+    That is, $x \in \dom{R}$ or $x \in \ran{R}$.
+
+    If $x \in \dom{R}$, then there exists some $y$ such that
+      $\left< x, y \right> = \{\{x\}, \{x, y\}\} \in R$.
+    Then $\{x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
+
+    On the other hand, if $x \in \ran{R}$, then there exists some $t$ such that
+      $\left< t, x \right> = \{\{t\}, \{t, x\}\} \in R$.
+    Then $\{t, x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-3.7-ii}
+
+    Let $t \in \bigcup\bigcup R$.
+    Then there exists some member $T \in \bigcup R$ such that $t \in T$.
+    Likewise there exists some member $T' \in R$ such that $T \in T'$.
+    By definition of a relation,
+      $T' = \left< x, y \right> = \{\{x\}, \{x, y\}\}$ for some sets $x$ and
+      $y$.
+    Thus $t = x$ or $t = y$.
+    By \nameref{sub:exercise-3.6}, $t \in \dom{R}$ or $t \in \ran{R}$.
+    In other words, $t \in \fld{R}$.
+
+  \paragraph{Conclusion}%
+
+    Since \nameref{par:exercise-3.7-i} and \nameref{par:exercise-3.7-ii} hold,
+      $\fld{R} = \bigcup\bigcup{R}$.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.8}}%
+\label{sub:exercise-3.8}
+
+Show that for any set $\mathscr{A}$:
+  \begin{align}
+    \dom{\bigcup{\mathscr{A}}}
+      & = \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \},
+      & \label{sub:exercise-3.8-eq1} \\
+    \ran{\bigcup{\mathscr{A}}}
+      & = \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}.
+      & \label{sub:exercise-3.8-eq2}
+  \end{align}
+
+\begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_8\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_8\_ii}
+
+  We prove (i) \eqref{sub:exercise-3.8-eq1} and then (ii)
+    \eqref{sub:exercise-3.8-eq2}.
+
+  \paragraph{(i)}%
+
+    Let $x \in \dom{\bigcup{\mathscr{A}}}$.
+    By definition of a domain, there exists some $y$ such that
+      $\left< x, y \right> \in \bigcup{\mathscr{A}}$.
+    By definition of the union of sets,
+      $\exists y, \exists R \in \mathscr{A}, \left< x, y \right> \in R$.
+    Equivalently,
+      $\exists R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
+    By another application of the definition of a domain,
+      $\exists R \in \mathscr{A}, x \in \dom{R}$.
+    By another application of the definition of the union of sets,
+      $x \in \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
+    Since membership of these two sets holds biconditionally, it follows
+      \eqref{sub:exercise-3.8-eq1} holds.
+
+  \paragraph{(ii)}%
+
+    Let $x \in \ran{\bigcup{\mathscr{A}}}$.
+    By definition of a range, there exists some $t$ such that
+      $\left< t, x \right> \in \bigcup{\mathscr{A}}$.
+    By definition of the union of sets,
+      $\exists t, \exists R \in \mathscr{A}, \left< t, x \right> \in R$.
+    Equivalently,
+      $\exists R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
+    By another application of the definition of a range,
+      $\exists R \in \mathscr{A}, x \in \ran{R}$.
+    By another application of the definition of the union of sets,
+      $x \in \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
+    Since membership of these two sets holds biconditionally, it follows
+      \eqref{sub:exercise-3.8-eq2} holds.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.9}}%
+\label{sub:exercise-3.9}
+
+Discuss the result of replacing the union operation by the intersection
+  operation in the preceding problem.
+
+\begin{answer}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_9\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_9\_ii}
+
+  Replacing the union operation with the intersection problem produces the
+    following relationships
+    \begin{align}
+      \dom{\bigcap{\mathscr{A}}}
+        & \subseteq \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \},
+        & \label{sub:exercise-3.9-eq1} \\
+      \ran{\bigcap{\mathscr{A}}}
+        & \subseteq \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}.
+        & \label{sub:exercise-3.9-eq2}
+    \end{align}
+
+  We prove (i) \eqref{sub:exercise-3.9-eq1} and then (ii)
+    \eqref{sub:exercise-3.9-eq2}.
+
+  \paragraph{(i)}%
+
+    Let $x \in \dom{\bigcap{\mathscr{A}}}$.
+    By definition of the \nameref{ref:domain} of a set,
+      $\exists y, \left< x, y \right> \in \bigcap{\mathscr{A}}$.
+    By definition of the intersection of sets,
+      $\exists y, \forall R \in \mathscr{A}, \left< x, y \right> \in R$.
+    But this implies that
+      $\forall R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
+    By another application of the definition of the \nameref{ref:domain} of a
+      set, $\forall R \in \mathscr{A}, x \in \dom{R}$.
+    By another application of the intersection of sets,
+      $x \in \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \}$.
+      Thus \eqref{sub:exercise-3.9-eq1} holds.
+
+  \paragraph{(ii)}%
+
+    Let $x \in \ran{\bigcap{\mathscr{A}}}$.
+    By definition of the \nameref{ref:range} of a set,
+      $\exists t, \left< t, x \right> \in \bigcap{\mathscr{A}}$.
+    By definition of the intersection of sets,
+      $\exists t, \forall R \in \mathscr{A}, \left< t, x \right> \in R$.
+    But this implies that
+      $\forall R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
+    By another application of the definition of the \nameref{ref:range} of a
+      set, $\forall R \in \mathscr{A}, x \in \ran{R}$.
+    By another application of the intersection of sets,
+      $x \in \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}$.
+      Thus \eqref{sub:exercise-3.9-eq2} holds.
+
+\end{answer}
+
+\subsection{\partial{Exercise 3.10}}%
+\label{sub:exercise-3.10}
+
+Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
+  integer $m$ less than $4$.
+
+\begin{answer}
+
+  Let $\left< x_1, x_2, x_3, x_4 \right>$ denote an arbitrary $4$-tuple.
+  Then
+    \begin{align}
+      \left< x_1, x_2, x_3, x_4 \right>
+        & = \left< \left< x_1, x_2, x_3 \right>, x_4 \right>
+          & \label{sub:exercise-7.10-eq1} \\
+        & = \left< \left< \left< x_1, x_2 \right>, x_3 \right>, x_4 \right>
+          & \label{sub:exercise-7.10-eq2}
+    \end{align}
+  Here \eqref{sub:exercise-7.10-eq1} is an equivalent ordered $2$-tuple and
+    \eqref{sub:exercise-7.10-eq2} is an equivalent ordered $3$-tuple.
+  Furthermore, $\left< x_1, x_2, x_3, x_4 \right> =
+    \left< \left< x_1, x_2, x_3, x_4 \right> \right>$, showing it can be
+    represented as an ordered $1$-tuple as well.
+
+\end{answer}
+
+\subsection{\unverified{Exercise 3.11}}%
+\label{sub:exercise-3.11}
 
 Prove the following version (for functions) of the extensionality principle:
   Assume that $F$ and $G$ are functions, $\dom{F} = \dom{G}$, and
@@ -3667,8 +3652,8 @@ Then $F = G$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.12}}%
-\label{sub:exercise-8.12}
+\subsection{\unverified{Exercise 3.12}}%
+\label{sub:exercise-3.12}
 
 Assume that $f$ and $g$ are functions and show that
   $$f \subseteq g \iff \dom{f} \subseteq \dom{g} \land
@@ -3680,8 +3665,8 @@ Assume that $f$ and $g$ are functions and show that
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.13}}%
-\label{sub:exercise-8.13}
+\subsection{\unverified{Exercise 3.13}}%
+\label{sub:exercise-3.13}
 
 Assume that $f$ and $g$ are functions with $f \subseteq g$ and
   $\dom{g} \subseteq \dom{f}$.
@@ -3693,8 +3678,8 @@ Show that $f = g$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.14}}%
-\label{sub:exercise-8.14}
+\subsection{\unverified{Exercise 3.14}}%
+\label{sub:exercise-3.14}
 
 Assume that $f$ and $g$ are functions.
 
@@ -3710,8 +3695,8 @@ Assume that $f$ and $g$ are functions.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.15}}%
-\label{sub:exercise-8.15}
+\subsection{\unverified{Exercise 3.15}}%
+\label{sub:exercise-3.15}
 
 Let $\mathscr{A}$ be a set of functions such that for any $f$ and $g$ in
   $\mathscr{A}$, either $f \subseteq g$ or $g \subseteq f$.
@@ -3723,8 +3708,8 @@ Show that $\bigcup \mathscr{A}$ is a function.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.16}}%
-\label{sub:exercise-8.16}
+\subsection{\unverified{Exercise 3.16}}%
+\label{sub:exercise-3.16}
 
 Show that there is no set to which every function belongs.
 
@@ -3734,8 +3719,8 @@ Show that there is no set to which every function belongs.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.17}}%
-\label{sub:exercise-8.17}
+\subsection{\unverified{Exercise 3.17}}%
+\label{sub:exercise-3.17}
 
 Show that the composition of two single-rooted sets is again single-rooted.
 Conclude that the composition of two one-to-one functions is again one-to-one.
@@ -3746,8 +3731,8 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.18}}%
-\label{sub:exercise-8.18}
+\subsection{\unverified{Exercise 3.18}}%
+\label{sub:exercise-3.18}
 
 Let $R$ be the set
   $$\{ \left< 0, 1 \right>, \left< 0, 2 \right>, \left< 0, 3 \right>,
@@ -3761,8 +3746,8 @@ Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.19}}%
-\label{sub:exercise-8.19}
+\subsection{\unverified{Exercise 3.19}}%
+\label{sub:exercise-3.19}
 
 Let $$A = \{
   \left< \emptyset, \{\emptyset, \{\emptyset\}\} \right>,
@@ -3780,8 +3765,8 @@ Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.20}}%
-\label{sub:exercise-8.20}
+\subsection{\unverified{Exercise 3.20}}%
+\label{sub:exercise-3.20}
 
 Show that $F \restriction A = F \cap (A \times \ran{F})$.
 
@@ -3791,8 +3776,8 @@ Show that $F \restriction A = F \cap (A \times \ran{F})$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.21}}%
-\label{sub:exercise-8.21}
+\subsection{\unverified{Exercise 3.21}}%
+\label{sub:exercise-3.21}
 
 Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
 
@@ -3802,8 +3787,8 @@ Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.22}}%
-\label{sub:exercise-8.22}
+\subsection{\unverified{Exercise 3.22}}%
+\label{sub:exercise-3.22}
 
 Show that the following are correct for any sets.
 
@@ -3820,8 +3805,8 @@ Show that the following are correct for any sets.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.23}}%
-\label{sub:exercise-8.23}
+\subsection{\unverified{Exercise 3.23}}%
+\label{sub:exercise-3.23}
 
 Let $I_A$ be the identity function on the set $A$.
 Show that for any sets $B$ and $C$,
@@ -3834,8 +3819,8 @@ Show that for any sets $B$ and $C$,
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.24}}%
-\label{sub:exercise-8.24}
+\subsection{\unverified{Exercise 3.24}}%
+\label{sub:exercise-3.24}
 
 Show that for a function $F$,
   $\img{F^{-1}}{A} = \{x \in \dom{F} \mid F(x) \in A\}$.
@@ -3846,8 +3831,8 @@ Show that for a function $F$,
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.25}}%
-\label{sub:exercise-8.25}
+\subsection{\unverified{Exercise 3.25}}%
+\label{sub:exercise-3.25}
 
 \begin{enumerate}[(a)]
   \item Assume that $G$ is a one-to-one function.
@@ -3863,8 +3848,8 @@ Show that for a function $F$,
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.26}}%
-\label{sub:exercise-8.26}
+\subsection{\unverified{Exercise 3.26}}%
+\label{sub:exercise-3.26}
 
 Prove the second halves of parts (a) and (b) of Theorem 3K.
 
@@ -3874,8 +3859,8 @@ Prove the second halves of parts (a) and (b) of Theorem 3K.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.27}}%
-\label{sub:exercise-8.27}
+\subsection{\unverified{Exercise 3.27}}%
+\label{sub:exercise-3.27}
 
 Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 ($F$ and $G$ need not be functions.)
@@ -3886,8 +3871,8 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.28}}%
-\label{sub:exercise-8.28}
+\subsection{\unverified{Exercise 3.28}}%
+\label{sub:exercise-3.28}
 
 Assume that $f$ is a one-to-one function from $A$ into $B$, and that $G$ is the
   function with $\dom{G} = \powerset{A}$ defined by the equation
@@ -3900,8 +3885,8 @@ Show that $G$ maps $\powerset{A}$ one-to-one into $\powerset{B}$.
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.29}}%
-\label{sub:exercise-8.29}
+\subsection{\unverified{Exercise 3.29}}%
+\label{sub:exercise-3.29}
 
 Assume that $f \colon A \rightarrow B$ and define a function
   $G \colon B \rightarrow \powerset{A}$ by
@@ -3915,8 +3900,8 @@ Does the converse hold?
 
 \end{proof}
 
-\subsection{\unverified{Exercise 8.30}}%
-\label{sub:exercise-8.30}
+\subsection{\unverified{Exercise 3.30}}%
+\label{sub:exercise-3.30}
 
 Assume that $F \colon \powerset{A} \rightarrow \powerset{A}$ and that $F$ has
   the monotonicity property:
@@ -3935,11 +3920,8 @@ Define
 
 \end{proof}
 
-\section{Exercise 9}%
-\label{sec:exercise-9}
-
-\subsection{\unverified{Exercise 9.31}}%
-\label{sub:exercise-9.31}
+\subsection{\unverified{Exercise 3.31}}%
+\label{sub:exercise-3.31}
 
 Show that from the first form of the axiom of choice we can prove the second
   form, and conversely.

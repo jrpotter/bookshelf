@@ -19,7 +19,7 @@ theorem theorem_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
   have hxys : {x, y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
   exact Set.mem_mem_imp_pair_subset hxs hxys
 
-/-- ### Exercise 5.1
+/-- ### Exercise 3.1
 
 Suppose that we attempted to generalize the Kuratowski definitions of ordered
 pairs to ordered triples by defining
@@ -31,7 +31,7 @@ Show that this definition is unsuccessful by giving examples of objects `u`,
 `v`, `w`, `x`, `y`, `z` with `⟨x, y, z⟩* = ⟨u, v, w⟩*` but with either `y ≠ v`
 or `z ≠ w` (or both).
 -/
-theorem exercise_5_1 {x y z u v w : ℕ}
+theorem exercise_3_1 {x y z u v w : ℕ}
   (hx : x = 1) (hy : y = 1) (hz : z = 2)
   (hu : u = 1) (hv : v = 2) (hw : w = 2)
   : ({{x}, {x, y}, {x, y, z}} : Set (Set ℕ)) = {{u}, {u, v}, {u, v, w}}
@@ -42,11 +42,11 @@ theorem exercise_5_1 {x y z u v w : ℕ}
   · rw [hy, hv]
     simp only
 
-/-- ### Exercise 5.2a
+/-- ### Exercise 3.2a
 
 Show that `A × (B ∪ C) = (A × B) ∪ (A × C)`.
 -/
-theorem exercise_5_2a {A : Set α} {B C : Set β}
+theorem exercise_3_2a {A : Set α} {B C : Set β}
   : Set.prod A (B ∪ C) = (Set.prod A B) ∪ (Set.prod A C) := by
   calc Set.prod A (B ∪ C)
     _ = { p | p.1 ∈ A ∧ p.2 ∈ B ∪ C } := rfl
@@ -58,11 +58,11 @@ theorem exercise_5_2a {A : Set α} {B C : Set β}
     _ = { p | p ∈ Set.prod A B ∨ (p ∈ Set.prod A C) } := rfl
     _ = (Set.prod A B) ∪ (Set.prod A C) := rfl
 
-/-- ### Exercise 5.2b
+/-- ### Exercise 3.2b
 
 Show that if `A × B = A × C` and `A ≠ ∅`, then `B = C`.
 -/
-theorem exercise_5_2b {A : Set α} {B C : Set β}
+theorem exercise_3_2b {A : Set α} {B C : Set β}
   (h : Set.prod A B = Set.prod A C) (hA : Set.Nonempty A)
   : B = C := by
   by_cases hB : Set.Nonempty B
@@ -87,11 +87,11 @@ theorem exercise_5_2b {A : Set α} {B C : Set β}
     have ⟨c, hc⟩ := Set.nonempty_iff_ne_empty.mpr (Ne.symm nC)
     exact (h (a, c)).mpr ⟨ha, hc⟩
 
-/-- ### Exercise 5.3
+/-- ### Exercise 3.3
 
 Show that `A × ⋃ 𝓑 = ⋃ {A × X | X ∈ 𝓑}`.
 -/
-theorem exercise_5_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
+theorem exercise_3_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
   : Set.prod A (⋃₀ 𝓑) = ⋃₀ {Set.prod A X | X ∈ 𝓑} := by
   calc Set.prod A (⋃₀ 𝓑)
     _ = { p | p.1 ∈ A ∧ p.2 ∈ ⋃₀ 𝓑} := rfl
@@ -115,7 +115,7 @@ theorem exercise_5_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
       · intro ⟨b, h₁, h₂, h₃⟩
         exact ⟨b, h₁, h₂, h₃⟩
 
-/-- ### Exercise 5.5a
+/-- ### Exercise 3.5a
 
 Assume that `A` and `B` are given sets, and show that there exists a set `C`
 such that for any `y`,
@@ -124,7 +124,7 @@ y ∈ C ↔ y = {x} × B for some x in A.
 ```
 In other words, show that `{{x} × B | x ∈ A}` is a set.
 -/
-theorem exercise_5_5a {A : Set α} {B : Set β}
+theorem exercise_3_5a {A : Set α} {B : Set β}
   : ∃ C : Set (Set (α × β)),
       y ∈ C ↔ ∃ x ∈ A, y = Set.prod {x} B := by
   let C := {y ∈ 𝒫 (Set.prod A B) | ∃ a ∈ A, ∀ x, (x ∈ y ↔ ∃ b ∈ B, x = (a, b))}
@@ -183,11 +183,11 @@ theorem exercise_5_5a {A : Set α} {B : Set β}
         rw [hab.right]
         exact ⟨hab.left, hb⟩
 
-/-- ### Exercise 5.5b
+/-- ### Exercise 3.5b
 
 With `A`, `B`, and `C` as above, show that `A × B = ∪ C`.
 -/
-theorem exercise_5_5b {A : Set α} (B : Set β)
+theorem exercise_3_5b {A : Set α} (B : Set β)
   : Set.prod A B = ⋃₀ {Set.prod ({x} : Set α) B | x ∈ A} := by
   rw [Set.Subset.antisymm_iff]
   apply And.intro
@@ -222,17 +222,17 @@ If `⟨x, y⟩ ∈ A`, then `x` and `y` belong to `⋃ ⋃ A`.
 -/
 theorem theorem_3d {A : Set (Set (Set α))} (h : OrderedPair x y ∈ A)
   : x ∈ ⋃₀ (⋃₀ A) ∧ y ∈ ⋃₀ (⋃₀ A) := by
-  have hp := Chapter_2.exercise_3_3 (OrderedPair x y) h
+  have hp := Chapter_2.exercise_2_3 (OrderedPair x y) h
   unfold OrderedPair at hp  
   have hq : {x, y} ∈ ⋃₀ A := hp (by simp)
-  have : {x, y} ⊆ ⋃₀ ⋃₀ A := Chapter_2.exercise_3_3 {x, y} hq
+  have : {x, y} ⊆ ⋃₀ ⋃₀ A := Chapter_2.exercise_2_3 {x, y} hq
   exact ⟨this (by simp), this (by simp)⟩
 
-/-- ### Exercise 6.6
+/-- ### Exercise 3.6
 
 Show that a set `A` is a relation **iff** `A ⊆ dom A × ran A`.
 -/
-theorem exercise_6_6 {A : Set.Relation α}
+theorem exercise_3_6 {A : Set.Relation α}
   : A ⊆ Set.prod (A.dom) (A.ran) := by
   show ∀ t, t ∈ A → t ∈ Set.prod (Prod.fst '' A) (Prod.snd '' A)
   intro (a, b) ht
@@ -246,11 +246,11 @@ theorem exercise_6_6 {A : Set.Relation α}
   ]
   exact ⟨⟨b, ht⟩, ⟨a, ht⟩⟩
 
-/-- ### Exercise 6.7
+/-- ### Exercise 3.7
 
 Show that if `R` is a relation, then `fld R = ⋃ ⋃ R`.
 -/
-theorem exercise_6_7 {R : Set.Relation α}
+theorem exercise_3_7 {R : Set.Relation α}
   : R.fld = ⋃₀ ⋃₀ R.toOrderedPairs := by
   let img := R.toOrderedPairs
   rw [Set.Subset.antisymm_iff]
@@ -269,8 +269,8 @@ theorem exercise_6_7 {R : Set.Relation α}
         simp only [Prod.exists, Set.mem_setOf_eq]
         exact ⟨x, ⟨y, ⟨hp, rfl⟩⟩⟩
       unfold OrderedPair at hm
-      have : {x} ∈ ⋃₀ img := Chapter_2.exercise_3_3 {{x}, {x, y}} hm (by simp)
-      exact (Chapter_2.exercise_3_3 {x} this) (show x ∈ {x} by rfl)
+      have : {x} ∈ ⋃₀ img := Chapter_2.exercise_2_3 {{x}, {x, y}} hm (by simp)
+      exact (Chapter_2.exercise_2_3 {x} this) (show x ∈ {x} by rfl)
     · intro hr
       unfold Set.Relation.ran Prod.snd at hr
       simp only [Set.mem_image, Prod.exists, exists_eq_right] at hr
@@ -279,9 +279,9 @@ theorem exercise_6_7 {R : Set.Relation α}
         simp only [Set.mem_image, Prod.exists]
         exact ⟨t, ⟨x, ⟨ht, rfl⟩⟩⟩
       unfold OrderedPair at hm
-      have : {t, x} ∈ ⋃₀ img := Chapter_2.exercise_3_3 {{t}, {t, x}} hm
+      have : {t, x} ∈ ⋃₀ img := Chapter_2.exercise_2_3 {{t}, {t, x}} hm
         (show {t, x} ∈ {{t}, {t, x}} by simp)
-      exact Chapter_2.exercise_3_3 {t, x} this (show x ∈ {t, x} by simp)
+      exact Chapter_2.exercise_2_3 {t, x} this (show x ∈ {t, x} by simp)
 
   · show ∀ t, t ∈ ⋃₀ ⋃₀ img → t ∈ Set.Relation.fld R
     intro t ht
@@ -300,7 +300,7 @@ theorem exercise_6_7 {R : Set.Relation α}
     -- `t = y` then `t ∈ ran R`.
     have hxy_mem : t = x ∨ t = y → t ∈ Set.Relation.fld R := by
       intro ht
-      have hz : R ⊆ Set.prod (R.dom) (R.ran) := exercise_6_6
+      have hz : R ⊆ Set.prod (R.dom) (R.ran) := exercise_3_6
       have : (x, y) ∈ Set.prod (R.dom) (R.ran) := hz p
       unfold Set.prod at this
       simp at this
@@ -329,14 +329,14 @@ section
 
 open Set.Relation
 
-/-- ### Exercise 6.8 (i)
+/-- ### Exercise 3.8 (i)
 
 Show that for any set `𝓐`:
 ```
 dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_6_8_i {A : Set (Set.Relation α)}
+theorem exercise_3_8_i {A : Set (Set.Relation α)}
   : dom (⋃₀ A) = ⋃₀ { dom R | R ∈ A } := by
   ext x
   unfold dom Prod.fst
@@ -355,14 +355,14 @@ theorem exercise_6_8_i {A : Set (Set.Relation α)}
   · intro ⟨t, ht, y, hx⟩
     exact ⟨y, t, ht, hx⟩
 
-/-- ### Exercise 6.8 (ii)
+/-- ### Exercise 3.8 (ii)
 
 Show that for any set `𝓐`:
 ```
 ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_6_8_ii {A : Set (Set.Relation α)}
+theorem exercise_3_8_ii {A : Set (Set.Relation α)}
   : ran (⋃₀ A) = ⋃₀ { ran R | R ∈ A } := by
   ext x
   unfold ran Prod.snd
@@ -380,7 +380,7 @@ theorem exercise_6_8_ii {A : Set (Set.Relation α)}
   · intro ⟨y, ⟨hy, ⟨t, ht⟩⟩⟩
     exact ⟨t, ⟨y, ⟨hy, ht⟩⟩⟩
 
-/-- ### Exercise 6.9 (i)
+/-- ### Exercise 3.9 (i)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -388,7 +388,7 @@ operation in the preceding problem.
 dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_6_9_i {A : Set (Set.Relation α)}
+theorem exercise_3_9_i {A : Set (Set.Relation α)}
   : dom (⋂₀ A) ⊆ ⋂₀ { dom R | R ∈ A } := by
   show ∀ x, x ∈ dom (⋂₀ A) → x ∈ ⋂₀ { dom R | R ∈ A }
   unfold dom Prod.fst
@@ -406,7 +406,7 @@ theorem exercise_6_9_i {A : Set (Set.Relation α)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- ### Exercise 6.9 (ii)
+/-- ### Exercise 3.9 (ii)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -414,7 +414,7 @@ operation in the preceding problem.
 ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_6_9_ii {A : Set (Set.Relation α)}
+theorem exercise_3_9_ii {A : Set (Set.Relation α)}
   : ran (⋂₀ A) ⊆ ⋂₀ { ran R | R ∈ A } := by
   show ∀ x, x ∈ ran (⋂₀ A) → x ∈ ⋂₀ { ran R | R ∈ A }
   unfold ran Prod.snd
