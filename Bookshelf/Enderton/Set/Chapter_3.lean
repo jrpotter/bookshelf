@@ -9,7 +9,7 @@ Relations and Functions
 
 namespace Enderton.Set.Chapter_3
 
-/-- ### Theorem 3B
+/-- #### Theorem 3B
 
 If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
@@ -19,7 +19,7 @@ theorem theorem_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
   have hxys : {x, y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
   exact Set.mem_mem_imp_pair_subset hxs hxys
 
-/-- ### Exercise 3.1
+/-- #### Exercise 3.1
 
 Suppose that we attempted to generalize the Kuratowski definitions of ordered
 pairs to ordered triples by defining
@@ -42,7 +42,7 @@ theorem exercise_3_1 {x y z u v w : ℕ}
   · rw [hy, hv]
     simp only
 
-/-- ### Exercise 3.2a
+/-- #### Exercise 3.2a
 
 Show that `A × (B ∪ C) = (A × B) ∪ (A × C)`.
 -/
@@ -58,7 +58,7 @@ theorem exercise_3_2a {A : Set α} {B C : Set β}
     _ = { p | p ∈ Set.prod A B ∨ (p ∈ Set.prod A C) } := rfl
     _ = (Set.prod A B) ∪ (Set.prod A C) := rfl
 
-/-- ### Exercise 3.2b
+/-- #### Exercise 3.2b
 
 Show that if `A × B = A × C` and `A ≠ ∅`, then `B = C`.
 -/
@@ -87,7 +87,7 @@ theorem exercise_3_2b {A : Set α} {B C : Set β}
     have ⟨c, hc⟩ := Set.nonempty_iff_ne_empty.mpr (Ne.symm nC)
     exact (h (a, c)).mpr ⟨ha, hc⟩
 
-/-- ### Exercise 3.3
+/-- #### Exercise 3.3
 
 Show that `A × ⋃ 𝓑 = ⋃ {A × X | X ∈ 𝓑}`.
 -/
@@ -115,7 +115,7 @@ theorem exercise_3_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
       · intro ⟨b, h₁, h₂, h₃⟩
         exact ⟨b, h₁, h₂, h₃⟩
 
-/-- ### Exercise 3.5a
+/-- #### Exercise 3.5a
 
 Assume that `A` and `B` are given sets, and show that there exists a set `C`
 such that for any `y`,
@@ -183,7 +183,7 @@ theorem exercise_3_5a {A : Set α} {B : Set β}
         rw [hab.right]
         exact ⟨hab.left, hb⟩
 
-/-- ### Exercise 3.5b
+/-- #### Exercise 3.5b
 
 With `A`, `B`, and `C` as above, show that `A × B = ∪ C`.
 -/
@@ -216,7 +216,7 @@ theorem exercise_3_5b {A : Set α} (B : Set β)
     rw [← ha] at h
     exact ⟨h, hb⟩
 
-/-- ### Theorem 3D
+/-- #### Theorem 3D
 
 If `⟨x, y⟩ ∈ A`, then `x` and `y` belong to `⋃ ⋃ A`.
 -/
@@ -228,7 +228,7 @@ theorem theorem_3d {A : Set (Set (Set α))} (h : OrderedPair x y ∈ A)
   have : {x, y} ⊆ ⋃₀ ⋃₀ A := Chapter_2.exercise_2_3 {x, y} hq
   exact ⟨this (by simp), this (by simp)⟩
 
-/-- ### Exercise 3.6
+/-- #### Exercise 3.6
 
 Show that a set `A` is a relation **iff** `A ⊆ dom A × ran A`.
 -/
@@ -246,7 +246,7 @@ theorem exercise_3_6 {A : Set.Relation α}
   ]
   exact ⟨⟨b, ht⟩, ⟨a, ht⟩⟩
 
-/-- ### Exercise 3.7
+/-- #### Exercise 3.7
 
 Show that if `R` is a relation, then `fld R = ⋃ ⋃ R`.
 -/
@@ -329,7 +329,7 @@ section
 
 open Set.Relation
 
-/-- ### Exercise 3.8 (i)
+/-- #### Exercise 3.8 (i)
 
 Show that for any set `𝓐`:
 ```
@@ -355,7 +355,7 @@ theorem exercise_3_8_i {A : Set (Set.Relation α)}
   · intro ⟨t, ht, y, hx⟩
     exact ⟨y, t, ht, hx⟩
 
-/-- ### Exercise 3.8 (ii)
+/-- #### Exercise 3.8 (ii)
 
 Show that for any set `𝓐`:
 ```
@@ -380,7 +380,7 @@ theorem exercise_3_8_ii {A : Set (Set.Relation α)}
   · intro ⟨y, ⟨hy, ⟨t, ht⟩⟩⟩
     exact ⟨t, ⟨y, ⟨hy, ht⟩⟩⟩
 
-/-- ### Exercise 3.9 (i)
+/-- #### Exercise 3.9 (i)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -406,7 +406,7 @@ theorem exercise_3_9_i {A : Set (Set.Relation α)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- ### Exercise 3.9 (ii)
+/-- #### Exercise 3.9 (ii)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -432,7 +432,7 @@ theorem exercise_3_9_ii {A : Set (Set.Relation α)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- ### Theorem 3G (i)
+/-- #### Theorem 3G (i)
 
 Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
@@ -446,7 +446,7 @@ theorem theorem_3g_i {F : Set.Relation α}
   unfold isOneToOne at hF
   exact (single_valued_eq_unique hF.left hy hy₁).symm
 
-/-- ### Theorem 3G (ii)
+/-- #### Theorem 3G (ii)
 
 Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
@@ -460,7 +460,7 @@ theorem theorem_3g_ii {F : Set.Relation α}
   unfold isOneToOne at hF
   exact (single_rooted_eq_unique hF.right hx hx₁).symm
 
-/-- ### Theorem 3H
+/-- #### Theorem 3H
 
 Assume that `F` and `G` are functions. Then
 ```
@@ -500,7 +500,7 @@ theorem theorem_3h_dom {F G : Set.Relation α}
     simp only [Set.mem_setOf_eq]
     exact ⟨a, ha.left.left, hb⟩
 
-/-- ### Theorem 3J (a)
+/-- #### Theorem 3J (a)
 
 Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `G : B → A` (a "left inverse") such that `G ∘ F` is the identity function on `A`
@@ -512,7 +512,7 @@ theorem theorem_3j_a {F : Set.Relation α} {A B : Set α}
       G.mapsInto B A ∧ (∀ p ∈ G.comp F, p.1 = p.2)) ↔ F.isOneToOne := by
   sorry
 
-/-- ### Theorem 3J (b)
+/-- #### Theorem 3J (b)
 
 Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `H : B → A` (a "right inverse") such that `F ∘ H` is the identity function on

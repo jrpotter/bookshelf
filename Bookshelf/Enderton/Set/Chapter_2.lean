@@ -10,7 +10,7 @@ Axioms and Operations
 namespace Enderton.Set.Chapter_2
 
 
-/-- ### Exercise 2.1
+/-- #### Exercise 2.1
 
 Assume that `A` is the set of integers divisible by `4`. Similarly assume that
 `B` and `C` are the sets of integers divisible by `9` and `10`, respectively.
@@ -32,7 +32,7 @@ theorem exercise_2_1 {A B C : Set ℤ}
   · rw [hC] at hc
     exact Set.mem_setOf.mp hc
 
-/-- ### Exercise 2.2
+/-- #### Exercise 2.2
 
 Give an example of sets `A` and `B` for which `⋃ A = ⋃ B` but `A ≠ B`.
 -/
@@ -71,7 +71,7 @@ theorem exercise_2_2 {A B : Set (Set ℕ)}
     have h₂ := h₁ 2
     simp at h₂
 
-/-- ### Exercise 2.3
+/-- #### Exercise 2.3
 
 Show that every member of a set `A` is a subset of `U A`. (This was stated as an
 example in this section.)
@@ -84,7 +84,7 @@ theorem exercise_2_3 {A : Set (Set α)}
   rw [Set.mem_setOf_eq]
   exact ⟨x, ⟨hx, hy⟩⟩
 
-/-- ### Exercise 2.4
+/-- #### Exercise 2.4
 
 Show that if `A ⊆ B`, then `⋃ A ⊆ ⋃ B`.
 -/
@@ -96,7 +96,7 @@ theorem exercise_2_4 {A B : Set (Set α)} (h : A ⊆ B) : ⋃₀ A ⊆ ⋃₀ B 
   rw [Set.mem_setOf_eq]
   exact ⟨t, ⟨h ht, hxt⟩⟩
 
-/-- ### Exercise 2.5
+/-- #### Exercise 2.5
 
 Assume that every member of `𝓐` is a subset of `B`. Show that `⋃ 𝓐 ⊆ B`.
 -/
@@ -108,7 +108,7 @@ theorem exercise_2_5 {𝓐 : Set (Set α)} (h : ∀ x ∈ 𝓐, x ⊆ B)
   have ⟨t, ⟨ht𝓐, hyt⟩⟩ := hy
   exact (h t ht𝓐) hyt
 
-/-- ### Exercise 2.6a
+/-- #### Exercise 2.6a
 
 Show that for any set `A`, `⋃ 𝓟 A = A`.
 -/
@@ -125,7 +125,7 @@ theorem exercise_2_6a : ⋃₀ (𝒫 A) = A := by
     rw [Set.mem_setOf_eq]
     exact ⟨A, ⟨by rw [Set.mem_setOf_eq], hx⟩⟩
 
-/-- ### Exercise 2.6b
+/-- #### Exercise 2.6b
 
 Show that `A ⊆ 𝓟 ⋃ A`. Under what conditions does equality hold?
 -/
@@ -144,7 +144,7 @@ theorem exercise_2_6b
       conv => rhs; rw [hB, exercise_2_6a]
       exact hB
 
-/-- ### Exercise 2.7a
+/-- #### Exercise 2.7a
 
 Show that for any sets `A` and `B`, `𝓟 A ∩ 𝓟 B = 𝓟 (A ∩ B)`.
 -/
@@ -162,9 +162,7 @@ theorem exercise_2_7A
     intro x hA _
     exact hA
 
--- theorem false_of_false_iff_true : (false ↔ true) → false := by simp
-
-/-- ### Exercise 2.7b (i)
+/-- #### Exercise 2.7b (i)
 
 Show that `𝓟 A ∪ 𝓟 B ⊆ 𝓟 (A ∪ B)`.
 -/
@@ -181,7 +179,7 @@ theorem exercise_2_7b_i
     rw [Set.mem_setOf_eq]
     exact Set.subset_union_of_subset_right hB A
 
-/-- ### Exercise 2.7b (ii)
+/-- #### Exercise 2.7b (ii)
 
 Under what conditions does `𝓟 A ∪ 𝓟 B = 𝓟 (A ∪ B)`.?
 -/
@@ -233,7 +231,7 @@ theorem exercise_2_7b_ii
         refine Or.inl (Set.Subset.trans hx ?_)
         exact subset_of_eq (Set.right_subset_union_eq_self hB)
 
-/-- ### Exercise 2.9
+/-- #### Exercise 2.9
 
 Give an example of sets `a` and `B` for which `a ∈ B` but `𝓟 a ∉ 𝓟 B`.
 -/
@@ -261,7 +259,7 @@ theorem exercise_2_9 (ha : a = {1}) (hB : B = {{1}})
       have := h 1
       simp at this
 
-/-- ### Exercise 2.10
+/-- #### Exercise 2.10
 
 Show that if `a ∈ B`, then `𝓟 a ∈ 𝓟 𝓟 ⋃ B`.
 -/
@@ -274,7 +272,7 @@ theorem exercise_2_10 {B : Set (Set α)} (ha : a ∈ B)
   rw [← hb, Set.mem_setOf_eq]
   exact h₂
 
-/-- ### Exercise 2.11 (i)
+/-- #### Exercise 2.11 (i)
 
 Show that for any sets `A` and `B`, `A = (A ∩ B) ∪ (A - B)`.
 -/
@@ -291,7 +289,7 @@ theorem exercise_2_11_i {A B : Set α}
   · intro hx
     exact ⟨hx, em (B x)⟩
 
-/-- ### Exercise 2.11 (ii)
+/-- #### Exercise 2.11 (ii)
 
 Show that for any sets `A` and `B`, `A ∪ (B - A) = A ∪ B`.
 -/
@@ -385,7 +383,7 @@ lemma left_diff_eq_singleton_one : (A \ B) \ C = {1} := by
         | inl y => rw [hx] at y; simp at y
         | inr y => rw [hx] at y; simp at y
 
-/-- ### Exercise 2.14
+/-- #### Exercise 2.14
 
 Show by example that for some sets `A`, `B`, and `C`, the set `A - (B - C)` is
 different from `(A - B) - C`.
@@ -402,7 +400,7 @@ theorem exercise_2_14 : A \ (B \ C) ≠ (A \ B) \ C := by
 
 end
 
-/-- ### Exercise 2.16
+/-- #### Exercise 2.16
 
 Simplify:
 `[(A ∪ B ∪ C) ∩ (A ∪ B)] - [(A ∪ (B - C)) ∩ A]`
@@ -414,7 +412,7 @@ theorem exercise_2_16 {A B C : Set α}
     _ = (A ∪ B) \ A := by rw [Set.union_inter_cancel_left]
     _ = B \ A := by rw [Set.union_diff_left]
 
-/-! ### Exercise 2.17
+/-! #### Exercise 2.17
 
 Show that the following four conditions are equivalent.
 
@@ -450,7 +448,7 @@ theorem exercise_2_17_iii {A B : Set α} (h : A ∪ B = B)
 theorem exercise_2_17_iv {A B : Set α} (h : A ∩ B = A)
   : A ⊆ B := Set.inter_eq_left_iff_subset.mp h
 
-/-- ### Exercise 2.19
+/-- #### Exercise 2.19
 
 Is `𝒫 (A - B)` always equal to `𝒫 A - 𝒫 B`? Is it ever equal to `𝒫 A - 𝒫 B`?
 -/
@@ -463,7 +461,7 @@ theorem exercise_2_19 {A B : Set α}
   have := h ∅
   exact absurd (this.mp he) ne
 
-/-- ### Exercise 2.20
+/-- #### Exercise 2.20
 
 Let `A`, `B`, and `C` be sets such that `A ∪ B = A ∪ C` and `A ∩ B = A ∩ C`.
 Show that `B = C`.
@@ -489,7 +487,7 @@ theorem exercise_2_20 {A B C : Set α}
       rw [← hu] at this
       exact Or.elim this (absurd · hA) (by simp)
 
-/-- ### Exercise 2.21
+/-- #### Exercise 2.21
 
 Show that `⋃ (A ∪ B) = (⋃ A) ∪ (⋃ B)`.
 -/
@@ -513,7 +511,7 @@ theorem exercise_2_21 {A B : Set (Set α)}
       have ⟨t, ht⟩ : ∃ t, t ∈ B ∧ x ∈ t := hB
       exact ⟨t, ⟨Set.mem_union_right A ht.left, ht.right⟩⟩
 
-/-- ### Exercise 2.22
+/-- #### Exercise 2.22
 
 Show that if `A` and `B` are nonempty sets, then `⋂ (A ∪ B) = ⋂ A ∩ ⋂ B`.
 -/
@@ -542,7 +540,7 @@ theorem exercise_2_22 {A B : Set (Set α)}
     · intro hB
       exact (this t).right hB
 
-/-- ### Exercise 2.24a
+/-- #### Exercise 2.24a
 
 Show that is `𝓐` is nonempty, then `𝒫 (⋂ 𝓐) = ⋂ { 𝒫 X | X ∈ 𝓐 }`.
 -/
@@ -561,7 +559,7 @@ theorem exercise_2_24a {𝓐 : Set (Set α)}
     _ = { x | ∀ t ∈ { 𝒫 X | X ∈ 𝓐 }, x ∈ t} := by simp
     _ = ⋂₀ { 𝒫 X | X ∈ 𝓐 } := rfl
 
-/-- ### Exercise 2.24b
+/-- #### Exercise 2.24b
 
 Show that
 ```
@@ -603,7 +601,7 @@ theorem exercise_2_24b {𝓐 : Set (Set α)}
     simp only [Set.mem_setOf_eq, exists_exists_and_eq_and, Set.mem_powerset_iff]
     exact ⟨⋃₀ 𝓐, ⟨hA, hx⟩⟩
 
-/-- ### Exercise 2.25
+/-- #### Exercise 2.25
 
 Is `A ∪ (⋃ 𝓑)` always the same as `⋃ { A ∪ X | X ∈ 𝓑 }`? If not, then under
 what conditions does equality hold? 
