@@ -507,10 +507,18 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 **iff** `F` is one-to-one.
 -/
 theorem theorem_3j_a {F : Set.Relation α} {A B : Set α}
-  (hF : F.mapsInto A B) (hA : Set.Nonempty A)
+  (hF : F.isSingleValued ∧ F.mapsInto A B) (hA : Set.Nonempty A)
   : (∃ G : Set.Relation α,
-      G.mapsInto B A ∧ (∀ p ∈ G.comp F, p.1 = p.2)) ↔ F.isOneToOne := by
-  sorry
+      G.isSingleValued ∧ G.mapsInto B A ∧
+        (∀ p ∈ G.comp F, p.1 = p.2)) ↔ F.isOneToOne := by
+  apply Iff.intro
+  · intro ⟨G, ⟨hG₁, hG₂, hI⟩⟩
+    refine ⟨hF.left, ?_⟩
+    show F.isSingleRooted
+    intro y hy
+    have ⟨x, hx⟩ := ran_exists hy
+    sorry
+  · sorry
 
 /-- #### Theorem 3J (b)
 
@@ -519,9 +527,10 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `B` **iff** `F` maps `A` onto `B`.
 -/
 theorem theorem_3j_b {F : Set.Relation α} {A B : Set α}
-  (hF : F.mapsInto A B) (hA : Set.Nonempty A)
+  (hF : F.isSingleValued ∧ F.mapsInto A B) (hA : Set.Nonempty A)
   : (∃ H : Set.Relation α,
-      H.mapsInto B A ∧ (∀ p ∈ F.comp H, p.1 = p.2)) ↔ F.mapsOnto A B := by
+      H.isSingleValued ∧ H.mapsInto B A ∧
+        (∀ p ∈ F.comp H, p.1 = p.2)) ↔ F.mapsOnto A B := by
   sorry
 
 end

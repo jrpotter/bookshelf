@@ -6,11 +6,6 @@
 \input{../../preamble}
 \makeleancommands{../..}
 
-\newcommand{\dom}[1]{\textop{dom}{#1}}
-\newcommand{\fld}[1]{\textop{fld}{#1}}
-\newcommand{\ran}[1]{\textop{ran}{#1}}
-\newcommand{\img}[2]{#1\left\llbracket#2\right\rrbracket}
-
 \begin{document}
 
 \header{Elements of Set Theory}{Herbert B. Enderton}
@@ -52,8 +47,8 @@ The \textbf{composition} of sets $F$ and $G$ is
 \section{\defined{Domain}}%
 \label{ref:domain}
 
-Given \nameref{ref:relation} $R$, the \textbf{domain} of $R$, denoted $\dom{R}$,
-  is given by $$x \in \dom{R} \iff \exists y \left< x, y \right> \in R.$$
+The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
+  $$x \in \dom{R} \iff \exists y \left< x, y \right> \in R.$$
 
 \begin{definition}
 
@@ -77,7 +72,8 @@ There is a set having no members:
 \label{ref:equivalence-relation}
 
 Relation $R$ is an \textbf{equivalence relation} if and only if $R$ is a binary
-  relation that is reflexive, symmetric, and transitive.
+  \nameref{ref:relation} that is \nameref{ref:reflexive},
+  \nameref{ref:symmetric}, and \nameref{ref:transitive}.
 
 \section{\defined{Extensionality Axiom}}%
 \label{ref:extensionality-axiom}
@@ -233,8 +229,8 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
 \section{\defined{Range}}%
 \label{ref:range}
 
-Given \nameref{ref:relation} $R$, the \textbf{range} of $R$, denoted $\ran{R}$,
-  is given by $$x \in \ran{R} \iff \exists t \left< t, x \right> \in R.$$
+The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
+  $$x \in \ran{R} \iff \exists t \left< t, x \right> \in R.$$
 
 \begin{definition}
 
@@ -242,8 +238,8 @@ Given \nameref{ref:relation} $R$, the \textbf{range} of $R$, denoted $\ran{R}$,
 
 \end{definition}
 
-\section{\pending{Reflexive Relation}}%
-\label{ref:reflexive-relation}
+\section{\pending{Reflexive}}%
+\label{ref:reflexive}
 
 A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
   $x \in A$.
@@ -284,8 +280,8 @@ For each formula $\phi$ not containing $B$, the following is an axiom:
 
 \end{axiom}
 
-\section{\pending{Symmetric Relation}}%
-\label{ref:symmetric-relation}
+\section{\pending{Symmetric}}%
+\label{ref:symmetric}
 
 A binary relation $R$ is \textbf{symmetric} on $A$ if and only if whenever
   $xRy$ then $yRx$.
@@ -302,8 +298,8 @@ The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
 
 \end{definition}
 
-\section{\pending{Transitive Relation}}%
-\label{ref:transitive-relation}
+\section{\pending{Transitive}}%
+\label{ref:transitive}
 
 A binary relation $R$ is \textbf{transitive} on $A$ if and only if whenever
   $xRy$ and $yRz$, then $xRz$.
@@ -2885,7 +2881,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     \subparagraph{($\Rightarrow$)}%
 
       Let $G \colon B \rightarrow A$ such that $G \circ F = I_A$.
-      All that remains is to prove $F$ is single-valued.
+      All that remains is to prove $F$ is single-rooted.
       Let $y \in \ran{F}$.
       By definition of the \nameref{ref:range} of a function, there exists some
         $x$ such that $\left< x, y \right> \in F$.
@@ -3175,7 +3171,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \section{Equivalence Relations}%
 \label{sec:equivalence-relations}
 
-\subsection{\sorry{Theorem 3M}}%
+\subsection{\pending{Theorem 3M}}%
 \label{sub:theorem-3m}
 
 \begin{theorem}[3M]
@@ -3187,7 +3183,23 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  TODO
+  Suppose $R$ is a \nameref{ref:symmetric} and \nameref{ref:transitive}
+    \nameref{ref:relation}.
+  By definition, the \nameref{ref:field} of $R$ is given by
+    $\fld{R} = \dom{R} \cup \ran{R}$.
+  An \nameref{ref:equivalence-relation} is, by definition, a
+    \nameref{ref:reflexive}, symmetric, and transitive relation.
+  Thus all that remains is to show $R$ is reflexive on $\fld{R}$.
+
+  Let $x \in \fld{R}$.
+  Then $x \in \dom{R}$ or $x \in \ran{R}$.
+  If $x \in \dom{R}$, there exists some $y$ such that $xRy$.
+  Since $R$ is symmetric, it follows $yRx$.
+  Since $R$ is transitive, it follows $xRx$.
+  If instead $x \in \ran{R}$, there exists some $t$ such that $tRx$.
+  Since $R$ is symmetric, it follows $xRt$.
+  Since $R$ is transitive, it follows $xRx$.
+  Thus $R$ is reflexive on $\fld{R}$.
 
 \end{proof}
 
@@ -3681,7 +3693,7 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
 \end{answer}
 
-\subsection{\sorry{Exercise 3.11}}%
+\subsection{\verified{Exercise 3.11}}%
 \label{sub:exercise-3.11}
 
 Prove the following version (for functions) of the extensionality principle:
@@ -3691,11 +3703,24 @@ Then $F = G$.
 
 \begin{proof}
 
-  TODO
+  \lean{Init/Core}{funext}
+
+  Let $F$ and $G$ be functions such that $\dom{F} = \dom{G}$ and $F(x) = G(x)$
+    for all $x$ in the common domain.
+  We prove that $\left< x, y \right> \in F$ if and only if
+    $\left< x, y \right> \in G$.
+  But this follows immediately:
+    \begin{align*}
+      \left< x, y \right> \in F
+        & \iff y = F(x) \land \left< x, F(x) \right> \in F \\
+        & \iff y = G(x) \land \left< x, G(x) \right> \in G \\
+        & \iff \left< x, y \right> \in G.
+    \end{align*}
+  By the \nameref{ref:extensionality-axiom}, $F = G$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.12}}%
+\subsection{\pending{Exercise 3.12}}%
 \label{sub:exercise-3.12}
 
 Assume that $f$ and $g$ are functions and show that
@@ -3704,11 +3729,31 @@ Assume that $f$ and $g$ are functions and show that
 
 \begin{proof}
 
-  TODO
+  Let $f$ and $g$ be \nameref{ref:function}s.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $f \subseteq g$.
+    Then for all \nameref{ref:ordered-pair}s $\left< x, y \right>$,
+      $\left< x, y \right> \in f$ implies $\left< x, y \right> \in g$.
+    Thus every $x \in \dom{f}$ must be a member of $\dom{g}$.
+    Likewise, by definition of a function, $f$ and $g$ are single-valued.
+    Thus $f(x) = y$ and $g(x) = y$.
+    Since $x$ is an arbitrary element in the domain of $f$, it follows
+      $(\forall x \in \dom{f}) f(x) = y = g(x)$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $\dom{f} \subseteq \dom{g}$ and
+      $(\forall x \in \dom{f}) f(x) = g(x)$.
+    Let $\left< x, y \right> \in f$.
+    By hypothesis, $x \in \dom{g}$ and $y = f(x) = g(x)$.
+    Thus $\left< x, y \right> \in g$ as well.
+    Therefore $f \subseteq g$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.13}}%
+\subsection{\pending{Exercise 3.13}}%
 \label{sub:exercise-3.13}
 
 Assume that $f$ and $g$ are functions with $f \subseteq g$ and
@@ -3717,11 +3762,17 @@ Show that $f = g$.
 
 \begin{proof}
 
-  TODO
+  Let $f$ and $g$ be functions such that $f \subseteq g$ and
+    $\dom{g} \subseteq \dom{f}$.
+  By \nameref{sub:exercise-3.12}, it follows that $\dom{f} \subseteq \dom{g}$
+    and $(\forall x \in \dom{f}) f(x) = g(x)$.
+  Since $\dom{g} \subseteq \dom{f}$ and $\dom{f} \subseteq \dom{g}$, it follows
+    that $\dom{g} = \dom{f}$.
+  By \nameref{sub:exercise-3.11}, $f = g$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.14}}%
+\subsection{\pending{Exercise 3.14}}%
 \label{sub:exercise-3.14}
 
 Assume that $f$ and $g$ are functions.
@@ -3734,35 +3785,116 @@ Assume that $f$ and $g$ are functions.
 
 \begin{proof}
 
-  TODO
+  Assume $f$ and $g$ are functions.
+
+  \paragraph{(a)}%
+
+    Consider $f \cap g$.
+    By definition of the intersection of sets, $f \cap g \subseteq f$.
+    By \nameref{sub:exercise-3.12}, $\dom{(f \cap g)} = \dom{f}$ and
+      $(\forall x \in \dom{(f \cap g)} (f \cap g)(x) = f(x)$.
+    The latter conjunct shows that, since $f$ is single-valued, $f \cap g$ must
+      also be single-valued.
+    In other words, $f \cap g$ is a function.
+
+  \paragraph{(b)}%
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $f \cup g$ is a function.
+      Let $x \in (\dom{f}) \cap (\dom{g})$.
+      That is, $x \in \dom{f}$ and $x \in \dom{g}$.
+      Then there exists only one $y_1$ such that $\left< x, y_1 \right> \in f$.
+      Likewise there exists only one $y_2$ such that
+        $\left< x, y_2 \right> \in g$.
+      But $\left< x, y_1 \right> \in f \cup g$ and
+        $\left< x, y_2 \right> \in f \cup g$.
+      Since $f \cup g$ is single-valued, it follows $y_1 = y_2$.
+      That is, $f(x) = g(x)$.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $f(x) = g(x)$ for every $x \in (\dom{f}) \cap (\dom{g})$.
+      Let $x \in \dom{(f \cup g)}$.
+      There are three cases to consider:
+
+      \begin{enumerate}[(i)]
+        \item Suppose $x \in \dom{f}$ but not in $\dom{g}$.
+          Since $f$ is a function, it follows $f \cup g$ has only one value $y$
+            such that $\left< x, y \right> \in f \cup g$.
+        \item Suppose $x \in \dom{g}$ but not in $\dom{f}$.
+          Again, since $g$ is a function, it follows $f \cup g$ has only one
+            value $y$ such that $\left< x, y \right> \in f \cup g$.
+        \item Suppose $x \in \dom{f}$ and $x \in \dom{g}$.
+          By hypothesis, $f(x) = g(x)$ meaning there is only one value $y$ such
+            that $\left< x, y \right> \in f \cup g$.
+      \end{enumerate}
+
+      The above cases are exhaustive.
+      Together they imply that $f \cup g$ is single-valued, i.e. a function.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.15}}%
+\subsection{\pending{Exercise 3.15}}%
 \label{sub:exercise-3.15}
 
 Let $\mathscr{A}$ be a set of functions such that for any $f$ and $g$ in
   $\mathscr{A}$, either $f \subseteq g$ or $g \subseteq f$.
-Show that $\bigcup \mathscr{A}$ is a function.
+Show that $\bigcup{\mathscr{A}}$ is a function.
 
 \begin{proof}
 
-  TODO
+  Let $\mathscr{A}$ be a set of \nameref{ref:function}s such that for any $f$
+    and $g$ in $\mathscr{A}$, either $f \subseteq g$ or $g \subseteq f$.
+  Let $x \in \dom{\bigcup{\mathscr{A}}}$.
+  Then there exists some $y_1$ such that
+    $\left< x, y_1 \right> \in \bigcup{\mathscr{A}}$.
+  Suppose there also exists some $y_2$ such that
+    $\left< x, y_2 \right> \in \bigcup{\mathscr{A}}$.
+
+  By definition of the union of sets, there exists some function
+    $f \in \mathscr{A}$ such that $\left< x, y_1 \right> \in f$.
+  Likewise there exists some function $g \in \mathscr{A}$ such that
+    $\left< x, y_2 \right> \in g$.
+  There are two cases to consider:
+
+  \paragraph{Case 1}%
+
+    Suppose $f \subseteq g$.
+    Then $\left< x, y_1 \right>, \left< x, y_2 \right> \in g$.
+    Since $g$ is a function, i.e. single-valued, $y_1 = y_2$.
+
+  \paragraph{Case 2}%
+
+    Suppose $g \subseteq f$.
+    Then $\left< x, y_1 \right>, \left< x, y_2 \right> \in f$.
+    Since $f$ is a function, i.e. single-valued, $y_1 = y_2$.
+
+  \paragraph{Conclusion}%
+
+    Since the above two cases applies for all
+      $x \in \dom{\bigcup{\mathscr{A}}}$ and appropriate choices of $f$ and $g$,
+      it follows $\bigcup{\mathscr{A}}$ is indeed a function.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.16}}%
+\subsection{\unverified{Exercise 3.16}}%
 \label{sub:exercise-3.16}
 
 Show that there is no set to which every function belongs.
 
 \begin{proof}
 
-  TODO
+  Every \nameref{ref:relation} consisting of a single \nameref{ref:ordered-pair}
+    is, by definition, a \nameref{ref:function}.
+  By \nameref{sub:exercise-3.4}, there is no set to which every ordered pair
+    belongs.
+  Thus there is no set to which every function of the described type belongs
+    either, let alone a set to which \textit{every} function belongs.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.17}}%
+\subsection{\pending{Exercise 3.17}}%
 \label{sub:exercise-3.17}
 
 Show that the composition of two single-rooted sets is again single-rooted.
@@ -3770,11 +3902,36 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
 
 \begin{proof}
 
-  TODO
+  Let $F$ and $G$ be two single-rooted sets.
+  Consider $F \circ G$.
+  By definition of the \nameref{ref:composition} of sets,
+    \begin{equation}
+      \label{sub:exercise-3.17-eq1}
+      F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.
+    \end{equation}
+  Consider any $v \in \ran{(F \circ G)}$.
+  By definition of the \nameref{ref:range} of a \nameref{ref:relation}, there
+    exists some $u_1$ such that $\left< u_1, v \right> \in F \circ G$.
+  Let $u_2$ be a set such that $\left< u_2, v \right> \in F \circ G$.
+
+  By \eqref{sub:exercise-3.17-eq1}, there exists a set $t_1$ such that
+    $\left< u_1, t_1 \right> \in G$ and $\left< t_1, v \right> \in F$.
+  Likewise, there exists a set $t_2$ such that
+    $\left< u_2, t_2 \right> \in G$ and $\left< t_2, v \right> \in F$.
+  But $F$ is single-rooted, meaning $t_1 = t_2$.
+  Likewise, because $G$ is single-rooted, $u_1 = u_2$.
+  Thus $F \circ G$ must also be single-rooted.
+
+  \suitdivider
+
+  Let $f$ and $g$ be one-to-one functions.
+  By \nameref{sub:theorem-3h}, $f \circ g$ is single-valued.
+  By the above, $f \circ g$ is single-rooted.
+  Thus $f \circ g$ is one-to-one.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.18}}%
+\subsection{\pending{Exercise 3.18}}%
 \label{sub:exercise-3.18}
 
 Let $R$ be the set
@@ -3785,11 +3942,25 @@ Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
 
 \begin{proof}
 
-  TODO
+  \begin{enumerate}[(i)]
+    \item $R \circ R = \{
+      \left< 0, 2 \right>,
+      \left< 0, 3 \right>,
+      \left< 0, 3 \right>,
+      \left< 1, 3 \right>
+    \}$.
+    \item $R \restriction \{1\} = \{
+      \left< 1, 2 \right>,
+      \left< 1, 3 \right>
+    \}$.
+    \item $R^{-1} \restriction \{1\} = \{\left< 1, 0 \right>\}$.
+    \item $\img{R}{\{1\}} = \{2, 3\}$.
+    \item $\img{R^{-1}}{\{1\}} = \{0\}$.
+  \end{enumerate}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.19}}%
+\subsection{\pending{Exercise 3.19}}%
 \label{sub:exercise-3.19}
 
 Let $$A = \{
@@ -3804,33 +3975,80 @@ Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
 
 \begin{proof}
 
-  TODO
+  \begin{enumerate}[(i)]
+    \item $A(\emptyset) = \{\emptyset, \{\emptyset\}\}$.
+    \item $\img{A}{\emptyset} = \emptyset$.
+    \item $\img{A}{\{\emptyset\}} = \{\{\emptyset, \{\emptyset\}\}\}$.
+    \item $\img{A}{\{\emptyset, \{\emptyset\}\}} =
+      \{\{\emptyset, \{\emptyset\}\}, \emptyset\}$.
+    \item $A^{-1} = \{
+      \left< \{\emptyset, \{\emptyset\}\}, \emptyset \right>,
+      \left< \emptyset, \{\emptyset\} \right>
+    \}$.
+    \item $A \circ A =
+      \{\left< \{\emptyset\}, \{\emptyset, \{\emptyset\}\} \right>\}$.
+    \item $A \restriction \emptyset = \emptyset$
+    \item $A \restriction \{\emptyset\} =
+      \{\left< \emptyset, \{\emptyset, \{\emptyset\}\} \right>\}$.
+    \item $A \restriction \{\emptyset, \{\emptyset\}\} = A$.
+    \item $\bigcup\bigcup A =
+      \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}$.
+  \end{enumerate}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.20}}%
+\subsection{\pending{Exercise 3.20}}%
 \label{sub:exercise-3.20}
 
 Show that $F \restriction A = F \cap (A \times \ran{F})$.
 
 \begin{proof}
 
-  TODO
+  Let $F$ and $A$ be arbitrary sets.
+  By definition of the \nameref{ref:restriction}, intersection,
+    \nameref{ref:range}, and \nameref{sub:cartesian-product} of sets,
+  Then
+    \begin{align*}
+      F \restriction A
+        & = \{\left< u, v \right> \mid uFv \land u \in A\} \\
+        & = \{\left< u, v \right> \mid
+          uFv \land u \in A \land v \in \ran{F}\} \\
+        & = \{\left< u, v \right> \mid uFv\} \cap
+          \{\left< u, v \right> \mid u \in A \land v \in \ran{F}\} \\
+        & = F \cap \{\left< u, v \right> \mid u \in A \land v \in \ran{F}\} \\
+        & = F \cap (A \times \ran{F}).
+    \end{align*}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.21}}%
+\subsection{\pending{Exercise 3.21}}%
 \label{sub:exercise-3.21}
 
 Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
 
 \begin{proof}
 
-  TODO
+  Let $R$, $S$, and $T$ be arbitrary sets.
+  By definition of the \nameref{ref:composition} of sets,
+    \begin{align*}
+      (R \circ S) \circ T
+        & = \{\left< u, v \right> \mid
+          \exists t(u(R \circ S)t \land tTv)\} \\
+        & = \{\left< u, v \right> \mid
+          \exists t((\exists a, uRa \land aSt) \land tTv)\} \\
+        & = \{\left< u, v \right> \mid
+          \exists t, \exists a, (uRa \land aSt \land tTv)\} \\
+        & = \{\left< u, v \right> \mid
+          \exists a, \exists t, (uRa \land aSt \land tTv)\} \\
+        & = \{\left< u, v \right> \mid
+          \exists a(uRa \land (\exists t, aSt \land tTv))\} \\
+        & = \{\left< u, v \right> \mid \exists a(uRa \land a(S \circ T)v)\} \\
+        & = R \circ (S \circ T).
+    \end{align*}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.22}}%
+\subsection{\pending{Exercise 3.22}}%
 \label{sub:exercise-3.22}
 
 Show that the following are correct for any sets.
@@ -3844,11 +4062,55 @@ Show that the following are correct for any sets.
 
 \begin{proof}
 
-  TODO
+  Let $A$, $B$, $F$, $G$, and $Q$ be arbitrary sets.
+
+  \paragraph{(a)}%
+
+    Suppose $A \subseteq B$.
+    Let $x \in \img{F}{A}$.
+    By definition of the \nameref{ref:image} of a set,
+      $\img{F}{A} = \{v \mid (\exists u \in A) uFv\}$.
+    Thus there exists some $u \in A$ such that $uFx$.
+    But $A \subseteq B$ meaning $u \in B$.
+    That is, $(\exists u \in B)uFx$.
+    Thus $$x \in \{v \mid (\exists u \in B)uFv\} = \img{F}{B}.$$
+
+  \paragraph{(b)}%
+
+    By definition of the \nameref{ref:composition} and \nameref{ref:image} of a
+      set,
+      \begin{align*}
+        \img{(F \circ G)}{A}
+          & = \{v \mid (\exists u \in A) u(F \circ G)v\} \\
+          & = \{v \mid (\exists u \in A) \left< u, v \right> \in F \circ G\} \\
+          & = \{v \mid (\exists u \in A)
+            \left< u, v \right> \in \{\left< b, c \right> \mid
+              \exists a(bGa \land aFc)\}\} \\
+          & = \{v \mid \exists u \in A, \exists a, uGa \land aFv\} \\
+          & = \{v \mid \exists a, \exists u \in A, uGa \land aFv\} \\
+          & = \{v \mid \exists a, (\exists u \in A, uGa) \land aFv\} \\
+          & = \{v \mid \exists a \in \{w \mid (\exists u \in A)uGw\}, aFv\} \\
+          & = \{v \mid (\exists a \in \img{G}{A}) aFv\} \\
+          & = \img{F}{\img{G}{A}}.
+      \end{align*}
+
+  \paragraph{(c)}%
+
+    By definition of the \nameref{ref:restriction} of a set,
+      \begin{align*}
+        Q \restriction (A \cup B)
+          & = \{\left< u, v \right> \mid uQv \land u \in A \cup B\} \\
+          & = \{\left< u, v \right> \mid uQv \land (u \in A \lor u \in B)\} \\
+          & = \{\left< u, v \right> \mid
+            (uQv \land u \in A) \lor (uQv \land u \in B)\} \\
+          & = \{\left< u, v \right> \mid uQv \land u \in A\} \cup
+            \{\left< u, v \right> \mid uQv \land u \in B\} \\
+          & = (Q \restriction A) \cup (Q \restriction B).
+      \end{align*}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.23}}%
+\subsection{\pending{Exercise 3.23}}%
 \label{sub:exercise-3.23}
 
 Let $I_A$ be the identity function on the set $A$.
@@ -3858,11 +4120,53 @@ Show that for any sets $B$ and $C$,
 
 \begin{proof}
 
-  TODO
+  Let $I_A$ be the identity function on the set $A$.
+  That is, $I_A = \{\left< u, u \right> \mid u \in A\}$.
+  Let $B$ and $C$ be any sets.
+  We show that (i) $B \circ I_A = B \restriction A$ and (ii)
+    $\img{I_A}{C} = A \cap C$.
+
+  \paragraph{(i)}%
+
+    We show that $B \circ I_A \subseteq B \restriction A$ and
+      $B \restriction A \subseteq B \circ I_A$.
+
+    \subparagraph{($\subseteq$)}%
+
+      Let $\left< x, y \right> \in B \circ I_A$.
+      By definition of the \nameref{ref:composition} of sets,
+        there exists some $t$ such that $xBt$ and $t(I_A)y$.
+      By definition of the identity function, $I_A(t) = y$ implies $t = y$.
+      Thus $xBy$.
+      By hypothesis, $x \in \dom{(B \circ I_A)}$.
+      Therefore $x \in \dom{I_A} = A$.
+      Thus
+        $$\left< x, y \right>
+            \in \{\left< u, v \right> \mid u \in A \land uBv\}
+            = B \restriction A.$$
+
+    \subparagraph{($\supseteq$)}%
+
+      Let $\left< x, y \right> \in B \restriction A$.
+      By definition of the \nameref{ref:restriction} of sets,
+        $x \in A$ and $xBy$.
+      But $I_A(x) = x$ meaning $\left< I_A(x), y \right> \in B$.
+      In other words, $\left< x, y \right> \in B \circ I_A$.
+
+  \paragraph{(ii)}%
+
+    By definition of the \nameref{ref:image} of sets,
+      \begin{align*}
+        \img{I_A}{C}
+          & = \{v \mid (\exists u \in C) \left< u, v \right> \in I_A\} \\
+          & = \{v \mid \exists u \in C, u \in A \land u = v\} \\
+          & = \{v \mid v \in C \land v \in A\} \\
+          & = C \cap A.
+      \end{align*}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.24}}%
+\subsection{\pending{Exercise 3.24}}%
 \label{sub:exercise-3.24}
 
 Show that for a function $F$,
@@ -3870,11 +4174,20 @@ Show that for a function $F$,
 
 \begin{proof}
 
-  TODO
+  Let $F$ be a function.
+  By definition of the \nameref{ref:inverse} of a set,
+    \begin{align*}
+      \img{F^{-1}}{A}
+        & = \{x \mid (\exists y \in A) yF^{-1}x\} \\
+        & = \{x \mid (\exists y \in A) xFy\} \\
+        & = \{x \mid (\exists y \in A) \left< x, y \right> \in F\} \\
+        & = \{x \mid \exists x \in F, F(x) \in A\} \\
+        & = \{x \in \dom{F} \mid F(x) \in A\}.
+    \end{align*}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.25}}%
+\subsection{\pending{Exercise 3.25}}%
 \label{sub:exercise-3.25}
 
 \begin{enumerate}[(a)]
@@ -3887,22 +4200,38 @@ Show that for a function $F$,
 
 \begin{proof}
 
-  TODO
+  \paragraph{(b)}%
+  \label{par:exercise-3.25-b}
+
+    Let $G$ be a function.
+    Let $\left< x, y \right> \in G \circ G^{-1}$.
+    By definition of the \nameref{ref:composition} of sets, there exists some
+      set $t$ such that $x(G^{-1})t$ and $tGy$.
+    By definition of the \nameref{ref:inverse} of a set,
+      $$x(G^{-1})t \iff tGx.$$
+    By hypothesis, $G$ is single-valued.
+    Thus $x = y$.
+    That is, $G \circ G^{-1}$ is the identity function on $\ran{G}$.
+
+  \paragraph{(a)}%
+
+    This immediately follows from part \nameref{par:exercise-3.25-b}.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.26}}%
+\subsection{\pending{Exercise 3.26}}%
 \label{sub:exercise-3.26}
 
 Prove the second halves of parts (a) and (b) of Theorem 3K.
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{sub:theorem-3k-a}, \nameref{sub:theorem-3k-b}, and
+    \nameref{sub:theorem-3k-c}.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.27}}%
+\subsection{\pending{Exercise 3.27}}%
 \label{sub:exercise-3.27}
 
 Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
@@ -3910,7 +4239,36 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 
 \begin{proof}
 
-  TODO
+  Let $F$ and $G$ be arbitrary sets.
+  We show that each side of our desired equality is a subset of the other.
+
+  \paragraph{($\subseteq$)}%
+
+    Let $x \in \dom{(F \circ G)}$.
+    Then there exists a set $y$ such that $\left< x, y \right> \in F \circ G$.
+    By definition of the \nameref{ref:composition} of sets, there exists a set
+      $t$ such that $xGt$ and $tFy$.
+    Thus $t \in \dom{F}$.
+    Therefore
+      \begin{align*}
+        x
+          & \in \{v \mid (\exists t \in \dom{F}) vGt\} \\
+          & = \{v \mid (\exists t \in \dom{F}) t(G^{-1})v\} \\
+          & = \img{G^{-1}}{\dom{F}}.
+      \end{align*}
+
+  \paragraph{($\supseteq$)}%
+
+    Let $x \in \img{G^{-1}}{\dom{F}}$.
+    Then, by definition of the \nameref{ref:image} of a set, there exists some
+      $u \in \dom{F}$ such that $u(G^{-1})x$.
+    By definition of the \nameref{ref:inverse} of a set, $xGu$.
+    By definition of the \nameref{ref:domain} of a set, there exists some $t$
+      such that $uFt$.
+    Thus $xGu \land uFt$.
+    By definition of the \nameref{ref:composition} of sets,
+      $\left< x, t \right> \in F \circ G$.
+    Therefore $x \in \dom{(F \circ G)}$.
 
 \end{proof}
 
