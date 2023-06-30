@@ -48,10 +48,14 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
             LaTeX and Lean.
           </li>
           <li>
+            <span style="color:olive">Olive statements </span> are reserved for
+            statements, theorems, lemmas, etc. that have been proven in LaTeX
+            and will not be proven in Lean.
+          </li>
+          <li>
             <span style="color:fuchsia">Fuchsia statements </span> are reserved
             for definitions, axioms, statements, theorems, lemmas, etc. that
-            have been proven or encoded in LaTeX but not yet proven or encoded
-            in Lean.
+            have been proven or encoded in LaTeX and will be encoded in Lean.
           </li>
           <li>
             <span style="color:maroon">Maroon </span> serves as a catch-all for

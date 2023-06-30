@@ -36,6 +36,18 @@ The \textbf{characteristic function} of $S$ is the function $\mathcal{X}_S$ such
 
 \end{definition}
 
+\section{\defined{Completeness Axiom}}%
+\label{ref:completeness-axiom}
+
+Every nonempty set $S$ of real numbers which is bounded above has a supremum;
+  that is, there is a real number $B$ such that $B = \sup{S}$.
+
+\begin{axiom}
+
+  \lean*{Mathlib/Data/Real/Basic}{Real.exists\_isLUB}
+
+\end{axiom}
+
 \section{\defined{Infimum}}%
 \label{ref:infimum}
 
@@ -53,7 +65,7 @@ Such a number $B$ is also known as the \textbf{greatest lower bound}.
 
 \end{definition}
 
-\section{\partial{Integrable}}%
+\section{\pending{Integrable}}%
 \label{ref:integrable}
 
 Let $f$ be a function defined and bounded on $[a, b]$.
@@ -62,7 +74,7 @@ $f$ is said to be \textbf{integrable} if there exists one and only one number
 If $f$ is integrable on $[a, b]$, we say that the integral
   $\int_a^b f(x) \mathop{dx}$ \textbf{exists}.
 
-\section{\partial{Integral of a Bounded Function}}%
+\section{\pending{Integral of a Bounded Function}}%
 \label{ref:integral-bounded-function}
 
 Let $f$ be a function defined and bounded on $[a, b]$.
@@ -90,7 +102,7 @@ The function $f$ is called the \textbf{integrand}, the numbers $a$ and $b$ are
   called the \textbf{limits of integration}, and the interval $[a, b]$ the
   \textbf{interval of integration}.
 
-\section{\partial{Integral of a Step Function}}%
+\section{\pending{Integral of a Step Function}}%
 \label{ref:integral-step-function}
 
 Let $s$ be a \nameref{ref:step-function} defined on $[a, b]$, and let
@@ -106,7 +118,7 @@ The \textbf{integral of $s$ from $a$ to $b$}, denoted by the symbol
 If $a < b$, we define $\int_b^a s(x) \mathop{dx} = -\int_a^b s(x) \mathop{dx}$.
 We also define $\int_a^a s(x) \mathop{dx} = 0$.
 
-\section{\partial{Lower Integral}}%
+\section{\pending{Lower Integral}}%
 \label{ref:lower-integral}
 
 Let $f$ be a function bounded on $[a, b]$ and $S$ denote the set of numbers
@@ -116,7 +128,7 @@ That is, let $$S = \left\{ \int_a^b s(x) \mathop{dx} : s \leq f \right\}.$$
 The number $\sup{S}$ is called the \textbf{lower integral of $f$}.
 It is denoted as $\ubar{I}(f)$.
 
-\section{\partial{Monotonic}}%
+\section{\pending{Monotonic}}%
 \label{ref:monotonic}
 
 A function $f$ is called \textbf{monotonic} on set $S$ if it is increasing on
@@ -152,7 +164,7 @@ A collection of points satisfying \eqref{sec:partition-eq1} is called a
 
 \end{definition}
 
-\section{\partial{Refinement}}%
+\section{\pending{Refinement}}%
 \label{ref:refinement}
 
 Let $P$ be a \nameref{ref:partition} of closed interval $[a, b]$.
@@ -199,7 +211,7 @@ Such a number $B$ is also known as the \textbf{least upper bound}.
 
 \end{definition}
 
-\section{\partial{Upper Integral}}%
+\section{\pending{Upper Integral}}%
 \label{ref:upper-integral}
 
 Let $f$ be a function bounded on $[a, b]$ and $T$ denote the set of numbers
@@ -213,18 +225,6 @@ It is denoted as $\bar{I}(f)$.
 
 \chapter{A Set of Axioms for the Real-Number System}%
 \label{chap:set-axioms-real-number-system}
-
-\section{\defined{Completeness Axiom}}%
-\label{sec:completeness-axiom}
-
-Every nonempty set $S$ of real numbers which is bounded above has a supremum;
-  that is, there is a real number $B$ such that $B = \sup{S}$.
-
-\begin{axiom}
-
-  \lean*{Mathlib/Data/Real/Basic}{Real.exists\_isLUB}
-
-\end{axiom}
 
 \section{\verified{Lemma 1}}%
 \label{sec:lemma-1}
@@ -267,7 +267,7 @@ Every nonempty set $S$ of real numbers which is bounded above has a supremum;
 
   Let $S$ be a nonempty set bounded below by $x$.
   Then $-S$ is nonempty and bounded above by $x$.
-  By the \nameref{sec:completeness-axiom}, there exists a
+  By the \nameref{ref:completeness-axiom}, there exists a
     \nameref{ref:supremum} $L$ of $-S$.
   By \nameref{sec:lemma-1}, $L$ is a supremum of $-S$ if and only if $-L$ is an
     infimum of $S$.
@@ -731,7 +731,7 @@ If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
 
 \end{axiom}
 
-\subsection{\partial{Exhaustion Property}}%
+\subsection{\pending{Exhaustion Property}}%
 \label{sub:area-exhaustion-property}
 
 Let $Q$ be a set that can be enclosed between two step regions $S$ and $T$, so
@@ -754,12 +754,12 @@ If there is one and only one number $c$ which satisfies the inequalities
 \section{Exercises 1.7}%
 \label{sec:exercises-1.7}
 
-\subsection{\partial{Exercise 1.7.1}}%
+\subsection{\pending{Exercise 1.7.1}}%
 \label{sub:exercise-1.7.1}
 
 Prove that each of the following sets is measurable and has zero area:
 
-\subsubsection{\partial{Exercise 1.7.1a}}%
+\subsubsection{\pending{Exercise 1.7.1a}}%
 \label{ssub:exercise-1.7.1a}
 
 A set consisting of a single point.
@@ -775,7 +775,7 @@ A set consisting of a single point.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.7.1b}}%
+\subsubsection{\pending{Exercise 1.7.1b}}%
 \label{ssub:exercise-1.7.1b}
 
 A set consisting of a finite number of points in a plane.
@@ -834,7 +834,7 @@ A set consisting of a finite number of points in a plane.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.7.1c}}%
+\subsubsection{\pending{Exercise 1.7.1c}}%
 \label{ssub:exercise-1.7.1c}
 
 The union of a finite collection of line segments in a plane.
@@ -897,7 +897,7 @@ The union of a finite collection of line segments in a plane.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.2}}%
+\subsection{\pending{Exercise 1.7.2}}%
 \label{sub:exercise-1.7.2}
 
 Every right triangular region is measurable because it can be obtained as the
@@ -948,7 +948,7 @@ Prove that every triangular region is measurable and that its area is one half
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.3}}%
+\subsection{\pending{Exercise 1.7.3}}%
 \label{sub:exercise-1.7.3}
 
 Prove that every trapezoid and every parallelogram is measurable and derive the
@@ -1053,14 +1053,14 @@ Prove that every trapezoid and every parallelogram is measurable and derive the
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.4}}%
+\subsection{\pending{Exercise 1.7.4}}%
 \label{sub:exercise-1.7.4}
 
 Let $P$ be a polygon whose vertices are lattice points.
 The area of $P$ is $I + \frac{1}{2}B - 1$, where $I$ denotes the number of
   lattice points inside the polygon and $B$ denotes the number on the boundary.
 
-\subsubsection{\partial{Exercise 1.7.4a}}%
+\subsubsection{\pending{Exercise 1.7.4a}}%
 \label{ssub:exercise-1.7.4a}
 
 Prove that the formula is valid for rectangles with sides parallel to the
@@ -1088,7 +1088,7 @@ Prove that the formula is valid for rectangles with sides parallel to the
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.7.4b}}%
+\subsubsection{\pending{Exercise 1.7.4b}}%
 \label{ssub:exercise-1.7.4b}
 
 Prove that the formula is valid for right triangles and parallelograms.
@@ -1137,7 +1137,7 @@ Prove that the formula is valid for right triangles and parallelograms.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.7.4c}}%
+\subsubsection{\pending{Exercise 1.7.4c}}%
 \label{ssub:exercise-1.7.4c}
 
 Use induction on the number of edges to construct a proof for general polygons.
@@ -1203,7 +1203,7 @@ Use induction on the number of edges to construct a proof for general polygons.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.5}}%
+\subsection{\pending{Exercise 1.7.5}}%
 \label{sub:exercise-1.7.5}
 
 Prove that a triangle whose vertices are lattice points cannot be equilateral.
@@ -1239,7 +1239,7 @@ ways, using Exercises 2 and 4.]
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.7.6}}%
+\subsection{\pending{Exercise 1.7.6}}%
 \label{sub:exercise-1.7.6}
 
 Let $A = \{1, 2, 3, 4, 5\}$, and let $\mathscr{M}$ denote the class of all
@@ -1324,7 +1324,7 @@ Prove that the set function $n$ satisfies the first three axioms for area.
 \section{Exercises 1.11}%
 \label{sec:exercises-1-11}
 
-\subsection{\partial{Exercise 1.11.4}}%
+\subsection{\pending{Exercise 1.11.4}}%
 \label{sub:exercise-1.11.4}
 
 Prove that the greatest-integer function has the properties indicated:
@@ -1442,7 +1442,7 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.11.4d}}%
+\subsubsection{\pending{Exercise 1.11.4d}}%
 \label{ssub:exercise-1.11.4d}
 
 $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
@@ -1456,7 +1456,7 @@ $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.11.4e}}%
+\subsubsection{\pending{Exercise 1.11.4e}}%
 \label{ssub:exercise-1.11.4e}
 
 $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
@@ -1470,7 +1470,7 @@ $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
 
 \end{proof}
 
-\subsection{\partial{Hermite's Identity}}%
+\subsection{\pending{Hermite's Identity}}%
 \label{sub:hermites-identity}
 \label{sub:exercise-1.11.5}
 
@@ -1559,7 +1559,7 @@ State and prove such a generalization.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.11.6}}%
+\subsection{\pending{Exercise 1.11.6}}%
 \label{sub:exercise-1.11.6}
 
 Recall that a lattice point $(x, y)$ in the plane is one whose coordinates are
@@ -1602,7 +1602,7 @@ Prove that the number of lattice points in $S$ is equal to the sum
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.11.7}}%
+\subsection{\pending{Exercise 1.11.7}}%
 \label{sub:exercise-1.11.7}
 
 If $a$ and $b$ are positive integers with no common factor, we have the formula
@@ -1612,7 +1612,7 @@ When $b = 1$, the sum on the left is understood to be $0$.
 \note{When $b = 1$, the proofs of (a) and (b) are trivial. We continue under the
   assumption $b > 1$.}
 
-\subsubsection{\partial{Exercise 1.11.7a}}%
+\subsubsection{\pending{Exercise 1.11.7a}}%
 \label{ssub:exercise-1.11.7a}
 
 Derive this result by a geometric argument, counting lattice points in a right
@@ -1694,7 +1694,7 @@ Derive this result by a geometric argument, counting lattice points in a right
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.11.7b}}%
+\subsubsection{\pending{Exercise 1.11.7b}}%
 \label{ssub:exercise-1.11.7b}
 
 Derive the result analytically as follows:
@@ -1736,7 +1736,7 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.11.8}}%
+\subsection{\pending{Exercise 1.11.8}}%
 \label{sub:exercise-1.11.8}
 
 Let $S$ be a set of points on the real line.
@@ -1774,7 +1774,7 @@ This property is described by saying that every step function is a linear
 \section{Properties of the Integral of a Step Function}%
 \label{sec:properties-integral-step-function}
 
-\subsection{\partial{Additive Property}}%
+\subsection{\pending{Additive Property}}%
 \label{sub:step-additive-property}
 \label{sub:theorem-1.2}
 
@@ -1817,7 +1817,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Homogeneous Property}}%
+\subsection{\pending{Homogeneous Property}}%
 \label{sub:step-homogeneous-property}
 \label{sub:theorem-1.3}
 
@@ -1848,7 +1848,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Linearity Property}}%
+\subsection{\pending{Linearity Property}}%
 \label{sub:step-linearity-property}
 \label{sub:theorem-1.4}
 
@@ -1878,7 +1878,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Comparison Theorem}}%
+\subsection{\pending{Comparison Theorem}}%
 \label{sub:step-comparison-theorem}
 \label{sub:theorem-1.5}
 
@@ -1917,7 +1917,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Additivity With Respect to the Interval of Integration}}%
+\subsection{\pending{Additivity With Respect to the Interval of Integration}}%
 \label{sub:step-additivity-with-respect-interval-integration}
 \label{sub:theorem-1.6}
 
@@ -1963,7 +1963,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Invariance Under Translation}}%
+\subsection{\pending{Invariance Under Translation}}%
 \label{sub:step-invariance-under-translation}
 \label{sub:theorem-1.7}
 
@@ -2004,7 +2004,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Expansion or Contraction of the Interval of Integration}}%
+\subsection{\pending{Expansion or Contraction of the Interval of Integration}}%
 \label{sub:step-expansion-contraction-interval-integration}
 \label{sub:theorem-1.8}
 
@@ -2064,7 +2064,7 @@ This property is described by saying that every step function is a linear
 
 \end{proof}
 
-\subsection{\partial{Reflection Property}}%
+\subsection{\pending{Reflection Property}}%
 \label{sub:step-reflection-property}
 
 Let $s$ be a step function on closed interval $[a, b]$.
@@ -2085,12 +2085,12 @@ Then
 \section{Exercises 1.15}%
 \label{sec:exercises-1.15}
 
-\subsection{\partial{Exercise 1.15.1}}%
+\subsection{\pending{Exercise 1.15.1}}%
 \label{sub:exercise-1.15.1}
 
 Compute the value of each of the following integrals.
 
-\subsubsection{\partial{Exercise 1.15.1a}}%
+\subsubsection{\pending{Exercise 1.15.1a}}%
 \label{ssub:exercise-1.15.1a}
 
 $\int_{-1}^3 \floor{x} \mathop{dx}$.
@@ -2112,7 +2112,7 @@ $\int_{-1}^3 \floor{x} \mathop{dx}$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.1c}}%
+\subsubsection{\pending{Exercise 1.15.1c}}%
 \label{ssub:exercise-1.15.1c}
 
 $\int_{-1}^3 \left(\floor{x} + \floor{x + \frac{1}{2}}\right) \mathop{dx}$.
@@ -2140,7 +2140,7 @@ $\int_{-1}^3 \left(\floor{x} + \floor{x + \frac{1}{2}}\right) \mathop{dx}$.
 
 \end{proof}
 
-\subsubsection{\partial{Exericse 1.15.1e}}%
+\subsubsection{\pending{Exericse 1.15.1e}}%
 \label{ssub:exercise-1.15.1e}
 
 $\int_{-1}^3 \floor{2x} \mathop{dx}$.
@@ -2155,7 +2155,7 @@ $\int_{-1}^3 \floor{2x} \mathop{dx}$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.3}}%
+\subsection{\pending{Exercise 1.15.3}}%
 \label{sub:exercise-1.15.3}
 
 Show that
@@ -2186,10 +2186,10 @@ Show that
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.5}}%
+\subsection{\pending{Exercise 1.15.5}}%
 \label{sub:exercise-1.15.5}
 
-\subsubsection{\partial{Exercise 1.15.5a}}%
+\subsubsection{\pending{Exercise 1.15.5a}}%
 \label{ssub:exercise-1.15.5a}
 
 Prove that $\int_0^2 \floor{t^2} \mathop{dt} = 5 - \sqrt{2} - \sqrt{3}$.
@@ -2212,7 +2212,7 @@ Prove that $\int_0^2 \floor{t^2} \mathop{dt} = 5 - \sqrt{2} - \sqrt{3}$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.5b}}%
+\subsubsection{\pending{Exercise 1.15.5b}}%
 \label{ssub:exercise-1.15.5b}
 
 Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
@@ -2256,10 +2256,10 @@ Compute $\int_{-3}^3 \floor{t^2} \mathop{dt}$.
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.7}}%
+\subsection{\pending{Exercise 1.15.7}}%
 \label{sub:exercise-1.15.7}
 
-\subsubsection{\partial{Exercise 1.15.7a}}%
+\subsubsection{\pending{Exercise 1.15.7a}}%
 \label{ssub:exercise-1.15.7a}
 
 Compute $\int_0^9 \floor{\sqrt{t}} \mathop{dt}$.
@@ -2281,7 +2281,7 @@ Compute $\int_0^9 \floor{\sqrt{t}} \mathop{dt}$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.7b}}%
+\subsubsection{\pending{Exercise 1.15.7b}}%
 \label{ssub:exercise-1.15.7b}
 
 If $n$ is a positive integer, prove that
@@ -2356,7 +2356,7 @@ If $n$ is a positive integer, prove that
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.9}}%
+\subsection{\pending{Exercise 1.15.9}}%
 \label{sub:exercise-1.15.9}
 
 Show that the following property is equivalent to
@@ -2378,7 +2378,7 @@ Show that the following property is equivalent to
 
 \end{proof}
 
-\subsection{\partial{Exercise 1.15.11}}%
+\subsection{\pending{Exercise 1.15.11}}%
 \label{sub:exercise-1.15.11}
 
 If we instead defined the integral of step functions as
@@ -2389,7 +2389,7 @@ If we instead defined the integral of step functions as
   a new and different theory of integration would result.
 Which of the following properties would remain valid in this new theory?
 
-\subsubsection{\partial{Exercise 1.15.11a}}%
+\subsubsection{\pending{Exercise 1.15.11a}}%
 \label{ssub:exercise-1.15.11a}
 
 $\int_a^b s + \int_b^c s = \int_a^c s$.
@@ -2425,7 +2425,7 @@ $\int_a^b s + \int_b^c s = \int_a^c s$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.11b}}%
+\subsubsection{\pending{Exercise 1.15.11b}}%
 \label{ssub:exercise-1.15.11b}
 
 $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
@@ -2472,7 +2472,7 @@ $\int_a^b (s + t) = \int_a^b s + \int_a^b t$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.11c}}%
+\subsubsection{\pending{Exercise 1.15.11c}}%
 \label{ssub:exercise-1.15.11c}
 
 $\int_a^b c \cdot s = c \int_a^b s$.
@@ -2504,7 +2504,7 @@ $\int_a^b c \cdot s = c \int_a^b s$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.11d}}%
+\subsubsection{\pending{Exercise 1.15.11d}}%
 \label{ssub:exercise-1.15.11d}
 
 $\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
@@ -2542,7 +2542,7 @@ $\int_{a+c}^{b+c} s(x) \mathop{dx} = \int_a^b s(x + c) \mathop{dx}$.
 
 \end{proof}
 
-\subsubsection{\partial{Exercise 1.15.11e}}%
+\subsubsection{\pending{Exercise 1.15.11e}}%
 \label{ssub:exercise-1.15.11e}
 
 If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
@@ -2583,7 +2583,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \section{Upper and Lower Integrals}%
 \label{sec:upper-lower-integrals}
 
-\subsection{\partial{Theorem 1.9}}%
+\subsection{\pending{Theorem 1.9}}%
 \label{sub:theorem-1.9}
 
 \begin{theorem}[1.9]
@@ -2649,7 +2649,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 \section{The Area of an Ordinate Set Expressed as an Integral}%
 \label{sec:area-ordinate-set-expressed-integral}
 
-\subsection{\partial{Theorem 1.10}}%
+\subsection{\pending{Theorem 1.10}}%
 \label{sub:theorem-1.10}
 
 \begin{theorem}[1.10]
@@ -2676,7 +2676,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\subsection{\partial{Theorem 1.11}}%
+\subsection{\pending{Theorem 1.11}}%
 \label{sub:theorem-1.11}
 
 \begin{theorem}[1.11]
@@ -2733,7 +2733,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
   {Integrability of Bounded Monotonic \texorpdfstring{\\}{}Functions}
 \label{sec:integrability-bounded-monotonic-functions}
 
-\subsection{\partial{Theorem 1.12}}%
+\subsection{\pending{Theorem 1.12}}%
 \label{sub:theorem-1.12}
 
 \begin{theorem}[1.12]
@@ -2837,7 +2837,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\subsection{\partial{Theorem 1.13}}%
+\subsection{\pending{Theorem 1.13}}%
 \label{sub:theorem-1.13}
 
 \begin{theorem}[1.13]
@@ -2909,7 +2909,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\subsection{\partial{Theorem 1.14}}%
+\subsection{\pending{Theorem 1.14}}%
 \label{sub:theorem-1.14}
 
 \begin{theorem}[1.14]
@@ -2981,7 +2981,7 @@ If $s(x) < t(x)$ for each $x$ in $[a, b]$, then $\int_a^b s < \int_a^b t$.
 
 \end{proof}
 
-\subsection{\unverified{%
+\subsection{\sorry{%
   Integral of \texorpdfstring{$\int_0^b x^p \mathop{dx}$}{int-x-p} when
     \texorpdfstring{$p$}{p} is a Positive Integer}}%
 \label{sub:calculation-integral-int-x-p-p-positive-integer}
