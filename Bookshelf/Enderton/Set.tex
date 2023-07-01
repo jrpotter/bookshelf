@@ -71,8 +71,8 @@ There is a set having no members:
 \section{\pending{Equivalence Relation}}%
 \label{ref:equivalence-relation}
 
-Relation $R$ is an \textbf{equivalence relation} if and only if $R$ is a binary
-  \nameref{ref:relation} that is \nameref{ref:reflexive},
+Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
+  $R$ is a binary \nameref{ref:relation} that is \nameref{ref:reflexive} on $A$,
   \nameref{ref:symmetric}, and \nameref{ref:transitive}.
 
 \section{\defined{Extensionality Axiom}}%
@@ -202,6 +202,16 @@ For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
 
 \end{axiom}
 
+\section{\pending{Partition}}%
+\label{ref:partition}
+
+A \textbf{partition} $\Pi$ of a set $A$ is a set of nonempty subsets of $A$ that
+  is disjoint and exhaustive, i.e.
+  \begin{enumerate}[(a)]
+    \item no two different sets in $\Pi$ have any common elements, and
+    \item each element of $A$ is in some set in $\Pi$.
+  \end{enumerate}
+
 \section{\defined{Power Set}}%
 \label{ref:power-set}
 
@@ -225,6 +235,14 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
   \lean*{Mathlib/Init/Set}{Set.powerset}
 
 \end{axiom}
+
+\section{\pending{Quotient Set}}%
+\label{ref:quotient-set}
+
+If $R$ is an \nameref{ref:equivalence-relation} on set $A$, then we can define
+  the \textbf{quotient set} $$A / R = \{[x]_R \mid x \in A\}$$ whose members are
+  the equivalence classes.
+The expression $A / R$ is read "$A$ modulo $R$.
 
 \section{\defined{Range}}%
 \label{ref:range}
@@ -283,8 +301,8 @@ For each formula $\phi$ not containing $B$, the following is an axiom:
 \section{\pending{Symmetric}}%
 \label{ref:symmetric}
 
-A binary relation $R$ is \textbf{symmetric} on $A$ if and only if whenever
-  $xRy$ then $yRx$.
+A binary relation $R$ is \textbf{symmetric} if and only if whenever $xRy$ then
+  $yRx$.
 
 \section{\defined{Symmetric Difference}}%
 \label{ref:symmetric-difference}
@@ -301,15 +319,16 @@ The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
 \section{\pending{Transitive}}%
 \label{ref:transitive}
 
-A binary relation $R$ is \textbf{transitive} on $A$ if and only if whenever
-  $xRy$ and $yRz$, then $xRz$.
+A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
+  $yRz$, then $xRz$.
 
 \section{\defined{Union Axiom}}%
 \label{ref:union-axiom}
 
 For any set $A$, there exists a set $B$ whose elements are exactly the members
   of the members of $A$:
-  $$\forall A, \exists B, \forall x \left[ x \in B \iff (\exists b \in A) x \in b \right]$$
+  $$\forall A, \exists B, \forall x
+    \left[ x \in B \iff (\exists b \in A) x \in b \right]$$
 
 \begin{axiom}
 
@@ -3187,9 +3206,10 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     \nameref{ref:relation}.
   By definition, the \nameref{ref:field} of $R$ is given by
     $\fld{R} = \dom{R} \cup \ran{R}$.
-  An \nameref{ref:equivalence-relation} is, by definition, a
-    \nameref{ref:reflexive}, symmetric, and transitive relation.
-  Thus all that remains is to show $R$ is reflexive on $\fld{R}$.
+  An \nameref{ref:equivalence-relation} on $\fld{R}$ is, by definition, a
+    binary relation \nameref{ref:reflexive} on $\fld{R}$, symmetric, and
+    transitive.
+  All that remains is to show $R$ is reflexive on $\fld{R}$.
 
   Let $x \in \fld{R}$.
   Then $x \in \dom{R}$ or $x \in \ran{R}$.
@@ -3200,6 +3220,69 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   Since $R$ is symmetric, it follows $xRt$.
   Since $R$ is transitive, it follows $xRx$.
   Thus $R$ is reflexive on $\fld{R}$.
+
+\end{proof}
+
+\subsection{\pending{Lemma 3N}}%
+\label{sub:lemma-3n}
+
+\begin{lemma}[3N]
+
+  Assume that $R$ is an equivalence relation on $A$ and that $x$ and $y$ belong
+    to $A$.
+  Then $$[x]_R = [y]_R \iff xRy.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  Suppose $R$ is an \nameref{ref:equivalence-relation} on set $A$.
+  Let $x, y \in A$.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $[x]_R = [y]_R$.
+    Since $R$ is an equivalence relation, it is reflexive on $A$.
+    Thus $yRy$ meaning $y \in [y]_R = \{t \mid yRt\}$.
+    Since $[x]_R = [y]_R$, $y \in \{t \mid xRt\}$ as well.
+    That is, $xRy$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $xRy$.
+    We show $[x]_R \subseteq [y]_R$ and $[y]_R \subseteq [x]_R$.
+
+    \subparagraph{($\subseteq$)}%
+
+      Let $t \in [x]_R$.
+      Then $xRt$.
+      Since $R$ is symmetric, $xRy$ implies $yRx$.
+      Since $R$ is transitive, $yRx$ and $xRt$ implies $yRt$.
+      Thus $t \in [y]_R$.
+
+    \subparagraph{($\supseteq$)}%
+
+      Let $t \in [y]_R$.
+      Then $yRt$.
+      Since $R$ is transitive, $xRy$ and $yRt$ implies $xRt$.
+      Thus $t \in [x]_R$.
+
+\end{proof}
+
+\subsection{\sorry{Theorem 3P}}%
+\label{sub:theorem-3p}
+
+\begin{theorem}[3P]
+
+  Assume that $R$ is an equivalence relation on $A$.
+  Then the set $\{[x]_R \mid x \in A\}$ of all equivalence classes is a
+    partition of $A$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
