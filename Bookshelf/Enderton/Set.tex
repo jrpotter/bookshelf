@@ -32,6 +32,13 @@ For any relation $R$ there is a function $H \subseteq R$ with
 For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
   for all $i \in I$, then $$\bigtimes_{i \in I} H(i) \neq \emptyset.$$
 
+\section{\pending{Compatible}}%
+\label{sec:compatible}
+
+A \nameref{ref:function} $F$ is \textbf{compatible} with relation $R$ if and
+  only if for all $x$ and $y$ in $A$,
+  $$xRy \Rightarrow F(x)RF(y).$$
+
 \section{\defined{Composition}}%
 \label{ref:composition}
 
@@ -3269,7 +3276,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\sorry{Theorem 3P}}%
+\subsection{\pending{Theorem 3P}}%
 \label{sub:theorem-3p}
 
 \begin{theorem}[3P]
@@ -3277,6 +3284,50 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   Assume that $R$ is an equivalence relation on $A$.
   Then the set $\{[x]_R \mid x \in A\}$ of all equivalence classes is a
     partition of $A$.
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $\Pi = \{[x]_R \mid x \in A\}$.
+  We show that (i) no two different sets in $\Pi$ have any common elements and
+    (ii) that each element of $A$ is in some set in $\Pi$.
+
+  \paragraph{(i)}%
+
+    Let $[x]_R, [y]_R \in \Pi$ be two different sets.
+    We must show that $[x]_R \cap [y]_R = \emptyset$.
+    For the sake of contradiction, suppose $[x]_R \cap [y]_R \neq \emptyset$.
+    Let $z \in [x]_R \cap [y]_R$.
+    Then $xRz$ and $yRz$.
+    Since $R$ is an \nameref{ref:equivalence-relation} on $A$, it is
+      \nameref{ref:symmetric} and \nameref{ref:transitive}.
+    Then $zRy$ and $xRy$.
+    By \nameref{sub:lemma-3n}, $xRy$ if and only if $[x]_R = [y]_R$,
+      contradicting the distinctness of $[x]_R$ and $[y]_R$.
+    Thus it follows $[x]_R \cap [y]_R] = \emptyset$.
+
+  \paragraph{(ii)}%
+
+    Let $x \in A$.
+    Since $R$ is an \nameref{ref:equivalence-relation} on $A$, it follows
+      $xRx$.
+    Thus $x$ is a member of some set in $\Pi$, namely $[x]_R$.
+
+\end{proof}
+
+\subsection{\sorry{Theorem 3Q}}%
+\label{sub:theorem-3q}
+
+\begin{theorem}[3Q]
+
+  Assume that $R$ is an equivalence relation on $A$ and that
+    $F \colon A \rightarrow A$.
+  If $F$ is compatible with $R$, then there exists a unique
+    $\hat{F} \colon A / R \rightarrow A / R$ such that
+    $$\hat{F}([x]_R) = [F(x)]_R \quad\text{for all } x \text{ in } A.$$
+  If $F$ is not compatible with $R$, then no such $\hat{F}$ exists.
+  Analogous results apply to functions from $A \times A$ into $A$.
 
 \end{theorem}
 
@@ -4409,6 +4460,166 @@ Define
 
 Show that from the first form of the axiom of choice we can prove the second
   form, and conversely.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.32}}%
+\label{sub:exercise-3.32}
+
+\begin{enumerate}[(a)]
+  \item Show that $R$ is symmetric iff $R^{-1} \subseteq R$.
+  \item Show that $R$ is transitive iff $R \circ R \subseteq R$.
+\end{enumerate}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.33}}%
+\label{sub:exercise-3.33}
+
+Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.34}}%
+\label{sub:exercise-3.34}
+
+Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
+  transitive relation.
+
+\begin{enumerate}[(a)]
+  \item Is the set $\bigcap{\mathscr{A}}$ a transitive relation?
+  \item Is $\bigcup{\mathscr{A}}$ a transitive relation?
+\end{enumerate}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.35}}%
+\label{sub:exercise-3.35}
+
+Show that for any $R$ and $x$, we have $[x]_R = \img{R}{\{x\}}$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.36}}%
+\label{sub:exercise-3.36}
+
+Assume that $f \colon A \rightarrow B$ and that $R$ is an equivalence relation
+  on $B$.
+Define $Q$ to be the set
+  $$\{\left< x, y \right> \in A \times A \mid
+    \left< f(x), f(x) \right> \in R\}.$$
+Show that $Q$ is an equivalence relation on $A$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.37}}%
+\label{sub:exercise-3.37}
+
+Assume that $\Pi$ is a partition of a set $A$.
+Define the relation $R_\Pi$ as follows:
+  $$xR_{\Pi}y \iff (\exists B \in \Pi)(x \in B \land y \in B).$$
+Show that $R_\Pi$ is an equivalence relation on $A$.
+(This is a formalized version of the discussion at the beginning of this
+  section.)
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.38}}%
+\label{sub:exercise-3.38}
+
+Theorem 3P shows that $A / R$ is a partition of $A$ whenever $R$ is an
+  equivalence relation on $A$.
+Show that if we start with the equivalence relation $R_\Pi$ of the preceding
+  exercise, then the partition $A / R_\Pi$ is just $\Pi$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.39}}%
+\label{sub:exercise-3.39}
+
+Assume that we start with an equivalence relation $R$ on $A$ and define $\Pi$ to
+  be the partition $A / R$.
+Show that $R_\Pi$, as defined in Exercise 37, is just $R$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.40}}%
+\label{sub:exercise-3.40}
+
+Define an equivalence relation $R$ on the set $P$ of positive integers by
+  $$mRn \iff m \text{ and } n \text{ have the same number of prime factors}.$$
+Is there a function $f \colon P / R \rightarrow P / R$ such that
+  $f([n]_R) = [3n]_R$ for each $n$?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.41}}%
+\label{sub:exercise-3.41}
+
+Let $\mathbb{R}$ be the set of real numbers and define the relation $Q$ on
+  $\mathbb{R} \times \mathbb{R}$ by $\left< u, v \right>Q \left< x, y \right>$
+  iff $u + y = x + v$.
+
+\begin{enumerate}[(a)]
+  \item Show that $Q$ is an equivalence relation on
+    $\mathbb{R} \times \mathbb{R}$.
+  \item Is there a function $G \colon (\mathbb{R} \times \mathbb{R}) / Q
+    \rightarrow (\mathbb{R} \times \mathbb{R}) / Q$ satisfying the equation
+    $$G([\left< x, y \right>]_Q) = [\left< x + 2y, y + 2x \right>]_Q?$$
+
+\end{enumerate}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.42}}%
+\label{sub:exercise-3.42}
+
+State precisely the "analogous results" mentioned in Theorem 3Q.
+(This will require extending the concept of compatibility in a suitable way.)
 
 \begin{proof}
 

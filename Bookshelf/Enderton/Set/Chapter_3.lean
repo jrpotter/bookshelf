@@ -518,7 +518,8 @@ theorem theorem_3j_a {F : Set.Relation α} {A B : Set α}
     intro y hy
     have ⟨x, hx⟩ := ran_exists hy
     sorry
-  · sorry
+  · intro h
+    sorry
 
 /-- #### Theorem 3J (b)
 
