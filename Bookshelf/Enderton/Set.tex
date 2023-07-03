@@ -20,24 +20,42 @@
 \chapter{Reference}%
 \label{chap:reference}
 
-\section{\pending{Axiom of Choice, First Form}}%
+\section{\defined{Axiom of Choice, First Form}}%
 \label{ref:axiom-of-choice-1}
 
 For any relation $R$ there is a function $H \subseteq R$ with
   $\dom{H} = \dom{R}$.
 
-\section{\pending{Axiom of Choice, Second Form}}%
+\begin{axiom}
+
+  \lean*{Init/Prelude}{Classical.choice}
+
+\end{axiom}
+
+\section{\defined{Axiom of Choice, Second Form}}%
 \label{ref:axiom-of-choice-2}
 
 For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
   for all $i \in I$, then $$\bigtimes_{i \in I} H(i) \neq \emptyset.$$
 
-\section{\pending{Compatible}}%
+\begin{axiom}
+
+  \lean*{Init/Prelude}{Classical.choice}
+
+\end{axiom}
+
+\section{\defined{Compatible}}%
 \label{sec:compatible}
 
 A \nameref{ref:function} $F$ is \textbf{compatible} with relation $R$ if and
   only if for all $x$ and $y$ in $A$,
   $$xRy \Rightarrow F(x)RF(y).$$
+
+\begin{definition}
+
+  \lean*{Init/Core}{Quotient.lift}
+
+\end{definition}
 
 \section{\defined{Composition}}%
 \label{ref:composition}
@@ -75,12 +93,18 @@ There is a set having no members:
 
 \end{axiom}
 
-\section{\pending{Equivalence Relation}}%
+\section{\defined{Equivalence Relation}}%
 \label{ref:equivalence-relation}
 
 Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
   $R$ is a binary \nameref{ref:relation} that is \nameref{ref:reflexive} on $A$,
   \nameref{ref:symmetric}, and \nameref{ref:transitive}.
+
+\begin{definition}
+
+  \lean*{Init/Core}{Equivalence}
+
+\end{definition}
 
 \section{\defined{Extensionality Axiom}}%
 \label{ref:extensionality-axiom}
@@ -209,7 +233,7 @@ For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
 
 \end{axiom}
 
-\section{\pending{Partition}}%
+\section{\defined{Partition}}%
 \label{ref:partition}
 
 A \textbf{partition} $\Pi$ of a set $A$ is a set of nonempty subsets of $A$ that
@@ -218,6 +242,12 @@ A \textbf{partition} $\Pi$ of a set $A$ is a set of nonempty subsets of $A$ that
     \item no two different sets in $\Pi$ have any common elements, and
     \item each element of $A$ is in some set in $\Pi$.
   \end{enumerate}
+
+\begin{definition}
+
+  \lean*{Mathlib/Data/Setoid/Partition}{Setoid.IsPartition}
+
+\end{definition}
 
 \section{\defined{Power Set}}%
 \label{ref:power-set}
@@ -243,13 +273,19 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
 
 \end{axiom}
 
-\section{\pending{Quotient Set}}%
+\section{\defined{Quotient Set}}%
 \label{ref:quotient-set}
 
 If $R$ is an \nameref{ref:equivalence-relation} on set $A$, then we can define
   the \textbf{quotient set} $$A / R = \{[x]_R \mid x \in A\}$$ whose members are
   the equivalence classes.
 The expression $A / R$ is read "$A$ modulo $R$.
+
+\begin{definition}
+
+  \lean*{Init/Core}{Quotient}
+
+\end{definition}
 
 \section{\defined{Range}}%
 \label{ref:range}
@@ -263,11 +299,17 @@ The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
 
 \end{definition}
 
-\section{\pending{Reflexive}}%
+\section{\defined{Reflexive}}%
 \label{ref:reflexive}
 
 A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
   $x \in A$.
+
+\begin{definition}
+
+  \lean*{Init/Core}{Equivalence.refl}
+
+\end{definition}
 
 \section{\defined{Relation}}%
 \label{ref:relation}
@@ -305,11 +347,17 @@ For each formula $\phi$ not containing $B$, the following is an axiom:
 
 \end{axiom}
 
-\section{\pending{Symmetric}}%
+\section{\defined{Symmetric}}%
 \label{ref:symmetric}
 
 A binary relation $R$ is \textbf{symmetric} if and only if whenever $xRy$ then
   $yRx$.
+
+\begin{definition}
+
+  \lean*{Init/Core}{Equivalence.symm}
+
+\end{definition}
 
 \section{\defined{Symmetric Difference}}%
 \label{ref:symmetric-difference}
@@ -323,11 +371,17 @@ The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
 
 \end{definition}
 
-\section{\pending{Transitive}}%
+\section{\defined{Transitive}}%
 \label{ref:transitive}
 
 A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
   $yRz$, then $xRz$.
+
+\begin{definition}
+
+  \lean*{Init/Core}{Equivalence.trans}
+
+\end{definition}
 
 \section{\defined{Union Axiom}}%
 \label{ref:union-axiom}
@@ -4406,32 +4460,82 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.28}}%
+\subsection{\pending{Exercise 3.28}}%
 \label{sub:exercise-3.28}
 
 Assume that $f$ is a one-to-one function from $A$ into $B$, and that $G$ is the
   function with $\dom{G} = \powerset{A}$ defined by the equation
-  $G(X) = \img{f}{x}$.
+  $G(X) = \img{f}{X}$.
 Show that $G$ maps $\powerset{A}$ one-to-one into $\powerset{B}$.
 
 \begin{proof}
 
-  TODO
+  By construction, $\dom{G} = \powerset{A}$.
+  Likewise, $\ran{G} \subseteq \powerset{B}$ by definition of the
+    \nameref{ref:image} of sets.
+  Let $y \in \ran{G}$.
+  Then there exists an $X_1 \in \powerset{A}$ such that $\img{f}{X_1} = y$.
+  To prove $G$ is one-to-one into $\powerset{B}$, assume there exists an
+    $X_2 \in \powerset{A}$ such that $\img{f}{X_2} = y$.
+  All that remains is showing $X_1 = X_2$.
+
+  Let $t \in X_1$.
+  By definition of the \nameref{ref:image} of a set, $f(t) \in \img{f}{X_1}$.
+  Since $\img{f}{X_1} = \img{f}{X_2}$, it follows $f(t) \in \img{f}{X_2}$.
+  Because $f$ is one-to-one, $f(t) \in \img{f}{X_2}$ if and only if $t \in X_2$.
+  Thus $t \in X_1$ if and only if $t \in X_2$.
+  By the \nameref{ref:extensionality-axiom}, it follows $X_1 = X_2$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.29}}%
+\subsection{\pending{Exercise 3.29}}%
 \label{sub:exercise-3.29}
 
 Assume that $f \colon A \rightarrow B$ and define a function
   $G \colon B \rightarrow \powerset{A}$ by
-  $$G(b) = \{x \in A \mid f(x) = b\}.$$
+  \begin{equation}
+    \label{sub:exercise-3.29-eq1}
+    G(b) = \{x \in A \mid f(x) = b\}.
+  \end{equation}
 Show that if $f$ maps $A$ \textit{onto} $B$, then $G$ is one-to-one.
 Does the converse hold?
 
 \begin{proof}
 
-  TODO
+  Let $f \colon A \rightarrow B$ such that $f$ maps $A$ onto $B$.
+  Define $G \colon B \rightarrow \powerset{A}$ by
+    \eqref{sub:exercise-3.29-eq1}.
+  Let $y \in \ran{G}$.
+  By definition of the \nameref{ref:range} of a set, there exists an
+    $x_1 \in B$ such that $G(x_1) = y$.
+  To prove $G$ is one-to-one, suppose there exists an $x_2 \in B$ such
+    that $G(x_2) = y$.
+  All that remains is proving $x_1 = x_2$.
+
+  By \eqref{sub:exercise-3.29-eq1}, it follows
+    \begin{align*}
+      G(x_1) & = \{x \in A \mid f(x) = x_1\} \\
+      G(x_2) & = \{x \in A \mid f(x) = x_2\}.
+    \end{align*}
+  Since $f$ maps $A$ onto $B$, $\ran{f} = B$.
+  Thus $x_2, x_2 \in \ran{f}$.
+  By definition of the \nameref{ref:range} of a set, there exist some $t \in A$
+    such that $f(t) = x_1$.
+  Therefore $t \in G(x_1)$.
+  By the \nameref{ref:extensionality-axiom}, $t \in G(x_2)$.
+  Then $f(t) = x_2$.
+  But $f$ is a \nameref{ref:function}, i.e. single-valued.
+  Thus $x_1 = x_2$.
+
+  \suitdivider
+  If $G$ is one-to-one, it does not follow that $f$ maps $A$ onto $B$.
+  As a counterexample, let $f \colon \{1\} \rightarrow \{1, 2\}$ given by
+    $f(x) = x$.
+  Define $G \colon \{1, 2\} \rightarrow \powerset{\{1\}}$ by
+    $$G(b) = \{x \in \{1\} \mid f(x) = b\}.$$
+  $G$ is trivially one-to-one since $G(1) = \{1\}$ and $G(2) = \emptyset$.
+  But $f$ does not map onto $\{1, 2\}$; there is no element in its domain that
+    corresponds to value $2$.
 
 \end{proof}
 

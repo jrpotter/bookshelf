@@ -285,7 +285,6 @@ theorem one_to_one_self_iff_one_to_one_inv {R : Relation α}
   · intro ⟨hx, hy⟩
     exact ⟨hy, hx⟩
 
-
 /-! ## Composition -/
 
 /--
