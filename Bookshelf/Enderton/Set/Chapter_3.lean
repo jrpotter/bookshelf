@@ -534,6 +534,186 @@ theorem theorem_3j_b {F : Set.Relation α} {A B : Set α}
         (∀ p ∈ F.comp H, p.1 = p.2)) ↔ F.mapsOnto A B := by
   sorry
 
+/-- #### Theorem 3K (a)
+
+The following hold for any sets. (`F` need not be a function.)
+The image of a union is the union of the images:
+```
+F⟦⋃ 𝓐⟧ = ⋃ {F⟦A⟧ | A ∈ 𝓐}
+```
+-/
+theorem theorem_3k_a {F : Set.Relation α} {𝓐 : Set (Set α)}
+  : F.image (⋃₀ 𝓐) = ⋃₀ { F.image A | A ∈ 𝓐 } := by
+  rw [Set.Subset.antisymm_iff]
+  apply And.intro
+  · show ∀ v, v ∈ F.image (⋃₀ 𝓐) → v ∈ ⋃₀ { F.image A | A ∈ 𝓐 }
+    intro v hv
+    unfold image at hv
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq] at hv
+    have ⟨u, hu⟩ := hv
+    have ⟨A, hA⟩ := hu.left
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq, exists_exists_and_eq_and]
+    refine ⟨A, hA.left, ?_⟩
+    show v ∈ F.image A
+    unfold image
+    simp only [Set.mem_setOf_eq]
+    exact ⟨u, hA.right, hu.right⟩
+  · show ∀ v, v ∈ ⋃₀ {x | ∃ A, A ∈ 𝓐 ∧ F.image A = x} → v ∈ F.image (⋃₀ 𝓐)
+    intro v hv
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq, exists_exists_and_eq_and] at hv
+    have ⟨A, hA⟩ := hv
+    unfold image at hA
+    simp only [Set.mem_setOf_eq] at hA
+    have ⟨u, hu⟩ := hA.right
+    unfold image
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq]
+    exact ⟨u, ⟨A, hA.left, hu.left⟩, hu.right⟩
+
+/-! #### Theorem 3K (b)
+
+The following hold for any sets. (`F` need not be a function.)
+The image of an intersection is included in the intersection of the images:
+```
+F⟦⋂ 𝓐⟧ ⊆ ⋂ {F⟦A⟧ | A ∈ 𝓐}
+```
+Equality holds if `F` is single-rooted.
+-/
+
+theorem theorem_3k_b_i {F : Set.Relation α} {𝓐 : Set (Set α)}
+  : F.image (⋂₀ 𝓐) ⊆ ⋂₀ { F.image A | A ∈ 𝓐} := by
+  show ∀ v, v ∈ F.image (⋂₀ 𝓐) → v ∈ ⋂₀ { F.image A | A ∈ 𝓐}
+  intro v hv
+  unfold image at hv
+  simp only [Set.mem_sInter, Set.mem_setOf_eq] at hv
+  have ⟨u, hu⟩ := hv
+  simp only [
+    Set.mem_sInter,
+    Set.mem_setOf_eq,
+    forall_exists_index,
+    and_imp,
+    forall_apply_eq_imp_iff₂
+  ]
+  intro A hA
+  unfold image
+  simp only [Set.mem_setOf_eq]
+  exact ⟨u, hu.left A hA, hu.right⟩
+
+theorem theorem_3k_b_ii {F : Set.Relation α} {𝓐 : Set (Set α)}
+  (hF : F.isSingleRooted) (h𝓐 : Set.Nonempty 𝓐)
+  : F.image (⋂₀ 𝓐) = ⋂₀ { F.image A | A ∈ 𝓐} := by
+  rw [Set.Subset.antisymm_iff]
+  refine ⟨theorem_3k_b_i, ?_⟩
+  show ∀ v, v ∈ ⋂₀ {x | ∃ A, A ∈ 𝓐 ∧ image F A = x} → v ∈ image F (⋂₀ 𝓐)
+  intro v hv
+  simp only [
+    Set.mem_sInter,
+    Set.mem_setOf_eq,
+    forall_exists_index,
+    and_imp,
+    forall_apply_eq_imp_iff₂
+  ] at hv
+  unfold image at hv
+  simp only [Set.mem_setOf_eq] at hv
+  have ⟨u, hu⟩ : ∃ u, (∀ (a : Set α), a ∈ 𝓐 → u ∈ a) ∧ (u, v) ∈ F := by
+    have ⟨A, hA⟩ := h𝓐
+    have ⟨_, ⟨_, hv'⟩⟩ := hv A hA
+    have ⟨u, hu⟩ := hF v (mem_pair_imp_snd_mem_ran hv')
+    simp only [and_imp] at hu
+    refine ⟨u, ?_, hu.left.right⟩
+    intro a ha
+    have ⟨u₁, hu₁⟩ := hv a ha
+    have := hu.right u₁ (mem_pair_imp_fst_mem_dom hu₁.right) hu₁.right
+    rw [← this]
+    exact hu₁.left
+  unfold image
+  simp only [Set.mem_sInter, Set.mem_setOf_eq]
+  exact ⟨u, hu⟩
+
+/-! #### Theorem 3K (c)
+
+The following hold for any sets. (`F` need not be a function.)
+The image of a difference includes the difference of the images:
+```
+F⟦A⟧ - F⟦B⟧ ⊆ F⟦A - B⟧.
+```
+Equality holds if `F` is single-rooted.
+-/
+
+theorem theorem_3k_c_i {F : Set.Relation α} {A B : Set α}
+  : F.image A \ F.image B ⊆ F.image (A \ B) := by
+  show ∀ v, v ∈ F.image A \ F.image B → v ∈ F.image (A \ B)
+  intro v hv
+  have hv' : v ∈ image F A ∧ v ∉ image F B := hv
+  conv at hv' => arg 1; unfold image; simp only [Set.mem_setOf_eq, eq_iff_iff]
+  have ⟨u, hu⟩ := hv'.left
+  have hw : ∀ w ∈ B, (w, v) ∉ F := by
+    intro w hw nw
+    have nv := hv'.right
+    unfold image at nv
+    simp only [Set.mem_setOf_eq, not_exists, not_and] at nv
+    exact absurd nw (nv w hw)
+  have hu' : u ∉ B := by
+    by_contra nu
+    exact absurd hu.right (hw u nu)
+  unfold image
+  simp only [Set.mem_diff, Set.mem_setOf_eq]
+  exact ⟨u, ⟨hu.left, hu'⟩, hu.right⟩
+
+theorem theorem_3k_c_ii {F : Set.Relation α} {A B : Set α}
+  (hF : F.isSingleRooted)
+  : F.image A \ F.image B = F.image (A \ B) := by
+  rw [Set.Subset.antisymm_iff]
+  refine ⟨theorem_3k_c_i, ?_⟩
+  show ∀ v, v ∈ image F (A \ B) → v ∈ image F A \ image F B
+  intro v hv
+  unfold image at hv
+  simp only [Set.mem_diff, Set.mem_setOf_eq] at hv
+  have ⟨u, hu⟩ := hv
+  have hv₁ : v ∈ F.image A := by
+    unfold image
+    simp only [Set.mem_setOf_eq]
+    exact ⟨u, hu.left.left, hu.right⟩
+  have hv₂ : v ∉ F.image B := by
+    intro nv
+    unfold image at nv
+    simp only [Set.mem_setOf_eq] at nv
+    have ⟨u₁, hu₁⟩ := nv
+    have ⟨x, hx⟩ := hF v (mem_pair_imp_snd_mem_ran hu.right)
+    simp only [and_imp] at hx
+    have hr₁ := hx.right u (mem_pair_imp_fst_mem_dom hu.right) hu.right
+    have hr₂ := hx.right u₁ (mem_pair_imp_fst_mem_dom hu₁.right) hu₁.right
+    rw [hr₂, ← hr₁] at hu₁
+    exact absurd hu₁.left hu.left.right
+  exact ⟨hv₁, hv₂⟩
+
+/-! #### Corollary 3L
+
+For any function `G` and sets `A`, `B`, and `𝓐`:
+
+```
+G⁻¹⟦⋃ 𝓐⟧ = ⋃ {G⁻¹⟦A⟧ | A ∈ 𝓐},
+G⁻¹⟦𝓐⟧ = ⋂ {G⁻¹⟦A⟧ | A ∈ 𝓐} for 𝓐 ≠ ∅,
+G⁻¹⟦A - B⟧ = G⁻¹⟦A⟧ - G⁻¹⟦B⟧.
+```
+-/
+
+theorem corollary_3l_i {G : Set.Relation α} {𝓐 : Set (Set α)}
+  : G.inv.image (⋃₀ 𝓐) = ⋃₀ {G.inv.image A | A ∈ 𝓐} := theorem_3k_a
+
+theorem corollary_3l_ii {G : Set.Relation α} {𝓐 : Set (Set α)}
+  (hG : G.isSingleValued) (h𝓐 : Set.Nonempty 𝓐)
+  : G.inv.image (⋂₀ 𝓐) = ⋂₀ {G.inv.image A | A ∈ 𝓐} := by
+  have hG' : G.inv.isSingleRooted :=
+    single_valued_self_iff_single_rooted_inv.mp hG
+  exact theorem_3k_b_ii hG' h𝓐
+
+theorem corollary_3l_iii {G : Set.Relation α} {A B : Set α}
+  (hG : G.isSingleValued)
+  : G.inv.image (A \ B) = G.inv.image A \ G.inv.image B := by
+  have hG' : G.inv.isSingleRooted :=
+    single_valued_self_iff_single_rooted_inv.mp hG
+  exact (theorem_3k_c_ii hG').symm
+
 end
 
 end Enderton.Set.Chapter_3

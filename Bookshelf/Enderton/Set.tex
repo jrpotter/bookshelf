@@ -44,8 +44,18 @@ For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
 
 \end{axiom}
 
+\section{\pending{Cartesian Product}}%
+\label{ref:cartesian-product}
+
+Let $I$ be a set and let $H$ be a \nameref{ref:function} whose domain includes $I$.
+Then for each $i$ in $I$ we have the set $H(i)$.
+We define the \textbf{cartesian product} of the $H(i)$'s as
+  $$\bigtimes_{i \in I} H(i) = \{f \mid
+    f \text{ is a function with domain } I \text{ and }
+      (\forall i \in I) f(i) \in H(i)\}.$$
+
 \section{\defined{Compatible}}%
-\label{sec:compatible}
+\label{ref:compatible}
 
 A \nameref{ref:function} $F$ is \textbf{compatible} with relation $R$ if and
   only if for all $x$ and $y$ in $A$,
@@ -2569,9 +2579,8 @@ If not, then under what conditions does equality hold?
 
 \end{proof}
 
-\subsection{\verified{Cartesian Product}}%
+\subsection{\verified{Corollary 3C}}%
 \label{sub:corollary-3c}
-\label{sub:cartesian-product}
 
 \begin{theorem}[3C]
 
@@ -3018,7 +3027,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Theorem 3K(a)}}%
+\subsection{\verified{Theorem 3K(a)}}%
 \label{sub:theorem-3k-a}
 
 \begin{theorem}[3K(a)]
@@ -3039,6 +3048,9 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3k\_a}
 
   Let $F$, $A$, $B$, and $\mathscr{A}$ be arbitrary sets.
   We prove (i) \eqref{sub:theorem-3k-a-eq1} and (ii)
@@ -3086,7 +3098,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Theorem 3K(b)}}%
+\subsection{\verified{Theorem 3K(b)}}%
 \label{sub:theorem-3k-b}
 
 \begin{theorem}[3K(b)]
@@ -3103,13 +3115,23 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
       \img{F}{\bigcap\mathscr{A}} \subseteq
         \bigcap\;\{\img{F}{A} \mid A \in \mathscr{A}\}.
     \end{equation}
-    Equality holds if $F$ is single-rooted.
+    for nonempty $\mathscr{A}$.
+  Equality holds if $F$ is single-rooted.
 
 \end{theorem}
 
 \begin{proof}
 
-  Let $F$, $A$, $B$, and $\mathscr{A}$ be arbitrary sets.
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3k\_b\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3k\_b\_ii}
+
+  Let $F$, $A$, $B$ be arbitrary sets.
+  Let $\mathscr{A}$ be a nonempty set.
   We first prove (i) \eqref{sub:theorem-3k-b-eq1} and (ii)
     \eqref{sub:theorem-3k-b-eq2}.
   Then, assuming $F$ is single-rooted, we prove both (iii)
@@ -3162,14 +3184,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     Then $\forall A \in \mathscr{A}, v \in \img{F}{A}$.
     By definition of the \nameref{ref:image} of a set,
       $\forall A \in \mathscr{A}, \exists u \in A, uFv$.
-    Since $F$ is single-rooted, it follows that
-      $\exists u, \forall A \in \mathscr{A}, u \in A \land uFv$.
+    Since $F$ is single-rooted and $\mathscr{A}$ is nonempty, it follows that
+      $\exists u, (\forall A \in \mathscr{A}, u \in A) \land uFv$.
     Equivalently, $\exists u \in \bigcap{A}, uFv$.
     Thus $v \in \img{F}{\bigcap{A}}$.
 
 \end{proof}
 
-\subsection{\pending{Theorem 3K(c)}}%
+\subsection{\verified{Theorem 3K(c)}}%
 \label{sub:theorem-3k-c}
 
 \begin{theorem}[3K(c)]
@@ -3185,6 +3207,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3k\_c\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3k\_c\_ii}
 
   We prove that (i) \eqref{sub:theorem-3k-c-eq1} holds and (ii) equality holds
     if $F$ is single-rooted.
@@ -3219,27 +3249,38 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Corollary 3L}}%
+\subsection{\verified{Corollary 3L}}%
 \label{sub:corollary-3l}
 
 \begin{theorem}[3L]
 
   For any function $G$ and sets $A$, $B$, and $\mathscr{A}$:
   \begin{align}
-    G^{-1}\left\llbracket\bigcup\mathscr{A}\right\rrbracket
-      & = \bigcup\;\{G^{-1}[A] \mid A \in \mathscr{A}\},
+    \img{G^{-1}}{\bigcup{\mathscr{A}}}
+      & = \bigcup\;\{\img{G^{-1}}{A} \mid A \in \mathscr{A}\},
       \label{sub:corollary-3l-eq1} \\
-    G^{-1}\left[\bigcap\mathscr{A}\right]
-      & = \bigcap\;\{G^{-1}[A] \mid A \in \mathscr{A}\}
+    \img{G^{-1}}{\bigcap{\mathscr{A}}}
+      & = \bigcap\;\{\img{G^{-1}}{A} \mid A \in \mathscr{A}\}
       \text{ for } \mathscr{A} \neq \emptyset,
       \label{sub:corollary-3l-eq2} \\
-    G^{-1}[A - B] & = G^{-1}[A] - G^{-1}[B].
+    \img{G^{-1}}{A - B} & = \img{G^{-1}}{A} - \img{G^{-1}}{B}.
       \label{sub:corollary-3l-eq3}
   \end{align}
 
 \end{theorem}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.corollary\_3l\_i}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.corollary\_3l\_ii}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.corollary\_3l\_iii}
 
   \nameref{sub:theorem-3k-a} implies \eqref{sub:corollary-3l-eq1}.
   Because the inverse of a function is always single-rooted,
@@ -3441,7 +3482,7 @@ Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
     {Enderton.Set.Chapter\_3.exercise\_3\_2a}
 
   Let $A$, $B$, and $C$ be arbitrary sets.
-  Then by definition of the \nameref{sub:cartesian-product} and union of sets,
+  Then by \nameref{sub:corollary-3c} and the definition of the union of sets,
     \begin{align*}
       A \times (B \cup C)
         & = \{ \left< x, y \right> \mid x \in A \land y \in (B \cup C) \} \\
@@ -3467,7 +3508,7 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
     {Enderton.Set.Chapter\_3.exercise\_3\_2b}
 
   Let $A$, $B$, and $C$ be arbitrary sets such that $A \neq \emptyset$.
-  By definition of the \nameref{sub:cartesian-product},
+  By \nameref{sub:corollary-3c},
     \begin{align}
       A \times B & = \{ \left< x, y \right> \mid x \in A \land y \in B \}
         & \label{sub:exercise-3.2b-eq1} \\
@@ -3513,7 +3554,7 @@ Show that $A \times \bigcup \mathscr{B} =
     {Enderton.Set.Chapter\_3.exercise\_3\_3}
 
   Let $A$ and $\mathscr{B}$ be arbitrary sets.
-  By definition of the \nameref{sub:cartesian-product} and the union of sets,
+  By \nameref{sub:corollary-3c} and the definition of the union of sets,
   \begin{align*}
     A \times \bigcup\mathscr{B}
       & = \{ \left< x, y \right> \mid
@@ -3564,10 +3605,10 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
 
   Let $a \in A$.
   By the \nameref{ref:pairing-axiom}, $\{a\}$ is a set.
-  By \nameref{sub:cartesian-product}, $\{a\} \times B$ is a set.
+  By \nameref{sub:corollary-3c}, $\{a\} \times B$ is a set.
   Again by the \nameref{ref:pairing-axiom}, $\{\{a\} \times B\}$ is a set.
 
-  Next, by another application of \nameref{sub:cartesian-product}, $A \times B$
+  Next, by another application of \nameref{sub:corollary-3c}, $A \times B$
     is a set.
   By the \nameref{ref:power-set-axiom}, $\powerset{(A \times B)}$ is a set.
   Thus, by the \nameref{ref:subset-axioms}, the following is also a set:
@@ -3593,7 +3634,7 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
   \paragraph{($\Leftarrow$)}%
 
     Suppose $y = \{a\} \times B$ for some $a \in A$.
-    By \nameref{sub:cartesian-product}, $x \in \{a\} \times B$ if and only if
+    By \nameref{sub:corollary-3c}, $x \in \{a\} \times B$ if and only if
       $\exists b \in B$ such that $x = \left< a, b \right>$.
     But then $x \in y$ if and only if $\exists b \in B$ such that
       $x = \left< a, b \right>$.
@@ -3618,7 +3659,7 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
       A \times B = \bigcup\; \{\{x\} \times B \mid x \in A\}.
     \end{equation}
   The left-hand side of \eqref{sub:exercise-3.5b-eq1} is a set by virtue of
-    \nameref{sub:cartesian-product}.
+    \nameref{sub:corollary-3c}.
   The right-hand side of \eqref{sub:exercise-3.5b-eq1} is a set by virtue of
     \nameref{sub:exercise-3.5a}.
   We prove the set on each side is a subset of the other.
@@ -4193,9 +4234,8 @@ Show that $F \restriction A = F \cap (A \times \ran{F})$.
 \begin{proof}
 
   Let $F$ and $A$ be arbitrary sets.
-  By definition of the \nameref{ref:restriction}, intersection,
-    \nameref{ref:range}, and \nameref{sub:cartesian-product} of sets,
-  Then
+  By \nameref{sub:corollary-3c} and definition of the \nameref{ref:restriction},
+    intersection, and \nameref{ref:range} of sets,
     \begin{align*}
       F \restriction A
         & = \{\left< u, v \right> \mid uFv \land u \in A\} \\
@@ -4559,7 +4599,7 @@ Define
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.31}}%
+\subsection{\unverified{Exercise 3.31}}%
 \label{sub:exercise-3.31}
 
 Show that from the first form of the axiom of choice we can prove the second
@@ -4567,7 +4607,55 @@ Show that from the first form of the axiom of choice we can prove the second
 
 \begin{proof}
 
-  TODO
+  We prove the first form holds if and only if the second form holds.
+
+  \paragraph{($\Rightarrow$)}%
+
+    We assume the first form of the axiom of choice.
+    Let $I$ be a set and $H$ be a function with $\dom{H} = I$.
+    Furthermore, suppose $H(i) \neq \emptyset$ for all $i \in I$.
+    By definition of the \nameref{ref:cartesian-product},
+      $$\bigtimes_{i \in I} H(i) = \{f \mid
+        f \text{ is a function with } \dom{f} = I \text{ and }
+          (\forall i \in I) f(i) \in H(i)\}.$$
+    Consider the relation $R$ formed by
+      $$R = \bigcup_{i \in I} \{i\} \times H(i).$$
+    By the \nameref{ref:axiom-of-choice-1}, there exists a function
+      $f \subseteq R$ with $\dom{f} = I$.
+    Furthermore, for all $i \in I$, it must be $f(i) \in H(i)$ by construction.
+    Then $f$ is a member of $\bigtimes_{i \in I} H(i)$.
+    That is, $\bigtimes_{i \in I} H(i) \neq \emptyset$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    We assume the second form of the axiom of choice.
+    Let $R$ be an arbitrary relation.
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $\ran{R} = \emptyset$.
+      Then $R = \emptyset$.
+      Thus the function $\emptyset \subseteq R$ satisfies
+        $\dom{\emptyset} = \dom{R}$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $\ran{R} \neq \emptyset$.
+      Let $I = \dom{R}$ and define $H \colon I \rightarrow \{\ran{R}\}$ as
+        $H(i) = \ran{R}$ for all $i \in I$.
+      By the \nameref{ref:axiom-of-choice-2},
+        $\bigtimes_{i \in I} H(i) \neq \emptyset$.
+      By definition of the \nameref{ref:cartesian-product}, there exists some
+        function $f$ such that $\dom{f} = I$ and
+        $(\forall i \in I) f(i) \in H(i) = \ran{R}$.
+      Thus $\dom{f} = \dom{R}$ and $f \subseteq R$ as desired.
+
+    \paragraph{Conclusion}%
+
+      The above cases are exhaustive and yield the same conclusion: for any
+        relation $R$ there exists a function $f \subseteq R$ such that
+        $\dom{f} = \dom{R}$.
 
 \end{proof}
 
