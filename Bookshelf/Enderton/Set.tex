@@ -4137,13 +4137,21 @@ Show that there is no set to which every function belongs.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.17}}%
+\subsection{\verified{Exercise 3.17}}%
 \label{sub:exercise-3.17}
 
 Show that the composition of two single-rooted sets is again single-rooted.
 Conclude that the composition of two one-to-one functions is again one-to-one.
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_17\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_17\_ii}
 
   Let $F$ and $G$ be two single-rooted sets.
   Consider $F \circ G$.
@@ -4174,7 +4182,7 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.18}}%
+\subsection{\verified{Exercise 3.18}}%
 \label{sub:exercise-3.18}
 
 Let $R$ be the set
@@ -4185,10 +4193,26 @@ Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
 
 \begin{proof}
 
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_18\_i}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_18\_ii}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_18\_iii}
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_18\_iv}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_18\_v}
+
   \begin{enumerate}[(i)]
     \item $R \circ R = \{
       \left< 0, 2 \right>,
-      \left< 0, 3 \right>,
       \left< 0, 3 \right>,
       \left< 1, 3 \right>
     \}$.

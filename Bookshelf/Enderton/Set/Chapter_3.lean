@@ -1,6 +1,7 @@
 import Bookshelf.Enderton.Set.Chapter_2
 import Bookshelf.Enderton.Set.OrderedPair
 import Bookshelf.Enderton.Set.Relation
+import Mathlib.Tactic.CasesM
 
 /-! # Enderton.Set.Chapter_3
 
@@ -469,7 +470,7 @@ dom (F ∘ G) = {x ∈ dom G | G(x) ∈ dom F}.
 -/
 theorem theorem_3h_dom {F G : Set.Relation α}
   (_ : F.isSingleValued) (hG : G.isSingleValued)
-  : dom (F.comp G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F } := by
+  : dom (F.comp G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F} := by
   let rhs := {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F }
   rw [Set.Subset.antisymm_iff]
   apply And.intro
@@ -720,7 +721,8 @@ f ⊆ g ↔ dom f ⊆ dom g ∧ (∀ x ∈ dom f) f(x) = g(x).
 -/
 theorem exercise_3_12 {f g : Set.Relation α}
   (hf : f.isSingleValued) (_ : g.isSingleValued)
-  : f ⊆ g ↔ dom f ⊆ dom g ∧ (∀ x ∈ dom f, ∃! y : α, (x, y) ∈ f ∧ (x, y) ∈ g) := by
+  : f ⊆ g ↔ dom f ⊆ dom g ∧
+      (∀ x ∈ dom f, ∃! y : α, (x, y) ∈ f ∧ (x, y) ∈ g) := by
   apply Iff.intro
   · intro h
     apply And.intro
@@ -786,74 +788,72 @@ theorem exercise_3_14_b {f g : Set.Relation α}
   · intro h x hx
     have ⟨y₁, hy₁⟩ := hf x hx.left
     have ⟨y₂, hy₂⟩ := hg x hx.right
-    have : y₁ = y₂ := by
-      have hf' : (x, y₁) ∈ f ∪ g := Or.inl hy₁.left.right
-      have hg' : (x, y₂) ∈ f ∪ g := Or.inr hy₂.left.right
-      exact single_valued_eq_unique h hf' hg'
+    have : y₁ = y₂ := single_valued_eq_unique h
+      (Or.inl hy₁.left.right)
+      (Or.inr hy₂.left.right)
     rw [← this] at hy₂
     refine ⟨y₁, ⟨hy₁.left.right, hy₂.left.right⟩, ?_⟩
     intro y₃ hfy₃
     exact single_valued_eq_unique hf hfy₃.left hy₁.left.right
   · intro h x hx
-    by_cases hfx : x ∈ dom f
-    · by_cases hgx : x ∈ dom g
-      · -- `x ∈ dom f ∧ x ∈ dom g`
-        have ⟨y₁, hy₁⟩ := hf x hfx
-        have ⟨y₂, hy₂⟩ := hg x hgx
-        refine ⟨y₁, ⟨?_, Or.inl hy₁.left.right⟩, ?_⟩
-        · unfold ran
-          simp only [Set.mem_image, Set.mem_union, Prod.exists, exists_eq_right]
-          exact ⟨x, Or.inl hy₁.left.right⟩
-        · intro y₃ hy₃
-          apply Or.elim hy₃.right
-          · intro hxy
-            exact single_valued_eq_unique hf hxy hy₁.left.right
-          · refine fun hxy => single_valued_eq_unique hg hxy ?_
-            have : y₁ = y₂ := by
-              have ⟨z, ⟨hz, _⟩⟩ := h x ⟨hfx, hgx⟩
-              rw [
-                single_valued_eq_unique hf hy₁.left.right hz.left,
-                single_valued_eq_unique hg hy₂.left.right hz.right
-              ]
-            rw [this]
-            exact hy₂.left.right
-      · -- `x ∈ dom f ∧ x ∉ dom g`
-        have ⟨y, hy⟩ := dom_exists hfx
-        have hxy : (x, y) ∈ f ∪ g := (Set.subset_union_left f g) hy
-        refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hxy, hxy⟩, ?_⟩
-        intro y₁ hy₁
-        apply Or.elim hy₁.right
-        · intro hx'
-          exact single_valued_eq_unique hf hx' hy
-        · intro hx'
-          exact absurd (mem_pair_imp_fst_mem_dom hx') hgx
-    · by_cases hgx : x ∈ dom g
-      · -- `x ∉ dom f ∧ x ∈ dom g`
-        have ⟨y, hy⟩ := dom_exists hgx
-        have hxy : (x, y) ∈ f ∪ g := (Set.subset_union_right f g) hy
-        refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hxy, hxy⟩, ?_⟩
-        intro y₁ hy₁
-        apply Or.elim hy₁.right
-        · intro hx'
-          exact absurd (mem_pair_imp_fst_mem_dom hx') hfx
-        · intro hx'
-          exact single_valued_eq_unique hg hx' hy
-      · -- `x ∉ dom f ∧ x ∉ dom g`
-        exfalso
-        unfold dom at hx
-        simp only [
-          Set.mem_image,
-          Set.mem_union,
-          Prod.exists,
-          exists_and_right,
-          exists_eq_right
-        ] at hx
-        have ⟨_, hy⟩ := hx
-        apply Or.elim hy
-        · intro hz
-          exact absurd (mem_pair_imp_fst_mem_dom hz) hfx
-        · intro hz
-          exact absurd (mem_pair_imp_fst_mem_dom hz) hgx
+    by_cases hfx : x ∈ dom f <;>
+    by_cases hgx : x ∈ dom g
+    · -- `x ∈ dom f ∧ x ∈ dom g`
+      have ⟨y₁, hy₁⟩ := hf x hfx
+      have ⟨y₂, hy₂⟩ := hg x hgx
+      refine ⟨y₁, ⟨?_, Or.inl hy₁.left.right⟩, ?_⟩
+      · unfold ran
+        simp only [Set.mem_image, Set.mem_union, Prod.exists, exists_eq_right]
+        exact ⟨x, Or.inl hy₁.left.right⟩
+      · intro y₃ hy₃
+        apply Or.elim hy₃.right
+        · intro hxy
+          exact single_valued_eq_unique hf hxy hy₁.left.right
+        · refine fun hxy => single_valued_eq_unique hg hxy ?_
+          have : y₁ = y₂ := by
+            have ⟨z, ⟨hz, _⟩⟩ := h x ⟨hfx, hgx⟩
+            rw [
+              single_valued_eq_unique hf hy₁.left.right hz.left,
+              single_valued_eq_unique hg hy₂.left.right hz.right
+            ]
+          rw [this]
+          exact hy₂.left.right
+    · -- `x ∈ dom f ∧ x ∉ dom g`
+      have ⟨y, hy⟩ := dom_exists hfx
+      have hxy : (x, y) ∈ f ∪ g := (Set.subset_union_left f g) hy
+      refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hxy, hxy⟩, ?_⟩
+      intro y₁ hy₁
+      apply Or.elim hy₁.right
+      · intro hx'
+        exact single_valued_eq_unique hf hx' hy
+      · intro hx'
+        exact absurd (mem_pair_imp_fst_mem_dom hx') hgx
+    · -- `x ∉ dom f ∧ x ∈ dom g`
+      have ⟨y, hy⟩ := dom_exists hgx
+      have hxy : (x, y) ∈ f ∪ g := (Set.subset_union_right f g) hy
+      refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hxy, hxy⟩, ?_⟩
+      intro y₁ hy₁
+      apply Or.elim hy₁.right
+      · intro hx'
+        exact absurd (mem_pair_imp_fst_mem_dom hx') hfx
+      · intro hx'
+        exact single_valued_eq_unique hg hx' hy
+    · -- `x ∉ dom f ∧ x ∉ dom g`
+      exfalso
+      unfold dom at hx
+      simp only [
+        Set.mem_image,
+        Set.mem_union,
+        Prod.exists,
+        exists_and_right,
+        exists_eq_right
+      ] at hx
+      have ⟨_, hy⟩ := hx
+      apply Or.elim hy
+      · intro hz
+        exact absurd (mem_pair_imp_fst_mem_dom hz) hfx
+      · intro hz
+        exact absurd (mem_pair_imp_fst_mem_dom hz) hgx
 
 /-- #### Exercise 3.15
 
@@ -877,6 +877,174 @@ theorem exercise_3_15 {𝓐 : Set (Set.Relation α)}
   · intro hg'
     have := hg' hg.right
     exact single_valued_eq_unique (h𝓐 f hf.left) this hf.right
+
+/-! #### Exercise 3.17
+
+Show that the composition of two single-rooted sets is again single-rooted.
+Conclude that the composition of two one-to-one functions is again one-to-one.
+-/
+
+theorem exercise_3_17_i {F G : Set.Relation α}
+  (hF : F.isSingleRooted) (hG : G.isSingleRooted)
+  : (F.comp G).isSingleRooted := by
+  intro v hv
+  
+  have ⟨u₁, hu₁⟩ := ran_exists hv
+  have hu₁' := hu₁
+  unfold comp at hu₁'
+  simp only [Set.mem_setOf_eq] at hu₁'
+  have ⟨t₁, ht₁⟩ := hu₁'
+  unfold ExistsUnique
+  refine ⟨u₁, ⟨mem_pair_imp_fst_mem_dom hu₁, hu₁⟩, ?_⟩
+  
+  intro u₂ hu₂
+  have hu₂' := hu₂
+  unfold comp at hu₂'
+  simp only [Set.mem_setOf_eq] at hu₂'
+  have ⟨_, ⟨t₂, ht₂⟩⟩ := hu₂'
+  
+  have ht : t₁ = t₂ := single_rooted_eq_unique hF ht₁.right ht₂.right
+  rw [ht] at ht₁
+  exact single_rooted_eq_unique hG ht₂.left ht₁.left
+
+theorem exercise_3_17_ii {F G : Set.Relation α}
+  (hF : F.isOneToOne) (hG : G.isOneToOne)
+  : (F.comp G).isOneToOne := And.intro
+    (single_valued_comp_is_single_valued hF.left hG.left)
+    (exercise_3_17_i hF.right hG.right)
+
+/-! #### Exercise 3.18
+
+Let `R` be the set
+```
+{⟨0, 1⟩, ⟨0, 2⟩, ⟨0, 3⟩, ⟨1, 2⟩, ⟨1, 3⟩, ⟨2, 3⟩}
+```
+Evaluate the following: `R ∘ R`, `R ↾ {1}`, `R⁻¹ ↾ {1}`, `R⟦{1}⟧`, and
+`R⁻¹⟦{1}⟧`.
+-/
+
+section
+
+variable {R : Set.Relation ℕ}
+variable (hR : R = {(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)})
+
+theorem exercise_3_18_i
+  : R.comp R = {(0, 2), (0, 3), (1, 3)} := by
+  rw [hR]
+  unfold comp
+  simp only [Set.mem_singleton_iff, Set.mem_insert_iff, or_self, Prod.mk.injEq]
+  ext x
+  have (a, b) := x
+  apply Iff.intro
+  · simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, Set.mem_insert_iff]
+    intro ⟨t, ht₁, ht₂⟩
+    casesm* _ ∨ _
+    all_goals case _ hl hr => first
+      | {rw [hl.right] at hr; simp at hr}
+      | {rw [hl.left] at hr; simp at hr}
+      | {rw [hl.left, hr.right]; simp}
+  · simp only [
+      Set.mem_singleton_iff,
+      Set.mem_insert_iff,
+      Prod.mk.injEq,
+      Set.mem_setOf_eq
+    ]
+    intro h
+    casesm* _ ∨ _
+    · case _ h =>
+        refine ⟨1, Or.inl ⟨h.left, rfl⟩, ?_⟩
+        iterate 3 right
+        left
+        exact ⟨rfl, h.right⟩
+    · case _ h =>
+        refine ⟨1, Or.inl ⟨h.left, rfl⟩, ?_⟩
+        iterate 4 right
+        left
+        exact ⟨rfl, h.right⟩
+    · case _ h =>
+        refine ⟨2, ?_, ?_⟩
+        · iterate 3 right
+          left
+          exact ⟨h.left, rfl⟩
+        · iterate 5 right
+          exact ⟨rfl, h.right⟩
+
+theorem exercise_3_18_ii
+  : R.restriction {1} = {(1, 2), (1, 3)} := by
+  rw [hR]
+  unfold restriction
+  ext p
+  have (a, b) := p
+  simp only [
+    Set.mem_singleton_iff,
+    Set.mem_insert_iff,
+    Set.mem_setOf_eq,
+    or_self
+  ]
+  apply Iff.intro
+  · intro ⟨hp, ha⟩
+    rw [ha]
+    simp only [Prod.mk.injEq, true_and]
+    casesm* _ ∨ _
+    all_goals case _ h => first
+      | {rw [ha] at h; simp at h}
+      | {simp only [Prod.mk.injEq] at h; left; exact h.right}
+      | {simp only [Prod.mk.injEq] at h; right; exact h.right}
+  · intro h
+    apply Or.elim h
+    · intro hab
+      simp only [Prod.mk.injEq] at hab
+      refine ⟨?_, hab.left⟩
+      iterate 3 right
+      left
+      rw [hab.left, hab.right]
+    · intro hab
+      simp only [Prod.mk.injEq] at hab
+      refine ⟨?_, hab.left⟩
+      iterate 4 right
+      left
+      rw [hab.left, hab.right]
+
+theorem exercise_3_18_iii
+  : R.inv.restriction {1} = {(1, 0)} := by
+  rw [hR]
+  unfold inv restriction
+  ext p
+  have (a, b) := p
+  simp only [
+    Set.mem_singleton_iff,
+    Set.mem_insert_iff,
+    or_self,
+    exists_eq_or_imp,
+    exists_eq_left,
+    Set.mem_setOf_eq,
+    Prod.mk.injEq
+  ]
+  apply Iff.intro
+  · intro ⟨hb, ha⟩
+    casesm* _ ∨ _
+    all_goals case _ hr => first
+      | exact ⟨ha, hr.right.symm⟩
+      | rw [ha] at hr; simp at hr
+  · intro ⟨ha, hb⟩
+    rw [ha, hb]
+    simp
+
+theorem exercise_3_18_iv
+  : R.image {1} = {2, 3} := by
+  rw [hR]
+  unfold image
+  ext y
+  simp
+
+theorem exercise_3_18_v
+  : R.inv.image {1} = {0} := by
+  rw [hR]
+  unfold inv image
+  ext y
+  simp
+
+end
 
 end Relation
 
