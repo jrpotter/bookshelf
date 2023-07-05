@@ -325,7 +325,7 @@ theorem exercise_3_7 {R : Set.Relation α}
       simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
       exact hxy_mem this
 
-section
+section Relation
 
 open Set.Relation
 
@@ -678,11 +678,8 @@ theorem theorem_3k_c_ii {F : Set.Relation α} {A B : Set α}
     unfold image at nv
     simp only [Set.mem_setOf_eq] at nv
     have ⟨u₁, hu₁⟩ := nv
-    have ⟨x, hx⟩ := hF v (mem_pair_imp_snd_mem_ran hu.right)
-    simp only [and_imp] at hx
-    have hr₁ := hx.right u (mem_pair_imp_fst_mem_dom hu.right) hu.right
-    have hr₂ := hx.right u₁ (mem_pair_imp_fst_mem_dom hu₁.right) hu₁.right
-    rw [hr₂, ← hr₁] at hu₁
+    have := single_rooted_eq_unique hF hu.right hu₁.right
+    rw [← this] at hu₁
     exact absurd hu₁.left hu.left.right
   exact ⟨hv₁, hv₂⟩
 
@@ -714,6 +711,173 @@ theorem corollary_3l_iii {G : Set.Relation α} {A B : Set α}
     single_valued_self_iff_single_rooted_inv.mp hG
   exact (theorem_3k_c_ii hG').symm
 
-end
+/-- #### Exercise 3.12
+
+Assume that `f` and `g` are functions and show that
+```
+f ⊆ g ↔ dom f ⊆ dom g ∧ (∀ x ∈ dom f) f(x) = g(x).
+```
+-/
+theorem exercise_3_12 {f g : Set.Relation α}
+  (hf : f.isSingleValued) (_ : g.isSingleValued)
+  : f ⊆ g ↔ dom f ⊆ dom g ∧ (∀ x ∈ dom f, ∃! y : α, (x, y) ∈ f ∧ (x, y) ∈ g) := by
+  apply Iff.intro
+  · intro h
+    apply And.intro
+    · show ∀ x, x ∈ dom f → x ∈ dom g
+      intro x hx
+      have ⟨y, hy⟩ := dom_exists hx
+      exact mem_pair_imp_fst_mem_dom (h hy)
+    · intro x hx
+      have ⟨y, hy⟩ := dom_exists hx
+      refine ⟨y, ⟨hy, h hy⟩, ?_⟩
+      intro y₁ hy₁
+      exact single_valued_eq_unique hf hy₁.left hy
+  · intro ⟨_, hx⟩
+    show ∀ p, p ∈ f → p ∈ g
+    intro (x, y) hp
+    have ⟨y₁, hy₁⟩ := hx x (mem_pair_imp_fst_mem_dom hp)
+    rw [single_valued_eq_unique hf hp hy₁.left.left]
+    exact hy₁.left.right
+
+/-- #### Exercise 3.13
+
+Assume that `f` and `g` are functions with `f ⊆ g` and `dom g ⊆ dom f`. Show
+that `f = g`.
+-/
+theorem exercise_3_13 {f g : Set.Relation α}
+  (hf : f.isSingleValued) (hg : g.isSingleValued)
+  (h : f ⊆ g) (h₁ : dom g ⊆ dom f)
+  : f = g := by
+  have h₂ := (exercise_3_12 hf hg).mp h
+  have hfg := Set.Subset.antisymm_iff.mpr ⟨h₁, h₂.left⟩
+  ext p
+  have (a, b) := p
+  apply Iff.intro
+  · intro hp
+    have ⟨x, hx⟩ := h₂.right a (mem_pair_imp_fst_mem_dom hp)
+    rw [single_valued_eq_unique hf hp hx.left.left]
+    exact hx.left.right
+  · intro hp
+    rw [← hfg] at h₂
+    have ⟨x, hx⟩ := h₂.right a (mem_pair_imp_fst_mem_dom hp)
+    rw [single_valued_eq_unique hg hp hx.left.right]
+    exact hx.left.left
+
+/-- #### Exercise 3.14 (a)
+
+Assume that `f` and `g` are functions. Show that `f ∩ g` is a function.
+-/
+theorem exercise_3_14_a {f g : Set.Relation α}
+  (hf : f.isSingleValued) (_ : g.isSingleValued)
+  : (f ∩ g).isSingleValued :=
+  single_valued_subset hf (Set.inter_subset_left f g)
+
+/-- #### Exercise 3.14 (b)
+
+Assume that `f` and `g` are functions. Show that `f ∪ g` is a function **iff**
+`f(x) = g(x)` for every `x` in `(dom f) ∩ (dom g)`.
+-/
+theorem exercise_3_14_b {f g : Set.Relation α}
+  (hf : f.isSingleValued) (hg : g.isSingleValued)
+  : (f ∪ g).isSingleValued ↔
+      (∀ x ∈ dom f ∩ dom g, ∃! y, (x, y) ∈ f ∧ (x, y) ∈ g) := by
+  apply Iff.intro
+  · intro h x hx
+    have ⟨y₁, hy₁⟩ := hf x hx.left
+    have ⟨y₂, hy₂⟩ := hg x hx.right
+    have : y₁ = y₂ := by
+      have hf' : (x, y₁) ∈ f ∪ g := Or.inl hy₁.left.right
+      have hg' : (x, y₂) ∈ f ∪ g := Or.inr hy₂.left.right
+      exact single_valued_eq_unique h hf' hg'
+    rw [← this] at hy₂
+    refine ⟨y₁, ⟨hy₁.left.right, hy₂.left.right⟩, ?_⟩
+    intro y₃ hfy₃
+    exact single_valued_eq_unique hf hfy₃.left hy₁.left.right
+  · intro h x hx
+    by_cases hfx : x ∈ dom f
+    · by_cases hgx : x ∈ dom g
+      · -- `x ∈ dom f ∧ x ∈ dom g`
+        have ⟨y₁, hy₁⟩ := hf x hfx
+        have ⟨y₂, hy₂⟩ := hg x hgx
+        refine ⟨y₁, ⟨?_, Or.inl hy₁.left.right⟩, ?_⟩
+        · unfold ran
+          simp only [Set.mem_image, Set.mem_union, Prod.exists, exists_eq_right]
+          exact ⟨x, Or.inl hy₁.left.right⟩
+        · intro y₃ hy₃
+          apply Or.elim hy₃.right
+          · intro hxy
+            exact single_valued_eq_unique hf hxy hy₁.left.right
+          · refine fun hxy => single_valued_eq_unique hg hxy ?_
+            have : y₁ = y₂ := by
+              have ⟨z, ⟨hz, _⟩⟩ := h x ⟨hfx, hgx⟩
+              rw [
+                single_valued_eq_unique hf hy₁.left.right hz.left,
+                single_valued_eq_unique hg hy₂.left.right hz.right
+              ]
+            rw [this]
+            exact hy₂.left.right
+      · -- `x ∈ dom f ∧ x ∉ dom g`
+        have ⟨y, hy⟩ := dom_exists hfx
+        have hxy : (x, y) ∈ f ∪ g := (Set.subset_union_left f g) hy
+        refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hxy, hxy⟩, ?_⟩
+        intro y₁ hy₁
+        apply Or.elim hy₁.right
+        · intro hx'
+          exact single_valued_eq_unique hf hx' hy
+        · intro hx'
+          exact absurd (mem_pair_imp_fst_mem_dom hx') hgx
+    · by_cases hgx : x ∈ dom g
+      · -- `x ∉ dom f ∧ x ∈ dom g`
+        have ⟨y, hy⟩ := dom_exists hgx
+        have hxy : (x, y) ∈ f ∪ g := (Set.subset_union_right f g) hy
+        refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hxy, hxy⟩, ?_⟩
+        intro y₁ hy₁
+        apply Or.elim hy₁.right
+        · intro hx'
+          exact absurd (mem_pair_imp_fst_mem_dom hx') hfx
+        · intro hx'
+          exact single_valued_eq_unique hg hx' hy
+      · -- `x ∉ dom f ∧ x ∉ dom g`
+        exfalso
+        unfold dom at hx
+        simp only [
+          Set.mem_image,
+          Set.mem_union,
+          Prod.exists,
+          exists_and_right,
+          exists_eq_right
+        ] at hx
+        have ⟨_, hy⟩ := hx
+        apply Or.elim hy
+        · intro hz
+          exact absurd (mem_pair_imp_fst_mem_dom hz) hfx
+        · intro hz
+          exact absurd (mem_pair_imp_fst_mem_dom hz) hgx
+
+/-- #### Exercise 3.15
+
+Let `𝓐` be a set of functions such that for any `f` and `g` in `𝓐`, either
+`f ⊆ g` or `g ⊆ f`. Show that `⋃ 𝓐` is a function.
+-/
+theorem exercise_3_15 {𝓐 : Set (Set.Relation α)}
+  (h𝓐 : ∀ F ∈ 𝓐, F.isSingleValued)
+  (h : ∀ F, ∀ G, F ∈ 𝓐 → G ∈ 𝓐 → F ⊆ G ∨ G ⊆ F)
+  : isSingleValued (⋃₀ 𝓐) := by
+  intro x hx
+  have ⟨y₁, hy₁⟩ := dom_exists hx
+  refine ⟨y₁, ⟨mem_pair_imp_snd_mem_ran hy₁, hy₁⟩, ?_⟩
+  intro y₂ hy₂
+  have ⟨f, hf⟩ : ∃ f : Set.Relation α, f ∈ 𝓐 ∧ (x, y₁) ∈ f := hy₁
+  have ⟨g, hg⟩ : ∃ g : Set.Relation α, g ∈ 𝓐 ∧ (x, y₂) ∈ g := hy₂.right
+  apply Or.elim (h f g hf.left hg.left)
+  · intro hf'
+    have := hf' hf.right
+    exact single_valued_eq_unique (h𝓐 g hg.left) hg.right this
+  · intro hg'
+    have := hg' hg.right
+    exact single_valued_eq_unique (h𝓐 f hf.left) this hf.right
+
+end Relation
 
 end Enderton.Set.Chapter_3

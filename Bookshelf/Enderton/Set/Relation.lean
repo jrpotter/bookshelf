@@ -180,7 +180,7 @@ A `Relation` `R` is said to be single-rooted **iff** for all `y ∈ ran R`, ther
 exists exactly one `x` such that `⟨x, y⟩ ∈ R`.
 -/
 def isSingleRooted (R : Relation α) : Prop :=
-  ∀ y ∈ R.ran, ∃! x, x ∈ R.dom ∧ (x, y) ∈ R
+  ∀ y ∈ ran R, ∃! x, x ∈ dom R ∧ (x, y) ∈ R
 
 /--
 A single-rooted `Relation` should map the same output to the same input.
@@ -204,7 +204,7 @@ exists exactly one `y` such that `⟨x, y⟩ ∈ R`.
 Notice, a `Relation` that is single-valued is a function.
 -/
 def isSingleValued (R : Relation α) : Prop :=
-  ∀ x ∈ R.dom, ∃! y, y ∈ R.ran ∧ (x, y) ∈ R
+  ∀ x ∈ dom R, ∃! y, y ∈ ran R ∧ (x, y) ∈ R
 
 /--
 A single-valued `Relation` should map the same input to the same output.
@@ -262,6 +262,21 @@ theorem single_valued_self_iff_single_rooted_inv {F : Set.Relation α}
   : F.isSingleValued ↔ F.inv.isSingleRooted := by
   conv => lhs; rw [← inv_inv_eq_self F]
   rw [single_valued_inv_iff_single_rooted_self]
+
+/--
+The subset of a function must also be a function.
+-/
+theorem single_valued_subset {F G : Set.Relation α}
+  (hG : G.isSingleValued) (h : F ⊆ G)
+  : F.isSingleValued := by
+  unfold isSingleValued
+  intro x hx
+  have ⟨y, hy⟩ := dom_exists hx
+  unfold ExistsUnique
+  simp only
+  refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hy, hy⟩, ?_⟩
+  intro y₁ hy₁
+  exact single_valued_eq_unique hG (h hy₁.right) (h hy)
 
 /--
 A `Relation` `R` is one-to-one if it is a single-rooted function.
