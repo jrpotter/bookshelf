@@ -923,7 +923,7 @@ Evaluate the following: `R ∘ R`, `R ↾ {1}`, `R⁻¹ ↾ {1}`, `R⟦{1}⟧`, 
 `R⁻¹⟦{1}⟧`.
 -/
 
-section
+section Exercise_3_18
 
 variable {R : Set.Relation ℕ}
 variable (hR : R = {(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)})
@@ -1044,7 +1044,257 @@ theorem exercise_3_18_v
   ext y
   simp
 
-end
+end Exercise_3_18
+
+/-! #### Exercise 3.19
+
+Let
+```
+A = {⟨∅, {∅, {∅}}⟩, ⟨{∅}, ∅⟩}.
+```
+Evaluate each of the following: `A(∅)`, `A⟦∅⟧`, `A⟦{∅}⟧`, `A⟦{∅, {∅}}⟧`,
+`A⁻¹`, `A ∘ A`, `A ↾ ∅`, `A ↾ {∅, {∅}}`, `⋃ ⋃ A`.
+-/
+
+section Exercise_3_19
+
+variable {A : Set.Relation (Set (Set (Set α)))}
+variable (hA : A = {(∅, {∅, {∅}}), ({∅}, ∅)})
+
+theorem exercise_3_19_i
+  : (∅, {∅, {∅}}) ∈ A := by
+  rw [hA]
+  simp
+
+theorem exercise_3_19_ii
+  : A.image ∅ = ∅ := by
+  unfold image
+  simp
+
+theorem exercise_3_19_iii
+  : A.image {∅} = {{∅, {∅}}} := by
+  unfold image
+  rw [hA]
+  ext x
+  simp only [
+    Set.mem_singleton_iff,
+    Prod.mk.injEq,
+    Set.mem_insert_iff,
+    exists_eq_left,
+    true_and
+  ]
+  apply Iff.intro
+  · intro hx
+    simp at hx
+    apply Or.elim hx
+    · simp
+    · intro ⟨h, _⟩
+      exfalso
+      rw [Set.ext_iff] at h
+      have := h ∅
+      simp at this
+  · intro hx
+    rw [hx]
+    simp
+
+theorem exercise_3_19_iv
+  : A.image {∅, {∅}} = {{∅, {∅}}, ∅} := by
+  unfold image
+  rw [hA]
+  ext x
+  simp only [
+    Set.mem_singleton_iff,
+    Set.mem_insert_iff,
+    Prod.mk.injEq,
+    exists_eq_or_imp,
+    true_and,
+    exists_eq_left,
+    Set.singleton_ne_empty,
+    false_and,
+    false_or,
+    Set.mem_setOf_eq
+  ]
+  apply Iff.intro
+  · intro h
+    apply Or.elim h
+    · intro hx₁
+      apply Or.elim hx₁
+      · intro hx₂; left ; exact hx₂
+      · intro hx₂; right; exact hx₂.right
+    · intro hx₂
+      right
+      exact hx₂
+  · intro h
+    apply Or.elim h
+    · intro hx₁; iterate 2 left
+      exact hx₁
+    · intro hx₁; right; exact hx₁
+
+theorem exercise_3_19_v
+  : A.inv = {({∅, {∅}}, ∅), (∅, {∅})} := by
+  unfold inv
+  rw [hA]
+  ext x
+  simp only [
+    Set.mem_singleton_iff,
+    Prod.mk.injEq,
+    Set.mem_insert_iff,
+    exists_eq_or_imp,
+    exists_eq_left,
+    Set.mem_setOf_eq
+  ]
+  apply Iff.intro
+  · intro hx
+    apply Or.elim hx
+    · intro hx₁; left ; rw [← hx₁]
+    · intro hx₁; right; rw [← hx₁]
+  · intro hx
+    apply Or.elim hx
+    · intro hx₁; left ; rw [← hx₁]
+    · intro hx₁; right; rw [← hx₁]
+
+theorem exercise_3_19_vi
+  : A.comp A = {({∅}, {∅, {∅}})} := by
+  unfold comp
+  rw [hA]
+  ext x
+  have (a, b) := x
+  simp only [
+    Set.mem_singleton_iff, Prod.mk.injEq, Set.mem_insert_iff, Set.mem_setOf_eq
+  ]
+  apply Iff.intro
+  · intro ⟨t, ht₁, ht₂⟩
+    casesm* _ ∨ _
+    all_goals case _ hl hr => first
+      | {
+          rw [hl.right] at hr
+          have := hr.left
+          rw [Set.ext_iff] at this
+          simp at this
+        }
+      | exact ⟨hl.left, hr.right⟩
+  · intro ⟨ha, hb⟩
+    refine ⟨∅, ?_, ?_⟩
+    · right; rw [ha]; simp
+    · left ; rw [hb]; simp
+
+theorem exercise_3_19_vii
+  : A.restriction ∅ = ∅ := by
+  unfold restriction
+  rw [hA]
+  simp
+
+theorem exercise_3_19_viii
+  : A.restriction {∅} = {(∅, {∅, {∅}})} := by
+  unfold restriction
+  rw [hA]
+  ext x
+  have (a, b) := x
+  simp only [
+    Set.mem_singleton_iff, Prod.mk.injEq, Set.mem_insert_iff, Set.mem_setOf_eq
+  ]
+  apply Iff.intro
+  · intro ⟨h, ha⟩
+    apply Or.elim h
+    · simp
+    · intro ⟨ha', _⟩
+      exfalso
+      rw [ha', Set.ext_iff] at ha
+      simp at ha
+  · intro ⟨ha, hb⟩
+    rw [ha, hb]
+    simp
+
+theorem exercise_3_19_ix
+  : A.restriction {∅, {∅}} = A := by
+  unfold restriction
+  rw [hA]
+  ext x
+  have (a, b) := x
+  simp only [
+    Set.mem_singleton_iff,
+    Prod.mk.injEq,
+    Set.mem_insert_iff,
+    Set.mem_setOf_eq
+  ]
+  apply Iff.intro
+  · intro ⟨h₁, h₂⟩
+    casesm* _ ∨ _
+    · case _ hl _ => left ; exact hl
+    · case _ hl _ => left ; exact hl
+    · case _ hl _ => right; exact hl
+    · case _ hl _ => right; exact hl
+  · intro h₁
+    apply Or.elim h₁ <;>
+    · intro ⟨ha, hb⟩
+      rw [ha, hb]
+      simp
+
+theorem exercise_3_19_x
+  : ⋃₀ ⋃₀ A.toOrderedPairs = {∅, {∅}, {∅, {∅}}} := by
+  unfold toOrderedPairs OrderedPair Set.sUnion sSup Set.instSupSetSet
+  rw [hA]
+  ext x
+  simp only [
+    Set.mem_singleton_iff,
+    Prod.mk.injEq,
+    Set.mem_image,
+    Set.mem_insert_iff,
+    exists_eq_or_imp,
+    exists_eq_left,
+    Set.singleton_ne_empty,
+    Set.mem_setOf_eq
+  ]
+  apply Iff.intro
+  · intro ⟨a, ⟨t, ht₁, ht₂⟩, hx⟩
+    apply Or.elim ht₁
+    · intro ht
+      rw [← ht] at ht₂
+      simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at ht₂ 
+      apply Or.elim ht₂
+      · intro ha
+        rw [ha] at hx
+        simp only [Set.mem_singleton_iff] at hx
+        left
+        exact hx
+      · intro ha
+        rw [ha] at hx
+        simp at hx
+        apply Or.elim hx <;>
+        · intro hx'; rw [hx']; simp
+    · intro ht
+      rw [← ht] at ht₂
+      simp only [
+        Set.mem_singleton_iff, Set.singleton_ne_empty, Set.mem_insert_iff
+      ] at ht₂
+      apply Or.elim ht₂
+      · intro ha
+        rw [ha] at hx
+        simp only [Set.mem_singleton_iff] at hx
+        rw [hx]
+        simp
+      · intro ha
+        rw [ha] at hx
+        simp only [
+          Set.mem_singleton_iff, Set.singleton_ne_empty, Set.mem_insert_iff
+        ] at hx
+        apply Or.elim hx <;>
+        · intro hx'; rw [hx']; simp
+  · intro hx
+    apply Or.elim hx
+    · intro hx₁
+      rw [hx₁]
+      refine ⟨{{∅}, ∅}, ⟨{{{∅}}, {{∅}, ∅}}, ?_⟩, ?_⟩ <;> simp
+    · intro hx₁
+      apply Or.elim hx₁
+      · intro hx₂
+        rw [hx₂]
+        refine ⟨{{∅}, ∅}, ⟨{{{∅}}, {{∅}, ∅}}, ?_⟩, ?_⟩ <;> simp
+      · intro hx₂
+        rw [hx₂]
+        refine ⟨{∅, {∅, {∅}}}, ⟨{{∅}, {∅, {∅, {∅}}}}, ?_⟩, ?_⟩ <;> simp
+
+end Exercise_3_19
 
 end Relation
 
