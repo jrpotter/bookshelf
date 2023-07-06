@@ -278,6 +278,8 @@ theorem single_valued_subset {F G : Set.Relation α}
   intro y₁ hy₁
   exact single_valued_eq_unique hG (h hy₁.right) (h hy)
 
+/-! ## Injections -/
+
 /--
 A `Relation` `R` is one-to-one if it is a single-rooted function.
 -/
@@ -299,6 +301,22 @@ theorem one_to_one_self_iff_one_to_one_inv {R : Relation α}
   apply Iff.intro <;>
   · intro ⟨hx, hy⟩
     exact ⟨hy, hx⟩
+
+/-! ## Surjections -/
+
+/--
+Indicates `Relation` `F` is a function from `A` to `B`.
+
+This is usually denoted as `F : A → B`.
+-/
+def mapsInto (F : Relation α) (A B : Set α) :=
+  F.isSingleValued ∧ dom F = A ∧ ran F ⊆ B
+
+/--
+Indicates `Relation` `F` is a function from `A` to `ran F = B`.
+-/
+def mapsOnto (F : Relation α) (A B : Set α) :=
+  F.isSingleValued ∧ dom F = A ∧ ran F = B
 
 /-! ## Composition -/
 
@@ -340,6 +358,41 @@ theorem ran_comp_imp_ran_self {F G : Relation α}
   ]
   intro x t ht
   exact ⟨t, ht.right⟩
+
+/--
+Composition of functions is associative.
+-/
+theorem comp_assoc {R S T : Relation α}
+  : (R.comp S).comp T = R.comp (S.comp T) := by
+  calc (R.comp S).comp T
+    _ = { p | ∃ t, (p.1, t) ∈ T ∧ (t, p.2) ∈ R.comp S} := rfl
+    _ = { p | ∃ t, (p.1, t) ∈ T ∧ (∃ a, (t, a) ∈ S ∧ (a, p.2) ∈ R) } := rfl
+    _ = { p | ∃ t, ∃ a, ((p.1, t) ∈ T ∧ (t, a) ∈ S) ∧ (a, p.2) ∈ R } := by
+      ext p
+      simp only [mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨t, ht, a, ha⟩
+        exact ⟨t, a, ⟨ht, ha.left⟩, ha.right⟩
+      · intro ⟨t, a, h₁, h₂⟩
+        exact ⟨t, h₁.left, a, h₁.right, h₂⟩
+    _ = { p | ∃ a, ∃ t, ((p.1, t) ∈ T ∧ (t, a) ∈ S) ∧ (a, p.2) ∈ R } := by
+      ext p
+      simp only [mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨t, a, h⟩
+        exact ⟨a, t, h⟩
+      · intro ⟨a, t, h⟩
+        exact ⟨t, a, h⟩
+    _ = { p | ∃ a, (∃ t, (p.1, t) ∈ T ∧ (t, a) ∈ S) ∧ (a, p.2) ∈ R } := by
+      ext p
+      simp only [mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨a, t, h⟩
+        exact ⟨a, ⟨t, h.left⟩, h.right⟩
+      · intro ⟨a, ⟨t, ht⟩, ha⟩
+        exact ⟨a, t, ht, ha⟩
+    _ = { p | ∃ a, (p.1, a) ∈ S.comp T ∧ (a, p.2) ∈ R } := rfl
+    _ = R.comp (S.comp T) := rfl
 
 /--
 The composition of two functions is itself a function.
@@ -419,20 +472,6 @@ theorem comp_inv_eq_inv_comp_inv {F G : Relation α}
       have ⟨t, p, q⟩ := ht
       refine ⟨t, ?_, ?_⟩ <;> rwa [← mem_self_comm_mem_inv]
   _ = comp (inv G) (inv F) := rfl
-
-/--
-Indicates `Relation` `F` is a function from `A` to `B`.
-
-This is usually denoted as `F : A → B`.
--/
-def mapsInto (F : Relation α) (A B : Set α) :=
-  F.isSingleValued ∧ dom F = A ∧ ran F ⊆ B
-
-/--
-Indicates `Relation` `F` is a function from `A` to `ran F = B`.
--/
-def mapsOnto (F : Relation α) (A B : Set α) :=
-  F.isSingleValued ∧ dom F = A ∧ ran F = B
 
 /-! ## Ordered Pairs -/
 

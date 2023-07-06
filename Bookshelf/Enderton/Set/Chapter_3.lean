@@ -1296,6 +1296,153 @@ theorem exercise_3_19_x
 
 end Exercise_3_19
 
+/-- #### Exercise 3.20
+
+Show that `F ↾ A = F ∩ (A × ran F)`.
+-/
+theorem exercise_3_20 {F : Set.Relation α} {A : Set α}
+  : F.restriction A = F ∩ (Set.prod A (ran F)) := by
+  calc F.restriction A
+    _ = {p | p ∈ F ∧ p.fst ∈ A} := rfl
+    _ = {p | p ∈ F ∧ p.fst ∈ A ∧ p.snd ∈ ran F} := by
+      ext x
+      have (a, b) := x
+      simp only [
+        Set.mem_setOf_eq, Set.sep_and, Set.mem_inter_iff, iff_self_and, and_imp
+      ]
+      intro hF _
+      exact ⟨hF, mem_pair_imp_snd_mem_ran hF⟩
+    _ = {p | p ∈ F} ∩ {p | p.fst ∈ A ∧ p.snd ∈ ran F} := rfl
+    _ = F ∩ {p | p.fst ∈ A ∧ p.snd ∈ ran F} := rfl
+    _ = F ∩ (Set.prod A (ran F)) := rfl
+
+/-- #### Exercise 3.22 (a)
+
+Show that the following is correct for any sets.
+```
+A ⊆ B → F⟦A⟧ ⊆ F⟦B⟧
+```
+-/
+theorem exercise_3_22_a {A B : Set α} {F : Set.Relation α} (h : A ⊆ B)
+  : F.image A ⊆ F.image B := by
+  show ∀ x, x ∈ F.image A → x ∈ F.image B
+  unfold image
+  simp only [Set.mem_setOf_eq]
+  intro x hx
+  have ⟨u, hu⟩ := hx
+  have := h hu.left
+  exact ⟨u, this, hu.right⟩
+
+/-- #### Exercise 3.22 (b)
+
+Show that the following is correct for any sets.
+```
+(F ∘ G)⟦A⟧ = F⟦G⟦A⟧⟧
+```
+-/
+theorem exercise_3_22_b {A B : Set α} {F : Set.Relation α}
+  : (F.comp G).image A = F.image (G.image A) := by
+  calc (F.comp G).image A
+    _ = { v | ∃ u ∈ A, (u, v) ∈ F.comp G } := rfl
+    _ = { v | ∃ u ∈ A, ∃ a, (u, a) ∈ G ∧ (a, v) ∈ F } := rfl
+    _ = { v | ∃ a, ∃ u ∈ A, (u, a) ∈ G ∧ (a, v) ∈ F } := by
+      ext p
+      simp only [Set.mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨u, hu, a, ha⟩
+        exact ⟨a, u, hu, ha⟩
+      · intro ⟨a, u, hu, ha⟩
+        exact ⟨u, hu, a, ha⟩
+    _ = { v | ∃ a, (∃ u ∈ A, (u, a) ∈ G) ∧ (a, v) ∈ F } := by
+      ext p
+      simp only [Set.mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨a, u, h⟩
+        exact ⟨a, ⟨u, h.left, h.right.left⟩, h.right.right⟩
+      · intro ⟨a, ⟨u, hu⟩, ha⟩
+        exact ⟨a, u, hu.left, hu.right, ha⟩
+    _ = { v | ∃ a ∈ { w | ∃ u ∈ A, (u, w) ∈ G }, (a, v) ∈ F } := rfl
+    _ = { v | ∃ a ∈ G.image A, (a, v) ∈ F } := rfl
+    _ = F.image (G.image A) := rfl
+
+/-- #### Exercise 3.22 (c)
+
+Show that the following is correct for any sets.
+```
+Q ↾ (A ∪ B) = (Q ↾ A) ∪ (Q ↾ B)
+```
+-/
+theorem exercise_3_22_c {A B : Set α} {Q : Set.Relation α}
+  : Q.restriction (A ∪ B) = (Q.restriction A) ∪ (Q.restriction B) := by
+  calc Q.restriction (A ∪ B)
+    _ = { p | p ∈ Q ∧ p.1 ∈ A ∪ B } := rfl
+    _ = { p | p ∈ Q ∧ (p.1 ∈ A ∨ p.1 ∈ B) } := rfl
+    _ = { p | (p ∈ Q ∧ p.1 ∈ A) ∨ (p ∈ Q ∧ p.1 ∈ B) } := by
+      ext p
+      simp only [Set.sep_or, Set.mem_union, Set.mem_setOf_eq]
+    _ = { p | p ∈ Q ∧ p.1 ∈ A} ∪ { p | p ∈ Q ∧ p.1 ∈ B } := rfl
+    _ = (Q.restriction A) ∪ (Q.restriction B) := rfl
+
+/-- #### Exercise 3.23 (i)
+
+Let `I` be the identity function on the set `A`. Show that for any sets `B` and
+`C`, `B ∘ I = B ↾ A`.
+-/
+theorem exercise_3_23_i {A : Set α} {B : Set.Relation α} {I : Set.Relation α}
+  (hI : I = { p | p.1 ∈ A ∧ p.1 = p.2 })
+  : B.comp I = B.restriction A := by
+  rw [Set.Subset.antisymm_iff]
+  apply And.intro
+  · show ∀ p, p ∈ B.comp I → p ∈ B.restriction A
+    intro (x, y) hp
+    have ⟨t, ht⟩ := hp
+    rw [hI] at ht
+    simp only [Set.mem_setOf_eq] at ht
+    show (x, y) ∈ B ∧ x ∈ A
+    rw [← ht.left.right] at ht
+    exact ⟨ht.right, ht.left.left⟩
+  · show ∀ p, p ∈ B.restriction A → p ∈ B.comp I
+    unfold restriction comp
+    rw [hI]
+    simp only [Set.mem_setOf_eq, and_true]
+    intro (x, y) hp
+    refine ⟨x, ⟨hp.right, rfl⟩, hp.left⟩
+
+/-- #### Exercise 3.23 (ii)
+
+Let `I` be the identity function on the set `A`. Show that for any sets `B` and
+`C`, `I⟦C⟧ = A ∩ C`.
+-/
+theorem exercise_3_23_ii {A C : Set α} {I : Set.Relation α}
+  (hI : I = { p | p.1 ∈ A ∧ p.1 = p.2 })
+  : I.image C = A ∩ C := by
+  calc I.image C
+    _ = { v | ∃ u ∈ C, (u, v) ∈ I } := rfl
+    _ = { v | ∃ u ∈ C, u ∈ A ∧ u = v } := by
+      ext v
+      simp only [Set.mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨u, h₁, h₂⟩
+        rw [hI] at h₂
+        simp only [Set.mem_setOf_eq] at h₂
+        exact ⟨u, h₁, h₂⟩
+      · intro ⟨u, h₁, h₂⟩
+        refine ⟨u, h₁, ?_⟩
+        · rw [hI]
+          simp only [Set.mem_setOf_eq]
+          exact h₂
+    _ = { v | v ∈ C ∧ v ∈ A } := by
+      ext v
+      simp only [Set.mem_setOf_eq, Set.sep_mem_eq, Set.mem_inter_iff]
+      apply Iff.intro
+      · intro ⟨u, hC, hA, hv⟩
+        rw [← hv]
+        exact ⟨hC, hA⟩
+      · intro ⟨hC, hA⟩
+        exact ⟨v, hC, hA, rfl⟩
+    _ = C ∩ A := rfl
+    _ = A ∩ C := Set.inter_comm C A
+
 end Relation
 
 end Enderton.Set.Chapter_3

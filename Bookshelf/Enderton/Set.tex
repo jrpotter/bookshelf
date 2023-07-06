@@ -75,7 +75,7 @@ The \textbf{composition} of sets $F$ and $G$ is
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.comp}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.comp}
 
 \end{definition}
 
@@ -87,7 +87,7 @@ The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.dom}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.dom}
 
 \end{definition}
 
@@ -137,7 +137,7 @@ Given \nameref{ref:relation} $R$, the \textbf{field} of $R$, denoted $\fld{R}$,
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.fld}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.fld}
 
 \end{definition}
 
@@ -182,7 +182,7 @@ The \textbf{image of $A$ under $F$} is the set
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.image}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.image}
 
 \end{definition}
 
@@ -194,7 +194,7 @@ The \textbf{inverse} of a set $F$ is the set
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.inv}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.inv}
 
 \end{definition}
 
@@ -206,7 +206,7 @@ For any sets $u$ and $v$, the \textbf{ordered pair} $\left< u, v \right>$ is
 
 \begin{definition}
 
-  \lean*{Common/Set/OrderedPair}{OrderedPair}
+  \lean*{Bookshelf/Enderton/Set/OrderedPair}{OrderedPair}
 
 \end{definition}
 
@@ -305,7 +305,7 @@ The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.ran}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.ran}
 
 \end{definition}
 
@@ -328,7 +328,7 @@ A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation}
 
 \end{definition}
 
@@ -340,7 +340,7 @@ The \textbf{restriction} of a set $F$ to set $A$ is the set
 
 \begin{definition}
 
-  \lean*{Common/Set/Relation}{Set.Relation.restriction}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.restriction}
 
 \end{definition}
 
@@ -1341,7 +1341,8 @@ Let $A$ and $B$ be sets. $x \not\in A + B$ if and only if either
 
 \begin{proof}
 
-  \lean{Common/Set/Basic}{Set.not\_mem\_symm\_diff\_inter\_or\_not\_union}
+  \lean{Bookshelf/Enderton/Set/Basic}
+    {Set.not\_mem\_symm\_diff\_inter\_or\_not\_union}
 
   By definition of the \nameref{ref:symmetric-difference},
     \begin{align*}
@@ -2657,13 +2658,13 @@ If not, then under what conditions does equality hold?
 
   \statementpadding
 
-  \lean*{Common/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.dom\_inv\_eq\_ran\_self}
 
-  \lean*{Common/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.ran\_inv\_eq\_dom\_self}
 
-  \lean{Common/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.inv\_inv\_eq\_self}
 
   We prove that (i) $\dom{(F^{-1})} = \ran{F}$, (ii) $\ran{(F^{-1})} = \dom{F}$,
@@ -2715,10 +2716,10 @@ If not, then under what conditions does equality hold?
 
   \statementpadding
 
-  \lean*{Common/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.single\_valued\_inv\_iff\_single\_rooted\_self}
 
-  \lean{Common/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.single\_valued\_self\_iff\_single\_rooted\_inv}
 
   We prove that (i) any set $F$, $F^{-1}$ is a function iff $F$ is
@@ -2778,7 +2779,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  \lean{Common/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.one\_to\_one\_self\_iff\_one\_to\_one\_inv}
 
   We prove that (i) $F^{-1}$ is a function and (ii) $F^{-1}$ is single-rooted.
@@ -2868,7 +2869,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
   \statementpadding
 
-  \lean*{Common/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.single\_valued\_comp\_is\_single\_valued}
 
   \lean{Bookshelf/Enderton/Set/Chapter\_3}
@@ -2924,7 +2925,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  \lean{Common/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.comp\_inv\_eq\_inv\_comp\_inv}
 
   By definition of the \nameref{ref:composition} of $F$ and $G$,
@@ -4296,12 +4297,15 @@ Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.20}}%
+\subsection{\verified{Exercise 3.20}}%
 \label{sub:exercise-3.20}
 
 Show that $F \restriction A = F \cap (A \times \ran{F})$.
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_20}
 
   Let $F$ and $A$ be arbitrary sets.
   By \nameref{sub:corollary-3c} and definition of the \nameref{ref:restriction},
@@ -4319,34 +4323,38 @@ Show that $F \restriction A = F \cap (A \times \ran{F})$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.21}}%
+\subsection{\verified{Exercise 3.21}}%
 \label{sub:exercise-3.21}
 
 Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
 
 \begin{proof}
 
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.comp\_assoc}
+
   Let $R$, $S$, and $T$ be arbitrary sets.
   By definition of the \nameref{ref:composition} of sets,
     \begin{align*}
       (R \circ S) \circ T
         & = \{\left< u, v \right> \mid
-          \exists t(u(R \circ S)t \land tTv)\} \\
+          \exists t(uTt \land t(R \circ S)v)\} \\
         & = \{\left< u, v \right> \mid
-          \exists t((\exists a, uRa \land aSt) \land tTv)\} \\
+          \exists t(uTt \land (\exists a(tSa \land aRv))\} \\
         & = \{\left< u, v \right> \mid
-          \exists t, \exists a, (uRa \land aSt \land tTv)\} \\
+          \exists t, \exists a, (uTt \land tSa) \land aRv)\} \\
         & = \{\left< u, v \right> \mid
-          \exists a, \exists t, (uRa \land aSt \land tTv)\} \\
+          \exists a, \exists t, (uTt \land tSa) \land aRv)\} \\
         & = \{\left< u, v \right> \mid
-          \exists a(uRa \land (\exists t, aSt \land tTv))\} \\
-        & = \{\left< u, v \right> \mid \exists a(uRa \land a(S \circ T)v)\} \\
+          \exists a, (\exists t(uTt \land tSa)) \land aRv)\} \\
+        & = \{\left< u, v \right> \mid
+          \exists a, u(S \circ T)a \land aRv)\} \\
         & = R \circ (S \circ T).
     \end{align*}
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.22}}%
+\subsection{\verified{Exercise 3.22}}%
 \label{sub:exercise-3.22}
 
 Show that the following are correct for any sets.
@@ -4359,6 +4367,17 @@ Show that the following are correct for any sets.
 \end{enumerate}
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_22\_a}
+
+  \lean*{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_22\_b}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_22\_c}
 
   Let $A$, $B$, $F$, $G$, and $Q$ be arbitrary sets.
 
@@ -4408,7 +4427,7 @@ Show that the following are correct for any sets.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.23}}%
+\subsection{\verified{Exercise 3.23}}%
 \label{sub:exercise-3.23}
 
 Let $I_A$ be the identity function on the set $A$.
@@ -4417,6 +4436,14 @@ Show that for any sets $B$ and $C$,
     \img{I_A}{C} = A \cap C.$$
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_23\_i}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_23\_ii}
 
   Let $I_A$ be the identity function on the set $A$.
   That is, $I_A = \{\left< u, u \right> \mid u \in A\}$.
@@ -4433,8 +4460,8 @@ Show that for any sets $B$ and $C$,
 
       Let $\left< x, y \right> \in B \circ I_A$.
       By definition of the \nameref{ref:composition} of sets,
-        there exists some $t$ such that $xBt$ and $t(I_A)y$.
-      By definition of the identity function, $I_A(t) = y$ implies $t = y$.
+        there exists some $t$ such that $x(I_A)t$ and $tBy$.
+      By definition of the identity function, $I_A(x) = t$ implies $x = t$.
       Thus $xBy$.
       By hypothesis, $x \in \dom{(B \circ I_A)}$.
       Therefore $x \in \dom{I_A} = A$.
