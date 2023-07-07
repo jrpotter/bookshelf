@@ -229,12 +229,16 @@ theorem theorem_3d {A : Set (Set (Set α))} (h : OrderedPair x y ∈ A)
   have : {x, y} ⊆ ⋃₀ ⋃₀ A := Chapter_2.exercise_2_3 {x, y} hq
   exact ⟨this (by simp), this (by simp)⟩
 
+section Relation
+
+open Set.Relation
+
 /-- #### Exercise 3.6
 
 Show that a set `A` is a relation **iff** `A ⊆ dom A × ran A`.
 -/
-theorem exercise_3_6 {A : Set.Relation α}
-  : A ⊆ Set.prod (A.dom) (A.ran) := by
+theorem exercise_3_6 {A : Set.HRelation α β}
+  : A ⊆ Set.prod (dom A) (ran A) := by
   show ∀ t, t ∈ A → t ∈ Set.prod (Prod.fst '' A) (Prod.snd '' A)
   intro (a, b) ht
   unfold Set.prod
@@ -301,8 +305,8 @@ theorem exercise_3_7 {R : Set.Relation α}
     -- `t = y` then `t ∈ ran R`.
     have hxy_mem : t = x ∨ t = y → t ∈ Set.Relation.fld R := by
       intro ht
-      have hz : R ⊆ Set.prod (R.dom) (R.ran) := exercise_3_6
-      have : (x, y) ∈ Set.prod (R.dom) (R.ran) := hz p
+      have hz : R ⊆ Set.prod (dom R) (ran R) := exercise_3_6
+      have : (x, y) ∈ Set.prod (dom R) (ran R) := hz p
       unfold Set.prod at this
       simp at this
       apply Or.elim ht
@@ -326,10 +330,6 @@ theorem exercise_3_7 {R : Set.Relation α}
       simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
       exact hxy_mem this
 
-section Relation
-
-open Set.Relation
-
 /-- #### Exercise 3.8 (i)
 
 Show that for any set `𝓐`:
@@ -337,7 +337,7 @@ Show that for any set `𝓐`:
 dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_3_8_i {A : Set (Set.Relation α)}
+theorem exercise_3_8_i {A : Set (Set.HRelation α β)}
   : dom (⋃₀ A) = ⋃₀ { dom R | R ∈ A } := by
   ext x
   unfold dom Prod.fst
@@ -363,7 +363,7 @@ Show that for any set `𝓐`:
 ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_3_8_ii {A : Set (Set.Relation α)}
+theorem exercise_3_8_ii {A : Set (Set.HRelation α β)}
   : ran (⋃₀ A) = ⋃₀ { ran R | R ∈ A } := by
   ext x
   unfold ran Prod.snd
@@ -389,7 +389,7 @@ operation in the preceding problem.
 dom ⋃ A = ⋃ { dom R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_3_9_i {A : Set (Set.Relation α)}
+theorem exercise_3_9_i {A : Set (Set.HRelation α β)}
   : dom (⋂₀ A) ⊆ ⋂₀ { dom R | R ∈ A } := by
   show ∀ x, x ∈ dom (⋂₀ A) → x ∈ ⋂₀ { dom R | R ∈ A }
   unfold dom Prod.fst
@@ -415,7 +415,7 @@ operation in the preceding problem.
 ran ⋃ A = ⋃ { ran R | R ∈ 𝓐 }
 ```
 -/
-theorem exercise_3_9_ii {A : Set (Set.Relation α)}
+theorem exercise_3_9_ii {A : Set (Set.HRelation α β)}
   : ran (⋂₀ A) ⊆ ⋂₀ { ran R | R ∈ A } := by
   show ∀ x, x ∈ ran (⋂₀ A) → x ∈ ⋂₀ { ran R | R ∈ A }
   unfold ran Prod.snd
@@ -437,9 +437,9 @@ theorem exercise_3_9_ii {A : Set (Set.Relation α)}
 
 Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
-theorem theorem_3g_i {F : Set.Relation α}
-  (hF : F.isOneToOne) (hx : x ∈ dom F)
-  : ∃! y, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
+theorem theorem_3g_i {F : Set.HRelation α β}
+  (hF : isOneToOne F) (hx : x ∈ dom F)
+  : ∃! y, (x, y) ∈ F ∧ (y, x) ∈ inv F := by
   simp only [mem_self_comm_mem_inv, and_self]
   have ⟨y, hy⟩ := dom_exists hx
   refine ⟨y, hy, ?_⟩
@@ -451,9 +451,9 @@ theorem theorem_3g_i {F : Set.Relation α}
 
 Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
-theorem theorem_3g_ii {F : Set.Relation α}
-  (hF : F.isOneToOne) (hy : y ∈ F.ran)
-  : ∃! x, (x, y) ∈ F ∧ (y, x) ∈ F.inv := by
+theorem theorem_3g_ii {F : Set.HRelation α β}
+  (hF : isOneToOne F) (hy : y ∈ ran F)
+  : ∃! x, (x, y) ∈ F ∧ (y, x) ∈ inv F := by
   simp only [mem_self_comm_mem_inv, and_self]
   have ⟨x, hx⟩ := ran_exists hy
   refine ⟨x, hx, ?_⟩
@@ -468,13 +468,13 @@ Assume that `F` and `G` are functions. Then
 dom (F ∘ G) = {x ∈ dom G | G(x) ∈ dom F}.
 ```
 -/
-theorem theorem_3h_dom {F G : Set.Relation α}
-  (_ : F.isSingleValued) (hG : G.isSingleValued)
-  : dom (F.comp G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F} := by
+theorem theorem_3h_dom {F : Set.HRelation β γ} {G : Set.HRelation α β}
+  (_ : isSingleValued F) (hG : isSingleValued G)
+  : dom (comp F G) = {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F} := by
   let rhs := {x ∈ dom G | ∃! y, (x, y) ∈ G ∧ y ∈ dom F }
   rw [Set.Subset.antisymm_iff]
   apply And.intro
-  · show ∀ t, t ∈ dom (F.comp G) → t ∈ rhs
+  · show ∀ t, t ∈ dom (comp F G) → t ∈ rhs
     intro t ht
     simp only [Set.mem_setOf_eq]
     have ⟨z, hz⟩ := dom_exists ht
@@ -488,7 +488,7 @@ theorem theorem_3h_dom {F G : Set.Relation α}
     refine ⟨a, ⟨ha.left, z, ha.right⟩, ?_⟩
     intro y₁ hy₁
     exact fun _ _ => single_valued_eq_unique hG hy₁ ha.left
-  · show ∀ t, t ∈ rhs → t ∈ dom (F.comp G)
+  · show ∀ t, t ∈ rhs → t ∈ dom (comp F G)
     intro t ht
     simp only [Set.mem_setOf_eq] at ht
     unfold dom
@@ -507,15 +507,15 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `G : B → A` (a "left inverse") such that `G ∘ F` is the identity function on `A`
 **iff** `F` is one-to-one.
 -/
-theorem theorem_3j_a {F : Set.Relation α} {A B : Set α}
-  (hF : F.isSingleValued ∧ F.mapsInto A B) (hA : Set.Nonempty A)
-  : (∃ G : Set.Relation α,
-      G.isSingleValued ∧ G.mapsInto B A ∧
-        (∀ p ∈ G.comp F, p.1 = p.2)) ↔ F.isOneToOne := by
+theorem theorem_3j_a {F : Set.HRelation α β} {A : Set α} {B : Set β}
+  (hF : isSingleValued F ∧ mapsInto F A B) (hA : Set.Nonempty A)
+  : (∃ G : Set.HRelation β α,
+      isSingleValued G ∧ mapsInto G B A ∧
+        (∀ p ∈ comp G F, p.1 = p.2)) ↔ isOneToOne F := by
   apply Iff.intro
   · intro ⟨G, ⟨hG₁, hG₂, hI⟩⟩
     refine ⟨hF.left, ?_⟩
-    show F.isSingleRooted
+    show isSingleRooted F
     intro y hy
     have ⟨x, hx⟩ := ran_exists hy
     sorry
@@ -528,11 +528,11 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `H : B → A` (a "right inverse") such that `F ∘ H` is the identity function on
 `B` **iff** `F` maps `A` onto `B`.
 -/
-theorem theorem_3j_b {F : Set.Relation α} {A B : Set α}
-  (hF : F.isSingleValued ∧ F.mapsInto A B) (hA : Set.Nonempty A)
-  : (∃ H : Set.Relation α,
-      H.isSingleValued ∧ H.mapsInto B A ∧
-        (∀ p ∈ F.comp H, p.1 = p.2)) ↔ F.mapsOnto A B := by
+theorem theorem_3j_b {F : Set.HRelation α β} {A : Set α} {B : Set β}
+  (hF : isSingleValued F ∧ mapsInto F A B) (hA : Set.Nonempty A)
+  : (∃ H : Set.HRelation β α,
+      isSingleValued H ∧ mapsInto H B A ∧
+        (∀ p ∈ comp F H, p.1 = p.2)) ↔ mapsOnto F A B := by
   sorry
 
 /-- #### Theorem 3K (a)
@@ -543,11 +543,11 @@ The image of a union is the union of the images:
 F⟦⋃ 𝓐⟧ = ⋃ {F⟦A⟧ | A ∈ 𝓐}
 ```
 -/
-theorem theorem_3k_a {F : Set.Relation α} {𝓐 : Set (Set α)}
-  : F.image (⋃₀ 𝓐) = ⋃₀ { F.image A | A ∈ 𝓐 } := by
+theorem theorem_3k_a {F : Set.HRelation α β} {𝓐 : Set (Set α)}
+  : image F (⋃₀ 𝓐) = ⋃₀ { image F A | A ∈ 𝓐 } := by
   rw [Set.Subset.antisymm_iff]
   apply And.intro
-  · show ∀ v, v ∈ F.image (⋃₀ 𝓐) → v ∈ ⋃₀ { F.image A | A ∈ 𝓐 }
+  · show ∀ v, v ∈ image F (⋃₀ 𝓐) → v ∈ ⋃₀ { image F A | A ∈ 𝓐 }
     intro v hv
     unfold image at hv
     simp only [Set.mem_sUnion, Set.mem_setOf_eq] at hv
@@ -555,11 +555,11 @@ theorem theorem_3k_a {F : Set.Relation α} {𝓐 : Set (Set α)}
     have ⟨A, hA⟩ := hu.left
     simp only [Set.mem_sUnion, Set.mem_setOf_eq, exists_exists_and_eq_and]
     refine ⟨A, hA.left, ?_⟩
-    show v ∈ F.image A
+    show v ∈ image F A
     unfold image
     simp only [Set.mem_setOf_eq]
     exact ⟨u, hA.right, hu.right⟩
-  · show ∀ v, v ∈ ⋃₀ {x | ∃ A, A ∈ 𝓐 ∧ F.image A = x} → v ∈ F.image (⋃₀ 𝓐)
+  · show ∀ v, v ∈ ⋃₀ {x | ∃ A, A ∈ 𝓐 ∧ image F A = x} → v ∈ image F (⋃₀ 𝓐)
     intro v hv
     simp only [Set.mem_sUnion, Set.mem_setOf_eq, exists_exists_and_eq_and] at hv
     have ⟨A, hA⟩ := hv
@@ -580,9 +580,9 @@ F⟦⋂ 𝓐⟧ ⊆ ⋂ {F⟦A⟧ | A ∈ 𝓐}
 Equality holds if `F` is single-rooted.
 -/
 
-theorem theorem_3k_b_i {F : Set.Relation α} {𝓐 : Set (Set α)}
-  : F.image (⋂₀ 𝓐) ⊆ ⋂₀ { F.image A | A ∈ 𝓐} := by
-  show ∀ v, v ∈ F.image (⋂₀ 𝓐) → v ∈ ⋂₀ { F.image A | A ∈ 𝓐}
+theorem theorem_3k_b_i {F : Set.HRelation α β} {𝓐 : Set (Set α)}
+  : image F (⋂₀ 𝓐) ⊆ ⋂₀ { image F A | A ∈ 𝓐} := by
+  show ∀ v, v ∈ image F (⋂₀ 𝓐) → v ∈ ⋂₀ { image F A | A ∈ 𝓐}
   intro v hv
   unfold image at hv
   simp only [Set.mem_sInter, Set.mem_setOf_eq] at hv
@@ -599,9 +599,9 @@ theorem theorem_3k_b_i {F : Set.Relation α} {𝓐 : Set (Set α)}
   simp only [Set.mem_setOf_eq]
   exact ⟨u, hu.left A hA, hu.right⟩
 
-theorem theorem_3k_b_ii {F : Set.Relation α} {𝓐 : Set (Set α)}
-  (hF : F.isSingleRooted) (h𝓐 : Set.Nonempty 𝓐)
-  : F.image (⋂₀ 𝓐) = ⋂₀ { F.image A | A ∈ 𝓐} := by
+theorem theorem_3k_b_ii {F : Set.HRelation α β} {𝓐 : Set (Set α)}
+  (hF : isSingleRooted F) (h𝓐 : Set.Nonempty 𝓐)
+  : image F (⋂₀ 𝓐) = ⋂₀ { image F A | A ∈ 𝓐} := by
   rw [Set.Subset.antisymm_iff]
   refine ⟨theorem_3k_b_i, ?_⟩
   show ∀ v, v ∈ ⋂₀ {x | ∃ A, A ∈ 𝓐 ∧ image F A = x} → v ∈ image F (⋂₀ 𝓐)
@@ -640,9 +640,9 @@ F⟦A⟧ - F⟦B⟧ ⊆ F⟦A - B⟧.
 Equality holds if `F` is single-rooted.
 -/
 
-theorem theorem_3k_c_i {F : Set.Relation α} {A B : Set α}
-  : F.image A \ F.image B ⊆ F.image (A \ B) := by
-  show ∀ v, v ∈ F.image A \ F.image B → v ∈ F.image (A \ B)
+theorem theorem_3k_c_i {F : Set.HRelation α β} {A B : Set α}
+  : image F A \ image F B ⊆ image F (A \ B) := by
+  show ∀ v, v ∈ image F A \ image F B → v ∈ image F (A \ B)
   intro v hv
   have hv' : v ∈ image F A ∧ v ∉ image F B := hv
   conv at hv' => arg 1; unfold image; simp only [Set.mem_setOf_eq, eq_iff_iff]
@@ -660,9 +660,9 @@ theorem theorem_3k_c_i {F : Set.Relation α} {A B : Set α}
   simp only [Set.mem_diff, Set.mem_setOf_eq]
   exact ⟨u, ⟨hu.left, hu'⟩, hu.right⟩
 
-theorem theorem_3k_c_ii {F : Set.Relation α} {A B : Set α}
-  (hF : F.isSingleRooted)
-  : F.image A \ F.image B = F.image (A \ B) := by
+theorem theorem_3k_c_ii {F : Set.HRelation α β} {A B : Set α}
+  (hF : isSingleRooted F)
+  : image F A \ image F B = image F (A \ B) := by
   rw [Set.Subset.antisymm_iff]
   refine ⟨theorem_3k_c_i, ?_⟩
   show ∀ v, v ∈ image F (A \ B) → v ∈ image F A \ image F B
@@ -670,11 +670,11 @@ theorem theorem_3k_c_ii {F : Set.Relation α} {A B : Set α}
   unfold image at hv
   simp only [Set.mem_diff, Set.mem_setOf_eq] at hv
   have ⟨u, hu⟩ := hv
-  have hv₁ : v ∈ F.image A := by
+  have hv₁ : v ∈ image F A := by
     unfold image
     simp only [Set.mem_setOf_eq]
     exact ⟨u, hu.left.left, hu.right⟩
-  have hv₂ : v ∉ F.image B := by
+  have hv₂ : v ∉ image F B := by
     intro nv
     unfold image at nv
     simp only [Set.mem_setOf_eq] at nv
@@ -695,20 +695,20 @@ G⁻¹⟦A - B⟧ = G⁻¹⟦A⟧ - G⁻¹⟦B⟧.
 ```
 -/
 
-theorem corollary_3l_i {G : Set.Relation α} {𝓐 : Set (Set α)}
-  : G.inv.image (⋃₀ 𝓐) = ⋃₀ {G.inv.image A | A ∈ 𝓐} := theorem_3k_a
+theorem corollary_3l_i {G : Set.HRelation β α} {𝓐 : Set (Set α)}
+  : image (inv G) (⋃₀ 𝓐) = ⋃₀ {image (inv G) A | A ∈ 𝓐} := theorem_3k_a
 
-theorem corollary_3l_ii {G : Set.Relation α} {𝓐 : Set (Set α)}
-  (hG : G.isSingleValued) (h𝓐 : Set.Nonempty 𝓐)
-  : G.inv.image (⋂₀ 𝓐) = ⋂₀ {G.inv.image A | A ∈ 𝓐} := by
-  have hG' : G.inv.isSingleRooted :=
+theorem corollary_3l_ii {G : Set.HRelation β α} {𝓐 : Set (Set α)}
+  (hG : isSingleValued G) (h𝓐 : Set.Nonempty 𝓐)
+  : image (inv G) (⋂₀ 𝓐) = ⋂₀ {image (inv G) A | A ∈ 𝓐} := by
+  have hG' : isSingleRooted (inv G) :=
     single_valued_self_iff_single_rooted_inv.mp hG
   exact theorem_3k_b_ii hG' h𝓐
 
-theorem corollary_3l_iii {G : Set.Relation α} {A B : Set α}
-  (hG : G.isSingleValued)
-  : G.inv.image (A \ B) = G.inv.image A \ G.inv.image B := by
-  have hG' : G.inv.isSingleRooted :=
+theorem corollary_3l_iii {G : Set.HRelation β α} {A B : Set α}
+  (hG : isSingleValued G)
+  : image (inv G) (A \ B) = image (inv G) A \ image (inv G) B := by
+  have hG' : isSingleRooted (inv G) :=
     single_valued_self_iff_single_rooted_inv.mp hG
   exact (theorem_3k_c_ii hG').symm
 
@@ -719,10 +719,10 @@ Assume that `f` and `g` are functions and show that
 f ⊆ g ↔ dom f ⊆ dom g ∧ (∀ x ∈ dom f) f(x) = g(x).
 ```
 -/
-theorem exercise_3_12 {f g : Set.Relation α}
-  (hf : f.isSingleValued) (_ : g.isSingleValued)
+theorem exercise_3_12 {f g : Set.HRelation α β}
+  (hf : isSingleValued f) (_ : isSingleValued g)
   : f ⊆ g ↔ dom f ⊆ dom g ∧
-      (∀ x ∈ dom f, ∃! y : α, (x, y) ∈ f ∧ (x, y) ∈ g) := by
+      (∀ x ∈ dom f, ∃! y : β, (x, y) ∈ f ∧ (x, y) ∈ g) := by
   apply Iff.intro
   · intro h
     apply And.intro
@@ -747,8 +747,8 @@ theorem exercise_3_12 {f g : Set.Relation α}
 Assume that `f` and `g` are functions with `f ⊆ g` and `dom g ⊆ dom f`. Show
 that `f = g`.
 -/
-theorem exercise_3_13 {f g : Set.Relation α}
-  (hf : f.isSingleValued) (hg : g.isSingleValued)
+theorem exercise_3_13 {f g : Set.HRelation α β}
+  (hf : isSingleValued f) (hg : isSingleValued g)
   (h : f ⊆ g) (h₁ : dom g ⊆ dom f)
   : f = g := by
   have h₂ := (exercise_3_12 hf hg).mp h
@@ -770,9 +770,9 @@ theorem exercise_3_13 {f g : Set.Relation α}
 
 Assume that `f` and `g` are functions. Show that `f ∩ g` is a function.
 -/
-theorem exercise_3_14_a {f g : Set.Relation α}
-  (hf : f.isSingleValued) (_ : g.isSingleValued)
-  : (f ∩ g).isSingleValued :=
+theorem exercise_3_14_a {f g : Set.HRelation α β}
+  (hf : isSingleValued f) (_ : isSingleValued g)
+  : isSingleValued (f ∩ g) :=
   single_valued_subset hf (Set.inter_subset_left f g)
 
 /-- #### Exercise 3.14 (b)
@@ -780,9 +780,9 @@ theorem exercise_3_14_a {f g : Set.Relation α}
 Assume that `f` and `g` are functions. Show that `f ∪ g` is a function **iff**
 `f(x) = g(x)` for every `x` in `(dom f) ∩ (dom g)`.
 -/
-theorem exercise_3_14_b {f g : Set.Relation α}
-  (hf : f.isSingleValued) (hg : g.isSingleValued)
-  : (f ∪ g).isSingleValued ↔
+theorem exercise_3_14_b {f g : Set.HRelation α β}
+  (hf : isSingleValued f) (hg : isSingleValued g)
+  : isSingleValued (f ∪ g) ↔
       (∀ x ∈ dom f ∩ dom g, ∃! y, (x, y) ∈ f ∧ (x, y) ∈ g) := by
   apply Iff.intro
   · intro h x hx
@@ -860,16 +860,16 @@ theorem exercise_3_14_b {f g : Set.Relation α}
 Let `𝓐` be a set of functions such that for any `f` and `g` in `𝓐`, either
 `f ⊆ g` or `g ⊆ f`. Show that `⋃ 𝓐` is a function.
 -/
-theorem exercise_3_15 {𝓐 : Set (Set.Relation α)}
-  (h𝓐 : ∀ F ∈ 𝓐, F.isSingleValued)
+theorem exercise_3_15 {𝓐 : Set (Set.HRelation α β)}
+  (h𝓐 : ∀ F ∈ 𝓐, isSingleValued F)
   (h : ∀ F, ∀ G, F ∈ 𝓐 → G ∈ 𝓐 → F ⊆ G ∨ G ⊆ F)
   : isSingleValued (⋃₀ 𝓐) := by
   intro x hx
   have ⟨y₁, hy₁⟩ := dom_exists hx
   refine ⟨y₁, ⟨mem_pair_imp_snd_mem_ran hy₁, hy₁⟩, ?_⟩
   intro y₂ hy₂
-  have ⟨f, hf⟩ : ∃ f : Set.Relation α, f ∈ 𝓐 ∧ (x, y₁) ∈ f := hy₁
-  have ⟨g, hg⟩ : ∃ g : Set.Relation α, g ∈ 𝓐 ∧ (x, y₂) ∈ g := hy₂.right
+  have ⟨f, hf⟩ : ∃ f : Set.HRelation α β, f ∈ 𝓐 ∧ (x, y₁) ∈ f := hy₁
+  have ⟨g, hg⟩ : ∃ g : Set.HRelation α β, g ∈ 𝓐 ∧ (x, y₂) ∈ g := hy₂.right
   apply Or.elim (h f g hf.left hg.left)
   · intro hf'
     have := hf' hf.right
@@ -884,9 +884,9 @@ Show that the composition of two single-rooted sets is again single-rooted.
 Conclude that the composition of two one-to-one functions is again one-to-one.
 -/
 
-theorem exercise_3_17_i {F G : Set.Relation α}
-  (hF : F.isSingleRooted) (hG : G.isSingleRooted)
-  : (F.comp G).isSingleRooted := by
+theorem exercise_3_17_i {F : Set.HRelation β γ} {G : Set.HRelation α β}
+  (hF : isSingleRooted F) (hG : isSingleRooted G)
+  : isSingleRooted (comp F G):= by
   intro v hv
   
   have ⟨u₁, hu₁⟩ := ran_exists hv
@@ -907,11 +907,11 @@ theorem exercise_3_17_i {F G : Set.Relation α}
   rw [ht] at ht₁
   exact single_rooted_eq_unique hG ht₂.left ht₁.left
 
-theorem exercise_3_17_ii {F G : Set.Relation α}
-  (hF : F.isOneToOne) (hG : G.isOneToOne)
-  : (F.comp G).isOneToOne := And.intro
-    (single_valued_comp_is_single_valued hF.left hG.left)
-    (exercise_3_17_i hF.right hG.right)
+theorem exercise_3_17_ii {F : Set.HRelation β γ} {G : Set.HRelation α β}
+  (hF : isOneToOne F) (hG : isOneToOne G)
+  : isOneToOne (comp F G) := And.intro
+      (single_valued_comp_is_single_valued hF.left hG.left)
+      (exercise_3_17_i hF.right hG.right)
 
 /-! #### Exercise 3.18
 
@@ -929,7 +929,7 @@ variable {R : Set.Relation ℕ}
 variable (hR : R = {(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)})
 
 theorem exercise_3_18_i
-  : R.comp R = {(0, 2), (0, 3), (1, 3)} := by
+  : comp R R = {(0, 2), (0, 3), (1, 3)} := by
   rw [hR]
   unfold comp
   simp only [Set.mem_singleton_iff, Set.mem_insert_iff, or_self, Prod.mk.injEq]
@@ -970,7 +970,7 @@ theorem exercise_3_18_i
           exact ⟨rfl, h.right⟩
 
 theorem exercise_3_18_ii
-  : R.restriction {1} = {(1, 2), (1, 3)} := by
+  : restriction R {1} = {(1, 2), (1, 3)} := by
   rw [hR]
   unfold restriction
   ext p
@@ -1006,7 +1006,7 @@ theorem exercise_3_18_ii
       rw [hab.left, hab.right]
 
 theorem exercise_3_18_iii
-  : R.inv.restriction {1} = {(1, 0)} := by
+  : restriction (inv R) {1} = {(1, 0)} := by
   rw [hR]
   unfold inv restriction
   ext p
@@ -1031,14 +1031,14 @@ theorem exercise_3_18_iii
     simp
 
 theorem exercise_3_18_iv
-  : R.image {1} = {2, 3} := by
+  : image R {1} = {2, 3} := by
   rw [hR]
   unfold image
   ext y
   simp
 
 theorem exercise_3_18_v
-  : R.inv.image {1} = {0} := by
+  : image (inv R) {1} = {0} := by
   rw [hR]
   unfold inv image
   ext y
@@ -1067,12 +1067,12 @@ theorem exercise_3_19_i
   simp
 
 theorem exercise_3_19_ii
-  : A.image ∅ = ∅ := by
+  : image A ∅ = ∅ := by
   unfold image
   simp
 
 theorem exercise_3_19_iii
-  : A.image {∅} = {{∅, {∅}}} := by
+  : image A {∅} = {{∅, {∅}}} := by
   unfold image
   rw [hA]
   ext x
@@ -1098,7 +1098,7 @@ theorem exercise_3_19_iii
     simp
 
 theorem exercise_3_19_iv
-  : A.image {∅, {∅}} = {{∅, {∅}}, ∅} := by
+  : image A {∅, {∅}} = {{∅, {∅}}, ∅} := by
   unfold image
   rw [hA]
   ext x
@@ -1131,7 +1131,7 @@ theorem exercise_3_19_iv
     · intro hx₁; right; exact hx₁
 
 theorem exercise_3_19_v
-  : A.inv = {({∅, {∅}}, ∅), (∅, {∅})} := by
+  : inv A = {({∅, {∅}}, ∅), (∅, {∅})} := by
   unfold inv
   rw [hA]
   ext x
@@ -1154,7 +1154,7 @@ theorem exercise_3_19_v
     · intro hx₁; right; rw [← hx₁]
 
 theorem exercise_3_19_vi
-  : A.comp A = {({∅}, {∅, {∅}})} := by
+  : comp A A = {({∅}, {∅, {∅}})} := by
   unfold comp
   rw [hA]
   ext x
@@ -1179,13 +1179,13 @@ theorem exercise_3_19_vi
     · left ; rw [hb]; simp
 
 theorem exercise_3_19_vii
-  : A.restriction ∅ = ∅ := by
+  : restriction A ∅ = ∅ := by
   unfold restriction
   rw [hA]
   simp
 
 theorem exercise_3_19_viii
-  : A.restriction {∅} = {(∅, {∅, {∅}})} := by
+  : restriction A {∅} = {(∅, {∅, {∅}})} := by
   unfold restriction
   rw [hA]
   ext x
@@ -1206,7 +1206,7 @@ theorem exercise_3_19_viii
     simp
 
 theorem exercise_3_19_ix
-  : A.restriction {∅, {∅}} = A := by
+  : restriction A {∅, {∅}} = A := by
   unfold restriction
   rw [hA]
   ext x
@@ -1300,9 +1300,9 @@ end Exercise_3_19
 
 Show that `F ↾ A = F ∩ (A × ran F)`.
 -/
-theorem exercise_3_20 {F : Set.Relation α} {A : Set α}
-  : F.restriction A = F ∩ (Set.prod A (ran F)) := by
-  calc F.restriction A
+theorem exercise_3_20 {F : Set.HRelation α β} {A : Set α}
+  : restriction F A = F ∩ (Set.prod A (ran F)) := by
+  calc restriction F A
     _ = {p | p ∈ F ∧ p.fst ∈ A} := rfl
     _ = {p | p ∈ F ∧ p.fst ∈ A ∧ p.snd ∈ ran F} := by
       ext x
@@ -1323,9 +1323,9 @@ Show that the following is correct for any sets.
 A ⊆ B → F⟦A⟧ ⊆ F⟦B⟧
 ```
 -/
-theorem exercise_3_22_a {A B : Set α} {F : Set.Relation α} (h : A ⊆ B)
-  : F.image A ⊆ F.image B := by
-  show ∀ x, x ∈ F.image A → x ∈ F.image B
+theorem exercise_3_22_a {A B : Set α} {F : Set.HRelation α β} (h : A ⊆ B)
+  : image F A ⊆ image F B := by
+  show ∀ x, x ∈ image F A → x ∈ image F B
   unfold image
   simp only [Set.mem_setOf_eq]
   intro x hx
@@ -1340,10 +1340,10 @@ Show that the following is correct for any sets.
 (F ∘ G)⟦A⟧ = F⟦G⟦A⟧⟧
 ```
 -/
-theorem exercise_3_22_b {A B : Set α} {F : Set.Relation α}
-  : (F.comp G).image A = F.image (G.image A) := by
-  calc (F.comp G).image A
-    _ = { v | ∃ u ∈ A, (u, v) ∈ F.comp G } := rfl
+theorem exercise_3_22_b {A B : Set α} {F : Set.HRelation α β}
+  : image (comp F G) A = image F (image G A) := by
+  calc image (comp F G) A
+    _ = { v | ∃ u ∈ A, (u, v) ∈ comp F G } := rfl
     _ = { v | ∃ u ∈ A, ∃ a, (u, a) ∈ G ∧ (a, v) ∈ F } := rfl
     _ = { v | ∃ a, ∃ u ∈ A, (u, a) ∈ G ∧ (a, v) ∈ F } := by
       ext p
@@ -1362,8 +1362,8 @@ theorem exercise_3_22_b {A B : Set α} {F : Set.Relation α}
       · intro ⟨a, ⟨u, hu⟩, ha⟩
         exact ⟨a, u, hu.left, hu.right, ha⟩
     _ = { v | ∃ a ∈ { w | ∃ u ∈ A, (u, w) ∈ G }, (a, v) ∈ F } := rfl
-    _ = { v | ∃ a ∈ G.image A, (a, v) ∈ F } := rfl
-    _ = F.image (G.image A) := rfl
+    _ = { v | ∃ a ∈ image G A, (a, v) ∈ F } := rfl
+    _ = image F (image G A) := rfl
 
 /-- #### Exercise 3.22 (c)
 
@@ -1373,27 +1373,27 @@ Q ↾ (A ∪ B) = (Q ↾ A) ∪ (Q ↾ B)
 ```
 -/
 theorem exercise_3_22_c {A B : Set α} {Q : Set.Relation α}
-  : Q.restriction (A ∪ B) = (Q.restriction A) ∪ (Q.restriction B) := by
-  calc Q.restriction (A ∪ B)
+  : restriction Q (A ∪ B) = (restriction Q A) ∪ (restriction Q B) := by
+  calc restriction Q (A ∪ B)
     _ = { p | p ∈ Q ∧ p.1 ∈ A ∪ B } := rfl
     _ = { p | p ∈ Q ∧ (p.1 ∈ A ∨ p.1 ∈ B) } := rfl
     _ = { p | (p ∈ Q ∧ p.1 ∈ A) ∨ (p ∈ Q ∧ p.1 ∈ B) } := by
       ext p
       simp only [Set.sep_or, Set.mem_union, Set.mem_setOf_eq]
     _ = { p | p ∈ Q ∧ p.1 ∈ A} ∪ { p | p ∈ Q ∧ p.1 ∈ B } := rfl
-    _ = (Q.restriction A) ∪ (Q.restriction B) := rfl
+    _ = (restriction Q A) ∪ (restriction Q B) := rfl
 
 /-- #### Exercise 3.23 (i)
 
 Let `I` be the identity function on the set `A`. Show that for any sets `B` and
 `C`, `B ∘ I = B ↾ A`.
 -/
-theorem exercise_3_23_i {A : Set α} {B : Set.Relation α} {I : Set.Relation α}
+theorem exercise_3_23_i {A : Set α} {B : Set.HRelation α β} {I : Set.Relation α}
   (hI : I = { p | p.1 ∈ A ∧ p.1 = p.2 })
-  : B.comp I = B.restriction A := by
+  : comp B I = restriction B A := by
   rw [Set.Subset.antisymm_iff]
   apply And.intro
-  · show ∀ p, p ∈ B.comp I → p ∈ B.restriction A
+  · show ∀ p, p ∈ comp B I → p ∈ restriction B A
     intro (x, y) hp
     have ⟨t, ht⟩ := hp
     rw [hI] at ht
@@ -1401,7 +1401,7 @@ theorem exercise_3_23_i {A : Set α} {B : Set.Relation α} {I : Set.Relation α}
     show (x, y) ∈ B ∧ x ∈ A
     rw [← ht.left.right] at ht
     exact ⟨ht.right, ht.left.left⟩
-  · show ∀ p, p ∈ B.restriction A → p ∈ B.comp I
+  · show ∀ p, p ∈ restriction B A → p ∈ comp B I
     unfold restriction comp
     rw [hI]
     simp only [Set.mem_setOf_eq, and_true]
@@ -1415,8 +1415,8 @@ Let `I` be the identity function on the set `A`. Show that for any sets `B` and
 -/
 theorem exercise_3_23_ii {A C : Set α} {I : Set.Relation α}
   (hI : I = { p | p.1 ∈ A ∧ p.1 = p.2 })
-  : I.image C = A ∩ C := by
-  calc I.image C
+  : image I C = A ∩ C := by
+  calc image I C
     _ = { v | ∃ u ∈ C, (u, v) ∈ I } := rfl
     _ = { v | ∃ u ∈ C, u ∈ A ∧ u = v } := by
       ext v
@@ -1442,6 +1442,205 @@ theorem exercise_3_23_ii {A C : Set α} {I : Set.Relation α}
         exact ⟨v, hC, hA, rfl⟩
     _ = C ∩ A := rfl
     _ = A ∩ C := Set.inter_comm C A
+
+/-- #### Exercise 3.24
+
+Show that for a function `F`, `F⁻¹⟦A⟧ = { x ∈ dom F | F(x) ∈ A }`.
+-/
+theorem exercise_3_24 {F : Set.HRelation α β} {A : Set β}
+  (hF : isSingleValued F)
+  : image (inv F) A = { x ∈ dom F | ∃! y : β, (x, y) ∈ F ∧ y ∈ A } := by
+  calc image (inv F) A
+    _ = { x | ∃ y ∈ A, (y, x) ∈ inv F } := rfl
+    _ = { x | ∃ y ∈ A, (x, y) ∈ F } := by simp only [mem_self_comm_mem_inv]
+    _ = { x | x ∈ dom F ∧ (∃ y : β, (x, y) ∈ F ∧ y ∈ A) } := by
+      ext x
+      simp only [Set.mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨y, hy, hyx⟩
+        exact ⟨mem_pair_imp_fst_mem_dom hyx, y, hyx, hy⟩
+      · intro ⟨_, y, hxy, hy⟩
+        exact ⟨y, hy, hxy⟩
+    _ = { x ∈ dom F | ∃ y : β, (x, y) ∈ F ∧ y ∈ A } := rfl
+    _ = { x ∈ dom F | ∃! y : β, (x, y) ∈ F ∧ y ∈ A } := by
+      ext x
+      simp only [Set.mem_setOf_eq, and_congr_right_iff]
+      intro _
+      apply Iff.intro
+      · intro ⟨y, hy⟩
+        refine ⟨y, hy, ?_⟩
+        intro y₁ hy₁
+        exact single_valued_eq_unique hF hy₁.left hy.left
+      · intro ⟨y, hy⟩
+        exact ⟨y, hy.left⟩
+
+/-- #### Exercise 3.25 (b)
+
+Show that the result of part (a) holds for any function `G`, not necessarily
+one-to-one.
+-/
+theorem exercise_3_25_b {G : Set.HRelation α β} (hG : isSingleValued G)
+  : comp G (inv G) = { p | p.1 ∈ ran G ∧ p.1 = p.2 } := by
+  ext p
+  have (x, y) := p
+  apply Iff.intro
+  · unfold comp inv
+    intro h
+    simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq] at h
+    have ⟨t, ⟨a, b, ⟨hab, hb, ha⟩⟩, ht⟩ := h
+    simp only [Set.mem_setOf_eq]
+    rw [hb, ha] at hab
+    exact ⟨mem_pair_imp_snd_mem_ran hab, single_valued_eq_unique hG hab ht⟩
+  · intro h
+    simp only [Set.mem_setOf_eq] at h
+    unfold comp inv
+    simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
+    have ⟨t, ht⟩ := ran_exists h.left
+    exact ⟨t, ⟨t, x, ht, rfl, rfl⟩, by rwa [← h.right]⟩
+
+/-- #### Exercise 3.25 (a)
+
+Assume that `G` is a one-to-one function. Show that `G ∘ G⁻¹` is the identity
+function on `ran G`.
+-/
+theorem exercise_3_25_a {G : Set.HRelation α β} (hG : isOneToOne G)
+  : comp G (inv G) = { p | p.1 ∈ ran G ∧ p.1 = p.2 } :=
+  exercise_3_25_b hG.left
+
+/-- #### Exercise 3.27
+
+Show that `dom (F ∘ G) = G⁻¹⟦dom F⟧` for any sets `F` and `G`. (`F` and `G` need
+not be functions.)
+-/
+theorem exercise_3_27 {F : Set.HRelation β γ} {G : Set.HRelation α β}
+  : dom (comp F G) = image (inv G) (dom F) := by
+  rw [Set.Subset.antisymm_iff]
+  apply And.intro
+  · show ∀ x, x ∈ dom (comp F G) → x ∈ image (inv G) (dom F)
+    intro x hx
+    have ⟨y, hy⟩ := dom_exists hx
+    unfold comp at hy
+    simp only [Set.mem_setOf_eq] at hy
+    have ⟨t, ht⟩ := hy
+    have htF : t ∈ dom F := mem_pair_imp_fst_mem_dom ht.right
+    
+    unfold image inv
+    simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
+    exact ⟨t, htF, x, t, ht.left, rfl, rfl⟩
+
+  · show ∀ x, x ∈ image (inv G) (dom F) → x ∈ dom (comp F G)
+    intro x hx
+    unfold image at hx
+    simp only [mem_self_comm_mem_inv, Set.mem_setOf_eq] at hx
+    have ⟨u, hu⟩ := hx
+    have ⟨t, ht⟩ := dom_exists hu.left
+
+    unfold dom comp
+    simp only [
+      Set.mem_image,
+      Set.mem_setOf_eq,
+      Prod.exists,
+      exists_and_right,
+      exists_eq_right
+    ]
+    exact ⟨t, u, hu.right, ht⟩
+
+/-- #### Exercise 3.28
+
+Assume that `f` is a one-to-one function from `A` into `B`, and that `G` is the
+function with `dom G = 𝒫 A` defined by the equation `G(X) = f⟦X⟧`. Show that `G`
+maps `𝒫 A` one-to-one into `𝒫 B`.
+-/
+theorem exercise_3_28 {A : Set α} {B : Set β}
+  {f : Set.HRelation α β} {G : Set.HRelation (Set α) (Set β)}
+  (hf : isOneToOne f ∧ mapsInto f A B)
+  (hG : G = { p | p.1 ∈ 𝒫 A ∧ p.2 = image f p.1 })
+  : isOneToOne G ∧ mapsInto G (𝒫 A) (𝒫 B) := by
+  have dG : dom G = 𝒫 A := by
+    rw [hG]
+    ext p
+    unfold dom Prod.fst
+    simp
+
+  have hG₁ : isSingleValued G := by
+    intro x hx
+    have ⟨y, hy⟩ := dom_exists hx
+    refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hy, hy⟩, ?_⟩
+    intro y₁ hy₁
+    rw [hG, Set.mem_setOf_eq] at hy
+    conv at hy₁ => rhs; rw [hG, Set.mem_setOf_eq]
+    simp only at *
+    rw [hy.right, hy₁.right.right]
+
+  apply And.intro
+  · show isOneToOne G
+    refine ⟨hG₁, ?_⟩
+    intro y hy
+    have ⟨X₁, hX₁⟩ := ran_exists hy
+    refine ⟨X₁, ⟨mem_pair_imp_fst_mem_dom hX₁, hX₁⟩, ?_⟩
+    intro X₂ hX₂
+    have hX₁' : y = image f X₁ := by
+      rw [hG] at hX₁
+      simp only [Set.mem_powerset_iff, Set.mem_setOf_eq] at hX₁
+      exact hX₁.right
+    have hX₂' : y = image f X₂ := by
+      have := hX₂.right
+      rw [hG] at this
+      simp only [Set.mem_powerset_iff, Set.mem_setOf_eq] at this
+      exact this.right
+
+    ext t
+    apply Iff.intro
+    · intro ht
+      rw [dG] at hX₂
+      simp only [Set.mem_powerset_iff] at hX₂
+
+      have ht' := hX₂.left ht
+      rw [← hf.right.right.left] at ht'
+      have ⟨ft, hft⟩ := dom_exists ht'
+      have hft' : ft ∈ image f X₂ := ⟨t, ht, hft⟩
+
+      rw [← hX₂', hX₁'] at hft'
+      have ⟨t₁, ht₁⟩ := hft'
+      rw [single_rooted_eq_unique hf.left.right hft ht₁.right]
+      exact ht₁.left
+
+    · intro ht
+      have hX₁sub := mem_pair_imp_fst_mem_dom hX₁
+      rw [dG] at hX₁sub
+      simp only [Set.mem_powerset_iff] at hX₁sub
+      
+      have ht' := hX₁sub ht
+      rw [← hf.right.right.left] at ht'
+      have ⟨ft, hft⟩ := dom_exists ht'
+      have hft' : ft ∈ image f X₁ := ⟨t, ht, hft⟩
+
+      rw [← hX₁', hX₂'] at hft'
+      have ⟨t₁, ht₁⟩ := hft'
+      rw [single_rooted_eq_unique hf.left.right hft ht₁.right]
+      exact ht₁.left
+
+  · show mapsInto G (𝒫 A) (𝒫 B)
+    refine ⟨hG₁, dG, ?_⟩
+    show ∀ x, x ∈ ran G → x ∈ 𝒫 B
+    intro x hx
+    rw [hG] at hx
+    unfold ran Prod.snd at hx
+    simp only [
+      Set.mem_powerset_iff,
+      Set.mem_image,
+      Set.mem_setOf_eq,
+      Prod.exists,
+      exists_eq_right
+    ] at hx
+    have ⟨a, ha⟩ := hx
+    rw [ha.right]
+    show ∀ y, y ∈ image f a → y ∈ B
+    intro y hy
+    simp only [Set.mem_setOf_eq] at hy
+    have ⟨b, hb⟩ := hy
+    have hz := mem_pair_imp_snd_mem_ran hb.right
+    exact hf.right.right.right hz
 
 end Relation
 

@@ -16,7 +16,12 @@ Kuratowski's definition of a set.
 
 Not to be confused with the Lean-provided `Rel`.
 -/
-abbrev Relation (α : Type _) := Set (α × α)
+abbrev HRelation (α β : Type ) := Set (α × β)
+
+/--
+A homogeneous variant of the `HRelation` type.
+-/
+abbrev Relation (α : Type _) := HRelation α α
 
 namespace Relation
 
@@ -25,13 +30,13 @@ namespace Relation
 /--
 The domain of a `Relation`.
 -/
-def dom (R : Relation α) : Set α := Prod.fst '' R
+def dom (R : HRelation α β) : Set α := Prod.fst '' R
 
 /--
 The first component of any pair in a `Relation` must be a member of the
 `Relation`'s domain.
 -/
-theorem mem_pair_imp_fst_mem_dom {R : Relation α} (h : (x, y) ∈ R)
+theorem mem_pair_imp_fst_mem_dom {R : HRelation α β} (h : (x, y) ∈ R)
   : x ∈ dom R := by
   unfold dom Prod.fst
   simp only [mem_image, Prod.exists, exists_and_right, exists_eq_right]
@@ -40,8 +45,8 @@ theorem mem_pair_imp_fst_mem_dom {R : Relation α} (h : (x, y) ∈ R)
 /--
 If `x ∈ dom R`, there exists some `y` such that `⟨x, y⟩ ∈ R`.
 -/
-theorem dom_exists {R : Relation α} (hx : x ∈ R.dom)
-  : ∃ y : α, (x, y) ∈ R := by
+theorem dom_exists {R : HRelation α β} (hx : x ∈ dom R)
+  : ∃ y : β, (x, y) ∈ R := by
   unfold dom at hx
   simp only [mem_image, Prod.exists, exists_and_right, exists_eq_right] at hx
   exact hx
@@ -49,9 +54,9 @@ theorem dom_exists {R : Relation α} (hx : x ∈ R.dom)
 /--
 The range of a `Relation`.
 -/
-def ran (R : Relation α) : Set α := Prod.snd '' R
+def ran (R : HRelation α β) : Set β := Prod.snd '' R
 
-theorem mem_pair_imp_snd_mem_ran {R : Relation α} (h : (x, y) ∈ R)
+theorem mem_pair_imp_snd_mem_ran {R : HRelation α β} (h : (x, y) ∈ R)
   : y ∈ ran R := by
   unfold ran Prod.snd
   simp only [mem_image, Prod.exists, exists_eq_right]
@@ -60,7 +65,7 @@ theorem mem_pair_imp_snd_mem_ran {R : Relation α} (h : (x, y) ∈ R)
 /--
 If `x ∈ ran R`, there exists some `t` such that `⟨t, x⟩ ∈ R`.
 -/
-theorem ran_exists {R : Relation α} (hx : x ∈ R.ran)
+theorem ran_exists {R : HRelation α β} (hx : x ∈ ran R)
   : ∃ t : α, (t, x) ∈ R := by
   unfold ran at hx
   simp only [mem_image, Prod.exists, exists_eq_right] at hx
@@ -74,14 +79,14 @@ def fld (R : Relation α) : Set α := dom R ∪ ran R
 /--
 The inverse of a `Relation`.
 -/
-def inv (R : Relation α) : Relation α := { (p.2, p.1) | p ∈ R }
+def inv (R : HRelation α β) : HRelation β α := { (p.2, p.1) | p ∈ R }
 
 /--
 `(x, y)` is a member of relation `R` **iff** `(y, x)` is a member of `R⁻¹`.
 -/
 @[simp]
-theorem mem_self_comm_mem_inv {R : Relation α}
-  : (y, x) ∈ R.inv ↔ (x, y) ∈ R := by
+theorem mem_self_comm_mem_inv {R : HRelation α β}
+  : (y, x) ∈ inv R ↔ (x, y) ∈ R := by
   unfold inv
   simp only [Prod.exists, mem_setOf_eq, Prod.mk.injEq]
   apply Iff.intro
@@ -95,8 +100,8 @@ theorem mem_self_comm_mem_inv {R : Relation α}
 The inverse of the inverse of a `Relation` is the `Relation`.
 -/
 @[simp]
-theorem inv_inv_eq_self (R : Relation α)
-  : R.inv.inv = R := by
+theorem inv_inv_eq_self (R : HRelation α β)
+  : inv (inv R) = R := by
   unfold inv
   simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
   ext x
@@ -115,8 +120,8 @@ theorem inv_inv_eq_self (R : Relation α)
 For a set `F`, `dom F⁻¹ = ran F`.
 -/
 @[simp]
-theorem dom_inv_eq_ran_self {F : Relation α}
-  : dom (F.inv) = ran F := by
+theorem dom_inv_eq_ran_self {F : HRelation α β}
+  : dom (inv F) = ran F := by
   ext x
   unfold dom ran inv
   simp only [
@@ -138,8 +143,8 @@ theorem dom_inv_eq_ran_self {F : Relation α}
 For a set `F`, `ran F⁻¹ = dom F`.
 -/
 @[simp]
-theorem ran_inv_eq_dom_self {F : Relation α}
-  : ran (F.inv) = dom F := by
+theorem ran_inv_eq_dom_self {F : HRelation α β}
+  : ran (inv F) = dom F := by
   ext x
   unfold dom ran inv
   simp only [
@@ -162,7 +167,7 @@ theorem ran_inv_eq_dom_self {F : Relation α}
 /--
 The restriction of a `Relation` to a `Set`.
 -/
-def restriction (R : Relation α) (A : Set α) : Relation α :=
+def restriction (R : HRelation α β) (A : Set α) : HRelation α β :=
   { p ∈ R | p.1 ∈ A } 
 
 /-! ## Image -/
@@ -170,7 +175,7 @@ def restriction (R : Relation α) (A : Set α) : Relation α :=
 /--
 The image of a `Relation` under a `Set`.
 -/
-def image (R : Relation α) (A : Set α) : Set α :=
+def image (R : HRelation α β) (A : Set α) : Set β :=
   { y | ∃ u ∈ A, (u, y) ∈ R }
 
 /-! ## Single-Rooted and Single-Valued -/
@@ -179,14 +184,14 @@ def image (R : Relation α) (A : Set α) : Set α :=
 A `Relation` `R` is said to be single-rooted **iff** for all `y ∈ ran R`, there
 exists exactly one `x` such that `⟨x, y⟩ ∈ R`.
 -/
-def isSingleRooted (R : Relation α) : Prop :=
+def isSingleRooted (R : HRelation α β) : Prop :=
   ∀ y ∈ ran R, ∃! x, x ∈ dom R ∧ (x, y) ∈ R
 
 /--
 A single-rooted `Relation` should map the same output to the same input.
 -/
-theorem single_rooted_eq_unique {R : Relation α} {x₁ x₂ y : α}
-  (hR : R.isSingleRooted)
+theorem single_rooted_eq_unique {R : HRelation α β} {x₁ x₂ : α} {y : β}
+  (hR : isSingleRooted R)
   : (x₁, y) ∈ R → (x₂, y) ∈ R → x₁ = x₂ := by
   intro hx₁ hx₂
   unfold isSingleRooted at hR
@@ -203,14 +208,14 @@ exists exactly one `y` such that `⟨x, y⟩ ∈ R`.
 
 Notice, a `Relation` that is single-valued is a function.
 -/
-def isSingleValued (R : Relation α) : Prop :=
+def isSingleValued (R : HRelation α β) : Prop :=
   ∀ x ∈ dom R, ∃! y, y ∈ ran R ∧ (x, y) ∈ R
 
 /--
 A single-valued `Relation` should map the same input to the same output.
 -/
-theorem single_valued_eq_unique {R : Relation α} {x y₁ y₂ : α}
-  (hR : R.isSingleValued)
+theorem single_valued_eq_unique {R : HRelation α β} {x : α} {y₁ y₂ : β}
+  (hR : isSingleValued R)
   : (x, y₁) ∈ R → (x, y₂) ∈ R → y₁ = y₂ := by
   intro hy₁ hy₂
   unfold isSingleValued at hR
@@ -224,8 +229,8 @@ theorem single_valued_eq_unique {R : Relation α} {x y₁ y₂ : α}
 /--
 For a set `F`, `F⁻¹` is a function **iff** `F` is single-rooted.
 -/
-theorem single_valued_inv_iff_single_rooted_self {F : Set.Relation α}
-  : F.inv.isSingleValued ↔ F.isSingleRooted := by
+theorem single_valued_inv_iff_single_rooted_self {F : HRelation α β}
+  : isSingleValued (inv F) ↔ isSingleRooted F := by
   apply Iff.intro
   · intro hF
     unfold isSingleValued at hF
@@ -234,7 +239,7 @@ theorem single_valued_inv_iff_single_rooted_self {F : Set.Relation α}
       ran_inv_eq_dom_self,
       mem_self_comm_mem_inv
     ] at hF
-    suffices ∀ x ∈ F.ran, ∃! y, (y, x) ∈ F from hF
+    suffices ∀ x ∈ ran F, ∃! y, (y, x) ∈ F from hF
     intro x hx
     have ⟨y, hy⟩ := hF x hx
     simp only [
@@ -258,17 +263,17 @@ theorem single_valued_inv_iff_single_rooted_self {F : Set.Relation α}
 /--
 For a relation `F`, `F` is a function **iff** `F⁻¹` is single-rooted.
 -/
-theorem single_valued_self_iff_single_rooted_inv {F : Set.Relation α}
-  : F.isSingleValued ↔ F.inv.isSingleRooted := by
+theorem single_valued_self_iff_single_rooted_inv {F : HRelation α β}
+  : isSingleValued F ↔ isSingleRooted (inv F) := by
   conv => lhs; rw [← inv_inv_eq_self F]
   rw [single_valued_inv_iff_single_rooted_self]
 
 /--
 The subset of a function must also be a function.
 -/
-theorem single_valued_subset {F G : Set.Relation α}
-  (hG : G.isSingleValued) (h : F ⊆ G)
-  : F.isSingleValued := by
+theorem single_valued_subset {F G : HRelation α β}
+  (hG : isSingleValued G) (h : F ⊆ G)
+  : isSingleValued F := by
   unfold isSingleValued
   intro x hx
   have ⟨y, hy⟩ := dom_exists hx
@@ -283,14 +288,14 @@ theorem single_valued_subset {F G : Set.Relation α}
 /--
 A `Relation` `R` is one-to-one if it is a single-rooted function.
 -/
-def isOneToOne (R : Relation α) : Prop :=
-  R.isSingleValued ∧ R.isSingleRooted
+def isOneToOne (R : HRelation α β) : Prop :=
+  isSingleValued R ∧ isSingleRooted R
 
 /--
 A `Relation` is one-to-one **iff** it's inverse is.
 -/
-theorem one_to_one_self_iff_one_to_one_inv {R : Relation α}
-  : R.isOneToOne ↔ R.inv.isOneToOne := by
+theorem one_to_one_self_iff_one_to_one_inv {R : HRelation α β}
+  : isOneToOne R ↔ isOneToOne (inv R) := by
   unfold isOneToOne isSingleValued isSingleRooted
   conv => rhs; simp only [
     dom_inv_eq_ran_self,
@@ -309,28 +314,28 @@ Indicates `Relation` `F` is a function from `A` to `B`.
 
 This is usually denoted as `F : A → B`.
 -/
-def mapsInto (F : Relation α) (A B : Set α) :=
-  F.isSingleValued ∧ dom F = A ∧ ran F ⊆ B
+def mapsInto (F : HRelation α β) (A : Set α) (B : Set β) :=
+  isSingleValued F ∧ dom F = A ∧ ran F ⊆ B
 
 /--
 Indicates `Relation` `F` is a function from `A` to `ran F = B`.
 -/
-def mapsOnto (F : Relation α) (A B : Set α) :=
-  F.isSingleValued ∧ dom F = A ∧ ran F = B
+def mapsOnto (F : HRelation α β) (A : Set α) (B : Set β) :=
+  isSingleValued F ∧ dom F = A ∧ ran F = B
 
 /-! ## Composition -/
 
 /--
 The composition of two `Relation`s.
 -/
-def comp (F G : Relation α) : Relation α :=
-  { p | ∃ t : α, (p.1, t) ∈ G ∧ (t, p.2) ∈ F}
+def comp (F : HRelation β γ) (G : HRelation α β) : HRelation α γ :=
+  { p | ∃ t : β, (p.1, t) ∈ G ∧ (t, p.2) ∈ F}
 
 /--
 If `x ∈ dom (F ∘ G)`, then `x ∈ dom G`.
 -/
-theorem dom_comp_imp_dom_self {F G : Relation α}
-  : x ∈ dom (F.comp G) → x ∈ dom G := by
+theorem dom_comp_imp_dom_self {F : HRelation β γ} {G : HRelation α β}
+  : x ∈ dom (comp F G) → x ∈ dom G := by
   unfold dom comp
   simp only [
     mem_image,
@@ -346,8 +351,8 @@ theorem dom_comp_imp_dom_self {F G : Relation α}
 /--
 If `y ∈ ran (F ∘ G)`, then `y ∈ ran F`.
 -/
-theorem ran_comp_imp_ran_self {F G : Relation α}
-  : y ∈ ran (F.comp G) → y ∈ ran F := by
+theorem ran_comp_imp_ran_self {F : HRelation β γ} {G : HRelation α β}
+  : y ∈ ran (comp F G) → y ∈ ran F := by
   unfold ran comp
   simp only [
     mem_image,
@@ -362,10 +367,10 @@ theorem ran_comp_imp_ran_self {F G : Relation α}
 /--
 Composition of functions is associative.
 -/
-theorem comp_assoc {R S T : Relation α}
-  : (R.comp S).comp T = R.comp (S.comp T) := by
-  calc (R.comp S).comp T
-    _ = { p | ∃ t, (p.1, t) ∈ T ∧ (t, p.2) ∈ R.comp S} := rfl
+theorem comp_assoc {R : HRelation γ δ} {S : HRelation β γ} {T : HRelation α β}
+  : comp (comp R S) T = comp R (comp S T) := by
+  calc comp (comp R S) T
+    _ = { p | ∃ t, (p.1, t) ∈ T ∧ (t, p.2) ∈ comp R S} := rfl
     _ = { p | ∃ t, (p.1, t) ∈ T ∧ (∃ a, (t, a) ∈ S ∧ (a, p.2) ∈ R) } := rfl
     _ = { p | ∃ t, ∃ a, ((p.1, t) ∈ T ∧ (t, a) ∈ S) ∧ (a, p.2) ∈ R } := by
       ext p
@@ -391,15 +396,16 @@ theorem comp_assoc {R S T : Relation α}
         exact ⟨a, ⟨t, h.left⟩, h.right⟩
       · intro ⟨a, ⟨t, ht⟩, ha⟩
         exact ⟨a, t, ht, ha⟩
-    _ = { p | ∃ a, (p.1, a) ∈ S.comp T ∧ (a, p.2) ∈ R } := rfl
-    _ = R.comp (S.comp T) := rfl
+    _ = { p | ∃ a, (p.1, a) ∈ comp S T ∧ (a, p.2) ∈ R } := rfl
+    _ = comp R (comp S T) := rfl
 
 /--
 The composition of two functions is itself a function.
 -/
-theorem single_valued_comp_is_single_valued {F G : Relation α}
-  (hF : F.isSingleValued) (hG : G.isSingleValued)
-  : (F.comp G).isSingleValued := by
+theorem single_valued_comp_is_single_valued
+  {F : HRelation β γ} {G : HRelation α β}
+  (hF : isSingleValued F) (hG : isSingleValued G)
+  : isSingleValued (comp F G) := by
   unfold isSingleValued
   intro x hx
   have ⟨y, hxy⟩ := dom_exists hx
@@ -433,9 +439,9 @@ theorem single_valued_comp_is_single_valued {F G : Relation α}
 /--
 For `Relation`s `F` and `G`, `(F ∘ G)⁻¹ = G⁻¹ ∘ F⁻¹`.
 -/
-theorem comp_inv_eq_inv_comp_inv {F G : Relation α}
-  : (F.comp G).inv = G.inv.comp F.inv := by
-  calc (F.comp G).inv
+theorem comp_inv_eq_inv_comp_inv {F : HRelation β γ} {G : HRelation α β}
+  : inv (comp F G) = comp (inv G) (inv F) := by
+  calc inv (comp F G)
   _ = {p | ∃ t, (p.2, t) ∈ G ∧ (t, p.1) ∈ F} := by
     rw [Set.Subset.antisymm_iff]
     apply And.intro
@@ -460,7 +466,7 @@ theorem comp_inv_eq_inv_comp_inv {F G : Relation α}
       simp only [mem_setOf_eq] at *
       have ⟨t, p, q⟩ := ht
       exact ⟨t, q, p⟩
-  _ = {p | ∃ t, (p.1, t) ∈ F.inv ∧ (t, p.2) ∈ G.inv } := by
+  _ = {p | ∃ t, (p.1, t) ∈ inv F ∧ (t, p.2) ∈ inv G } := by
     rw [Set.Subset.antisymm_iff]
     apply And.intro
     · intro (a, b) ht

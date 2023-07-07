@@ -4491,13 +4491,16 @@ Show that for any sets $B$ and $C$,
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.24}}%
+\subsection{\verified{Exercise 3.24}}%
 \label{sub:exercise-3.24}
 
 Show that for a function $F$,
   $\img{F^{-1}}{A} = \{x \in \dom{F} \mid F(x) \in A\}$.
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_24}
 
   Let $F$ be a function.
   By definition of the \nameref{ref:inverse} of a set,
@@ -4506,13 +4509,13 @@ Show that for a function $F$,
         & = \{x \mid (\exists y \in A) yF^{-1}x\} \\
         & = \{x \mid (\exists y \in A) xFy\} \\
         & = \{x \mid (\exists y \in A) \left< x, y \right> \in F\} \\
-        & = \{x \mid \exists x \in F, F(x) \in A\} \\
+        & = \{x \mid x \in \dom{F} \land F(x) \in A\} \\
         & = \{x \in \dom{F} \mid F(x) \in A\}.
     \end{align*}
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.25}}%
+\subsection{\verified{Exercise 3.25}}%
 \label{sub:exercise-3.25}
 
 \begin{enumerate}[(a)]
@@ -4525,18 +4528,45 @@ Show that for a function $F$,
 
 \begin{proof}
 
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_25\_b}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_25\_a}
+
   \paragraph{(b)}%
   \label{par:exercise-3.25-b}
 
-    Let $G$ be a function.
-    Let $\left< x, y \right> \in G \circ G^{-1}$.
-    By definition of the \nameref{ref:composition} of sets, there exists some
-      set $t$ such that $x(G^{-1})t$ and $tGy$.
-    By definition of the \nameref{ref:inverse} of a set,
-      $$x(G^{-1})t \iff tGx.$$
-    By hypothesis, $G$ is single-valued.
-    Thus $x = y$.
-    That is, $G \circ G^{-1}$ is the identity function on $\ran{G}$.
+    Let $G$ be an arbitrary function.
+    We show that $G \circ G^{-1} \subseteq I_{\ran{G}}$ and that
+      $I_{\ran{G}} \subseteq G \circ G^{-1}$.
+
+    \subparagraph{($\subseteq$)}%
+
+      Let $\left< x, y \right> \in G \circ G^{-1}$.
+      By definition of the \nameref{ref:composition} of sets, there exists some
+        set $t$ such that $x(G^{-1})t$ and $tGy$.
+      By definition of the \nameref{ref:inverse} of a set,
+        $$x(G^{-1})t \iff tGx.$$
+      The right hand side of the above biconditional indicates $x \in \ran{G}$.
+      Since $G$ is single-valued, $tGy \land tGx$ implies $x = y$.
+      Thus $\left< x, y \right> \in I_{\ran{G}}$.
+
+    \subparagraph{($\supseteq$)}%
+
+      Let $\left< x, x \right> \in I_{\ran{G}}$ where $x \in \ran{G}$.
+      By definition of the \nameref{ref:range} of a function, there exists some
+        $t$ such that $\left< t, x \right> \in G$.
+      By definition of the \nameref{ref:inverse} of a set, it follows
+        $\left< x, t \right> \in G^{-1}$.
+      Thus $\left< x, x \right> \in G \circ G^{-1}$.
+
+    \subparagraph{Conclusion}%
+
+      Since $G \circ G^{-1}$ is a subset of $I_{\ran{G}}$ and vice versa, it
+        follows that these two sets are equal.
 
   \paragraph{(a)}%
 
@@ -4544,7 +4574,7 @@ Show that for a function $F$,
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.26}}%
+\subsection{\verified{Exercise 3.26}}%
 \label{sub:exercise-3.26}
 
 Prove the second halves of parts (a) and (b) of Theorem 3K.
@@ -4556,13 +4586,16 @@ Prove the second halves of parts (a) and (b) of Theorem 3K.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.27}}%
+\subsection{\verified{Exercise 3.27}}%
 \label{sub:exercise-3.27}
 
 Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 ($F$ and $G$ need not be functions.)
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_27}
 
   Let $F$ and $G$ be arbitrary sets.
   We show that each side of our desired equality is a subset of the other.
@@ -4597,7 +4630,7 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.28}}%
+\subsection{\verified{Exercise 3.28}}%
 \label{sub:exercise-3.28}
 
 Assume that $f$ is a one-to-one function from $A$ into $B$, and that $G$ is the
@@ -4607,9 +4640,14 @@ Show that $G$ maps $\powerset{A}$ one-to-one into $\powerset{B}$.
 
 \begin{proof}
 
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_28}
+
   By construction, $\dom{G} = \powerset{A}$.
   Likewise, $\ran{G} \subseteq \powerset{B}$ by definition of the
     \nameref{ref:image} of sets.
+  Thus $G$ maps $\powerset{A}$ into $\powerset{B}$.
+
   Let $y \in \ran{G}$.
   Then there exists an $X_1 \in \powerset{A}$ such that $\img{f}{X_1} = y$.
   To prove $G$ is one-to-one into $\powerset{B}$, assume there exists an
