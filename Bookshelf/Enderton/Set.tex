@@ -44,7 +44,7 @@ For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
 
 \end{axiom}
 
-\section{\pending{Cartesian Product}}%
+\section{\defined{Cartesian Product}}%
 \label{ref:cartesian-product}
 
 Let $I$ be a set and let $H$ be a \nameref{ref:function} whose domain includes $I$.
@@ -53,6 +53,12 @@ We define the \textbf{cartesian product} of the $H(i)$'s as
   $$\bigtimes_{i \in I} H(i) = \{f \mid
     f \text{ is a function with domain } I \text{ and }
       (\forall i \in I) f(i) \in H(i)\}.$$
+
+\begin{definition}
+
+  \lean*{Mathlib/Data/Set/Prod}{Set.prod}
+
+\end{definition}
 
 \section{\defined{Compatible}}%
 \label{ref:compatible}
@@ -2974,12 +2980,11 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
       All that remains is to prove $F$ is single-rooted.
       Let $y \in \ran{F}$.
       By definition of the \nameref{ref:range} of a function, there exists some
-        $x$ such that $\left< x, y \right> \in F$.
-      Suppose $x_1, x_2 \in \dom{F}$ such that
-        $\left< x_1, y \right>, \left< x_2, y \right> \in F$.
-      Then $F(x_1) = F(x_2) = y$.
-      Then $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
+        $x_1$ such that $\left< x_1, y \right> \in F$.
+      Suppose there exists a set $x_2$ such that $\left< x_2, y \right> \in F$.
+      By hypothesis, $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
       Thus $x_1 = x_2$.
+      Therefore $F$ must be single-rooted.
 
     \subparagraph{($\Leftarrow$)}%
 
@@ -4663,7 +4668,7 @@ Show that $G$ maps $\powerset{A}$ one-to-one into $\powerset{B}$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.29}}%
+\subsection{\verified{Exercise 3.29}}%
 \label{sub:exercise-3.29}
 
 Assume that $f \colon A \rightarrow B$ and define a function
@@ -4676,6 +4681,9 @@ Show that if $f$ maps $A$ \textit{onto} $B$, then $G$ is one-to-one.
 Does the converse hold?
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_29}
 
   Let $f \colon A \rightarrow B$ such that $f$ maps $A$ onto $B$.
   Define $G \colon B \rightarrow \powerset{A}$ by
@@ -4693,7 +4701,7 @@ Does the converse hold?
       G(x_2) & = \{x \in A \mid f(x) = x_2\}.
     \end{align*}
   Since $f$ maps $A$ onto $B$, $\ran{f} = B$.
-  Thus $x_2, x_2 \in \ran{f}$.
+  Thus $x_1, x_2 \in \ran{f}$.
   By definition of the \nameref{ref:range} of a set, there exist some $t \in A$
     such that $f(t) = x_1$.
   Therefore $t \in G(x_1)$.

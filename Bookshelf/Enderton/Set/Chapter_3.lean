@@ -508,19 +508,19 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 **iff** `F` is one-to-one.
 -/
 theorem theorem_3j_a {F : Set.HRelation α β} {A : Set α} {B : Set β}
-  (hF : isSingleValued F ∧ mapsInto F A B) (hA : Set.Nonempty A)
+  (hF : mapsInto F A B) (hA : Set.Nonempty A)
   : (∃ G : Set.HRelation β α,
       isSingleValued G ∧ mapsInto G B A ∧
-        (∀ p ∈ comp G F, p.1 = p.2)) ↔ isOneToOne F := by
+        (comp G F = { p | p.1 ∈ A ∧ p.1 = p.2 })) ↔ isOneToOne F := by
   apply Iff.intro
-  · intro ⟨G, ⟨hG₁, hG₂, hI⟩⟩
+  · intro ⟨G, hG⟩
     refine ⟨hF.left, ?_⟩
-    show isSingleRooted F
     intro y hy
-    have ⟨x, hx⟩ := ran_exists hy
+    have ⟨x₁, hx₁⟩ := ran_exists hy
+    refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
+    intro x₂ hx₂
     sorry
-  · intro h
-    sorry
+  · sorry
 
 /-- #### Theorem 3J (b)
 
@@ -529,10 +529,10 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `B` **iff** `F` maps `A` onto `B`.
 -/
 theorem theorem_3j_b {F : Set.HRelation α β} {A : Set α} {B : Set β}
-  (hF : isSingleValued F ∧ mapsInto F A B) (hA : Set.Nonempty A)
+  (hF : mapsInto F A B) (hA : Set.Nonempty A)
   : (∃ H : Set.HRelation β α,
       isSingleValued H ∧ mapsInto H B A ∧
-        (∀ p ∈ comp F H, p.1 = p.2)) ↔ mapsOnto F A B := by
+        (comp F H = { p | p.1 ∈ B ∧ p.1 = p.2 })) ↔ mapsOnto F A B := by
   sorry
 
 /-- #### Theorem 3K (a)
@@ -1641,6 +1641,51 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
     have ⟨b, hb⟩ := hy
     have hz := mem_pair_imp_snd_mem_ran hb.right
     exact hf.right.right.right hz
+
+/-- #### Exercise 3.29
+
+Assume that `f : A → B` and define a function `G : B → 𝒫 A` by
+```
+G(b) = {x ∈ A | f(x) = b}
+```
+Show that if `f` maps `A` *onto* `B`, then `G` is one-to-one. Does the converse
+hold?
+-/
+theorem exercise_3_29 {f : Set.HRelation α β} {G : Set.HRelation β (Set α)}
+  {A : Set α} {B : Set β} (hf : mapsOnto f A B)
+  (hG : mapsInto G B (𝒫 A) ∧ G = { p | p.1 ∈ B ∧ p.2 = {x ∈ A | (x, p.1) ∈ f} })
+  : isOneToOne G := by
+  unfold isOneToOne
+  refine ⟨hG.left.left, ?_⟩
+  intro y hy
+  have ⟨x₁, hx₁⟩ := ran_exists hy
+  refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
+  intro x₂ hx₂
+
+  have hG₁ : (x₁, {x ∈ A | (x, x₁) ∈ f}) ∈ G := by
+    rw [hG.right, ← hG.left.right.left]
+    simp only [Set.mem_setOf_eq, and_true]
+    exact mem_pair_imp_fst_mem_dom hx₁
+  have hG₂ : (x₂, {x ∈ A | (x, x₂) ∈ f}) ∈ G := by
+    rw [hG.right, ← hG.left.right.left]
+    simp only [Set.mem_setOf_eq, and_true]
+    exact hx₂.left
+  have heq : {x ∈ A | (x, x₁) ∈ f} = {x ∈ A | (x, x₂) ∈ f} := by
+    have h₁ := single_valued_eq_unique hG.left.left hx₁ hG₁
+    have h₂ := single_valued_eq_unique hG.left.left hx₂.right hG₂
+    rw [← h₁, ← h₂]
+
+  rw [hG.right, ← hf.right.right] at hG₁ hG₂
+  simp only [Set.mem_setOf_eq, and_true] at hG₁ hG₂
+  have ⟨t, ht⟩ := ran_exists hG₁
+  have : t ∈ {x ∈ A | (x, x₁) ∈ f} := by
+    simp only [Set.mem_setOf_eq]
+    refine ⟨?_, ht⟩
+    rw [← hf.right.left]
+    exact mem_pair_imp_fst_mem_dom ht
+  rw [heq] at this
+  simp only [Set.mem_setOf_eq] at this
+  exact single_valued_eq_unique hf.left this.right ht
 
 end Relation
 
