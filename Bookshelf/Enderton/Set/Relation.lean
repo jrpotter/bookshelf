@@ -488,6 +488,52 @@ def toOrderedPairs (R : Relation α) : Set (Set (Set α)) :=
   -- Notice here we are using `Set.image` and *not* `Set.Relation.image`.
   Set.image (fun (x, y) => OrderedPair x y) R
 
+/-! ## Equivalence Classes -/
+
+/--
+A binary `Relation` `R` is **reflexive** on `A` **iff** `xRx` for all `x ∈ A`.
+-/
+def isReflexive (R : Relation α) (A : Set α) := ∀ a ∈ A, (a, a) ∈ R
+
+/--
+A binary `Relation` `R` is **symmetric** **iff** whenever `xRy` then `yRx`.
+-/
+def isSymmetric (R : Relation α) := ∀ {x y : α}, (x, y) ∈ R → (y, x) ∈ R
+
+/--
+A binary `Relation` `R` is **transitive** **iff** whenever `xRy` and `yRz`, then
+`xRz`.
+-/
+def isTransitive (R : Relation α) :=
+  ∀ {x y z : α}, (x, y) ∈ R → (y, z) ∈ R → (x, z) ∈ R
+
+/--
+`Relation` `R` is an **equivalence relation** on set `A` **iff** `R` is a binary
+relation that is relexive on `A`, symmetric, and transitive.
+-/
+def isEquivalence (R : Relation α) (A : Set α) :=
+  isReflexive R A ∧ isSymmetric R ∧ isTransitive R
+
+/--
+A **partition** `Π` of a set `A` is a set of nonempty subsets of `A` that is
+disjoint and exhaustive.
+-/
+def isPartition (P : Set (Set α)) (A : Set α) :=
+  (∀ p ∈ P, Set.Nonempty p) ∧
+  (∀ a ∈ P, ∀ b, b ∈ P → a ≠ b → a ∩ b = ∅) ∧
+  (∀ a ∈ A, ∃ p, p ∈ P ∧ a ∈ p)
+
+/--
+A cell of some partition induced by `Relation` `R`.
+-/
+def cell (R : Relation α) (x : α) := { t | (x, t) ∈ R }
+
+/--
+The equivalence class of `x` modulo `R`.
+-/
+def isEquivClass (R : Relation α) (A : Set α) (x : α) :=
+  isEquivalence R A ∧ x ∈ fld R
+
 end Relation
 
 end Set

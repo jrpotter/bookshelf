@@ -3298,7 +3298,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \section{Equivalence Relations}%
 \label{sec:equivalence-relations}
 
-\subsection{\pending{Theorem 3M}}%
+\subsection{\verified{Theorem 3M}}%
 \label{sub:theorem-3m}
 
 \begin{theorem}[3M]
@@ -3309,6 +3309,9 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3m}
 
   Suppose $R$ is a \nameref{ref:symmetric} and \nameref{ref:transitive}
     \nameref{ref:relation}.
@@ -3331,7 +3334,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Lemma 3N}}%
+\subsection{\verified{Lemma 3N}}%
 \label{sub:lemma-3n}
 
 \begin{lemma}[3N]
@@ -3343,6 +3346,9 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{lemma}
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.lemma\_3n}
 
   Suppose $R$ is an \nameref{ref:equivalence-relation} on set $A$.
   Let $x, y \in A$.
@@ -3377,7 +3383,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Theorem 3P}}%
+\subsection{\verified{Theorem 3P}}%
 \label{sub:theorem-3p}
 
 \begin{theorem}[3P]
@@ -3390,11 +3396,22 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3p}
+
   Let $\Pi = \{[x]_R \mid x \in A\}$.
-  We show that (i) no two different sets in $\Pi$ have any common elements and
-    (ii) that each element of $A$ is in some set in $\Pi$.
+  We show that (i) there are no empty sets in $\Pi$, (ii) no two different sets
+    in $\Pi$ have any common elements and (iii) that each element of $A$ is in
+    some set in $\Pi$.
 
   \paragraph{(i)}%
+
+    By construction, every element of $\Pi$ is of form $[x]_R$ for some
+      $x \in A$.
+    At the very least, $x \in A$ is also in $[x]_R$.
+    Thus every element of $\Pi$ must be nonempty.
+
+  \paragraph{(ii)}%
 
     Let $[x]_R, [y]_R \in \Pi$ be two different sets.
     We must show that $[x]_R \cap [y]_R = \emptyset$.
@@ -3408,7 +3425,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
       contradicting the distinctness of $[x]_R$ and $[y]_R$.
     Thus it follows $[x]_R \cap [y]_R] = \emptyset$.
 
-  \paragraph{(ii)}%
+  \paragraph{(iii)}%
 
     Let $x \in A$.
     Since $R$ is an \nameref{ref:equivalence-relation} on $A$, it follows
@@ -3417,7 +3434,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\sorry{Theorem 3Q}}%
+\subsection{\pending{Theorem 3Q}}%
 \label{sub:theorem-3q}
 
 \begin{theorem}[3Q]
@@ -3426,15 +3443,47 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     $F \colon A \rightarrow A$.
   If $F$ is compatible with $R$, then there exists a unique
     $\hat{F} \colon A / R \rightarrow A / R$ such that
-    $$\hat{F}([x]_R) = [F(x)]_R \quad\text{for all } x \text{ in } A.$$
+    \begin{equation}
+      \label{sub:theorem-3q-eq1}
+      \hat{F}([x]_R) = [F(x)]_R \quad\text{for all } x \text{ in } A.
+    \end{equation}
   If $F$ is not compatible with $R$, then no such $\hat{F}$ exists.
-  Analogous results apply to functions from $A \times A$ into $A$.
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  Let $R$ be an \nameref{ref:equivalence-relation} on $A$ and
+    $F \colon A \rightarrow A$.
+  Suppose $F$ is \nameref{ref:compatible} with $R$.
+  Next define \nameref{ref:relation} $\hat{F}$ to be
+    $$\hat{F} = \{([x]_R, [F(x)]_R) \mid x \in A\}.$$
+
+  By construction $\hat{F}$ has domain $A / R$ and
+    $\ran{\hat{F}} \subseteq A / R$.
+  All that remains is proving $\hat{F}$ is single-valued.
+  Let $[x_1]_R, [x_2]_R \in \dom{\hat{F}}$ such that $[x_1]_R = [x_2]_R$.
+  By definition of $\hat{F}$, $\left< [x_1]_R, [F(x_1)]_R \right> \in \hat{F}$
+    and $\left< [x_2]_R, [F(x_2)]_R \right> \in \hat{F}$.
+  By \nameref{sub:lemma-3n}, $[x_1]_R = [x_2]_R$ implies $x_1Rx_2$.
+  Since $F$ is compatible, $F(x_1)RF(x_2)$.
+  Another application of \nameref{sub:lemma-3n} implies that
+    $[F(x_1)]_R = [F(x_2)]_R$.
+  Thus $\hat{F}$ is be single-valued.
+
+  Uniqueness follows immediately from the \nameref{ref:extensionality-axiom}.
+
+  \suitdivider
+
+  Suppose $F$ is not compatible with $R$.
+  Then there exists some $x, y \in A$ such that $xRy$ and $\neg F(x)RF(y)$.
+  By \nameref{sub:lemma-3n}, $[x]_R = [y]_R$.
+  For the sake of contradiction, suppose a function $\hat{F}$ exists satisfying
+    \eqref{sub:theorem-3q-eq1}.
+  Then $\hat{F}([x]_R) = \hat{F}([y]_R)$ and $[F(x)]_R = [F(y)]_R$.
+  Then \nameref{sub:lemma-3n} implies $F(x)RF(y)$, a contradiction.
+  Therefore our original hypothesis must be incorrect.
+  That is, there is no function $\hat{F}$ satisfying \eqref{sub:theorem-3q-eq1}.
 
 \end{proof}
 
@@ -4802,32 +4851,149 @@ Show that from the first form of the axiom of choice we can prove the second
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.32}}%
-\label{sub:exercise-3.32}
+\subsection{\verified{Exercise 3.32a}}%
+\label{sub:exercise-3.32-a}
 
-\begin{enumerate}[(a)]
-  \item Show that $R$ is symmetric iff $R^{-1} \subseteq R$.
-  \item Show that $R$ is transitive iff $R \circ R \subseteq R$.
-\end{enumerate}
+Show that $R$ is symmetric iff $R^{-1} \subseteq R$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_32\_a}
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $R$ is \nameref{ref:symmetric}.
+    Let $\left< x, y \right> \in R^{-1}$.
+    By definition of the \nameref{ref:inverse} of a set,
+      $\left< y, x \right> \in R$.
+    By symmetry, $\left< x, y \right> \in R$.
+    Thus $R^{-1} \subseteq R$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $R^{-1} \subseteq R$.
+    Let $\left< x, y \right> \in R$.
+    By definition of the \nameref{ref:inverse} of a set,
+      $\left< y, x \right> \in R^{-1}$.
+    Since $R^{-1} \subseteq R$, $\left< y, x \right> \in R$.
+    Therefore $\left< x, y \right>$ and $\left< y, x \right>$ are both in $R$.
+    In other words, $R$ is symmetric.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.33}}%
+\subsection{\verified{Exercise 3.32b}}%
+\label{sub:exercise-3.32-b}
+
+Show that $R$ is transitive iff $R \circ R \subseteq R$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_32\_b}
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $R$ is \nameref{ref:transitive}.
+    Let $\left< x, y \right> \in R \circ R$.
+    By definition of the \nameref{ref:composition} of a set,
+      there exists some $t$ such that $xRt \land tRy$.
+    That is, $\left< x, t \right> \in R$ and $\left< t, y \right> \in R$.
+    Since $R$ is transitive, it follows $\left< x, y \right> \in R$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $R \circ R \subseteq R$.
+    Let $\left< x, y \right>, \left< y, z \right> \in R$.
+    By definition of the \nameref{ref:composition} of a set,
+      $$R \circ R = \{\left< u, v \right> \mid \exists t(uRt \land tRv)\}.$$
+    Then $\left< x, z \right> \in R \circ R$.
+    Since $R \circ R \subseteq R$, it follows $\left< x, z \right> \in R$.
+    Thus $R$ is transitive.
+
+\end{proof}
+
+\subsection{\verified{Exercise 3.33}}%
 \label{sub:exercise-3.33}
 
 Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_33}
+
+  By definition of the \nameref{ref:inverse} and \nameref{ref:composition}
+    of sets,
+    \begin{align}
+      R^{-1} \circ R
+        & = \{ (u, v) \mid \exists t(uRt \land tR^{-1}v) \}
+          \nonumber \\
+        & = \{ (u, v) \mid \exists t(uRt \land vRt) \}.
+          \label{sub:exercise-3.33-eq1}
+    \end{align}
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $R$ is symmetric and transitive.
+    We now show that $R \subseteq R^{-1} \circ R$ and
+      $R^{-1} \circ R \subseteq R$.
+
+    \subparagraph{($\subseteq$)}%
+
+      Let $\left< x, y \right> \in R$.
+      Since $R$ is symmetric, $\left< y, x \right> \in R$.
+      Since $R$ is transitive, $\left< x, x \right> \in R$.
+      Then there exists a $t$ such that $\left< x, t \right> \in R$ and
+        $\left< y, t \right> \in R$, namely $t = x$.
+      By \eqref{sub:exercise-3.33-eq1},
+        $\left< x, y \right> \in R^{-1} \circ R$.
+
+    \subparagraph{($\supseteq$)}%
+
+      Let $\left< x, y \right> \in R^{-1} \circ R$.
+      By \eqref{sub:exercise-3.33-eq1}, there exists some $t$ such that
+        $\left< x, t \right> \in R$ and $\left< y, t \right> \in R$.
+      But $R$ is symmetric meaning $\left< t, y \right> \in R$.
+      Since $R$ is transitive, it follows $\left< x, y \right> \in R$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $R = R^{-1} \circ R$.
+    We prove that (i) $R$ is symmetric and (ii) $R$ is transitive.
+
+    \subparagraph{(i)}%
+    \label{spar:exercise-3.33-i}
+
+      First we note that $R$ is equal to its inverse:
+        \begin{align}
+          R^{-1}
+            & = (R^{-1} \circ R)^{-1} \nonumber \\
+            & = R^{-1} \circ (R^{-1})^{-1}
+              & \textref{sub:theorem-3i} \nonumber \\
+            & = R^{-1} \circ R
+              & \textref{sub:theorem-3e} \nonumber \\
+            & = R \label{sub:exercise-3.33-eq2}.
+        \end{align}
+      Now let $\left< x, y \right> \in R$.
+      By \eqref{sub:exercise-3.33-eq2} $\left< x, y \right> \in R^{-1}$.
+      By definition of the \nameref{ref:inverse} of a set,
+        $\left< y, x \right> \in R$.
+      Thus $R$ is symmetric.
+
+    \subparagraph{(ii)}%
+
+      Let $\left< x, y \right>, \left< y, z \right> \in R$.
+      By \nameref{spar:exercise-3.33-i}, $R$ is symmetric.
+      Thus $\left< z, y \right> \in R$.
+      By \eqref{sub:exercise-3.33-eq1}, it follows
+        $\left< x, z \right> \in R^{-1} \circ R$.
+      Since $R^{-1} \circ R = R$, it follows $\left< x, z \right> \in R$.
+      Thus $R$ is transitive.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.34}}%
+\subsection{\verified{Exercise 3.34}}%
 \label{sub:exercise-3.34}
 
 Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
@@ -4840,62 +5006,184 @@ Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_34\_a}
+
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_34\_b}
+
+  \paragraph{(a)}%
+
+    Because $\mathscr{A} \neq \emptyset$, $\bigcap{\mathscr{A}}$ is
+      well-defined.
+    We prove that $\bigcap{\mathscr{A}}$ is a transitive relation.
+    Let $\left< x, y \right>, \left< y, z \right> \in \bigcap{\mathscr{A}}$.
+    Then forall $A$ in $\mathscr{A}$, it follows
+      $\left< x, y \right>, \left< y, z \right> \in A$.
+    Since $A$ is transitive, it follows $\left< x, z \right> \in A$.
+    Since this holds for all $A \in \mathscr{A}$, it follows that
+      $\left< x, z \right> \in A$ as well.
+    Thus $\bigcap{\mathscr{A}}$ is transitive.
+
+  \paragraph{(b)}%
+
+    We show that $\bigcup{\mathscr{A}}$ is not necessarily transitive with a
+      counterexample.
+    Suppose $$\mathscr{A} = \{
+      \{\left< 1, 2 \right>, \left< 2, 3 \right>, \left< 1, 3 \right>\},
+      \{\left< 2, 1 \right>\}
+    \}.$$
+    Notice that the two members of $\mathscr{A}$ are transitive relations.
+    Now $$\bigcup{\mathscr{A}} = \{
+      \left< 1, 2 \right>,
+      \left< 2, 3 \right>,
+      \left< 1, 3 \right>,
+      \left< 2, 1 \right>,
+    \}.$$
+    But the above cannot be transitive, for $\left< 1, 2 \right>$ and
+      $\left< 2, 1 \right>$ are members of the set, but $\left< 1, 1 \right>$
+      is not.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.35}}%
+\subsection{\verified{Exercise 3.35}}%
 \label{sub:exercise-3.35}
 
 Show that for any $R$ and $x$, we have $[x]_R = \img{R}{\{x\}}$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_35}
+
+  Let $R$ and $x$ be arbitrary sets.
+  Then
+    \begin{align*}
+      [x]_R
+        & = \{t \mid xRt\} \\
+        & = \{t \mid (\exists u \in \{x\})uRt\} \\
+        & = \img{R}{\{x\}}.
+    \end{align*}
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.36}}%
+\subsection{\verified{Exercise 3.36}}%
 \label{sub:exercise-3.36}
 
 Assume that $f \colon A \rightarrow B$ and that $R$ is an equivalence relation
   on $B$.
 Define $Q$ to be the set
-  $$\{\left< x, y \right> \in A \times A \mid
-    \left< f(x), f(x) \right> \in R\}.$$
+  \begin{equation}
+    \label{sub:exercise-3.36-eq1}
+    \{\left< x, y \right> \in A \times A \mid
+      \left< f(x), f(y) \right> \in R\}.
+  \end{equation}
 Show that $Q$ is an equivalence relation on $A$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_36}
+
+  We prove that (i) $Q$ is reflexive on $A$, (ii) $Q$ is symmetric, and (iii)
+    $Q$ is transitive.
+
+  \paragraph{(i)}%
+
+    Let $x \in A$.
+    By hypothesis, $f(x) \in B$.
+    Since $R$ is an equivalence relation on $B$, $R$ is reflexive on $B$.
+    Thus $\left< f(x), f(x) \right> \in R$.
+    But then \eqref{sub:exercise-3.36-eq1} implies $\left< x, x \right> \in Q$.
+    Thus $Q$ is reflexive on $A$.
+
+  \paragraph{(ii)}%
+
+    Let $\left< x, y \right> \in Q$.
+    By \eqref{sub:exercise-3.36-eq1}, $\left< f(x), f(y) \right> \in R$.
+    Since $R$ is an equivalence relation on $B$, $R$ is symmetric.
+    Thus $\left< f(y), f(x) \right> \in R$.
+    But then \eqref{sub:exercise-3.36-eq1} implies $\left< y, x \right> \in Q$.
+    Thus $Q$ is symmetric.
+
+  \paragraph{(iii)}%
+
+    Let $\left< x, y \right>, \left< y, z \right> \in Q$.
+    By \eqref{sub:exercise-3.36-eq1},
+      $\left< f(x), f(y) \right>, \left< f(y), f(z) \right> \in R$.
+    Since $R$ is an equivalence relation on $B$, $R$ is transitive.
+    Thus $\left< f(x), f(z) \right> \in R$.
+    But then \eqref{sub:exercise-3.36-eq1} implies $\left< x, z \right> \in Q$.
+    Thus $Q$ is transitive.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.37}}%
+\subsection{\verified{Exercise 3.37}}%
 \label{sub:exercise-3.37}
 
 Assume that $\Pi$ is a partition of a set $A$.
 Define the relation $R_\Pi$ as follows:
-  $$xR_{\Pi}y \iff (\exists B \in \Pi)(x \in B \land y \in B).$$
+  \begin{equation}
+    \label{sub:exercise-3.37-eq1}
+    xR_{\Pi}y \iff (\exists B \in \Pi)(x \in B \land y \in B).
+  \end{equation}
 Show that $R_\Pi$ is an equivalence relation on $A$.
 (This is a formalized version of the discussion at the beginning of this
   section.)
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_37}
+
+  We prove that (i) $R_\Pi$ is reflexive on $B$, (ii) $R_\Pi$ is symmetric, and
+    (iii) $R_\Pi$ is transitive.
+
+  \paragraph{(i)}%
+
+    Let $x \in A$.
+    By definition of a \nameref{ref:partition}, there exists some nonempty set
+      $B \in \Pi$ such that $x \in B$.
+    Thus $(\exists B \in \Pi)(x \in B \land x \in B)$.
+    By \eqref{sub:exercise-3.37-eq1}, $\left< x, x \right> \in R_\Pi$.
+    Therefore $R_\Pi$ is reflexive on $A$.
+
+  \paragraph{(ii)}%
+
+    Let $\left< x, y \right> \in R_\Pi$.
+    By \eqref{sub:exercise-3.37-eq1}, there exists some $B \in \Pi$ such that
+      $x \in B \land y \in B$.
+    But then $y \in B \land x \in B$.
+    Thus $\left< y, x \right> \in R_\Pi$.
+    In other words, $R_\Pi$ is symmetric.
+
+  \paragraph{(iii)}%
+
+    Let $\left< x, y \right>, \left< y, z \right> \in R_\Pi$.
+    By \eqref{sub:exercise-3.37-eq1}, there exists some $B_1 \in \Pi$ such that
+      $x \in B_1 \land y \in B_1$.
+    Likewise there exists some $B_2 \in \Pi$ such that
+      $y \in B_2 \land z \in B_2$.
+    But $\Pi$ is a \nameref{ref:partition} meaning $y \in B_1$ and $y \in B_2$
+      if $B_1 = B_2$.
+    Therefore $x \in B_1 \land z \in B_1$ and $\left< x, z \right> \in R_\Pi$.
+    In other words, $R_\Pi$ is transitive.
 
 \end{proof}
 
 \subsection{\sorry{Exercise 3.38}}%
 \label{sub:exercise-3.38}
 
-Theorem 3P shows that $A / R$ is a partition of $A$ whenever $R$ is an
-  equivalence relation on $A$.
+\nameref{sub:theorem-3p} shows that $A / R$ is a partition of $A$ whenever $R$
+  is an equivalence relation on $A$.
 Show that if we start with the equivalence relation $R_\Pi$ of the preceding
   exercise, then the partition $A / R_\Pi$ is just $\Pi$.
 
 \begin{proof}
+
+  We prove that $\{[x]_{R_\Pi} \mid x \in A\} = \Pi$.
 
   TODO
 

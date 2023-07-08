@@ -1,6 +1,7 @@
 import Bookshelf.Enderton.Set.Chapter_2
 import Bookshelf.Enderton.Set.OrderedPair
 import Bookshelf.Enderton.Set.Relation
+import Common.Logic.Basic
 import Mathlib.Tactic.CasesM
 
 /-! # Enderton.Set.Chapter_3
@@ -519,7 +520,19 @@ theorem theorem_3j_a {F : Set.HRelation α β} {A : Set α} {B : Set β}
     have ⟨x₁, hx₁⟩ := ran_exists hy
     refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
     intro x₂ hx₂
-    sorry
+    
+    have hG' : y ∈ dom G := by
+      rw [hG.right.left.right.left]
+      exact hF.right.right hy
+    have ⟨z, hz⟩ := dom_exists hG'
+
+    have := hG.right.right
+    unfold comp at this
+    rw [Set.ext_iff] at this
+    have h₁ := (this (x₁, z)).mp ⟨y, hx₁, hz⟩
+    have h₂ := (this (x₂, z)).mp ⟨y, hx₂.right, hz⟩
+    simp only [Set.mem_setOf_eq] at h₁ h₂
+    rw [h₁.right, h₂.right]
   · sorry
 
 /-- #### Theorem 3J (b)
@@ -1326,8 +1339,6 @@ A ⊆ B → F⟦A⟧ ⊆ F⟦B⟧
 theorem exercise_3_22_a {A B : Set α} {F : Set.HRelation α β} (h : A ⊆ B)
   : image F A ⊆ image F B := by
   show ∀ x, x ∈ image F A → x ∈ image F B
-  unfold image
-  simp only [Set.mem_setOf_eq]
   intro x hx
   have ⟨u, hu⟩ := hx
   have := h hu.left
@@ -1347,7 +1358,6 @@ theorem exercise_3_22_b {A B : Set α} {F : Set.HRelation α β}
     _ = { v | ∃ u ∈ A, ∃ a, (u, a) ∈ G ∧ (a, v) ∈ F } := rfl
     _ = { v | ∃ a, ∃ u ∈ A, (u, a) ∈ G ∧ (a, v) ∈ F } := by
       ext p
-      simp only [Set.mem_setOf_eq]
       apply Iff.intro
       · intro ⟨u, hu, a, ha⟩
         exact ⟨a, u, hu, ha⟩
@@ -1355,7 +1365,6 @@ theorem exercise_3_22_b {A B : Set α} {F : Set.HRelation α β}
         exact ⟨u, hu, a, ha⟩
     _ = { v | ∃ a, (∃ u ∈ A, (u, a) ∈ G) ∧ (a, v) ∈ F } := by
       ext p
-      simp only [Set.mem_setOf_eq]
       apply Iff.intro
       · intro ⟨a, u, h⟩
         exact ⟨a, ⟨u, h.left, h.right.left⟩, h.right.right⟩
@@ -1404,7 +1413,6 @@ theorem exercise_3_23_i {A : Set α} {B : Set.HRelation α β} {I : Set.Relation
   · show ∀ p, p ∈ restriction B A → p ∈ comp B I
     unfold restriction comp
     rw [hI]
-    simp only [Set.mem_setOf_eq, and_true]
     intro (x, y) hp
     refine ⟨x, ⟨hp.right, rfl⟩, hp.left⟩
 
@@ -1420,16 +1428,13 @@ theorem exercise_3_23_ii {A C : Set α} {I : Set.Relation α}
     _ = { v | ∃ u ∈ C, (u, v) ∈ I } := rfl
     _ = { v | ∃ u ∈ C, u ∈ A ∧ u = v } := by
       ext v
-      simp only [Set.mem_setOf_eq]
       apply Iff.intro
       · intro ⟨u, h₁, h₂⟩
         rw [hI] at h₂
-        simp only [Set.mem_setOf_eq] at h₂
         exact ⟨u, h₁, h₂⟩
       · intro ⟨u, h₁, h₂⟩
         refine ⟨u, h₁, ?_⟩
         · rw [hI]
-          simp only [Set.mem_setOf_eq]
           exact h₂
     _ = { v | v ∈ C ∧ v ∈ A } := by
       ext v
@@ -1455,7 +1460,6 @@ theorem exercise_3_24 {F : Set.HRelation α β} {A : Set β}
     _ = { x | ∃ y ∈ A, (x, y) ∈ F } := by simp only [mem_self_comm_mem_inv]
     _ = { x | x ∈ dom F ∧ (∃ y : β, (x, y) ∈ F ∧ y ∈ A) } := by
       ext x
-      simp only [Set.mem_setOf_eq]
       apply Iff.intro
       · intro ⟨y, hy, hyx⟩
         exact ⟨mem_pair_imp_fst_mem_dom hyx, y, hyx, hy⟩
@@ -1488,7 +1492,6 @@ theorem exercise_3_25_b {G : Set.HRelation α β} (hG : isSingleValued G)
     intro h
     simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq] at h
     have ⟨t, ⟨a, b, ⟨hab, hb, ha⟩⟩, ht⟩ := h
-    simp only [Set.mem_setOf_eq]
     rw [hb, ha] at hab
     exact ⟨mem_pair_imp_snd_mem_ran hab, single_valued_eq_unique hG hab ht⟩
   · intro h
@@ -1518,12 +1521,8 @@ theorem exercise_3_27 {F : Set.HRelation β γ} {G : Set.HRelation α β}
   apply And.intro
   · show ∀ x, x ∈ dom (comp F G) → x ∈ image (inv G) (dom F)
     intro x hx
-    have ⟨y, hy⟩ := dom_exists hx
-    unfold comp at hy
-    simp only [Set.mem_setOf_eq] at hy
-    have ⟨t, ht⟩ := hy
+    have ⟨y, t, ht⟩ := dom_exists hx
     have htF : t ∈ dom F := mem_pair_imp_fst_mem_dom ht.right
-    
     unfold image inv
     simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
     exact ⟨t, htF, x, t, ht.left, rfl, rfl⟩
@@ -1636,9 +1635,7 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
     have ⟨a, ha⟩ := hx
     rw [ha.right]
     show ∀ y, y ∈ image f a → y ∈ B
-    intro y hy
-    simp only [Set.mem_setOf_eq] at hy
-    have ⟨b, hb⟩ := hy
+    intro y ⟨b, hb⟩
     have hz := mem_pair_imp_snd_mem_ran hb.right
     exact hf.right.right.right hz
 
@@ -1675,18 +1672,355 @@ theorem exercise_3_29 {f : Set.HRelation α β} {G : Set.HRelation β (Set α)}
     have h₂ := single_valued_eq_unique hG.left.left hx₂.right hG₂
     rw [← h₁, ← h₂]
 
-  rw [hG.right, ← hf.right.right] at hG₁ hG₂
-  simp only [Set.mem_setOf_eq, and_true] at hG₁ hG₂
+  rw [hG.right, ← hf.right.right] at hG₁
+  simp only [Set.mem_setOf_eq, and_true] at hG₁
   have ⟨t, ht⟩ := ran_exists hG₁
   have : t ∈ {x ∈ A | (x, x₁) ∈ f} := by
-    simp only [Set.mem_setOf_eq]
     refine ⟨?_, ht⟩
     rw [← hf.right.left]
     exact mem_pair_imp_fst_mem_dom ht
   rw [heq] at this
-  simp only [Set.mem_setOf_eq] at this
   exact single_valued_eq_unique hf.left this.right ht
 
+/-- #### Theorem 3M
+
+If `R` is a symmetric and transitive relation, then `R` is an equivalence
+relation on `fld R`.
+-/
+theorem theorem_3m {R : Set.Relation α}
+  (hS : R.isSymmetric) (hT : R.isTransitive)
+  : R.isEquivalence (fld R) := by
+  refine ⟨?_, hS, hT⟩
+  unfold isReflexive fld
+  intro x hx
+  apply Or.elim hx
+  · intro h
+    have ⟨y, hy⟩ := dom_exists h
+    have := hS hy
+    exact hT hy this
+  · intro h
+    have ⟨t, ht⟩ := ran_exists h
+    have := hS ht
+    exact hT this ht
+
+/-- #### Lemma 3N
+
+Assume that `R` is an equivalence relation on `A` and that `x` and `y` belong
+to `A`. Then `[x]_R = [y]_R ↔ xRy`.
+-/
+theorem lemma_3n {R : Set.Relation α} {A : Set α} {x y : α}
+  (hR : R.isEquivalence A) (_ : x ∈ A) (hy : y ∈ A)
+  : cell R x = cell R y ↔ (x, y) ∈ R := by
+  apply Iff.intro
+  · intro h
+    have : y ∈ cell R y :=  hR.left y hy
+    rwa [← h] at this
+  · intro h
+    rw [Set.ext_iff]
+    intro t
+    apply Iff.intro
+    · intro ht
+      have := hR.right.left h
+      exact hR.right.right this ht
+    · intro ht
+      exact hR.right.right h ht
+
+/-- #### Theorem 3P
+
+Assume that `R` is an equivalence relation on `A`. Then the set
+`{[x]_R | x ∈ A}` of all equivalence classes is a partition of `P`.
+-/
+theorem theorem_3p {R : Set.Relation α} {A : Set α} {P : Set (Set α)}
+  (hR : R.isEquivalence A) (hP : P = {cell R x | x ∈ A})
+  : isPartition P A := by
+  refine ⟨?_, ?_, ?_⟩
+  · -- Every member is nonempty.
+    intro p hp
+    rw [hP] at hp
+    have ⟨x, hx⟩ := hp
+    rw [← hx.right]
+    exact ⟨x, hR.left x hx.left⟩
+
+  · -- Every pair of members is disjoint.
+    intro xR hxR yR hyR h
+    by_contra nh
+    have nh' : Set.Nonempty (xR ∩ yR) := by
+      rw [← Set.nmem_singleton_empty]
+      exact nh
+    have ⟨z, hz⟩ := nh'
+    rw [hP] at hxR hyR
+    have ⟨x, hx⟩ := hxR
+    have ⟨y, hy⟩ := hyR
+    rw [← hx.right, ← hy.right] at hz
+    unfold cell at hz
+    simp only [Set.mem_inter_iff, Set.mem_setOf_eq] at hz
+    have hzy : (z, y) ∈ R := hR.right.left hz.right
+    have hxy : (x, y) ∈ R := hR.right.right hz.left hzy
+    have := (lemma_3n hR hx.left hy.left).mpr hxy
+    rw [hx.right, hy.right] at this
+    exact absurd this h
+
+  · -- Every element of `A` is in `P`.
+    intro x hx
+    have := hR.left x hx
+    refine ⟨cell R x, ?_, this⟩
+    · rw [hP]
+      exact ⟨x, hx, rfl⟩
+
+/-- #### Exercise 3.32 (a)
+
+Show that `R` is symmetric **iff** `R⁻¹ ⊆ R`.
+-/
+theorem exercise_3_32_a {R : Set.Relation α}
+  : isSymmetric R ↔ inv R ⊆ R := by
+  apply Iff.intro
+  · intro hR
+    show ∀ p, p ∈ inv R → p ∈ R
+    intro (x, y) hp
+    simp only [mem_self_comm_mem_inv] at hp
+    exact hR hp
+  · intro hR
+    unfold isSymmetric
+    intro x y hp
+    rw [← mem_self_comm_mem_inv] at hp
+    exact hR hp
+
+/-- #### Exercise 3.32 (b)
+
+Show that `R` is transitive **iff** `R ∘ R ⊆ R`.
+-/
+theorem exercise_3_32_b {R : Set.Relation α}
+  : isTransitive R ↔ comp R R ⊆ R := by
+  apply Iff.intro
+  · intro hR
+    show ∀ p, p ∈ comp R R → p ∈ R
+    intro (x, y) hp
+    have ⟨t, ht⟩ := hp
+    exact hR ht.left ht.right
+  · intro hR
+    intro x y z hx hz
+    have : (x, z) ∈ comp R R := ⟨y, hx, hz⟩
+    exact hR this
+
+/-- #### Exercise 3.33
+
+Show that `R` is a symmetric and transitive relation **iff** `R = R⁻¹ ∘ R`.
+-/
+theorem exercise_3_33 {R : Set.Relation α}
+  : isSymmetric R ∧ isTransitive R ↔ R = comp (inv R) R := by
+  have hR : comp (inv R) R = { p | ∃ t, (p.1, t) ∈ R ∧ (p.2, t) ∈ R } := by
+      ext p
+      unfold comp inv
+      simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
+      apply Iff.intro
+      · intro ⟨t, ht, a, b, h⟩
+        refine ⟨t, ht, ?_⟩
+        rw [← h.right.right, ← h.right.left]
+        exact h.left
+      · intro ⟨t, ht⟩
+        exact ⟨t, ht.left, p.snd, t, ht.right, rfl, rfl⟩
+
+  apply Iff.intro
+  · intro h
+    rw [Set.Subset.antisymm_iff]
+    apply And.intro
+    · show ∀ p, p ∈ R → p ∈ comp (inv R) R
+      intro (x, y) hp
+      have hy := h.left hp
+      have hx := h.right hp hy
+      rw [hR]
+      exact ⟨x, hx, hy⟩
+    · show ∀ p, p ∈ comp (inv R) R → p ∈ R
+      intro (x, y) hp
+      rw [hR] at hp
+      have ⟨_, ht⟩ := hp
+      have := h.left ht.right
+      exact h.right ht.left this
+  · intro h
+    have hS : isSymmetric R := by
+      intro x y hp
+      have : inv R = R := by
+        calc inv R
+          _ = inv (comp (inv R) R) := by conv => lhs; rw [h]
+          _ = comp (inv R) (inv (inv R)) := by rw [comp_inv_eq_inv_comp_inv]
+          _ = comp (inv R) R := by rw [inv_inv_eq_self]
+          _ = R := h.symm
+      rwa [← this, mem_self_comm_mem_inv]
+    refine ⟨hS, ?_⟩
+    intro x y z hx hy
+    have : (z, y) ∈ R := hS hy
+    rw [h, hR]
+    exact ⟨y, hx, this⟩
+
+/-- #### Exercise 3.34 (a)
+
+Assume that `𝓐` is a nonempty set, every member of which is a transitive
+relation. Is the set `⋂ 𝓐` a transitive relation?
+-/
+theorem exercise_3_34_a {𝓐 : Set (Set.Relation α)}
+  (_ : Set.Nonempty 𝓐) (h𝓐 : ∀ A ∈ 𝓐, isTransitive A)
+  : isTransitive (⋂₀ 𝓐) := by
+  intro x y z hx hy
+  simp only [Set.mem_sInter] at *
+  intro A hA
+  have hx' := hx A hA
+  have hy' := hy A hA
+  exact h𝓐 A hA hx' hy'
+
+/-- #### Exercise 3.34 (b)
+
+Assume that `𝓐` is a nonempty set, every member of which is a transitive
+relation. Is `⋃ 𝓐` a transitive relation?
+-/
+theorem exercise_3_34_b {𝓐 : Set (Set.Relation ℕ)}
+  (_ : Set.Nonempty 𝓐) (h𝓐 : 𝓐 = {{(1, 2), (2, 3), (1, 3)}, {(2, 1)}})
+  : (∀ A ∈ 𝓐, isTransitive A) ∧ ¬ isTransitive (⋃₀ 𝓐) := by
+  apply And.intro
+  · intro A hA
+    rw [h𝓐] at hA
+    simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at hA
+    apply Or.elim hA
+    · intro hA₁
+      rw [hA₁]
+      intro x y z hx hy
+      simp only [Set.mem_singleton_iff, Set.mem_insert_iff, Prod.mk.injEq] at *
+      casesm* _ ∨ _
+      all_goals case _ hl hr => first
+        | {rw [hl.right] at hr; simp at hr}
+        | {rw [hl.left] at hr; simp at hr}
+        | {right; right; exact ⟨hl.left, hr.right⟩}
+    · intro hA₁
+      rw [hA₁]
+      intro x y z hx hy
+      simp only [Set.mem_singleton_iff, Set.mem_insert_iff, Prod.mk.injEq] at *
+      rw [hx.right] at hy
+      simp at hy
+  · intro h
+    have h₁ : (1, 2) ∈ ⋃₀ 𝓐 := by
+      simp only [Set.mem_sUnion]
+      exact ⟨{(1, 2), (2, 3), (1, 3)}, by rw [h𝓐]; simp, by simp⟩
+    have h₂ : (2, 1) ∈ ⋃₀ 𝓐 := by
+      simp only [Set.mem_sUnion]
+      exact ⟨{(2, 1)}, by rw [h𝓐]; simp, by simp⟩
+    have h₃ : (1, 1) ∉ ⋃₀ 𝓐 := by
+      simp only [Set.mem_sUnion]
+      rw [h𝓐]
+      intro ⟨t, ht⟩
+      simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at ht
+      have := ht.right
+      apply Or.elim ht.left <;>
+      · intro ht₁
+        rw [ht₁] at this
+        simp at this
+    exact absurd (h h₁ h₂) h₃
+
+/-- #### Exercise 3.35
+
+Show that for any `R` and `x`, we have `[x]_R = R⟦{x}⟧`.
+-/
+theorem exercise_3_35 {R : Set.Relation α} {x : α}
+  : cell R x = image R {x} := by
+  calc cell R x
+    _ = { t | (x, t) ∈ R } := rfl
+    _ = { t | ∃ u ∈ ({x} : Set α), (u, t) ∈ R } := by simp
+    _ = image R {x} := rfl
+
+/-- #### Exercise 3.36
+
+Assume that `f : A → B` and that `R` is an equivalence relation on `B`. Define
+`Q` to be the set `{⟨x, y⟩ ∈ A × A | ⟨f(x), f(y)⟩ ∈ R}`. Show that `Q` is an
+equivalence relation on `A`.
+-/
+theorem exercise_3_36 {f : Set.HRelation α β}
+  {Q : Set.Relation α} {R : Set.Relation β} {A : Set α} {B : Set β}
+  (hf : mapsInto f A B)
+  (hR : isEquivalence R B)
+  (hQ : Q = { p | ∃ fx fy : β, (p.1, fx) ∈ f ∧ (p.2, fy) ∈ f ∧ (fx, fy) ∈ R })
+  : isEquivalence Q A := by
+  refine ⟨?_, ?_, ?_⟩
+  · unfold isReflexive
+    intro x hx
+    unfold mapsInto at hf
+    rw [← hf.right.left] at hx
+    have ⟨fx, hfx⟩ := dom_exists hx
+    have := hR.left fx (hf.right.right $ mem_pair_imp_snd_mem_ran hfx)
+    rw [hQ]
+    simp only [exists_and_left, Set.mem_setOf_eq]
+    exact ⟨fx, hfx, fx, hfx, this⟩
+  · unfold isSymmetric
+    intro x y h
+    rw [hQ] at h
+    simp only [exists_and_left, Set.mem_setOf_eq] at h
+    have ⟨fx, hfx, fy, hfy, h'⟩ := h
+    have := hR.right.left h'
+    rw [hQ]
+    simp only [exists_and_left, Set.mem_setOf_eq]
+    exact ⟨fy, hfy, fx, hfx, this⟩
+  · unfold isTransitive
+    intro x y z hx hy
+    rw [hQ] at hx hy
+    simp only [exists_and_left, Set.mem_setOf_eq] at hx hy
+    have ⟨fx, hfx, fy, hfy, h₁⟩ := hx
+    have ⟨fy₁, hfy₁, fz, hfz, h₂⟩ := hy
+    have hfy' : fy = fy₁ := single_valued_eq_unique hf.left hfy hfy₁
+    rw [hfy'] at h₁
+    rw [hQ]
+    simp only [exists_and_left, Set.mem_setOf_eq]
+    exact ⟨fx, hfx, fz, hfz, hR.right.right h₁ h₂⟩
+
+/-- #### Exercise 3.37
+
+Assume that `Π` is a partition of a set `A`. Define the relation `R` as follows:
+```
+xRy ↔ (∃ B ∈ Π)(x ∈ B ∧ y ∈ B).
+```
+Show that `R` is an equivalence relation on `A`. (This is a formalized version
+of the discussion at the beginning of this section.)
+-/
+theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
+  (hP : isPartition P A) (R : Set.Relation α)
+  (hR : ∀ x y, (x, y) ∈ R ↔ ∃ B ∈ P, x ∈ B ∧ y ∈ B)
+  : isEquivalence R A := by
+  have hR' : R = { p | ∃ B ∈ P, p.1 ∈ B ∧ p.2 ∈ B } := by
+    ext p
+    have (x, y) := p
+    exact hR x y
+  refine ⟨?_, ?_, ?_⟩
+  · unfold isReflexive
+    intro x hx
+    rw [hR']
+    simp only [Set.mem_setOf_eq, and_self]
+    exact hP.right.right x hx
+  · unfold isSymmetric
+    intro x y h
+    rw [hR'] at h
+    simp only [Set.mem_setOf_eq] at h
+    have ⟨B, hB⟩ := h
+    rw [hR']
+    simp only [Set.mem_setOf_eq]
+    conv at hB => right; rw [and_comm]
+    exact ⟨B, hB⟩
+  · unfold isTransitive
+    intro x y z hx hy
+    rw [hR'] at hx hy
+    simp only [Set.mem_setOf_eq] at hx hy
+    have ⟨B₁, hB₁⟩ := hx
+    have ⟨B₂, hB₂⟩ := hy
+    unfold isPartition at hP
+    have hB : B₁ = B₂ := by
+      have hy₁ : y ∈ B₁ := hB₁.right.right
+      have hy₂ : y ∈ B₂ := hB₂.right.left
+      have hy := hP.right.left B₁ hB₁.left B₂ hB₂.left
+      rw [contraposition] at hy
+      simp at hy
+      suffices B₁ ∩ B₂ ≠ ∅ from hy this
+      intro h'
+      rw [Set.ext_iff] at h'
+      exact (h' y).mp ⟨hy₁, hy₂⟩
+    rw [hR']
+    simp only [Set.mem_setOf_eq]
+    exact ⟨B₁, hB₁.left, hB₁.right.left, by rw [hB]; exact hB₂.right.right⟩
+lemma test (h : ¬ p = q) : p ≠ q := by exact?
 end Relation
 
 end Enderton.Set.Chapter_3

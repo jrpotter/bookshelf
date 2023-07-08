@@ -18,6 +18,17 @@ Renaming of `not_or` to indicate its relationship to de Morgan's laws.
 theorem not_or_de_morgan : ¬(p ∨ q) ↔ ¬p ∧ ¬q := not_or
 
 /--
+The principle of contraposition.
+-/
+theorem contraposition : (p → q) ↔ (¬q → ¬p) := by
+  apply Iff.intro
+  · intro h nq hp
+    exact absurd (h hp) nq
+  · intro h hp
+    by_contra nq
+    exact absurd hp (h nq)
+
+/--
 Universal quantification across nested set memberships can be commuted in either
 order.
 -/
