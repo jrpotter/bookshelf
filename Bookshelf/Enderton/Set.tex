@@ -6,6 +6,8 @@
 \input{../../preamble}
 \makeleancommands{../..}
 
+\newcommand{\pair}[1]{\left< #1 \right>}
+
 \begin{document}
 
 \header{Elements of Set Theory}{Herbert B. Enderton}
@@ -77,7 +79,7 @@ A \nameref{ref:function} $F$ is \textbf{compatible} with relation $R$ if and
 \label{ref:composition}
 
 The \textbf{composition} of sets $F$ and $G$ is
-  $$F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.$$
+  $$F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.$$
 
 \begin{definition}
 
@@ -89,7 +91,7 @@ The \textbf{composition} of sets $F$ and $G$ is
 \label{ref:domain}
 
 The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
-  $$x \in \dom{R} \iff \exists y \left< x, y \right> \in R.$$
+  $$x \in \dom{R} \iff \exists y \pair{x, y} \in R.$$
 
 \begin{definition}
 
@@ -109,16 +111,30 @@ There is a set having no members:
 
 \end{axiom}
 
+\section{\defined{Equivalence Class}}%
+\label{sec:equivalence-class}
+
+The set $[x]_R$ is defined by $$[x]_R = \{t \mid xRt\}.$$
+If $R$ is an \nameref{ref:equivalence-relation} and $x \in fld R$, then $[x]_R$
+  is called the \textbf{equivalence class} of $x$ (\textbf{modulo $R$}).
+If the relation $R$ is fixed by the context, we may write just $[x]$.
+
+\begin{definition}
+
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.modEquiv}
+
+\end{definition}
+
 \section{\defined{Equivalence Relation}}%
 \label{ref:equivalence-relation}
 
 Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
-  $R$ is a binary \nameref{ref:relation} that is \nameref{ref:reflexive} on $A$,
-  \nameref{ref:symmetric}, and \nameref{ref:transitive}.
+  $R$ is a binary \nameref{ref:relation} on $A$ that is \nameref{ref:reflexive}
+  on $A$, \nameref{ref:symmetric}, and \nameref{ref:transitive}.
 
 \begin{definition}
 
-  \lean*{Init/Core}{Equivalence}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isEquivalence}
 
 \end{definition}
 
@@ -196,7 +212,7 @@ The \textbf{image of $A$ under $F$} is the set
 \label{ref:inverse}
 
 The \textbf{inverse} of a set $F$ is the set
-  $$F^{-1} = \{\left< u, v \right> \mid vFu\}.$$
+  $$F^{-1} = \{\pair{u, v} \mid vFu\}.$$
 
 \begin{definition}
 
@@ -207,7 +223,7 @@ The \textbf{inverse} of a set $F$ is the set
 \section{\defined{Ordered Pair}}%
 \label{ref:ordered-pair}
 
-For any sets $u$ and $v$, the \textbf{ordered pair} $\left< u, v \right>$ is
+For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
   the set $\{\{u\}, \{u, v\}\}$.
 
 \begin{definition}
@@ -307,7 +323,7 @@ The expression $A / R$ is read "$A$ modulo $R$.
 \label{ref:range}
 
 The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
-  $$x \in \ran{R} \iff \exists t \left< t, x \right> \in R.$$
+  $$x \in \ran{R} \iff \exists t \pair{t, x} \in R.$$
 
 \begin{definition}
 
@@ -323,7 +339,7 @@ A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
 
 \begin{definition}
 
-  \lean*{Init/Core}{Equivalence.refl}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isReflexive}
 
 \end{definition}
 
@@ -342,7 +358,7 @@ A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 \label{ref:restriction}
 
 The \textbf{restriction} of a set $F$ to set $A$ is the set
-  $$F \restriction A = \{\left< u, v \right> \mid uFv \land u \in A\}.$$
+  $$F \restriction A = \{\pair{u, v} \mid uFv \land u \in A\}.$$
 
 \begin{definition}
 
@@ -371,7 +387,7 @@ A binary relation $R$ is \textbf{symmetric} if and only if whenever $xRy$ then
 
 \begin{definition}
 
-  \lean*{Init/Core}{Equivalence.symm}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isSymmetric}
 
 \end{definition}
 
@@ -395,7 +411,7 @@ A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
 
 \begin{definition}
 
-  \lean*{Init/Core}{Equivalence.trans}
+  \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isTransitive}
 
 \end{definition}
 
@@ -2493,7 +2509,7 @@ If not, then under what conditions does equality hold?
   For any sets $x$, $y$, $u$, and $v$,
     \begin{equation}
       \label{sub:theorem-3a-eq1}
-      \left< u, v \right> = \left< x, y \right> \iff u = x \land v = y.
+      \pair{u, v} = \pair{x, y} \iff u = x \land v = y.
     \end{equation}
 
 \end{theorem}
@@ -2511,7 +2527,7 @@ If not, then under what conditions does equality hold?
 
   \paragraph{($\Rightarrow$)}%
 
-    Suppose $\left< u, v \right> = \left< x, y \right>$.
+    Suppose $\pair{u, v} = \pair{x, y}$.
     Then, by definition of an \nameref{ref:ordered-pair},
       \begin{equation}
         \label{sub:theorem-3a-eq2}
@@ -2566,8 +2582,7 @@ If not, then under what conditions does equality hold?
 
 \begin{theorem}[3B]
 
-  If $x \in C$ and $y \in C$, then
-    $\left< x, y \right> \in \powerset{\powerset{C}}$.
+  If $x \in C$ and $y \in C$, then $\pair{x, y} \in \powerset{\powerset{C}}$.
 
 \end{theorem}
 
@@ -2581,7 +2596,7 @@ If not, then under what conditions does equality hold?
     $\{x\}$ and $\{x, y\}$ are members of $\powerset{C}$.
   Likewise, $\{\{x\}, \{x, y\}\}$ is a member of $\powerset{\powerset{C}}$.
   By definition of an \nameref{ref:ordered-pair},
-    $\left< x, y \right> = \{\{x\}, \{x, y\}\}$.
+    $\pair{x, y} = \{\{x\}, \{x, y\}\}$.
   This concludes our proof.
 
 \end{proof}
@@ -2592,7 +2607,7 @@ If not, then under what conditions does equality hold?
 \begin{theorem}[3C]
 
   For any sets $A$ and $B$, there is a set whose members are exactly the
-    pairs $\left< x, y \right>$ with $x \in A$ and $y \in B$.
+    pairs $\pair{x, y}$ with $x \in A$ and $y \in B$.
 
 \end{theorem}
 
@@ -2606,16 +2621,16 @@ If not, then under what conditions does equality hold?
   Define $C = A \cup B$.
   Then for all $x \in A$ and for all $y \in B$, $x$ and $y$ are both in $C$.
   By \nameref{sub:lemma-3b}, it follows that
-    $\left< x, y \right> \in \powerset{\powerset{C}}$.
+    $\pair{x, y} \in \powerset{\powerset{C}}$.
   The \nameref{ref:power-set-axiom} indicates $\powerset{\powerset{C}}$ is
     indeed a set.
   Therefore the \nameref{ref:subset-axioms} are applicable.
   This implies the existence of a set $D$ such that
     $$\forall z, (z \in D \iff z \in \powerset{\powerset{C}} \land
       (\exists x, \exists y, x \in A \land y \in B \land
-        z = \left< x, y \right>)).$$
+        z = \pair{x, y})).$$
   By construction $D$ is the set whose members are exactly the pairs
-    $\left< x, y \right>$ with $x \in A$ and $y \in B$.
+    $\pair{x, y}$ with $x \in A$ and $y \in B$.
 
 \end{proof}
 
@@ -2627,7 +2642,7 @@ If not, then under what conditions does equality hold?
 
 \begin{theorem}[3D]
 
-  If $\left< x, y \right> \in A$, then $x$ and $y$ belong to $\bigcup\bigcup A$.
+  If $\pair{x, y} \in A$, then $x$ and $y$ belong to $\bigcup\bigcup A$.
 
 \end{theorem}
 
@@ -2636,9 +2651,9 @@ If not, then under what conditions does equality hold?
   \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.theorem\_3d}
 
-  Let $A$ be a set and $\left< x, y \right> \in A$.
+  Let $A$ be a set and $\pair{x, y} \in A$.
   By definition of an \nameref{ref:ordered-pair},
-    $$\left< x, y \right> = \{\{x\}, \{x, y\}\}.$$
+    $$\pair{x, y} = \{\{x\}, \{x, y\}\}.$$
   By \nameref{sub:exercise-2.3}, $\{\{x\}, \{x, y\}\} \subseteq \bigcup A$.
   Then $\{x, y\} \in \bigcup A$.
   Another application of \nameref{sub:exercise-2.3} implies
@@ -2679,9 +2694,9 @@ If not, then under what conditions does equality hold?
   \paragraph{(i)}%
 
     By definition of the \nameref{ref:domain}, $x \in \dom{(F^{-1})}$ if and
-      only if there exists some $y$ such that $\left< x, y \right> \in F^{-1}$.
+      only if there exists some $y$ such that $\pair{x, y} \in F^{-1}$.
     By definition of the \nameref{ref:inverse} of a set,
-      $\left< y, x \right> \in F$.
+      $\pair{y, x} \in F$.
     By definition of the \nameref{ref:range}, $x \in \ran{F}$.
     Since each step holds biconditionally, it follows
       $\dom{(F^{-1})} = \ran{F}$ as expected.
@@ -2689,9 +2704,9 @@ If not, then under what conditions does equality hold?
   \paragraph{(ii)}%
 
     By definition of the \nameref{ref:range}, $x \in \ran{(F^{-1})}$ if and
-      only if there exists some $t$ such that $\left< t, x \right> \in F^{-1}$.
+      only if there exists some $t$ such that $\pair{t, x} \in F^{-1}$.
     By definition of the \nameref{ref:inverse} of a set,
-      $\left< x, t \right> \in F$.
+      $\pair{x, t} \in F$.
     By definition of the \nameref{ref:domain}, $x \in \dom{F}$.
     Since each step holds biconditionally, it follows
       $\ran{(F^{-1})} = \dom{F}$.
@@ -2701,8 +2716,8 @@ If not, then under what conditions does equality hold?
     By definition of the \nameref{ref:inverse} of a set,
       \begin{align*}
         (F^{-1})^{-1}
-          & = \{\left< u, v \right> \mid \left< v, u \right> \in F^{-1}\} \\
-          & = \{\left< u, v \right> \mid \left< u, v \right> \in F\} \\
+          & = \{\pair{u, v} \mid \pair{v, u} \in F^{-1}\} \\
+          & = \{\pair{u, v} \mid \pair{u, v} \in F\} \\
           & = F.
       \end{align*}
 
@@ -2741,22 +2756,22 @@ If not, then under what conditions does equality hold?
 
       Suppose $F^{-1}$ is a \nameref{ref:function}.
       By definition, for each $x \in \dom{(F^{-1})}$, there is only one $y$
-        such that $\left< x, y \right> \in F^{-1}$.
+        such that $\pair{x, y} \in F^{-1}$.
       By definition of the \nameref{ref:inverse} of $F$,
-        $F^{-1} = \{\left< u, v \right> \mid vFu\}$.
+        $F^{-1} = \{\pair{u, v} \mid vFu\}$.
       Then for each $x \in \ran{F}$, there exists exactly one $y$ such that
-        $\left< y, x \right> \in F$.
+        $\pair{y, x} \in F$.
       This definitionally means $F$ is single-rooted.
 
     \subparagraph{($\Leftarrow$)}%
 
       Suppose $F$ is single-rooted.
       By definition, for each $x \in \ran{F}$, there is only one $t$ such that
-        $\left< t, x \right> \in F$.
+        $\pair{t, x} \in F$.
       By definition of the \nameref{ref:inverse} of $F$,
-        $F^{-1} = \{\left< u, v \right> \mid vFu\}$.
+        $F^{-1} = \{\pair{u, v} \mid vFu\}$.
       Then for each $x \in \dom{(F^{-1})}$ there exists exactly one $t$ such
-        that $\left< x, t \right> \in F^{-1}$.
+        that $\pair{x, t} \in F^{-1}$.
       This definitionally means $F^{-1}$ is a function.
 
   \paragraph{(ii)}%
@@ -2795,11 +2810,11 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
     By hypothesis, $F$ is one-to-one.
     This means it is single-rooted, i.e. for all $x \in \ran{F}$, there exists
-      exactly one $t$ such that $\left< t, x \right> \in F$.
+      exactly one $t$ such that $\pair{t, x} \in F$.
     By definition of the \nameref{ref:inverse} of $F$,
-      $\left< x, t \right> \in F^{-1}$.
+      $\pair{x, t} \in F^{-1}$.
     But then for all $x \in \dom{(F^{-1})}$, there exists exactly one $t$ such
-      that $\left< x, t \right> \in F^{-1}$.
+      that $\pair{x, t} \in F^{-1}$.
     Thus $F^{-1}$ is a function.
 
   \paragraph{(ii)}%
@@ -2807,11 +2822,11 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
     By hypothesis, $F$ is single-valued.
     That is, for all $x \in \dom{F}$, there exists exactly one $y$ such that
-      $\left< x, y \right> \in F$.
+      $\pair{x, y} \in F$.
     By definition of the \nameref{ref:inverse} of $F$,
-      $\left< y, x \right> \in F^{-1}$.
+      $\pair{y, x} \in F^{-1}$.
     But then for all $x \in \ran{(F^{-1})}$, there exists exactly one $y$ such
-      that $\left< y, x \right> \in F^{-1}$.
+      that $\pair{y, x} \in F^{-1}$.
     Thus $F^{-1}$ is single-rooted.
 
   \paragraph{Conclusion}%
@@ -2846,12 +2861,12 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   Then \nameref{sub:lemma-1} indicates $F^{-1}$ is a one-to-one function with
     domain $\ran{F}$ and range $\dom{F}$.
 
-  For all $x \in \dom{F}$, $\left< x, F(x) \right> \in F$.
-  Then $\left< F(x), x \right> \in F^{-1}$.
+  For all $x \in \dom{F}$, $\pair{x, F(x)} \in F$.
+  Then $\pair{F(x), x} \in F^{-1}$.
   Since $F^{-1}$ is single-valued, $F^{-1}(F(x)) = x$.
 
-  For all $y \in \ran{F}$, $\left< y, F^{-1}(y) \right> \in F^{-1}$.
-  Then $\left< F^{-1}(y), y \right> \in F$.
+  For all $y \in \ran{F}$, $\pair{y, F^{-1}(y)} \in F^{-1}$.
+  Then $\pair{F^{-1}(y), y} \in F$.
   Since $F$ is single-valued, $F(F^{-1}(y)) = y$.
 
 \end{proof}
@@ -2885,12 +2900,12 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   By definition of the \nameref{ref:composition} of $F$ and $G$,
     \begin{equation}
       \label{sub:theorem-3h-eq2}
-      F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.
+      F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.
     \end{equation}
   By construction, $F \circ G$ is a relation.
   By the definition of the \nameref{ref:domain} of a relation,
     $x \in \dom{(F \circ G)}$ if and only if there exists some $y$ such that
-    $\left< x, y \right> \in F \circ G$.
+    $\pair{x, y} \in F \circ G$.
   We prove that (i) $F \circ G$ is a function with domain satisfying
     \eqref{sub:theorem-3h-eq1}, and (ii) $(F \circ G)(x) = F(G(x))$.
 
@@ -2898,24 +2913,22 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   \label{par:theorem-3h-i}
 
     By \eqref{sub:theorem-3h-eq2}, there exists some $t$ such that
-      $\left< x, t \right> \in G$ and $\left< t, y \right> \in F$.
+      $\pair{x, t} \in G$ and $\pair{t, y} \in F$.
     Since $G$ is single-valued, $t$ is uniquely determined by $x$.
     Since $F$ is single-valued, $y$ is uniquely determined by $t$.
     Therefore, by transitivity, $y$ is uniquely determined by $x$.
     Thus $F \circ G$ is single-valued, i.e. $F \circ G$ is a function.
 
     Furthermore, by definition of function application, $t = G(x)$.
-    Thus
-      $$\left< x, G(x) \right> \in G \quad\text{and}\quad
-        \left< G(x), y \right> \in F.$$
+    Thus $$\pair{x, G(x)} \in G \quad\text{and}\quad \pair{G(x), y} \in F.$$
     This immediately implies \eqref{sub:theorem-3h-eq1} holds true.
 
   \paragraph{(ii)}%
 
     Let $x \in \dom{(F \circ G)}$.
-    By definition, $\left< x, (F \circ G)(x) \right> \in F \circ G$.
+    By definition, $\pair{x, (F \circ G)(x)} \in F \circ G$.
     Then \eqref{sub:theorem-3h-eq2} implies $(F \circ G)(x)$ satisfies
-      $\left< G(x), (F \circ G)(x) \right> \in F$.
+      $\pair{G(x), (F \circ G)(x)} \in F$.
     This is equivalent to saying $F(G(x)) = (F \circ G)(x)$ as expected.
 
 \end{proof}
@@ -2935,13 +2948,13 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     {Set.Relation.comp\_inv\_eq\_inv\_comp\_inv}
 
   By definition of the \nameref{ref:composition} of $F$ and $G$,
-    $$F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.$$
+    $$F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.$$
   By definition of the \nameref{ref:inverse} of a function,
     \begin{align*}
       (F \circ G)^{-1}
-        & = \{\left< u, v \right> \mid \exists t (vGt \land tFu)\} \\
-        & = \{\left< u, v \right> \mid \exists t (tFu \land vGt)\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid \exists t (vGt \land tFu)\} \\
+        & = \{\pair{u, v} \mid \exists t (tFu \land vGt)\} \\
+        & = \{\pair{u, v} \mid
           \exists t \left[ u(F^{-1})t \land t(G^{-1})v \right]\} \\
         & = G^{-1} \circ F^{-1}.
     \end{align*}
@@ -2980,8 +2993,8 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
       All that remains is to prove $F$ is single-rooted.
       Let $y \in \ran{F}$.
       By definition of the \nameref{ref:range} of a function, there exists some
-        $x_1$ such that $\left< x_1, y \right> \in F$.
-      Suppose there exists a set $x_2$ such that $\left< x_2, y \right> \in F$.
+        $x_1$ such that $\pair{x_1, y} \in F$.
+      Suppose there exists a set $x_2$ such that $\pair{x_2, y} \in F$.
       By hypothesis, $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
       Thus $x_1 = x_2$.
       Therefore $F$ must be single-rooted.
@@ -3021,14 +3034,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
       Suppose $F$ maps $A$ \textit{onto} $B$.
       By definition of maps onto, $\ran{F} = B$.
       Then for all $y \in B$, there exists some $x \in A$ such that
-        $\left< x, y \right> \in F$.
+        $\pair{x, y} \in F$.
       Notice though that $F^{-1}[\{y\}]$ may not be a singleton set.
       Then there is no obvious way to \textit{choose} an element from each
         preimage to form a function.
       By the \nameref{ref:axiom-of-choice-1}, there exists a function
         $H \subseteq F^{-1}$ such that $\dom{H} = \dom{F^{-1}} = B$.
-      For all $y \in B$, $\left< y, H(y) \right> \in H \subseteq F^{-1}$
-        meaning $\left< H(y), y \right> \in F$.
+      For all $y \in B$, $\pair{y, H(y)} \in H \subseteq F^{-1}$
+        meaning $\pair{H(y), y} \in F$.
       Thus $F(H(y)) = y$ as expected.
 
 \end{proof}
@@ -3232,8 +3245,8 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     By definition of the difference of two sets,
       $v \in \img{F}{A}$ and $v \not\in \img{F}{B}$.
     By definition of the \nameref{ref:image} of a set, there exists a set
-      $u \in A$ such that $\left< u, v \right> \in F$.
-    Likewise, $\forall w \in B, \left< w, v \right> \not\in F$.
+      $u \in A$ such that $\pair{u, v} \in F$.
+    Likewise, $\forall w \in B, \pair{w, v} \not\in F$.
     Thus $u \not\in B$, since otherwise we get an immediate contradiction.
     Therefore $u \in A - B$ meaning $v \in \img{F}{A - B}$.
 
@@ -3347,8 +3360,8 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.lemma\_3n}
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.neighborhood\_iff\_mem}
 
   Suppose $R$ is an \nameref{ref:equivalence-relation} on set $A$.
   Let $x, y \in A$.
@@ -3457,14 +3470,13 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     $F \colon A \rightarrow A$.
   Suppose $F$ is \nameref{ref:compatible} with $R$.
   Next define \nameref{ref:relation} $\hat{F}$ to be
-    $$\hat{F} = \{([x]_R, [F(x)]_R) \mid x \in A\}.$$
-
+    $$\hat{F} = \{\pair{[x]_R, [F(x)]_R} \mid x \in A\}.$$
   By construction $\hat{F}$ has domain $A / R$ and
     $\ran{\hat{F}} \subseteq A / R$.
   All that remains is proving $\hat{F}$ is single-valued.
   Let $[x_1]_R, [x_2]_R \in \dom{\hat{F}}$ such that $[x_1]_R = [x_2]_R$.
-  By definition of $\hat{F}$, $\left< [x_1]_R, [F(x_1)]_R \right> \in \hat{F}$
-    and $\left< [x_2]_R, [F(x_2)]_R \right> \in \hat{F}$.
+  By definition of $\hat{F}$, $\pair{[x_1]_R, [F(x_1)]_R} \in \hat{F}$
+    and $\pair{[x_2]_R, [F(x_2)]_R} \in \hat{F}$.
   By \nameref{sub:lemma-3n}, $[x_1]_R = [x_2]_R$ implies $x_1Rx_2$.
   Since $F$ is compatible, $F(x_1)RF(x_2)$.
   Another application of \nameref{sub:lemma-3n} implies that
@@ -3495,10 +3507,10 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 Suppose that we attempted to generalize the Kuratowski definitions of ordered
   pairs to ordered triples by defining
-  $$\left< x, y, z \right>^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
+  $$\pair{x, y, z}^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
 Show that this definition is unsuccessful by giving examples of objects
   $u$, $v$, $w$, $x$, $y$, $z$ with
-  $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but with either
+  $\pair{x, y, z}^* = \pair{u, v, w}^*$ but with either
   $y \neq v$ or $z \neq w$ (or both).
 
 \begin{proof}
@@ -3510,19 +3522,19 @@ Show that this definition is unsuccessful by giving examples of objects
   Let $u = 1$, $v = 2$, and $w = 2$.
   Then
     \begin{align*}
-      \left< x, y, z \right>^*
+      \pair{x, y, z}^*
         & = \{\{x\}, \{x, y\}, \{x, y, z\}\} \\
         & = \{\{1\}, \{1, 1\}, \{1, 1, 2\}\} \\
         & = \{\{1\}, \{1, 2\}\}.
     \end{align*}
   Likewise
     \begin{align*}
-      \left< u, v, w \right>^*
+      \pair{u, v, w}^*
         & = \{\{u\}, \{u, v\}, \{u, v, w\}\} \\
         & = \{\{1\}, \{1, 2\}, \{1, 2, 2\}\} \\
         & = \{\{1\}, \{1, 2\}\}.
     \end{align*}
-  Thus $\left< x, y, z \right>^* = \left< u, v, w \right>^*$ but $y \neq v$.
+  Thus $\pair{x, y, z}^* = \pair{u, v, w}^*$ but $y \neq v$.
 
 \end{proof}
 
@@ -3540,13 +3552,13 @@ Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
   Then by \nameref{sub:corollary-3c} and the definition of the union of sets,
     \begin{align*}
       A \times (B \cup C)
-        & = \{ \left< x, y \right> \mid x \in A \land y \in (B \cup C) \} \\
-        & = \{ \left< x, y \right> \mid
+        & = \{ \pair{x, y} \mid x \in A \land y \in (B \cup C) \} \\
+        & = \{ \pair{x, y} \mid
           x \in A \land (y \in B \lor y \in C) \} \\
-        & = \{ \left< x, y \right> \mid
+        & = \{ \pair{x, y} \mid
           (x \in A \land y \in B) \lor (x \in A \land y \in C) \} \\
-        & = \{ \left< x, y \right> \mid (x \in A \land y \in B) \} \cup
-          \{ \left< x, y \right> \mid (x \in A \land y \in C) \} \\
+        & = \{ \pair{x, y} \mid (x \in A \land y \in B) \} \cup
+          \{ \pair{x, y} \mid (x \in A \land y \in C) \} \\
         & = (A \times B) \cup (A \times C).
     \end{align*}
 
@@ -3565,9 +3577,9 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
   Let $A$, $B$, and $C$ be arbitrary sets such that $A \neq \emptyset$.
   By \nameref{sub:corollary-3c},
     \begin{align}
-      A \times B & = \{ \left< x, y \right> \mid x \in A \land y \in B \}
+      A \times B & = \{ \pair{x, y} \mid x \in A \land y \in B \}
         & \label{sub:exercise-3.2b-eq1} \\
-      A \times C & = \{ \left< x, y \right> \mid x \in A \land y \in C \}.
+      A \times C & = \{ \pair{x, y} \mid x \in A \land y \in C \}.
         & \label{sub:exercise-3.2b-eq2}
     \end{align}
   There are two cases to consider:
@@ -3576,11 +3588,11 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
 
     Suppose $B \neq \emptyset$.
     Then $A \times B \neq \emptyset$ and $A \times C \neq \emptyset$.
-    Let $\left< x, y \right> \in A \times B$.
+    Let $\pair{x, y} \in A \times B$.
     By \eqref{sub:exercise-3.2b-eq1}, $x \in A$ and $y \in B$.
     By the \nameref{ref:extensionality-axiom},
-      $$\left< x, y \right> \in A \times B \iff \left< x, y \right> \in A \times C.$$
-    Therefore $\left< x, y \right> \in A \times C$.
+      $$\pair{x, y} \in A \times B \iff \pair{x, y} \in A \times C.$$
+    Therefore $\pair{x, y} \in A \times C$.
     By \eqref{sub:exercise-3.2b-eq2}, $x \in A$ and $y \in C$.
     Since membership of $y$ in $B$ and in $C$ holds biconditionally, the
       \nameref{ref:extensionality-axiom} indicates $B = C$.
@@ -3588,9 +3600,9 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
   \paragraph{Case 2}%
 
     Suppose $B = \emptyset$.
-    Then there is no $\left< x, y \right>$ such that $x \in A$ and $y \in B$.
+    Then there is no $\pair{x, y}$ such that $x \in A$ and $y \in B$.
     Thus $A \times B = \emptyset$ and $A \times C = \emptyset$.
-    But then there cannot exist an $\left< x, y \right>$ such that $x \in A$
+    But then there cannot exist an $\pair{x, y}$ such that $x \in A$
       and $y \in C$ either.
     Since $A \neq \emptyset$, it must be the case that $C = \emptyset$.
     Thus $B = C$.
@@ -3612,11 +3624,11 @@ Show that $A \times \bigcup \mathscr{B} =
   By \nameref{sub:corollary-3c} and the definition of the union of sets,
   \begin{align*}
     A \times \bigcup\mathscr{B}
-      & = \{ \left< x, y \right> \mid
+      & = \{ \pair{x, y} \mid
         x \in A \land y \in \bigcup\mathscr{B} \} \\
-      & = \{ \left< x, y \right> \mid
+      & = \{ \pair{x, y} \mid
         x \in A \land (\exists b \in \mathscr{B}), y \in b \} \\
-      & = \{ \left< x, y \right> \mid
+      & = \{ \pair{x, y} \mid
         (\exists b \in \mathscr{B}), x \in A \land y \in b \} \\
       & = \bigcup\; \{ A \times X \mid X \in \mathscr{B} \}.
   \end{align*}
@@ -3632,7 +3644,7 @@ Show that there is no set to which every ordered pair belongs.
 
   For the sake of contradiction, suppose there exists a set $A$ to which every
     ordered pair belongs.
-  That is, for all sets $x$ and $y$, $\left< x, y \right> = \{\{x\}, \{x, y\}\}$
+  That is, for all sets $x$ and $y$, $\pair{x, y} = \{\{x\}, \{x, y\}\}$
     is a member of $A$.
   By the \nameref{ref:union-axiom}, it follows that $\bigcup\bigcup A$ is the
     set to which every set belongs.
@@ -3669,7 +3681,7 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
   Thus, by the \nameref{ref:subset-axioms}, the following is also a set:
     $$C = \{ y \in \powerset{(A \times B)} \mid
       \exists a \in A, \forall x, \left[ x \in y \iff
-        \exists b \in B, x = \left< a, b \right> \right] \}.$$
+        \exists b \in B, x = \pair{a, b} \right] \}.$$
   We now show that $C$ satisfies \eqref{sub:exercise-3.5a-eq1}.
 
   \paragraph{($\Rightarrow$)}%
@@ -3677,12 +3689,12 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
     Suppose $y \in C$.
     Then there exists some $a \in A$ such that
       $$\forall x, \left[ x \in y \iff
-        \exists b \in B, x = \left< a, b \right> \right].$$
+        \exists b \in B, x = \pair{a, b} \right].$$
     By the \nameref{ref:extensionality-axiom},
       \begin{align*}
         y
-          & = \{ \left< a, b \right> \mid b \in B \} \\
-          & = \{ \left< x, b \right> \mid x \in \{a\} \land b \in B \} \\
+          & = \{ \pair{a, b} \mid b \in B \} \\
+          & = \{ \pair{x, b} \mid x \in \{a\} \land b \in B \} \\
           & = \{ \{a\} \times B \}.
       \end{align*}
 
@@ -3690,9 +3702,9 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
 
     Suppose $y = \{a\} \times B$ for some $a \in A$.
     By \nameref{sub:corollary-3c}, $x \in \{a\} \times B$ if and only if
-      $\exists b \in B$ such that $x = \left< a, b \right>$.
+      $\exists b \in B$ such that $x = \pair{a, b}$.
     But then $x \in y$ if and only if $\exists b \in B$ such that
-      $x = \left< a, b \right>$.
+      $x = \pair{a, b}$.
     This immediately proves $y \in C$.
 
 \end{proof}
@@ -3722,8 +3734,7 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
   \paragraph{($\subseteq$)}%
 
     Let $c \in A \times B$.
-    Then there exists some $a \in A$ and $b \in B$ such that
-      $c = \left< a, b \right>$.
+    Then there exists some $a \in A$ and $b \in B$ such that $c = \pair{a, b}$.
     Thus $c \in \{a\} \times B$.
     We also note $\{a\} \times B \in \{\{x\} \times B \mid x \in A\}$,
       specifically when $x = a$.
@@ -3767,10 +3778,10 @@ Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
     We show for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
     Let $a \in A$.
     Since $A$ is a relation, $a$ is an ordered pair.
-    Then there exists some sets $x$ and $y$ such that $a = \left< x, y \right>$.
+    Then there exists some sets $x$ and $y$ such that $a = \pair{x, y}$.
     By the definition of the \nameref{ref:domain} and \nameref{ref:range} of
       $A$, $x \in \dom{A}$ and $y \in \ran{A}$.
-    Thus $a = \left< x, y \right> \in \dom{A} \times \ran{A}$ as well.
+    Thus $a = \pair{x, y} \in \dom{A} \times \ran{A}$ as well.
     This proves $A \subseteq \dom{A} \times \ran{A}$.
 
   \paragraph{($\Leftarrow$)}%
@@ -3803,11 +3814,11 @@ Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
     That is, $x \in \dom{R}$ or $x \in \ran{R}$.
 
     If $x \in \dom{R}$, then there exists some $y$ such that
-      $\left< x, y \right> = \{\{x\}, \{x, y\}\} \in R$.
+      $\pair{x, y} = \{\{x\}, \{x, y\}\} \in R$.
     Then $\{x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
 
     On the other hand, if $x \in \ran{R}$, then there exists some $t$ such that
-      $\left< t, x \right> = \{\{t\}, \{t, x\}\} \in R$.
+      $\pair{t, x} = \{\{t\}, \{t, x\}\} \in R$.
     Then $\{t, x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
 
   \paragraph{(ii)}%
@@ -3816,9 +3827,8 @@ Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
     Let $t \in \bigcup\bigcup R$.
     Then there exists some member $T \in \bigcup R$ such that $t \in T$.
     Likewise there exists some member $T' \in R$ such that $T \in T'$.
-    By definition of a relation,
-      $T' = \left< x, y \right> = \{\{x\}, \{x, y\}\}$ for some sets $x$ and
-      $y$.
+    By definition of a relation, $T' = \pair{x, y} = \{\{x\}, \{x, y\}\}$ for
+      some sets $x$ and $y$.
     Thus $t = x$ or $t = y$.
     By \nameref{sub:exercise-3.6}, $t \in \dom{R}$ or $t \in \ran{R}$.
     In other words, $t \in \fld{R}$.
@@ -3860,11 +3870,11 @@ Show that for any set $\mathscr{A}$:
 
     Let $x \in \dom{\bigcup{\mathscr{A}}}$.
     By definition of a domain, there exists some $y$ such that
-      $\left< x, y \right> \in \bigcup{\mathscr{A}}$.
+      $\pair{x, y} \in \bigcup{\mathscr{A}}$.
     By definition of the union of sets,
-      $\exists y, \exists R \in \mathscr{A}, \left< x, y \right> \in R$.
+      $\exists y, \exists R \in \mathscr{A}, \pair{x, y} \in R$.
     Equivalently,
-      $\exists R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
+      $\exists R \in \mathscr{A}, \exists y, \pair{x, y} \in R$.
     By another application of the definition of a domain,
       $\exists R \in \mathscr{A}, x \in \dom{R}$.
     By another application of the definition of the union of sets,
@@ -3876,11 +3886,11 @@ Show that for any set $\mathscr{A}$:
 
     Let $x \in \ran{\bigcup{\mathscr{A}}}$.
     By definition of a range, there exists some $t$ such that
-      $\left< t, x \right> \in \bigcup{\mathscr{A}}$.
+      $\pair{t, x} \in \bigcup{\mathscr{A}}$.
     By definition of the union of sets,
-      $\exists t, \exists R \in \mathscr{A}, \left< t, x \right> \in R$.
+      $\exists t, \exists R \in \mathscr{A}, \pair{t, x} \in R$.
     Equivalently,
-      $\exists R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
+      $\exists R \in \mathscr{A}, \exists t, \pair{t, x} \in R$.
     By another application of the definition of a range,
       $\exists R \in \mathscr{A}, x \in \ran{R}$.
     By another application of the definition of the union of sets,
@@ -3924,11 +3934,11 @@ Discuss the result of replacing the union operation by the intersection
 
     Let $x \in \dom{\bigcap{\mathscr{A}}}$.
     By definition of the \nameref{ref:domain} of a set,
-      $\exists y, \left< x, y \right> \in \bigcap{\mathscr{A}}$.
+      $\exists y, \pair{x, y} \in \bigcap{\mathscr{A}}$.
     By definition of the intersection of sets,
-      $\exists y, \forall R \in \mathscr{A}, \left< x, y \right> \in R$.
+      $\exists y, \forall R \in \mathscr{A}, \pair{x, y} \in R$.
     But this implies that
-      $\forall R \in \mathscr{A}, \exists y, \left< x, y \right> \in R$.
+      $\forall R \in \mathscr{A}, \exists y, \pair{x, y} \in R$.
     By another application of the definition of the \nameref{ref:domain} of a
       set, $\forall R \in \mathscr{A}, x \in \dom{R}$.
     By another application of the intersection of sets,
@@ -3939,11 +3949,11 @@ Discuss the result of replacing the union operation by the intersection
 
     Let $x \in \ran{\bigcap{\mathscr{A}}}$.
     By definition of the \nameref{ref:range} of a set,
-      $\exists t, \left< t, x \right> \in \bigcap{\mathscr{A}}$.
+      $\exists t, \pair{t, x} \in \bigcap{\mathscr{A}}$.
     By definition of the intersection of sets,
-      $\exists t, \forall R \in \mathscr{A}, \left< t, x \right> \in R$.
+      $\exists t, \forall R \in \mathscr{A}, \pair{t, x} \in R$.
     But this implies that
-      $\forall R \in \mathscr{A}, \exists t, \left< t, x \right> \in R$.
+      $\forall R \in \mathscr{A}, \exists t, \pair{t, x} \in R$.
     By another application of the definition of the \nameref{ref:range} of a
       set, $\forall R \in \mathscr{A}, x \in \ran{R}$.
     By another application of the intersection of sets,
@@ -3960,20 +3970,19 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 
 \begin{answer}
 
-  Let $\left< x_1, x_2, x_3, x_4 \right>$ denote an arbitrary $4$-tuple.
+  Let $\pair{x_1, x_2, x_3, x_4}$ denote an arbitrary $4$-tuple.
   Then
     \begin{align}
-      \left< x_1, x_2, x_3, x_4 \right>
-        & = \left< \left< x_1, x_2, x_3 \right>, x_4 \right>
+      \pair{x_1, x_2, x_3, x_4}
+        & = \pair{\pair{x_1, x_2, x_3}, x_4}
           & \label{sub:exercise-7.10-eq1} \\
-        & = \left< \left< \left< x_1, x_2 \right>, x_3 \right>, x_4 \right>
+        & = \pair{\pair{\pair{x_1, x_2}, x_3}, x_4}
           & \label{sub:exercise-7.10-eq2}
     \end{align}
   Here \eqref{sub:exercise-7.10-eq1} is an equivalent ordered $2$-tuple and
     \eqref{sub:exercise-7.10-eq2} is an equivalent ordered $3$-tuple.
-  Furthermore, $\left< x_1, x_2, x_3, x_4 \right> =
-    \left< \left< x_1, x_2, x_3, x_4 \right> \right>$, showing it can be
-    represented as an ordered $1$-tuple as well.
+  Furthermore, $\pair{x_1, x_2, x_3, x_4} = \pair{\pair{x_1, x_2, x_3, x_4}}$,
+    showing it can be represented as an ordered $1$-tuple as well.
 
 \end{answer}
 
@@ -3991,14 +4000,13 @@ Then $F = G$.
 
   Let $F$ and $G$ be functions such that $\dom{F} = \dom{G}$ and $F(x) = G(x)$
     for all $x$ in the common domain.
-  We prove that $\left< x, y \right> \in F$ if and only if
-    $\left< x, y \right> \in G$.
+  We prove that $\pair{x, y} \in F$ if and only if $\pair{x, y} \in G$.
   But this follows immediately:
     \begin{align*}
-      \left< x, y \right> \in F
-        & \iff y = F(x) \land \left< x, F(x) \right> \in F \\
-        & \iff y = G(x) \land \left< x, G(x) \right> \in G \\
-        & \iff \left< x, y \right> \in G.
+      \pair{x, y} \in F
+        & \iff y = F(x) \land \pair{x, F(x)} \in F \\
+        & \iff y = G(x) \land \pair{x, G(x)} \in G \\
+        & \iff \pair{x, y} \in G.
     \end{align*}
   By the \nameref{ref:extensionality-axiom}, $F = G$.
 
@@ -4021,8 +4029,8 @@ Assume that $f$ and $g$ are functions and show that
   \paragraph{($\Rightarrow$)}%
 
     Suppose $f \subseteq g$.
-    Then for all \nameref{ref:ordered-pair}s $\left< x, y \right>$,
-      $\left< x, y \right> \in f$ implies $\left< x, y \right> \in g$.
+    Then for all \nameref{ref:ordered-pair}s $\pair{x, y}$,
+      $\pair{x, y} \in f$ implies $\pair{x, y} \in g$.
     Thus every $x \in \dom{f}$ must be a member of $\dom{g}$.
     Likewise, by definition of a function, $f$ and $g$ are single-valued.
     Thus $f(x) = y$ and $g(x) = y$.
@@ -4033,9 +4041,9 @@ Assume that $f$ and $g$ are functions and show that
 
     Suppose $\dom{f} \subseteq \dom{g}$ and
       $(\forall x \in \dom{f}) f(x) = g(x)$.
-    Let $\left< x, y \right> \in f$.
+    Let $\pair{x, y} \in f$.
     By hypothesis, $x \in \dom{g}$ and $y = f(x) = g(x)$.
-    Thus $\left< x, y \right> \in g$ as well.
+    Thus $\pair{x, y} \in g$ as well.
     Therefore $f \subseteq g$.
 
 \end{proof}
@@ -4099,11 +4107,10 @@ Assume that $f$ and $g$ are functions.
       Suppose $f \cup g$ is a function.
       Let $x \in (\dom{f}) \cap (\dom{g})$.
       That is, $x \in \dom{f}$ and $x \in \dom{g}$.
-      Then there exists only one $y_1$ such that $\left< x, y_1 \right> \in f$.
+      Then there exists only one $y_1$ such that $\pair{x, y_1} \in f$.
       Likewise there exists only one $y_2$ such that
-        $\left< x, y_2 \right> \in g$.
-      But $\left< x, y_1 \right> \in f \cup g$ and
-        $\left< x, y_2 \right> \in f \cup g$.
+        $\pair{x, y_2} \in g$.
+      But $\pair{x, y_1} \in f \cup g$ and $\pair{x, y_2} \in f \cup g$.
       Since $f \cup g$ is single-valued, it follows $y_1 = y_2$.
       That is, $f(x) = g(x)$.
 
@@ -4116,13 +4123,13 @@ Assume that $f$ and $g$ are functions.
       \begin{enumerate}[(i)]
         \item Suppose $x \in \dom{f}$ but not in $\dom{g}$.
           Since $f$ is a function, it follows $f \cup g$ has only one value $y$
-            such that $\left< x, y \right> \in f \cup g$.
+            such that $\pair{x, y} \in f \cup g$.
         \item Suppose $x \in \dom{g}$ but not in $\dom{f}$.
           Again, since $g$ is a function, it follows $f \cup g$ has only one
-            value $y$ such that $\left< x, y \right> \in f \cup g$.
+            value $y$ such that $\pair{x, y} \in f \cup g$.
         \item Suppose $x \in \dom{f}$ and $x \in \dom{g}$.
           By hypothesis, $f(x) = g(x)$ meaning there is only one value $y$ such
-            that $\left< x, y \right> \in f \cup g$.
+            that $\pair{x, y} \in f \cup g$.
       \end{enumerate}
 
       The above cases are exhaustive.
@@ -4146,26 +4153,26 @@ Show that $\bigcup{\mathscr{A}}$ is a function.
     and $g$ in $\mathscr{A}$, either $f \subseteq g$ or $g \subseteq f$.
   Let $x \in \dom{\bigcup{\mathscr{A}}}$.
   Then there exists some $y_1$ such that
-    $\left< x, y_1 \right> \in \bigcup{\mathscr{A}}$.
+    $\pair{x, y_1} \in \bigcup{\mathscr{A}}$.
   Suppose there also exists some $y_2$ such that
-    $\left< x, y_2 \right> \in \bigcup{\mathscr{A}}$.
+    $\pair{x, y_2} \in \bigcup{\mathscr{A}}$.
 
   By definition of the union of sets, there exists some function
-    $f \in \mathscr{A}$ such that $\left< x, y_1 \right> \in f$.
+    $f \in \mathscr{A}$ such that $\pair{x, y_1} \in f$.
   Likewise there exists some function $g \in \mathscr{A}$ such that
-    $\left< x, y_2 \right> \in g$.
+    $\pair{x, y_2} \in g$.
   There are two cases to consider:
 
   \paragraph{Case 1}%
 
     Suppose $f \subseteq g$.
-    Then $\left< x, y_1 \right>, \left< x, y_2 \right> \in g$.
+    Then $\pair{x, y_1}, \pair{x, y_2} \in g$.
     Since $g$ is a function, i.e. single-valued, $y_1 = y_2$.
 
   \paragraph{Case 2}%
 
     Suppose $g \subseteq f$.
-    Then $\left< x, y_1 \right>, \left< x, y_2 \right> \in f$.
+    Then $\pair{x, y_1}, \pair{x, y_2} \in f$.
     Since $f$ is a function, i.e. single-valued, $y_1 = y_2$.
 
   \paragraph{Conclusion}%
@@ -4213,17 +4220,17 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
   By definition of the \nameref{ref:composition} of sets,
     \begin{equation}
       \label{sub:exercise-3.17-eq1}
-      F \circ G = \{\left< u, v \right> \mid \exists t(uGt \land tFv)\}.
+      F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.
     \end{equation}
   Consider any $v \in \ran{(F \circ G)}$.
   By definition of the \nameref{ref:range} of a \nameref{ref:relation}, there
-    exists some $u_1$ such that $\left< u_1, v \right> \in F \circ G$.
-  Let $u_2$ be a set such that $\left< u_2, v \right> \in F \circ G$.
+    exists some $u_1$ such that $\pair{u_1, v} \in F \circ G$.
+  Let $u_2$ be a set such that $\pair{u_2, v} \in F \circ G$.
 
   By \eqref{sub:exercise-3.17-eq1}, there exists a set $t_1$ such that
-    $\left< u_1, t_1 \right> \in G$ and $\left< t_1, v \right> \in F$.
+    $\pair{u_1, t_1} \in G$ and $\pair{t_1, v} \in F$.
   Likewise, there exists a set $t_2$ such that
-    $\left< u_2, t_2 \right> \in G$ and $\left< t_2, v \right> \in F$.
+    $\pair{u_2, t_2} \in G$ and $\pair{t_2, v} \in F$.
   But $F$ is single-rooted, meaning $t_1 = t_2$.
   Likewise, because $G$ is single-rooted, $u_1 = u_2$.
   Thus $F \circ G$ must also be single-rooted.
@@ -4241,8 +4248,8 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
 \label{sub:exercise-3.18}
 
 Let $R$ be the set
-  $$\{ \left< 0, 1 \right>, \left< 0, 2 \right>, \left< 0, 3 \right>,
-       \left< 1, 2 \right>, \left< 1, 3 \right>, \left< 2, 3 \right>\}.$$
+  $$\{ \pair{0, 1}, \pair{0, 2}, \pair{0, 3},
+       \pair{1, 2}, \pair{1, 3}, \pair{2, 3}\}.$$
 Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
   $R^{-1} \restriction \{1\}$, $\img{R}{\{1\}}$, and $\img{R^{-1}}{\{1\}}$.
 
@@ -4266,16 +4273,9 @@ Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
     {Enderton.Set.Chapter\_3.exercise\_3\_18\_v}
 
   \begin{enumerate}[(i)]
-    \item $R \circ R = \{
-      \left< 0, 2 \right>,
-      \left< 0, 3 \right>,
-      \left< 1, 3 \right>
-    \}$.
-    \item $R \restriction \{1\} = \{
-      \left< 1, 2 \right>,
-      \left< 1, 3 \right>
-    \}$.
-    \item $R^{-1} \restriction \{1\} = \{\left< 1, 0 \right>\}$.
+    \item $R \circ R = \{ \pair{0, 2}, \pair{0, 3}, \pair{1, 3} \}$.
+    \item $R \restriction \{1\} = \{ \pair{1, 2}, \pair{1, 3} \}$.
+    \item $R^{-1} \restriction \{1\} = \{\pair{1, 0}\}$.
     \item $\img{R}{\{1\}} = \{2, 3\}$.
     \item $\img{R^{-1}}{\{1\}} = \{0\}$.
   \end{enumerate}
@@ -4286,8 +4286,8 @@ Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
 \label{sub:exercise-3.19}
 
 Let $$A = \{
-  \left< \emptyset, \{\emptyset, \{\emptyset\}\} \right>,
-  \left< \{\emptyset\}, \emptyset \right>
+  \pair{\emptyset, \{\emptyset, \{\emptyset\}\}},
+  \pair{\{\emptyset\}, \emptyset}
   \}.$$
 Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
   $\img{A}{\{\emptyset\}}$, $\img{A}{\{\emptyset, \{\emptyset\}\}}$,
@@ -4336,14 +4336,14 @@ Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
     \item $\img{A}{\{\emptyset, \{\emptyset\}\}} =
       \{\{\emptyset, \{\emptyset\}\}, \emptyset\}$.
     \item $A^{-1} = \{
-      \left< \{\emptyset, \{\emptyset\}\}, \emptyset \right>,
-      \left< \emptyset, \{\emptyset\} \right>
+      \pair{\{\emptyset, \{\emptyset\}\}, \emptyset},
+      \pair{\emptyset, \{\emptyset\}}
     \}$.
     \item $A \circ A =
-      \{\left< \{\emptyset\}, \{\emptyset, \{\emptyset\}\} \right>\}$.
+      \{\pair{\{\emptyset\}, \{\emptyset, \{\emptyset\}\}}\}$.
     \item $A \restriction \emptyset = \emptyset$
     \item $A \restriction \{\emptyset\} =
-      \{\left< \emptyset, \{\emptyset, \{\emptyset\}\} \right>\}$.
+      \{\pair{\emptyset, \{\emptyset, \{\emptyset\}\}}\}$.
     \item $A \restriction \{\emptyset, \{\emptyset\}\} = A$.
     \item $\bigcup\bigcup A =
       \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}$.
@@ -4366,12 +4366,12 @@ Show that $F \restriction A = F \cap (A \times \ran{F})$.
     intersection, and \nameref{ref:range} of sets,
     \begin{align*}
       F \restriction A
-        & = \{\left< u, v \right> \mid uFv \land u \in A\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid uFv \land u \in A\} \\
+        & = \{\pair{u, v} \mid
           uFv \land u \in A \land v \in \ran{F}\} \\
-        & = \{\left< u, v \right> \mid uFv\} \cap
-          \{\left< u, v \right> \mid u \in A \land v \in \ran{F}\} \\
-        & = F \cap \{\left< u, v \right> \mid u \in A \land v \in \ran{F}\} \\
+        & = \{\pair{u, v} \mid uFv\} \cap
+          \{\pair{u, v} \mid u \in A \land v \in \ran{F}\} \\
+        & = F \cap \{\pair{u, v} \mid u \in A \land v \in \ran{F}\} \\
         & = F \cap (A \times \ran{F}).
     \end{align*}
 
@@ -4391,17 +4391,17 @@ Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
   By definition of the \nameref{ref:composition} of sets,
     \begin{align*}
       (R \circ S) \circ T
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid
           \exists t(uTt \land t(R \circ S)v)\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid
           \exists t(uTt \land (\exists a(tSa \land aRv))\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid
           \exists t, \exists a, (uTt \land tSa) \land aRv)\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid
           \exists a, \exists t, (uTt \land tSa) \land aRv)\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid
           \exists a, (\exists t(uTt \land tSa)) \land aRv)\} \\
-        & = \{\left< u, v \right> \mid
+        & = \{\pair{u, v} \mid
           \exists a, u(S \circ T)a \land aRv)\} \\
         & = R \circ (S \circ T).
     \end{align*}
@@ -4453,9 +4453,9 @@ Show that the following are correct for any sets.
       \begin{align*}
         \img{(F \circ G)}{A}
           & = \{v \mid (\exists u \in A) u(F \circ G)v\} \\
-          & = \{v \mid (\exists u \in A) \left< u, v \right> \in F \circ G\} \\
+          & = \{v \mid (\exists u \in A) \pair{u, v} \in F \circ G\} \\
           & = \{v \mid (\exists u \in A)
-            \left< u, v \right> \in \{\left< b, c \right> \mid
+            \pair{u, v} \in \{\pair{b, c} \mid
               \exists a(bGa \land aFc)\}\} \\
           & = \{v \mid \exists u \in A, \exists a, uGa \land aFv\} \\
           & = \{v \mid \exists a, \exists u \in A, uGa \land aFv\} \\
@@ -4470,12 +4470,12 @@ Show that the following are correct for any sets.
     By definition of the \nameref{ref:restriction} of a set,
       \begin{align*}
         Q \restriction (A \cup B)
-          & = \{\left< u, v \right> \mid uQv \land u \in A \cup B\} \\
-          & = \{\left< u, v \right> \mid uQv \land (u \in A \lor u \in B)\} \\
-          & = \{\left< u, v \right> \mid
+          & = \{\pair{u, v} \mid uQv \land u \in A \cup B\} \\
+          & = \{\pair{u, v} \mid uQv \land (u \in A \lor u \in B)\} \\
+          & = \{\pair{u, v} \mid
             (uQv \land u \in A) \lor (uQv \land u \in B)\} \\
-          & = \{\left< u, v \right> \mid uQv \land u \in A\} \cup
-            \{\left< u, v \right> \mid uQv \land u \in B\} \\
+          & = \{\pair{u, v} \mid uQv \land u \in A\} \cup
+            \{\pair{u, v} \mid uQv \land u \in B\} \\
           & = (Q \restriction A) \cup (Q \restriction B).
       \end{align*}
 
@@ -4500,7 +4500,7 @@ Show that for any sets $B$ and $C$,
     {Enderton.Set.Chapter\_3.exercise\_3\_23\_ii}
 
   Let $I_A$ be the identity function on the set $A$.
-  That is, $I_A = \{\left< u, u \right> \mid u \in A\}$.
+  That is, $I_A = \{\pair{u, u} \mid u \in A\}$.
   Let $B$ and $C$ be any sets.
   We show that (i) $B \circ I_A = B \restriction A$ and (ii)
     $\img{I_A}{C} = A \cap C$.
@@ -4512,32 +4512,30 @@ Show that for any sets $B$ and $C$,
 
     \subparagraph{($\subseteq$)}%
 
-      Let $\left< x, y \right> \in B \circ I_A$.
+      Let $\pair{x, y} \in B \circ I_A$.
       By definition of the \nameref{ref:composition} of sets,
         there exists some $t$ such that $x(I_A)t$ and $tBy$.
       By definition of the identity function, $I_A(x) = t$ implies $x = t$.
       Thus $xBy$.
       By hypothesis, $x \in \dom{(B \circ I_A)}$.
       Therefore $x \in \dom{I_A} = A$.
-      Thus
-        $$\left< x, y \right>
-            \in \{\left< u, v \right> \mid u \in A \land uBv\}
-            = B \restriction A.$$
+      Thus $$\pair{x, y} \in \{\pair{u, v} \mid u \in A \land uBv\}
+        = B \restriction A.$$
 
     \subparagraph{($\supseteq$)}%
 
-      Let $\left< x, y \right> \in B \restriction A$.
+      Let $\pair{x, y} \in B \restriction A$.
       By definition of the \nameref{ref:restriction} of sets,
         $x \in A$ and $xBy$.
-      But $I_A(x) = x$ meaning $\left< I_A(x), y \right> \in B$.
-      In other words, $\left< x, y \right> \in B \circ I_A$.
+      But $I_A(x) = x$ meaning $\pair{I_A(x), y} \in B$.
+      In other words, $\pair{x, y} \in B \circ I_A$.
 
   \paragraph{(ii)}%
 
     By definition of the \nameref{ref:image} of sets,
       \begin{align*}
         \img{I_A}{C}
-          & = \{v \mid (\exists u \in C) \left< u, v \right> \in I_A\} \\
+          & = \{v \mid (\exists u \in C) \pair{u, v} \in I_A\} \\
           & = \{v \mid \exists u \in C, u \in A \land u = v\} \\
           & = \{v \mid v \in C \land v \in A\} \\
           & = C \cap A.
@@ -4562,7 +4560,7 @@ Show that for a function $F$,
       \img{F^{-1}}{A}
         & = \{x \mid (\exists y \in A) yF^{-1}x\} \\
         & = \{x \mid (\exists y \in A) xFy\} \\
-        & = \{x \mid (\exists y \in A) \left< x, y \right> \in F\} \\
+        & = \{x \mid (\exists y \in A) \pair{x, y} \in F\} \\
         & = \{x \mid x \in \dom{F} \land F(x) \in A\} \\
         & = \{x \in \dom{F} \mid F(x) \in A\}.
     \end{align*}
@@ -4599,23 +4597,23 @@ Show that for a function $F$,
 
     \subparagraph{($\subseteq$)}%
 
-      Let $\left< x, y \right> \in G \circ G^{-1}$.
+      Let $\pair{x, y} \in G \circ G^{-1}$.
       By definition of the \nameref{ref:composition} of sets, there exists some
         set $t$ such that $x(G^{-1})t$ and $tGy$.
       By definition of the \nameref{ref:inverse} of a set,
         $$x(G^{-1})t \iff tGx.$$
       The right hand side of the above biconditional indicates $x \in \ran{G}$.
       Since $G$ is single-valued, $tGy \land tGx$ implies $x = y$.
-      Thus $\left< x, y \right> \in I_{\ran{G}}$.
+      Thus $\pair{x, y} \in I_{\ran{G}}$.
 
     \subparagraph{($\supseteq$)}%
 
-      Let $\left< x, x \right> \in I_{\ran{G}}$ where $x \in \ran{G}$.
+      Let $\pair{x, x} \in I_{\ran{G}}$ where $x \in \ran{G}$.
       By definition of the \nameref{ref:range} of a function, there exists some
-        $t$ such that $\left< t, x \right> \in G$.
+        $t$ such that $\pair{t, x} \in G$.
       By definition of the \nameref{ref:inverse} of a set, it follows
-        $\left< x, t \right> \in G^{-1}$.
-      Thus $\left< x, x \right> \in G \circ G^{-1}$.
+        $\pair{x, t} \in G^{-1}$.
+      Thus $\pair{x, x} \in G \circ G^{-1}$.
 
     \subparagraph{Conclusion}%
 
@@ -4657,7 +4655,7 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
   \paragraph{($\subseteq$)}%
 
     Let $x \in \dom{(F \circ G)}$.
-    Then there exists a set $y$ such that $\left< x, y \right> \in F \circ G$.
+    Then there exists a set $y$ such that $\pair{x, y} \in F \circ G$.
     By definition of the \nameref{ref:composition} of sets, there exists a set
       $t$ such that $xGt$ and $tFy$.
     Thus $t \in \dom{F}$.
@@ -4679,7 +4677,7 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
       such that $uFt$.
     Thus $xGu \land uFt$.
     By definition of the \nameref{ref:composition} of sets,
-      $\left< x, t \right> \in F \circ G$.
+      $\pair{x, t} \in F \circ G$.
     Therefore $x \in \dom{(F \circ G)}$.
 
 \end{proof}
@@ -4864,20 +4862,20 @@ Show that $R$ is symmetric iff $R^{-1} \subseteq R$.
   \paragraph{($\Rightarrow$)}%
 
     Suppose $R$ is \nameref{ref:symmetric}.
-    Let $\left< x, y \right> \in R^{-1}$.
+    Let $\pair{x, y} \in R^{-1}$.
     By definition of the \nameref{ref:inverse} of a set,
-      $\left< y, x \right> \in R$.
-    By symmetry, $\left< x, y \right> \in R$.
+      $\pair{y, x} \in R$.
+    By symmetry, $\pair{x, y} \in R$.
     Thus $R^{-1} \subseteq R$.
 
   \paragraph{($\Leftarrow$)}%
 
     Suppose $R^{-1} \subseteq R$.
-    Let $\left< x, y \right> \in R$.
+    Let $\pair{x, y} \in R$.
     By definition of the \nameref{ref:inverse} of a set,
-      $\left< y, x \right> \in R^{-1}$.
-    Since $R^{-1} \subseteq R$, $\left< y, x \right> \in R$.
-    Therefore $\left< x, y \right>$ and $\left< y, x \right>$ are both in $R$.
+      $\pair{y, x} \in R^{-1}$.
+    Since $R^{-1} \subseteq R$, $\pair{y, x} \in R$.
+    Therefore $\pair{x, y}$ and $\pair{y, x}$ are both in $R$.
     In other words, $R$ is symmetric.
 
 \end{proof}
@@ -4895,20 +4893,20 @@ Show that $R$ is transitive iff $R \circ R \subseteq R$.
   \paragraph{($\Rightarrow$)}%
 
     Suppose $R$ is \nameref{ref:transitive}.
-    Let $\left< x, y \right> \in R \circ R$.
+    Let $\pair{x, y} \in R \circ R$.
     By definition of the \nameref{ref:composition} of a set,
       there exists some $t$ such that $xRt \land tRy$.
-    That is, $\left< x, t \right> \in R$ and $\left< t, y \right> \in R$.
-    Since $R$ is transitive, it follows $\left< x, y \right> \in R$.
+    That is, $\pair{x, t} \in R$ and $\pair{t, y} \in R$.
+    Since $R$ is transitive, it follows $\pair{x, y} \in R$.
 
   \paragraph{($\Leftarrow$)}%
 
     Suppose $R \circ R \subseteq R$.
-    Let $\left< x, y \right>, \left< y, z \right> \in R$.
+    Let $\pair{x, y} \pair{y, z} \in R$.
     By definition of the \nameref{ref:composition} of a set,
-      $$R \circ R = \{\left< u, v \right> \mid \exists t(uRt \land tRv)\}.$$
-    Then $\left< x, z \right> \in R \circ R$.
-    Since $R \circ R \subseteq R$, it follows $\left< x, z \right> \in R$.
+      $$R \circ R = \{\pair{u, v} \mid \exists t(uRt \land tRv)\}.$$
+    Then $\pair{x, z} \in R \circ R$.
+    Since $R \circ R \subseteq R$, it follows $\pair{x, z} \in R$.
     Thus $R$ is transitive.
 
 \end{proof}
@@ -4941,21 +4939,21 @@ Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
 
     \subparagraph{($\subseteq$)}%
 
-      Let $\left< x, y \right> \in R$.
-      Since $R$ is symmetric, $\left< y, x \right> \in R$.
-      Since $R$ is transitive, $\left< x, x \right> \in R$.
-      Then there exists a $t$ such that $\left< x, t \right> \in R$ and
-        $\left< y, t \right> \in R$, namely $t = x$.
+      Let $\pair{x, y} \in R$.
+      Since $R$ is symmetric, $\pair{y, x} \in R$.
+      Since $R$ is transitive, $\pair{x, x} \in R$.
+      Then there exists a $t$ such that $\pair{x, t} \in R$ and
+        $\pair{y, t} \in R$, namely $t = x$.
       By \eqref{sub:exercise-3.33-eq1},
-        $\left< x, y \right> \in R^{-1} \circ R$.
+        $\pair{x, y} \in R^{-1} \circ R$.
 
     \subparagraph{($\supseteq$)}%
 
-      Let $\left< x, y \right> \in R^{-1} \circ R$.
+      Let $\pair{x, y} \in R^{-1} \circ R$.
       By \eqref{sub:exercise-3.33-eq1}, there exists some $t$ such that
-        $\left< x, t \right> \in R$ and $\left< y, t \right> \in R$.
-      But $R$ is symmetric meaning $\left< t, y \right> \in R$.
-      Since $R$ is transitive, it follows $\left< x, y \right> \in R$.
+        $\pair{x, t} \in R$ and $\pair{y, t} \in R$.
+      But $R$ is symmetric meaning $\pair{t, y} \in R$.
+      Since $R$ is transitive, it follows $\pair{x, y} \in R$.
 
   \paragraph{($\Leftarrow$)}%
 
@@ -4975,20 +4973,20 @@ Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
               & \textref{sub:theorem-3e} \nonumber \\
             & = R \label{sub:exercise-3.33-eq2}.
         \end{align}
-      Now let $\left< x, y \right> \in R$.
-      By \eqref{sub:exercise-3.33-eq2} $\left< x, y \right> \in R^{-1}$.
+      Now let $\pair{x, y} \in R$.
+      By \eqref{sub:exercise-3.33-eq2} $\pair{x, y} \in R^{-1}$.
       By definition of the \nameref{ref:inverse} of a set,
-        $\left< y, x \right> \in R$.
+        $\pair{y, x} \in R$.
       Thus $R$ is symmetric.
 
     \subparagraph{(ii)}%
 
-      Let $\left< x, y \right>, \left< y, z \right> \in R$.
+      Let $\pair{x, y}, \pair{y, z} \in R$.
       By \nameref{spar:exercise-3.33-i}, $R$ is symmetric.
-      Thus $\left< z, y \right> \in R$.
+      Thus $\pair{z, y} \in R$.
       By \eqref{sub:exercise-3.33-eq1}, it follows
-        $\left< x, z \right> \in R^{-1} \circ R$.
-      Since $R^{-1} \circ R = R$, it follows $\left< x, z \right> \in R$.
+        $\pair{x, z} \in R^{-1} \circ R$.
+      Since $R^{-1} \circ R = R$, it follows $\pair{x, z} \in R$.
       Thus $R$ is transitive.
 
 \end{proof}
@@ -5019,12 +5017,12 @@ Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
     Because $\mathscr{A} \neq \emptyset$, $\bigcap{\mathscr{A}}$ is
       well-defined.
     We prove that $\bigcap{\mathscr{A}}$ is a transitive relation.
-    Let $\left< x, y \right>, \left< y, z \right> \in \bigcap{\mathscr{A}}$.
+    Let $\pair{x, y}, \pair{y, z} \in \bigcap{\mathscr{A}}$.
     Then forall $A$ in $\mathscr{A}$, it follows
-      $\left< x, y \right>, \left< y, z \right> \in A$.
-    Since $A$ is transitive, it follows $\left< x, z \right> \in A$.
+      $\pair{x, y}, \pair{y, z} \in A$.
+    Since $A$ is transitive, it follows $\pair{x, z} \in A$.
     Since this holds for all $A \in \mathscr{A}$, it follows that
-      $\left< x, z \right> \in A$ as well.
+      $\pair{x, z} \in A$ as well.
     Thus $\bigcap{\mathscr{A}}$ is transitive.
 
   \paragraph{(b)}%
@@ -5032,19 +5030,14 @@ Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
     We show that $\bigcup{\mathscr{A}}$ is not necessarily transitive with a
       counterexample.
     Suppose $$\mathscr{A} = \{
-      \{\left< 1, 2 \right>, \left< 2, 3 \right>, \left< 1, 3 \right>\},
-      \{\left< 2, 1 \right>\}
+      \{\pair{1, 2}, \pair{2, 3}, \pair{1, 3}\}, \{\pair{2, 1}\}
     \}.$$
     Notice that the two members of $\mathscr{A}$ are transitive relations.
     Now $$\bigcup{\mathscr{A}} = \{
-      \left< 1, 2 \right>,
-      \left< 2, 3 \right>,
-      \left< 1, 3 \right>,
-      \left< 2, 1 \right>,
+      \pair{1, 2}, \pair{2, 3}, \pair{1, 3}, \pair{2, 1},
     \}.$$
-    But the above cannot be transitive, for $\left< 1, 2 \right>$ and
-      $\left< 2, 1 \right>$ are members of the set, but $\left< 1, 1 \right>$
-      is not.
+    But the above cannot be transitive, for $\pair{1, 2}$ and $\pair{2, 1}$ are
+      members of the set, but $\pair{1, 1}$ is not.
 
 \end{proof}
 
@@ -5077,8 +5070,7 @@ Assume that $f \colon A \rightarrow B$ and that $R$ is an equivalence relation
 Define $Q$ to be the set
   \begin{equation}
     \label{sub:exercise-3.36-eq1}
-    \{\left< x, y \right> \in A \times A \mid
-      \left< f(x), f(y) \right> \in R\}.
+    \{\pair{x, y} \in A \times A \mid \pair{f(x), f(y)} \in R\}.
   \end{equation}
 Show that $Q$ is an equivalence relation on $A$.
 
@@ -5087,35 +5079,35 @@ Show that $Q$ is an equivalence relation on $A$.
   \lean{Bookshelf/Enderton/Set/Relation}
     {Enderton.Set.Chapter\_3.exercise\_3\_36}
 
-  We prove that (i) $Q$ is reflexive on $A$, (ii) $Q$ is symmetric, and (iii)
-    $Q$ is transitive.
+  We prove that (i) $Q$ is \nameref{ref:reflexive} on $A$, (ii) $Q$ is
+    \nameref{ref:symmetric}, and (iii) $Q$ is \nameref{ref:transitive}.
 
   \paragraph{(i)}%
 
     Let $x \in A$.
     By hypothesis, $f(x) \in B$.
     Since $R$ is an equivalence relation on $B$, $R$ is reflexive on $B$.
-    Thus $\left< f(x), f(x) \right> \in R$.
-    But then \eqref{sub:exercise-3.36-eq1} implies $\left< x, x \right> \in Q$.
+    Thus $\pair{f(x), f(x)} \in R$.
+    But then \eqref{sub:exercise-3.36-eq1} implies $\pair{x, x} \in Q$.
     Thus $Q$ is reflexive on $A$.
 
   \paragraph{(ii)}%
 
-    Let $\left< x, y \right> \in Q$.
-    By \eqref{sub:exercise-3.36-eq1}, $\left< f(x), f(y) \right> \in R$.
+    Let $\pair{x, y} \in Q$.
+    By \eqref{sub:exercise-3.36-eq1}, $\pair{f(x), f(y)} \in R$.
     Since $R$ is an equivalence relation on $B$, $R$ is symmetric.
-    Thus $\left< f(y), f(x) \right> \in R$.
-    But then \eqref{sub:exercise-3.36-eq1} implies $\left< y, x \right> \in Q$.
+    Thus $\pair{f(y), f(x)} \in R$.
+    But then \eqref{sub:exercise-3.36-eq1} implies $\pair{y, x} \in Q$.
     Thus $Q$ is symmetric.
 
   \paragraph{(iii)}%
 
-    Let $\left< x, y \right>, \left< y, z \right> \in Q$.
+    Let $\pair{x, y}, \pair{y, z} \in Q$.
     By \eqref{sub:exercise-3.36-eq1},
-      $\left< f(x), f(y) \right>, \left< f(y), f(z) \right> \in R$.
+      $\pair{f(x), f(y)}, \pair{f(y), f(z)} \in R$.
     Since $R$ is an equivalence relation on $B$, $R$ is transitive.
-    Thus $\left< f(x), f(z) \right> \in R$.
-    But then \eqref{sub:exercise-3.36-eq1} implies $\left< x, z \right> \in Q$.
+    Thus $\pair{f(x), f(z)} \in R$.
+    But then \eqref{sub:exercise-3.36-eq1} implies $\pair{x, z} \in Q$.
     Thus $Q$ is transitive.
 
 \end{proof}
@@ -5138,8 +5130,8 @@ Show that $R_\Pi$ is an equivalence relation on $A$.
   \lean{Bookshelf/Enderton/Set/Relation}
     {Enderton.Set.Chapter\_3.exercise\_3\_37}
 
-  We prove that (i) $R_\Pi$ is reflexive on $B$, (ii) $R_\Pi$ is symmetric, and
-    (iii) $R_\Pi$ is transitive.
+  We prove that (i) $R_\Pi$ is \nameref{ref:reflexive} on $B$, (ii) $R_\Pi$ is
+    \nameref{ref:symmetric}, and (iii) $R_\Pi$ is \nameref{ref:transitive}.
 
   \paragraph{(i)}%
 
@@ -5147,33 +5139,33 @@ Show that $R_\Pi$ is an equivalence relation on $A$.
     By definition of a \nameref{ref:partition}, there exists some nonempty set
       $B \in \Pi$ such that $x \in B$.
     Thus $(\exists B \in \Pi)(x \in B \land x \in B)$.
-    By \eqref{sub:exercise-3.37-eq1}, $\left< x, x \right> \in R_\Pi$.
+    By \eqref{sub:exercise-3.37-eq1}, $\pair{x, x} \in R_\Pi$.
     Therefore $R_\Pi$ is reflexive on $A$.
 
   \paragraph{(ii)}%
 
-    Let $\left< x, y \right> \in R_\Pi$.
+    Let $\pair{x, y} \in R_\Pi$.
     By \eqref{sub:exercise-3.37-eq1}, there exists some $B \in \Pi$ such that
       $x \in B \land y \in B$.
     But then $y \in B \land x \in B$.
-    Thus $\left< y, x \right> \in R_\Pi$.
+    Thus $\pair{y, x} \in R_\Pi$.
     In other words, $R_\Pi$ is symmetric.
 
   \paragraph{(iii)}%
 
-    Let $\left< x, y \right>, \left< y, z \right> \in R_\Pi$.
+    Let $\pair{x, y}, \pair{y, z} \in R_\Pi$.
     By \eqref{sub:exercise-3.37-eq1}, there exists some $B_1 \in \Pi$ such that
       $x \in B_1 \land y \in B_1$.
     Likewise there exists some $B_2 \in \Pi$ such that
       $y \in B_2 \land z \in B_2$.
     But $\Pi$ is a \nameref{ref:partition} meaning $y \in B_1$ and $y \in B_2$
       if $B_1 = B_2$.
-    Therefore $x \in B_1 \land z \in B_1$ and $\left< x, z \right> \in R_\Pi$.
+    Therefore $x \in B_1 \land z \in B_1$ and $\pair{x, z} \in R_\Pi$.
     In other words, $R_\Pi$ is transitive.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.38}}%
+\subsection{\pending{Exercise 3.38}}%
 \label{sub:exercise-3.38}
 
 \nameref{sub:theorem-3p} shows that $A / R$ is a partition of $A$ whenever $R$
@@ -5183,13 +5175,26 @@ Show that if we start with the equivalence relation $R_\Pi$ of the preceding
 
 \begin{proof}
 
-  We prove that $\{[x]_{R_\Pi} \mid x \in A\} = \Pi$.
-
-  TODO
+  If $\Pi$ is empty, its trivial to see $A / R_\Pi$ is likewise empty.
+  Thus assume $\Pi$ is not empty.
+  Let $C \in \Pi$.
+  By definition of a \nameref{ref:partition}, $C$ is nonempty.
+  Let $x \in C$.
+  By definition of a \nameref{ref:partition}, every member of $\Pi$ is disjoint
+    from every other.
+  Thus
+    \begin{align*}
+      C
+        & = \{t \mid (\exists B \in \Pi)(x \in B \land t \in B)\} \\
+        & = \{t \mid x R_\Pi t\} & \textref{sub:exercise-3.37} \\
+        & = [x]_{R_\Pi}.
+    \end{align*}
+  Therefore every member of $\Pi$ is of form $[x]_{R_\Pi}$ for some $x \in A$.
+  In other words, $$A / R_\Pi = \{[x]_{R_\Pi} \mid x \in A\} = \Pi.$$
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.39}}%
+\subsection{\pending{Exercise 3.39}}%
 \label{sub:exercise-3.39}
 
 Assume that we start with an equivalence relation $R$ on $A$ and define $\Pi$ to
@@ -5198,11 +5203,26 @@ Show that $R_\Pi$, as defined in Exercise 37, is just $R$.
 
 \begin{proof}
 
-  TODO
+  If $\Pi$ is empty, it's trivial to show $R_\Pi$ is also empty.
+  Thus assume $\Pi$ is not empty.
+  Let $C \in \Pi = A / R$.
+  By definition of a \nameref{ref:partition}, $C$ is nonempty.
+  Let $x \in C$.
+  Thus
+    \begin{align*}
+      C
+        & = [x]_R & \textref{sub:theorem-3p} \\
+        & = \{t \mid xRt\} \\
+        & = \{t \mid (\exists B \in A / R)(x \in B \land t \in B)\} \\
+        & = \{t \mid (\exists B \in \Pi)(x \in B \land t \in B)\} \\
+        & = \{t \mid x R_\Pi t\}.
+    \end{align*}
+  Thus $\pair{x, y} \in R_\Pi$ if and only if $\pair{x, y} \in R$.
+  By the \nameref{ref:extensionality-axiom}, $R_\Pi = R$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.40}}%
+\subsection{\pending{Exercise 3.40}}%
 \label{sub:exercise-3.40}
 
 Define an equivalence relation $R$ on the set $P$ of positive integers by
@@ -5212,7 +5232,17 @@ Is there a function $f \colon P / R \rightarrow P / R$ such that
 
 \begin{proof}
 
-  TODO
+  Define $g \colon P \rightarrow P$ as $g(x) = 3x$ for all $x \in P$.
+  We first show that $g$ is \nameref{ref:compatible} with $R$.
+  Let $m, n \in P$ such that $mRn$.
+  Then $m$ and $n$ have the same prime factors.
+  Then $3m$ has one additional prime factor than $m$, namely $3$.
+  Likewise $3n$ has one additional prime factor than $n$, also $3$.
+  Thus $(3m)R(3n)$, i.e. $g$ is compatible with $R$.
+
+  By \nameref{sub:theorem-3q}, it follows there exists a unique function
+    $f \colon P / R \rightarrow P / R$ such that $f([n]_R) = [g(n)]_R = [3n]_R$
+    as expected.
 
 \end{proof}
 
@@ -5220,15 +5250,15 @@ Is there a function $f \colon P / R \rightarrow P / R$ such that
 \label{sub:exercise-3.41}
 
 Let $\mathbb{R}$ be the set of real numbers and define the relation $Q$ on
-  $\mathbb{R} \times \mathbb{R}$ by $\left< u, v \right>Q \left< x, y \right>$
-  iff $u + y = x + v$.
+  $\mathbb{R} \times \mathbb{R}$ by $\pair{u, v}Q\pair{x, y}$ iff
+  $u + y = x + v$.
 
 \begin{enumerate}[(a)]
   \item Show that $Q$ is an equivalence relation on
     $\mathbb{R} \times \mathbb{R}$.
   \item Is there a function $G \colon (\mathbb{R} \times \mathbb{R}) / Q
     \rightarrow (\mathbb{R} \times \mathbb{R}) / Q$ satisfying the equation
-    $$G([\left< x, y \right>]_Q) = [\left< x + 2y, y + 2x \right>]_Q?$$
+    $$G([\pair{x, y}]_Q) = [\pair{x + 2y, y + 2x}]_Q?$$
 
 \end{enumerate}
 

@@ -511,22 +511,22 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 theorem theorem_3j_a {F : Set.HRelation α β} {A : Set α} {B : Set β}
   (hF : mapsInto F A B) (hA : Set.Nonempty A)
   : (∃ G : Set.HRelation β α,
-      isSingleValued G ∧ mapsInto G B A ∧
+      mapsInto G B A ∧
         (comp G F = { p | p.1 ∈ A ∧ p.1 = p.2 })) ↔ isOneToOne F := by
   apply Iff.intro
   · intro ⟨G, hG⟩
-    refine ⟨hF.left, ?_⟩
+    refine ⟨hF.is_func, ?_⟩
     intro y hy
     have ⟨x₁, hx₁⟩ := ran_exists hy
     refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
     intro x₂ hx₂
     
     have hG' : y ∈ dom G := by
-      rw [hG.right.left.right.left]
-      exact hF.right.right hy
+      rw [hG.left.dom_eq]
+      exact hF.ran_ss hy
     have ⟨z, hz⟩ := dom_exists hG'
 
-    have := hG.right.right
+    have := hG.right
     unfold comp at this
     rw [Set.ext_iff] at this
     have h₁ := (this (x₁, z)).mp ⟨y, hx₁, hz⟩
@@ -544,7 +544,7 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 theorem theorem_3j_b {F : Set.HRelation α β} {A : Set α} {B : Set β}
   (hF : mapsInto F A B) (hA : Set.Nonempty A)
   : (∃ H : Set.HRelation β α,
-      isSingleValued H ∧ mapsInto H B A ∧
+      mapsInto H B A ∧
         (comp F H = { p | p.1 ∈ B ∧ p.1 = p.2 })) ↔ mapsOnto F A B := by
   sorry
 
@@ -1595,7 +1595,7 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
       simp only [Set.mem_powerset_iff] at hX₂
 
       have ht' := hX₂.left ht
-      rw [← hf.right.right.left] at ht'
+      rw [← hf.right.dom_eq] at ht'
       have ⟨ft, hft⟩ := dom_exists ht'
       have hft' : ft ∈ image f X₂ := ⟨t, ht, hft⟩
 
@@ -1610,7 +1610,7 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
       simp only [Set.mem_powerset_iff] at hX₁sub
       
       have ht' := hX₁sub ht
-      rw [← hf.right.right.left] at ht'
+      rw [← hf.right.dom_eq] at ht'
       have ⟨ft, hft⟩ := dom_exists ht'
       have hft' : ft ∈ image f X₁ := ⟨t, ht, hft⟩
 
@@ -1637,7 +1637,7 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
     show ∀ y, y ∈ image f a → y ∈ B
     intro y ⟨b, hb⟩
     have hz := mem_pair_imp_snd_mem_ran hb.right
-    exact hf.right.right.right hz
+    exact hf.right.ran_ss hz
 
 /-- #### Exercise 3.29
 
@@ -1653,34 +1653,34 @@ theorem exercise_3_29 {f : Set.HRelation α β} {G : Set.HRelation β (Set α)}
   (hG : mapsInto G B (𝒫 A) ∧ G = { p | p.1 ∈ B ∧ p.2 = {x ∈ A | (x, p.1) ∈ f} })
   : isOneToOne G := by
   unfold isOneToOne
-  refine ⟨hG.left.left, ?_⟩
+  refine ⟨hG.left.is_func, ?_⟩
   intro y hy
   have ⟨x₁, hx₁⟩ := ran_exists hy
   refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
   intro x₂ hx₂
 
   have hG₁ : (x₁, {x ∈ A | (x, x₁) ∈ f}) ∈ G := by
-    rw [hG.right, ← hG.left.right.left]
+    rw [hG.right, ← hG.left.dom_eq]
     simp only [Set.mem_setOf_eq, and_true]
     exact mem_pair_imp_fst_mem_dom hx₁
   have hG₂ : (x₂, {x ∈ A | (x, x₂) ∈ f}) ∈ G := by
-    rw [hG.right, ← hG.left.right.left]
+    rw [hG.right, ← hG.left.dom_eq]
     simp only [Set.mem_setOf_eq, and_true]
     exact hx₂.left
   have heq : {x ∈ A | (x, x₁) ∈ f} = {x ∈ A | (x, x₂) ∈ f} := by
-    have h₁ := single_valued_eq_unique hG.left.left hx₁ hG₁
-    have h₂ := single_valued_eq_unique hG.left.left hx₂.right hG₂
+    have h₁ := single_valued_eq_unique hG.left.is_func hx₁ hG₁
+    have h₂ := single_valued_eq_unique hG.left.is_func hx₂.right hG₂
     rw [← h₁, ← h₂]
 
-  rw [hG.right, ← hf.right.right] at hG₁
+  rw [hG.right, ← hf.ran_eq] at hG₁
   simp only [Set.mem_setOf_eq, and_true] at hG₁
   have ⟨t, ht⟩ := ran_exists hG₁
   have : t ∈ {x ∈ A | (x, x₁) ∈ f} := by
     refine ⟨?_, ht⟩
-    rw [← hf.right.left]
+    rw [← hf.dom_eq]
     exact mem_pair_imp_fst_mem_dom ht
   rw [heq] at this
-  exact single_valued_eq_unique hf.left this.right ht
+  exact single_valued_eq_unique hf.is_func this.right ht
 
 /-- #### Theorem 3M
 
@@ -1690,8 +1690,7 @@ relation on `fld R`.
 theorem theorem_3m {R : Set.Relation α}
   (hS : R.isSymmetric) (hT : R.isTransitive)
   : R.isEquivalence (fld R) := by
-  refine ⟨?_, hS, hT⟩
-  unfold isReflexive fld
+  refine ⟨Eq.subset rfl, ?_, hS, hT⟩
   intro x hx
   apply Or.elim hx
   · intro h
@@ -1703,43 +1702,31 @@ theorem theorem_3m {R : Set.Relation α}
     have := hS ht
     exact hT this ht
 
-/-- #### Lemma 3N
-
-Assume that `R` is an equivalence relation on `A` and that `x` and `y` belong
-to `A`. Then `[x]_R = [y]_R ↔ xRy`.
--/
-theorem lemma_3n {R : Set.Relation α} {A : Set α} {x y : α}
-  (hR : R.isEquivalence A) (_ : x ∈ A) (hy : y ∈ A)
-  : cell R x = cell R y ↔ (x, y) ∈ R := by
-  apply Iff.intro
-  · intro h
-    have : y ∈ cell R y :=  hR.left y hy
-    rwa [← h] at this
-  · intro h
-    rw [Set.ext_iff]
-    intro t
-    apply Iff.intro
-    · intro ht
-      have := hR.right.left h
-      exact hR.right.right this ht
-    · intro ht
-      exact hR.right.right h ht
-
 /-- #### Theorem 3P
 
 Assume that `R` is an equivalence relation on `A`. Then the set
 `{[x]_R | x ∈ A}` of all equivalence classes is a partition of `P`.
 -/
 theorem theorem_3p {R : Set.Relation α} {A : Set α} {P : Set (Set α)}
-  (hR : R.isEquivalence A) (hP : P = {cell R x | x ∈ A})
+  (hR : R.isEquivalence A) (hP : P = {neighborhood R x | x ∈ A})
   : isPartition P A := by
-  refine ⟨?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · -- Every member is a subset of `A`.
+    intro p hp
+    rw [hP] at hp
+    simp only [Set.mem_setOf_eq] at hp
+    have ⟨x, hx⟩ := hp
+    rw [← hx.right]
+    show ∀ t, t ∈ neighborhood R x → t ∈ A
+    intro t ht
+    exact hR.b_on (Or.inr (mem_pair_imp_snd_mem_ran ht))
+
   · -- Every member is nonempty.
     intro p hp
     rw [hP] at hp
     have ⟨x, hx⟩ := hp
     rw [← hx.right]
-    exact ⟨x, hR.left x hx.left⟩
+    exact ⟨x, hR.refl x hx.left⟩
 
   · -- Every pair of members is disjoint.
     intro xR hxR yR hyR h
@@ -1752,18 +1739,18 @@ theorem theorem_3p {R : Set.Relation α} {A : Set α} {P : Set (Set α)}
     have ⟨x, hx⟩ := hxR
     have ⟨y, hy⟩ := hyR
     rw [← hx.right, ← hy.right] at hz
-    unfold cell at hz
+    unfold neighborhood at hz
     simp only [Set.mem_inter_iff, Set.mem_setOf_eq] at hz
-    have hzy : (z, y) ∈ R := hR.right.left hz.right
-    have hxy : (x, y) ∈ R := hR.right.right hz.left hzy
-    have := (lemma_3n hR hx.left hy.left).mpr hxy
+    have hzy : (z, y) ∈ R := hR.symm hz.right
+    have hxy : (x, y) ∈ R := hR.trans hz.left hzy
+    have := (neighborhood_iff_mem hR hx.left hy.left).mpr hxy
     rw [hx.right, hy.right] at this
     exact absurd this h
 
   · -- Every element of `A` is in `P`.
     intro x hx
-    have := hR.left x hx
-    refine ⟨cell R x, ?_, this⟩
+    have := hR.refl x hx
+    refine ⟨neighborhood R x, ?_, this⟩
     · rw [hP]
       exact ⟨x, hx, rfl⟩
 
@@ -1919,8 +1906,8 @@ theorem exercise_3_34_b {𝓐 : Set (Set.Relation ℕ)}
 Show that for any `R` and `x`, we have `[x]_R = R⟦{x}⟧`.
 -/
 theorem exercise_3_35 {R : Set.Relation α} {x : α}
-  : cell R x = image R {x} := by
-  calc cell R x
+  : neighborhood R x = image R {x} := by
+  calc neighborhood R x
     _ = { t | (x, t) ∈ R } := rfl
     _ = { t | ∃ u ∈ ({x} : Set α), (u, t) ∈ R } := by simp
     _ = image R {x} := rfl
@@ -1933,40 +1920,63 @@ equivalence relation on `A`.
 -/
 theorem exercise_3_36 {f : Set.HRelation α β}
   {Q : Set.Relation α} {R : Set.Relation β} {A : Set α} {B : Set β}
-  (hf : mapsInto f A B)
-  (hR : isEquivalence R B)
+  (hf : mapsInto f A B) (hR : isEquivalence R B)
   (hQ : Q = { p | ∃ fx fy : β, (p.1, fx) ∈ f ∧ (p.2, fy) ∈ f ∧ (fx, fy) ∈ R })
   : isEquivalence Q A := by
-  refine ⟨?_, ?_, ?_⟩
-  · unfold isReflexive
+  refine ⟨?_, ?_, ?_, ?_⟩
+
+  · -- `fld Q ⊆ A`
+    show ∀ x, x ∈ fld Q → x ∈ A
     intro x hx
-    unfold mapsInto at hf
-    rw [← hf.right.left] at hx
+    rw [hQ] at hx
+    unfold fld dom ran at hx
+    simp only [
+      exists_and_left,
+      Set.mem_union,
+      Set.mem_image,
+      Set.mem_setOf_eq,
+      Prod.exists,
+      exists_and_right,
+      exists_eq_right
+    ] at hx 
+    apply Or.elim hx
+    · intro ⟨_, _, hx₁⟩
+      rw [← hf.dom_eq]
+      exact mem_pair_imp_fst_mem_dom hx₁.left
+    · intro ⟨_, _, _, _, hx₂⟩
+      rw [← hf.dom_eq]
+      exact mem_pair_imp_fst_mem_dom hx₂.left
+
+  · -- `isReflexive Q A`
+    intro x hx
+    rw [← hf.dom_eq] at hx
     have ⟨fx, hfx⟩ := dom_exists hx
-    have := hR.left fx (hf.right.right $ mem_pair_imp_snd_mem_ran hfx)
+    have := hR.refl fx (hf.ran_ss $ mem_pair_imp_snd_mem_ran hfx)
     rw [hQ]
     simp only [exists_and_left, Set.mem_setOf_eq]
     exact ⟨fx, hfx, fx, hfx, this⟩
-  · unfold isSymmetric
+
+  · -- `isSymmetric Q`
     intro x y h
     rw [hQ] at h
     simp only [exists_and_left, Set.mem_setOf_eq] at h
     have ⟨fx, hfx, fy, hfy, h'⟩ := h
-    have := hR.right.left h'
+    have := hR.symm h'
     rw [hQ]
     simp only [exists_and_left, Set.mem_setOf_eq]
     exact ⟨fy, hfy, fx, hfx, this⟩
-  · unfold isTransitive
+
+  · -- `isTransitive Q`
     intro x y z hx hy
     rw [hQ] at hx hy
     simp only [exists_and_left, Set.mem_setOf_eq] at hx hy
     have ⟨fx, hfx, fy, hfy, h₁⟩ := hx
     have ⟨fy₁, hfy₁, fz, hfz, h₂⟩ := hy
-    have hfy' : fy = fy₁ := single_valued_eq_unique hf.left hfy hfy₁
+    have hfy' : fy = fy₁ := single_valued_eq_unique hf.is_func hfy hfy₁
     rw [hfy'] at h₁
     rw [hQ]
     simp only [exists_and_left, Set.mem_setOf_eq]
-    exact ⟨fx, hfx, fz, hfz, hR.right.right h₁ h₂⟩
+    exact ⟨fx, hfx, fz, hfz, hR.trans h₁ h₂⟩
 
 /-- #### Exercise 3.37
 
@@ -1985,13 +1995,36 @@ theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
     ext p
     have (x, y) := p
     exact hR x y
-  refine ⟨?_, ?_, ?_⟩
-  · unfold isReflexive
+  refine ⟨?_, ?_, ?_, ?_⟩
+
+  · -- `fld R ⊆ A`
+    show ∀ x, x ∈ fld R → x ∈ A
+    rw [hR']
+    intro x hx
+    unfold fld dom ran at hx
+    simp only [
+      Set.mem_union,
+      Set.mem_image,
+      Set.mem_setOf_eq,
+      Prod.exists,
+      exists_and_right,
+      exists_eq_right
+    ] at hx
+    apply Or.elim hx
+    · intro ⟨t, B, hB⟩
+      have := hP.p_subset B hB.left
+      exact this hB.right.left
+    · intro ⟨a, B, hB⟩
+      have := hP.p_subset B hB.left
+      exact this hB.right.right
+
+  · -- `isReflexive R A`
     intro x hx
     rw [hR']
     simp only [Set.mem_setOf_eq, and_self]
-    exact hP.right.right x hx
-  · unfold isSymmetric
+    exact hP.exhaustive x hx
+
+  · -- `isSymmetric R`
     intro x y h
     rw [hR'] at h
     simp only [Set.mem_setOf_eq] at h
@@ -2000,17 +2033,17 @@ theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
     simp only [Set.mem_setOf_eq]
     conv at hB => right; rw [and_comm]
     exact ⟨B, hB⟩
-  · unfold isTransitive
+
+  · -- `isTransitive R`
     intro x y z hx hy
     rw [hR'] at hx hy
     simp only [Set.mem_setOf_eq] at hx hy
     have ⟨B₁, hB₁⟩ := hx
     have ⟨B₂, hB₂⟩ := hy
-    unfold isPartition at hP
     have hB : B₁ = B₂ := by
       have hy₁ : y ∈ B₁ := hB₁.right.right
       have hy₂ : y ∈ B₂ := hB₂.right.left
-      have hy := hP.right.left B₁ hB₁.left B₂ hB₂.left
+      have hy := hP.disjoint B₁ hB₁.left B₂ hB₂.left
       rw [contraposition] at hy
       simp at hy
       suffices B₁ ∩ B₂ ≠ ∅ from hy this
@@ -2020,7 +2053,7 @@ theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
     rw [hR']
     simp only [Set.mem_setOf_eq]
     exact ⟨B₁, hB₁.left, hB₁.right.left, by rw [hB]; exact hB₂.right.right⟩
-lemma test (h : ¬ p = q) : p ≠ q := by exact?
+
 end Relation
 
 end Enderton.Set.Chapter_3

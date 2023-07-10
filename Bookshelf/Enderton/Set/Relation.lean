@@ -314,14 +314,18 @@ Indicates `Relation` `F` is a function from `A` to `B`.
 
 This is usually denoted as `F : A → B`.
 -/
-def mapsInto (F : HRelation α β) (A : Set α) (B : Set β) :=
-  isSingleValued F ∧ dom F = A ∧ ran F ⊆ B
+structure mapsInto (F : HRelation α β) (A : Set α) (B : Set β) : Prop where
+  is_func : isSingleValued F
+  dom_eq : dom F = A
+  ran_ss : ran F ⊆ B
 
 /--
 Indicates `Relation` `F` is a function from `A` to `ran F = B`.
 -/
-def mapsOnto (F : HRelation α β) (A : Set α) (B : Set β) :=
-  isSingleValued F ∧ dom F = A ∧ ran F = B
+structure mapsOnto (F : HRelation α β) (A : Set α) (B : Set β) : Prop where
+  is_func : isSingleValued F
+  dom_eq : dom F = A
+  ran_eq : ran F = B
 
 /-! ## Composition -/
 
@@ -493,7 +497,7 @@ def toOrderedPairs (R : Relation α) : Set (Set (Set α)) :=
 /--
 A binary `Relation` `R` is **reflexive** on `A` **iff** `xRx` for all `x ∈ A`.
 -/
-def isReflexive (R : Relation α) (A : Set α) := ∀ a ∈ A, (a, a) ∈ R
+def isReflexive (R : Relation α) (A : Set α) := ∀ x ∈ A, (x, x) ∈ R
 
 /--
 A binary `Relation` `R` is **symmetric** **iff** whenever `xRy` then `yRx`.
@@ -509,30 +513,100 @@ def isTransitive (R : Relation α) :=
 
 /--
 `Relation` `R` is an **equivalence relation** on set `A` **iff** `R` is a binary
-relation that is relexive on `A`, symmetric, and transitive.
+relation on `A` that is relexive on `A`, symmetric, and transitive.
 -/
-def isEquivalence (R : Relation α) (A : Set α) :=
-  isReflexive R A ∧ isSymmetric R ∧ isTransitive R
+structure isEquivalence (R : Relation α) (A : Set α) : Prop where
+  b_on : fld R ⊆ A
+  refl : isReflexive R A
+  symm : isSymmetric R
+  trans : isTransitive R
+
+/--
+A set of members related to `x` via `Relation` `R`.
+
+The term "neighborhood" here was chosen to reflect this relationship between `x`
+and the members of the set. It isn't standard in anyway.
+-/
+def neighborhood (R : Relation α) (x : α) := { t | (x, t) ∈ R }
+
+/--
+Assume that `R` is an equivalence relation on `A` and that `x` and `y` belong
+to `A`. Then `[x]_R = [y]_R ↔ xRy`.
+-/
+theorem neighborhood_iff_mem {R : Set.Relation α} {A : Set α} {x y : α}
+  (hR : isEquivalence R A) (_ : x ∈ A) (hy : y ∈ A)
+  : neighborhood R x = neighborhood R y ↔ (x, y) ∈ R := by
+  apply Iff.intro
+  · intro h
+    have : y ∈ neighborhood R y :=  hR.refl y hy
+    rwa [← h] at this
+  · intro h
+    rw [Set.ext_iff]
+    intro t
+    apply Iff.intro
+    · intro ht
+      have := hR.symm h
+      exact hR.trans this ht
+    · intro ht
+      exact hR.trans h ht
 
 /--
 A **partition** `Π` of a set `A` is a set of nonempty subsets of `A` that is
 disjoint and exhaustive.
 -/
-def isPartition (P : Set (Set α)) (A : Set α) :=
-  (∀ p ∈ P, Set.Nonempty p) ∧
-  (∀ a ∈ P, ∀ b, b ∈ P → a ≠ b → a ∩ b = ∅) ∧
-  (∀ a ∈ A, ∃ p, p ∈ P ∧ a ∈ p)
+structure isPartition (P : Set (Set α)) (A : Set α) : Prop where
+  p_subset : ∀ p ∈ P, p ⊆ A 
+  nonempty : ∀ p ∈ P, Set.Nonempty p
+  disjoint : ∀ a ∈ P, ∀ b, b ∈ P → a ≠ b → a ∩ b = ∅
+  exhaustive : ∀ a ∈ A, ∃ p, p ∈ P ∧ a ∈ p
 
 /--
-A cell of some partition induced by `Relation` `R`.
+The partition `A / R` induced by an equivalence relation `R`.
 -/
-def cell (R : Relation α) (x : α) := { t | (x, t) ∈ R }
+def modEquiv {A : Set α} {R : Relation α} (_ : isEquivalence R A) :=
+  {neighborhood R x | x ∈ A}
 
 /--
-The equivalence class of `x` modulo `R`.
+Show the sets formed by `modEquiv` do indeed form a `partition`.
 -/
-def isEquivClass (R : Relation α) (A : Set α) (x : α) :=
-  isEquivalence R A ∧ x ∈ fld R
+theorem modEquiv_partition {A : Set α} {R : Relation α} (hR : isEquivalence R A)
+  : isPartition (modEquiv hR) A := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro p hp
+    have ⟨x, hx⟩ := hp
+    rw [← hx.right]
+    show ∀ t, t ∈ neighborhood R x → t ∈ A
+    intro t ht
+    have : t ∈ fld R := Or.inr (mem_pair_imp_snd_mem_ran ht)
+    exact hR.b_on this
+  · intro p hp
+    have ⟨x, hx⟩ := hp
+    refine ⟨x, ?_⟩
+    rw [← hx.right]
+    exact hR.refl x hx.left
+  · intro X hX Y hY nXY
+    by_contra nh
+    have nh' : Set.Nonempty (X ∩ Y) := by
+      rw [← Set.nmem_singleton_empty]
+      exact nh
+    have ⟨x, hx⟩ := hX
+    have ⟨y, hy⟩ := hY
+    have ⟨z, hz⟩ := nh'
+    rw [← hx.right, ← hy.right] at hz
+    unfold neighborhood at hz
+    simp only [mem_inter_iff, mem_setOf_eq] at hz
+    have hz_mem : z ∈ A := by
+      have : z ∈ fld R := Or.inr (mem_pair_imp_snd_mem_ran hz.left)
+      exact hR.b_on this
+    rw [
+      ← neighborhood_iff_mem hR hx.left hz_mem,
+      ← neighborhood_iff_mem hR hy.left hz_mem,
+      hx.right, hy.right
+    ] at hz
+    rw [hz.left, hz.right] at nXY
+    simp only [ne_eq, not_true] at nXY
+  · intro x hx
+    exact ⟨neighborhood R x, ⟨x, hx, rfl⟩, hR.refl x hx⟩
 
 end Relation
 
