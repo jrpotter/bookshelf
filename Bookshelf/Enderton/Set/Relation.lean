@@ -530,6 +530,14 @@ and the members of the set. It isn't standard in anyway.
 def neighborhood (R : Relation α) (x : α) := { t | (x, t) ∈ R }
 
 /--
+The neighborhood with some respect to an equivalence relation `R` on set `A`
+and member `x` contains `x`.
+-/
+theorem neighborhood_self_mem {R : Set.Relation α} {A : Set α} {x : α}
+  (hR : isEquivalence R A) (hx : x ∈ A)
+  : x ∈ neighborhood R x := hR.refl x hx
+
+/--
 Assume that `R` is an equivalence relation on `A` and that `x` and `y` belong
 to `A`. Then `[x]_R = [y]_R ↔ xRy`.
 -/
@@ -559,6 +567,21 @@ structure isPartition (P : Set (Set α)) (A : Set α) : Prop where
   nonempty : ∀ p ∈ P, Set.Nonempty p
   disjoint : ∀ a ∈ P, ∀ b, b ∈ P → a ≠ b → a ∩ b = ∅
   exhaustive : ∀ a ∈ A, ∃ p, p ∈ P ∧ a ∈ p
+
+/--
+Membership of sets within `P` is unique.
+-/
+theorem partition_mem_mem_eq {P : Set (Set α)} {A : Set α}
+  (hP : isPartition P A) (hx : x ∈ A)
+  : ∃! B, B ∈ P ∧ x ∈ B := by
+  have ⟨B, hB⟩ := hP.exhaustive x hx
+  refine ⟨B, hB, ?_⟩
+  intro B₁ hB₁
+  by_contra nB
+  have hB_disj := hP.disjoint B hB.left B₁ hB₁.left (Ne.symm nB)
+  rw [Set.ext_iff] at hB_disj
+  have := (hB_disj x).mp ⟨hB.right, hB₁.right⟩
+  simp at this
 
 /--
 The partition `A / R` induced by an equivalence relation `R`.

@@ -1702,58 +1702,6 @@ theorem theorem_3m {R : Set.Relation α}
     have := hS ht
     exact hT this ht
 
-/-- #### Theorem 3P
-
-Assume that `R` is an equivalence relation on `A`. Then the set
-`{[x]_R | x ∈ A}` of all equivalence classes is a partition of `P`.
--/
-theorem theorem_3p {R : Set.Relation α} {A : Set α} {P : Set (Set α)}
-  (hR : R.isEquivalence A) (hP : P = {neighborhood R x | x ∈ A})
-  : isPartition P A := by
-  refine ⟨?_, ?_, ?_, ?_⟩
-  · -- Every member is a subset of `A`.
-    intro p hp
-    rw [hP] at hp
-    simp only [Set.mem_setOf_eq] at hp
-    have ⟨x, hx⟩ := hp
-    rw [← hx.right]
-    show ∀ t, t ∈ neighborhood R x → t ∈ A
-    intro t ht
-    exact hR.b_on (Or.inr (mem_pair_imp_snd_mem_ran ht))
-
-  · -- Every member is nonempty.
-    intro p hp
-    rw [hP] at hp
-    have ⟨x, hx⟩ := hp
-    rw [← hx.right]
-    exact ⟨x, hR.refl x hx.left⟩
-
-  · -- Every pair of members is disjoint.
-    intro xR hxR yR hyR h
-    by_contra nh
-    have nh' : Set.Nonempty (xR ∩ yR) := by
-      rw [← Set.nmem_singleton_empty]
-      exact nh
-    have ⟨z, hz⟩ := nh'
-    rw [hP] at hxR hyR
-    have ⟨x, hx⟩ := hxR
-    have ⟨y, hy⟩ := hyR
-    rw [← hx.right, ← hy.right] at hz
-    unfold neighborhood at hz
-    simp only [Set.mem_inter_iff, Set.mem_setOf_eq] at hz
-    have hzy : (z, y) ∈ R := hR.symm hz.right
-    have hxy : (x, y) ∈ R := hR.trans hz.left hzy
-    have := (neighborhood_iff_mem hR hx.left hy.left).mpr hxy
-    rw [hx.right, hy.right] at this
-    exact absurd this h
-
-  · -- Every element of `A` is in `P`.
-    intro x hx
-    have := hR.refl x hx
-    refine ⟨neighborhood R x, ?_, this⟩
-    · rw [hP]
-      exact ⟨x, hx, rfl⟩
-
 /-- #### Exercise 3.32 (a)
 
 Show that `R` is symmetric **iff** `R⁻¹ ⊆ R`.
@@ -1980,26 +1928,27 @@ theorem exercise_3_36 {f : Set.HRelation α β}
 
 /-- #### Exercise 3.37
 
-Assume that `Π` is a partition of a set `A`. Define the relation `R` as follows:
+Assume that `Π` is a partition of a set `A`. Define the relation `Rₚ` as
+follows:
 ```
-xRy ↔ (∃ B ∈ Π)(x ∈ B ∧ y ∈ B).
+xRₚy ↔ (∃ B ∈ Π)(x ∈ B ∧ y ∈ B).
 ```
-Show that `R` is an equivalence relation on `A`. (This is a formalized version
+Show that `Rₚ` is an equivalence relation on `A`. (This is a formalized version
 of the discussion at the beginning of this section.)
 -/
 theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
-  (hP : isPartition P A) (R : Set.Relation α)
-  (hR : ∀ x y, (x, y) ∈ R ↔ ∃ B ∈ P, x ∈ B ∧ y ∈ B)
-  : isEquivalence R A := by
-  have hR' : R = { p | ∃ B ∈ P, p.1 ∈ B ∧ p.2 ∈ B } := by
+  (hP : isPartition P A) (Rₚ : Set.Relation α)
+  (hRₚ : ∀ x y, (x, y) ∈ Rₚ ↔ ∃ B ∈ P, x ∈ B ∧ y ∈ B)
+  : isEquivalence Rₚ A := by
+  have hR : Rₚ = { p | ∃ B ∈ P, p.1 ∈ B ∧ p.2 ∈ B } := by
     ext p
     have (x, y) := p
-    exact hR x y
-  refine ⟨?_, ?_, ?_, ?_⟩
+    exact hRₚ x y
 
-  · -- `fld R ⊆ A`
-    show ∀ x, x ∈ fld R → x ∈ A
-    rw [hR']
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · -- `fld Rₚ ⊆ A`
+    show ∀ x, x ∈ fld Rₚ → x ∈ A
+    rw [hR]
     intro x hx
     unfold fld dom ran at hx
     simp only [
@@ -2018,25 +1967,25 @@ theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
       have := hP.p_subset B hB.left
       exact this hB.right.right
 
-  · -- `isReflexive R A`
+  · -- `isReflexive Rₚ A`
     intro x hx
-    rw [hR']
+    rw [hR]
     simp only [Set.mem_setOf_eq, and_self]
     exact hP.exhaustive x hx
 
-  · -- `isSymmetric R`
+  · -- `isSymmetric Rₚ`
     intro x y h
-    rw [hR'] at h
+    rw [hR] at h
     simp only [Set.mem_setOf_eq] at h
     have ⟨B, hB⟩ := h
-    rw [hR']
+    rw [hR]
     simp only [Set.mem_setOf_eq]
     conv at hB => right; rw [and_comm]
     exact ⟨B, hB⟩
 
-  · -- `isTransitive R`
+  · -- `isTransitive Rₚ`
     intro x y z hx hy
-    rw [hR'] at hx hy
+    rw [hR] at hx hy
     simp only [Set.mem_setOf_eq] at hx hy
     have ⟨B₁, hB₁⟩ := hx
     have ⟨B₂, hB₂⟩ := hy
@@ -2050,9 +1999,77 @@ theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
       intro h'
       rw [Set.ext_iff] at h'
       exact (h' y).mp ⟨hy₁, hy₂⟩
-    rw [hR']
+    rw [hR]
     simp only [Set.mem_setOf_eq]
     exact ⟨B₁, hB₁.left, hB₁.right.left, by rw [hB]; exact hB₂.right.right⟩
+
+/-- #### Exercise 3.38
+
+Theorem 3P shows that `A / R` is a partition of `A` whenever `R` is an
+equivalence relation on `A`. Show that if we start with the equivalence relation
+`Rₚ` of the preceding exercise, then the partition `A / Rₚ` is just `P`.
+-/
+theorem exercise_3_38 {P : Set (Set α)} {A : Set α}
+  (hP : isPartition P A) (Rₚ : Set.Relation α)
+  (hRₚ : ∀ x y, (x, y) ∈ Rₚ ↔ ∃ B ∈ P, x ∈ B ∧ y ∈ B)
+  : modEquiv (exercise_3_37 hP Rₚ hRₚ) = P := by
+  have hR : Rₚ = { p | ∃ B ∈ P, p.1 ∈ B ∧ p.2 ∈ B } := by
+    ext p
+    have (x, y) := p
+    exact hRₚ x y
+
+  ext B
+  apply Iff.intro
+  · intro ⟨x, hx⟩
+    have ⟨B', hB'⟩ := partition_mem_mem_eq hP hx.left
+    simp only at hB'
+    suffices B = B' by
+      rw [this]
+      exact hB'.left.left
+
+    ext y
+    apply Iff.intro
+    · intro hy
+      rw [← hx.right, hR] at hy
+      have ⟨B₁, hB₁⟩ := hy
+      have := hB'.right B₁ ⟨hB₁.left, hB₁.right.left⟩
+      rw [← this]
+      exact hB₁.right.right
+    · intro hy
+      rw [← hx.right, hR]
+      exact ⟨B', hB'.left.left, hB'.left.right, hy⟩
+
+  · intro hB
+    have ⟨x, hx⟩ := hP.nonempty B hB
+    have hx' : x ∈ A := hP.p_subset B hB hx
+    refine ⟨x, hx', Eq.symm ?_⟩
+    calc B
+      _ = {t | x ∈ B ∧ t ∈ B} := by
+        ext y
+        apply Iff.intro
+        · intro hy
+          exact ⟨hx, hy⟩
+        · intro hy
+          exact hy.right
+      _ = {t | ∃ B₁ ∈ P, x ∈ B₁ ∧ t ∈ B₁} := by
+        ext y
+        apply Iff.intro
+        · intro hy
+          exact ⟨B, hB, hy⟩
+        · intro hy
+          have ⟨B₁, hB₁⟩ := hy
+          have ⟨B', hB'⟩ := partition_mem_mem_eq hP hx'
+          simp only [Set.mem_setOf_eq] at *
+          have : B = B₁ := by
+            have lhs := hB'.right B ⟨hB, hx⟩
+            have rhs := hB'.right B₁ ⟨hB₁.left, hB₁.right.left⟩
+            rw [lhs, rhs]
+          rw [this]
+          exact hB₁.right
+      _ = {t | (x, t) ∈ Rₚ } := by
+        rw [hR]
+        simp only [Set.mem_setOf_eq]
+      _ = neighborhood Rₚ x := rfl
 
 end Relation
 

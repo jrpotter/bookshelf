@@ -112,7 +112,7 @@ There is a set having no members:
 \end{axiom}
 
 \section{\defined{Equivalence Class}}%
-\label{sec:equivalence-class}
+\label{ref:equivalence-class}
 
 The set $[x]_R$ is defined by $$[x]_R = \{t \mid xRt\}.$$
 If $R$ is an \nameref{ref:equivalence-relation} and $x \in fld R$, then $[x]_R$
@@ -3409,8 +3409,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.theorem\_3p}
+  \lean{Bookshelf/Enderton/Set/Relation}{Set.Relation.modEquiv\_partition}
 
   Let $\Pi = \{[x]_R \mid x \in A\}$.
   We show that (i) there are no empty sets in $\Pi$, (ii) no two different sets
@@ -5165,7 +5164,7 @@ Show that $R_\Pi$ is an equivalence relation on $A$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.38}}%
+\subsection{\verified{Exercise 3.38}}%
 \label{sub:exercise-3.38}
 
 \nameref{sub:theorem-3p} shows that $A / R$ is a partition of $A$ whenever $R$
@@ -5175,26 +5174,90 @@ Show that if we start with the equivalence relation $R_\Pi$ of the preceding
 
 \begin{proof}
 
-  If $\Pi$ is empty, its trivial to see $A / R_\Pi$ is likewise empty.
-  Thus assume $\Pi$ is not empty.
-  Let $C \in \Pi$.
-  By definition of a \nameref{ref:partition}, $C$ is nonempty.
-  Let $x \in C$.
-  By definition of a \nameref{ref:partition}, every member of $\Pi$ is disjoint
-    from every other.
-  Thus
-    \begin{align*}
-      C
-        & = \{t \mid (\exists B \in \Pi)(x \in B \land t \in B)\} \\
-        & = \{t \mid x R_\Pi t\} & \textref{sub:exercise-3.37} \\
-        & = [x]_{R_\Pi}.
-    \end{align*}
-  Therefore every member of $\Pi$ is of form $[x]_{R_\Pi}$ for some $x \in A$.
-  In other words, $$A / R_\Pi = \{[x]_{R_\Pi} \mid x \in A\} = \Pi.$$
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Enderton.Set.Chapter\_3.exercise\_3\_38}
+
+  By definition,
+    \begin{equation}
+      \label{sub:exercise-3.38-eq1}
+      R_\Pi = \{ (x, y) \mid (\exists B \in \Pi)(x \in B \land y \in B) \}.
+    \end{equation}
+  We prove that $A / R_\Pi = \Pi$.
+  By the \nameref{ref:extensionality-axiom}, these two sets are equal when
+    $$B \in A / R_\Pi \iff B \in \Pi.$$
+  We prove both directions of this biconditional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $B \in A / R_\Pi$.
+    By \nameref{sub:exercise-3.37}, $R_\Pi$ is an equivalence class.
+    Then, by definition of a \nameref{ref:quotient-set},
+      $$A / R_\Pi = \{[x]_{R_\Pi} \mid x \in A\},$$
+      whose members are the \nameref{ref:equivalence-class}es.
+    Thus there exists some $x \in A$ such that $B = [x]_{R_\Pi}$.
+    By definition of a \nameref{ref:partition}, there exists a unique set
+      $B' \in \Pi$ containing $x$.
+    Thus it suffices to prove that $B = B'$, for then $B = [x]_{R_\Pi} = B'$ is
+      a member of $\Pi$ as desired.
+    We proceed by extensionality again; that is, we show
+      $$y \in B \iff y \in B'.$$
+
+    \subparagraph{($\rightarrow$)}%
+
+      Suppose $y \in B$.
+      Then
+        \begin{align*}
+          y
+            & \in B = [x]_{R_\Pi} \\
+            & = \{t \mid \pair{x, t} \in R_\Pi\} \\
+            & = \{t \mid (\exists B_1 \in \Pi)(x \in B_1 \land t \in B_1)\}.
+              & \eqref{sub:exercise-3.38-eq1}
+        \end{align*}
+      Thus there exists some $B_1 \in \Pi$ such that $x \in B_1$ and
+        $y \in B_1$.
+      By definition of a \nameref{ref:partition}, $B_1 \in \Pi$ is the unique
+        member of $\Pi$ containing $y$.
+      Thus $B_1 = B'$ meaning $y \in B'$ as desired.
+
+    \subparagraph{($\leftarrow$)}%
+
+      Suppose $y \in B'$.
+      By construction, $x \in B'$.
+      Then there exists a set $B_1$ such that $x \in B_1$ and $y \in B_1$,
+        namely $B'$.
+      Therefore
+        \begin{align*}
+          y
+            & \in \{t \mid (\exists B_1 \in \Pi)(x \in B_1 \land t \in B_1)\} \\
+            & = \{t \mid \pair{x, t} \in R_\Pi\} \\
+            & = [x]_{R_\Pi} = B.
+        \end{align*}
+
+    \subparagraph{Conclusion}%
+
+      By the \nameref{ref:extensionality-axiom}, it follows $B = B'$.
+      Since $B' \in P$, it also follows $B \in P$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Let $B \in \Pi$.
+    By definition of a \nameref{ref:partition}, $B$ is nonempty.
+    Let $x \in B$.
+    By definition of a set, $B = \{t \mid x \in B \land t \in B\}$.
+    By definition of a \nameref{ref:partition}, every member of $B$ must belong
+      to only $B$ (i.e. no other sets in the partition).
+    Thus we can equivalently write
+      \begin{align*}
+        B
+          & = \{t \mid (\exists B_1 \in \Pi)(x \in B_1 \land t \in B_1)\} \\
+          & = \{ t \mid \pair{x, t} \in R_\Pi \} \\
+          & = [x]_{R_\Pi}.
+      \end{align*}
+    Therefore $B \in A / R_{\Pi}$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.39}}%
+\subsection{\sorry{Exercise 3.39}}%
 \label{sub:exercise-3.39}
 
 Assume that we start with an equivalence relation $R$ on $A$ and define $\Pi$ to
@@ -5203,22 +5266,7 @@ Show that $R_\Pi$, as defined in Exercise 37, is just $R$.
 
 \begin{proof}
 
-  If $\Pi$ is empty, it's trivial to show $R_\Pi$ is also empty.
-  Thus assume $\Pi$ is not empty.
-  Let $C \in \Pi = A / R$.
-  By definition of a \nameref{ref:partition}, $C$ is nonempty.
-  Let $x \in C$.
-  Thus
-    \begin{align*}
-      C
-        & = [x]_R & \textref{sub:theorem-3p} \\
-        & = \{t \mid xRt\} \\
-        & = \{t \mid (\exists B \in A / R)(x \in B \land t \in B)\} \\
-        & = \{t \mid (\exists B \in \Pi)(x \in B \land t \in B)\} \\
-        & = \{t \mid x R_\Pi t\}.
-    \end{align*}
-  Thus $\pair{x, y} \in R_\Pi$ if and only if $\pair{x, y} \in R$.
-  By the \nameref{ref:extensionality-axiom}, $R_\Pi = R$.
+  TODO
 
 \end{proof}
 
