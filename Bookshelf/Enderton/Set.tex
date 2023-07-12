@@ -20,10 +20,10 @@
 \addtocounter{chapter}{-1}
 
 \chapter{Reference}%
-\label{chap:reference}
+\hyperlabel{chap:reference}
 
 \section{\defined{Axiom of Choice, First Form}}%
-\label{ref:axiom-of-choice-1}
+\hyperlabel{ref:axiom-of-choice-1}
 
 For any relation $R$ there is a function $H \subseteq R$ with
   $\dom{H} = \dom{R}$.
@@ -35,7 +35,7 @@ For any relation $R$ there is a function $H \subseteq R$ with
 \end{axiom}
 
 \section{\defined{Axiom of Choice, Second Form}}%
-\label{ref:axiom-of-choice-2}
+\hyperlabel{ref:axiom-of-choice-2}
 
 For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
   for all $i \in I$, then $$\bigtimes_{i \in I} H(i) \neq \emptyset.$$
@@ -47,7 +47,7 @@ For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
 \end{axiom}
 
 \section{\defined{Cartesian Product}}%
-\label{ref:cartesian-product}
+\hyperlabel{ref:cartesian-product}
 
 Let $I$ be a set and let $H$ be a \nameref{ref:function} whose domain includes $I$.
 Then for each $i$ in $I$ we have the set $H(i)$.
@@ -63,7 +63,7 @@ We define the \textbf{cartesian product} of the $H(i)$'s as
 \end{definition}
 
 \section{\defined{Compatible}}%
-\label{ref:compatible}
+\hyperlabel{ref:compatible}
 
 A \nameref{ref:function} $F$ is \textbf{compatible} with relation $R$ if and
   only if for all $x$ and $y$ in $A$,
@@ -76,7 +76,7 @@ A \nameref{ref:function} $F$ is \textbf{compatible} with relation $R$ if and
 \end{definition}
 
 \section{\defined{Composition}}%
-\label{ref:composition}
+\hyperlabel{ref:composition}
 
 The \textbf{composition} of sets $F$ and $G$ is
   $$F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.$$
@@ -88,7 +88,7 @@ The \textbf{composition} of sets $F$ and $G$ is
 \end{definition}
 
 \section{\defined{Domain}}%
-\label{ref:domain}
+\hyperlabel{ref:domain}
 
 The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
   $$x \in \dom{R} \iff \exists y \pair{x, y} \in R.$$
@@ -100,7 +100,7 @@ The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
 \end{definition}
 
 \section{\defined{Empty Set Axiom}}%
-\label{ref:empty-set-axiom}
+\hyperlabel{ref:empty-set-axiom}
 
 There is a set having no members:
   $$\exists B, \forall x, x \not\in B.$$
@@ -112,7 +112,7 @@ There is a set having no members:
 \end{axiom}
 
 \section{\defined{Equivalence Class}}%
-\label{ref:equivalence-class}
+\hyperlabel{ref:equivalence-class}
 
 The set $[x]_R$ is defined by $$[x]_R = \{t \mid xRt\}.$$
 If $R$ is an \nameref{ref:equivalence-relation} and $x \in fld R$, then $[x]_R$
@@ -126,7 +126,7 @@ If the relation $R$ is fixed by the context, we may write just $[x]$.
 \end{definition}
 
 \section{\defined{Equivalence Relation}}%
-\label{ref:equivalence-relation}
+\hyperlabel{ref:equivalence-relation}
 
 Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
   $R$ is a binary \nameref{ref:relation} on $A$ that is \nameref{ref:reflexive}
@@ -139,7 +139,7 @@ Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
 \end{definition}
 
 \section{\defined{Extensionality Axiom}}%
-\label{ref:extensionality-axiom}
+\hyperlabel{ref:extensionality-axiom}
 
 If two sets have exactly the same members, then they are equal:
   $$\forall A, \forall B,
@@ -152,7 +152,7 @@ If two sets have exactly the same members, then they are equal:
 \end{axiom}
 
 \section{\defined{Field}}%
-\label{ref:field}
+\hyperlabel{ref:field}
 
 Given \nameref{ref:relation} $R$, the \textbf{field} of $R$, denoted $\fld{R}$,
   is given by $$\fld{R} = \dom{R} \cup \ran{R}.$$
@@ -164,7 +164,7 @@ Given \nameref{ref:relation} $R$, the \textbf{field} of $R$, denoted $\fld{R}$,
 \end{definition}
 
 \section{\defined{Function}}%
-\label{ref:function}
+\hyperlabel{ref:function}
 
 A \textbf{function} is a relation $F$ such that for each $x$ in $\dom{F}$ there
   is only one $y$ such that $xFy$.
@@ -192,7 +192,7 @@ One-to-one functions are sometimes called \textbf{injections}.
 \end{definition}
 
 \section{\defined{Image}}%
-\label{ref:image}
+\hyperlabel{ref:image}
 
 Let $A$ and $F$ be arbitrary sets.
 The \textbf{image of $A$ under $F$} is the set
@@ -209,7 +209,7 @@ The \textbf{image of $A$ under $F$} is the set
 \end{definition}
 
 \section{\defined{Inverse}}%
-\label{ref:inverse}
+\hyperlabel{ref:inverse}
 
 The \textbf{inverse} of a set $F$ is the set
   $$F^{-1} = \{\pair{u, v} \mid vFu\}.$$
@@ -221,7 +221,7 @@ The \textbf{inverse} of a set $F$ is the set
 \end{definition}
 
 \section{\defined{Ordered Pair}}%
-\label{ref:ordered-pair}
+\hyperlabel{ref:ordered-pair}
 
 For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
   the set $\{\{u\}, \{u, v\}\}$.
@@ -233,7 +233,7 @@ For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
 \end{definition}
 
 \section{\defined{Pair Set}}%
-\label{ref:pair-set}
+\hyperlabel{ref:pair-set}
 
 For any sets $u$ and $v$, the \textbf{pair set $\{u, v\}$} is the set whose
   only members are $u$ and $v$.
@@ -249,7 +249,7 @@ For any sets $u$ and $v$, the \textbf{pair set $\{u, v\}$} is the set whose
 \end{definition}
 
 \section{\defined{Pairing Axiom}}%
-\label{ref:pairing-axiom}
+\hyperlabel{ref:pairing-axiom}
 
 For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
   $$\forall u, \forall v, \exists B, \forall x,
@@ -266,7 +266,7 @@ For any sets $u$ and $v$, there is a set having as members just $u$ and $v$:
 \end{axiom}
 
 \section{\defined{Partition}}%
-\label{ref:partition}
+\hyperlabel{ref:partition}
 
 A \textbf{partition} $\Pi$ of a set $A$ is a set of nonempty subsets of $A$ that
   is disjoint and exhaustive, i.e.
@@ -282,7 +282,7 @@ A \textbf{partition} $\Pi$ of a set $A$ is a set of nonempty subsets of $A$ that
 \end{definition}
 
 \section{\defined{Power Set}}%
-\label{ref:power-set}
+\hyperlabel{ref:power-set}
 
 For any set $a$, the \textbf{power set $\powerset{a}$} is the set whose members
   are exactly the subsets of $a$.
@@ -294,7 +294,7 @@ For any set $a$, the \textbf{power set $\powerset{a}$} is the set whose members
 \end{definition}
 
 \section{\defined{Power Set Axiom}}%
-\label{ref:power-set-axiom}
+\hyperlabel{ref:power-set-axiom}
 
 For any set $a$, there is a set whose members are exactly the subsets of $a$:
   $$\forall a, \exists B, \forall x, (x \in B \iff x \subseteq a).$$
@@ -306,7 +306,7 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
 \end{axiom}
 
 \section{\defined{Quotient Set}}%
-\label{ref:quotient-set}
+\hyperlabel{ref:quotient-set}
 
 If $R$ is an \nameref{ref:equivalence-relation} on set $A$, then we can define
   the \textbf{quotient set} $$A / R = \{[x]_R \mid x \in A\}$$ whose members are
@@ -320,7 +320,7 @@ The expression $A / R$ is read "$A$ modulo $R$.
 \end{definition}
 
 \section{\defined{Range}}%
-\label{ref:range}
+\hyperlabel{ref:range}
 
 The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
   $$x \in \ran{R} \iff \exists t \pair{t, x} \in R.$$
@@ -332,7 +332,7 @@ The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
 \end{definition}
 
 \section{\defined{Reflexive}}%
-\label{ref:reflexive}
+\hyperlabel{ref:reflexive}
 
 A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
   $x \in A$.
@@ -344,7 +344,7 @@ A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
 \end{definition}
 
 \section{\defined{Relation}}%
-\label{ref:relation}
+\hyperlabel{ref:relation}
 
 A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 
@@ -355,7 +355,7 @@ A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 \end{definition}
 
 \section{\defined{Restriction}}%
-\label{ref:restriction}
+\hyperlabel{ref:restriction}
 
 The \textbf{restriction} of a set $F$ to set $A$ is the set
   $$F \restriction A = \{\pair{u, v} \mid uFv \land u \in A\}.$$
@@ -367,7 +367,7 @@ The \textbf{restriction} of a set $F$ to set $A$ is the set
 \end{definition}
 
 \section{\defined{Subset Axioms}}%
-\label{ref:subset-axioms}
+\hyperlabel{ref:subset-axioms}
 
 For each formula $\phi$ not containing $B$, the following is an axiom:
   $$\forall t_1, \cdots \forall t_k, \forall c,
@@ -380,7 +380,7 @@ For each formula $\phi$ not containing $B$, the following is an axiom:
 \end{axiom}
 
 \section{\defined{Symmetric}}%
-\label{ref:symmetric}
+\hyperlabel{ref:symmetric}
 
 A binary relation $R$ is \textbf{symmetric} if and only if whenever $xRy$ then
   $yRx$.
@@ -392,7 +392,7 @@ A binary relation $R$ is \textbf{symmetric} if and only if whenever $xRy$ then
 \end{definition}
 
 \section{\defined{Symmetric Difference}}%
-\label{ref:symmetric-difference}
+\hyperlabel{ref:symmetric-difference}
 
 The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
   $(A - B) \cup (B - A)$.
@@ -404,7 +404,7 @@ The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
 \end{definition}
 
 \section{\defined{Transitive}}%
-\label{ref:transitive}
+\hyperlabel{ref:transitive}
 
 A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
   $yRz$, then $xRz$.
@@ -416,7 +416,7 @@ A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
 \end{definition}
 
 \section{\defined{Union Axiom}}%
-\label{ref:union-axiom}
+\hyperlabel{ref:union-axiom}
 
 For any set $A$, there exists a set $B$ whose elements are exactly the members
   of the members of $A$:
@@ -430,7 +430,7 @@ For any set $A$, there exists a set $B$ whose elements are exactly the members
 \end{axiom}
 
 \section{\defined{Union Axiom, Preliminary Form}}%
-\label{ref:union-axiom-preliminary-form}
+\hyperlabel{ref:union-axiom-preliminary-form}
 
 For any sets $a$ and $b$, there is a set whose members are those sets belonging
   either to $a$ or to $b$ (or both):
@@ -446,20 +446,20 @@ For any sets $a$ and $b$, there is a set whose members are those sets belonging
 \endgroup
 
 \chapter{Introduction}%
-\label{chap:introduction}
+\hyperlabel{chap:introduction}
 
 \section{Exercises 1}%
-\label{sec:exercises-1}
+\hyperlabel{sec:exercises-1}
 
 \subsection{\verified{Exercise 1.1}}%
-\label{sub:exercise-1.1}
+\hyperlabel{sub:exercise-1.1}
 
 Which of the following become true when "$\in$" is inserted in place of the
   blank?
 Which become true when "$\subseteq$" is inserted?
 
 \subsubsection{\verified{Exercise 1.1a}}%
-\label{ssub:exercise-1.1a}
+\hyperlabel{ssub:exercise-1.1a}
 
 $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 
@@ -478,7 +478,7 @@ $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 \end{proof}
 
 \subsubsection{\verified{Exercise 1.1b}}%
-\label{ssub:exercise-1.11b}
+\hyperlabel{ssub:exercise-1.11b}
 
 $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 
@@ -496,7 +496,7 @@ $\{\emptyset\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 \end{proof}
 
 \subsubsection{\verified{Exercise 1.1c}}%
-\label{ssub:exercise-1.1c}
+\hyperlabel{ssub:exercise-1.1c}
 
 $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 
@@ -514,7 +514,7 @@ $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\emptyset\}\}$.
 \end{proof}
 
 \subsubsection{\verified{Exercise 1.1d}}%
-\label{ssub:exercise-1.1d}
+\hyperlabel{ssub:exercise-1.1d}
 
 $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 
@@ -533,7 +533,7 @@ $\{\{\emptyset\}\} \_\_\_\_ \{\emptyset, \{\{\emptyset\}\}\}$.
 \end{proof}
 
 \subsubsection{\verified{Exercise 1.1e}}%
-\label{ssub:exercise-1.1e}
+\hyperlabel{ssub:exercise-1.1e}
 
 $\{\{\emptyset\}\} \_\_ \{\emptyset, \{\emptyset, \{\emptyset\}\}\}$.
 
@@ -552,7 +552,7 @@ $\{\{\emptyset\}\} \_\_ \{\emptyset, \{\emptyset, \{\emptyset\}\}\}$.
 \end{proof}
 
 \subsection{\verified{Exercise 1.2}}%
-\label{sub:exercise-1.2}
+\hyperlabel{sub:exercise-1.2}
 
 Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
   $\{\{\emptyset\}\}$ are equal to each other.
@@ -574,7 +574,7 @@ Show that no two of the three sets $\emptyset$, $\{\emptyset\}$, and
 \end{proof}
 
 \subsection{\verified{Exercise 1.3}}%
-\label{sub:exercise-1.3}
+\hyperlabel{sub:exercise-1.3}
 
 Show that if $B \subseteq C$, then $\powerset{B} \subseteq \powerset{C}$.
 
@@ -593,7 +593,7 @@ Show that if $B \subseteq C$, then $\powerset{B} \subseteq \powerset{C}$.
 \end{proof}
 
 \subsection{\verified{Exercise 1.4}}%
-\label{sub:exercise-1.4}
+\hyperlabel{sub:exercise-1.4}
 
 Assume that $x$ and $y$ are members of a set $B$.
 Show that $\{\{x\}, \{x, y\}\} \in \powerset{\powerset{B}}.$
@@ -614,7 +614,7 @@ Show that $\{\{x\}, \{x, y\}\} \in \powerset{\powerset{B}}.$
 \end{proof}
 
 \subsection{\unverified{Exercise 1.5}}%
-\label{sub:exercise-1.5}
+\hyperlabel{sub:exercise-1.5}
 
 Define the rank of a set $c$ to be the least $\alpha$ such that
   $c \subseteq V_\alpha$.
@@ -654,7 +654,7 @@ Compute the rank of
 \end{proof}
 
 \subsection{\unverified{Exercise 1.6}}%
-\label{sub:exercise-1.6}
+\hyperlabel{sub:exercise-1.6}
 
 We have stated that $V_{\alpha + 1} = A \cup \powerset{V_\alpha}$.
 Prove this at least for $\alpha < 3$.
@@ -686,7 +686,7 @@ Prove this at least for $\alpha < 3$.
           & = (A \cup \powerset{V_{n-1}}) \cup \powerset{V_n}
             \nonumber \\
           & = A \cup (\powerset{V_{n-1}} \cup \powerset{V_n})
-            \label{sub:exercise-1.6-eq1}
+            \hyperlabel{sub:exercise-1.6-eq1}
       \end{align}
     But $V_{n-1}$ is a subset of $V_n$.
     \nameref{sub:exercise-1.3} then implies
@@ -702,7 +702,7 @@ Prove this at least for $\alpha < 3$.
 \end{proof}
 
 \subsection{\unverified{Exercise 1.7}}%
-\label{sub:exercise-1.7}
+\hyperlabel{sub:exercise-1.7}
 
 List all the members of $V_3$.
 List all the members of $V_4$.
@@ -744,13 +744,13 @@ List all the members of $V_4$.
 \end{proof}
 
 \chapter{Axioms and Operations}%
-\label{chap:axioms-operations}
+\hyperlabel{chap:axioms-operations}
 
 \section{Axioms}%
-\label{sec:axioms}
+\hyperlabel{sec:axioms}
 
 \subsection{\unverified{Theorem 2A}}%
-\label{sub:theorem-2a}
+\hyperlabel{sub:theorem-2a}
 
 \begin{theorem}[2A]
 
@@ -774,7 +774,7 @@ List all the members of $V_4$.
 \end{proof}
 
 \subsection{\unverified{Theorem 2B}}%
-\label{sub:theorem-2b}
+\hyperlabel{sub:theorem-2b}
 
 \begin{theorem}[2B]
 
@@ -799,10 +799,10 @@ List all the members of $V_4$.
 \end{proof}
 
 \section{Algebra of Sets}%
-\label{sec:algebra-sets}
+\hyperlabel{sec:algebra-sets}
 
 \subsection{\verified{Commutative Laws}}%
-\label{sub:commutative-laws}
+\hyperlabel{sub:commutative-laws}
 
 For any sets $A$ and $B$,
   \begin{align*}
@@ -848,7 +848,7 @@ For any sets $A$ and $B$,
 \end{proof}
 
 \subsection{\verified{Associative Laws}}%
-\label{sub:associative-laws}
+\hyperlabel{sub:associative-laws}
 
 For any sets $A$, $B$ and $C$,
   \begin{align*}
@@ -905,7 +905,7 @@ For any sets $A$, $B$ and $C$,
 \end{proof}
 
 \subsection{\verified{Distributive Laws}}%
-\label{sub:distributive-laws}
+\hyperlabel{sub:distributive-laws}
 
 For any sets $A$, $B$, and $C$,
   \begin{align*}
@@ -961,7 +961,7 @@ For any sets $A$, $B$, and $C$,
 \end{proof}
 
 \subsection{\verified{De Morgan's Laws}}%
-\label{sub:de-morgans-laws}
+\hyperlabel{sub:de-morgans-laws}
 
 For any sets $A$, $B$, and $C$,
   \begin{align*}
@@ -1020,7 +1020,7 @@ For any sets $A$, $B$, and $C$,
 
 \subsection{\verified{%
   Identities Involving \texorpdfstring{$\emptyset$}{the Empty Set}}}%
-\label{sub:identitives-involving-empty-set}
+\hyperlabel{sub:identitives-involving-empty-set}
 
 For any set $A$,
   \begin{align*}
@@ -1089,7 +1089,7 @@ For any set $A$,
 \end{proof}
 
 \subsection{\verified{Monotonicity}}%
-\label{sub:monotonicity}
+\hyperlabel{sub:monotonicity}
 
 For any sets $A$, $B$, and $C$,
   \begin{align*}
@@ -1162,7 +1162,7 @@ For any sets $A$, $B$, and $C$,
 \end{proof}
 
 \subsection{\verified{Anti-monotonicity}}%
-\label{sub:anti-monotonicity}
+\hyperlabel{sub:anti-monotonicity}
 
 For any sets $A$, $B$, and $C$,
   \begin{align*}
@@ -1212,7 +1212,7 @@ For any sets $A$, $B$, and $C$,
 \end{proof}
 
 \subsection{\unverified{General Distributive Laws}}%
-\label{sub:general-distributive-laws}
+\hyperlabel{sub:general-distributive-laws}
 
 For any sets $A$ and $\mathscr{B}$,
   \begin{align*}
@@ -1272,7 +1272,7 @@ For any sets $A$ and $\mathscr{B}$,
 \end{proof}
 
 \subsection{\unverified{General De Morgan's Laws}}%
-\label{sub:general-de-morgans-laws}
+\hyperlabel{sub:general-de-morgans-laws}
 
 For any set $C$ and $\mathscr{A} \neq \emptyset$,
   \begin{align*}
@@ -1333,7 +1333,7 @@ For any set $C$ and $\mathscr{A} \neq \emptyset$,
 
 \subsection{\verified{%
   \texorpdfstring{$\cap$/$-$}{Intersection/Difference} Associativity}}%
-\label{sub:intersection-difference-associativity}
+\hyperlabel{sub:intersection-difference-associativity}
 
 Let $A$, $B$, and $C$ be sets.
 Then $A \cap (B - C) = (A \cap B) - C$.
@@ -1356,7 +1356,7 @@ Then $A \cap (B - C) = (A \cap B) - C$.
 \end{proof}
 
 \subsection{\verified{Nonmembership of Symmetric Difference}}
-\label{sub:nonmembership-symmetric-difference}
+\hyperlabel{sub:nonmembership-symmetric-difference}
 
 Let $A$ and $B$ be sets. $x \not\in A + B$ if and only if either
   $x \in A \cap B$ or $x \not\in A \cup B$.
@@ -1387,10 +1387,10 @@ Let $A$ and $B$ be sets. $x \not\in A + B$ if and only if either
 \end{proof}
 
 \section{Exercises 2}%
-\label{sec:exercises-2}
+\hyperlabel{sec:exercises-2}
 
 \subsection{\verified{Exercise 2.1}}%
-\label{sub:exercise-2.1}
+\hyperlabel{sub:exercise-2.1}
 
 Assume that $A$ is the set of integers divisible by $4$.
 Similarly assume that $B$ and $C$ are the sets of integers divisible by $9$ and
@@ -1407,7 +1407,7 @@ What is in $A \cap B \cap C$?
 \end{answer}
 
 \subsection{\verified{Exercise 2.2}}%
-\label{sub:exercise-2.2}
+\hyperlabel{sub:exercise-2.2}
 
 Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
   $A \neq B$.
@@ -1422,7 +1422,7 @@ Give an example of sets $A$ and $B$ for which $\bigcup A = \bigcup B$ but
 \end{answer}
 
 \subsection{\verified{Exercise 2.3}}%
-\label{sub:exercise-2.3}
+\hyperlabel{sub:exercise-2.3}
 
 Show that every member of a set $A$ is a subset of $\bigcup A$.
 (This was stated as an example in this section.)
@@ -1441,7 +1441,7 @@ Show that every member of a set $A$ is a subset of $\bigcup A$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.4}}%
-\label{sub:exercise-2.4}
+\hyperlabel{sub:exercise-2.4}
 
 Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
 
@@ -1461,7 +1461,7 @@ Show that if $A \subseteq B$, then $\bigcup A \subseteq \bigcup B$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.5}}%
-\label{sub:exercise-2.5}
+\hyperlabel{sub:exercise-2.5}
 
 Assume that every member of $\mathscr{A}$ is a subset of $B$.
 Show that $\bigcup \mathscr{A} \subseteq B$.
@@ -1483,7 +1483,7 @@ Show that $\bigcup \mathscr{A} \subseteq B$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.6a}}%
-\label{sub:exercise-2.6a}
+\hyperlabel{sub:exercise-2.6a}
 
 Show that for any set $A$, $\bigcup \powerset{A} = A$.
 
@@ -1496,7 +1496,7 @@ Show that for any set $A$, $\bigcup \powerset{A} = A$.
     $A \subseteq \bigcup \powerset{A}$.
 
   \paragraph{(i)}%
-  \label{par:exercise-2.6a-i}
+  \hyperlabel{par:exercise-2.6a-i}
 
     By definition, the \nameref{ref:power-set} of $A$ is the set of all subsets
       of $A$.
@@ -1504,7 +1504,7 @@ Show that for any set $A$, $\bigcup \powerset{A} = A$.
     By \nameref{sub:exercise-2.5}, $\bigcup \powerset{A} \subseteq A$.
 
   \paragraph{(ii)}%
-  \label{par:exercise-2.6a-ii}
+  \hyperlabel{par:exercise-2.6a-ii}
 
     Let $x \in A$.
     By definition of the power set of $A$, $\{x\} \in \powerset{A}$. 
@@ -1523,7 +1523,7 @@ Show that for any set $A$, $\bigcup \powerset{A} = A$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.6b}}%
-\label{sub:exercise-2.6b}
+\hyperlabel{sub:exercise-2.6b}
 
 Show that $A \subseteq \powerset{\bigcup A}$.
 Under what conditions does equality hold?
@@ -1546,13 +1546,13 @@ Under what conditions does equality hold?
     $A = \powerset{B}$.
 
   \paragraph{($\Rightarrow$)}%
-  \label{par:exercise-2.6b-right}
+  \hyperlabel{par:exercise-2.6b-right}
 
     Suppose $A = \powerset{\bigcup A}$.
     Then our statement immediately follows by settings $B = \bigcup A$.
 
   \paragraph{($\Leftarrow$)}%
-  \label{par:exercise-2.6b-left}
+  \hyperlabel{par:exercise-2.6b-left}
 
     Suppose there exists some set $B$ such that $A = \powerset{B}$.
     Therefore
@@ -1572,7 +1572,7 @@ Under what conditions does equality hold?
 \end{proof}
 
 \subsection{\verified{Exercise 2.7a}}%
-\label{sub:exercise-2.7a}
+\hyperlabel{sub:exercise-2.7a}
 
 Show that for any sets $A$ and $B$,
   $$\powerset{A} \cap \powerset{B} = \powerset{(A \cap B)}.$$
@@ -1621,7 +1621,7 @@ Show that for any sets $A$ and $B$,
 \end{proof}
 
 \subsection{\verified{Exercise 2.7b}}%
-\label{sub:exercise-2.7b}
+\hyperlabel{sub:exercise-2.7b}
 
 Show that $\powerset{A} \cup \powerset{B} \subseteq \powerset{(A \cup B)}$.
 Under what conditions does equality hold?
@@ -1653,11 +1653,11 @@ Under what conditions does equality hold?
     other.
 
   \paragraph{($\Rightarrow$)}%
-  \label{par:exercise-2.7b-right}
+  \hyperlabel{par:exercise-2.7b-right}
 
     Suppose
       \begin{equation}
-        \label{sub:exercise-2.7b-eq1}
+        \hyperlabel{sub:exercise-2.7b-eq1}
         \powerset{A} \cup \powerset{B} = \powerset{(A \cup B)}.
       \end{equation}
     By the definition of the \nameref{ref:power-set},
@@ -1679,7 +1679,7 @@ Under what conditions does equality hold?
     In other words, $A \subseteq B$ or $B \subseteq A$.
 
   \paragraph{($\Leftarrow$)}%
-  \label{par:exercise-2.7b-left}
+  \hyperlabel{par:exercise-2.7b-left}
 
     WLOG, suppose $A \subseteq B$.
     Then, by \nameref{sub:exercise-1.3}, $\powerset{A} \subseteq \powerset{B}$.
@@ -1700,7 +1700,7 @@ Under what conditions does equality hold?
 \end{proof}
 
 \subsection{\unverified{Exercise 2.8}}%
-\label{sub:exercise-2.8}
+\hyperlabel{sub:exercise-2.8}
 
 Show that there is no set to which every singleton (that is, every set of the
   form $\{x\}$) belongs.
@@ -1719,7 +1719,7 @@ Show that there is no set to which every singleton (that is, every set of the
 \end{proof}
 
 \subsection{\verified{Exercise 2.9}}%
-\label{sub:exercise-2.9}
+\hyperlabel{sub:exercise-2.9}
 
 Give an example of sets $a$ and $B$ for which $a \in B$ but
   $\powerset{a} \not\in \powerset{B}$.
@@ -1740,7 +1740,7 @@ Give an example of sets $a$ and $B$ for which $a \in B$ but
 \end{answer}
 
 \subsection{\verified{Exercise 2.10}}%
-\label{sub:exercise-2.10}
+\hyperlabel{sub:exercise-2.10}
 
 Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
 [\textit{Suggestion}: If you need help, look in the Appendix.]
@@ -1761,7 +1761,7 @@ Show that if $a \in B$, then $\powerset{a} \in \powerset{\powerset{\bigcup B}}$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.11}}%
-\label{sub:exercise-2.11}
+\hyperlabel{sub:exercise-2.11}
 
 Show that for any sets $A$ and $B$,
   $$A = (A \cap B) \cup (A - B) \quad\text{and}\quad
@@ -1823,7 +1823,7 @@ Show that for any sets $A$ and $B$,
 \end{proof}
 
 \subsection{\verified{Exercise 2.12}}%
-\label{sub:exercise-2.12}
+\hyperlabel{sub:exercise-2.12}
 
 Verify the following identity (one of De Morgan's laws):
   $$C - (A \cap B) = (C - A) \cup (C - B).$$
@@ -1835,7 +1835,7 @@ Verify the following identity (one of De Morgan's laws):
 \end{proof}
 
 \subsection{\verified{Exercise 2.13}}%
-\label{sub:exercise-2.13}
+\hyperlabel{sub:exercise-2.13}
 
 Show that if $A \subseteq B$, then $C - B \subseteq C - A$.
 
@@ -1846,7 +1846,7 @@ Show that if $A \subseteq B$, then $C - B \subseteq C - A$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.14}}%
-\label{sub:exercise-2.14}
+\hyperlabel{sub:exercise-2.14}
 
 Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
   different from $(A - B) - C$.
@@ -1875,7 +1875,7 @@ Show by example that for some sets $A$, $B$, and $C$, the set $A - (B - C)$ is
 \end{proof}
 
 \subsection{\verified{Exercise 2.15a}}%
-\label{sub:exercise-2.15a}
+\hyperlabel{sub:exercise-2.15a}
 
 Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 
@@ -1912,7 +1912,7 @@ Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.15b}}%
-\label{sub:exercise-2.15b}
+\hyperlabel{sub:exercise-2.15b}
 
 Show that $A + (B + C) = (A + B) + C$.
 
@@ -1928,7 +1928,7 @@ Show that $A + (B + C) = (A + B) + C$.
     \end{enumerate}
 
   \paragraph{(i)}%
-  \label{par:exercise-2.15b-i}
+  \hyperlabel{par:exercise-2.15b-i}
 
     Let $x \in A + (B + C)$.
     Then $x$ is in $A$ or in $B + C$, but not both.
@@ -1964,7 +1964,7 @@ Show that $A + (B + C) = (A + B) + C$.
         $x \in (A + B) + C$.
 
   \paragraph{(ii)}%
-  \label{par:exercise-2.15b-ii}
+  \hyperlabel{par:exercise-2.15b-ii}
 
     Let $x \in (A + B) + C$.
     Then $x$ is in $A + B$ or in $C$, but not both.
@@ -2008,7 +2008,7 @@ Show that $A + (B + C) = (A + B) + C$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.16}}%
-\label{sub:exercise-2.16}
+\hyperlabel{sub:exercise-2.16}
 
 Simplify:
   $$[(A \cup B \cup C) \cap (A \cup B)] - [(A \cup (B - C)) \cap A].$$
@@ -2035,7 +2035,7 @@ Simplify:
 \end{proof}
 
 \subsection{\verified{Exercise 2.17}}%
-\label{sub:exercise-2.17}
+\hyperlabel{sub:exercise-2.17}
 
 Show that the following four conditions are equivalent.
 
@@ -2100,7 +2100,7 @@ Show that the following four conditions are equivalent.
 \end{proof}
 
 \subsection{\unverified{Exercise 2.18}}%
-\label{sub:exercise-2.18}
+\hyperlabel{sub:exercise-2.18}
 
 Assume that $A$ and $B$ are subsets of $S$.
 List all of the different sets that can be made from these three by use of the
@@ -2132,7 +2132,7 @@ List all of the different sets that can be made from these three by use of the
 \end{proof}
 
 \subsection{\verified{Exercise 2.19}}%
-\label{sub:exercise-2.19}
+\hyperlabel{sub:exercise-2.19}
 
 Is $\powerset{(A - B)}$ always equal to $\powerset{A} - \powerset{B}$?
 Is it ever equal to $\powerset{A} - \powerset{B}$?
@@ -2147,7 +2147,7 @@ Is it ever equal to $\powerset{A} - \powerset{B}$?
     $\emptyset \not\in \powerset{A} - \powerset{B}$.
 
   \paragraph{(i)}%
-  \label{par:exercise-2.19-i}
+  \hyperlabel{par:exercise-2.19-i}
 
     By definition of the \nameref{ref:power-set},
       $$\powerset{(A - B)} = \{ x \mid x \subseteq A - B \}.$$
@@ -2168,7 +2168,7 @@ Is it ever equal to $\powerset{A} - \powerset{B}$?
 \end{proof}
 
 \subsection{\verified{Exercise 2.20}}%
-\label{sub:exercise-2.20}
+\hyperlabel{sub:exercise-2.20}
 
 Let $A$, $B$, and $C$ be sets such that $A \cup B = A \cup C$ and
   $A \cap B = A \cap C$.
@@ -2227,7 +2227,7 @@ Show that $B = C$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.21}}%
-\label{sub:exercise-2.21}
+\hyperlabel{sub:exercise-2.21}
 
 Show that $\bigcup (A \cup B) = \bigcup A \cup \bigcup B$.
 
@@ -2265,7 +2265,7 @@ Show that $\bigcup (A \cup B) = \bigcup A \cup \bigcup B$.
 \end{proof}
 
 \subsection{\verified{Exercise 2.22}}%
-\label{sub:exercise-2.22}
+\hyperlabel{sub:exercise-2.22}
 
 Show that if $A$ and $B$ are nonempty sets, then
   $\bigcap (A \cup B) = \bigcap A \cap \bigcap B$.
@@ -2279,7 +2279,7 @@ Show that if $A$ and $B$ are nonempty sets, then
   By the \nameref{ref:extensionality-axiom}, the specified equality holds if and
     only if for all sets $x$,
     \begin{equation}
-      \label{sub:exercise-2.22-eq1}
+      \hyperlabel{sub:exercise-2.22-eq1}
       x \in \bigcap (A \cup B) \iff x \in \bigcap A \cap \bigcap B.
     \end{equation}
   We prove both directions of this biconditional.
@@ -2305,7 +2305,7 @@ Show that if $A$ and $B$ are nonempty sets, then
 \end{proof}
 
 \subsection{\unverified{Exercise 2.23}}%
-\label{sub:exercise-2.23}
+\hyperlabel{sub:exercise-2.23}
 
 Show that if $\mathscr{B}$ is nonempty, then
   $A \cup \bigcap \mathscr{B} = \bigcap\; \{A \cup X \mid X \in \mathscr{B} \}$.
@@ -2317,7 +2317,7 @@ Show that if $\mathscr{B}$ is nonempty, then
 \end{proof}
 
 \subsection{\verified{Exercise 2.24a}}%
-\label{sub:exercise-2.24a}
+\hyperlabel{sub:exercise-2.24a}
 
 Show that if $\mathscr{A}$ is nonempty, then
   $\powerset{\bigcap\mathscr{A}} =
@@ -2356,11 +2356,11 @@ Show that if $\mathscr{A}$ is nonempty, then
 \end{proof}
 
 \subsection{\verified{Exercise 2.24b}}%
-\label{sub:exercise-2.24b}
+\hyperlabel{sub:exercise-2.24b}
 
 Show that
   \begin{equation}
-    \label{sub:exercise-2.24b-eq1}
+    \hyperlabel{sub:exercise-2.24b-eq1}
     \bigcup\; \{ \powerset{X} \mid X \in \mathscr{A} \} \subseteq
       \powerset{\bigcup\mathscr{A}}.
   \end{equation}
@@ -2419,7 +2419,7 @@ Under what conditions does equality hold?
 \end{proof}
 
 \subsection{\verified{Exercise 2.25}}%
-\label{sub:exercise-2.25}
+\hyperlabel{sub:exercise-2.25}
 
 Is $A \cup \bigcup \mathscr{B}$ always the same as
   $\bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}$?
@@ -2432,7 +2432,7 @@ If not, then under what conditions does equality hold?
 
   We prove that
     \begin{equation}
-      \label{sub:exercise-2.25-eq1}
+      \hyperlabel{sub:exercise-2.25-eq1}
       A \cup \bigcup \mathscr{B} =
         \bigcup\;\{ A \cup X \mid X \in \mathscr{B} \}
     \end{equation}
@@ -2496,19 +2496,19 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \chapter{Relations and Functions}%
-\label{chap:relations-functions}
+\hyperlabel{chap:relations-functions}
 
 \section{Ordered Pairs}%
-\label{sec:ordered-pairs}
+\hyperlabel{sec:ordered-pairs}
 
 \subsection{\verified{Theorem 3A}}%
-\label{sub:theorem-3a}
+\hyperlabel{sub:theorem-3a}
 
 \begin{theorem}[3A]
 
   For any sets $x$, $y$, $u$, and $v$,
     \begin{equation}
-      \label{sub:theorem-3a-eq1}
+      \hyperlabel{sub:theorem-3a-eq1}
       \pair{u, v} = \pair{x, y} \iff u = x \land v = y.
     \end{equation}
 
@@ -2530,7 +2530,7 @@ If not, then under what conditions does equality hold?
     Suppose $\pair{u, v} = \pair{x, y}$.
     Then, by definition of an \nameref{ref:ordered-pair},
       \begin{equation}
-        \label{sub:theorem-3a-eq2}
+        \hyperlabel{sub:theorem-3a-eq2}
         \{\{u\}, \{u, v\}\} = \{\{x\}, \{x, y\}\}.
       \end{equation}
     By the \nameref{ref:extensionality-axiom}, it follows
@@ -2578,7 +2578,7 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \subsection{\verified{Lemma 3B}}%
-\label{sub:lemma-3b}
+\hyperlabel{sub:lemma-3b}
 
 \begin{theorem}[3B]
 
@@ -2602,7 +2602,7 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \subsection{\verified{Corollary 3C}}%
-\label{sub:corollary-3c}
+\hyperlabel{sub:corollary-3c}
 
 \begin{theorem}[3C]
 
@@ -2635,10 +2635,10 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \section{Relations}%
-\label{sec:relations}
+\hyperlabel{sec:relations}
 
 \subsection{\verified{Theorem 3D}}%
-\label{sub:theorem-3d}
+\hyperlabel{sub:theorem-3d}
 
 \begin{theorem}[3D]
 
@@ -2663,10 +2663,10 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \section{Functions}%
-\label{sec:functions}
+\hyperlabel{sec:functions}
 
 \subsection{\verified{Theorem 3E}}%
-\label{sub:theorem-3e}
+\hyperlabel{sub:theorem-3e}
 
 \begin{theorem}[3E]
 
@@ -2724,7 +2724,7 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \subsection{\verified{Theorem 3F}}%
-\label{sub:theorem-3f}
+\hyperlabel{sub:theorem-3f}
 
 \begin{theorem}[3F]
 
@@ -2748,7 +2748,7 @@ If not, then under what conditions does equality hold?
     single-rooted.
 
   \paragraph{(i)}%
-  \label{par:theorem-3f-i}
+  \hyperlabel{par:theorem-3f-i}
 
     Let $F$ be any set.
 
@@ -2794,7 +2794,7 @@ If not, then under what conditions does equality hold?
 \end{proof}
 
 \subsection{\verified{Lemma 1}}%
-\label{sub:lemma-1}
+\hyperlabel{sub:lemma-1}
 
 For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
@@ -2806,7 +2806,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   We prove that (i) $F^{-1}$ is a function and (ii) $F^{-1}$ is single-rooted.
 
   \paragraph{(i)}%
-  \label{par:lemma-1-i}
+  \hyperlabel{par:lemma-1-i}
 
     By hypothesis, $F$ is one-to-one.
     This means it is single-rooted, i.e. for all $x \in \ran{F}$, there exists
@@ -2818,7 +2818,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     Thus $F^{-1}$ is a function.
 
   \paragraph{(ii)}%
-  \label{par:lemma-1-ii}
+  \hyperlabel{par:lemma-1-ii}
 
     By hypothesis, $F$ is single-valued.
     That is, for all $x \in \dom{F}$, there exists exactly one $y$ such that
@@ -2837,7 +2837,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3G}}%
-\label{sub:theorem-3g}
+\hyperlabel{sub:theorem-3g}
 
 \begin{theorem}[3G]
 
@@ -2872,14 +2872,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3H}}%
-\label{sub:theorem-3h}
+\hyperlabel{sub:theorem-3h}
 
 \begin{theorem}[3H]
 
   Assume that $F$ and $G$ are functions.
   Then $F \circ G$ is a function, its domain is
     \begin{equation}
-      \label{sub:theorem-3h-eq1}
+      \hyperlabel{sub:theorem-3h-eq1}
       \{x \in \dom{G} \mid G(x) \in \dom{F}\},
     \end{equation}
     and for $x$ in its domain, $(F \circ G)(x) = F(G(x))$.
@@ -2899,7 +2899,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   Let $F$ and $G$ be \nameref{ref:function}s.
   By definition of the \nameref{ref:composition} of $F$ and $G$,
     \begin{equation}
-      \label{sub:theorem-3h-eq2}
+      \hyperlabel{sub:theorem-3h-eq2}
       F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.
     \end{equation}
   By construction, $F \circ G$ is a relation.
@@ -2910,7 +2910,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     \eqref{sub:theorem-3h-eq1}, and (ii) $(F \circ G)(x) = F(G(x))$.
 
   \paragraph{(i)}%
-  \label{par:theorem-3h-i}
+  \hyperlabel{par:theorem-3h-i}
 
     By \eqref{sub:theorem-3h-eq2}, there exists some $t$ such that
       $\pair{x, t} \in G$ and $\pair{t, y} \in F$.
@@ -2934,7 +2934,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3I}}%
-\label{sub:theorem-3i}
+\hyperlabel{sub:theorem-3i}
 
 \begin{theorem}[3I]
 
@@ -2962,7 +2962,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\pending{Theorem 3J}}%
-\label{sub:theorem-3j}
+\hyperlabel{sub:theorem-3j}
 
 \begin{theorem}[3J]
 
@@ -3047,19 +3047,19 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3K(a)}}%
-\label{sub:theorem-3k-a}
+\hyperlabel{sub:theorem-3k-a}
 
 \begin{theorem}[3K(a)]
 
   The following hold for any sets. ($F$ need not be a function.)
   The image of a union is the union of the images:
     \begin{equation}
-      \label{sub:theorem-3k-a-eq1}
+      \hyperlabel{sub:theorem-3k-a-eq1}
       \img{F}{A \cup B} = \img{F}{A} \cup \img{F}{B}
     \end{equation}
     and
     \begin{equation}
-      \label{sub:theorem-3k-a-eq2}
+      \hyperlabel{sub:theorem-3k-a-eq2}
       \img{F}{\bigcup{\mathscr{A}}} =
         \bigcup\;\{\img{F}{A} \mid A \in \mathscr{A}\}.
     \end{equation}
@@ -3118,19 +3118,19 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3K(b)}}%
-\label{sub:theorem-3k-b}
+\hyperlabel{sub:theorem-3k-b}
 
 \begin{theorem}[3K(b)]
 
   The following hold for any sets. ($F$ need not be a function.)
   The image of an intersection is included in the intersection of the images:
     \begin{equation}
-      \label{sub:theorem-3k-b-eq1}
+      \hyperlabel{sub:theorem-3k-b-eq1}
       \img{F}{A \cap B} \subseteq \img{F}{A} \cap \img{F}{B}
     \end{equation}
     and
     \begin{equation}
-      \label{sub:theorem-3k-b-eq2}
+      \hyperlabel{sub:theorem-3k-b-eq2}
       \img{F}{\bigcap\mathscr{A}} \subseteq
         \bigcap\;\{\img{F}{A} \mid A \in \mathscr{A}\}.
     \end{equation}
@@ -3158,7 +3158,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     under equality.
 
   \paragraph{(i)}%
-  \label{par:theorem-3k-b-i}
+  \hyperlabel{par:theorem-3k-b-i}
 
     Let $v \in \img{F}{A \cap B}$.
     By definition of the \nameref{ref:image} of a set,
@@ -3167,7 +3167,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     Therefore $v \in \img{F}{A} \cap \img{F}{B}$.
 
   \paragraph{(ii)}%
-  \label{par:theorem-3k-b-ii}
+  \hyperlabel{par:theorem-3k-b-ii}
 
     Let $v \in \img{F}{\bigcap{\mathscr{A}}}$.
     By definition of the \nameref{ref:image} of a set,
@@ -3211,14 +3211,14 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3K(c)}}%
-\label{sub:theorem-3k-c}
+\hyperlabel{sub:theorem-3k-c}
 
 \begin{theorem}[3K(c)]
 
   The following hold for any sets. ($F$ need not be a function.)
   The image of a difference includes the difference of the images:
     \begin{equation}
-      \label{sub:theorem-3k-c-eq1}
+      \hyperlabel{sub:theorem-3k-c-eq1}
       \img{F}{A} - \img{F}{B} \subseteq \img{F}{A - B}.
     \end{equation}
   Equality holds if $F$ is single-rooted.
@@ -3239,7 +3239,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
     if $F$ is single-rooted.
 
   \paragraph{(i)}%
-  \label{par:theorem-3k-c-i}
+  \hyperlabel{par:theorem-3k-c-i}
 
     Let $v \in \img{F}{A} - \img{F}{B}$.
     By definition of the difference of two sets,
@@ -3269,7 +3269,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Corollary 3L}}%
-\label{sub:corollary-3l}
+\hyperlabel{sub:corollary-3l}
 
 \begin{theorem}[3L]
 
@@ -3277,13 +3277,13 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   \begin{align}
     \img{G^{-1}}{\bigcup{\mathscr{A}}}
       & = \bigcup\;\{\img{G^{-1}}{A} \mid A \in \mathscr{A}\},
-      \label{sub:corollary-3l-eq1} \\
+      \hyperlabel{sub:corollary-3l-eq1} \\
     \img{G^{-1}}{\bigcap{\mathscr{A}}}
       & = \bigcap\;\{\img{G^{-1}}{A} \mid A \in \mathscr{A}\}
       \text{ for } \mathscr{A} \neq \emptyset,
-      \label{sub:corollary-3l-eq2} \\
+      \hyperlabel{sub:corollary-3l-eq2} \\
     \img{G^{-1}}{A - B} & = \img{G^{-1}}{A} - \img{G^{-1}}{B}.
-      \label{sub:corollary-3l-eq3}
+      \hyperlabel{sub:corollary-3l-eq3}
   \end{align}
 
 \end{theorem}
@@ -3309,10 +3309,10 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \section{Equivalence Relations}%
-\label{sec:equivalence-relations}
+\hyperlabel{sec:equivalence-relations}
 
 \subsection{\verified{Theorem 3M}}%
-\label{sub:theorem-3m}
+\hyperlabel{sub:theorem-3m}
 
 \begin{theorem}[3M]
 
@@ -3348,7 +3348,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Lemma 3N}}%
-\label{sub:lemma-3n}
+\hyperlabel{sub:lemma-3n}
 
 \begin{lemma}[3N]
 
@@ -3397,7 +3397,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\verified{Theorem 3P}}%
-\label{sub:theorem-3p}
+\hyperlabel{sub:theorem-3p}
 
 \begin{theorem}[3P]
 
@@ -3447,7 +3447,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \subsection{\pending{Theorem 3Q}}%
-\label{sub:theorem-3q}
+\hyperlabel{sub:theorem-3q}
 
 \begin{theorem}[3Q]
 
@@ -3456,7 +3456,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   If $F$ is compatible with $R$, then there exists a unique
     $\hat{F} \colon A / R \rightarrow A / R$ such that
     \begin{equation}
-      \label{sub:theorem-3q-eq1}
+      \hyperlabel{sub:theorem-3q-eq1}
       \hat{F}([x]_R) = [F(x)]_R \quad\text{for all } x \text{ in } A.
     \end{equation}
   If $F$ is not compatible with $R$, then no such $\hat{F}$ exists.
@@ -3499,10 +3499,10 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{proof}
 
 \section{Exercises 3}%
-\label{sec:exercises-3}
+\hyperlabel{sec:exercises-3}
 
 \subsection{\verified{Exercise 3.1}}%
-\label{sub:exercise-3.1}
+\hyperlabel{sub:exercise-3.1}
 
 Suppose that we attempted to generalize the Kuratowski definitions of ordered
   pairs to ordered triples by defining
@@ -3538,7 +3538,7 @@ Show that this definition is unsuccessful by giving examples of objects
 \end{proof}
 
 \subsection{\verified{Exercise 3.2a}}%
-\label{sub:exercise-3.2a}
+\hyperlabel{sub:exercise-3.2a}
 
 Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
 
@@ -3564,7 +3564,7 @@ Show that $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.2b}}%
-\label{sub:exercise-3.2b}
+\hyperlabel{sub:exercise-3.2b}
 
 Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
 
@@ -3577,9 +3577,9 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
   By \nameref{sub:corollary-3c},
     \begin{align}
       A \times B & = \{ \pair{x, y} \mid x \in A \land y \in B \}
-        & \label{sub:exercise-3.2b-eq1} \\
+        & \hyperlabel{sub:exercise-3.2b-eq1} \\
       A \times C & = \{ \pair{x, y} \mid x \in A \land y \in C \}.
-        & \label{sub:exercise-3.2b-eq2}
+        & \hyperlabel{sub:exercise-3.2b-eq2}
     \end{align}
   There are two cases to consider:
 
@@ -3609,7 +3609,7 @@ Show that if $A \times B = A \times C$ and $A \neq \emptyset$, then $B = C$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.3}}%
-\label{sub:exercise-3.3}
+\hyperlabel{sub:exercise-3.3}
 
 Show that $A \times \bigcup \mathscr{B} =
   \bigcup\;\{ A \times X \mid X \in \mathscr{B} \}$.
@@ -3635,7 +3635,7 @@ Show that $A \times \bigcup \mathscr{B} =
 \end{proof}
 
 \subsection{\unverified{Exercise 3.4}}%
-\label{sub:exercise-3.4}
+\hyperlabel{sub:exercise-3.4}
 
 Show that there is no set to which every ordered pair belongs.
 
@@ -3654,12 +3654,12 @@ Show that there is no set to which every ordered pair belongs.
 \end{proof}
 
 \subsection{\verified{Exercise 3.5a}}%
-\label{sub:exercise-3.5a}
+\hyperlabel{sub:exercise-3.5a}
 
 Assume that $A$ and $B$ are given sets, and show that there exists a set $C$
   such that for any $y$,
   \begin{equation}
-    \label{sub:exercise-3.5a-eq1}
+    \hyperlabel{sub:exercise-3.5a-eq1}
     y \in C \iff y = \{x\} \times B \text{ for some } x \text{ in } A.
   \end{equation}
 In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
@@ -3709,7 +3709,7 @@ In other words, show that $\{\{x\} \times B \mid x \in A\}$ is a set.
 \end{proof}
 
 \subsection{\verified{Exercise 3.5b}}%
-\label{sub:exercise-3.5b}
+\hyperlabel{sub:exercise-3.5b}
 
 With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
 
@@ -3721,7 +3721,7 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
   Let $A$ and $B$ be arbitrary sets.
   We want to show that
     \begin{equation}
-      \label{sub:exercise-3.5b-eq1}
+      \hyperlabel{sub:exercise-3.5b-eq1}
       A \times B = \bigcup\; \{\{x\} \times B \mid x \in A\}.
     \end{equation}
   The left-hand side of \eqref{sub:exercise-3.5b-eq1} is a set by virtue of
@@ -3759,7 +3759,7 @@ With $A$, $B$, and $C$ as above, show that $A \times B = \bigcup C$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.6}}%
-\label{sub:exercise-3.6}
+\hyperlabel{sub:exercise-3.6}
 
 Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
 
@@ -3793,7 +3793,7 @@ Show that a set $A$ is a relation iff $A \subseteq \dom{A} \times \ran{A}$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.7}}%
-\label{sub:exercise-3.7}
+\hyperlabel{sub:exercise-3.7}
 
 Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
 
@@ -3807,7 +3807,7 @@ Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
     $\bigcup\bigcup R \subseteq \fld{R}$.
 
   \paragraph{(i)}%
-  \label{par:exercise-3.7-i}
+  \hyperlabel{par:exercise-3.7-i}
 
     Let $x \in \fld{R} = \dom{R} \cup \ran{R}$.
     That is, $x \in \dom{R}$ or $x \in \ran{R}$.
@@ -3821,7 +3821,7 @@ Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
     Then $\{t, x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
 
   \paragraph{(ii)}%
-  \label{par:exercise-3.7-ii}
+  \hyperlabel{par:exercise-3.7-ii}
 
     Let $t \in \bigcup\bigcup R$.
     Then there exists some member $T \in \bigcup R$ such that $t \in T$.
@@ -3840,16 +3840,16 @@ Show that if $R$ is a relation, then $\fld{R} = \bigcup\bigcup R$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.8}}%
-\label{sub:exercise-3.8}
+\hyperlabel{sub:exercise-3.8}
 
 Show that for any set $\mathscr{A}$:
   \begin{align}
     \dom{\bigcup{\mathscr{A}}}
       & = \bigcup\;\{ \dom{R} \mid R \in \mathscr{A} \},
-      & \label{sub:exercise-3.8-eq1} \\
+      & \hyperlabel{sub:exercise-3.8-eq1} \\
     \ran{\bigcup{\mathscr{A}}}
       & = \bigcup\;\{ \ran{R} \mid R \in \mathscr{A} \}.
-      & \label{sub:exercise-3.8-eq2}
+      & \hyperlabel{sub:exercise-3.8-eq2}
   \end{align}
 
 \begin{proof}
@@ -3900,7 +3900,7 @@ Show that for any set $\mathscr{A}$:
 \end{proof}
 
 \subsection{\verified{Exercise 3.9}}%
-\label{sub:exercise-3.9}
+\hyperlabel{sub:exercise-3.9}
 
 Discuss the result of replacing the union operation by the intersection
   operation in the preceding problem.
@@ -3920,10 +3920,10 @@ Discuss the result of replacing the union operation by the intersection
     \begin{align}
       \dom{\bigcap{\mathscr{A}}}
         & \subseteq \bigcap\;\{ \dom{R} \mid R \in \mathscr{A} \},
-        & \label{sub:exercise-3.9-eq1} \\
+        & \hyperlabel{sub:exercise-3.9-eq1} \\
       \ran{\bigcap{\mathscr{A}}}
         & \subseteq \bigcap\;\{ \ran{R} \mid R \in \mathscr{A} \}.
-        & \label{sub:exercise-3.9-eq2}
+        & \hyperlabel{sub:exercise-3.9-eq2}
     \end{align}
 
   We prove (i) \eqref{sub:exercise-3.9-eq1} and then (ii)
@@ -3962,7 +3962,7 @@ Discuss the result of replacing the union operation by the intersection
 \end{answer}
 
 \subsection{\unverified{Exercise 3.10}}%
-\label{sub:exercise-3.10}
+\hyperlabel{sub:exercise-3.10}
 
 Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
   integer $m$ less than $4$.
@@ -3974,9 +3974,9 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
     \begin{align}
       \pair{x_1, x_2, x_3, x_4}
         & = \pair{\pair{x_1, x_2, x_3}, x_4}
-          & \label{sub:exercise-7.10-eq1} \\
+          & \hyperlabel{sub:exercise-7.10-eq1} \\
         & = \pair{\pair{\pair{x_1, x_2}, x_3}, x_4}
-          & \label{sub:exercise-7.10-eq2}
+          & \hyperlabel{sub:exercise-7.10-eq2}
     \end{align}
   Here \eqref{sub:exercise-7.10-eq1} is an equivalent ordered $2$-tuple and
     \eqref{sub:exercise-7.10-eq2} is an equivalent ordered $3$-tuple.
@@ -3986,7 +3986,7 @@ Show that an ordered $4$-tuple is also an ordered $m$-tuple for every positive
 \end{answer}
 
 \subsection{\verified{Exercise 3.11}}%
-\label{sub:exercise-3.11}
+\hyperlabel{sub:exercise-3.11}
 
 Prove the following version (for functions) of the extensionality principle:
   Assume that $F$ and $G$ are functions, $\dom{F} = \dom{G}$, and
@@ -4012,7 +4012,7 @@ Then $F = G$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.12}}%
-\label{sub:exercise-3.12}
+\hyperlabel{sub:exercise-3.12}
 
 Assume that $f$ and $g$ are functions and show that
   $$f \subseteq g \iff \dom{f} \subseteq \dom{g} \land
@@ -4048,7 +4048,7 @@ Assume that $f$ and $g$ are functions and show that
 \end{proof}
 
 \subsection{\verified{Exercise 3.13}}%
-\label{sub:exercise-3.13}
+\hyperlabel{sub:exercise-3.13}
 
 Assume that $f$ and $g$ are functions with $f \subseteq g$ and
   $\dom{g} \subseteq \dom{f}$.
@@ -4070,7 +4070,7 @@ Show that $f = g$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.14}}%
-\label{sub:exercise-3.14}
+\hyperlabel{sub:exercise-3.14}
 
 Assume that $f$ and $g$ are functions.
 
@@ -4137,7 +4137,7 @@ Assume that $f$ and $g$ are functions.
 \end{proof}
 
 \subsection{\verified{Exercise 3.15}}%
-\label{sub:exercise-3.15}
+\hyperlabel{sub:exercise-3.15}
 
 Let $\mathscr{A}$ be a set of functions such that for any $f$ and $g$ in
   $\mathscr{A}$, either $f \subseteq g$ or $g \subseteq f$.
@@ -4183,7 +4183,7 @@ Show that $\bigcup{\mathscr{A}}$ is a function.
 \end{proof}
 
 \subsection{\unverified{Exercise 3.16}}%
-\label{sub:exercise-3.16}
+\hyperlabel{sub:exercise-3.16}
 
 Show that there is no set to which every function belongs.
 
@@ -4199,7 +4199,7 @@ Show that there is no set to which every function belongs.
 \end{proof}
 
 \subsection{\verified{Exercise 3.17}}%
-\label{sub:exercise-3.17}
+\hyperlabel{sub:exercise-3.17}
 
 Show that the composition of two single-rooted sets is again single-rooted.
 Conclude that the composition of two one-to-one functions is again one-to-one.
@@ -4218,7 +4218,7 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
   Consider $F \circ G$.
   By definition of the \nameref{ref:composition} of sets,
     \begin{equation}
-      \label{sub:exercise-3.17-eq1}
+      \hyperlabel{sub:exercise-3.17-eq1}
       F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.
     \end{equation}
   Consider any $v \in \ran{(F \circ G)}$.
@@ -4244,7 +4244,7 @@ Conclude that the composition of two one-to-one functions is again one-to-one.
 \end{proof}
 
 \subsection{\verified{Exercise 3.18}}%
-\label{sub:exercise-3.18}
+\hyperlabel{sub:exercise-3.18}
 
 Let $R$ be the set
   $$\{ \pair{0, 1}, \pair{0, 2}, \pair{0, 3},
@@ -4282,7 +4282,7 @@ Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
 \end{proof}
 
 \subsection{\verified{Exercise 3.19}}%
-\label{sub:exercise-3.19}
+\hyperlabel{sub:exercise-3.19}
 
 Let $$A = \{
   \pair{\emptyset, \{\emptyset, \{\emptyset\}\}},
@@ -4351,7 +4351,7 @@ Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
 \end{proof}
 
 \subsection{\verified{Exercise 3.20}}%
-\label{sub:exercise-3.20}
+\hyperlabel{sub:exercise-3.20}
 
 Show that $F \restriction A = F \cap (A \times \ran{F})$.
 
@@ -4377,7 +4377,7 @@ Show that $F \restriction A = F \cap (A \times \ran{F})$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.21}}%
-\label{sub:exercise-3.21}
+\hyperlabel{sub:exercise-3.21}
 
 Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
 
@@ -4408,7 +4408,7 @@ Show that $(R \circ S) \circ T = R \circ (S \circ T)$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.22}}%
-\label{sub:exercise-3.22}
+\hyperlabel{sub:exercise-3.22}
 
 Show that the following are correct for any sets.
 
@@ -4423,13 +4423,13 @@ Show that the following are correct for any sets.
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_22\_a}
 
-  \lean*{Bookshelf/Enderton/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_22\_b}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_22\_c}
 
   Let $A$, $B$, $F$, $G$, and $Q$ be arbitrary sets.
@@ -4481,7 +4481,7 @@ Show that the following are correct for any sets.
 \end{proof}
 
 \subsection{\verified{Exercise 3.23}}%
-\label{sub:exercise-3.23}
+\hyperlabel{sub:exercise-3.23}
 
 Let $I_A$ be the identity function on the set $A$.
 Show that for any sets $B$ and $C$,
@@ -4492,10 +4492,10 @@ Show that for any sets $B$ and $C$,
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_23\_i}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_23\_ii}
 
   Let $I_A$ be the identity function on the set $A$.
@@ -4543,14 +4543,14 @@ Show that for any sets $B$ and $C$,
 \end{proof}
 
 \subsection{\verified{Exercise 3.24}}%
-\label{sub:exercise-3.24}
+\hyperlabel{sub:exercise-3.24}
 
 Show that for a function $F$,
   $\img{F^{-1}}{A} = \{x \in \dom{F} \mid F(x) \in A\}$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_24}
 
   Let $F$ be a function.
@@ -4567,7 +4567,7 @@ Show that for a function $F$,
 \end{proof}
 
 \subsection{\verified{Exercise 3.25}}%
-\label{sub:exercise-3.25}
+\hyperlabel{sub:exercise-3.25}
 
 \begin{enumerate}[(a)]
   \item Assume that $G$ is a one-to-one function.
@@ -4581,14 +4581,14 @@ Show that for a function $F$,
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_25\_b}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_25\_a}
 
   \paragraph{(b)}%
-  \label{par:exercise-3.25-b}
+  \hyperlabel{par:exercise-3.25-b}
 
     Let $G$ be an arbitrary function.
     We show that $G \circ G^{-1} \subseteq I_{\ran{G}}$ and that
@@ -4626,7 +4626,7 @@ Show that for a function $F$,
 \end{proof}
 
 \subsection{\verified{Exercise 3.26}}%
-\label{sub:exercise-3.26}
+\hyperlabel{sub:exercise-3.26}
 
 Prove the second halves of parts (a) and (b) of Theorem 3K.
 
@@ -4638,14 +4638,14 @@ Prove the second halves of parts (a) and (b) of Theorem 3K.
 \end{proof}
 
 \subsection{\verified{Exercise 3.27}}%
-\label{sub:exercise-3.27}
+\hyperlabel{sub:exercise-3.27}
 
 Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 ($F$ and $G$ need not be functions.)
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_27}
 
   Let $F$ and $G$ be arbitrary sets.
@@ -4682,7 +4682,7 @@ Show that $\dom{(F \circ G)} = \img{G^{-1}}{\dom{F}}$ for any sets $F$ and $G$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.28}}%
-\label{sub:exercise-3.28}
+\hyperlabel{sub:exercise-3.28}
 
 Assume that $f$ is a one-to-one function from $A$ into $B$, and that $G$ is the
   function with $\dom{G} = \powerset{A}$ defined by the equation
@@ -4691,7 +4691,7 @@ Show that $G$ maps $\powerset{A}$ one-to-one into $\powerset{B}$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_28}
 
   By construction, $\dom{G} = \powerset{A}$.
@@ -4715,12 +4715,12 @@ Show that $G$ maps $\powerset{A}$ one-to-one into $\powerset{B}$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.29}}%
-\label{sub:exercise-3.29}
+\hyperlabel{sub:exercise-3.29}
 
 Assume that $f \colon A \rightarrow B$ and define a function
   $G \colon B \rightarrow \powerset{A}$ by
   \begin{equation}
-    \label{sub:exercise-3.29-eq1}
+    \hyperlabel{sub:exercise-3.29-eq1}
     G(b) = \{x \in A \mid f(x) = b\}.
   \end{equation}
 Show that if $f$ maps $A$ \textit{onto} $B$, then $G$ is one-to-one.
@@ -4728,8 +4728,8 @@ Does the converse hold?
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
-    {Enderton.Set.Chapter\_3.exercise\_3\_29}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_39}
 
   Let $f \colon A \rightarrow B$ such that $f$ maps $A$ onto $B$.
   Define $G \colon B \rightarrow \powerset{A}$ by
@@ -4769,7 +4769,7 @@ Does the converse hold?
 \end{proof}
 
 \subsection{\sorry{Exercise 3.30}}%
-\label{sub:exercise-3.30}
+\hyperlabel{sub:exercise-3.30}
 
 Assume that $F \colon \powerset{A} \rightarrow \powerset{A}$ and that $F$ has
   the monotonicity property:
@@ -4789,7 +4789,7 @@ Define
 \end{proof}
 
 \subsection{\unverified{Exercise 3.31}}%
-\label{sub:exercise-3.31}
+\hyperlabel{sub:exercise-3.31}
 
 Show that from the first form of the axiom of choice we can prove the second
   form, and conversely.
@@ -4849,13 +4849,13 @@ Show that from the first form of the axiom of choice we can prove the second
 \end{proof}
 
 \subsection{\verified{Exercise 3.32a}}%
-\label{sub:exercise-3.32-a}
+\hyperlabel{sub:exercise-3.32-a}
 
 Show that $R$ is symmetric iff $R^{-1} \subseteq R$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_32\_a}
 
   \paragraph{($\Rightarrow$)}%
@@ -4880,13 +4880,13 @@ Show that $R$ is symmetric iff $R^{-1} \subseteq R$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.32b}}%
-\label{sub:exercise-3.32-b}
+\hyperlabel{sub:exercise-3.32-b}
 
 Show that $R$ is transitive iff $R \circ R \subseteq R$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_32\_b}
 
   \paragraph{($\Rightarrow$)}%
@@ -4911,13 +4911,13 @@ Show that $R$ is transitive iff $R \circ R \subseteq R$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.33}}%
-\label{sub:exercise-3.33}
+\hyperlabel{sub:exercise-3.33}
 
 Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_33}
 
   By definition of the \nameref{ref:inverse} and \nameref{ref:composition}
@@ -4927,7 +4927,7 @@ Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
         & = \{ (u, v) \mid \exists t(uRt \land tR^{-1}v) \}
           \nonumber \\
         & = \{ (u, v) \mid \exists t(uRt \land vRt) \}.
-          \label{sub:exercise-3.33-eq1}
+          \hyperlabel{sub:exercise-3.33-eq1}
     \end{align}
 
   \paragraph{($\Rightarrow$)}%
@@ -4960,7 +4960,7 @@ Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
     We prove that (i) $R$ is symmetric and (ii) $R$ is transitive.
 
     \subparagraph{(i)}%
-    \label{spar:exercise-3.33-i}
+    \hyperlabel{spar:exercise-3.33-i}
 
       First we note that $R$ is equal to its inverse:
         \begin{align}
@@ -4970,7 +4970,7 @@ Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
               & \textref{sub:theorem-3i} \nonumber \\
             & = R^{-1} \circ R
               & \textref{sub:theorem-3e} \nonumber \\
-            & = R \label{sub:exercise-3.33-eq2}.
+            & = R \hyperlabel{sub:exercise-3.33-eq2}.
         \end{align}
       Now let $\pair{x, y} \in R$.
       By \eqref{sub:exercise-3.33-eq2} $\pair{x, y} \in R^{-1}$.
@@ -4991,7 +4991,7 @@ Show that $R$ is a symmetric and transitive relation iff $R = R^{-1} \circ R$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.34}}%
-\label{sub:exercise-3.34}
+\hyperlabel{sub:exercise-3.34}
 
 Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
   transitive relation.
@@ -5005,10 +5005,10 @@ Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
 
   \statementpadding
 
-  \lean*{Bookshelf/Enderton/Set/Relation}
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_34\_a}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_34\_b}
 
   \paragraph{(a)}%
@@ -5041,13 +5041,13 @@ Assume that $\mathscr{A}$ is a nonempty set, every member of which is a
 \end{proof}
 
 \subsection{\verified{Exercise 3.35}}%
-\label{sub:exercise-3.35}
+\hyperlabel{sub:exercise-3.35}
 
 Show that for any $R$ and $x$, we have $[x]_R = \img{R}{\{x\}}$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_35}
 
   Let $R$ and $x$ be arbitrary sets.
@@ -5062,20 +5062,20 @@ Show that for any $R$ and $x$, we have $[x]_R = \img{R}{\{x\}}$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.36}}%
-\label{sub:exercise-3.36}
+\hyperlabel{sub:exercise-3.36}
 
 Assume that $f \colon A \rightarrow B$ and that $R$ is an equivalence relation
   on $B$.
 Define $Q$ to be the set
   \begin{equation}
-    \label{sub:exercise-3.36-eq1}
+    \hyperlabel{sub:exercise-3.36-eq1}
     \{\pair{x, y} \in A \times A \mid \pair{f(x), f(y)} \in R\}.
   \end{equation}
 Show that $Q$ is an equivalence relation on $A$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_36}
 
   We prove that (i) $Q$ is \nameref{ref:reflexive} on $A$, (ii) $Q$ is
@@ -5112,12 +5112,12 @@ Show that $Q$ is an equivalence relation on $A$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.37}}%
-\label{sub:exercise-3.37}
+\hyperlabel{sub:exercise-3.37}
 
 Assume that $\Pi$ is a partition of a set $A$.
 Define the relation $R_\Pi$ as follows:
   \begin{equation}
-    \label{sub:exercise-3.37-eq1}
+    \hyperlabel{sub:exercise-3.37-eq1}
     xR_{\Pi}y \iff (\exists B \in \Pi)(x \in B \land y \in B).
   \end{equation}
 Show that $R_\Pi$ is an equivalence relation on $A$.
@@ -5126,7 +5126,7 @@ Show that $R_\Pi$ is an equivalence relation on $A$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_37}
 
   We prove that (i) $R_\Pi$ is \nameref{ref:reflexive} on $B$, (ii) $R_\Pi$ is
@@ -5165,7 +5165,7 @@ Show that $R_\Pi$ is an equivalence relation on $A$.
 \end{proof}
 
 \subsection{\verified{Exercise 3.38}}%
-\label{sub:exercise-3.38}
+\hyperlabel{sub:exercise-3.38}
 
 \nameref{sub:theorem-3p} shows that $A / R$ is a partition of $A$ whenever $R$
   is an equivalence relation on $A$.
@@ -5174,12 +5174,12 @@ Show that if we start with the equivalence relation $R_\Pi$ of the preceding
 
 \begin{proof}
 
-  \lean{Bookshelf/Enderton/Set/Relation}
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.exercise\_3\_38}
 
   By definition,
     \begin{equation}
-      \label{sub:exercise-3.38-eq1}
+      \hyperlabel{sub:exercise-3.38-eq1}
       R_\Pi = \{ (x, y) \mid (\exists B \in \Pi)(x \in B \land y \in B) \}.
     \end{equation}
   We prove that $A / R_\Pi = \Pi$.
@@ -5258,7 +5258,7 @@ Show that if we start with the equivalence relation $R_\Pi$ of the preceding
 \end{proof}
 
 \subsection{\sorry{Exercise 3.39}}%
-\label{sub:exercise-3.39}
+\hyperlabel{sub:exercise-3.39}
 
 Assume that we start with an equivalence relation $R$ on $A$ and define $\Pi$ to
   be the partition $A / R$.
@@ -5271,7 +5271,7 @@ Show that $R_\Pi$, as defined in Exercise 37, is just $R$.
 \end{proof}
 
 \subsection{\pending{Exercise 3.40}}%
-\label{sub:exercise-3.40}
+\hyperlabel{sub:exercise-3.40}
 
 Define an equivalence relation $R$ on the set $P$ of positive integers by
   $$mRn \iff m \text{ and } n \text{ have the same number of prime factors}.$$
@@ -5295,7 +5295,7 @@ Is there a function $f \colon P / R \rightarrow P / R$ such that
 \end{proof}
 
 \subsection{\sorry{Exercise 3.41}}%
-\label{sub:exercise-3.41}
+\hyperlabel{sub:exercise-3.41}
 
 Let $\mathbb{R}$ be the set of real numbers and define the relation $Q$ on
   $\mathbb{R} \times \mathbb{R}$ by $\pair{u, v}Q\pair{x, y}$ iff
@@ -5317,7 +5317,7 @@ Let $\mathbb{R}$ be the set of real numbers and define the relation $Q$ on
 \end{proof}
 
 \subsection{\sorry{Exercise 3.42}}%
-\label{sub:exercise-3.42}
+\hyperlabel{sub:exercise-3.42}
 
 State precisely the "analogous results" mentioned in Theorem 3Q.
 (This will require extending the concept of compatibility in a suitable way.)
