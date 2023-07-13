@@ -3446,7 +3446,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
-\subsection{\pending{Theorem 3Q}}%
+\subsection{\unverified{Theorem 3Q}}%
 \hyperlabel{sub:theorem-3q}
 
 \begin{theorem}[3Q]
@@ -3480,7 +3480,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   Since $F$ is compatible, $F(x_1)RF(x_2)$.
   Another application of \nameref{sub:lemma-3n} implies that
     $[F(x_1)]_R = [F(x_2)]_R$.
-  Thus $\hat{F}$ is be single-valued.
+  Thus $\hat{F}$ is single-valued.
 
   Uniqueness follows immediately from the \nameref{ref:extensionality-axiom}.
 
@@ -3491,7 +3491,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   By \nameref{sub:lemma-3n}, $[x]_R = [y]_R$.
   For the sake of contradiction, suppose a function $\hat{F}$ exists satisfying
     \eqref{sub:theorem-3q-eq1}.
-  Then $\hat{F}([x]_R) = \hat{F}([y]_R)$ and $[F(x)]_R = [F(y)]_R$.
+  Then $\hat{F}([x]_R) = \hat{F}([y]_R)$ meaning $[F(x)]_R = [F(y)]_R$.
   Then \nameref{sub:lemma-3n} implies $F(x)RF(y)$, a contradiction.
   Therefore our original hypothesis must be incorrect.
   That is, there is no function $\hat{F}$ satisfying \eqref{sub:theorem-3q-eq1}.
@@ -4777,10 +4777,22 @@ Assume that $F \colon \powerset{A} \rightarrow \powerset{A}$ and that $F$ has
 Define
   $$B = \bigcap\{X \subseteq A \mid F(X) \subseteq X\} \quad\text{and}\quad
     C = \bigcup\{X \subseteq A \mid X \subseteq F(X)\}.$$
-\begin{enumerate}[(a)]
-  \item Show that $F(B) = B$ and $F(C) = C$.
-  \item Show that if $F(X) = X$, then $B \subseteq X \subseteq C$.
-\end{enumerate}
+
+\subsubsection{\sorry{Exercise 3.30 (a)}}%
+\hyperlabel{ssub:exercise-3.30-a}
+
+Show that $F(B) = B$ and $F(C) = C$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsubsection{\sorry{Exercise 3.30 (b)}}%
+\hyperlabel{ssub:exercise-3.30-b}
+
+Show that if $F(X) = X$, then $B \subseteq X \subseteq C$.
 
 \begin{proof}
 
@@ -5257,7 +5269,7 @@ Show that if we start with the equivalence relation $R_\Pi$ of the preceding
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.39}}%
+\subsection{\verified{Exercise 3.39}}%
 \hyperlabel{sub:exercise-3.39}
 
 Assume that we start with an equivalence relation $R$ on $A$ and define $\Pi$ to
@@ -5266,11 +5278,44 @@ Show that $R_\Pi$, as defined in Exercise 37, is just $R$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_39}
+
+  By definition,
+    \begin{equation}
+      \hyperlabel{sub:exercise-3.39-eq1}
+      R_\Pi = \{ (x, y) \mid (\exists B \in \Pi)(x \in B \land y \in B) \}.
+    \end{equation}
+  We prove that $R_\Pi = R$.
+  By the \nameref{ref:extensionality-axiom}, these two sets are equal when
+    $$(x, y) \in R_\Pi \iff (x, y) \in R.$$
+  We prove both directions of this biconditional.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Let $(x, y) \in R_\Pi$.
+    By \eqref{sub:exercise-3.39-eq1}, there exists some $B \in \Pi$ such that
+      $x \in B$ and $y \in B$.
+    Since $\Pi = A / R = \{[x]_R \mid x \in A\}$, there must exist some
+      $z \in A$ such that $B = [z]_R$.
+    By definition of an \nameref{ref:equivalence-class}, $x \in [z]_R$ implies
+      that $zRx$ and $y \in [z]_R$ implies $zRy$.
+    Since $R$ is \nameref{ref:symmetric}, $xRz$.
+    Since $R$ is \nameref{ref:transitive}, $xRy$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Let $(x, y) \in R$.
+    By definition of an \nameref{ref:equivalence-class}, $x \in [x]_R$ and
+      $y \in [x]_R$.
+    Note also that $[x]_R \in A / R = \Pi$.
+    Thus there exists some $B \in \Pi$ such that $x \in B$ and $y \in B$, namely
+      $B = [x]_R$.
+    By \eqref{sub:exercise-3.39-eq1}, $(x, y) \in R_\Pi$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.40}}%
+\subsection{\unverified{Exercise 3.40}}%
 \hyperlabel{sub:exercise-3.40}
 
 Define an equivalence relation $R$ on the set $P$ of positive integers by
@@ -5294,25 +5339,106 @@ Is there a function $f \colon P / R \rightarrow P / R$ such that
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.41}}%
+\subsection{\unverified{Exercise 3.41}}%
 \hyperlabel{sub:exercise-3.41}
 
 Let $\mathbb{R}$ be the set of real numbers and define the relation $Q$ on
   $\mathbb{R} \times \mathbb{R}$ by $\pair{u, v}Q\pair{x, y}$ iff
   $u + y = x + v$.
 
-\begin{enumerate}[(a)]
-  \item Show that $Q$ is an equivalence relation on
-    $\mathbb{R} \times \mathbb{R}$.
-  \item Is there a function $G \colon (\mathbb{R} \times \mathbb{R}) / Q
-    \rightarrow (\mathbb{R} \times \mathbb{R}) / Q$ satisfying the equation
-    $$G([\pair{x, y}]_Q) = [\pair{x + 2y, y + 2x}]_Q?$$
+\subsubsection{\verified{Exercise 3.41a}}%
+\hyperlabel{ssub:exercise-3.41-a}
 
-\end{enumerate}
+Show that $Q$ is an equivalence relation on $\mathbb{R} \times \mathbb{R}$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_41\_a}
+
+  We show (i) $Q$ is \nameref{ref:reflexive} on $\mathbb{R} \times \mathbb{R}$,
+    (ii) $Q$ is \nameref{ref:symmetric}, and (iii) $Q$ is
+    \nameref{ref:transitive}.
+
+  \paragraph{(i)}%
+
+    Let $\pair{x, y} \in R \times R$.
+    Since $x + y = x + y$, it immediately follows $\pair{x, y}Q\pair{x, y}$.
+    Thus $Q$ is reflexive on $\mathbb{R}$.
+
+  \paragraph{(ii)}%
+
+    Let $\pair{\pair{u, v}, \pair{x, y}} \in Q$.
+    Then $u + y = x + v$.
+    Likewise, $x + v = u + y$.
+    This immediately implies that $\pair{\pair{x, y}, \pair{u, v}} \in Q$.
+    Thus $Q$ is symmetric.
+
+  \paragraph{(iii)}%
+
+    Let $\pair{\pair{u, v}, \pair{x, y}} \in Q$ and
+      $\pair{\pair{x, y}, \pair{a, b}} \in Q$.
+    Then $u + y = x + v$ and $x + b = a + y$.
+    Rearranging terms, we have $u - v = x - y$ and $x - y = a - b$.
+    Thus $u - v = a - b$.
+    Rearranging terms once more yields $u + b = a + v$.
+    Thus $\pair{\pair{u, v}, \pair{a, b}} \in Q$.
+    Therefore $Q$ is transitive.
+
+\end{proof}
+
+\subsubsection{\unverified{Exercise 3.41b}}%
+\hyperlabel{ssub:exercise-3.41-b}
+
+Is there a function $G \colon (\mathbb{R} \times \mathbb{R}) / Q
+  \rightarrow (\mathbb{R} \times \mathbb{R}) / Q$ satisfying the equation
+  \begin{equation}
+    \hyperlabel{ssub:exercise-3.41-b-eq1}
+    G([\pair{x, y}]_Q) = [\pair{x + 2y, y + 2x}]_Q?
+  \end{equation}
+
+\begin{proof}
+
+  Let $f \colon \mathbb{R} \times \mathbb{R}
+    \rightarrow \mathbb{R} \times \mathbb{R}$ be given by
+    $f(\pair{x, y}) = \pair{x + 2y, y + 2x}$.
+  We show (i) that $f$ is \nameref{ref:compatible} with $Q$ and then (ii)
+    there exists such a function satisfying \eqref{ssub:exercise-3.41-b-eq1}.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:exercise-3.41-b-i}
+
+    Let $\pair{u, v}, \pair{x, y} \in \mathbb{R} \times \mathbb{R}$ such that
+      $\pair{u, v} Q \pair{x, y}$.
+    Thus
+      \begin{equation}
+        \hyperlabel{ssub:exercise-3.41-b-eq2}
+        u + y = x + v
+      \end{equation}
+    Next consider
+      \begin{align*}
+        f(\pair{u, v}) & = \pair{u + 2v, v + 2u}, \\
+        f(\pair{x, y}) & = \pair{x + 2y, y + 2x}.
+      \end{align*}
+    Then
+      \begin{align*}
+             u + y & = x + v \\
+        \iff 3u + 3y & = 3x + 3v \\
+        \iff (u + y) + (2u + 2y) & = (x + v) + (2x + 2v) \\
+        \iff (x + v) + (2u + 2y) & = (u + y) + (2x + 2v)
+          & \eqref{ssub:exercise-3.41-b-eq2} \\
+        \iff (x + 2y) + (v + 2u) & = (u + 2v) + (y + 2x) \\
+        \iff (u + 2v) + (y + 2x) & = (x + 2y) + (v + 2u).
+      \end{align*}
+    This last equality shows $f(\pair{u, v}) \,Q\, f(\pair{x, y})$.
+    Thus $f$ is compatible with $Q$.
+
+  \paragraph{(ii)}%
+
+    By \nameref{par:exercise-3.41-b-i} and \nameref{sub:theorem-3q}, there
+      exists a unique $G \colon (\mathbb{R} \times \mathbb{R}) / Q \rightarrow
+      (\mathbb{R} \times \mathbb{R}) / Q$ satisfying
+      \eqref{ssub:exercise-3.41-b-eq1}.
 
 \end{proof}
 

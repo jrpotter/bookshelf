@@ -533,7 +533,7 @@ def neighborhood (R : Relation α) (x : α) := { t | (x, t) ∈ R }
 The neighborhood with some respect to an equivalence relation `R` on set `A`
 and member `x` contains `x`.
 -/
-theorem neighborhood_self_mem {R : Set.Relation α} {A : Set α} {x : α}
+theorem neighborhood_self_mem {R : Set.Relation α} {A : Set α}
   (hR : isEquivalence R A) (hx : x ∈ A)
   : x ∈ neighborhood R x := hR.refl x hx
 
@@ -541,7 +541,7 @@ theorem neighborhood_self_mem {R : Set.Relation α} {A : Set α} {x : α}
 Assume that `R` is an equivalence relation on `A` and that `x` and `y` belong
 to `A`. Then `[x]_R = [y]_R ↔ xRy`.
 -/
-theorem neighborhood_iff_mem {R : Set.Relation α} {A : Set α} {x y : α}
+theorem neighborhood_eq_iff_mem_relate {R : Set.Relation α} {A : Set α}
   (hR : isEquivalence R A) (_ : x ∈ A) (hy : y ∈ A)
   : neighborhood R x = neighborhood R y ↔ (x, y) ∈ R := by
   apply Iff.intro
@@ -557,6 +557,19 @@ theorem neighborhood_iff_mem {R : Set.Relation α} {A : Set α} {x y : α}
       exact hR.trans this ht
     · intro ht
       exact hR.trans h ht
+
+/--
+Assume that `R` is an equivalence relation on `A`. If two sets `x` and `y`
+belong to the same neighborhood, then `xRy`. 
+-/
+theorem neighborhood_mem_imp_relate {R : Set.Relation α} {A : Set α}
+  (hR : isEquivalence R A)
+  (hx : x ∈ neighborhood R z) (hy : y ∈ neighborhood R z)
+  : (x, y) ∈ R := by
+  unfold neighborhood at hx hy
+  simp only [mem_setOf_eq] at hx hy
+  have := hR.symm hx
+  exact hR.trans this hy
 
 /--
 A **partition** `Π` of a set `A` is a set of nonempty subsets of `A` that is
@@ -622,8 +635,8 @@ theorem modEquiv_partition {A : Set α} {R : Relation α} (hR : isEquivalence R 
       have : z ∈ fld R := Or.inr (mem_pair_imp_snd_mem_ran hz.left)
       exact hR.b_on this
     rw [
-      ← neighborhood_iff_mem hR hx.left hz_mem,
-      ← neighborhood_iff_mem hR hy.left hz_mem,
+      ← neighborhood_eq_iff_mem_relate hR hx.left hz_mem,
+      ← neighborhood_eq_iff_mem_relate hR hy.left hz_mem,
       hx.right, hy.right
     ] at hz
     rw [hz.left, hz.right] at nXY
