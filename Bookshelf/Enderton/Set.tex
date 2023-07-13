@@ -87,6 +87,17 @@ The \textbf{composition} of sets $F$ and $G$ is
 
 \end{definition}
 
+\section{\defined{Connected}}%
+\hyperlabel{ref:connected}
+
+A binary relation $R$ on $A$ is \textbf{connected} if for distinct $x, y \in A$, either $xRy$ or $yRx$.
+
+\begin{definition}
+
+  \lean*{Common/Algebra/Classes}{IsConnected}
+
+\end{definition}
+
 \section{\defined{Domain}}%
 \hyperlabel{ref:domain}
 
@@ -217,6 +228,36 @@ The \textbf{inverse} of a set $F$ is the set
 \begin{definition}
 
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.inv}
+
+\end{definition}
+
+\section{\defined{Irreflexive}}%
+\hyperlabel{ref:irreflexive}
+
+A binary relation $R$ on set $A$ is \textbf{irreflexive} if there is no $x \in A$ for which $xRx$.
+
+\begin{definition}
+
+  \lean*{Mathlib/Init/Algebra/Classes}{IsIrrefl}
+
+\end{definition}
+
+\section{\defined{Linear Ordering}}
+\hyperlabel{ref:linear-ordering}
+
+Let $A$ be any set.
+A \textbf{linear ordering} on $A$ (also called a \textbf{total ordering} on $A$)
+  is a binary relation $R$ on $A$ (i.e., $R \subseteq A \times A$) meeting the
+  following two conditions:
+
+\begin{enumerate}[(a)]
+  \item $R$ is \nameref{ref:transitive}.
+  \item $R$ is \nameref{ref:trichotomous}.
+\end{enumerate}
+
+\begin{definition}
+
+  \lean*{Mathlib/Init/Algebra/Classes}{IsLinearOrder}
 
 \end{definition}
 
@@ -412,6 +453,20 @@ A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
 \begin{definition}
 
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isTransitive}
+
+\end{definition}
+
+\section{\defined{Trichotomous}}%
+\hyperlabel{ref:trichotomous}
+
+A binary relation $R$ on set $A$ is \textbf{trichotomous} if for any
+  $x, y \in A$, exactly one of the three alternatives
+  $$xRy, \quad x = y, \quad yRx$$
+  holds.
+
+\begin{definition}
+
+  \lean*{Mathlib/Init/Algebra/Classes}{IsTrichotomous}
 
 \end{definition}
 
@@ -3498,6 +3553,42 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
 \end{proof}
 
+\section{Ordering Relations}%
+\hyperlabel{sec:ordering-relations}
+
+\subsection{\pending{Theorem 3R}}%
+\hyperlabel{sub:theorem-3r}
+
+\begin{theorem}[3R]
+
+  Let $R$ be a linear ordering on $A$.
+  \begin{enumerate}[(i)]
+    \item There is no $x$ for which $xRx$.
+    \item For distinct $x$ and $y$ in $A$, either $xRy$ or $yRx$.
+  \end{enumerate}
+
+\end{theorem}
+
+\begin{proof}
+
+  Suppose $R$ is a \nameref{ref:linear-ordering} on $A$.
+
+  \paragraph{(i)}%
+
+    Let $x \in A$.
+    By definition, $R$ is \nameref{ref:trichotomous}.
+    Then only one of $xRx$ and $x = x$ can hold.
+    Since $x = x$ obviously holds, it follows $\pair{x, x} \not\in R$.
+
+  \paragraph{(ii)}%
+
+    Let $x, y \in A$ such that $x \neq y$.
+    By definition, $R$ is \nameref{ref:trichotomous}.
+    Thus only one of $$xRy, \quad x = y, \quad yRx$$ hold.
+    By hypothesis $x \neq y$ meaning either $xRy$ or $yRx$.
+
+\end{proof}
+
 \section{Exercises 3}%
 \hyperlabel{sec:exercises-3}
 
@@ -5447,6 +5538,49 @@ Is there a function $G \colon (\mathbb{R} \times \mathbb{R}) / Q
 
 State precisely the "analogous results" mentioned in Theorem 3Q.
 (This will require extending the concept of compatibility in a suitable way.)
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.43}}%
+\label{sub:exercise-3.43}
+
+Assume that $R$ is a linear ordering on a set $A$.
+Show that $R^{-1}$ is also a linear ordering on $A$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.44}}%
+\label{sub:exercise-3.44}
+
+Assume that $<$ is a linear orderinng on a set $A$.
+Assume that $f \colon A \rightarrow A$ and that $f$ has the property that
+  whenever $x < y$, then $f(x) < f(y)$.
+Show that $f$ is one-to-one and that whenever $f(x) < f(y)$, then $x < y$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 3.45}}%
+\label{sub:exercise-3.45}
+
+Assume that $<_A$ and $<_B$ are linear orderings on $A$ and $B$, respectively.
+Define the binary relation $<_L$ on the Cartesian product $A \times B$ by:
+  $$\pair{a_1, b_1} <_L \pair{a_2, b_2} \quad\text{iff}\quad
+    \text{either } a_1 <_A a_2 \text{ or } (a_1 = a_2 \land b_1 <_B b_2).$$
+Show that $<_L$ is a linear ordering on $A \times B$.
+(The relation $<_L$ is called \textit{lexicographic} ordering, being the
+  ordering used in making dictionaries.)
 
 \begin{proof}
 
