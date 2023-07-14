@@ -3,6 +3,8 @@ import Bookshelf.Enderton.Set.OrderedPair
 import Bookshelf.Enderton.Set.Relation
 import Common.Logic.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Rel
+import Mathlib.Order.RelClasses
 import Mathlib.Tactic.CasesM
 
 /-! # Enderton.Set.Chapter_3
@@ -2109,7 +2111,7 @@ theorem exercise_3_39 {P : Set (Set α)} {R Rₚ : Set.Relation α} {A : Set α}
     refine ⟨neighborhood R x, ?_, ⟨hx, hy⟩⟩
     rw [hP]
     exact ⟨x, hxA, rfl⟩
-lemma test {x y z : ℝ} (h : x + y = z) : (x = z - y) := by apply?
+
 /-- #### Exercise 3.41 (a)
 
 Let `ℝ` be the set of real numbers and define the realtion `Q` on `ℝ × ℝ` by

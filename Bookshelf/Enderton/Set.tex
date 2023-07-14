@@ -5545,7 +5545,7 @@ State precisely the "analogous results" mentioned in Theorem 3Q.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.43}}%
+\subsection{\pending{Exercise 3.43}}%
 \label{sub:exercise-3.43}
 
 Assume that $R$ is a linear ordering on a set $A$.
@@ -5553,25 +5553,124 @@ Show that $R^{-1}$ is also a linear ordering on $A$.
 
 \begin{proof}
 
-  TODO
+  Assume that $R$ is a \nameref{ref:linear-ordering} on a set $A$.
+  Then $R$ is \nameref{ref:transitive} and \nameref{ref:trichotomous}.
+  We show that (i) $R^{-1}$ is transitive and (ii) $R^{-1}$ is trichotomous.
+
+  \paragraph{(i)}%
+  \label{par:exercise-3.43-i}
+
+    Let $\pair{x, y}, \pair{y, z} \in R^{-1}$.
+    By definition of the \nameref{ref:inverse} of a set,
+      $\pair{y, x}$, $\pair{z, y} \in R$.
+    Since $R$ is transitive, it must be that $\pair{z, x} \in R$.
+    Then $\pair{x, z} \in R^{-1}$.
+    Thus $R^{-1}$ is transitive.
+
+  \paragraph{(ii)}%
+  \label{par:exercise-3.43-ii}
+
+    Let $x, y \in A$.
+    Since $R$ is trichotomous on $A$, it follows that exactly one of the
+      following conditions hold: $$xRy, \quad x = y, \quad yRx.$$
+    By definition of the \nameref{ref:inverse} of a set, the above possibilities
+      are equivalently expressed as
+      $$yR^{-1}x, \quad x = y, \quad xR^{-1}y.$$
+    Thus $R^{-1}$ is trichotomous.
+
+  \paragraph{Conclusion}%
+
+    Since $R^{-1}$ is transitive by \nameref{par:exercise-3.43-i} and
+      trichotomous by \nameref{par:exercise-3.43-ii}, it follows $R^{-1}$ is a
+      linear ordering on $A$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.44}}%
+\subsection{\pending{Exercise 3.44}}%
 \label{sub:exercise-3.44}
 
-Assume that $<$ is a linear orderinng on a set $A$.
+Assume that $<$ is a linear ordering on a set $A$.
 Assume that $f \colon A \rightarrow A$ and that $f$ has the property that
   whenever $x < y$, then $f(x) < f(y)$.
 Show that $f$ is one-to-one and that whenever $f(x) < f(y)$, then $x < y$.
 
 \begin{proof}
 
-  TODO
+  We show that (i) $f$ is one-to-one and (ii) whenever $f(x) < f(y)$, then
+    $x < y$.
+
+  \paragraph{(i)}%
+
+    Let $y \in \ran{f}$.
+    By definition of the \nameref{ref:range} of a set, there exists some
+      $x_1 \in A$ such that $f(x_1) = y$.
+    Suppose there exists some $x_2 \in A$ such that $f(x_2) = y$.
+    We prove $f$ is one-to-one by showing $x_1 = x_2$.
+    Because $<$ is a linear ordering on $A$, there exist three cases to
+      consider:
+
+    \subparagraph{Case 1}%
+
+      Assume $x_1 < x_2$.
+      By hypothesis, $f$ is monotonic.
+      Thus $f(x_1) < f(x_2)$.
+      But $<$ is a trichotomous relation meaning it is not possible for
+        \textit{both} $f(x) = f(y)$ and $f(x) < f(y)$.
+      Thus our original assumption must be wrong.
+
+    \subparagraph{Case 2}%
+
+      Assume $x_1 = x_2$.
+      Then we are immediately finished.
+
+    \subparagraph{Case 3}%
+
+      Assume $x_1 > x_2$.
+      By hypothesis, $f$ is monotonic.
+      Thus $f(x_1) > f(x_2)$.
+      But $<$ is a trichotomous relation meaning it is not possible for
+        \textit{both} $f(x) = f(y)$ and $f(x) > f(y)$.
+      Thus our original assumption must be wrong.
+
+    \subparagraph{Conclusion}%
+
+      Since the above cases are exhaustive, the only possibility is $x_1 = x_2$.
+      Thus $f$ is one-to-one.
+
+  \paragraph{(ii)}%
+
+    Suppose $f(x) < f(y)$.
+    There are three cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Assume $x < y$.
+      Then we are immediately finished.
+
+    \subparagraph{Case 2}%
+
+      Assume $x = y$.
+      Then $f(x) = f(y)$.
+      But $<$ is a trichotomous relation meaning it is not possible for
+        \textit{both} $f(x) = f(y)$ and $f(x) < f(y)$.
+      Thus our original assumption must be wrong.
+
+    \subparagraph{Case 3}%
+
+      Assume $x > y$.
+      By hypothesis, $f$ is monotonic.
+      Thus $f(x) > f(y)$.
+      But $<$ is a trichotomous relation meaning it is not possible for
+        \textit{both} $f(x) < f(y)$ and $f(x) > f(y)$.
+      Thus our original assumption must be wrong.
+
+    \subparagraph{Conclusion}%
+
+      Since the above cases are exhaustive, the only possibility is $x < y$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 3.45}}%
+\subsection{\pending{Exercise 3.45}}%
 \label{sub:exercise-3.45}
 
 Assume that $<_A$ and $<_B$ are linear orderings on $A$ and $B$, respectively.
@@ -5584,7 +5683,88 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  TODO
+  We show that $<_L$ is (i) \nameref{ref:transitive} and (ii)
+    \nameref{ref:trichotomous} on $A \times B$.
+
+  \paragraph{(i)}%
+
+    Let $\pair{a_1, b_1} <_L \pair{a_2, b_2}$ and
+      $\pair{a_2, b_2} <_L \pair{a_3, b_3}$.
+    Then either $a_1 <_A a_2$ or $a_1 = a_2 \land b_1 <_B b_2$.
+    Likewise, either $a_2 <_A a_3$ or $a_2 = a_3 \land b_2 <_B b_3$.
+    We consider each combination of cases in turn:
+
+    \subparagraph{Case 1}%
+
+      Suppose $a_1 <_A a_2$ and $a_2 <_A a_3$.
+      Since $<_A$ is a linear ordering, it follows $<_A$ is transitive.
+      Thus $a_1 <_A a_3$.
+      Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $a_1 <_A a_2$, $a_2 = a_3$, and $b_2 <_B b_3$.
+      Then $a_1 < a_3$.
+      Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+
+    \subparagraph{Case 3}%
+
+      Suppose $a_1 = a_2$, $b_1 <_B b_2$, and $a_2 <_A a_3$.
+      Then $a_1 <_A a_3$.
+      Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+
+    \subparagraph{Case 4}%
+
+      Suppose $a_1 = a_2$, $b_1 <_B b_2$, $a_2 = a_3$, and $b_2 <_B b_3$.
+      Then $a_1 = a_3$.
+      Since $<_B$ is a linear ordering, it follows $<_B$ is transitive.
+      Thus $b_1 <_B b_3$.
+      Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+
+    \subparagraph{Conclusion}%
+
+      These four cases are exhaustive and each conclude that $<_L$ is
+        transitive.
+
+  \paragraph{(ii)}%
+
+    Let $\pair{a_1, b_1}, \pair{a_2, b_2} \in A \times B$.
+    Because $<_A$ and $<_B$ are linear orderings on $A$ and $B$ respectively,
+      it follows $<_A$ and $<_B$ are both trichotomous on their respective sets.
+    Thus exactly one of $$a_1 <_A a_2, \quad a_1 = a_2, \quad a_2 <_A a_1$$
+      and $$b_1 <_B b_2, \quad b_1 = b_2, \quad b_2 <_B b_1$$ holds.
+    There are three cases we examine:
+
+    \subparagraph{Case 1}%
+    \label{spar:exercise-3.45-ii-case-1}
+
+      Suppose $a_1 <_A a_2$.
+      Then $\pair{a_1, b_1} <_L \pair{a_2, b_2}$.
+      This is trivially the only possible relationship between the ordered
+        pairs.
+
+    \subparagraph{Case 2}%
+
+      Suppose $a_1 = a_2$.
+      If $b_1 <_B b_2$, then $\pair{a_1, b_1} <_L \pair{a_2, b_2}$ is the only
+        possibility.
+      If $b_1 = b_2$, then $\pair{a_1, b_1} = \pair{a_2, b_2}$ is the only
+        possibility.
+      If $b_2 <_B b_1$, then $\pair{a_2, b_2} <_L \pair{a_1, b_1}$ is the only
+        possibility.
+
+    \subparagraph{Case 3}%
+
+      Suppose $a_2 <_A a_1$.
+      This case is analagous to \eqref{spar:exercise-3.45-ii-case-1}.
+
+    \subparagraph{Conclusion}%
+
+      In each of the above cases, we are always left with exactly one of
+        $$\pair{a_1, b_1} <_L \pair{a_2, b_2}, \quad
+          \pair{a_1, b_1} = \pair{a_2, b_2}, \quad
+          \pair{a_2, b_2} <_L \pair{a_1, b_1}.$$
+      Thus $<_L$ is trichotomous.
 
 \end{proof}
 
