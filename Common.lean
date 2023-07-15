@@ -1,4 +1,3 @@
-import Common.Algebra
 import Common.Finset
 import Common.List
 import Common.Logic
