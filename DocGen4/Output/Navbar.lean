@@ -15,7 +15,7 @@ open scoped DocGen4.Jsx
 
 def moduleListFile (file : NameExt) : BaseHtmlM Html := do
   return <div class={if (← getCurrentName) == file.name then "nav_link visible" else "nav_link"}>
-    <a href={← moduleNameExtToLink file}>{file.getString!}</a>
+    <a class={if file.ext == .pdf then "pdf_link" else ""} href={← moduleNameExtToLink file}>{file.getString!}</a>
   </div>
 
 /--
@@ -23,11 +23,14 @@ Build the HTML tree representing the module hierarchy.
 -/
 partial def moduleListDir (h : Hierarchy) : BaseHtmlM Html := do
   let children := Array.mk (h.getChildren.toList.map Prod.snd)
-  let dirs := children.filter (fun c => c.getChildren.toList.length != 0)
-  let files := children.filter (fun c => Hierarchy.isFile c && c.getChildren.toList.length = 0)
-    |>.map Hierarchy.getNameExt
-  let dirNodes ← dirs.mapM moduleListDir
-  let fileNodes ← files.mapM moduleListFile
+  let nodes ← children.mapM (fun c =>
+    if c.getChildren.toList.length != 0 then
+      moduleListDir c
+    else if Hierarchy.isFile c && c.getChildren.toList.length = 0 then
+      moduleListFile (Hierarchy.getNameExt c)
+    else
+      pure ""
+  )
   let moduleLink ← moduleNameToHtmlLink h.getName
   let summary :=
     if h.isFile then
@@ -38,8 +41,7 @@ partial def moduleListDir (h : Hierarchy) : BaseHtmlM Html := do
   pure
     <details class="nav_sect" "data-path"={moduleLink} [if (← getCurrentName).any (h.getName.isPrefixOf ·) then #[("open", "")] else #[]]>
       {summary}
-      [dirNodes]
-      [fileNodes]
+      [nodes]
     </details>
 
 /--

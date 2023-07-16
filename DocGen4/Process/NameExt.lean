@@ -18,6 +18,12 @@ def cmp : Extension → Extension → Ordering
   | pdf, pdf => Ordering.eq
   | pdf, _ => Ordering.gt
 
+instance : BEq Extension where
+  beq e1 e2 :=
+    match cmp e1 e2 with
+    | Ordering.eq => true
+    | _ => false
+
 def toString : Extension → String
   | html => "html"
   | pdf => "pdf"
