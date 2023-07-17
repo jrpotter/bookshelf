@@ -14,8 +14,8 @@ a {
    color: var(--link-color);
 }
 
-a.pdf_link {
-   color: purple;
+a.pdf {
+   color: var(--link-pdf-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -35,6 +35,7 @@ nav { line-height: normal; }
     --code-bg: #f3f3f3;
     --text-color: black;
     --link-color: hsl(210, 100%, 30%);
+    --link-pdf-color: hsl(272, 61%, 34%);
 
     --implicit-arg-text-color: var(--text-color);
 
@@ -65,6 +66,7 @@ nav { line-height: normal; }
         --code-bg: #363333;
         --text-color: #eee;
         --link-color: #58a6ff;
+        --link-pdf-color: #9d58fd;
 
         --implicit-arg-text-color: var(--text-color);
 
@@ -98,6 +100,7 @@ nav { line-height: normal; }
     --code-bg: #f3f3f3;
     --text-color: black;
     --link-color: hsl(210, 100%, 30%);
+    --link-pdf-color: hsl(272, 61%, 34%);
 
     --implicit-arg-text-color: var(--text-color);
 
@@ -129,6 +132,7 @@ nav { line-height: normal; }
     --code-bg: #363333;
     --text-color: #eee;
     --link-color: #58a6ff;
+    --link-pdf-color: #9d58fd;
 
     --implicit-arg-text-color: var(--text-color);
 
@@ -743,6 +747,11 @@ pre code { padding: 0 0; }
 a:link, a:visited, a:active {
     color:var(--link-color);
     text-decoration: none;
+}
+
+a.pdf:link, a.pdf:visited, a.pdf:active {
+    color:var(--link-pdf-color);
+    text-decoration: none
 }
 
 /** Show it on hover though. **/
