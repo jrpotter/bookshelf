@@ -751,7 +751,6 @@ a:link, a:visited, a:active {
 
 a.pdf:link, a.pdf:visited, a.pdf:active {
     color:var(--link-pdf-color);
-    text-decoration: none
 }
 
 /** Show it on hover though. **/
