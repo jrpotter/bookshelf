@@ -4,6 +4,7 @@ import Bookshelf.Enderton.Set.Relation
 import Common.Logic.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Rel
+import Mathlib.Init.Algebra.Classes
 import Mathlib.Order.RelClasses
 import Mathlib.Tactic.CasesM
 
@@ -2166,5 +2167,175 @@ theorem exercise_3_41_a {Q : Set.Relation (ℝ × ℝ)}
     exact this
 
 end Relation
+
+/-- #### Theorem 3R
+
+Let `R` be a linear ordering on `A`.
+
+(i) There is no `x` for which `xRx`.
+(ii) For distinct `x` and `y` in `A`, either `xRy` or `yRx`.
+-/
+theorem theorem_3r {R : Rel α α} (hR : IsStrictTotalOrder α R)
+  : (∀ x : α, ¬ R x x) ∧ (∀ x y : α, x ≠ y → R x y ∨ R y x) := by
+  apply And.intro
+  · exact hR.irrefl
+  · intro x y h
+    apply Or.elim (hR.trichotomous x y)
+    · intro h₁
+      left
+      exact h₁
+    · intro h₁
+      apply Or.elim h₁
+      · intro h₂
+        exact absurd h₂ h
+      · intro h₂
+        right
+        exact h₂
+
+/-- #### Exercise 3.43
+
+Assume that `R` is a linear ordering on a set `A`. Show that `R⁻¹` is also a
+linear ordering on `A`.
+-/
+theorem exercise_3_43 {R : Rel α α} (hR : IsStrictTotalOrder α R)
+  : IsStrictTotalOrder α R.inv := by
+  refine { trichotomous := ?_, irrefl := ?_, trans := ?_ }
+  · intro a b
+    unfold Rel.inv flip
+    apply Or.elim (hR.trichotomous a b)
+    · intro h; right; right; exact h
+    · intro h
+      apply Or.elim h
+      · intro h; right; left; exact h
+      · intro h; left; exact h
+  · intro x h
+    unfold Rel.inv flip at h
+    exact absurd h (hR.irrefl x)
+  · intro a b c hab hac
+    unfold Rel.inv flip at *
+    exact hR.trans c b a hac hab
+
+/-! #### Exercise 3.44
+
+Assume that `<` is a linear ordering on a set `A`. Assume that `f : A → A` and
+that `f` has the property that whenever `x < y`, then `f(x) < f(y)`. Show that
+`f` is one-to-one and that whenever `f(x) < f(y)`, then `x < y`.
+-/
+
+theorem exercise_3_44_i {R : Rel α α} (hR : IsStrictTotalOrder α R)
+  (f : α → α) (hf : ∀ x y, R x y → R (f x) (f y))
+  : Function.Injective f := by
+  unfold Function.Injective
+  intro x₁ x₂ hx
+  apply Or.elim (hR.trichotomous x₁ x₂)
+  · -- `x₁ < x₂`
+    intro hx₁
+    have nh := hf x₁ x₂ hx₁
+    rw [hx] at nh
+    exact absurd nh (hR.irrefl (f x₂))
+  · intro hx₁
+    apply Or.elim hx₁
+    · simp  -- `x₁ = x₂`
+    · -- `x₁ > x₂`
+      intro hx₂
+      have nh := hf x₂ x₁ hx₂
+      rw [← hx] at nh
+      exact absurd nh (hR.irrefl (f x₁))
+
+theorem exercise_3_44_ii {R : Rel α α} (hR : IsStrictTotalOrder α R)
+  (f : α → α) (hf : ∀ x y, R x y → R (f x) (f y))
+  : R (f x) (f y) → R x y := by
+  intro h
+  apply Or.elim (hR.trichotomous x y)
+  · simp  -- `x < y`
+  · intro h₁
+    apply Or.elim h₁
+    · -- `x = y`
+      intro h₂
+      rw [h₂] at h
+      exact absurd h (hR.irrefl (f y))
+    · -- `x > y`
+      intro h₂
+      have := hR.trans (f x) (f y) (f x) h (hf y x h₂)
+      exact absurd this (hR.irrefl (f x))
+
+/-- #### Exercise 3.45
+
+Assume that `<_A` and `<_B` are linear orderings on `A` and `B`, respectively.
+Define the binary relation `<_L` on the Cartesian product `A × B` by:
+```
+⟨a₁, b₁⟩ <_L ⟨a₂, b₂⟩ iff either a₁ <_A a₂ or (a₁ = a₂ ∧ b₁ <_B b₂).
+```
+Show that `<_L` is a linear ordering on `A × B`. (The relation `<_L` is called
+*lexicographic* ordering, being the ordering used in making dictionaries.)
+-/
+theorem exercise_3_45 {A : Rel α α} {B : Rel β β} {R : Rel (α × β) (α × β)}
+  (hA : IsStrictTotalOrder α A) (hB : IsStrictTotalOrder β B)
+  (hR : ∀ a₁ b₁ a₂ b₂, R (a₁, b₁) (a₂, b₂) ↔ A a₁ a₂ ∨ (a₁ = a₂ ∧ B b₁ b₂))
+  : IsStrictTotalOrder (α × β) R := by
+  refine { trichotomous := ?_, irrefl := ?_, trans := ?_ }
+  · intro (a₁, b₁) (a₂, b₂)
+    apply Or.elim (hA.trichotomous a₁ a₂)
+    · -- `a₁ <_A a₂`
+      intro ha
+      left
+      exact (hR a₁ b₁ a₂ b₂).mpr (Or.inl ha)
+    · intro ha
+      apply Or.elim ha
+      · -- `a₁ = a₂`
+        intro ha₁
+        apply Or.elim (hB.trichotomous b₁ b₂)
+        · -- `b₁ <_B b₂`
+          intro hb
+          left
+          exact (hR a₁ b₁ a₂ b₂).mpr (Or.inr ⟨ha₁, hb⟩)
+        · intro hb
+          apply Or.elim hb
+          · -- `b₁ = b₂`
+            intro hb₁
+            right; left
+            rw [ha₁, hb₁]
+          · -- `b₂ <_B b₁`
+            intro hb₁
+            right; right
+            exact (hR a₂ b₂ a₁ b₁).mpr (Or.inr ⟨ha₁.symm, hb₁⟩)
+      · -- `a₂ <_A a₁`
+        intro ha₁
+        right; right
+        exact (hR a₂ b₂ a₁ b₁).mpr (Or.inl ha₁)
+  · intro (a, b) h
+    have := (hR a b a b).mp h
+    apply Or.elim this
+    · intro ha₁
+      exact absurd ha₁ (hA.irrefl a)
+    · intro ⟨_, hb₁⟩
+      exact absurd hb₁ (hB.irrefl b)
+  · intro (a₁, b₁) (a₂, b₂) (a₃, b₃) h₁ h₂
+    have h₁' := (hR a₁ b₁ a₂ b₂).mp h₁
+    have h₂' := (hR a₂ b₂ a₃ b₃).mp h₂
+    apply Or.elim h₁'
+    · -- `a₁ <_A a₂`
+      intro ha₁
+      apply Or.elim h₂'
+      · -- `a₂ <_A a₃`
+        intro ha₂
+        have := hA.trans a₁ a₂ a₃ ha₁ ha₂
+        exact (hR a₁ b₁ a₃ b₃).mpr (Or.inl this)
+      · -- `a₂ = a₃ ∧ b₂ <_B b₃`
+        intro ha₂
+        rw [ha₂.left] at ha₁
+        exact (hR a₁ b₁ a₃ b₃).mpr (Or.inl ha₁)
+    · -- `a₁ = a₂ ∧ b₁ <_B b₂`
+      intro ha₁
+      apply Or.elim h₂'
+      · -- `a₂ <_A a₃`
+        intro ha₂
+        rw [← ha₁.left] at ha₂
+        exact (hR a₁ b₁ a₃ b₃).mpr (Or.inl ha₂)
+      · -- `a₂ = a₃ ∧ b₂ <_B b₃`
+        intro ⟨ha₂, hb₂⟩
+        rw [← ha₁.left] at ha₂
+        have := hB.trans b₁ b₂ b₃ ha₁.right hb₂
+        exact (hR a₁ b₁ a₃ b₃).mpr (Or.inr ⟨ha₂, this⟩)
 
 end Enderton.Set.Chapter_3

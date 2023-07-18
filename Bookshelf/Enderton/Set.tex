@@ -255,9 +255,26 @@ A \textbf{linear ordering} on $A$ (also called a \textbf{total ordering} on $A$)
   \item $R$ is \nameref{ref:trichotomous}.
 \end{enumerate}
 
+\begin{note}
+  This definition does not agree with how Lean defines a linear order.
+
+  \vspace{6pt}
+  Trichotomy is equivalent to asymmetry and connectivity and asymmetry is
+  equivalent to antisymmetry and irreflexivity. Thus a linear order, as defined
+  by Enderton, is a binary relation with the following four properties:
+
+  \vspace{6pt}
+  \begin{enumerate}[(i)]
+    \item Irreflexivity
+    \item Antisymmetry
+    \item Connectivity (i.e. totality)
+    \item Transitivity
+  \end{enumerate}
+\end{note}
+
 \begin{definition}
 
-  \lean*{Mathlib/Init/Algebra/Classes}{IsLinearOrder}
+  \lean*{Mathlib/Init/Algebra/Classes}{IsStrictTotalOrder}
 
 \end{definition}
 
@@ -811,7 +828,9 @@ List all the members of $V_4$.
 
   There is no set to which every set belongs.
 
-  \note{This was revisited after reading Enderton's proof prior.}
+  \begin{note}
+    This was revisited after reading Enderton's proof prior.
+  \end{note}
 
 \end{theorem}
 
@@ -2670,8 +2689,10 @@ If not, then under what conditions does equality hold?
 
   \lean*{Mathlib/SetTheory/ZFC/Basic}{Set.prod}
 
-  \note{The above Lean proof is a definition (i.e. an axiom). It does not prove
-    such a set's existence from first principles.}
+  \begin{note}
+    The above Lean proof is a definition (i.e. an axiom). It does not prove
+    such a set's existence from first principles.
+  \end{note}
 
   Define $C = A \cup B$.
   Then for all $x \in A$ and for all $y \in B$, $x$ and $y$ are both in $C$.
@@ -3556,7 +3577,7 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \section{Ordering Relations}%
 \hyperlabel{sec:ordering-relations}
 
-\subsection{\pending{Theorem 3R}}%
+\subsection{\verified{Theorem 3R}}%
 \hyperlabel{sub:theorem-3r}
 
 \begin{theorem}[3R]
@@ -3570,6 +3591,9 @@ For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 \end{theorem}
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3r}
 
   Suppose $R$ is a \nameref{ref:linear-ordering} on $A$.
 
@@ -5545,20 +5569,23 @@ State precisely the "analogous results" mentioned in Theorem 3Q.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.43}}%
-\label{sub:exercise-3.43}
+\subsection{\verified{Exercise 3.43}}%
+\hyperlabel{sub:exercise-3.43}
 
 Assume that $R$ is a linear ordering on a set $A$.
 Show that $R^{-1}$ is also a linear ordering on $A$.
 
 \begin{proof}
 
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_43}
+
   Assume that $R$ is a \nameref{ref:linear-ordering} on a set $A$.
   Then $R$ is \nameref{ref:transitive} and \nameref{ref:trichotomous}.
   We show that (i) $R^{-1}$ is transitive and (ii) $R^{-1}$ is trichotomous.
 
   \paragraph{(i)}%
-  \label{par:exercise-3.43-i}
+  \hyperlabel{par:exercise-3.43-i}
 
     Let $\pair{x, y}, \pair{y, z} \in R^{-1}$.
     By definition of the \nameref{ref:inverse} of a set,
@@ -5568,7 +5595,7 @@ Show that $R^{-1}$ is also a linear ordering on $A$.
     Thus $R^{-1}$ is transitive.
 
   \paragraph{(ii)}%
-  \label{par:exercise-3.43-ii}
+  \hyperlabel{par:exercise-3.43-ii}
 
     Let $x, y \in A$.
     Since $R$ is trichotomous on $A$, it follows that exactly one of the
@@ -5586,8 +5613,8 @@ Show that $R^{-1}$ is also a linear ordering on $A$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.44}}%
-\label{sub:exercise-3.44}
+\subsection{\verified{Exercise 3.44}}%
+\hyperlabel{sub:exercise-3.44}
 
 Assume that $<$ is a linear ordering on a set $A$.
 Assume that $f \colon A \rightarrow A$ and that $f$ has the property that
@@ -5595,6 +5622,14 @@ Assume that $f \colon A \rightarrow A$ and that $f$ has the property that
 Show that $f$ is one-to-one and that whenever $f(x) < f(y)$, then $x < y$.
 
 \begin{proof}
+
+  \statementpadding
+
+  \lean*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_44\_i}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_44\_ii}
 
   We show that (i) $f$ is one-to-one and (ii) whenever $f(x) < f(y)$, then
     $x < y$.
@@ -5670,8 +5705,8 @@ Show that $f$ is one-to-one and that whenever $f(x) < f(y)$, then $x < y$.
 
 \end{proof}
 
-\subsection{\pending{Exercise 3.45}}%
-\label{sub:exercise-3.45}
+\subsection{\verified{Exercise 3.45}}%
+\hyperlabel{sub:exercise-3.45}
 
 Assume that $<_A$ and $<_B$ are linear orderings on $A$ and $B$, respectively.
 Define the binary relation $<_L$ on the Cartesian product $A \times B$ by:
@@ -5682,6 +5717,9 @@ Show that $<_L$ is a linear ordering on $A \times B$.
   ordering used in making dictionaries.)
 
 \begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_45}
 
   We show that $<_L$ is (i) \nameref{ref:transitive} and (ii)
     \nameref{ref:trichotomous} on $A \times B$.
@@ -5736,7 +5774,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     There are three cases we examine:
 
     \subparagraph{Case 1}%
-    \label{spar:exercise-3.45-ii-case-1}
+    \hyperlabel{spar:exercise-3.45-ii-case-1}
 
       Suppose $a_1 <_A a_2$.
       Then $\pair{a_1, b_1} <_L \pair{a_2, b_2}$.
