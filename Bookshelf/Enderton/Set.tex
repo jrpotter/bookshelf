@@ -83,7 +83,11 @@ The \textbf{composition} of sets $F$ and $G$ is
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.comp}
+
+  \lean*{Mathlib/Data/Rel}{Rel.comp}
 
 \end{definition}
 
@@ -106,7 +110,11 @@ The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.dom}
+
+  \lean*{Mathlib/Data/Rel}{Rel.dom}
 
 \end{definition}
 
@@ -215,9 +223,59 @@ The \textbf{image of $A$ under $F$} is the set
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.image}
 
+  \lean*{Mathlib/Data/Rel}{Rel.image}
+
 \end{definition}
+
+\section{\defined{Inductive Set}}%
+\hyperlabel{ref:inductive-set}
+
+A set $A$ is said to be \textit{inductive} if and only if $\emptyset \in A$ and
+  it is "closed under \nameref{ref:successor}", i.e.
+  $$(\forall a \in A) a^+ \in A.$$
+
+\begin{note}
+  Induction is baked into Lean's type system.
+  In particular, the $\emptyset$ and "closed under successor" properties are
+    analagous to base and recursive constructors of an inductive data type
+    respectively.
+\end{note}
+
+\begin{definition}
+
+  \statementpadding
+
+  \lean*{Prelude}{Nat}
+
+  \lean*{Mathlib/Init/Set}{Set.univ}
+
+\end{definition}
+
+\section{\defined{Infinity Axiom}}%
+\hyperlabel{ref:infinity-axiom}
+
+There exists an \nameref{ref:inductive-set}:
+  $$(\exists A)\left[ \emptyset \in A \land (\forall a \in A) a^+ \in A \right].$$
+
+\begin{note}
+  Since the definition of natural numbers in Lean satisfies the properties
+    required by this axiom, there is no need to explicitly state the axiom
+    separately in Lean.
+\end{note}
+
+\begin{axiom}
+
+  \statementpadding
+
+  \lean*{Prelude}{Nat}
+
+  \lean*{Mathlib/Init/Set}{Set.univ}
+
+\end{axiom}
 
 \section{\defined{Inverse}}%
 \hyperlabel{ref:inverse}
@@ -227,7 +285,11 @@ The \textbf{inverse} of a set $F$ is the set
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.inv}
+
+  \lean{Mathlib/Data/Rel}{Rel.inv}
 
 \end{definition}
 
@@ -260,8 +322,9 @@ A \textbf{linear ordering} on $A$ (also called a \textbf{total ordering} on $A$)
 
   \vspace{6pt}
   Trichotomy is equivalent to asymmetry and connectivity and asymmetry is
-  equivalent to antisymmetry and irreflexivity. Thus a linear order, as defined
-  by Enderton, is a binary relation with the following four properties:
+    equivalent to antisymmetry and irreflexivity.
+  Thus a linear order, as defined by Enderton, is a binary relation with the
+    following four properties:
 
   \vspace{6pt}
   \begin{enumerate}[(i)]
@@ -278,6 +341,19 @@ A \textbf{linear ordering} on $A$ (also called a \textbf{total ordering} on $A$)
 
 \end{definition}
 
+\section{\defined{Natural Number}}%
+\hyperlabel{ref:natural-number}
+
+A \textbf{natural number} is a set that belongs to every inductive set.
+The set of all natural numbers exists by virtue of \nameref{sub:theorem-4a}.
+This set is denoted as $\omega$.
+
+\begin{definition}
+
+  \lean*{Prelude}{Nat}
+
+\end{definition}
+
 \section{\defined{Ordered Pair}}%
 \hyperlabel{ref:ordered-pair}
 
@@ -286,7 +362,11 @@ For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/OrderedPair}{OrderedPair}
+
+  \lean*{Prelude}{Prod}
 
 \end{definition}
 
@@ -385,7 +465,11 @@ The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.ran}
+
+  \lean*{Mathlib/Data/Rel}{Rel.codom}
 
 \end{definition}
 
@@ -397,7 +481,11 @@ A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for all
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isReflexive}
+
+  \lean*{Mathlib/Init/Algebra/Classes}{IsRefl}
 
 \end{definition}
 
@@ -408,7 +496,11 @@ A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation}
+
+  \lean*{Mathlib/Data/Rel}{Rel}
 
 \end{definition}
 
@@ -421,6 +513,23 @@ The \textbf{restriction} of a set $F$ to set $A$ is the set
 \begin{definition}
 
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.restriction}
+
+\end{definition}
+
+\section{\defined{Successor}}%
+\label{ref:successor}
+
+For any set $a$, its \textbf{successor} is defined by $$a^+ = a \cup \{a\}.$$
+
+\begin{note}
+  The corresponding Lean reference refers to the `Nat.succ` constructor.
+  This is not represented internally as a union of sets, but serves the same
+    role.
+\end{note}
+
+\begin{definition}
+
+  \lean*{Prelude}{Nat.succ}
 
 \end{definition}
 
@@ -469,7 +578,11 @@ A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
 
 \begin{definition}
 
+  \statementpadding
+
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isTransitive}
+
+  \lean*{Mathlib/Init/Algebra/Classes}{IsTrans}
 
 \end{definition}
 
@@ -2690,8 +2803,8 @@ If not, then under what conditions does equality hold?
   \lean*{Mathlib/SetTheory/ZFC/Basic}{Set.prod}
 
   \begin{note}
-    The above Lean proof is a definition (i.e. an axiom). It does not prove
-    such a set's existence from first principles.
+    The above Lean proof is a definition (i.e. an axiom).
+    It does not prove such a set's existence from first principles.
   \end{note}
 
   Define $C = A \cup B$.
@@ -5803,6 +5916,125 @@ Show that $<_L$ is a linear ordering on $A \times B$.
           \pair{a_1, b_1} = \pair{a_2, b_2}, \quad
           \pair{a_2, b_2} <_L \pair{a_1, b_1}.$$
       Thus $<_L$ is trichotomous.
+
+\end{proof}
+
+\chapter{Natural Numbers}%
+\hyperlabel{chap:natural-numbers}
+
+\section{Inductive Sets}%
+\hyperlabel{sec:inductive-sets}
+
+\subsection{\unverified{Theorem 4A}}%
+\hyperlabel{sub:theorem-4a}
+
+\begin{theorem}[4A]
+
+  There is a set whose members are exactly the natural numbers.
+
+\end{theorem}
+
+\begin{proof}
+
+  By the \nameref{ref:infinity-axiom}, there exists an
+    \nameref{ref:inductive-set} $A$.
+  By the \nameref{ref:subset-axioms}, there exists a set $B$ such that
+    $$x \in B \iff x \in A \land \left[\forall C,
+      (\emptyset \in C \land
+        (\forall c \in C) c^+ \in C) \Rightarrow x \in C\right].$$
+  In other words, $x \in B$ if and only if $x \in A$ and $x$ is a natural
+    number.
+  Thus $B$ is the set whose members are exactly the natural numbers.
+
+\end{proof}
+
+\subsection{\unverified{Theorem 4B}}%
+\hyperlabel{sub:theorem-4b}
+
+\begin{theorem}[4B]
+
+  $\omega$ is inductive, and is a subset of every other inductive set.
+
+\end{theorem}
+
+\begin{proof}
+
+  $\omega$ denotes the set of \nameref{ref:natural-number}s.
+  We show $\omega$ is an \nameref{ref:inductive-set} by proving (i)
+    $\emptyset \in \omega$ and (ii) $\omega$ is closed under
+    \nameref{ref:successor}.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4b-i}
+
+    By definition, $\emptyset$ is a member of every inductive set.
+    Thus $\emptyset$ is a natural number, i.e. a member of $\omega$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4b-ii}
+
+    Let $n \in \omega$.
+    That is, let $n$ be a natural number.
+    By definition, $n$ is a member of every inductive set.
+    By definition of an inductive set, $n^+$ is then a member of every inductive
+      set as well.
+    Thus $n^+$ is a natural number, i.e. $n^+ \in \omega$.
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:theorem-4b-i} and \nameref{par:theorem-4b-ii}, it follows
+      $\omega$ is inductive.
+    It follows immediately from the definition of a natural number that $\omega$
+      is a subset of every other inductive set.
+
+\end{proof}
+
+\subsection{\verified{Theorem 4C}}%
+\hyperlabel{sub:theorem-4c}
+
+\begin{theorem}[4C]
+
+  Every natural number except $0$ is the successor of some natural number.
+
+\end{theorem}
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4c}
+
+  Let $T = \{n \mid n = 0 \lor (\exists m) n = m^+\}$.
+  It trivially follows that $\emptyset \in T$.
+  Let $x \in T$.
+  Then $x^+ \in T$ since $(\exists m) x^+ = m^+$, namely $m = x$.
+  Therefore $T$ is inductive.
+  By \nameref{sub:theorem-4b}, $\omega$ is a subset of $T$.
+  Thus every natural number satisfies the condition written in $T$'s definition.
+  In other words, every natural number except $0$ is the successor of some
+    natural number.
+
+\end{proof}
+
+\section{Exercises 4}%
+\hyperlabel{sec:exercises-4}
+
+\subsection{\verified{Exercise 4.1}}%
+\label{sub:exercise-4.1}
+
+Show that $1 \neq 3$ i.e., that $\emptyset^+ \neq \emptyset^{+++}$.
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_1}
+
+  By definition,
+    \begin{align*}
+      1 & = \{\emptyset\} \\
+      3 & = \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}.
+    \end{align*}
+  By the \nameref{ref:extensionality-axiom}, these two sets are trivially not
+    equal to one another.
 
 \end{proof}
 
