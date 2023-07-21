@@ -419,6 +419,25 @@ A \textbf{partition} $\Pi$ of a set $A$ is a set of nonempty subsets of $A$ that
 
 \end{definition}
 
+\section{\defined{Peano System}}%
+\hyperlabel{ref:peano-system}
+
+A \textbf{Peano system} is a triple $\langle N, S, e \rangle$ consisting of a
+  set $N$, a function $S \colon N \rightarrow N$, and a member $e \in N$ such
+  that the following three conditions are met:
+\begin{enumerate}[(i)]
+  \item $e \not\in \ran{S}$.
+  \item $S$ is one-to-one.
+  \item Every subset $A$ of $N$ containing $e$ and closed under $S$ is $N$
+    itself.
+\end{enumerate}
+
+\begin{definition}
+
+  \lean*{Common/Set/Peano}{Peano.System}
+
+\end{definition}
+
 \section{\defined{Power Set}}%
 \hyperlabel{ref:power-set}
 
@@ -6015,11 +6034,52 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
+\section{Peano's Postulates}%
+\hyperlabel{sec:peanos-postulates}
+
+\subsection{\verified{Theorem 4D}}%
+\hyperlabel{sub:theorem-4d}
+
+\begin{theorem}[4D]
+
+  $\langle \omega, \sigma, 0 \rangle$ is a Peano system.
+
+\end{theorem}
+
+\begin{proof}
+
+  \lean{Common/Set/Peano}{Peano.instSystemNatUnivSuccOfNatInstOfNatNat}
+
+  Note $\sigma$ is defined as $\sigma = \{\pair{n, n^+} \mid n \in \omega\}$.
+  To prove $\langle \omega, \sigma, 0 \rangle$ is a \nameref{ref:peano-system},
+    we must show that (i) $0 \not\in \ran{S}$, (ii) $\sigma$ is one-to-one, and
+    (iii) every subset $A$ of $\omega$ containing $0$ and closed under $\sigma$
+    is $\omega$ itself.
+
+  \paragraph{(i)}%
+
+    This follows immediately from \nameref{sub:theorem-4c}.
+
+  \paragraph{(ii)}%
+
+    Let $n^+ \in \ran{\sigma}$.
+    By construction, there exists some $m_1 \in \omega$ such that $m_1 = n^+$.
+    Suppose there exists some $m_2 \in \omega$ such that $m_2 = n^+$.
+    By definition of the \nameref{ref:successor}, $m_1 = n \cup \{n\} = m_2$.
+    By the \nameref{ref:extensionality-axiom}, $m_1 = m_2$.
+    Thus $\sigma$ is one-to-one.
+
+  \paragraph{(iii)}%
+
+    This follows immediately from \nameref{sub:theorem-4b}.
+
+\end{proof}
+
 \section{Exercises 4}%
 \hyperlabel{sec:exercises-4}
 
 \subsection{\verified{Exercise 4.1}}%
-\label{sub:exercise-4.1}
+\hyperlabel{sub:exercise-4.1}
 
 Show that $1 \neq 3$ i.e., that $\emptyset^+ \neq \emptyset^{+++}$.
 

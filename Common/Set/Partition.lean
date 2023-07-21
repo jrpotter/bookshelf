@@ -1,7 +1,3 @@
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.List.Sort
-import Mathlib.Data.Set.Intervals.Basic
-
 import Common.List.Basic
 import Common.List.NonEmpty
 import Common.Set.Interval

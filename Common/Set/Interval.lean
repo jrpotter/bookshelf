@@ -1,8 +1,6 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Set.Intervals.Basic
 
-import Common.List.Basic
-
 /-! # Common.Set.Interval
 
 A representation of a range of values.
