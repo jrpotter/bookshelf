@@ -605,6 +605,13 @@ A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
 
 \end{definition}
 
+\section{\defined{Transitive Set}}%
+\hyperlabel{ref:transitive-set}
+
+A set $A$ is said to be \textbf{transitive} if and only if every member of a
+  member of $A$ is a member of $A$ itself.
+That is, $\bigcup A \subseteq A$.
+
 \section{\defined{Trichotomous}}%
 \hyperlabel{ref:trichotomous}
 
@@ -6075,6 +6082,109 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
+\subsection{\unverified{Theorem 4E}}%
+\hyperlabel{sub:theorem-4e}
+
+\begin{theorem}[4E]
+
+  For a transitive set $a$, $$\bigcup \left(a^+\right) = a.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $a$ be a \nameref{ref:transitive-set}.
+  We show that
+    \begin{equation}
+      \hyperlabel{sub:theorem-4e-eq1}
+      x \in \bigcup \left(a^+\right) \iff x \in a.
+    \end{equation}
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $x \in \bigcup \left(a^+\right)$.
+    By definition of \nameref{ref:successor},
+      $x \in \bigcup \left(a \cup \{a\}\right)$.
+    Then there exists some $b \in a \cup \{a\}$ such that $x \in b$.
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $b \in a$.
+      By definition of a transitive set, $x \in b \in a$ means $x \in a$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $b \in \{a\}$.
+      Then $b = a$ and immediately $x \in b = a$.
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $x \in a$.
+    Then immediately $x \in a \cup \{a\}$.
+    Thus there exists some $b$ such that $b \in a \cup \{a\}$ and $x \in b$,
+      namely $b = \{a\}$.
+    Thus $x \in \bigcup \left(a^+\right)$.
+
+  \paragraph{Conclusion}%
+
+    We have shown both sides of \eqref{sub:theorem-4e-eq1} holds.
+    By the \nameref{ref:extensionality-axiom}, $\bigcup \left(a^+\right) = a$.
+
+\end{proof}
+
+\subsection{\unverified{Theorem 4F}}%
+\hyperlabel{sub:theorem-4f}
+
+\begin{theorem}[4F]
+
+  Every natural number is a transitive set.
+
+\end{theorem}
+
+\begin{proof}
+
+  Let $T = \{n \in \omega \mid n \text{ is a transitive set}\}$.
+  We (i) prove that $T$ is an \nameref{ref:inductive-set} and then (ii) every
+    natural number is a transitive set.
+
+  \paragraph{(i)}%
+  \label{par:theorem-4f-i}
+
+    First, $\emptyset \in T$ since it vacuously holds that a member of a
+      member of $\emptyset$ is itself a member of $\emptyset$.
+    Next, let $n \in T$ and consider whether $n^+ \in T$.
+    Since $n$ is a transitive set, \nameref{sub:theorem-4e} implies
+      $\bigcup \left(n^+\right) = n$.
+    But $n \subseteq n^+ = n \cup \{n\}$.
+    Thus $\bigcup \left(n^+\right) \subseteq n+$, i.e. $n^+$ is a transitive
+      set.
+    Therefore $n^+ \in T$.
+    Hence $T$ is inductive.
+
+  \paragraph{(ii)}%
+
+    Notice $T \subseteq \omega$.
+    By \nameref{par:theorem-4f-i} and \nameref{sub:theorem-4b}, $T = \omega$.
+    Thus every natural number is a transitive set.
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4G}}%
+\label{sub:theorem-4g}
+
+\begin{theorem}[4G]
+
+  The set $\omega$ is a transitive set.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
 \section{Exercises 4}%
 \hyperlabel{sec:exercises-4}
 
@@ -6095,6 +6205,73 @@ Show that $1 \neq 3$ i.e., that $\emptyset^+ \neq \emptyset^{+++}$.
     \end{align*}
   By the \nameref{ref:extensionality-axiom}, these two sets are trivially not
     equal to one another.
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.2}}%
+\hyperlabel{sub:exercise-4.2}
+
+Show that if $a$ is a transitive set, then $a^+$ is also a transitive set.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.3}}%
+\hyperlabel{sub:exercise-4.3}
+
+\begin{enumerate}[(a)]
+  \item Show that if $a$ is a transitive set, then $\powerset{a}$ is also a
+    transitive set.
+  \item Show that if $\powerset{a}$ is a transitive set, then $a$ is also a
+    transitive set.
+\end{enumerate}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.4}}%
+\hyperlabel{sub:exercise-4.4}
+
+Show that if $a$ is a transitive set, then $\bigcup a$ is also a transitive set.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.5}}%
+\hyperlabel{sub:exercise-4.5}
+
+Assume that every member of $\mathscr{A}$ is a transitive set.
+
+\begin{enumerate}[(a)]
+  \item Show that $\bigcup \mathscr{A}$ is a transitive set.
+  \item Show that $\bigcap \mathscr{A}$ is a transitive set (assume that
+    $\mathscr{A}$ is nonempty).
+\end{enumerate}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.6}}%
+\hyperlabel{sub:exercise-4.6}
+
+Prove the converse to Theorem 4E: If $\bigcup \left(a^+\right) = a$, then $a$ is
+  a transitive set.
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 

@@ -34,17 +34,7 @@ theorem nonempty_minkowski_sum_iff_nonempty_add_nonempty {α : Type u} [Add α]
   · intro ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
     exact ⟨a + b, ⟨a, ⟨ha, ⟨b, ⟨hb, rfl⟩⟩⟩⟩⟩
 
-/-! ## Characteristic Function -/
-
-/--
-The characteristic function of a `Set` `S`.
-
-It returns `1` if the specified input belongs to `S` and `0` otherwise.
--/
-def characteristic (S : Set α) (x : α) [Decidable (x ∈ S)] : Nat :=
-  if x ∈ S then 1 else 0
-
-/-! ## Equality -/
+/-! ## Pair Sets -/
 
 /--
 If `{x, y} = {x}` then `x = y`.
