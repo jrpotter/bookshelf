@@ -6170,7 +6170,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\sorry{Theorem 4G}}%
+\subsection{\unverified{Theorem 4G}}%
 \label{sub:theorem-4g}
 
 \begin{theorem}[4G]
@@ -6181,7 +6181,32 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  TODO
+  Let $T = \{n \in \omega \mid \forall t \in n, t \in \omega\}$.
+  We prove that (i) $T$ is an \nameref{ref:inductive-set} and then (ii) every
+    member of a natural number is itself a natural number.
+
+  \paragraph{(i)}%
+  \label{par:theorem-4g-i}
+
+    First, it vacuously holds that $\emptyset \in T$.
+    Next, let $n \in T$.
+    We must prove that $n^+ \in T$ as well.
+    By definition of the \nameref{ref:successor}, $n^+ = n \cup \{n\}$.
+    That is, either $n^+ = n$ or $n^+ = \{n\}$.
+    If the former, then every member of $n^+$ must be a natural number since
+      this already holds for $n$.
+    If the latter, the only member of $n^+$ is $n$ which is, by definition of
+      $T$, a natural number.
+    Thus $n^+ \in T$.
+    We conclude that $T$ is an inductive set.
+
+  \paragraph{(ii)}%
+
+    Since $T \subseteq \omega$, \nameref{par:theorem-4g-i} and
+      \nameref{sub:theorem-4b} implies $T = \omega$.
+    Thus the member of every natural number is itself a natural number.
+    In other words, $\bigcup \omega \subseteq \omega$.
+    Therefore $\omega$ is indeed a \nameref{ref:transitive-set}.
 
 \end{proof}
 
@@ -6208,18 +6233,23 @@ Show that $1 \neq 3$ i.e., that $\emptyset^+ \neq \emptyset^{+++}$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.2}}%
+\subsection{\unverified{Exercise 4.2}}%
 \hyperlabel{sub:exercise-4.2}
 
 Show that if $a$ is a transitive set, then $a^+$ is also a transitive set.
 
 \begin{proof}
 
-  TODO
+  Suppose $a$ is a \nameref{ref:transitive-set}.
+  By \nameref{sub:theorem-4e}, it follows $\bigcup \left(a^+\right) = a$.
+  By definition of a \nameref{ref:successor}, $a^+ = a \cup \{a\}$.
+  Thus it immediately follows
+    $$\bigcup \left(a^+\right) = a \subseteq a \cup \{a\} = a^+.$$
+  Therefore $a^+$ is indeed a transitive set.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.3}}%
+\subsection{\unverified{Exercise 4.3}}%
 \hyperlabel{sub:exercise-4.3}
 
 \begin{enumerate}[(a)]
@@ -6231,47 +6261,101 @@ Show that if $a$ is a transitive set, then $a^+$ is also a transitive set.
 
 \begin{proof}
 
-  TODO
+  \paragraph{(a)}%
+
+    Suppose $a$ is a \nameref{ref:transitive-set}.
+    We show that $\bigcup \powerset{a} \subseteq \powerset{a}$.
+    Let $t \in \bigcup \powerset{a}$.
+    By definition of the \nameref{ref:power-set}, there exists some
+      $X \subseteq a$ such that $t \in X$.
+    Thus $t \in a$.
+    Because $a$ is a transitive set, every member of $t$ is a member of $a$.
+    In other words, $t \subseteq a$.
+    Equivalently, $t \in \powerset{a}$.
+
+  \paragraph{(b)}%
+
+    Suppose $\powerset{a}$ is a transitive set.
+    We show that $\bigcup a \subseteq a$.
+    Let $t \in \bigcup a$.
+    Then there exists some $b \in a$ such that $t \in b$.
+    Since $\{b\}$ is a member of $\powerset{a}$ and $\powerset{a}$ is a
+      transitive set, $b \in \powerset{a}$.
+    That is, $b \subseteq a$.
+    Thus $t \in a$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.4}}%
+\subsection{\unverified{Exercise 4.4}}%
 \hyperlabel{sub:exercise-4.4}
 
 Show that if $a$ is a transitive set, then $\bigcup a$ is also a transitive set.
 
 \begin{proof}
 
-  TODO
+  Suppose $a$ is a transitive set.
+  We show that $\bigcup\bigcup{a} \subseteq \bigcup a$.
+  Let $t \in \bigcup\bigcup{a}$.
+  Then there exists some $b \in \bigcup{a}$ such that $t \in b$.
+  Since $a$ is transitive, $\bigcup{a} \subseteq a$.
+  Thus $b \in a$ and $t \in \bigcup a$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.5}}%
+\subsection{\unverified{Exercise 4.5}}%
 \hyperlabel{sub:exercise-4.5}
 
 Assume that every member of $\mathscr{A}$ is a transitive set.
 
 \begin{enumerate}[(a)]
-  \item Show that $\bigcup \mathscr{A}$ is a transitive set.
-  \item Show that $\bigcap \mathscr{A}$ is a transitive set (assume that
+  \item Show that $\bigcup\mathscr{A}$ is a transitive set.
+  \item Show that $\bigcap\mathscr{A}$ is a transitive set (assume that
     $\mathscr{A}$ is nonempty).
 \end{enumerate}
 
 \begin{proof}
 
-  TODO
+  \paragraph{(a)}%
+
+    Suppose every member of $\mathscr{A}$ is a transitive set.
+    We show that $\bigcup\bigcup{\mathscr{A}} \subseteq \bigcup{\mathscr{A}}$.
+    Let $t \in \bigcup\bigcup{\mathscr{A}}$.
+    Then there exists some $b_1 \in \bigcup{\mathscr{A}}$ such that $t \in b_1$.
+    Likewise there exists some $b_2 \in \mathscr{A}$ such that $b_1 \in b_2$.
+    By hypothesis, $b_2$ is transitive meaning $t \in b_2$.
+    Thus $t \in \bigcup{\mathscr{A}}$.
+
+  \paragraph{(b)}%
+
+    Suppose every member of nonempty set $\mathscr{A}$ is a transitive set.
+    We show that $\bigcup\bigcap{\mathscr{A}} \subseteq \bigcap{\mathscr{A}}$.
+    Let $t \in \bigcup\bigcap{\mathscr{A}}$.
+    Then there exists some $b \in \bigcap{\mathscr{A}}$ such that $t \in b$.
+    Thus $b$ is a member of every member of $\mathscr{A}$.
+    By hypothesis, every member of $\mathscr{A}$ is a transitive set meaning
+      $t$ must be a member of every member of $\mathscr{A}$.
+    In other words, $t \in \bigcap{\mathscr{A}}$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.6}}%
+\subsection{\unverified{Exercise 4.6}}%
 \hyperlabel{sub:exercise-4.6}
 
-Prove the converse to Theorem 4E: If $\bigcup \left(a^+\right) = a$, then $a$ is
-  a transitive set.
+Prove the converse to \nameref{sub:theorem-4e}: If
+  $\bigcup \left(a^+\right) = a$, then $a$ is a transitive set.
 
 \begin{proof}
 
-  TODO
+  Let $a$ be a set such that $\bigcup \left(a^+\right) = a$.
+  Then
+    \begin{align*}
+      \bigcup \left(a^+\right)
+        & = \bigcup (a \cup \{a\}) & \textref{ref:successor} \\
+        & = \bigcup a \cup \bigcup \{a\} & \textref{sub:exercise-2.21} \\
+        & = a. & \text{by hypothesis}
+    \end{align*}
+  But $$\bigcup{a} \subseteq \bigcup a \cup \bigcup \{a\} = a.$$
+  Thus $a$ is indeed a \nameref{ref:transitive-set}.
 
 \end{proof}
 
