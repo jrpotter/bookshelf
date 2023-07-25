@@ -6149,7 +6149,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     natural number is a transitive set.
 
   \paragraph{(i)}%
-  \label{par:theorem-4f-i}
+  \hyperlabel{par:theorem-4f-i}
 
     First, $\emptyset \in T$ since it vacuously holds that a member of a
       member of $\emptyset$ is itself a member of $\emptyset$.
@@ -6171,7 +6171,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \end{proof}
 
 \subsection{\unverified{Theorem 4G}}%
-\label{sub:theorem-4g}
+\hyperlabel{sub:theorem-4g}
 
 \begin{theorem}[4G]
 
@@ -6186,7 +6186,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     member of a natural number is itself a natural number.
 
   \paragraph{(i)}%
-  \label{par:theorem-4g-i}
+  \hyperlabel{par:theorem-4g-i}
 
     First, it vacuously holds that $\emptyset \in T$.
     Next, let $n \in T$.
@@ -6207,6 +6207,46 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     Thus the member of every natural number is itself a natural number.
     In other words, $\bigcup \omega \subseteq \omega$.
     Therefore $\omega$ is indeed a \nameref{ref:transitive-set}.
+
+\end{proof}
+
+\section{Recursion on \texorpdfstring{$\omega$}{the Natural Numbers}}%
+\hyperlabel{sec:recursion-natural-numbers}
+
+\subsection{\sorry{
+  Recursion Theorem on \texorpdfstring{$\omega$}{the Natural Numbers}}}%
+\hyperlabel{sub:recursion-theorem-natural-numbers}
+
+\begin{theorem}
+
+  Let $A$ be a set, $a \in A$, and $F \colon A \rightarrow A$.
+  Then there exists a unique function $h \colon \omega \rightarrow A$ such that
+    $$h(0) = a,$$ and for every $n \in \omega$, $$h(n^+) = F(h(n)).$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4H}}%
+\hyperlabel{sub:theorem-4h}
+
+\begin{theorem}[4H]
+
+  Let $\langle N, S, e \rangle$ be a Peano system.
+  Then $\langle \omega, \sigma, 0 \rangle$ is isomorphic to
+    $\langle N, S, e \rangle$, i.e., there is a function $h$ mapping $\omega$
+    one-to-one onto $N$ in a way that preserves the successor operation
+    $$h(\sigma(n)) = S(h(n))$$ and the zero element $$h(0) = e.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
@@ -6356,6 +6396,101 @@ Prove the converse to \nameref{sub:theorem-4e}: If
     \end{align*}
   But $$\bigcup{a} \subseteq \bigcup a \cup \bigcup \{a\} = a.$$
   Thus $a$ is indeed a \nameref{ref:transitive-set}.
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.7}}%
+\hyperlabel{sub:exercise-4.7}
+
+Complete part 4 of the proof of the recursion theorem on $\omega$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.8}}%
+\hyperlabel{sub:exercise-4.8}
+
+Let $f$ be a one-to-one function from $A$ into $A$, and assume that
+  $c \in A - \ran{f}$.
+Define $h \colon \omega \rightarrow A$ by recursion:
+  \begin{align*}
+    h(0) & = c, \\
+    h(n^+) & = f(h(n)).
+  \end{align*}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.9}}%
+\hyperlabel{sub:exercise-4.9}
+
+Let $f$ be a function from $B$ into $B$, and assume that $A \subseteq B$.
+We have two possible methods for constructing the "closure" $C$ of $A$ under
+  $f$.
+First define $C^*$ to be the intersection of the closed supersets of $A$:
+  $$C^* = \bigcap\{X \mid
+    A \subseteq X \subseteq B \land \img{f}{X} \subseteq X\}.$$
+Alternatively, we could apply the recursion theorem to obtain the function $h$
+  for which
+  \begin{align*}
+    h(0) & = A, \\
+    h(n^+) & = h(n) \cup \img{f}{h(n)}.
+  \end{align*}
+Clearly $h(0) \subseteq h(1) \subseteq \cdots$; define $C_*$ to be
+  $\bigcup\ran{h}$; in other words $$C_* = \bigcup_{i \in \omega} h(i).$$
+Show that $C^+ = C_*$.
+[\textit{Suggestion}:
+To show that $C^* \subseteq C_*$, show that $\img{f}{C_*} \subseteq C_*$.
+To show that $C_* \subseteq C^*$, use induction to show that
+  $h(n) \subseteq C^*$.]
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.10}}%
+\hyperlabel{sub:exercise-4.10}
+
+In Exercise 9, assume that $B$ is the set of real numbers, $f(x) = x^2$, and $A$
+  is the closed interval $\icc{\frac{1}{2}}{1}$.
+What is the set called $C^*$ and $C_*$?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.11}}%
+\hyperlabel{sub:exercise-4.11}
+
+In Exercise 9, assume that $B$ is the set of real numbers, $f(x) = x - 1$, and
+  $A = \{0\}$.
+What is the set called $C^*$ and $C_*$?
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.12}}%
+\hyperlabel{sub:exercise-4.12}
+
+Formulate an analogue to Exercise 9 for a function
+  $f \colon B \times B \rightarrow B$.
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
