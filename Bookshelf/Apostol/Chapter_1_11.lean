@@ -1,8 +1,6 @@
-import Mathlib.Data.Real.Basic
-
 import Common.Real.Floor
-import Common.Geometry.StepFunction
 import Common.Set.Basic
+import Mathlib.Data.Real.Basic
 
 /-! # Apostol.Chapter_1_11 -/
 

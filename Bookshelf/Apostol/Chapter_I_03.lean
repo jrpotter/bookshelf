@@ -1,6 +1,5 @@
-import Mathlib.Data.Real.Basic
-
 import Common.Set
+import Mathlib.Data.Real.Basic
 
 /-! # Apostol.Chapter_I_03
 
