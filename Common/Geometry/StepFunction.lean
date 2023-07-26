@@ -1,4 +1,3 @@
-import Common.Finset
 import Common.Geometry.Rectangle.Orthogonal
 import Common.List.Basic
 import Common.List.NonEmpty
@@ -73,19 +72,7 @@ namespace StepFunction
 /--
 The ordinate set of the `StepFunction`.
 -/
-def toSet (sf : StepFunction) : Set Point :=
-  ⋃ i ∈ Finset.finRange sf.ivls.length,
-    let I := sf.ivls[i]
-    Rectangle.Orthogonal.toSet
-      ⟨
-        {
-          tl := ⟨I.left, sf.toFun i⟩,
-          bl := ⟨I.left, 0⟩,
-          br := ⟨I.right, 0⟩,
-          has_right_angle := sorry
-        },
-        by simp
-      ⟩
+def toSet (sf : StepFunction) : Set Point := sorry
 
 end StepFunction
 
