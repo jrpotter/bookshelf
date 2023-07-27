@@ -6213,7 +6213,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \section{Recursion on \texorpdfstring{$\omega$}{the Natural Numbers}}%
 \hyperlabel{sec:recursion-natural-numbers}
 
-\subsection{\sorry{
+\subsection{\unverified{%
   Recursion Theorem on \texorpdfstring{$\omega$}{the Natural Numbers}}}%
 \hyperlabel{sub:recursion-theorem-natural-numbers}
 
@@ -6225,9 +6225,173 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{theorem}
 
+\begin{note}
+  This proof was written a few days after reading Enderton's proof as a means of
+  ensuring I remember the main arguments.
+\end{note}
+
 \begin{proof}
 
-  TODO
+  Define set
+    \begin{align*}
+      H = \{ v \mid & v \text{ is a function with } \\
+        & \text{(a) } \dom{v} \subseteq \omega, \\
+        & \text{(b) } \ran{v} \subseteq A, \\
+        & \text{(c) if } 0 \in \dom{v}, \text{ then } v(0) = a, \text{ and} \\
+        & \text{(d) if } n^+ \in \dom{v},
+          \text{ then } n \in \dom{v} \text{ and } v(n^+) = F(v(n))
+      \}.
+    \end{align*}
+  Define a function satisfying properties (a)-(d) above as \textit{acceptable}.
+  That is, $H$ is the set of all acceptable functions.
+  Define $h = \bigcup H$.
+  We prove that (i) $h$ is a \nameref{ref:function}, (ii) $h \in H$, (iii)
+    $\dom{h} = \omega$, and (iv) $h$ is unique.
+
+  \paragraph{(i)}%
+  \label{par:recursion-theorem-natural-numbers-i}
+
+    We prove that $h$ is a function.
+    Consider set
+      $$S = \{x \in \omega \mid h(x) = y \text{ for at most one value } y\}.$$
+    We show (1) that $0 \in S$ and (2) if $n \in S$ then $n^+ \in S$.
+
+    \subparagraph{(1)}%
+    \label{spar:recursion-theorem-natural-numbers-i-1}
+
+      Suppose $0 \in \dom{h}$.
+      By construction, there must exist some $y_1 \in A$ and acceptable function
+        $v_1$ such that $v_1(0) = y_1$.
+      Suppose there also exists a $y_2 \in A$ and acceptable function $v_2$ such
+        that $v_2(0) = y_2$.
+      By property (c), $v_1(0) = a$ and $v_2(0) = a$.
+      Thus $y_1 = a = y_2$ and $h(0) = a$.
+      Therefore $0 \in S$.
+
+    \subparagraph{(2)}%
+    \label{spar:recursion-theorem-natural-numbers-i-2}
+
+      Suppose $n$ and $n^+$ are members of $\dom{h}$.
+      By construction, there must exist some $y_1 \in A$ and acceptable function
+        $v_1$ such that $v_1(n^+) = y_1$.
+      Suppose there also exists a $y_2 \in A$ and acceptable function $v_2$ such
+        that $v_2(n^+) = y_2$.
+      By property (d), it follows $n \in \dom{v_1}$, $n \in \dom{v_2}$,
+        $v_1(n^+) = F(v_1(n))$, and $v_2(n^+) = F(v_2(n))$.
+      But $n \in S$ meaning there is at most one value $y$ such that
+        $v_1(n) = y = v_2(n)$.
+      Thus $F(v_1(n)) = F(y) = F(v_2(n))$ and $h(n^+) = F(y)$.
+      Therefore $n^+ \in S$.
+
+    \subparagraph{Conclusion}%
+
+      By \nameref{spar:recursion-theorem-natural-numbers-i-1} and
+        \nameref{spar:recursion-theorem-natural-numbers-i-2}, $S$ is an
+        \nameref{ref:inductive-set}.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      Since $S = \omega$, it follows $h$ has at most one value for every
+        $x \in \omega$.
+      In other words, $h$ is a function.
+
+  \paragraph{(ii)}%
+  \label{par:recursion-theorem-natural-numbers-ii}
+
+    We now prove $h \in H$, i.e. $h$ is an acceptable function.
+    It trivially holds that $\dom{h} \subseteq \omega$ and
+      $\ran{h} \subseteq A$.
+    Thus we are left with proving properties (c) and (d).
+
+    \subparagraph{(c)}%
+
+      Note $\{\pair{0, a}\}$ is an acceptable function.
+      Thus $\pair{0, a} \in h$.
+      By \nameref{par:recursion-theorem-natural-numbers-i}, $h$ is a function.
+      Therefore $a$ is the only value $h(0)$ takes on.
+
+    \subparagraph{(d)}%
+
+      Suppose $n^+ \in \dom{h}$.
+      Then there exists some acceptable function $v$ such that
+        $v(n^+) = h(n^+)$.
+      By definition of acceptable, $\pair{n, v(n)} \in v$.
+      Since \nameref{par:recursion-theorem-natural-numbers-i} indicates $h$ is a
+        function, $n \in \dom{h}$ and $h(n) = v(n)$.
+      Also by definition of acceptable, $v(n^+) = F(v(n))$.
+      Therefore $$h(n^+) = v(n^+) = F(v(n)) = F(h(n)).$$
+      Hence $h \in H$.
+
+  \paragraph{(iii)}%
+  \label{par:recursion-theorem-natural-numbers-iii}
+
+    We now prove that $\dom{h} = \omega$.
+    We show that (1) $0 \in \dom{h}$ and (2) if $n \in \dom{h}$ then
+      $n^+ \in \dom{h}$.
+
+    \subparagraph{(1)}%
+    \label{spar:recursion-theorem-natural-numbers-iii-1}
+
+      We note that $\{\pair{0, a}\}$ is an acceptable function.
+      By construction of $h$, $0 \in \dom{h}$.
+
+    \subparagraph{(2)}%
+    \label{spar:recursion-theorem-natural-numbers-iii-2}
+
+      Suppose $n \in \dom{h}$.
+      Since $n \in \dom{h}$ there exists an acceptable function $v$ with
+        $n \in \dom{v}$.
+      Define $$v' = v \cup \{\pair{n^+, F(v(n))}\}.$$
+      We prove that $v'$ is acceptable:
+
+      \begin{enumerate}[(a)]
+        \item It trivially holds that $\dom{v'} \subseteq \omega$.
+        \item It trivially holds that $\ran{v'} \subseteq A$.
+        \item If $0 \in \dom{v'}$, then $v'(0) = v(0) = a$.
+        \item
+          Suppose $m^+ \in \dom{v'}$ for some $m \in \omega$.
+          If $m^+ = n^+$, then $m = n$ and $v'(m^+) = F(v(m))$ by construction.
+          If $m^+ \neq n^+$, then $m^+ \in \dom{v}$.
+          Since $v$ is an acceptable function,
+            $v'(m^+) = v(m^+) = F(v(m)) = F(v(m^+))$.
+      \end{enumerate}
+      Since $v'$ is acceptable, $n^+ \in \dom{h}$.
+
+    \subparagraph{Conclusion}%
+
+      By \nameref{spar:recursion-theorem-natural-numbers-iii-1} and
+        \nameref{spar:recursion-theorem-natural-numbers-iii-2},
+        $\dom{h}$ is an inductive set.
+      \nameref{sub:theorem-4b} implies $\dom{h} = \omega$.
+
+  \paragraph{(iv)}%
+  \label{par:recursion-theorem-natural-numbers-iv}
+
+    We now prove $h$ is a unique function.
+    Let $h_1$ and $h_2$ both satisfy the conclusion of the theorem.
+    Define $$S = \{n \in \omega \mid h_1(n) = h_2(n)\}.$$
+    It suffices to prove $S$ is an inductive set, for \nameref{sub:theorem-4b}
+      would then imply $S = \omega$, i.e. $h_1$ and $h_2$ agree on all of
+      $\omega$.
+
+    By definition of an acceptable function, $h_1(0) = a = h_2(0)$ meaning
+      $0 \in S$.
+    Next, suppose $n \in S$.
+    By \nameref{par:recursion-theorem-natural-numbers-iii}, it follows $n^+$
+      in $\dom{h_1}$ and $\dom{h_2}$.
+    Since both $h_1$ and $h_2$ are acceptable, $h_1(n^+) = F(h_1(n))$ and
+      $h_2(n^+) = F(h_2(n))$.
+    Since $n \in S$, $h_1(n) = h_2(n)$.
+    Therefore $h_1$ and $h_2$ coincide with input $n^+$.
+    Thus $n^+ \in S$.
+    Hence $S$ is an inductive set.
+
+  \paragraph{Conclusion}%
+
+    By \nameref{par:recursion-theorem-natural-numbers-i},
+      \nameref{par:recursion-theorem-natural-numbers-iii}, and
+      \nameref{par:recursion-theorem-natural-numbers-iv}, it follows $h$ is a
+      unique function mapping $\omega$ into $A$.
+    \nameref{par:recursion-theorem-natural-numbers-ii} shows $h$ satisfies the
+      desired conditions.
 
 \end{proof}
 
@@ -6399,18 +6563,19 @@ Prove the converse to \nameref{sub:theorem-4e}: If
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.7}}%
+\subsection{\unverified{Exercise 4.7}}%
 \hyperlabel{sub:exercise-4.7}
 
-Complete part 4 of the proof of the recursion theorem on $\omega$.
+Complete part 4 of the proof of the
+  \nameref{sub:recursion-theorem-natural-numbers}.
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{par:recursion-theorem-natural-numbers-iv}.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.8}}%
+\subsection{\unverified{Exercise 4.8}}%
 \hyperlabel{sub:exercise-4.8}
 
 Let $f$ be a one-to-one function from $A$ into $A$, and assume that
@@ -6420,10 +6585,54 @@ Define $h \colon \omega \rightarrow A$ by recursion:
     h(0) & = c, \\
     h(n^+) & = f(h(n)).
   \end{align*}
+Show that $h$ is one-to-one.
 
 \begin{proof}
 
-  TODO
+  Let
+    $$S = \{x \in \omega \mid \forall y,
+      \left[ h(x) = h(y) \Rightarrow x = y \right]\}.$$
+  We prove that (i) $S$ is an \nameref{ref:inductive-set} and (ii) that $h$ is
+    one-to-one.
+
+  \paragraph{(i)}%
+  \label{par:exercise-4.8-i}
+
+    We first show that $0 \in S$.
+    Suppose there exists some $n \in \omega$ such that $h(0) = c = h(n)$.
+    For the sake of contradiction, suppose $n \neq 0$.
+    By \nameref{sub:theorem-4c}, there exists some $m$ such that $m^+ = n$.
+    Then $$h(n) = h(m^+) = f(h(m)) = c.$$
+    But $c \in A - \ran{f}$, meaning the previous identity is an impossibility.
+    Thus $n = 0$, i.e. $0 \in S$.
+
+    Next, suppose $y, n \in \omega$ such that $n \in S$ and $h(n^+) = h(y)$.
+    We must show $n^+ \in S$.
+    There are two cases to consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $y = 0$.
+      Then $h(y) = h(0) = c = h(n^+) = f(h(n))$.
+      Since $c \in A - \ran{f}$, $f(h(n)) \neq c$.
+      Thus $y \neq 0$, a contradiction.
+
+    \subparagraph{Case 2}%
+
+      Suppose $y \neq 0$.
+      \nameref{sub:theorem-4c} implies there exists some $z \in \omega$ such
+        that $z^+ = y$.
+      Thus $$h(n^+) = f(h(n)) = f(h(z)) = h(z^+).$$
+      But $f$ is one-to-one meaning $h(n) = h(z)$.
+      Since $n \in S$, $h(n) = h(z)$ implies $n = z$ which in turn implies
+        $n^+ = z^+ = y$.
+      Thus $n^+$ is in $S$.
+
+  \paragraph{(ii)}%
+
+    By \nameref{par:exercise-4.8-i}, $S \subseteq \omega$ is an inductive set.
+    Then \nameref{sub:theorem-4b} states $S = \omega$.
+    Hence $h$ is one-to-one.
 
 \end{proof}
 
