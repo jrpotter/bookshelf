@@ -22,6 +22,28 @@
 \chapter{Reference}%
 \hyperlabel{chap:reference}
 
+\section{\defined{Addition}}%
+\label{ref:addition}
+
+For each $m \in \omega$, there exists (by the
+  \nameref{sub:recursion-theorem-natural-numbers}) a unique
+  \nameref{ref:function} $A_m \colon \omega \rightarrow \omega$ for which
+  \begin{align*}
+    A_m(0) & = m, \\
+    A_m(n^+) & = A_m(n)^+ & \text{for } n \text{ in } \omega.
+  \end{align*}
+\textbf{Addition} ($+$) is the \nameref{ref:binary-operation} on $\omega$ such
+  that for any $m$ and $n$ in $\omega$, $$m + n = A_m(n).$$
+Thus when written as a \nameref{ref:relation},
+  $$+ = \{\pair{\pair{m, n}, p} \mid
+    m \in \omega \land n \in \omega \land p = A_m(n)\}.$$
+
+\begin{definition}
+
+  \lean*{Init/Prelude}{Add.add}
+
+\end{definition}
+
 \section{\defined{Axiom of Choice, First Form}}%
 \hyperlabel{ref:axiom-of-choice-1}
 
@@ -45,6 +67,12 @@ For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
   \lean*{Init/Prelude}{Classical.choice}
 
 \end{axiom}
+
+\section{\defined{Binary Operation}}%
+\hyperlabel{ref:binary-operation}
+
+A \textbf{binary operation} on a set $A$ is a \nameref{ref:function} from
+  $A \times A$ into $A$.
 
 \section{\defined{Cartesian Product}}%
 \hyperlabel{ref:cartesian-product}
@@ -338,6 +366,25 @@ A \textbf{linear ordering} on $A$ (also called a \textbf{total ordering} on $A$)
 \begin{definition}
 
   \lean*{Mathlib/Init/Algebra/Classes}{IsStrictTotalOrder}
+
+\end{definition}
+
+\section{\defined{Multiplication}}%
+\hyperlabel{sec:multiplication}
+
+For each $m \in \omega$, there exists (by the
+  \nameref{sub:recursion-theorem-natural-numbers}) a unique
+  \nameref{ref:function} $M_m \colon \omega \rightarrow \omega$ for which
+  \begin{align*}
+    M_m(0) & = 0, \\
+    M_m(n^+) = M_m(n) + m.
+  \end{align*}
+\textbf{Multiplication} ($\cdot$) is the \nameref{ref:binary-operation} on
+  $\omega$ such that for any $m$ and $n$ in $\omega$, $$m \cdot n = M_m(n).$$
+
+\begin{definition}
+
+  \lean*{Init/Prelude}{Mul.mul}
 
 \end{definition}
 
@@ -6249,7 +6296,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     $\dom{h} = \omega$, and (iv) $h$ is unique.
 
   \paragraph{(i)}%
-  \label{par:recursion-theorem-natural-numbers-i}
+  \hyperlabel{par:recursion-theorem-natural-numbers-i}
 
     We prove that $h$ is a function.
     Consider set
@@ -6257,7 +6304,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     We show (1) that $0 \in S$ and (2) if $n \in S$ then $n^+ \in S$.
 
     \subparagraph{(1)}%
-    \label{spar:recursion-theorem-natural-numbers-i-1}
+    \hyperlabel{spar:recursion-theorem-natural-numbers-i-1}
 
       Suppose $0 \in \dom{h}$.
       By construction, there must exist some $y_1 \in A$ and acceptable function
@@ -6269,7 +6316,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
       Therefore $0 \in S$.
 
     \subparagraph{(2)}%
-    \label{spar:recursion-theorem-natural-numbers-i-2}
+    \hyperlabel{spar:recursion-theorem-natural-numbers-i-2}
 
       Suppose $n$ and $n^+$ are members of $\dom{h}$.
       By construction, there must exist some $y_1 \in A$ and acceptable function
@@ -6294,7 +6341,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
       In other words, $h$ is a function.
 
   \paragraph{(ii)}%
-  \label{par:recursion-theorem-natural-numbers-ii}
+  \hyperlabel{par:recursion-theorem-natural-numbers-ii}
 
     We now prove $h \in H$, i.e. $h$ is an acceptable function.
     It trivially holds that $\dom{h} \subseteq \omega$ and
@@ -6321,7 +6368,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
       Hence $h \in H$.
 
   \paragraph{(iii)}%
-  \label{par:recursion-theorem-natural-numbers-iii}
+  \hyperlabel{par:recursion-theorem-natural-numbers-iii}
 
     We now prove that $\dom{h} = \omega$.
     We show that (1) $0 \in \dom{h}$ and (2) if $n \in \dom{h}$ then
@@ -6405,6 +6452,74 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     $\langle N, S, e \rangle$, i.e., there is a function $h$ mapping $\omega$
     one-to-one onto $N$ in a way that preserves the successor operation
     $$h(\sigma(n)) = S(h(n))$$ and the zero element $$h(0) = e.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\section{Arithmetic}%
+\hyperlabel{sec:arithmetic}
+
+\subsection{\sorry{Theorem 4I}}
+\hyperlabel{sub:theorem-4i}
+
+\begin{theorem}[4I]
+
+  For natural numbers $m$ and $n$,
+    \begin{align*}
+      m + 0 & = m, \\
+      m + n^+ & = (m + n)^+.
+    \end{align*}
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4J}}
+\hyperlabel{sub:theorem-4j}
+
+\begin{theorem}[4J]
+
+  For natural numbers $m$ and $n$,
+    \begin{align*}
+      m \cdot 0 & = 0, \\
+      m \cdot n^+ & = m \cdot n + m.
+    \end{align*}
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4K}}
+\hyperlabel{sub:theorem-4k}
+
+\begin{theorem}[4K]
+
+  The following identities hold for all natural numbers.
+  \begin{enumerate}
+    \item Associative law for addition
+      $$m + (n + p) = (m + n) + p.$$
+    \item Commutative law for addition
+      $$m + n = n + m.$$
+    \item Distributive law
+      $$m \cdot (n + p) = m \cdot n + m \cdot p.$$
+    \item Associative law for multiplication
+      $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
+    \item Commutative law for multiplication
+      $$m \cdot n = n \cdot m.$$
+  \end{enumerate}
 
 \end{theorem}
 
@@ -6774,6 +6889,64 @@ What is the set called $C^*$ and $C_*$?
 
 Formulate an analogue to Exercise 9 for a function
   $f \colon B \times B \rightarrow B$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.13}}%
+\hyperlabel{sub:exercise-4.13}
+
+Let $m$ and $n$ be natural numbers such that $m \cdot n = 0$.
+Show that either $m = 0$ or $n = 0$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.14}}%
+\hyperlabel{sub:exercise-4.14}
+
+Call a natural number \textit{even} if it has the form $2 \cdot m$ for some $m$.
+Call it \textit{odd} if it has the form $(2 \cdot p) + 1$ for some $p$.
+Show that each natural number is either even or odd, but never both.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.15}}%
+\hyperlabel{sub:exercise-4.15}
+
+Complete the proof of part (1) of \nameref{sub:theorem-4k}.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.16}}%
+\hyperlabel{sub:exercise-4.16}
+
+Complete the proof of part (5) of \nameref{sub:theorem-4k}.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.17}}%
+\hyperlabel{sub:exercise-4.17}
+
+Prove that $m^{n+p} = m^n \cdot m^p$.
 
 \begin{proof}
 
