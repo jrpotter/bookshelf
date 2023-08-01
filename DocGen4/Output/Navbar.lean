@@ -16,7 +16,7 @@ open scoped DocGen4.Jsx
 def moduleListFile (file : NameExt) : BaseHtmlM Html := do
   let contents :=
     if file.ext == .pdf then
-      <span>{s!"🗎 {file.getString!} (<a class=\"pdf\" href={← moduleNameExtToLink file}>pdf</a>)"}</span>
+      <span>{s!"🗎 {file.getString!} (<a class=\"pdf\" target=\"_blank\" href={← moduleNameExtToLink file}>pdf</a>)"}</span>
     else
       <a href={← moduleNameExtToLink file}>{file.getString!}</a>
   return <div class={if (← getCurrentName) == file.name then "nav_link visible" else "nav_link"}>
