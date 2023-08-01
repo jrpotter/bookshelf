@@ -6636,15 +6636,18 @@ Show that $h$ is one-to-one.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.9}}%
+\subsection{\unverified{Exercise 4.9}}%
 \hyperlabel{sub:exercise-4.9}
 
 Let $f$ be a function from $B$ into $B$, and assume that $A \subseteq B$.
 We have two possible methods for constructing the "closure" $C$ of $A$ under
   $f$.
 First define $C^*$ to be the intersection of the closed supersets of $A$:
-  $$C^* = \bigcap\{X \mid
-    A \subseteq X \subseteq B \land \img{f}{X} \subseteq X\}.$$
+  \begin{equation}
+    \label{sub:exercise-4.9-eq1}
+    C^* = \bigcap\{X \mid
+      A \subseteq X \subseteq B \land \img{f}{X} \subseteq X\}.
+  \end{equation}
 Alternatively, we could apply the recursion theorem to obtain the function $h$
   for which
   \begin{align*}
@@ -6652,8 +6655,12 @@ Alternatively, we could apply the recursion theorem to obtain the function $h$
     h(n^+) & = h(n) \cup \img{f}{h(n)}.
   \end{align*}
 Clearly $h(0) \subseteq h(1) \subseteq \cdots$; define $C_*$ to be
-  $\bigcup\ran{h}$; in other words $$C_* = \bigcup_{i \in \omega} h(i).$$
-Show that $C^+ = C_*$.
+  $\bigcup\ran{h}$; in other words
+  \begin{equation}
+    \label{sub:exercise-4.9-eq2}
+    C_* = \bigcup_{i \in \omega} h(i).
+  \end{equation}
+Show that $C^* = C_*$.
 [\textit{Suggestion}:
 To show that $C^* \subseteq C_*$, show that $\img{f}{C_*} \subseteq C_*$.
 To show that $C_* \subseteq C^*$, use induction to show that
@@ -6661,11 +6668,70 @@ To show that $C_* \subseteq C^*$, use induction to show that
 
 \begin{proof}
 
-  TODO
+  We show that $C^* \subseteq C_*$ and $C^* \supseteq C_*$.
+
+  \paragraph{($\subseteq$)}%
+
+    It suffices to show $\img{f}{C_*} \subseteq C_*$ since then $C_*$ is a
+      member of the family of sets being intersected in
+      \eqref{sub:exercise-4.9-eq1}.
+    Let $t \in \img{f}{C_*}$.
+    By definition of the \nameref{ref:image} of a set, there exists some
+      $u \in C_*$ such that $f(u) = t$.
+    By \eqref{sub:exercise-4.9-eq2}, there exists some $i \in \omega$ such that
+      $u \in h(i)$.
+    Then $t \in \img{f}{h(i)} \subseteq h(i) \cup \img{f}{h(i)} = h(i^+)$.
+    Therefore \eqref{sub:exercise-4.9-eq2} indicates $t \in C_*$.
+
+  \paragraph{($\supseteq$)}%
+
+    Define $$S = \{n \in \omega \mid h(n) \subseteq C^*\}.$$
+    We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+    Afterward we prove that (iii) $C_* \subseteq C^*$.
+
+    \subparagraph{(i)}%
+    \label{spar:exercise-4.9-i}
+
+      By construction, $h(0) = A$.
+      It trivially follows that $A \subseteq C^*$ by
+        \eqref{sub:exercise-4.9-eq1}.
+      Thus $h(0) \subseteq C^*$ meaning $0 \in S$.
+
+    \subparagraph{(ii)}%
+    \label{spar:exercise-4.9-ii}
+
+      Suppose $n \in S$.
+      That is, $h(n) \subseteq C^*$.
+      We must prove that $h(n^+) \subseteq C^*$.
+      Let $$t \in h(n^+) = h(n) \cup \img{f}{h(n)}.$$
+      Then either $t \in h(n)$ or $t \in \img{f}{h(n)}$.
+      If $t \in h(n)$, it immediately follows $t \in C^*$.
+      If $t \in \img{f}{h(n)}$, then the definition of the \nameref{ref:image}
+        of a set implies there exists some $u \in h(n)$ such that $f(u) = t$.
+      Since $h(n) \subseteq C^*$, \eqref{sub:exercise-4.9-eq1} indicates that
+        $$\forall X, A \subseteq X \subseteq B \land
+          \img{f}{X} \subseteq X \Rightarrow u \in X.$$
+      But then closure under image yields
+        $$\forall X, A \subseteq X \subseteq B \land
+          \img{f}{X} \subseteq X \Rightarrow f(u) \in X.$$
+      Since $f(u) = t$, $t \in C^*$.
+      Thus $h(n^+) \subseteq C^*$, i.e. $n^+ \in S$.
+
+    \subparagraph{(iii)}%
+
+      By \nameref{spar:exercise-4.9-i} and \nameref{spar:exercise-4.9-ii},
+        $S \subseteq \omega$ is an \nameref{ref:inductive-set}.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      That is, for all $n \in \omega$, $h(n) \subseteq C^*$.
+      Thus $$C_* = \bigcup_{i \in \omega} h(i) \subseteq C^*.$$
+
+  \paragraph{Conclusion}%
+
+    Since $C^* \subseteq C_*$ and $C_* \subseteq C^*$, it follows $C^* = C_*$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.10}}%
+\subsection{\unverified{Exercise 4.10}}%
 \hyperlabel{sub:exercise-4.10}
 
 In Exercise 9, assume that $B$ is the set of real numbers, $f(x) = x^2$, and $A$
@@ -6674,11 +6740,17 @@ What is the set called $C^*$ and $C_*$?
 
 \begin{proof}
 
-  TODO
+  By \nameref{sub:exercise-4.9}, $C^* = C_*$.
+  By definition,
+    $$C^* = \bigcap \{X \mid
+      \icc{\frac{1}{2}}{1} \subseteq X \subseteq \mathbb{R} \land
+      \img{f}{X} \subseteq X\}.$$
+  Since $f(x)$ converges to $0$ for all values $x < 1$, it follows
+    $C^* = C_* = \ioc{0}{1}$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.11}}%
+\subsection{\unverified{Exercise 4.11}}%
 \hyperlabel{sub:exercise-4.11}
 
 In Exercise 9, assume that $B$ is the set of real numbers, $f(x) = x - 1$, and
@@ -6687,7 +6759,13 @@ What is the set called $C^*$ and $C_*$?
 
 \begin{proof}
 
-  TODO
+  By \nameref{sub:exercise-4.9}, $C^* = C_*$.
+  By definition, $$C_* = \bigcup_{i \in \omega} h(i)$$ where
+    \begin{align*}
+      h(0) & = A = \{0\}, \\
+      h(n^+) & = h(n) \cup \img{f}{h(n)}.
+    \end{align*}
+  Thus $C_* = C^* = \{x \in \mathbb{Z} \mid x \leq 0\}$.
 
 \end{proof}
 
