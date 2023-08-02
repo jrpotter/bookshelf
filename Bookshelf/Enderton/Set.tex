@@ -370,14 +370,14 @@ A \textbf{linear ordering} on $A$ (also called a \textbf{total ordering} on $A$)
 \end{definition}
 
 \section{\defined{Multiplication}}%
-\hyperlabel{sec:multiplication}
+\hyperlabel{ref:multiplication}
 
 For each $m \in \omega$, there exists (by the
   \nameref{sub:recursion-theorem-natural-numbers}) a unique
   \nameref{ref:function} $M_m \colon \omega \rightarrow \omega$ for which
   \begin{align*}
     M_m(0) & = 0, \\
-    M_m(n^+) = M_m(n) + m.
+    M_m(n^+) & = M_m(n) + m.
   \end{align*}
 \textbf{Multiplication} ($\cdot$) is the \nameref{ref:binary-operation} on
   $\omega$ such that for any $m$ and $n$ in $\omega$, $$m \cdot n = M_m(n).$$
@@ -2840,11 +2840,11 @@ If not, then under what conditions does equality hold?
 \subsection{\verified{Lemma 3B}}%
 \hyperlabel{sub:lemma-3b}
 
-\begin{theorem}[3B]
+\begin{lemma}[3B]
 
   If $x \in C$ and $y \in C$, then $\pair{x, y} \in \powerset{\powerset{C}}$.
 
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
 
@@ -3058,7 +3058,12 @@ If not, then under what conditions does equality hold?
 \subsection{\verified{Lemma 1}}%
 \hyperlabel{sub:lemma-1}
 
-For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
+\begin{lemma}[1]
+
+  For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
+
+\end{lemma}
+
 
 \begin{proof}
 
@@ -6502,24 +6507,344 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\sorry{Theorem 4K}}
+\subsection{\pending{Lemma 2}}%
+\label{sub:lemma-2}
+
+\begin{lemma}[2]
+
+  For all $n \in \omega$, $A_0(n) = n$.
+  In other words, $$0 + n = n.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  Let $S = \{n \in \omega \mid A_0(n) = n\}$.
+  We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:lemma-2-i}
+
+    By definition of \nameref{ref:addition}, $A_0(0) = 0$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:lemma-2-ii}
+
+    Suppose $n \in S$.
+    By definition of addition, $A_0(n^+) = A_0(n)^+$.
+    Since $n \in S$, $A_0(n) = n$ which in turn implies that $A_0(n)^+ = n^+$.
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:lemma-2-i} and \nameref{par:lemma-2-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $n \in \omega$, $A_0(n) = n$.
+
+\end{proof}
+
+\subsection{\pending{Lemma 3}}%
+\label{sub:lemma-3}
+
+\begin{lemma}[3]
+
+  For all $m, n \in \omega$, $A_{m^+}(n) = A_m(n^+)$.
+  In other words, $$m^+ + n = m + n^+.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  Let $m \in \omega$ and define
+    $$S = \{n \in \omega \mid A_{m^+}(n) = A_m(n^+)\}.$$
+  We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \label{par:lemma-3-i}
+
+    By definition of \nameref{ref:addition}, $A_{m^+}(0) = m^+$.
+    Likewise, $$A_m(0^+) = A_m(0)^+ = m^+.$$
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \label{par:lemma-3-ii}
+
+    Suppose $n \in S$.
+    By definition of addition, $A_{m^+}(n^+) = \left[A_{m^+}(n)\right]^+$.
+    Since $n \in S$, $A_{m^+}(n) = A_m(n^+)$ which in turn implies that
+      $$\left[A_{m^+}(n)\right]^+ = \left[A_m(n^+)\right]^+ = A_m(n^{++}).$$
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:lemma-3-i} and \nameref{par:lemma-3-ii}, $S$ is inductive.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $n \in \omega$, $A_{m^+}(n) = A_m(n^+)$.
+
+\end{proof}
+
+\subsection{\pending{Lemma 4}}%
+\hyperlabel{sub:lemma-4}
+
+\begin{lemma}[4]
+
+  For all $n \in \omega$, $M_0(n) = 0$.
+  In other words, $$0 \cdot n = 0.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  Define
+    \begin{equation}
+      \hyperlabel{sub:lemma-4-eq1}
+      S = \{n \in \omega \mid M_0(n) = 0\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) that if $n \in S$, then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:lemma-4-i}
+
+    By definition of \nameref{ref:multiplication}, $M_0(0) = 0$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:lemma-4-ii}
+
+    Suppose $n \in S$.
+    Then, by definition of \nameref{ref:multiplication},
+      \begin{align*}
+        M_0(n^+)
+          & = M_0(n) + 0 \\
+          & = 0 + 0 & \eqref{sub:lemma-4-eq1} \\
+          & = 0. & \textref{ref:addition}
+      \end{align*}
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:lemma-4-i} and \nameref{par:lemma-4-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $n \in \omega$, $M_0(n) = 0$.
+
+\end{proof}
+
+\subsection{\sorry{Lemma 5}}%
+\hyperlabel{sub:lemma-5}
+
+\begin{lemma}[5]
+
+  For all $m, n \in \omega$, $M_{m^+}(n) = M_m(n) + n$.
+  In other words, $$m^+ \cdot n = m \cdot n + n.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\pending{Theorem 4k (1)}}%
+\label{sub:theorem-4k-1}
+
+\begin{theorem}[4K.1]
+
+  Associative law for addition.
+  For $m, n, p \in \omega$, $$m + (n + p) = (m + n) + p.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  Fix $n, p \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:theorem-4k-1-eq1}
+      S = \{m \in \omega \mid m + (n + p) = (m + n) + p\}.
+    \end{equation}
+  We show that (i) $0 \in S$ and (ii) if $m \in S$ then $m^+ \in S$.
+  Afterward we show that (iii) the associative law for addition holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4k-1-i}
+
+    By definition of \nameref{ref:addition},
+      \begin{align*}
+        0 + (n + p)
+          & = n + p & \textref{sub:lemma-2} \\
+          & = (0 + n) + p. & \textref{sub:lemma-2} \\
+      \end{align*}
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4k-1-ii}
+
+    Suppose $m \in S$.
+    By definition of \nameref{ref:addition},
+      \begin{align*}
+        m^+ + (n + p)
+          & = m + (n + p)^+ & \textref{sub:lemma-3} \\
+          & = (m + (n + p))^+ & \textref{sub:theorem-4i} \\
+          & = ((m + n) + p)^+ & \eqref{sub:theorem-4k-1-eq1} \\
+          & = (m + n) + p^+ & \textref{sub:theorem-4i} \\
+          & = (m + n)^+ + p & \textref{sub:lemma-3} \\
+          & = (m + n^+) + p & \textref{sub:theorem-4i} \\
+          & = (m^+ + n) + p. & \textref{sub:lemma-3}
+      \end{align*}
+    Thus $m^+ \in S$.
+
+  \paragraph{(iii)}%
+  \hyperlabel{par:theorem-4k-1-iii}
+
+    By \nameref{par:theorem-4k-1-i} and \nameref{par:theorem-4k-1-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n, p \in \omega$, $m + (n + p) = (m + n) + p$.
+
+\end{proof}
+
+\subsection{\pending{Theorem 4k (2)}}%
+\label{sub:theorem-4k-2}
+
+\begin{theorem}[4K.2]
+
+  Commutative law for addition.
+  For $m, n \in \omega$, $$m + n = n + m.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  Fix $n \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:theorem-4k-2-eq1}
+      S = \{m \in \omega \mid m + n = n + m\}.
+    \end{equation}
+  We show that (i) $0 \in S$ and (ii) if $m \in S$ then $m^+ \in S$.
+  Afterward we show that (iii) the commutative law for addition holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4k-2-i}
+
+    By definition of \nameref{ref:addition},
+      \begin{align*}
+        0 + n
+          & = n & \textref{sub:lemma-2} \\
+          & = n + 0. \\
+      \end{align*}
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4k-2-ii}
+
+    Suppose $m \in S$.
+    By definition of \nameref{ref:addition},
+      \begin{align*}
+        m^+ + n
+          & = m + n^+ & \textref{sub:lemma-3} \\
+          & = (m + n)^+ \\
+          & = (n + m)^+ & \eqref{sub:theorem-4k-2-eq1} \\
+          & = n + m^+.
+      \end{align*}
+    Thus $m^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:theorem-4k-2-i} and \nameref{par:theorem-4k-2-ii}, $S$
+      is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n \in \omega$, $m + n = n + m$.
+
+\end{proof}
+
+\subsection{\pending{Theorem 4k (3)}}%
+\label{sub:theorem-4k-3}
+
+\begin{theorem}[4K.3]
+
+  Distributive law.
+  For $m, n, p \in \omega$, $$m \cdot (n + p) = m \cdot n + m \cdot p.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  Fix $n, p \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:theorem-4k-3-eq1}
+      S = \{m \in \omega m \cdot (n + p) = m \cdot n + m \cdot p\}.
+    \end{equation}
+  We show that (i) $0 \in S$ and (ii) if $m \in S$ then $m^+ \in S$.
+  Afterward we show that (iii) the distributive law holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4k-3-i}
+
+    By definition of \nameref{ref:multiplication} and \nameref{ref:addition},
+      \begin{align*}
+        0 \cdot (n + p)
+          & = 0 & \textref{sub:lemma-4} \\
+          & = 0 + 0 & \textref{ref:addition} \\
+          & = 0 \cdot n + 0 \cdot p. & \textref{sub:lemma-4}
+      \end{align*}
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4k-3-ii}
+
+    Suppose $m \in S$.
+    By definition of \nameref{ref:multiplication} and \nameref{ref:addition},
+      \begin{align*}
+        m^+ \cdot (n + p)
+          & = m \cdot (n + p) + (n + p) & \textref{sub:lemma-5} \\
+          & = m \cdot (n + p) + n + p & \textref{sub:theorem-4k-1} \\
+          & = m \cdot n + m \cdot p + n + p
+            & \eqref{sub:theorem-4k-3-eq1} \\
+          & = m \cdot n + n + m \cdot p + p & \textref{sub:theorem-4k-2} \\
+          & = m^+ \cdot n + m^+ \cdot p. & \textref{sub:lemma-5}
+      \end{align*}
+    Thus $m^+ \in S$.
+
+  \paragraph{(iii)}%
+  \hyperlabel{par:theorem-4k-3-iii}
+
+    By \nameref{par:theorem-4k-3-i} and \nameref{par:theorem-4k-3-ii}, $S$
+      is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n, p \in \omega$,
+      $m \cdot (n + p) = m \cdot n + m \cdot p$.
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4k (4)}}%
+\label{sub:theorem-4k-4}
+
+\begin{theorem}[4K.4]
+
+  Associative law for multiplication.
+  For $m, n, p \in \omega$, $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4K (5)}}
 \hyperlabel{sub:theorem-4k}
 
-\begin{theorem}[4K]
+\begin{theorem}[4K.5]
 
-  The following identities hold for all natural numbers.
-  \begin{enumerate}
-    \item Associative law for addition
-      $$m + (n + p) = (m + n) + p.$$
-    \item Commutative law for addition
-      $$m + n = n + m.$$
-    \item Distributive law
-      $$m \cdot (n + p) = m \cdot n + m \cdot p.$$
-    \item Associative law for multiplication
-      $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
-    \item Commutative law for multiplication
-      $$m \cdot n = n \cdot m.$$
-  \end{enumerate}
+  Commutative law for multiplication.
+  For $m, n \in \omega$, $$m \cdot n = n \cdot m.$$
 
 \end{theorem}
 
