@@ -3057,6 +3057,7 @@ If not, then under what conditions does equality hold?
 
 \subsection{\verified{Lemma 1}}%
 \hyperlabel{sub:lemma-1}
+\hyperlabel{sub:one-to-one-inverse}
 
 \begin{lemma}[1]
 
@@ -3125,8 +3126,8 @@ If not, then under what conditions does equality hold?
     {Enderton.Set.Chapter\_3.theorem\_3g\_ii}
 
   Suppose $F$ is a one-to-one \nameref{ref:function}.
-  Then \nameref{sub:lemma-1} indicates $F^{-1}$ is a one-to-one function with
-    domain $\ran{F}$ and range $\dom{F}$.
+  Then \nameref{sub:one-to-one-inverse} indicates $F^{-1}$ is a one-to-one
+    function with domain $\ran{F}$ and range $\dom{F}$.
 
   For all $x \in \dom{F}$, $\pair{x, F(x)} \in F$.
   Then $\pair{F(x), x} \in F^{-1}$.
@@ -3275,8 +3276,8 @@ If not, then under what conditions does equality hold?
           F^{-1}(y) & \text{if } y \in \ran{F} \\
           a & \text{otherwise}.
         \end{cases}$$
-      $G$ is a function by virtue of \nameref{sub:lemma-1} and choice of mapping
-        for all values $y \not\in \ran{F}$.
+      $G$ is a function by virtue of \nameref{sub:one-to-one-inverse} and choice
+        of mapping for all values $y \not\in \ran{F}$.
       Furthermore, for all $x \in A$, $F(x) \in \ran{F}$.
       Thus $(G \circ F)(x) = G(F(x)) = F^{-1}(F(x)) = x$ by
         \nameref{sub:theorem-3g}.
@@ -6469,46 +6470,78 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \section{Arithmetic}%
 \hyperlabel{sec:arithmetic}
 
-\subsection{\sorry{Theorem 4I}}
+\subsection{\verified{Theorem 4I}}
 \hyperlabel{sub:theorem-4i}
 
 \begin{theorem}[4I]
 
   For natural numbers $m$ and $n$,
-    \begin{align*}
-      m + 0 & = m, \\
-      m + n^+ & = (m + n)^+.
-    \end{align*}
+    \begin{align}
+      m + 0 & = m, \hyperlabel{sub:theorem-4i-eq1} \\
+      m + n^+ & = (m + n)^+. \hyperlabel{sub:theorem-4i-eq2}
+    \end{align}
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Init/Data/Nat/Basic}{Nat.add\_zero}
+
+  \lean{Init/Prelude}{Nat.add}
+
+  \paragraph{\eqref{sub:theorem-4i-eq1}}%
+
+    Let $m$ be a \nameref{ref:natural-number}.
+    By definition of \nameref{ref:addition}, $m + 0 = A_m(0)$.
+    By definition of $A_m$, $A_m(0) = m$.
+    Thus $m + 0 = m$.
+
+  \paragraph{\eqref{sub:theorem-4i-eq2}}%
+
+    Let $m$ and $n$ be natural numbers.
+    By definition of \nameref{ref:addition},
+      $$m + n^+ = A_m(n^+) = A_m(n)^+ = (m + n)^+.$$
 
 \end{proof}
 
-\subsection{\sorry{Theorem 4J}}
+\subsection{\verified{Theorem 4J}}
 \hyperlabel{sub:theorem-4j}
 
 \begin{theorem}[4J]
 
   For natural numbers $m$ and $n$,
-    \begin{align*}
-      m \cdot 0 & = 0, \\
-      m \cdot n^+ & = m \cdot n + m.
-    \end{align*}
+    \begin{align}
+      m \cdot 0 & = 0, \hyperlabel{sub:theorem-4j-eq1} \\
+      m \cdot n^+ & = m \cdot n + m. \hyperlabel{sub:theorem-4j-eq2}
+    \end{align}
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Init/Data/Nat/Basic}{Nat.mul\_zero}
+
+  \lean{Init/Prelude}{Nat.mul}
+
+  \paragraph{\eqref{sub:theorem-4j-eq1}}%
+
+    Let $m$ be a \nameref{ref:natural-number}.
+    By definition of \nameref{ref:multiplication}, $$m \cdot 0 = M_m(0) = 0.$$
+
+  \paragraph{\eqref{sub:theorem-4j-eq2}}%
+
+    Let $m$ and $n$ be natural numbers.
+    By definition of \nameref{ref:multiplication},
+      $$m \cdot n^+ = M_m(n^+) = M_m(n) + m = m \cdot n + m.$$
 
 \end{proof}
 
-\subsection{\pending{Lemma 2}}%
-\label{sub:lemma-2}
+\subsection{\verified{Left Additive Identity}}%
+\hyperlabel{sub:left-additive-identity}
 
 \begin{lemma}[2]
 
@@ -6519,35 +6552,39 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  Let $S = \{n \in \omega \mid A_0(n) = n\}$.
+  \lean{Init/Data/Nat/Basic}{Nat.zero\_add}
+
+  Let $S = \{n \in \omega \mid 0 + n = n\}$.
   We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
   Afterwards we show that (iii) our theorem holds.
 
   \paragraph{(i)}%
-  \hyperlabel{par:lemma-2-i}
+  \hyperlabel{par:left-additive-identity-i}
 
-    By definition of \nameref{ref:addition}, $A_0(0) = 0$.
+    By \nameref{sub:theorem-4i}, $0 + 0 = 0$.
     Thus $0 \in S$.
 
   \paragraph{(ii)}%
-  \hyperlabel{par:lemma-2-ii}
+  \hyperlabel{par:left-additive-identity-ii}
 
     Suppose $n \in S$.
-    By definition of addition, $A_0(n^+) = A_0(n)^+$.
-    Since $n \in S$, $A_0(n) = n$ which in turn implies that $A_0(n)^+ = n^+$.
+    By \nameref{sub:theorem-4i}, $0 + n^+ = (0 + n)^+$.
+    Since $n \in S$, $0 + n = n$ which in turn implies that $(0 + n)^+ = n^+$.
     Thus $n^+ \in S$.
 
   \paragraph{(iii)}%
 
-    By \nameref{par:lemma-2-i} and \nameref{par:lemma-2-ii}, $S$ is an
+    By \nameref{par:left-additive-identity-i} and
+      \nameref{par:left-additive-identity-ii}, $S$ is an
       \nameref{ref:inductive-set}.
     Hence \nameref{sub:theorem-4b} implies $S = \omega$.
-    Thus for all $n \in \omega$, $A_0(n) = n$.
+    Thus for all $n \in \omega$, $0 + n = n$.
 
 \end{proof}
 
-\subsection{\pending{Lemma 3}}%
-\label{sub:lemma-3}
+\subsection{\verified{Lemma 3}}%
+\hyperlabel{sub:lemma-3}
+\hyperlabel{sub:succ-add-eq-add-succ}
 
 \begin{lemma}[3]
 
@@ -6558,103 +6595,41 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
+  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_add\_eq\_succ\_add}
+
   Let $m \in \omega$ and define
-    $$S = \{n \in \omega \mid A_{m^+}(n) = A_m(n^+)\}.$$
+    $$S = \{n \in \omega \mid m^+ + n = m + n^+\}.$$
   We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
   Afterwards we show that (iii) our theorem holds.
 
   \paragraph{(i)}%
-  \label{par:lemma-3-i}
+  \hyperlabel{par:lemma-3-i}
 
-    By definition of \nameref{ref:addition}, $A_{m^+}(0) = m^+$.
-    Likewise, $$A_m(0^+) = A_m(0)^+ = m^+.$$
+    By \nameref{sub:theorem-4i}, $m^+ + 0 = m^+$.
+    Likewise, $m + 0^+ = (m + 0)^+ = m^+$.
     Thus $0 \in S$.
 
   \paragraph{(ii)}%
-  \label{par:lemma-3-ii}
+  \hyperlabel{par:lemma-3-ii}
 
     Suppose $n \in S$.
-    By definition of addition, $A_{m^+}(n^+) = \left[A_{m^+}(n)\right]^+$.
-    Since $n \in S$, $A_{m^+}(n) = A_m(n^+)$ which in turn implies that
-      $$\left[A_{m^+}(n)\right]^+ = \left[A_m(n^+)\right]^+ = A_m(n^{++}).$$
+    By \nameref{sub:theorem-4i}, $m^+ + n^+ = (m^+ + n)^+$.
+    Since $n \in S$, $m^+ + n = m + n^+$.
+    Therefore $(m^+ + n)^+ = (m + n^+)^+ = m + n^{++}$.
     Thus $n^+ \in S$.
 
   \paragraph{(iii)}%
 
     By \nameref{par:lemma-3-i} and \nameref{par:lemma-3-ii}, $S$ is inductive.
     Hence \nameref{sub:theorem-4b} implies $S = \omega$.
-    Thus for all $n \in \omega$, $A_{m^+}(n) = A_m(n^+)$.
+    Thus for all $n \in \omega$, $m^+ + n = m + n^+$.
 
 \end{proof}
 
-\subsection{\pending{Lemma 4}}%
-\hyperlabel{sub:lemma-4}
-
-\begin{lemma}[4]
-
-  For all $n \in \omega$, $M_0(n) = 0$.
-  In other words, $$0 \cdot n = 0.$$
-
-\end{lemma}
-
-\begin{proof}
-
-  Define
-    \begin{equation}
-      \hyperlabel{sub:lemma-4-eq1}
-      S = \{n \in \omega \mid M_0(n) = 0\}.
-    \end{equation}
-  We prove that (i) $0 \in S$ and (ii) that if $n \in S$, then $n^+ \in S$.
-  Afterwards we show that (iii) our theorem holds.
-
-  \paragraph{(i)}%
-  \hyperlabel{par:lemma-4-i}
-
-    By definition of \nameref{ref:multiplication}, $M_0(0) = 0$.
-    Thus $0 \in S$.
-
-  \paragraph{(ii)}%
-  \hyperlabel{par:lemma-4-ii}
-
-    Suppose $n \in S$.
-    Then, by definition of \nameref{ref:multiplication},
-      \begin{align*}
-        M_0(n^+)
-          & = M_0(n) + 0 \\
-          & = 0 + 0 & \eqref{sub:lemma-4-eq1} \\
-          & = 0. & \textref{ref:addition}
-      \end{align*}
-    Thus $n^+ \in S$.
-
-  \paragraph{(iii)}%
-
-    By \nameref{par:lemma-4-i} and \nameref{par:lemma-4-ii}, $S$ is an
-      \nameref{ref:inductive-set}.
-    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
-    Thus for all $n \in \omega$, $M_0(n) = 0$.
-
-\end{proof}
-
-\subsection{\sorry{Lemma 5}}%
-\hyperlabel{sub:lemma-5}
-
-\begin{lemma}[5]
-
-  For all $m, n \in \omega$, $M_{m^+}(n) = M_m(n) + n$.
-  In other words, $$m^+ \cdot n = m \cdot n + n.$$
-
-\end{lemma}
-
-\begin{proof}
-
-  TODO
-
-\end{proof}
-
-\subsection{\pending{Theorem 4k (1)}}%
+\subsection{\verified{Theorem 4K-1}}%
 \label{sub:theorem-4k-1}
 
-\begin{theorem}[4K.1]
+\begin{theorem}[4K-1]
 
   Associative law for addition.
   For $m, n, p \in \omega$, $$m + (n + p) = (m + n) + p.$$
@@ -6662,6 +6637,8 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \end{theorem}
 
 \begin{proof}
+
+  \lean{Mathlib/Algebra/Group/Defs}{add\_assoc}
 
   Fix $n, p \in \omega$ and define
     \begin{equation}
@@ -6674,28 +6651,24 @@ Show that $<_L$ is a linear ordering on $A \times B$.
   \paragraph{(i)}%
   \hyperlabel{par:theorem-4k-1-i}
 
-    By definition of \nameref{ref:addition},
-      \begin{align*}
-        0 + (n + p)
-          & = n + p & \textref{sub:lemma-2} \\
-          & = (0 + n) + p. & \textref{sub:lemma-2} \\
-      \end{align*}
+    By \nameref{sub:left-additive-identity},
+      $$0 + (n + p) = n + p = (0 + n) + p.$$
     Thus $0 \in S$.
 
   \paragraph{(ii)}%
   \hyperlabel{par:theorem-4k-1-ii}
 
     Suppose $m \in S$.
-    By definition of \nameref{ref:addition},
+    Then
       \begin{align*}
         m^+ + (n + p)
-          & = m + (n + p)^+ & \textref{sub:lemma-3} \\
+          & = m + (n + p)^+ & \textref{sub:succ-add-eq-add-succ} \\
           & = (m + (n + p))^+ & \textref{sub:theorem-4i} \\
           & = ((m + n) + p)^+ & \eqref{sub:theorem-4k-1-eq1} \\
           & = (m + n) + p^+ & \textref{sub:theorem-4i} \\
-          & = (m + n)^+ + p & \textref{sub:lemma-3} \\
+          & = (m + n)^+ + p & \textref{sub:succ-add-eq-add-succ} \\
           & = (m + n^+) + p & \textref{sub:theorem-4i} \\
-          & = (m^+ + n) + p. & \textref{sub:lemma-3}
+          & = (m^+ + n) + p. & \textref{sub:succ-add-eq-add-succ}
       \end{align*}
     Thus $m^+ \in S$.
 
@@ -6709,10 +6682,10 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\pending{Theorem 4k (2)}}%
+\subsection{\verified{Theorem 4K-2}}%
 \label{sub:theorem-4k-2}
 
-\begin{theorem}[4K.2]
+\begin{theorem}[4K-2]
 
   Commutative law for addition.
   For $m, n \in \omega$, $$m + n = n + m.$$
@@ -6720,6 +6693,8 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \end{theorem}
 
 \begin{proof}
+
+  \lean{Mathlib/Algebra/Group/Defs}{add\_comm}
 
   Fix $n \in \omega$ and define
     \begin{equation}
@@ -6732,25 +6707,21 @@ Show that $<_L$ is a linear ordering on $A \times B$.
   \paragraph{(i)}%
   \hyperlabel{par:theorem-4k-2-i}
 
-    By definition of \nameref{ref:addition},
-      \begin{align*}
-        0 + n
-          & = n & \textref{sub:lemma-2} \\
-          & = n + 0. \\
-      \end{align*}
+    By definition of \nameref{ref:addition} and
+      \nameref{sub:left-additive-identity}, $$0 + n = n = n + 0.$$
     Thus $0 \in S$.
 
   \paragraph{(ii)}%
   \hyperlabel{par:theorem-4k-2-ii}
 
     Suppose $m \in S$.
-    By definition of \nameref{ref:addition},
+    Then
       \begin{align*}
         m^+ + n
-          & = m + n^+ & \textref{sub:lemma-3} \\
-          & = (m + n)^+ \\
+          & = m + n^+ & \textref{sub:succ-add-eq-add-succ} \\
+          & = (m + n)^+ & \textref{sub:theorem-4i} \\
           & = (n + m)^+ & \eqref{sub:theorem-4k-2-eq1} \\
-          & = n + m^+.
+          & = n + m^+. & \textref{sub:theorem-4i}
       \end{align*}
     Thus $m^+ \in S$.
 
@@ -6763,10 +6734,116 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\pending{Theorem 4k (3)}}%
-\label{sub:theorem-4k-3}
+\subsection{\verified{Zero Multiplicand}}%
+\hyperlabel{sub:zero-multiplicand}
 
-\begin{theorem}[4K.3]
+\begin{lemma}[4]
+
+  For all $n \in \omega$, $M_0(n) = 0$.
+  In other words, $$0 \cdot n = 0.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Init/Data/Nat/Basic}{Nat.zero\_mul}
+
+  Define
+    \begin{equation}
+      \hyperlabel{sub:zero-multiplicand-eq1}
+      S = \{n \in \omega \mid 0 \cdot n = 0\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) that if $n \in S$, then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:zero-multiplicand-i}
+
+    By \nameref{sub:theorem-4j}, $0 \cdot 0 = 0$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:zero-multiplicand-ii}
+
+    Suppose $n \in S$.
+    Then
+      \begin{align*}
+        0 \cdot n^+
+          & = 0 \cdot n + 0 & \textref{sub:theorem-4j} \\
+          & = 0 + 0 & \eqref{sub:zero-multiplicand-eq1} \\
+          & = 0. & \textref{ref:addition}
+      \end{align*}
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:zero-multiplicand-i} and \nameref{par:zero-multiplicand-ii},
+      $S$ is an \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $n \in \omega$, $0 \cdot n = 0$.
+
+\end{proof}
+
+\subsection{\verified{Successor Distribution}}%
+\hyperlabel{sub:successor-distribution}
+
+\begin{lemma}[5]
+
+  For all $m, n \in \omega$, $M_{m^+}(n) = M_m(n) + n$.
+  In other words, $$m^+ \cdot n = m \cdot n + n.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Init/Data/Nat/Basic}{Nat.succ\_mul}
+
+  Let $m \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:successor-distribution-eq1}
+      S = \{n \in \omega \mid m^+ \cdot n = m \cdot n + n\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) that if $n \in S$, then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:successor-distribution-i}
+
+    By \nameref{sub:theorem-4j}, $m^+ \cdot 0 = 0$.
+    Likewise, by \nameref{sub:theorem-4i}, $m \cdot 0 + 0 = 0$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:successor-distribution-ii}
+
+    Suppose $n \in S$.
+    Then
+      \begin{align*}
+        m^+ \cdot n^+
+          & = m^+ \cdot n + m^+ & \textref{sub:theorem-4j} \\
+          & = (m \cdot n + n) + m^+ & \eqref{sub:successor-distribution-eq1} \\
+          & = m \cdot n + (n + m^+) & \textref{sub:theorem-4k-1} \\
+          & = m \cdot n + (n^+ + m) & \textref{sub:succ-add-eq-add-succ} \\
+          & = m \cdot n + (m + n^+) & \textref{sub:theorem-4k-2} \\
+          & = (m \cdot n + m) + n^+ & \textref{sub:theorem-4k-1} \\
+          & = m \cdot n^+ + n^+. & \textref{sub:theorem-4j}
+      \end{align*}
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:successor-distribution-i} and
+      \nameref{par:successor-distribution-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n \in \omega$, $m^+ \cdot n = m \cdot n + n$.
+
+\end{proof}
+
+\subsection{\verified{Theorem 4K-3}}
+\hyperlabel{sub:theorem-4k-3}
+
+\begin{theorem}[4K-3]
 
   Distributive law.
   For $m, n, p \in \omega$, $$m \cdot (n + p) = m \cdot n + m \cdot p.$$
@@ -6775,10 +6852,12 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
+  \lean{Init/Data/Nat/Basic}{Nat.left\_distrib}
+
   Fix $n, p \in \omega$ and define
     \begin{equation}
       \hyperlabel{sub:theorem-4k-3-eq1}
-      S = \{m \in \omega m \cdot (n + p) = m \cdot n + m \cdot p\}.
+      S = \{m \in \omega \mid m \cdot (n + p) = m \cdot n + m \cdot p\}.
     \end{equation}
   We show that (i) $0 \in S$ and (ii) if $m \in S$ then $m^+ \in S$.
   Afterward we show that (iii) the distributive law holds.
@@ -6789,9 +6868,9 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     By definition of \nameref{ref:multiplication} and \nameref{ref:addition},
       \begin{align*}
         0 \cdot (n + p)
-          & = 0 & \textref{sub:lemma-4} \\
+          & = 0 & \textref{sub:zero-multiplicand} \\
           & = 0 + 0 & \textref{ref:addition} \\
-          & = 0 \cdot n + 0 \cdot p. & \textref{sub:lemma-4}
+          & = 0 \cdot n + 0 \cdot p. & \textref{sub:zero-multiplicand}
       \end{align*}
     Thus $0 \in S$.
 
@@ -6802,17 +6881,17 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     By definition of \nameref{ref:multiplication} and \nameref{ref:addition},
       \begin{align*}
         m^+ \cdot (n + p)
-          & = m \cdot (n + p) + (n + p) & \textref{sub:lemma-5} \\
+          & = m \cdot (n + p) + (n + p)
+            & \textref{sub:successor-distribution} \\
           & = m \cdot (n + p) + n + p & \textref{sub:theorem-4k-1} \\
           & = m \cdot n + m \cdot p + n + p
             & \eqref{sub:theorem-4k-3-eq1} \\
           & = m \cdot n + n + m \cdot p + p & \textref{sub:theorem-4k-2} \\
-          & = m^+ \cdot n + m^+ \cdot p. & \textref{sub:lemma-5}
+          & = m^+ \cdot n + m^+ \cdot p. & \textref{sub:successor-distribution}
       \end{align*}
     Thus $m^+ \in S$.
 
   \paragraph{(iii)}%
-  \hyperlabel{par:theorem-4k-3-iii}
 
     By \nameref{par:theorem-4k-3-i} and \nameref{par:theorem-4k-3-ii}, $S$
       is an \nameref{ref:inductive-set}.
@@ -6822,10 +6901,174 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\sorry{Theorem 4k (4)}}%
-\label{sub:theorem-4k-4}
+\subsection{\verified{Successor Identity}}%
+\hyperlabel{sub:successor-identity}
 
-\begin{theorem}[4K.4]
+\begin{lemma}[6]
+
+  For all $m \in \omega$, $A_m(1) = m^+$.
+  In other words, $$m + 1 = m^+.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Init/Prelude}{Nat.succ}
+
+  Let
+    \begin{equation}
+      \hyperlabel{sub:successor-identity-eq1}
+      S = \{m \in \omega \mid m + 1 = m^+\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) if $m \in S$, then $m^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:successor-identity-i}
+
+    By \nameref{sub:left-additive-identity}, $0 + 1 = 1$.
+    By definition of the \nameref{ref:successor},
+      $0^+ = \emptyset \cup \{\emptyset\} = 1$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:successor-identity-ii}
+
+    Let $m \in S$.
+    Then
+      \begin{align*}
+        m^+ + 1
+          & = m + 1^+ & \textref{sub:succ-add-eq-add-succ} \\
+          & = (m + 1)^+ & \textref{sub:theorem-4i} \\
+          & = (m^+)^+. & \eqref{sub:successor-identity-eq1}
+      \end{align*}
+    Thus $m^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:successor-identity-i} and
+      \nameref{par:successor-identity-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $m \in \omega$, $m + 1 = m^+$.
+
+\end{proof}
+
+\subsection{\verified{Right Multiplicative Identity}}%
+\hyperlabel{sub:right-multiplicative-identity}
+
+\begin{lemma}[7]
+
+  For all $m \in \omega$, $M_m(1) = m$.
+  In other words, $$m \cdot 1 = m.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Init/Data/Nat/Basic}{mul\_one}
+
+  Let
+    \begin{equation}
+      \hyperlabel{sub:right-multiplicative-identity-eq1}
+      S = \{m \in \omega \mid m \cdot 1 = m\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) if $m \in S$, then $m^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:right-multiplicative-identity-i}
+
+    By \nameref{sub:zero-multiplicand}, $0 \cdot 1 = 0$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:right-multiplicative-identity-ii}
+
+    Suppose $m \in S$.
+    Then
+      \begin{align*}
+        m^+ \cdot 1
+          & = m \cdot 1 + 1 & \textref{sub:successor-distribution} \\
+          & = m + 1 & \eqref{sub:right-multiplicative-identity-eq1} \\
+          & = m^+. & \textref{sub:successor-identity}
+      \end{align*}
+    Thus $m^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:right-multiplicative-identity-i} and
+      \nameref{par:right-multiplicative-identity-ii}, $S$
+      is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m \in \omega$, $m \cdot 1 = m$.
+
+\end{proof}
+
+\subsection{\verified{Theorem 4K-5}}
+\hyperlabel{sub:theorem-4k-5}
+
+\begin{theorem}[4K-5]
+
+  Commutative law for multiplication.
+  For $m, n \in \omega$, $$m \cdot n = n \cdot m.$$
+
+\end{theorem}
+
+\begin{note}
+  We prove commutativity before associativity, though Enderton orders these
+  two properties in the opposite direction.
+\end{note}
+
+\begin{proof}
+
+  \lean{Mathlib/Algebra/Group/Defs}{mul\_comm}
+
+  Fix $n \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:theorem-4k-5-eq1}
+      S = \{m \in \omega \mid m \cdot n = n \cdot m\}.
+    \end{equation}
+  We show that (i) $0 \in S$ and (ii) if $m \in S$ then $m^+ \in S$.
+  Afterward we show that (iii) the commutative law for multiplication holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4k-5-i}
+
+    By \nameref{sub:theorem-4j} and \nameref{sub:zero-multiplicand},
+      $$0 \cdot n = 0 = n \cdot 0.$$
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4k-5-ii}
+
+    Suppose $m \in S$.
+    Then
+      \begin{align*}
+        m^+ \cdot n
+          & = m \cdot n + n & \textref{sub:successor-distribution} \\
+          & = n \cdot m + n & \eqref{sub:theorem-4k-5-eq1} \\
+          & = n \cdot m + n \cdot 1
+            & \textref{sub:right-multiplicative-identity} \\
+          & = n \cdot (m + 1) & \textref{sub:theorem-4k-3} \\
+          & = n \cdot m^+. & \textref{sub:successor-identity}
+      \end{align*}
+    Thus $m^+ \in S$.
+
+  \paragraph{(iii)}%
+  \hyperlabel{par:theorem-4k-5-iii}
+
+    By \nameref{par:theorem-4k-5-i} and \nameref{par:theorem-4k-5-ii}, $S$
+      is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n \in \omega$, $m \cdot n = n \cdot m$.
+
+\end{proof}
+
+\subsection{\verified{Theorem 4K-4}}%
+\hyperlabel{sub:theorem-4k-4}
+
+\begin{theorem}[4K-4]
 
   Associative law for multiplication.
   For $m, n, p \in \omega$, $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
@@ -6834,23 +7077,46 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  TODO
+  \lean{Mathlib/Algebra/Group/Defs}{mul\_assoc}
 
-\end{proof}
+  Fix $m, n \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:theorem-4k-4-eq1}
+      S = \{p \in \omega \mid m \cdot (n \cdot p) = (m \cdot n) \cdot p\}.
+    \end{equation}
+  We show that (i) $0 \in S$ and (ii) if $p \in S$ then $p^+ \in S$.
+  Afterward we show that (iii) the associative law for multiplication holds.
 
-\subsection{\sorry{Theorem 4K (5)}}
-\hyperlabel{sub:theorem-4k}
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4k-4-i}
 
-\begin{theorem}[4K.5]
+    By \nameref{sub:theorem-4j},
+      $$m \cdot (n \cdot 0) = 0 = (m \cdot n) \cdot 0.$$
+    Thus $0 \in S$.
 
-  Commutative law for multiplication.
-  For $m, n \in \omega$, $$m \cdot n = n \cdot m.$$
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4k-4-ii}
 
-\end{theorem}
+    Suppose $p \in S$.
+    Then
+      \begin{align*}
+        m \cdot (n \cdot p^+)
+          & = m \cdot (n \cdot p + n) & \textref{sub:theorem-4j} \\
+          & = m \cdot (n \cdot p) + m \cdot n & \textref{sub:theorem-4k-3} \\
+          & = (m \cdot n) \cdot p + m \cdot n & \eqref{sub:theorem-4k-4-eq1} \\
+          & = p \cdot (m \cdot n) + m \cdot n & \textref{sub:theorem-4k-5} \\
+          & = p^+ \cdot (m \cdot n) & \textref{sub:successor-distribution} \\
+          & = (m \cdot n) \cdot p^+ & \textref{sub:theorem-4k-5}
+      \end{align*}
+    Thus $p^+ \in S$.
 
-\begin{proof}
+  \paragraph{(iii)}%
 
-  TODO
+    By \nameref{par:theorem-4k-4-i} and \nameref{par:theorem-4k-4-ii}, $S$
+      is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n, p \in \omega$,
+      $m \cdot (n \cdot p) = (m \cdot n) \cdot p$.
 
 \end{proof}
 
@@ -7249,7 +7515,7 @@ Show that each natural number is either even or odd, but never both.
 \subsection{\sorry{Exercise 4.15}}%
 \hyperlabel{sub:exercise-4.15}
 
-Complete the proof of part (1) of \nameref{sub:theorem-4k}.
+Complete the proof of \nameref{sub:theorem-4k-1}.
 
 \begin{proof}
 
@@ -7260,7 +7526,7 @@ Complete the proof of part (1) of \nameref{sub:theorem-4k}.
 \subsection{\sorry{Exercise 4.16}}%
 \hyperlabel{sub:exercise-4.16}
 
-Complete the proof of part (5) of \nameref{sub:theorem-4k}.
+Complete the proof of \nameref{sub:theorem-4k-5}.
 
 \begin{proof}
 
