@@ -34,9 +34,6 @@ For each $m \in \omega$, there exists (by the
   \end{align*}
 \textbf{Addition} ($+$) is the \nameref{ref:binary-operation} on $\omega$ such
   that for any $m$ and $n$ in $\omega$, $$m + n = A_m(n).$$
-Thus when written as a \nameref{ref:relation},
-  $$+ = \{\pair{\pair{m, n}, p} \mid
-    m \in \omega \land n \in \omega \land p = A_m(n)\}.$$
 
 \begin{definition}
 
@@ -182,6 +179,25 @@ Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
 \begin{definition}
 
   \lean*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isEquivalence}
+
+\end{definition}
+
+\section{\defined{Exponentiation}}%
+\hyperlabel{ref:exponentiation}
+
+For each $m \in \omega$, there exists (by the
+  \nameref{sub:recursion-theorem-natural-numbers}) a unique
+  \nameref{ref:function} $E_m \colon \omega \rightarrow \omega$ for which
+  \begin{align*}
+    E_m(0) & = 1, \\
+    E_m(n^+) & = E_m(n) \cdot m & \text{for } n \text{ in } \omega.
+  \end{align*}
+\textbf{Exponentiation} is the \nameref{ref:binary-operation} on $\omega$
+  such that for any $m$ and $n$ in $\omega$, $$m^n = E_m(n).$$
+
+\begin{definition}
+
+  \lean*{Init/Prelude}{Pow.pow}
 
 \end{definition}
 
@@ -7512,25 +7528,25 @@ Show that each natural number is either even or odd, but never both.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.15}}%
+\subsection{\verified{Exercise 4.15}}%
 \hyperlabel{sub:exercise-4.15}
 
 Complete the proof of \nameref{sub:theorem-4k-1}.
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{sub:theorem-4k-1}.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.16}}%
+\subsection{\verified{Exercise 4.16}}%
 \hyperlabel{sub:exercise-4.16}
 
 Complete the proof of \nameref{sub:theorem-4k-5}.
 
 \begin{proof}
 
-  TODO
+  Refer to \nameref{sub:theorem-4k-5}.
 
 \end{proof}
 
