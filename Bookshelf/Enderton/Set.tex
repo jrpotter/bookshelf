@@ -6950,7 +6950,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  \lean{Init/Prelude}{Nat.succ}
+  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_eq\_one\_add}
 
   Let
     \begin{equation}
@@ -7605,7 +7605,7 @@ Formulate an analogue to Exercise 9 for a function
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.13}}%
+\subsection{\verified{Exercise 4.13}}%
 \hyperlabel{sub:exercise-4.13}
 
 Let $m$ and $n$ be natural numbers such that $m \cdot n = 0$.
@@ -7613,11 +7613,29 @@ Show that either $m = 0$ or $n = 0$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_13}
+
+  Suppose $m \cdot n = 0$.
+  For the sake of contradiction, assume $m \neq 0$ and $n \neq 0$.
+  By \nameref{sub:theorem-4c}, there exists some $p, q \in \omega$ such that
+    $p^+ = m$ and $q^+ = n$.
+  Thus
+    \begin{align*}
+      m \cdot n
+        & = m \cdot q^+ \\
+        & = m \cdot q + m & \textref{sub:theorem-4j} \\
+        & = m \cdot q + p^+ \\
+        & = (m \cdot q + p)^+. & \textref{sub:theorem-4i}
+    \end{align*}
+  By definition of a \nameref{ref:successor},
+    $m \cdot n = (m \cdot q + p)^+ \neq \emptyset = 0$, a contradiction.
+  Therefore our original assumption was wrong.
+  Hence $m = 0$ or $n = 0$.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.14}}%
+\subsection{\verified{Exercise 4.14}}%
 \hyperlabel{sub:exercise-4.14}
 
 Call a natural number \textit{even} if it has the form $2 \cdot m$ for some $m$.
@@ -7626,7 +7644,98 @@ Show that each natural number is either even or odd, but never both.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_14}
+
+  Let $$S = \{n \in \omega \mid n \text{ is even or odd but not both}\}.$$
+  We show that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$ as well.
+  Afterward we prove (iii) that the theorem statement holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:exercise-4.14a-i}
+
+    $0$ is even since $2 \cdot 0 = 0$ by \nameref{sub:theorem-4j}.
+    Furthermore, $0$ is not odd since that would imply there exists some
+      $p$ such that $(2 \cdot p)^+ = 0$.
+    By definition of \nameref{ref:successor}, this is not possible.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:exercise-4.14a-ii}
+
+    Suppose $n \in S$.
+    Then $n$ is even or odd but not both.
+
+    \subparagraph{Case 1}%
+
+      Suppose $n$ is even and not odd.
+      Then there exists some $m \in \omega$ such that $2 \cdot m = n$.
+      Since the successor operation is one-to-one, $(2 \cdot m)^+ = n^+$.
+      Thus $n^+$ is odd.
+
+      For the sake of contradiction, suppose $n^+$ is even.
+      Then there exists some $p$ such that $2 \cdot p = n^+$.
+      We consider two additional cases:
+
+      \vspace{8pt}\quad
+      \textbf{Case 1a}: Suppose $p = 0$.
+      Then, by \nameref{sub:theorem-4j}, $2 \cdot p = 0 = n^+$.
+      By definition of \nameref{ref:successor}, this is not possible. 
+
+      \vspace{8pt}\quad
+      \textbf{Case 1b}: Suppose $p \neq 0$.
+      Then \nameref{sub:theorem-4c} implies there exists some $q$ such that
+        $q^+ = p$.
+      Thus
+        \begin{align*}
+          n^+
+            & = 2 \cdot p \\
+            & = 2 \cdot q^+ \\
+            & = q^+ + q^+ \\
+            & = (q^+ + q)^+. & \textref{sub:theorem-4i}
+        \end{align*}
+      Since the successor operation is one-to-one, $n = q^+ + q$.
+      But then
+        \begin{align*}
+          n
+            & = q^+ + q \\
+            & = q + q^+ & \textref{sub:theorem-4k-2} \\
+            & = (q + q)^+ & \textref{sub:theorem-4i} \\
+            & = (2 \cdot q)^+,
+        \end{align*}
+        indicating $n$ is odd.
+      This is a contradiction.
+
+      \vspace{8pt}\quad
+      \textbf{Conclusion}: Since the above two cases are exhaustive, it follows
+        our original assumption is wrong.
+      That is, $n^+$ is odd but not even.
+
+    \subparagraph{Case 2}%
+
+      Suppose $n$ is odd and not even.
+      Then there exists some $p \in \omega$ such that $(2 \cdot p)^+ = n$.
+      Since the successor operation is one-to-one,
+        $(2 \cdot p)^{++} = (2 \cdot p^+) = n^+$.
+      Thus $n^+$ is even.
+
+      For the sake of contradiction, suppose $n^+$ is odd.
+      Then there exists some $q$ such that $(2 \cdot q)^+ = n^+$.
+      Since the successor operation is one-to-one, it follows $2 \cdot q = n$.
+      But this implies $n$ is even, a contradiction.
+      Thus our original assumption is wrong.
+      That is, $n^+$ is even but not odd.
+
+    \subparagraph{Conclusion}%
+
+      Since the foregoing cases are exhaustive, it follows $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:exercise-4.14a-i} and \nameref{par:exercise-4.14a-ii},
+      $S$ is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus every natural number is either even or odd, but not both.
 
 \end{proof}
 
