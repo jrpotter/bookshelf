@@ -433,6 +433,27 @@ For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
 
 \end{definition}
 
+\section{\defined{Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}}%
+\hyperlabel{ref:ordering-natural-numbers}
+
+For \nameref{ref:natural-number}s $m$ and $n$, define $m$ to be
+  \textbf{less than} $n$ if and only if $m \in n$.
+That is, $$m < n \iff m \in n.$$
+Likewise, define $m$ to be \textbf{less than or equal to} $n$ if and only if
+  $m \in n \lor m = n$.
+That is,
+  \begin{align*}
+    m \leq n
+      & \iff m \mathop{\underline{\in}} n \\
+      & \iff m < n \lor m = n.
+  \end{align*}
+
+\begin{definition}
+
+  \lean*{Init/Prelude}{Nat.lt}
+
+\end{definition}
+
 \section{\defined{Pair Set}}%
 \hyperlabel{ref:pair-set}
 
@@ -7136,6 +7157,87 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
+\section{Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}%
+\hyperlabel{sec:ordering-natural-numbers}
+
+\subsection{\unverified{Ordering on Successor}}%
+\hyperlabel{sub:ordering-successor}
+
+\begin{lemma}[8]
+
+  Let $m, n \in \omega$.
+  Then $m < n^+ \iff m \leq n$.
+
+\end{lemma}
+
+\begin{proof}
+
+  Let $m, n \in \omega$.
+  By \nameref{ref:ordering-natural-numbers},
+    \begin{align*}
+      m < n^+
+        & \iff m \in n^+ \\
+        & \iff m \in n \cup \{n\} & \textref{ref:successor} \\
+        & \iff m \in n \lor m \in \{n\} \\
+        & \iff m \in n \lor m = n \\
+        & \iff m \leq n.
+    \end{align*}
+
+\end{proof}
+
+\subsection{\sorry{Lemma 4L}}%
+\hyperlabel{sub:lemma-4l}
+
+\begin{lemma}[4L]
+
+  \begin{enumerate}[(a)]
+    \item For any natural numbers $m$ and $n$, $$m \in n \iff m^+ \in n^+.$$
+    \item No natural number is a member of itself.
+  \end{enumerate}
+
+\end{lemma}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{%
+  Trichotomy Law for \texorpdfstring{$\omega$}{Natural Numbers}}}%
+\hyperlabel{sub:trichotomy-law-natrual-numbers}
+
+\begin{theorem}
+
+  For any natural numbers $m$ and $n$, exactly one of the three conditions
+    $$m \in n, \quad m = n, \quad n \in m$$ holds.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{%
+  Linear Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}}%
+\hyperlabel{sub:linear-ordering-natural-numbers}
+
+\begin{theorem}
+
+  Relation
+    $$\in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}$$
+    is a linear ordering on $\omega$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
 \section{Exercises 4}%
 \hyperlabel{sec:exercises-4}
 
@@ -7550,14 +7652,57 @@ Complete the proof of \nameref{sub:theorem-4k-5}.
 
 \end{proof}
 
-\subsection{\sorry{Exercise 4.17}}%
+\subsection{\verified{Exercise 4.17}}%
 \hyperlabel{sub:exercise-4.17}
 
 Prove that $m^{n+p} = m^n \cdot m^p$.
 
 \begin{proof}
 
-  TODO
+  \lean{Data/Nat/Lemmas}{Nat.pow\_add}
+
+  Let $m$ and $n$ be \nameref{ref:natural-number}s and define
+    \begin{equation}
+      \hyperlabel{sub:exercise-4.17-eq1}
+      S = \{p \in \omega \mid m^{n+p} = m^n \cdot m^p\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) if $p \in S$ then $p^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:exercise-4.17-i}
+
+    Consider $m^{n+0}$:
+      \begin{align*}
+        m^{n+0}
+          & = m^n & \textref{sub:theorem-4i} \\
+          & = m^n \cdot 1 & \textref{sub:right-multiplicative-identity} \\
+          & = m^n \cdot m^0. & \textref{ref:exponentiation}
+      \end{align*}
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:exercise-4.17-ii}
+
+    Suppose $p \in S$.
+    Now consider $m^{n+p^+}$:
+      \begin{align*}
+        m^{n+p^+}
+          & = m^{(n + p)^+} & \textref{sub:theorem-4i} \\
+          & = E_m(n + p) \cdot m & \textref{ref:exponentiation} \\
+          & = m^n \cdot m^p \cdot m & \eqref{sub:exercise-4.17-eq1} \\
+          & = m^n \cdot (m^p \cdot m) & \textref{sub:theorem-4k-4} \\
+          & = m^n \cdot m^{p^+}. & \textref{ref:exponentiation}
+      \end{align*}
+    Thus $p^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:exercise-4.17-i} and \nameref{par:exercise-4.17-ii},
+      $S \subseteq \omega$ is an \nameref{ref:inductive-set}.
+    By \nameref{sub:theorem-4b}, $S = \omega$.
+    Thus for all $m, n, p \in \omega$, it follows that
+      $m^{n+p} = m^n \cdot m^p$.
 
 \end{proof}
 
