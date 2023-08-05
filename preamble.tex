@@ -99,6 +99,13 @@
 \newenvironment{definition}{\@statement{Definition}}{\hfill$\square$}
 \renewenvironment{proof}{\@statement{Proof}}{\hfill$\square$}
 
+\newtheorem{corollaryinner}{Corollary}
+\newenvironment{corollary}[1][]{%
+  \ifstrempty{#1}
+    {\corollaryinner}
+    {\renewcommand\thecorollaryinner{#1}\corollaryinner}
+}{\endcorollaryinner}
+
 \newtheorem{lemmainner}{Lemma}
 \newenvironment{lemma}[1][]{%
   \ifstrempty{#1}

@@ -7,6 +7,7 @@
 \makeleancommands{../..}
 
 \newcommand{\pair}[1]{\left< #1 \right>}
+\newcommand{\ineq}{\,\mathop{\underline{\in}}\,}
 
 \begin{document}
 
@@ -446,7 +447,7 @@ Likewise, define $m$ to be \textbf{less than or equal to} $n$ if and only if
 That is,
   \begin{align*}
     m \leq n
-      & \iff m \mathop{\underline{\in}} n \\
+      & \iff m \ineq n \\
       & \iff m < n \lor m = n.
   \end{align*}
 
@@ -547,6 +548,19 @@ For any set $a$, there is a set whose members are exactly the subsets of $a$:
   \lean*{Mathlib/Init/Set}{Set.powerset}
 
 \end{axiom}
+
+\section{\defined{Proper Subset}}%
+\hyperlabel{ref:proper-subset}
+
+A set $A$ is said to be a \textbf{proper subset} of $B$ ($A \subset B$) if and
+  only if it is a subset of $B$ that is unequal to $B$.
+$$A \subset B \iff A \subseteq B \land A \neq B.$$
+
+\begin{definition}
+
+  \lean*{Std/Classes/SetNotation}{HasSSubset}
+
+\end{definition}
 
 \section{\defined{Quotient Set}}%
 \hyperlabel{ref:quotient-set}
@@ -7212,7 +7226,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\pending{Lemma 4L(a)}}%
+\subsection{\verified{Lemma 4L(a)}}%
 \hyperlabel{sub:lemma-4l-a}
 
 \begin{lemma}[4L(a)]
@@ -7220,6 +7234,10 @@ Show that $<_L$ is a linear ordering on $A \times B$.
   For any natural numbers $m$ and $n$, $$m \in n \iff m^+ \in n^+.$$
 
 \end{lemma}
+
+\begin{note}
+  Here I referred to Enderton's proof in the forward direction.
+\end{note}
 
 \begin{proof}
 
@@ -7229,13 +7247,50 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
   \paragraph{($\Rightarrow$)}%
 
-    Suppose $m \in n$.
-    TODO
+    Define $$S = \{n \in \omega \mid (\forall m \in n) m^+ \in n^+\}.$$
+    We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+    Afterwards we show that (iii) the forward direction of the stated
+      biconditional holds.
+
+    \subparagraph{(i)}%
+    \hyperlabel{spar:lemma-4l-a-i}
+
+      $0 \in S$ vacuously.
+      That is, there are no members of $0 = \emptyset$ by definition.
+
+    \subparagraph{(ii)}%
+    \hyperlabel{spar:lemma-4l-a-ii}
+
+      Suppose $n \in S$.
+      We need to show for all $m \in n^+$, $m^+ \in n^{++}$.
+      Let $m \in n^+ = n \cup \{n\}$.
+      Then $m \in n$ or $m \in \{n\}$.
+
+      If $m \in n$, then $n \in S$ implies $m^+ \in n^+ \in n^{++}$.
+      By \nameref{sub:theorem-4f}, every natural number is a
+        \nameref{ref:transitive-set}.
+      Therefore $m^+ \in n^{++}$.
+      On the other hand, if $m \in \{n\}$, then $m = n$.
+      Since $n^+ \in n^{++}$, it immediately follows $m^+ \in n^{++}$.
+      Hence $n^+ \in S$.
+
+    \subparagraph{(iii)}%
+
+      By \nameref{spar:lemma-4l-a-i} and \nameref{spar:lemma-4l-a-ii}, $S$ is an
+        \nameref{ref:inductive-set}.
+      Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+      Thus for all $n \in \omega$, $m \in n \Rightarrow m^+ \in n^+$.
 
   \paragraph{($\Leftarrow$)}%
 
     Suppose $m^+ \in n^+$.
-    TODO
+    The definition of \nameref{ref:successor} immediately implies that
+      $m \in m^+$.
+    By \nameref{sec:ordering-natural-numbers}, $m^+ \in n^+$ implies $m^+ \in n$
+      or $m^+ = n$.
+    If the latter, $m \in n$ immediately follows.
+    If the former, we note $n$ is a transitive set by \nameref{sub:theorem-4f}.
+    Thus $m \in m^+ \in n$ implies $m \in n$.
 
 \end{proof}
 
@@ -7446,6 +7501,166 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
     By \nameref{sub:trichotomy-law-natural-numbers},
       \eqref{sub:linear-ordering-natural-numbers-eq1} is trichotomous.
+
+\end{proof}
+
+\subsection{\unverified{Corollary 4M}}%
+\hyperlabel{sub:corollary-4m}
+
+\begin{corollary}[4M]
+
+  For any natural numbers $m$ and $n$,
+    \begin{equation}
+      \hyperlabel{sub:corollary-4m-eq1}
+      m \in n \iff m \subset n
+    \end{equation}
+    and
+    \begin{equation}
+      \hyperlabel{sub:corollary-4m-eq2}
+      m \ineq n \iff m \subseteq n.
+    \end{equation}
+
+\end{corollary}
+
+\begin{proof}
+
+  \paragraph{\eqref{sub:corollary-4m-eq1}}%
+
+    We prove both directions of the biconditional specified in
+      \eqref{sub:corollary-4m-eq1}:
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $m \in n$ and $t \in m$.
+      By \nameref{sub:theorem-4f}, $n$ is a \nameref{ref:transitive-set}.
+      Therefore $t \in n$.
+      Hence $m \subseteq n$.
+      Since $m \in n$, \nameref{sub:linear-ordering-natural-numbers} implies
+        $m \neq n$.
+      Thus, by definition of \nameref{ref:proper-subset}, $m \subset n$.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $m \subset n$.
+      By \nameref{sub:linear-ordering-natural-numbers}, exactly one of
+        $$m \in n, \quad m = n, \quad n \in m$$ holds.
+      By definition of \nameref{ref:proper-subset}, $m \subseteq n$ and
+        $m \neq n$.
+      Furthermore, it cannot be that $n \in m$ since otherwise $n \in n$,
+        contradicting \nameref{sub:lemma-4l-b}.
+      Thus $m \in n$ is the only possibility.
+
+  \paragraph{\eqref{sub:corollary-4m-eq2}}%
+
+    We prove both directions of the biconditional specified in
+      \eqref{sub:corollary-4m-eq2}:
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Suppose $m \ineq n$.
+      By definition, $m \in n$ or $m = n$.
+      Let $p \in m$.
+      Then $p \in m \in n$ or $p \in m = n$.
+      By \nameref{sub:theorem-4f}, $n$ is a \nameref{ref:transitive-set}.
+      Thus $p \in n$ in either case.
+      Hence $m \subseteq n$.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Suppose $m \subseteq n$.
+      By \nameref{sub:linear-ordering-natural-numbers}, exactly one of
+        $$m \in n, \quad m = n, \quad n \in m$$ holds.
+      But it cannot be that $n \in m$ since that would imply $n \in n$,
+        contradicting \nameref{sub:lemma-4l-b}.
+      Therefore $m \in n$ or $m = n$.
+      Hence $m \ineq n$.
+
+\end{proof}
+
+\subsection{\sorry{Theorem 4N}}%
+\hyperlabel{sub:theorem-4n}
+
+\begin{theorem}[4N]
+
+  For any natural numbers $n$, $m$, and $p$, $$m \in n \iff m + p \in n + p.$$
+  If, in addition, $p \neq 0$, then $$m \in n \iff m \cdot p \in n \cdot p.$$
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Corollary 4P}}%
+\hyperlabel{sub:corollary-4p}
+
+\begin{corollary}[4P]
+
+  The following cancellation laws hold for $m$, $n$, and $p$ in $\omega$:
+    \begin{align*}
+      m + p = n + p & \Rightarrow m = n, \\
+      m \cdot p = n \cdot p & \Rightarrow m = n.
+    \end{align*}
+
+\end{corollary}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{%
+  Well Ordering of \texorpdfstring{$\omega$}{Natural Numbers}}}%
+\hyperlabel{sub:well-ordering-natural-numbers}
+
+\begin{theorem}
+
+  Let $A$ be a nonempty subset of $\omega$.
+  Then there is some $m \in A$ such that $m \ineq n$ for all $n \in A$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Corollary 4Q}}%
+\hyperlabel{sub:corollary-4q}
+
+\begin{corollary}[4Q]
+
+  There is no function $f \colon \omega \rightarrow \omega$ such that
+    $f(n^+) \in f(n)$ for every natural number $n$.
+
+\end{corollary}
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{%
+  Strong Induction Principle for \texorpdfstring{$\omega$}{Natural Numbers}}}%
+\hyperlabel{sub:strong-induction-principle-natural-numbers}
+
+\begin{theorem}
+
+  Let $A$ be a subset of $\omega$, and assume that for every $n \in \omega$,
+    $$\text{if every number less than } n \text{ is in } A,
+      \text{ then } n \in A.$$
+  Then $A = \omega$.
+
+\end{theorem}
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
@@ -8024,6 +8239,143 @@ Prove that $m^{n+p} = m^n \cdot m^p$.
     By \nameref{sub:theorem-4b}, $S = \omega$.
     Thus for all $m, n, p \in \omega$, it follows that
       $m^{n+p} = m^n \cdot m^p$.
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.18}}%
+\hyperlabel{sub:exercise-4.18}
+
+Simplify $\img{\in_\omega^{-1}}{\{7, 8\}}$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.19}}%
+\hyperlabel{sub:exercise-4.19}
+
+Prove that if $m$ is a natural number and $d$ is a nonzero number, then there
+  exist numbers $q$ and $r$ such that $m = (d \cdot q) + r$ and $r$ is less than
+  $d$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.20}}%
+\hyperlabel{sub:exercise-4.20}
+
+Let $A$ be a nonempty subset of $\omega$ such that $\bigcup A = A$.
+Show that $A = \omega$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.21}}%
+\hyperlabel{sub:exercise-4.21}
+
+Show that no natural number is a subset of any of its elements.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.22}}%
+\hyperlabel{sub:exercise-4.22}
+
+Show that for any natural numbers $m$ and $p$ we have $m \in m + p^+$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.23}}%
+\hyperlabel{sub:exercise-4.23}
+
+Assume that $m$ and $n$ are natural numbers with $m$ less than $n$.
+Show that there is some $p$ in $\omega$ for which $m + p^+ = n$.
+(It follows form this and the preceding exercise that $m$ is less than $n$ iff
+  $(\exists p \in \omega)m + p^+ = n$.)
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.24}}%
+\hyperlabel{sub:exercise-4.24}
+
+Assume that $m + n = p + q$.
+Show that $$m \in p \iff n \in q.$$
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.25}}%
+\hyperlabel{sub:exercise-4.25}
+
+Assume that $n \in m$ and $q \in p$.
+Show that $$(m \cdot q) + (n \cdot p) \in (m \cdot p) + (n \cdot q).$$
+[\textit{Suggestion:} Use \nameref{sub:exercise-4.23}.]
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.26}}%
+\hyperlabel{sub:exercise-4.26}
+
+Assume that $n \in \omega$ and $f \colon n^+ \rightarrow \omega$.
+Show that $\ran{f}$ has a largest element.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.27}}%
+\hyperlabel{sub:exercise-4.27}
+
+Assume that $A$ is a set, $G$ is a function, and $f_1$ and $f_2$ map $\omega$
+  into $A$.
+Further assume that for each $n \in \omega$ both $f_1 \restriction n$ and
+  $f_2 \restriction n$ belong to $\dom{G}$ and
+  $$f_1(n) = G(f_1 \restriction n) \land f_2(n) = G(f_2 \restriction n).$$
+Show that $f_1 = f_2$.
+
+\begin{proof}
+
+  TODO
+
+\end{proof}
+
+\subsection{\sorry{Exercise 4.28}}%
+\hyperlabel{sub:exercise-4.28}
+
+Rewrite the proof of \nameref{sub:theorem-4g} using, in place of induction, the
+  well-ordering of $\omega$.
+
+\begin{proof}
+
+  TODO
 
 \end{proof}
 
