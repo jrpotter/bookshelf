@@ -119,7 +119,8 @@ The \textbf{composition} of sets $F$ and $G$ is
 \section{\defined{Connected}}%
 \hyperlabel{ref:connected}
 
-A binary relation $R$ on $A$ is \textbf{connected} if for distinct $x, y \in A$, either $xRy$ or $yRx$.
+A binary relation $R$ on $A$ is \textbf{connected} if for distinct $x, y \in A$,
+  either $xRy$ or $yRx$.
 
 \begin{definition}
 
@@ -340,7 +341,8 @@ The \textbf{inverse} of a set $F$ is the set
 \section{\defined{Irreflexive}}%
 \hyperlabel{ref:irreflexive}
 
-A binary relation $R$ on set $A$ is \textbf{irreflexive} if there is no $x \in A$ for which $xRx$.
+A binary relation $R$ on set $A$ is \textbf{irreflexive} if there is no
+  $x \in A$ for which $xRx$.
 
 \begin{definition}
 
@@ -3096,7 +3098,7 @@ If not, then under what conditions does equality hold?
 \hyperlabel{sub:lemma-1}
 \hyperlabel{sub:one-to-one-inverse}
 
-\begin{lemma}[1]
+\begin{lemma}
 
   For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
 
@@ -3814,7 +3816,7 @@ If not, then under what conditions does equality hold?
   Let $R$ be a linear ordering on $A$.
   \begin{enumerate}[(i)]
     \item There is no $x$ for which $xRx$.
-    \item For distinct $x$ and $y$ in $A$, either $xRy$ or $yRx$.
+    \item For distinct $x$ and $y$ in $A$, either $xRy$ or $yRx$ (but not both).
   \end{enumerate}
 
 \end{theorem}
@@ -3838,7 +3840,7 @@ If not, then under what conditions does equality hold?
     Let $x, y \in A$ such that $x \neq y$.
     By definition, $R$ is \nameref{ref:trichotomous}.
     Thus only one of $$xRy, \quad x = y, \quad yRx$$ hold.
-    By hypothesis $x \neq y$ meaning either $xRy$ or $yRx$.
+    By hypothesis $x \neq y$ meaning either $xRy$ or $yRx$ (but not both).
 
 \end{proof}
 
@@ -6134,44 +6136,6 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \section{Peano's Postulates}%
 \hyperlabel{sec:peanos-postulates}
 
-\subsection{\verified{Theorem 4D}}%
-\hyperlabel{sub:theorem-4d}
-
-\begin{theorem}[4D]
-
-  $\langle \omega, \sigma, 0 \rangle$ is a Peano system.
-
-\end{theorem}
-
-\begin{proof}
-
-  \lean{Common/Set/Peano}{Peano.instSystemNatUnivSuccOfNatInstOfNatNat}
-
-  Note $\sigma$ is defined as $\sigma = \{\pair{n, n^+} \mid n \in \omega\}$.
-  To prove $\langle \omega, \sigma, 0 \rangle$ is a \nameref{ref:peano-system},
-    we must show that (i) $0 \not\in \ran{S}$, (ii) $\sigma$ is one-to-one, and
-    (iii) every subset $A$ of $\omega$ containing $0$ and closed under $\sigma$
-    is $\omega$ itself.
-
-  \paragraph{(i)}%
-
-    This follows immediately from \nameref{sub:theorem-4c}.
-
-  \paragraph{(ii)}%
-
-    Let $n^+ \in \ran{\sigma}$.
-    By construction, there exists some $m_1 \in \omega$ such that $m_1 = n^+$.
-    Suppose there exists some $m_2 \in \omega$ such that $m_2 = n^+$.
-    By definition of the \nameref{ref:successor}, $m_1 = n \cup \{n\} = m_2$.
-    By the \nameref{ref:extensionality-axiom}, $m_1 = m_2$.
-    Thus $\sigma$ is one-to-one.
-
-  \paragraph{(iii)}%
-
-    This follows immediately from \nameref{sub:theorem-4b}.
-
-\end{proof}
-
 \subsection{\unverified{Theorem 4E}}%
 \hyperlabel{sub:theorem-4e}
 
@@ -6257,6 +6221,50 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     Notice $T \subseteq \omega$.
     By \nameref{par:theorem-4f-i} and \nameref{sub:theorem-4b}, $T = \omega$.
     Thus every natural number is a transitive set.
+
+\end{proof}
+
+\subsection{\verified{Theorem 4D}}%
+\hyperlabel{sub:theorem-4d}
+
+\begin{theorem}[4D]
+
+  $\langle \omega, \sigma, 0 \rangle$ is a Peano system.
+
+\end{theorem}
+
+\begin{note}
+  Notice this theorem comes after \nameref{sub:theorem-4e}. Enderton introduces
+  this theorem before \nameref{sub:theorem-4e} but its proof relies on
+  \nameref{sub:theorem-4e}.
+\end{note}
+
+\begin{proof}
+
+  \lean{Common/Set/Peano}{Peano.instSystemNatUnivSuccOfNatInstOfNatNat}
+
+  Note $\sigma$ is defined as $\sigma = \{\pair{n, n^+} \mid n \in \omega\}$.
+  To prove $\langle \omega, \sigma, 0 \rangle$ is a \nameref{ref:peano-system},
+    we must show that (i) $0 \not\in \ran{S}$, (ii) $\sigma$ is one-to-one, and
+    (iii) every subset $A$ of $\omega$ containing $0$ and closed under $\sigma$
+    is $\omega$ itself.
+
+  \paragraph{(i)}%
+
+    This follows immediately from \nameref{sub:theorem-4c}.
+
+  \paragraph{(ii)}%
+
+    Let $m, n \in \omega$ and suppose $m^+ = n^+$.
+    Then $\bigcup \left(m^+\right) = \bigcup \left(n^+\right)$.
+    By \nameref{sub:theorem-4f}, every natural number is a
+      \nameref{ref:transitive-set}.
+    Therefore, by \nameref{sub:theorem-4e},
+      $$\bigcup \left(m^+\right) = m = \bigcup \left(n^+\right) = n.$$
+
+  \paragraph{(iii)}%
+
+    This follows immediately from \nameref{sub:theorem-4b}.
 
 \end{proof}
 
@@ -6580,7 +6588,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \subsection{\verified{Left Additive Identity}}%
 \hyperlabel{sub:left-additive-identity}
 
-\begin{lemma}[2]
+\begin{lemma}
 
   For all $n \in \omega$, $A_0(n) = n$.
   In other words, $$0 + n = n.$$
@@ -6623,7 +6631,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \hyperlabel{sub:lemma-3}
 \hyperlabel{sub:succ-add-eq-add-succ}
 
-\begin{lemma}[3]
+\begin{lemma}
 
   For all $m, n \in \omega$, $A_{m^+}(n) = A_m(n^+)$.
   In other words, $$m^+ + n = m + n^+.$$
@@ -6774,7 +6782,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \subsection{\verified{Zero Multiplicand}}%
 \hyperlabel{sub:zero-multiplicand}
 
-\begin{lemma}[4]
+\begin{lemma}
 
   For all $n \in \omega$, $M_0(n) = 0$.
   In other words, $$0 \cdot n = 0.$$
@@ -6824,7 +6832,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \subsection{\verified{Successor Distribution}}%
 \hyperlabel{sub:successor-distribution}
 
-\begin{lemma}[5]
+\begin{lemma}
 
   For all $m, n \in \omega$, $M_{m^+}(n) = M_m(n) + n$.
   In other words, $$m^+ \cdot n = m \cdot n + n.$$
@@ -6941,7 +6949,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \subsection{\verified{Successor Identity}}%
 \hyperlabel{sub:successor-identity}
 
-\begin{lemma}[6]
+\begin{lemma}
 
   For all $m \in \omega$, $A_m(1) = m^+$.
   In other words, $$m + 1 = m^+.$$
@@ -6994,7 +7002,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \subsection{\verified{Right Multiplicative Identity}}%
 \hyperlabel{sub:right-multiplicative-identity}
 
-\begin{lemma}[7]
+\begin{lemma}
 
   For all $m \in \omega$, $M_m(1) = m$.
   In other words, $$m \cdot 1 = m.$$
@@ -7160,10 +7168,10 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \section{Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}%
 \hyperlabel{sec:ordering-natural-numbers}
 
-\subsection{\unverified{Ordering on Successor}}%
+\subsection{\verified{Ordering on Successor}}%
 \hyperlabel{sub:ordering-successor}
 
-\begin{lemma}[8]
+\begin{lemma}
 
   Let $m, n \in \omega$.
   Then $m < n^+ \iff m \leq n$.
@@ -7171,6 +7179,8 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 \end{lemma}
 
 \begin{proof}
+
+  \lean{Std/Data/Nat/Lemmas}{Nat.lt\_succ}
 
   Let $m, n \in \omega$.
   By \nameref{ref:ordering-natural-numbers},
@@ -7185,27 +7195,144 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\sorry{Lemma 4L}}%
-\hyperlabel{sub:lemma-4l}
+\subsection{\unverified{Members of Natural Numbers}}%
+\hyperlabel{sub:members-natural-numbers}
 
-\begin{lemma}[4L]
+\begin{lemma}
 
-  \begin{enumerate}[(a)]
-    \item For any natural numbers $m$ and $n$, $$m \in n \iff m^+ \in n^+.$$
-    \item No natural number is a member of itself.
-  \end{enumerate}
+  Every natural number is the set of all smaller natural numbers.
 
 \end{lemma}
 
 \begin{proof}
 
-  TODO
+  Let $n \in \omega$.
+  Consider $m \in n$.
+  By \nameref{sub:theorem-4b}, $\omega$ is a \nameref{ref:transitive-set}.
+  Thus $m \in n$ implies $m \in \omega$.
+  Thus $m \in n \iff m \in \omega \land m \in n$.
 
 \end{proof}
 
-\subsection{\sorry{%
+\subsection{\pending{Lemma 4L(a)}}%
+\hyperlabel{sub:lemma-4l-a}
+
+\begin{lemma}[4L(a)]
+
+  For any natural numbers $m$ and $n$, $$m \in n \iff m^+ \in n^+.$$
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_lt\_succ\_iff}
+
+  Let $m$ and $n$ be \nameref{ref:natural-number}s.
+
+  \paragraph{($\Rightarrow$)}%
+
+    Suppose $m \in n$.
+    TODO
+
+  \paragraph{($\Leftarrow$)}%
+
+    Suppose $m^+ \in n^+$.
+    TODO
+
+\end{proof}
+
+\subsection{\verified{Lemma 4L(b)}}%
+\hyperlabel{sub:lemma-4l-b}
+
+\begin{lemma}[4L(b)]
+
+  No natural number is a member of itself.
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Init/Prelude}{Nat.lt\_irrefl}
+
+  Define
+    \begin{equation}
+      \hyperlabel{sub:lemma-4l-b-eq1}
+      S = \{n \in \omega \mid n \not\in n\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:lemma-4l-b-i}
+
+    By definition, $0 = \emptyset$.
+    It obviously holds that $\emptyset \not\in \emptyset$ since $\emptyset$,
+      by definition, has no members.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:lemma-4l-b-ii}
+
+    Suppose $n \in S$.
+    By \eqref{sub:lemma-4l-b-eq1}, $n \not\in n$.
+    By \nameref{sub:lemma-4l-a}, it follows $n^+ \not\in n^+$.
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:lemma-4l-b-i} and \nameref{par:lemma-4l-b-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $n \in \omega$, $n \not\in n$.
+
+\end{proof}
+
+\subsection{\verified{\texorpdfstring{$0$}{Zero} is the Least Natural Number}}%
+\hyperlabel{sub:zero-least-natural-number}
+
+\begin{lemma}
+
+  For every natural number $n \neq 0$, $0 \in n$.
+
+\end{lemma}
+
+\begin{proof}
+
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.zero\_least\_nat}
+
+  Let $$S = \{n \in \omega \mid n = 0 \lor 0 \in n\}.$$
+  We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:zero-least-natural-number-i}
+
+    This trivially holds by definition of $S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:zero-least-natural-number-ii}
+
+    Suppose $n \in S$.
+    By definition of the \nameref{ref:successor} function, $n^+ = n \cup \{n\}$.
+    Thus $n \in n^+$.
+    By \nameref{sub:theorem-4f}, $n^+$ is a \nameref{ref:transitive-set}.
+    Since $0 \in n$ and $n \in n^+$, it follows $0 \in n^+$.
+    Thus $n^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:zero-least-natural-number-i} and
+      \nameref{par:zero-least-natural-number-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $n \in \omega$, either $n = 0$ or $0 \in n$.
+
+\end{proof}
+
+\subsection{\verified{%
   Trichotomy Law for \texorpdfstring{$\omega$}{Natural Numbers}}}%
-\hyperlabel{sub:trichotomy-law-natrual-numbers}
+\hyperlabel{sub:trichotomy-law-natural-numbers}
 
 \begin{theorem}
 
@@ -7216,25 +7343,111 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.trichotomy\_law\_for\_nat}
+
+  Let $n \in \omega$ and define
+    \begin{equation}
+      \hyperlabel{sub:trichotomy-law-natural-numbers-eq1}
+      S = \{m \in \omega \mid m \in n \lor m = n \lor n \in m\}.
+    \end{equation}
+  We prove that (i) $0 \in S$ and (ii) if $m \in S$ then $m^+ \in S$.
+  Afterwards we show that (iii) our theorem holds.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:trichotomy-law-natural-numbers-i}
+
+    If $n = 0$, then it trivially follows $0 \in S$.
+    Otherwise \nameref{sub:zero-least-natural-number} implies $0 \in n$.
+    Thus $0 \in S$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:trichotomy-law-natural-numbers-ii}
+
+    Suppose $m \in S$.
+    By \eqref{sub:trichotomy-law-natural-numbers-eq1}, there are three cases to
+      consider:
+
+    \subparagraph{Case 1}%
+
+      Suppose $m \in n$.
+      By \nameref{sub:lemma-4l-a}, $m^+ \in n^+ = n \cup \{n\}$.
+      By definition of the \nameref{ref:successor}, $m^+ \in n$ or $m^+ = n$.
+      Either way, $m^+ \in S$.
+
+    \subparagraph{Case 2}%
+
+      Suppose $m = n$.
+      Since $m \in m^+$, it follows $n \in m^+$.
+      Thus $m^+ \in S$.
+
+    \subparagraph{Case 3}%
+
+      Suppose $n \in m$.
+      Then $n \in m \cup \{m\} = m^+$.
+      Thus $m^+ \in S$.
+
+    \subparagraph{Conclusion}%
+
+      Since the above three cases are exhaustive, it follows $m^+ \in S$.
+
+  \paragraph{(iii)}%
+
+    By \nameref{par:trichotomy-law-natural-numbers-i} and
+      \nameref{par:trichotomy-law-natural-numbers-ii}, $S$ is an
+      \nameref{ref:inductive-set}.
+    Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+    Thus for all $m, n \in \omega$, $$m \in n \lor m = n \lor n \in m.$$
+    We now prove that
+      $$\in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}$$
+      is \nameref{ref:irreflexive} and \nameref{ref:connected}.
+    Irreflexivity immediately follows from \nameref{sub:lemma-4l-b}.
+    Connectivity follows immediately from the fact $S = \omega$.
+    Furthermore, it is not possible both $m \in n$ and $n \in m$ since, by
+      \nameref{sub:theorem-4f}, $m$ and $n$ are \nameref{ref:transitive-set}s.
+    This would otherwise imply $m \in m$, an immediate contradiction to
+      irreflexivity.
+    Thus $\in_\omega$ is a \nameref{ref:trichotomous} relation.
 
 \end{proof}
 
-\subsection{\sorry{%
+\subsection{\verified{%
   Linear Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:linear-ordering-natural-numbers}
 
 \begin{theorem}
 
   Relation
-    $$\in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}$$
+    \begin{equation}
+      \hyperlabel{sub:linear-ordering-natural-numbers-eq1}
+      \in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}
+    \end{equation}
     is a linear ordering on $\omega$.
 
 \end{theorem}
 
 \begin{proof}
 
-  TODO
+  \lean{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.linear\_ordering\_on\_nat}
+
+  By definition, \eqref{sub:linear-ordering-natural-numbers-eq1} is a
+    \nameref{ref:linear-ordering} on $\omega$ if it is (i) transitive and
+    (ii) trichotomous.
+
+  \paragraph{(i)}%
+
+    Suppose $p, q, r \in \omega$ such that $p \in q$ and $q \in r$.
+    By \nameref{sub:theorem-4f}, $p$, $q$, and $r$ are
+      \nameref{ref:transitive-set}s.
+    By definition of a transitive set, it follows $p \in r$.
+    Hence \eqref{sub:linear-ordering-natural-numbers-eq1} is
+      \nameref{ref:transitive}.
+
+  \paragraph{(ii)}%
+
+    By \nameref{sub:trichotomy-law-natural-numbers},
+      \eqref{sub:linear-ordering-natural-numbers-eq1} is trichotomous.
 
 \end{proof}
 
@@ -7670,8 +7883,8 @@ Show that each natural number is either even or odd, but never both.
 
       Suppose $n$ is even and not odd.
       Then there exists some $m \in \omega$ such that $2 \cdot m = n$.
-      Since the successor operation is one-to-one, $(2 \cdot m)^+ = n^+$.
-      Thus $n^+$ is odd.
+      Therefore $(2 \cdot m)^+ = n^+$.
+      Hence $n^+$ is odd.
 
       For the sake of contradiction, suppose $n^+$ is even.
       Then there exists some $p$ such that $2 \cdot p = n^+$.
@@ -7694,7 +7907,8 @@ Show that each natural number is either even or odd, but never both.
             & = q^+ + q^+ \\
             & = (q^+ + q)^+. & \textref{sub:theorem-4i}
         \end{align*}
-      Since the successor operation is one-to-one, $n = q^+ + q$.
+      By \nameref{sub:theorem-4d}, the \nameref{ref:successor} operation is
+        one-to-one meaning $n = q^+ + q$.
       But then
         \begin{align*}
           n
@@ -7715,13 +7929,13 @@ Show that each natural number is either even or odd, but never both.
 
       Suppose $n$ is odd and not even.
       Then there exists some $p \in \omega$ such that $(2 \cdot p)^+ = n$.
-      Since the successor operation is one-to-one,
-        $(2 \cdot p)^{++} = (2 \cdot p^+) = n^+$.
-      Thus $n^+$ is even.
+      Therefore $(2 \cdot p)^{++} = (2 \cdot p^+) = n^+$.
+      Hence $n^+$ is even.
 
       For the sake of contradiction, suppose $n^+$ is odd.
       Then there exists some $q$ such that $(2 \cdot q)^+ = n^+$.
-      Since the successor operation is one-to-one, it follows $2 \cdot q = n$.
+      By \nameref{sub:theorem-4d}, the \nameref{ref:successor} operation is
+        one-to-one meaning $2 \cdot q = n$.
       But this implies $n$ is even, a contradiction.
       Thus our original assumption is wrong.
       That is, $n^+$ is even but not odd.

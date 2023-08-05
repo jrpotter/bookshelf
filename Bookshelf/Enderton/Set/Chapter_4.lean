@@ -105,4 +105,41 @@ theorem exercise_4_14 (n : ℕ)
       have : even n := ⟨q, hq'⟩
       exact absurd this h
 
+/-- #### Lemma 10
+
+For every natural number `n ≠ 0`, `0 ∈ n`.
+-/
+theorem zero_least_nat (n : ℕ)
+  : 0 = n ∨ 0 < n := by
+  by_cases h : n = 0
+  · left
+    rw [h]
+  · right
+    have ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero h
+    rw [hm]
+    exact Nat.succ_pos m
+
+/-- #### Trichotomy Law for ω
+
+For any natural numbers `m` and `n`, exactly one of the three conditions
+```
+m ∈ n,  m = n,  n ∈ m
+```
+holds.
+-/
+theorem trichotomy_law_for_nat
+  : IsAsymm ℕ LT.lt ∧ IsTrichotomous ℕ LT.lt :=
+  ⟨instIsAsymmLtToLT, instIsTrichotomousLtToLTToPreorderToPartialOrder⟩
+
+/-- #### Linear Ordering on ω
+
+Relation
+```
+∈_ω = {⟨m, n⟩ ∈ ω × ω | m ∈ n} 
+```
+is a linear ordering on `ω`.
+-/
+theorem linear_ordering_on_nat
+  : IsStrictTotalOrder ℕ LT.lt := isStrictTotalOrder_of_linearOrder
+
 end Enderton.Set.Chapter_4
