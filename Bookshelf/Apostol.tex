@@ -32,7 +32,7 @@ The \textbf{characteristic function} of $S$ is the function $\mathcal{X}_S$ such
 
 \begin{definition}
 
-  \lean*{Common/Set/Basic}{Set.characteristic}
+  \code*{Common/Set/Basic}{Set.characteristic}
 
 \end{definition}
 
@@ -160,7 +160,7 @@ A collection of points satisfying \eqref{sec:partition-eq1} is called a
 
 \begin{definition}
 
-  \lean*{Common/Set/Partition}{Set.Partition}
+  \code*{Common/Set/Partition}{Set.Partition}
 
 \end{definition}
 
@@ -192,7 +192,7 @@ That is to say, for each $k = 1, 2, \ldots, n$, there is a real number $s_k$
 
 \begin{definition}
 
-  \lean*{Common/Geometry/StepFunction}{Geometry.StepFunction}
+  \code*{Common/Geometry/StepFunction}{Geometry.StepFunction}
 
 \end{definition}
 
@@ -239,7 +239,7 @@ It is denoted as $\bar{I}(f)$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.is\_lub\_neg\_set\_iff\_is\_glb\_set\_neg}
 
   Suppose $L = \sup{S}$ and fix $x \in S$.
@@ -264,7 +264,7 @@ It is denoted as $\bar{I}(f)$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.exists\_isGLB}
 
   Let $S$ be a nonempty set bounded below by $x$.
@@ -288,7 +288,7 @@ It is denoted as $\bar{I}(f)$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.exists\_pnat\_geq\_self}
 
   Let $n = \abs{\ceil{x}} + 1$.
@@ -313,7 +313,7 @@ It is denoted as $\bar{I}(f)$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.exists\_pnat\_mul\_self\_geq\_of\_pos}
 
   Let $x > 0$ and $y$ be an arbitrary real number.
@@ -336,7 +336,7 @@ It is denoted as $\bar{I}(f)$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.forall\_pnat\_leq\_self\_leq\_frac\_imp\_eq}
 
   By the trichotomy of the reals, there are three cases to consider:
@@ -382,7 +382,7 @@ It is denoted as $\bar{I}(f)$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.forall\_pnat\_frac\_leq\_self\_leq\_imp\_eq}
 
   By the trichotomy of the reals, there are three cases to consider:
@@ -432,7 +432,7 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.sup\_imp\_exists\_gt\_sup\_sub\_delta}
 
   By definition of a \nameref{ref:supremum}, $\sup{S}$ is the least upper
@@ -458,7 +458,7 @@ Let $h$ be a given positive number and let $S$ be a set of real numbers.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.inf\_imp\_exists\_lt\_inf\_add\_delta}
 
   By definition of an \nameref{ref:infimum}, $\inf{S}$ is the greatest lower
@@ -496,7 +496,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.sup\_minkowski\_sum\_eq\_sup\_add\_sup}
 
   We prove (i) $\sup{A} + \sup{B}$ is an upper bound of $C$ and (ii)
@@ -567,7 +567,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.inf\_minkowski\_sum\_eq\_inf\_add\_inf}
 
   We prove (i) $\inf{A} + \inf{B}$ is a lower bound of $C$ and (ii)
@@ -639,7 +639,7 @@ Given nonempty subsets $A$ and $B$ of $\mathbb{R}$, let $C$ denote the set
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_I\_03}
+  \code{Bookshelf/Apostol/Chapter\_I\_03}
     {Apostol.Chapter\_I\_03.forall\_mem\_le\_forall\_mem\_imp\_sup\_le\_inf}
 
   By hypothesis, $S$ and $T$ are nonempty sets.
@@ -678,7 +678,7 @@ For each set $S$ in $\mathscr{M}$, we have $a(S) \geq 0$.
 
 \begin{axiom}
 
-  \leanp*{Common/Geometry/Area}{Nonnegative-Property}
+  \codep*{Common/Geometry/Area}{Nonnegative-Property}
     {Nonnegative Property}
 
 \end{axiom}
@@ -691,7 +691,7 @@ If $S$ and $T$ are in $\mathscr{M}$, then $S \cup T$ and $S \cap T$ are in
 
 \begin{axiom}
 
-  \leanp*{Common/Geometry/Area}{Additive-Property}
+  \codep*{Common/Geometry/Area}{Additive-Property}
     {Additive Property}
 
 \end{axiom}
@@ -704,7 +704,7 @@ If $S$ and $T$ are in $\mathscr{M}$ with $S \subseteq T$, then $T - S$ is in
 
 \begin{axiom}
 
-  \leanp*{Common/Geometry/Area}{Difference-Property}
+  \codep*{Common/Geometry/Area}{Difference-Property}
     {Difference Property}
 
 \end{axiom}
@@ -717,7 +717,7 @@ If a set $S$ is in $\mathscr{M}$ and if $T$ is congruent to $S$, then $T$ is
 
 \begin{axiom}
 
-  \leanp*{Common/Geometry/Area}{Invariance-Under-Congruence}
+  \codep*{Common/Geometry/Area}{Invariance-Under-Congruence}
     {Invariance Under Congruence}
 
 \end{axiom}
@@ -730,7 +730,7 @@ If the edges of $R$ have lengths $h$ and $k$, then $a(R) = hk$.
 
 \begin{axiom}
 
-  \leanp*{Common/Geometry/Area}{Choice-of-Scale}
+  \codep*{Common/Geometry/Area}{Choice-of-Scale}
     {Choice of Scale}
 
 \end{axiom}
@@ -750,7 +750,7 @@ If there is one and only one number $c$ which satisfies the inequalities
 
 \begin{axiom}
 
-  \leanp*{Common/Geometry/Area}{Exhaustion-Property}
+  \codep*{Common/Geometry/Area}{Exhaustion-Property}
     {Exhaustion Property}
 
 \end{axiom}
@@ -1340,7 +1340,7 @@ $\floor{x + n} = \floor{x} + n$ for every integer $n$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4a}
 
   Let $x$ be a real number and $n$ an integer.
@@ -1366,10 +1366,10 @@ $\floor{-x} =
 
   \statementpadding
 
-  \lean*{Bookshelf/Apostol/Chapter\_1\_11}
+  \code*{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4b\_1}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4b\_2}
 
   There are two cases to consider:
@@ -1409,7 +1409,7 @@ $\floor{x + y} = \floor{x} + \floor{y}$ or $\floor{x} + \floor{y} + 1$.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4c}
 
   Rewrite $x$ and $y$ as the sum of their floor and fractional components:
@@ -1453,7 +1453,7 @@ $\floor{2x} = \floor{x} + \floor{x + \frac{1}{2}}.$
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4d}
 
   This is immediately proven by applying \nameref{sub:hermites-identity}.
@@ -1467,7 +1467,7 @@ $\floor{3x} = \floor{x} + \floor{x + \frac{1}{3}} + \floor{x + \frac{2}{3}}.$
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_4e}
 
   This is immediately proven by applying \nameref{sub:hermites-identity}.
@@ -1484,7 +1484,7 @@ State and prove such a generalization.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_5}
 
   We prove that for all natural numbers $n$ and real numbers $x$, the following
@@ -1710,7 +1710,7 @@ Now apply Exercises 4(a) and (b) to the bracket on the right.
 
 \begin{proof}
 
-  \lean{Bookshelf/Apostol/Chapter\_1\_11}
+  \code{Bookshelf/Apostol/Chapter\_1\_11}
     {Apostol.Chapter\_1\_11.exercise\_7b}
 
   Let $n = 1, \ldots, b - 1$.

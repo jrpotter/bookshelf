@@ -40,28 +40,26 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
           <li>
             <span style="color:darkgray">Dark gray statements </span> are
             reserved for definitions and axioms that have been encoded in LaTeX.
-            A corresponding reference to a definition/axiom in Lean may also be
-            provided.
+            A reference to a definition in Lean may also be provided.
           </li>
           <li>
             <span style="color:teal">Teal statements </span> are reserved for
-            statements, theorems, lemmas, etc. that have been proven in both
-            LaTeX and Lean.
+            statements, theorems, lemmas, etc. that have been proven in LaTeX
+            and have a corresponding proof in Lean.
           </li>
           <li>
             <span style="color:olive">Olive statements </span> are reserved for
-            statements, theorems, lemmas, etc. that have been proven in LaTeX
-            and will <i>not </i> be proven in Lean.
+            statements, theorems, lemmas, etc. that have been proven in LaTeX.
+            A reference to a statement in Lean may also be provided.
           </li>
           <li>
             <span style="color:fuchsia">Fuchsia statements </span> are reserved
-            for definitions, axioms, statements, theorems, lemmas, etc. that
-            have been proven or encoded in LaTeX and <i>will </i> be encoded in
-            Lean.
+            for statements, theorems, lemmas, etc. that have been proven in
+            LaTeX and <i>will </i> have a corresponding proof in Lean.
           </li>
           <li>
             <span style="color:maroon">Maroon </span> serves as a catch-all for
-            all statements that don't fit the above categorizations. Incomplete
+            statements that don't fit the above categorizations. Incomplete
             definitions, statements without proof, etc. belong here.
           </li>
         </ul>

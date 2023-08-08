@@ -9,6 +9,34 @@ Axioms and Operations
 
 namespace Enderton.Set.Chapter_2
 
+/-! #### Commutative Laws
+
+For any sets `A` and `B`,
+```
+A ∪ B = B ∪ A
+A ∩ B = B ∩ A
+```
+-/
+
+#check Set.union_comm
+
+theorem commutative_law_i (A B : Set α)
+  : A ∪ B = B ∪ A := calc A ∪ B
+  _ = { x | x ∈ A ∨ x ∈ B } := rfl
+  _ = { x | x ∈ B ∨ x ∈ A } := by
+    ext
+    exact or_comm
+  _ = B ∪ A := rfl
+
+#check Set.inter_comm
+
+theorem commutative_law_ii (A B : Set α)
+  : A ∩ B = B ∩ A := calc A ∩ B
+  _ = { x | x ∈ A ∧ x ∈ B } := rfl
+  _ = { x | x ∈ B ∧ x ∈ A } := by
+    ext
+    exact and_comm
+  _ = B ∩ A := rfl
 
 /-- #### Exercise 2.1
 
