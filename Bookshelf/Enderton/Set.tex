@@ -7623,26 +7623,22 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     \subparagraph{($\Leftarrow$)}%
 
       Let $p$ be a natural number and suppose $m + p \in n + p$.
-      By the \nameref{sub:trichotomy-law-natural-numbers}, there are three
-        ways $m$ and $n$ may relate to one another.
+      By the \nameref{sub:trichotomy-law-natural-numbers}, there are two
+        cases to consider regarding how $m$ and $n$ relate to one another:
 
       \vspace{8pt}
-      \textbf{Case 1}: Suppose $m \in n$.
-      Then our proof is complete.
-
-      \vspace{8pt}
-      \textbf{Case 2}: Suppose $m = n$.
+      \textbf{Case 1}: Suppose $m = n$.
       Then $m + p \in n + p = m + p$.
       \nameref{sub:lemma-4l-b} shows this is impossible.
 
       \vspace{8pt}
-      \textbf{Case 3}: Suppose $n \in m$.
+      \textbf{Case 2}: Suppose $n \in m$.
       Then \nameref{spar:theorem-4n-i-right} indicates $n + p \in m + p$.
       But this contradicts \nameref{sub:trichotomy-law-natural-numbers} since,
         by hypothesis, $m + p \in n + p$.
 
       \vspace{8pt}
-      \textbf{Conclusion}: The only possibility is $m \in n$.
+      \textbf{Conclusion}: By trichotomy, it follows $m \in n$.
 
   \paragraph{(ii)}%
   \hyperlabel{par:theorem-4n-ii}
@@ -7679,46 +7675,72 @@ Show that $<_L$ is a linear ordering on $A \times B$.
     \subparagraph{($\Leftarrow$)}%
 
       Let $p \neq 0$ be a natural number and suppose $m \cdot p \in n \cdot p$.
-      By the \nameref{sub:trichotomy-law-natural-numbers}, there are three
-        ways $m$ and $n$ may relate to one another.
+      By the \nameref{sub:trichotomy-law-natural-numbers}, there are two
+        cases to consider regarding how $m$ and $n$ relate to one another:
 
       \vspace{8pt}
-      \textbf{Case 1}: Suppose $m \in n$.
-      Then our proof is complete.
-
-      \vspace{8pt}
-      \textbf{Case 2}: Suppose $m = n$.
+      \textbf{Case 1}: Suppose $m = n$.
       Then $m \cdot p \in n \cdot p = m \cdot p$.
       \nameref{sub:lemma-4l-b} shows this is impossible.
 
       \vspace{8pt}
-      \textbf{Case 3}: Suppose $n \in m$.
+      \textbf{Case 2}: Suppose $n \in m$.
       Then \nameref{spar:theorem-4n-ii-right} indicates
         $n \cdot p \in m \cdot p$.
       But this contradicts \nameref{sub:trichotomy-law-natural-numbers} since,
         by hypothesis, $m \cdot p \in n \cdot p$.
 
       \vspace{8pt}
-      \textbf{Conclusion}: The only possibility is $m \in n$.
+      \textbf{Conclusion}: By trichotomy, it follows $m \in n$.
 
 \end{proof}
 
-\subsection{\sorry{Corollary 4P}}%
+\subsection{\verified{Corollary 4P}}%
 \hyperlabel{sub:corollary-4p}
 
 \begin{corollary}[4P]
 
   The following cancellation laws hold for $m$, $n$, and $p$ in $\omega$:
-    \begin{align*}
-      m + p = n + p & \Rightarrow m = n, \\
-      m \cdot p = n \cdot p & \Rightarrow m = n.
-    \end{align*}
+    \begin{align}
+      m + p = n + p & \Rightarrow m = n,
+        & \hyperlabel{sub:corollary-4p-eq1} \\
+      m \cdot p = n \cdot p \land p \neq 0 & \Rightarrow m = n.
+        & \hyperlabel{sub:corollary-4p-eq2}
+    \end{align}
 
 \end{corollary}
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Init/Data/Nat/Basic}{Nat.add\_right\_cancel}
+
+  \lean{Common/Nat/Basic}{Nat.mul\_right\_cancel}
+
+  \paragraph{\eqref{sub:corollary-4p-eq1}}%
+
+    Suppose $m + p = n + p$.
+    By the \nameref{sub:trichotomy-law-natural-numbers}, there are two
+      cases to consider regarding how $m$ and $n$ relate to one another.
+    If $m \in n$, then \nameref{sub:theorem-4n} implies $m + p \in n + p$.
+    If $n \in m$, then \nameref{sub:theorem-4n} implies $n + p \in m + p$.
+    Both of these contradict the \nameref{sub:trichotomy-law-natural-numbers} of
+      $m + p$ and $n + p$.
+    Thus $m = n$ is the only remaining possibility.
+
+  \paragraph{\eqref{sub:corollary-4p-eq2}}%
+
+    Suppose $m \cdot p = n \cdot p$ and $p \neq 0$.
+    By the \nameref{sub:trichotomy-law-natural-numbers}, there are two
+      cases to consider regarding how $m$ and $n$ relate to one another.
+    If $m \in n$, then \nameref{sub:theorem-4n} implies
+      $m \cdot p \in n \cdot p$.
+    If $n \in m$, then \nameref{sub:theorem-4n} implies
+      $n \cdot p \in m \cdot p$.
+    Both of these contradict the \nameref{sub:trichotomy-law-natural-numbers} of
+      $m \cdot p$ and $n \cdot p$.
+    Thus $m = n$ is the only remaining possibility.
 
 \end{proof}
 
