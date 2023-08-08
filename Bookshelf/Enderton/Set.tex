@@ -7577,7 +7577,7 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \end{proof}
 
-\subsection{\sorry{Theorem 4N}}%
+\subsection{\verified{Theorem 4N}}%
 \hyperlabel{sub:theorem-4n}
 
 \begin{theorem}[4N]
@@ -7589,7 +7589,117 @@ Show that $<_L$ is a linear ordering on $A \times B$.
 
 \begin{proof}
 
-  TODO
+  \statementpadding
+
+  \lean*{Std/Data/Nat/Lemmas}{Nat.add\_lt\_add\_iff\_right}
+
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_lt\_mul\_of\_pos\_right}
+
+  We prove that (i) $m \in n$ iff $m + p \in n + p$ and,
+    (ii) if $p \neq 0$, then $m \in n$ iff $m \cdot p \in n \cdot p$.
+
+  \paragraph{(i)}%
+  \hyperlabel{par:theorem-4n-i}
+
+    Let $m$ and $n$ be \nameref{ref:natural-number}s.
+
+    \subparagraph{($\Rightarrow$)}%
+    \hyperlabel{spar:theorem-4n-i-right}
+
+      Suppose $m \in n$.
+      Let $$S = \{p \in \omega \mid m + p \in n + p\}.$$
+      It trivially follows that $0 \in S$.
+      Next, suppose $p \in S$.
+      That is, suppose $m + p \in n + p$.
+      By \nameref{sub:lemma-4l-a}, this holds if and only if
+        $(m + p)^+ \in (n + p)^+$.
+      \nameref{sub:theorem-4i} then implies that $m + p^+ \in n + p^+$ meaning
+        $p^+ \in S$.
+
+      Thus $S$ is an \nameref{ref:inductive-set}.
+      Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+      Therefore, for all $p \in \omega$, $m \in n$ implies $m + p \in n + p$.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Let $p$ be a natural number and suppose $m + p \in n + p$.
+      By the \nameref{sub:trichotomy-law-natural-numbers}, there are three
+        ways $m$ and $n$ may relate to one another.
+
+      \vspace{8pt}
+      \textbf{Case 1}: Suppose $m \in n$.
+      Then our proof is complete.
+
+      \vspace{8pt}
+      \textbf{Case 2}: Suppose $m = n$.
+      Then $m + p \in n + p = m + p$.
+      \nameref{sub:lemma-4l-b} shows this is impossible.
+
+      \vspace{8pt}
+      \textbf{Case 3}: Suppose $n \in m$.
+      Then \nameref{spar:theorem-4n-i-right} indicates $n + p \in m + p$.
+      But this contradicts \nameref{sub:trichotomy-law-natural-numbers} since,
+        by hypothesis, $m + p \in n + p$.
+
+      \vspace{8pt}
+      \textbf{Conclusion}: The only possibility is $m \in n$.
+
+  \paragraph{(ii)}%
+  \hyperlabel{par:theorem-4n-ii}
+
+    Let $m$ and $n$ be \nameref{ref:natural-number}s.
+
+    \subparagraph{($\Rightarrow$)}%
+    \hyperlabel{spar:theorem-4n-ii-right}
+
+      Suppose $m \in n$.
+      Let $$S = \{p \in \omega \mid m \cdot p^+ \in n \cdot p^+\}.$$
+      $0 \in S$ by \nameref{sub:right-multiplicative-identity}.
+      Next, suppose $p \in S$.
+      That is, $m \cdot p^+ \in n \cdot p^+$.
+      Then
+        \begin{align*}
+          m \cdot p^{++}
+            & = m \cdot p^+ + m & \textref{sub:theorem-4j} \\
+            & \in n \cdot p^+ + m & \textref{par:theorem-4n-i} \\
+            & = m + n \cdot p^+ & \textref{sub:theorem-4k-2} \\
+            & \in n + n \cdot p^+ & \textref{par:theorem-4n-i} \\
+            & = n \cdot p^+ + n & \textref{sub:theorem-4k-2} \\
+            & = n \cdot p^{++}. & \textref{sub:theorem-4j}
+        \end{align*}
+      Therefore $p^+ \in S$.
+
+      Thus $S$ is an \nameref{ref:inductive-set}.
+      Hence \nameref{sub:theorem-4b} implies $S = \omega$.
+      By \nameref{sub:theorem-4c}, every natural number except 0 is the
+        successor of some natural number.
+      Therefore, for all $p \in \omega$ such that $p \neq 0$, $m \in n$ implies
+        $m \cdot p \in n \cdot p$.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Let $p \neq 0$ be a natural number and suppose $m \cdot p \in n \cdot p$.
+      By the \nameref{sub:trichotomy-law-natural-numbers}, there are three
+        ways $m$ and $n$ may relate to one another.
+
+      \vspace{8pt}
+      \textbf{Case 1}: Suppose $m \in n$.
+      Then our proof is complete.
+
+      \vspace{8pt}
+      \textbf{Case 2}: Suppose $m = n$.
+      Then $m \cdot p \in n \cdot p = m \cdot p$.
+      \nameref{sub:lemma-4l-b} shows this is impossible.
+
+      \vspace{8pt}
+      \textbf{Case 3}: Suppose $n \in m$.
+      Then \nameref{spar:theorem-4n-ii-right} indicates
+        $n \cdot p \in m \cdot p$.
+      But this contradicts \nameref{sub:trichotomy-law-natural-numbers} since,
+        by hypothesis, $m \cdot p \in n \cdot p$.
+
+      \vspace{8pt}
+      \textbf{Conclusion}: The only possibility is $m \in n$.
 
 \end{proof}
 
