@@ -9,6 +9,7 @@ A Set of Axioms for the Real-Number System
 namespace Apostol.Chapter_I_03
 
 #check Archimedean
+
 #check Real.exists_isLUB
 
 /-! ## The least-upper-bound axiom (completeness axiom) -/

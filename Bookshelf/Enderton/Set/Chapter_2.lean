@@ -18,8 +18,6 @@ A ∩ B = B ∩ A
 ```
 -/
 
-#check Set.union_comm
-
 theorem commutative_law_i (A B : Set α)
   : A ∪ B = B ∪ A := calc A ∪ B
   _ = { x | x ∈ A ∨ x ∈ B } := rfl
@@ -28,7 +26,7 @@ theorem commutative_law_i (A B : Set α)
     exact or_comm
   _ = B ∪ A := rfl
 
-#check Set.inter_comm
+#check Set.union_comm
 
 theorem commutative_law_ii (A B : Set α)
   : A ∩ B = B ∩ A := calc A ∩ B
@@ -38,6 +36,8 @@ theorem commutative_law_ii (A B : Set α)
     exact and_comm
   _ = B ∩ A := rfl
 
+#check Set.inter_comm
+
 /-! #### Associative Laws
 
 For any sets `A`, `B`, and `C`,
@@ -46,8 +46,6 @@ A ∪ (B ∪ C) = (A ∪ B) ∪ C
 A ∩ (B ∩ C) = (A ∩ B) ∩ C
 ```
 -/
-
-#check Set.union_assoc
 
 theorem associative_law_i (A B C : Set α)
   : A ∪ (B ∪ C) = (A ∪ B) ∪ C := calc A ∪ (B ∪ C)
@@ -60,7 +58,7 @@ theorem associative_law_i (A B C : Set α)
   _ = { x | x ∈ A ∪ B ∨ x ∈ C } := rfl
   _ = (A ∪ B) ∪ C := rfl
 
-#check Set.inter_assoc
+#check Set.union_assoc
 
 theorem associative_law_ii (A B C : Set α)
   : A ∩ (B ∩ C) = (A ∩ B) ∩ C := calc A ∩ (B ∩ C)
@@ -73,6 +71,8 @@ theorem associative_law_ii (A B C : Set α)
   _ = { x | x ∈ A ∩ B ∧ x ∈ C } := rfl
   _ = (A ∩ B) ∩ C := rfl
 
+#check Set.inter_assoc
+
 /-! #### Distributive Laws
 
 For any sets `A`, `B`, and `C`,
@@ -81,8 +81,6 @@ A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)
 A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)
 ```
 -/
-
-#check Set.inter_distrib_left
 
 theorem distributive_law_i (A B C : Set α)
   : A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C) := calc A ∩ (B ∪ C)
@@ -94,7 +92,7 @@ theorem distributive_law_i (A B C : Set α)
   _ = { x | x ∈ A ∩ B ∨ x ∈ A ∩ C } := rfl
   _ = (A ∩ B) ∪ (A ∩ C) := rfl
 
-#check Set.union_distrib_left
+#check Set.inter_distrib_left
 
 theorem distributive_law_ii (A B C : Set α)
   : A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C) := calc A ∪ (B ∩ C)
@@ -106,6 +104,8 @@ theorem distributive_law_ii (A B C : Set α)
   _ = { x | x ∈ A ∪ B ∧ x ∈ A ∪ C } := rfl
   _ = (A ∪ B) ∩ (A ∪ C) := rfl
 
+#check Set.union_distrib_left
+
 /-! #### De Morgan's Laws
 
 For any sets `A`, `B`, and `C`,
@@ -114,8 +114,6 @@ C - (A ∪ B) = (C - A) ∩ (C - B)
 C - (A ∩ B) = (C - A) ∪ (C - B)
 ```
 -/
-
-#check Set.diff_inter_diff
 
 theorem de_morgans_law_i (A B C : Set α)
   : C \ (A ∪ B) = (C \ A) ∩ (C \ B) := calc C \ (A ∪ B)
@@ -131,7 +129,7 @@ theorem de_morgans_law_i (A B C : Set α)
   _ = { x | x ∈ C \ A ∧ x ∈ C \ B } := rfl
   _ = (C \ A) ∩ (C \ B) := rfl
 
-#check Set.diff_inter
+#check Set.diff_inter_diff
 
 theorem de_morgans_law_ii (A B C : Set α)
   : C \ (A ∩ B) = (C \ A) ∪ (C \ B) := calc C \ (A ∩ B)
@@ -147,6 +145,8 @@ theorem de_morgans_law_ii (A B C : Set α)
   _ = { x | x ∈ C \ A ∨ x ∈ C \ B } := rfl
   _ = (C \ A) ∪ (C \ B) := rfl
 
+#check Set.diff_inter
+
 /-! #### Identities Involving ∅
 
 For any set `A`,
@@ -157,8 +157,6 @@ A ∩ (C - A) = ∅
 ```
 -/
 
-#check Set.union_empty
-
 theorem emptyset_identity_i (A : Set α)
   : A ∪ ∅ = A := calc A ∪ ∅
   _ = { x | x ∈ A ∨ x ∈ ∅ } := rfl
@@ -166,7 +164,7 @@ theorem emptyset_identity_i (A : Set α)
   _ = { x | x ∈ A } := by simp
   _ = A := rfl
 
-#check Set.inter_empty
+#check Set.union_empty
 
 theorem emptyset_identity_ii (A : Set α)
   : A ∩ ∅ = ∅ := calc A ∩ ∅
@@ -175,7 +173,7 @@ theorem emptyset_identity_ii (A : Set α)
   _ = { x | False } := by simp
   _ = ∅ := rfl
 
-#check Set.inter_diff_self
+#check Set.inter_empty
 
 theorem emptyset_identity_iii (A C : Set α)
   : A ∩ (C \ A) = ∅ := calc A ∩ (C \ A)
@@ -184,6 +182,100 @@ theorem emptyset_identity_iii (A C : Set α)
   _ = { x | x ∈ C ∧ False } := by simp
   _ = { x | False } := by simp
   _ = ∅ := rfl
+
+#check Set.inter_diff_self
+
+/-! #### Monotonicity
+
+For any sets `A`, `B`, and `C`,
+```
+A ⊆ B ⇒ A ∪ C ⊆ B ∪ C
+A ⊆ B ⇒ A ∩ C ⊆ B ∩ C
+A ⊆ B ⇒ ⋃ A ⊆ ⋃ B
+```
+-/
+
+theorem monotonicity_i (A B C : Set α) (h : A ⊆ B)
+  : A ∪ C ⊆ B ∪ C := by
+  show ∀ x, x ∈ A ∪ C → x ∈ B ∪ C
+  intro x hx
+  apply Or.elim hx
+  · intro hA
+    have := h hA
+    left
+    exact this
+  · intro hC
+    right
+    exact hC
+
+#check Set.union_subset_union_left
+
+theorem monotonicity_ii (A B C : Set α) (h : A ⊆ B)
+  : A ∩ C ⊆ B ∩ C := by
+  show ∀ x, x ∈ A ∩ C → x ∈ B ∩ C
+  intro x hx
+  have := h hx.left
+  exact ⟨this, hx.right⟩
+
+#check Set.inter_subset_inter_left
+
+theorem monotonicity_iii (A B : Set (Set α)) (h : A ⊆ B)
+  : ⋃₀ A ⊆ ⋃₀ B := by
+  show ∀ x, x ∈ ⋃₀ A → x ∈ ⋃₀ B
+  intro x hx
+  have ⟨b, hb⟩ := hx
+  have := h hb.left
+  exact ⟨b, this, hb.right⟩
+
+#check Set.sUnion_mono
+
+/-! #### Anti-monotonicity
+
+For any sets `A`, `B`, and `C`,
+```
+A ⊆ B ⇒ C - B ⊆ C - A
+∅ ≠ A ⊆ B ⇒ ⋂ B ⊆ ⋂ A
+```
+-/
+
+theorem anti_monotonicity_i (A B C : Set α) (h : A ⊆ B)
+  : C \ B ⊆ C \ A := by
+  show ∀ x, x ∈ C \ B → x ∈ C \ A
+  intro x hx
+  have : x ∉ A := by
+    by_contra nh
+    have := h nh
+    exact absurd this hx.right
+  exact ⟨hx.left, this⟩
+
+#check Set.diff_subset_diff_right
+
+theorem anti_monotonicity_ii (A B : Set (Set α)) (h : A ⊆ B)
+  : ⋂₀ B ⊆ ⋂₀ A := by
+  show ∀ x, x ∈ ⋂₀ B → x ∈ ⋂₀ A
+  intro x hx
+  have : ∀ b, b ∈ B → x ∈ b := hx
+  show ∀ a, a ∈ A → x ∈ a
+  intro a ha
+  exact this a (h ha)
+
+#check Set.sInter_subset_sInter
+
+/-- #### ∩/- Associativity
+
+Let `A`, `B`, and `C` be sets. Then `A ∩ (B - C) = (A ∩ B) - C`.
+-/
+theorem inter_diff_assoc (A B C : Set α)
+  : A ∩ (B \ C) = (A ∩ B) \ C := calc A ∩ (B \ C)
+  _ = { x | x ∈ A ∧ x ∈ (B \ C) } := rfl
+  _ = { x | x ∈ A ∧ (x ∈ B ∧ x ∉ C) } := rfl
+  _ = { x | (x ∈ A ∧ x ∈ B) ∧ x ∉ C } := by
+    ext _
+    sorry
+  _ = { x | x ∈ A ∩ B ∧ x ∉ C } := rfl
+  _ = (A ∩ B) \ C := rfl
+
+#check Set.inter_diff_assoc
 
 /-- #### Exercise 2.1
 

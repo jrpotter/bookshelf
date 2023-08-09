@@ -1165,7 +1165,7 @@
 
   \end{proof}
 
-\subsection{\pending{Monotonicity}}%
+\subsection{\verified{Monotonicity}}%
 \hyperlabel{sub:monotonicity}
 
   For any sets $A$, $B$, and $C$,
@@ -1175,11 +1175,23 @@
       A \subseteq B & \Rightarrow \bigcup A \subseteq \bigcup B
     \end{align*}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.union\_subset\_union\_left}
+  \lean{Mathlib/Data/Set/Basic}
+    {Set.union\_subset\_union\_left}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.inter\_subset\_inter\_left}
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.monotonicity\_i}
 
-  \lean{Mathlib/Data/Set/Lattice}{Set.sUnion\_mono}
+  \lean{Mathlib/Data/Set/Basic}
+    {Set.inter\_subset\_inter\_left}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.monotonicity\_ii}
+
+  \lean{Mathlib/Data/Set/Lattice}
+    {Set.sUnion\_mono}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.monotonicity\_iii}
 
   \begin{proof}
 
@@ -1236,7 +1248,7 @@
 
   \end{proof}
 
-\subsection{\pending{Anti-monotonicity}}%
+\subsection{\verified{Anti-monotonicity}}%
 \hyperlabel{sub:anti-monotonicity}
 
   For any sets $A$, $B$, and $C$,
@@ -1245,9 +1257,17 @@
       \emptyset \neq A \subseteq B & \Rightarrow \bigcap B \subseteq \bigcap A.
     \end{align*}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.diff\_subset\_diff\_right}
+  \lean{Mathlib/Data/Set/Basic}
+    {Set.diff\_subset\_diff\_right}
 
-  \lean{Mathlib/Data/Set/Lattice}{Set.sInter\_subset\_sInter}
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.anti\_monotonicity\_i}
+
+  \lean{Mathlib/Data/Set/Lattice}
+    {Set.sInter\_subset\_sInter}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.anti\_monotonicity\_ii}
 
   \begin{proof}
 
@@ -1404,14 +1424,18 @@
 
   \end{proof}
 
-\subsection{\pending{%
+\subsection{\verified{%
   \texorpdfstring{$\cap$/$-$}{Intersection/Difference} Associativity}}%
 \hyperlabel{sub:intersection-difference-associativity}
 
   Let $A$, $B$, and $C$ be sets.
   Then $A \cap (B - C) = (A \cap B) - C$.
 
-  \lean*{Mathlib/Data/Set/Basic}{Set.inter\_diff\_assoc}
+  \lean*{Mathlib/Data/Set/Basic}
+    {Set.inter\_diff\_assoc}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.inter\_diff\_assoc}
 
   \begin{proof}
     Let $A$, $B$, and $C$ be sets.
@@ -2626,7 +2650,7 @@
     This concludes our proof.
   \end{proof}
 
-\subsection{\pending{Corollary 3C}}%
+\subsection{\unverified{Corollary 3C}}%
 \hyperlabel{sub:corollary-3c}
 
   \begin{theorem}[3C]
@@ -2634,13 +2658,14 @@
       pairs $\pair{x, y}$ with $x \in A$ and $y \in B$.
   \end{theorem}
 
+  \begin{note}
+    The below Lean proof is a definition (i.e. an axiom).
+    It does not prove such a set's existence from first principles.
+  \end{note}
+
   \lean{Mathlib/SetTheory/ZFC/Basic}{Set.prod}
 
   \begin{proof}
-    \begin{note}
-      The above Lean proof is a definition (i.e. an axiom).
-      It does not prove such a set's existence from first principles.
-    \end{note}
     Define $C = A \cup B$.
     Then for all $x \in A$ and for all $y \in B$, $x$ and $y$ are both in $C$.
     By \nameref{sub:lemma-3b}, it follows that
