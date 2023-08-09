@@ -15,7 +15,7 @@ Relations and Functions
 
 namespace Enderton.Set.Chapter_3
 
-/-- #### Theorem 3B
+/-- #### Lemma 3B
 
 If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
