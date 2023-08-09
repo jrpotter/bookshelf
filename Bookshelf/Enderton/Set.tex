@@ -88,9 +88,9 @@
   The \textbf{composition} of sets $F$ and $G$ is
     $$F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.$$
 
-  \lean{Mathlib/Data/Rel}{Rel.comp}
-
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.comp}
+
+  \lean{Mathlib/Data/Rel}{Rel.comp}
 
 \section{\defined{Connected}}%
 \hyperlabel{ref:connected}
@@ -106,9 +106,9 @@
   The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
     $$x \in \dom{R} \iff \exists y \pair{x, y} \in R.$$
 
-  \lean{Mathlib/Data/Rel}{Rel.dom}
-
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.dom}
+
+  \lean{Mathlib/Data/Rel}{Rel.dom}
 
 \section{\defined{Empty Set Axiom}}%
 \hyperlabel{ref:empty-set-axiom}
@@ -202,9 +202,9 @@
         & = \{v \mid (\exists u \in A) uFv\}.
     \end{align*}
 
-  \lean{Mathlib/Data/Rel}{Rel.image}
-
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.image}
+
+  \lean{Mathlib/Data/Rel}{Rel.image}
 
 \section{\defined{Inductive Set}}%
 \hyperlabel{ref:inductive-set}
@@ -247,9 +247,9 @@
   The \textbf{inverse} of a set $F$ is the set
     $$F^{-1} = \{\pair{u, v} \mid vFu\}.$$
 
-  \lean{Mathlib/Data/Rel}{Rel.inv}
-
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.inv}
+
+  \lean{Mathlib/Data/Rel}{Rel.inv}
 
 \section{\defined{Irreflexive}}%
 \hyperlabel{ref:irreflexive}
@@ -322,9 +322,9 @@
   For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
     the set $\{\{u\}, \{u, v\}\}$.
 
-  \lean*{Prelude}{Prod}
+  \code*{Bookshelf/Enderton/Set/OrderedPair}{OrderedPair}
 
-  \code{Bookshelf/Enderton/Set/OrderedPair}{OrderedPair}
+  \lean{Prelude}{Prod}
 
 \section{\defined{Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{ref:ordering-natural-numbers}
@@ -432,9 +432,9 @@
   The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
     $$x \in \ran{R} \iff \exists t \pair{t, x} \in R.$$
 
-  \lean{Mathlib/Data/Rel}{Rel.codom}
-
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.ran}
+
+  \lean{Mathlib/Data/Rel}{Rel.codom}
 
 \section{\defined{Reflexive}}%
 \hyperlabel{ref:reflexive}
@@ -442,18 +442,18 @@
   A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for
     all $x \in A$.
 
-  \lean*{Mathlib/Init/Algebra/Classes}{IsRefl}
+  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isReflexive}
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.isReflexive}
+  \lean{Mathlib/Init/Algebra/Classes}{IsRefl}
 
 \section{\defined{Relation}}%
 \hyperlabel{ref:relation}
 
   A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 
-  \lean*{Mathlib/Data/Rel}{Rel}
+  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation}
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation}
+  \lean{Mathlib/Data/Rel}{Rel}
 
 \section{\defined{Restriction}}%
 \hyperlabel{ref:restriction}
@@ -507,9 +507,9 @@
   A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
     $yRz$, then $xRz$.
 
-  \lean*{Mathlib/Init/Algebra/Classes}{IsTrans}
+  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isTransitive}
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.isTransitive}
+  \lean{Mathlib/Init/Algebra/Classes}{IsTrans}
 
 \section{\defined{Transitive Set}}%
 \hyperlabel{ref:transitive-set}
@@ -887,29 +887,24 @@
 \hyperlabel{sub:commutative-laws}
 
   For any sets $A$ and $B$,
-    \begin{align*}
-      A \cup B = B \cup A \\
-      A \cap B = B \cap A
-    \end{align*}
-
-  \lean{Mathlib/Data/Set/Basic}{Set.union\_comm}
+    \begin{enumerate}[(i)]
+      \item $A \cup B = B \cup A$
+      \item $A \cap B = B \cap A$
+    \end{enumerate}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.commutative\_law\_i}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.inter\_comm}
+  \lean{Mathlib/Data/Set/Basic}{Set.union\_comm}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.commutative\_law\_ii}
 
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_comm}
+
   \begin{proof}
 
     Let $A$ and $B$ be sets.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item $A \cup B = B \cup A$
-        \item $A \cap B = B \cap A$.
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -937,29 +932,24 @@
 \hyperlabel{sub:associative-laws}
 
   For any sets $A$, $B$ and $C$,
-    \begin{align*}
-      A \cup (B \cup C) & = (A \cup B) \cup C \\
-      A \cap (B \cap C) & = (A \cap B) \cap C
-    \end{align*}
-
-  \lean{Mathlib/Data/Set/Basic}{Set.union\_assoc}
+    \begin{enumerate}[(i)]
+      \item $A \cup (B \cup C) = (A \cup B) \cup C$
+      \item $A \cap (B \cap C) = (A \cap B) \cap C$
+    \end{enumerate}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.associative\_law\_i}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.inter\_assoc}
+  \lean{Mathlib/Data/Set/Basic}{Set.union\_assoc}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.associative\_law\_ii}
 
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_assoc}
+
   \begin{proof}
 
     Let $A$, $B$, and $C$ be sets.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item $A \cup (B \cup C) = (A \cup B) \cup C$
-        \item $A \cap (B \cap C) = (A \cap B) \cap C$
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -991,29 +981,24 @@
 \hyperlabel{sub:distributive-laws}
 
   For any sets $A$, $B$, and $C$,
-    \begin{align*}
-      A \cap (B \cup C) & = (A \cap B) \cup (A \cap C) \\
-      A \cup (B \cap C) & = (A \cup B) \cap (A \cup C)
-    \end{align*}
-
-  \lean{Mathlib/Data/Set/Basic}{Set.inter\_distrib\_left}
+    \begin{enumerate}[(i)]
+      \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+      \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+    \end{enumerate}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.distributive\_law\_i}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.union\_distrib\_left}
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_distrib\_left}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.distributive\_law\_ii}
 
+  \lean{Mathlib/Data/Set/Basic}{Set.union\_distrib\_left}
+
   \begin{proof}
 
     Let $A$, $B$, and $C$ be sets.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
-        \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -1052,15 +1037,15 @@
       \item $C - (A \cap B) = (C - A) \cup (C - B)$
     \end{enumerate}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.diff\_inter\_diff}
-
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.de\_morgans\_law\_i}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.diff\_inter}
+  \lean{Mathlib/Data/Set/Basic}{Set.diff\_inter\_diff}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.de\_morgans\_law\_ii}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.diff\_inter}
 
   \begin{proof}
 
@@ -1109,20 +1094,20 @@
       \item $A \cap (C - A) = \emptyset$
     \end{enumerate}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.union\_empty}
-
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.emptyset\_identity\_i}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.inter\_empty}
+  \lean{Mathlib/Data/Set/Basic}{Set.union\_empty}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.emptyset\_identity\_ii}
 
-  \lean{Mathlib/Data/Set/Basic}{Set.inter\_diff\_self}
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_empty}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.emptyset\_identity\_iii}
+
+  \lean{Mathlib/Data/Set/Basic}{Set.inter\_diff\_self}
 
   \begin{proof}
 
@@ -1169,39 +1154,33 @@
 \hyperlabel{sub:monotonicity}
 
   For any sets $A$, $B$, and $C$,
-    \begin{align*}
-      A \subseteq B & \Rightarrow A \cup C \subseteq B \cup C \\
-      A \subseteq B & \Rightarrow A \cap C \subseteq B \cap C \\
-      A \subseteq B & \Rightarrow \bigcup A \subseteq \bigcup B
-    \end{align*}
-
-  \lean{Mathlib/Data/Set/Basic}
-    {Set.union\_subset\_union\_left}
+    \begin{enumerate}[(i)]
+      \item $A \subseteq B \Rightarrow A \cup C \subseteq B \cup C$
+      \item $A \subseteq B \Rightarrow A \cap C \subseteq B \cap C$
+      \item $A \subseteq B \Rightarrow \bigcup A \subseteq \bigcup B$
+    \end{enumerate}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.monotonicity\_i}
 
   \lean{Mathlib/Data/Set/Basic}
-    {Set.inter\_subset\_inter\_left}
+    {Set.union\_subset\_union\_left}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.monotonicity\_ii}
 
-  \lean{Mathlib/Data/Set/Lattice}
-    {Set.sUnion\_mono}
+  \lean{Mathlib/Data/Set/Basic}
+    {Set.inter\_subset\_inter\_left}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.monotonicity\_iii}
 
+  \lean{Mathlib/Data/Set/Lattice}
+    {Set.sUnion\_mono}
+
   \begin{proof}
 
     Let $A$, $B$, and $C$ be arbitrary sets.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item $A \subseteq B \Rightarrow A \cup C \subseteq B \cup C$
-        \item $A \subseteq B \Rightarrow A \cap C \subseteq B \cap C$
-        \item $A \subseteq B \Rightarrow \bigcup A \subseteq \bigcup B$
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -1252,32 +1231,27 @@
 \hyperlabel{sub:anti-monotonicity}
 
   For any sets $A$, $B$, and $C$,
-    \begin{align*}
-      A \subseteq B & \Rightarrow C - B \subseteq C - A \\
-      \emptyset \neq A \subseteq B & \Rightarrow \bigcap B \subseteq \bigcap A.
-    \end{align*}
+    \begin{enumerate}[(i)]
+      \item $A \subseteq B \Rightarrow C - B \subseteq C - A$
+      \item $\emptyset \neq A \subseteq B \Rightarrow
+        \bigcap B \subseteq \bigcap A$.
+    \end{enumerate}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.anti\_monotonicity\_i}
 
   \lean{Mathlib/Data/Set/Basic}
     {Set.diff\_subset\_diff\_right}
 
   \code{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.anti\_monotonicity\_i}
+    {Enderton.Set.Chapter\_2.anti\_monotonicity\_ii}
 
   \lean{Mathlib/Data/Set/Lattice}
     {Set.sInter\_subset\_sInter}
 
-  \code{Bookshelf/Enderton/Set/Chapter\_2}
-    {Enderton.Set.Chapter\_2.anti\_monotonicity\_ii}
-
   \begin{proof}
 
     Let $A$, $B$, and $C$ be arbitrary sets.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item $A \subseteq B \Rightarrow C - B \subseteq C - A$
-        \item $\emptyset \neq A \subseteq B \Rightarrow
-               \bigcap B \subseteq \bigcap A$
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -1308,25 +1282,17 @@
 \hyperlabel{sub:general-distributive-laws}
 
   For any sets $A$ and $\mathscr{B}$,
-    \begin{align*}
-      A \cup \bigcap \mathscr{B} & =
+    \begin{enumerate}[(i)]
+      \item $A \cup \bigcap \mathscr{B} =
         \bigcap\; \{ A \cup X \mid X \in \mathscr{B} \}
-          \quad\text{for}\quad \mathscr{B} \neq \emptyset \\
-      A \cap \bigcup \mathscr{B} & =
-        \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}
-    \end{align*}
+          \quad\text{for}\quad \mathscr{B} \neq \emptyset$
+      \item $A \cap \bigcup \mathscr{B} =
+        \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}$
+    \end{enumerate}
 
   \begin{proof}
 
     Let $A$ and $\mathscr{B}$ be sets.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item For $\mathscr{B} \neq \emptyset$,
-          $A \cup \bigcap \mathscr{B} =
-           \bigcap\; \{ A \cup X \mid X \in \mathscr{B} \}$.
-        \item $A \cap \bigcup \mathscr{B} =
-               \bigcup\; \{ A \cap X \mid X \in \mathscr{B} \}$
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -1368,21 +1334,16 @@
 \hyperlabel{sub:general-de-morgans-laws}
 
   For any set $C$ and $\mathscr{A} \neq \emptyset$,
-    \begin{align*}
-      C - \bigcup \mathscr{A} & = \bigcap\; \{ C - X \mid X \in \mathscr{A} \} \\
-      C - \bigcap \mathscr{A} & = \bigcup\; \{ C - X \mid X \in \mathscr{A} \}
-    \end{align*}
+    \begin{enumerate}[(i)]
+      \item $C - \bigcup \mathscr{A} =
+        \bigcap\; \{ C - X \mid X \in \mathscr{A} \}$
+      \item $C - \bigcap \mathscr{A} =
+        \bigcup\; \{ C - X \mid X \in \mathscr{A} \}$
+    \end{enumerate}
 
   \begin{proof}
 
     Let $C$ and $\mathscr{A}$ be sets such that $\mathscr{A} \neq \emptyset$.
-    We prove that
-      \begin{enumerate}[(i)]
-        \item $C - \bigcup \mathscr{A} =
-          \bigcap\; \{ C - X \mid X \in \mathscr{A} \}$
-        \item $C - \bigcap \mathscr{A} =
-            \bigcup\; \{ C - X \mid X \in \mathscr{A} \}$
-      \end{enumerate}
 
     \paragraph{(i)}%
 
@@ -1431,11 +1392,11 @@
   Let $A$, $B$, and $C$ be sets.
   Then $A \cap (B - C) = (A \cap B) - C$.
 
-  \lean*{Mathlib/Data/Set/Basic}
-    {Set.inter\_diff\_assoc}
-
-  \code{Bookshelf/Enderton/Set/Chapter\_2}
+  \code*{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.inter\_diff\_assoc}
+
+  \lean{Mathlib/Data/Set/Basic}
+    {Set.inter\_diff\_assoc}
 
   \begin{proof}
     Let $A$, $B$, and $C$ be sets.
@@ -1953,11 +1914,11 @@
 
   Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 
-  \lean*{Mathlib/Data/Set/Basic}
-    {Set.inter\_symmDiff\_distrib\_left}
-
-  \code{Bookshelf/Enderton/Set/Chapter\_2}
+  \code*{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.exercise\_2\_15a}
+
+  \lean{Mathlib/Data/Set/Basic}
+    {Set.inter\_symmDiff\_distrib\_left}
 
   \begin{proof}
     By definition of the intersection, \nameref{ref:symmetric-difference}, and
@@ -1992,10 +1953,10 @@
 
   Show that $A + (B + C) = (A + B) + C$.
 
-  \lean*{Mathlib/Order/SymmDiff}{symmDiff\_assoc}
-
-  \code{Bookshelf/Enderton/Set/Chapter\_2}
+  \code*{Bookshelf/Enderton/Set/Chapter\_2}
     {Enderton.Set.Chapter\_2.exercise\_2\_15b}
+
+  \lean{Mathlib/Order/SymmDiff}{symmDiff\_assoc}
 
   \begin{proof}
     Let $A$, $B$, and $C$ be sets.
@@ -6094,12 +6055,12 @@
       \end{align}
   \end{theorem}
 
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4i}
+
   \lean{Init/Data/Nat/Basic}{Nat.add\_zero}
 
   \lean{Init/Prelude}{Nat.add}
-
-  \code{Bookshelf/Enderton/Set/Chapter\_4}
-    {Enderton.Set.Chapter\_4.theorem\_4i}
 
   \begin{proof}
 
@@ -6129,12 +6090,12 @@
       \end{align}
   \end{theorem}
 
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4j}
+
   \lean{Init/Data/Nat/Basic}{Nat.mul\_zero}
 
   \lean{Init/Prelude}{Nat.mul}
-
-  \code{Bookshelf/Enderton/Set/Chapter\_4}
-    {Enderton.Set.Chapter\_4.theorem\_4j}
 
   \begin{proof}
 
@@ -6159,10 +6120,10 @@
     In other words, $$0 + n = n.$$
   \end{lemma}
 
-  \lean{Init/Data/Nat/Basic}{Nat.zero\_add}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.left\_additive\_identity}
+
+  \lean{Init/Data/Nat/Basic}{Nat.zero\_add}
 
   \begin{proof}
 
@@ -6203,10 +6164,10 @@
     In other words, $$m^+ + n = m + n^+.$$
   \end{lemma}
 
-  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_add\_eq\_succ\_add}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.lemma\_2}
+
+  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_add\_eq\_succ\_add}
 
   \begin{proof}
 
@@ -6247,10 +6208,10 @@
     For $m, n, p \in \omega$, $$m + (n + p) = (m + n) + p.$$
   \end{theorem}
 
-  \lean{Init/Data/Nat/Basic}{Nat.add\_assoc}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4k\_1}
+
+  \lean{Init/Data/Nat/Basic}{Nat.add\_assoc}
 
   \begin{proof}
 
@@ -6304,10 +6265,10 @@
     For $m, n \in \omega$, $$m + n = n + m.$$
   \end{theorem}
 
-  \lean{Init/Data/Nat/Basic}{Nat.add\_comm}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4k\_2}
+
+  \lean{Init/Data/Nat/Basic}{Nat.add\_comm}
 
   \begin{proof}
 
@@ -6357,10 +6318,10 @@
     In other words, $$0 \cdot n = 0.$$
   \end{lemma}
 
-  \lean{Init/Data/Nat/Basic}{Nat.zero\_mul}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.zero\_multiplicand}
+
+  \lean{Init/Data/Nat/Basic}{Nat.zero\_mul}
 
   \begin{proof}
 
@@ -6409,10 +6370,10 @@
     In other words, $$m^+ \cdot n = m \cdot n + n.$$
   \end{lemma}
 
-  \lean{Init/Data/Nat/Basic}{Nat.succ\_mul}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.succ\_distrib}
+
+  \lean{Init/Data/Nat/Basic}{Nat.succ\_mul}
 
   \begin{proof}
 
@@ -6466,10 +6427,10 @@
     For $m, n, p \in \omega$, $$m \cdot (n + p) = m \cdot n + m \cdot p.$$
   \end{theorem}
 
-  \lean{Init/Data/Nat/Basic}{Nat.left\_distrib}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4k\_3}
+
+  \lean{Init/Data/Nat/Basic}{Nat.left\_distrib}
 
   \begin{proof}
 
@@ -6529,10 +6490,10 @@
     In other words, $$m + 1 = m^+.$$
   \end{lemma}
 
-  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_eq\_one\_add}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.succ\_identity}
+
+  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_eq\_one\_add}
 
   \begin{proof}
 
@@ -6583,10 +6544,10 @@
     In other words, $$m \cdot 1 = m.$$
   \end{lemma}
 
-  \lean{Init/Data/Nat/Basic}{Nat.mul\_one}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.right\_mul\_id}
+
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_one}
 
   \begin{proof}
 
@@ -6640,10 +6601,10 @@
     two properties in the opposite direction.
   \end{note}
 
-  \lean{Init/Data/Nat/Basic}{Nat.mul\_comm}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4k\_5}
+
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_comm}
 
   \begin{proof}
 
@@ -6696,10 +6657,10 @@
     For $m, n, p \in \omega$, $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
   \end{theorem}
 
-  \lean{Init/Data/Nat/Basic}{Nat.mul\_assoc}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4k\_4}
+
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_assoc}
 
   \begin{proof}
 
@@ -6858,10 +6819,10 @@
     No natural number is a member of itself.
   \end{lemma}
 
-  \lean{Init/Prelude}{Nat.lt\_irrefl}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4l\_b}
+
+  \lean{Init/Prelude}{Nat.lt\_irrefl}
 
   \begin{proof}
 
@@ -7255,9 +7216,9 @@
       \end{align}
   \end{corollary}
 
-  \lean{Init/Data/Nat/Basic}{Nat.add\_right\_cancel}
-
   \code{Common/Nat/Basic}{Nat.mul\_right\_cancel}
+
+  \lean{Init/Data/Nat/Basic}{Nat.add\_right\_cancel}
 
   \begin{proof}
 
