@@ -1456,7 +1456,7 @@
   Let $A$ and $B$ be sets. $x \not\in A + B$ if and only if either
     $x \in A \cap B$ or $x \not\in A \cup B$.
 
-  \code*{Bookshelf/Enderton/Set/Basic}
+  \code*{Common/Set/Basic}
     {Set.not\_mem\_symm\_diff\_inter\_or\_not\_union}
 
   \begin{proof}
@@ -1948,13 +1948,16 @@
       \end{align*}
   \end{proof}
 
-\subsection{\pending{Exercise 2.15a}}%
+\subsection{\verified{Exercise 2.15a}}%
 \hyperlabel{sub:exercise-2.15a}
 
   Show that $A \cap (B + C) = (A \cap B) + (A \cap C)$.
 
   \lean*{Mathlib/Data/Set/Basic}
     {Set.inter\_symmDiff\_distrib\_left}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_15a}
 
   \begin{proof}
     By definition of the intersection, \nameref{ref:symmetric-difference}, and
@@ -1984,13 +1987,15 @@
       \end{align*}
   \end{proof}
 
-\subsection{\pending{Exercise 2.15b}}%
+\subsection{\verified{Exercise 2.15b}}%
 \hyperlabel{sub:exercise-2.15b}
 
   Show that $A + (B + C) = (A + B) + C$.
 
-  \lean*{Mathlib/Data/Set/Basic}
-    {Set.symmDiff\_assoc}
+  \lean*{Mathlib/Order/SymmDiff}{symmDiff\_assoc}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_2}
+    {Enderton.Set.Chapter\_2.exercise\_2\_15b}
 
   \begin{proof}
     Let $A$, $B$, and $C$ be sets.
@@ -2658,11 +2663,6 @@
       pairs $\pair{x, y}$ with $x \in A$ and $y \in B$.
   \end{theorem}
 
-  \begin{note}
-    The below Lean proof is a definition (i.e. an axiom).
-    It does not prove such a set's existence from first principles.
-  \end{note}
-
   \lean{Mathlib/SetTheory/ZFC/Basic}{Set.prod}
 
   \begin{proof}
@@ -2830,7 +2830,7 @@
 \hyperlabel{sub:lemma-1}
 \hyperlabel{sub:one-to-one-inverse}
 
-  \begin{lemma}
+  \begin{lemma}[1]
     For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   \end{lemma}
 
@@ -3985,7 +3985,7 @@
       showing it can be represented as an ordered $1$-tuple as well.
   \end{answer}
 
-\subsection{\pending{Exercise 3.11}}%
+\subsection{\unverified{Exercise 3.11}}%
 \hyperlabel{sub:exercise-3.11}
 
   Prove the following version (for functions) of the extensionality principle:
@@ -6083,7 +6083,7 @@
 \section{Arithmetic}%
 \hyperlabel{sec:arithmetic}
 
-\subsection{\pending{Theorem 4I}}
+\subsection{\verified{Theorem 4I}}
 \hyperlabel{sub:theorem-4i}
 
   \begin{theorem}[4I]
@@ -6097,6 +6097,9 @@
   \lean{Init/Data/Nat/Basic}{Nat.add\_zero}
 
   \lean{Init/Prelude}{Nat.add}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4i}
 
   \begin{proof}
 
@@ -6115,7 +6118,7 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 4J}}
+\subsection{\verified{Theorem 4J}}
 \hyperlabel{sub:theorem-4j}
 
   \begin{theorem}[4J]
@@ -6129,6 +6132,9 @@
   \lean{Init/Data/Nat/Basic}{Nat.mul\_zero}
 
   \lean{Init/Prelude}{Nat.mul}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4j}
 
   \begin{proof}
 
@@ -6145,7 +6151,7 @@
 
   \end{proof}
 
-\subsection{\pending{Left Additive Identity}}%
+\subsection{\verified{Left Additive Identity}}%
 \hyperlabel{sub:left-additive-identity}
 
   \begin{lemma}
@@ -6154,6 +6160,9 @@
   \end{lemma}
 
   \lean{Init/Data/Nat/Basic}{Nat.zero\_add}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.left\_additive\_identity}
 
   \begin{proof}
 
@@ -6185,16 +6194,19 @@
 
   \end{proof}
 
-\subsection{\pending{Lemma 3}}%
-\hyperlabel{sub:lemma-3}
+\subsection{\verified{Lemma 2}}%
+\hyperlabel{sub:lemma-2}
 \hyperlabel{sub:succ-add-eq-add-succ}
 
-  \begin{lemma}
+  \begin{lemma}[2]
     For all $m, n \in \omega$, $A_{m^+}(n) = A_m(n^+)$.
     In other words, $$m^+ + n = m + n^+.$$
   \end{lemma}
 
   \lean{Std/Data/Nat/Lemmas}{Nat.succ\_add\_eq\_succ\_add}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.lemma\_2}
 
   \begin{proof}
 
@@ -6204,14 +6216,14 @@
     Afterwards we show that (iii) our theorem holds.
 
     \paragraph{(i)}%
-    \hyperlabel{par:lemma-3-i}
+    \hyperlabel{par:lemma-2-i}
 
       By \nameref{sub:theorem-4i}, $m^+ + 0 = m^+$.
       Likewise, $m + 0^+ = (m + 0)^+ = m^+$.
       Thus $0 \in S$.
 
     \paragraph{(ii)}%
-    \hyperlabel{par:lemma-3-ii}
+    \hyperlabel{par:lemma-2-ii}
 
       Suppose $n \in S$.
       By \nameref{sub:theorem-4i}, $m^+ + n^+ = (m^+ + n)^+$.
@@ -6221,13 +6233,13 @@
 
     \paragraph{(iii)}%
 
-      By \nameref{par:lemma-3-i} and \nameref{par:lemma-3-ii}, $S$ is inductive.
+      By \nameref{par:lemma-2-i} and \nameref{par:lemma-2-ii}, $S$ is inductive.
       Hence \nameref{sub:theorem-4b} implies $S = \omega$.
       Thus for all $n \in \omega$, $m^+ + n = m + n^+$.
 
   \end{proof}
 
-\subsection{\pending{Theorem 4K-1}}%
+\subsection{\verified{Theorem 4K-1}}%
 \hyperlabel{sub:theorem-4k-1}
 
   \begin{theorem}[4K-1]
@@ -6235,7 +6247,10 @@
     For $m, n, p \in \omega$, $$m + (n + p) = (m + n) + p.$$
   \end{theorem}
 
-  \lean{Mathlib/Algebra/Group/Defs}{add\_assoc}
+  \lean{Init/Data/Nat/Basic}{Nat.add\_assoc}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4k\_1}
 
   \begin{proof}
 
@@ -6281,7 +6296,7 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 4K-2}}%
+\subsection{\verified{Theorem 4K-2}}%
 \hyperlabel{sub:theorem-4k-2}
 
   \begin{theorem}[4K-2]
@@ -6289,7 +6304,10 @@
     For $m, n \in \omega$, $$m + n = n + m.$$
   \end{theorem}
 
-  \lean{Mathlib/Algebra/Group/Defs}{add\_comm}
+  \lean{Init/Data/Nat/Basic}{Nat.add\_comm}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4k\_2}
 
   \begin{proof}
 
@@ -6331,7 +6349,7 @@
 
   \end{proof}
 
-\subsection{\pending{Zero Multiplicand}}%
+\subsection{\verified{Zero Multiplicand}}%
 \hyperlabel{sub:zero-multiplicand}
 
   \begin{lemma}
@@ -6340,6 +6358,9 @@
   \end{lemma}
 
   \lean{Init/Data/Nat/Basic}{Nat.zero\_mul}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.zero\_multiplicand}
 
   \begin{proof}
 
@@ -6365,8 +6386,8 @@
         \begin{align*}
           0 \cdot n^+
             & = 0 \cdot n + 0 & \textref{sub:theorem-4j} \\
-            & = 0 + 0 & \eqref{sub:zero-multiplicand-eq1} \\
-            & = 0. & \textref{ref:addition}
+            & = 0 \cdot n & \textref{sub:theorem-4i} \\
+            & = 0. & \eqref{sub:zero-multiplicand-eq1}
         \end{align*}
       Thus $n^+ \in S$.
 
@@ -6380,7 +6401,7 @@
 
   \end{proof}
 
-\subsection{\pending{Successor Distribution}}%
+\subsection{\verified{Successor Distribution}}%
 \hyperlabel{sub:successor-distribution}
 
   \begin{lemma}
@@ -6389,6 +6410,9 @@
   \end{lemma}
 
   \lean{Init/Data/Nat/Basic}{Nat.succ\_mul}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.succ\_distrib}
 
   \begin{proof}
 
@@ -6434,7 +6458,7 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 4K-3}}
+\subsection{\verified{Theorem 4K-3}}
 \hyperlabel{sub:theorem-4k-3}
 
   \begin{theorem}[4K-3]
@@ -6443,6 +6467,9 @@
   \end{theorem}
 
   \lean{Init/Data/Nat/Basic}{Nat.left\_distrib}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4k\_3}
 
   \begin{proof}
 
@@ -6494,7 +6521,7 @@
 
   \end{proof}
 
-\subsection{\pending{Successor Identity}}%
+\subsection{\verified{Successor Identity}}%
 \hyperlabel{sub:successor-identity}
 
   \begin{lemma}
@@ -6503,6 +6530,9 @@
   \end{lemma}
 
   \lean{Std/Data/Nat/Lemmas}{Nat.succ\_eq\_one\_add}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.succ\_identity}
 
   \begin{proof}
 
@@ -6545,7 +6575,7 @@
 
   \end{proof}
 
-\subsection{\pending{Right Multiplicative Identity}}%
+\subsection{\verified{Right Multiplicative Identity}}%
 \hyperlabel{sub:right-multiplicative-identity}
 
   \begin{lemma}
@@ -6553,7 +6583,10 @@
     In other words, $$m \cdot 1 = m.$$
   \end{lemma}
 
-  \lean{Init/Data/Nat/Basic}{mul\_one}
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_one}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.right\_mul\_id}
 
   \begin{proof}
 
@@ -6594,7 +6627,7 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 4K-5}}
+\subsection{\verified{Theorem 4K-5}}
 \hyperlabel{sub:theorem-4k-5}
 
   \begin{theorem}[4K-5]
@@ -6607,7 +6640,10 @@
     two properties in the opposite direction.
   \end{note}
 
-  \lean{Mathlib/Algebra/Group/Defs}{mul\_comm}
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_comm}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4k\_5}
 
   \begin{proof}
 
@@ -6652,7 +6688,7 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 4K-4}}%
+\subsection{\verified{Theorem 4K-4}}%
 \hyperlabel{sub:theorem-4k-4}
 
   \begin{theorem}[4K-4]
@@ -6660,7 +6696,10 @@
     For $m, n, p \in \omega$, $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
   \end{theorem}
 
-  \lean{Mathlib/Algebra/Group/Defs}{mul\_assoc}
+  \lean{Init/Data/Nat/Basic}{Nat.mul\_assoc}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4k\_4}
 
   \begin{proof}
 
@@ -6708,7 +6747,7 @@
 \section{Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}%
 \hyperlabel{sec:ordering-natural-numbers}
 
-\subsection{\pending{Ordering on Successor}}%
+\subsection{\unverified{Ordering on Successor}}%
 \hyperlabel{sub:ordering-successor}
 
   \begin{lemma}
@@ -6746,7 +6785,7 @@
     Thus $m \in n \iff m \in \omega \land m \in n$.
   \end{proof}
 
-\subsection{\pending{Lemma 4L(a)}}%
+\subsection{\unverified{Lemma 4L(a)}}%
 \hyperlabel{sub:lemma-4l-a}
 
   \begin{lemma}[4L(a)]
@@ -6804,8 +6843,7 @@
       Suppose $m^+ \in n^+$.
       The definition of \nameref{ref:successor} immediately implies that
         $m \in m^+$.
-      By \nameref{sec:ordering-natural-numbers}, $m^+ \in n^+$ implies
-        $m^+ \in n$ or $m^+ = n$.
+      Likewise, $m^+ \in n^+$ implies $m^+ \in n$ or $m^+ = n$.
       If the latter, $m \in n$ immediately follows.
       If the former, we note $n$ is a transitive set by
         \nameref{sub:theorem-4f}.
@@ -6813,7 +6851,7 @@
 
   \end{proof}
 
-\subsection{\pending{Lemma 4L(b)}}%
+\subsection{\verified{Lemma 4L(b)}}%
 \hyperlabel{sub:lemma-4l-b}
 
   \begin{lemma}[4L(b)]
@@ -6821,6 +6859,9 @@
   \end{lemma}
 
   \lean{Init/Prelude}{Nat.lt\_irrefl}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4l\_b}
 
   \begin{proof}
 

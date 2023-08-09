@@ -1,6 +1,7 @@
 import Bookshelf.Enderton.Set.Chapter_1
 import Common.Set.Basic
 import Mathlib.Data.Set.Lattice
+import Mathlib.Order.SymmDiff
 
 /-! # Enderton.Set.Chapter_2
 
@@ -261,7 +262,7 @@ theorem anti_monotonicity_ii (A B : Set (Set α)) (h : A ⊆ B)
 
 #check Set.sInter_subset_sInter
 
-/-- #### ∩/- Associativity
+/-- #### Intersection/Difference Associativity
 
 Let `A`, `B`, and `C` be sets. Then `A ∩ (B - C) = (A ∩ B) - C`.
 -/
@@ -271,7 +272,8 @@ theorem inter_diff_assoc (A B C : Set α)
   _ = { x | x ∈ A ∧ (x ∈ B ∧ x ∉ C) } := rfl
   _ = { x | (x ∈ A ∧ x ∈ B) ∧ x ∉ C } := by
     ext _
-    sorry
+    simp only [Set.mem_setOf_eq]
+    rw [and_assoc]
   _ = { x | x ∈ A ∩ B ∧ x ∉ C } := rfl
   _ = (A ∩ B) \ C := rfl
 
@@ -666,6 +668,87 @@ theorem exercise_2_14 : A \ (B \ C) ≠ (A \ B) \ C := by
   simp at this
 
 end
+
+/-- #### Exercise 2.15 (a)
+
+Show that `A ∩ (B + C) = (A ∩ B) + (A ∩ C)`.
+-/
+theorem exercise_2_15a (A B C : Set α)
+  : A ∩ (B ∆ C) = (A ∩ B) ∆ (A ∩ C) := Eq.symm $
+  calc (A ∩ B) ∆ (A ∩ C)
+    _ = ((A ∩ B) \ (A ∩ C)) ∪ ((A ∩ C) \ (A ∩ B)) := rfl
+    _ = ((A ∩ B) \ A) ∪
+        ((A ∩ B) \ C) ∪
+        (((A ∩ C) \ A) ∪
+         ((A ∩ C) \ B)) := by
+      iterate 2 rw [Set.diff_inter]
+    _ = (A ∩ (B \ A)) ∪
+        (A ∩ (B \ C)) ∪
+        ((A ∩ (C \ A)) ∪
+         (A ∩ (C \ B))) := by
+      iterate 4 rw [Set.inter_diff_assoc]
+    _ = ∅ ∪ (A ∩ (B \ C)) ∪ (∅ ∪ (A ∩ (C \ B))) := by
+      iterate 2 rw [Set.inter_diff_self]
+    _ = (A ∩ (B \ C)) ∪ (A ∩ (C \ B)) := by
+      simp only [Set.empty_union]
+    _ = A ∩ ((B \ C) ∪ (C \ B)) := by
+      rw [Set.inter_distrib_left]
+    _ = A ∩ (B ∆ C) := rfl
+
+#check Set.inter_symmDiff_distrib_left
+
+/-- #### Exercise 2.15 (b)
+
+Show that `A + (B + C) = (A + B) + C`.
+-/
+theorem exercise_2_15b (A B C : Set α)
+  : A ∆ (B ∆ C) = (A ∆ B) ∆ C := by
+  rw [Set.Subset.antisymm_iff]
+  apply And.intro
+  · show ∀ x, x ∈ A ∆ (B ∆ C) → x ∈ (A ∆ B) ∆ C
+    intro x hx
+    apply Or.elim hx
+    · intro ⟨hA, nBC⟩
+      rw [Set.not_mem_symm_diff_inter_or_not_union] at nBC
+      apply Or.elim nBC
+      · intro h
+        have : x ∉ A ∆ B := Set.symm_diff_mem_both_not_mem hA h.left
+        exact Set.symm_diff_mem_right this h.right
+      · intro h
+        have ⟨nB, nC⟩ : x ∉ B ∧ x ∉ C := not_or_de_morgan.mp h
+        have : x ∈ A ∆ B := Set.symm_diff_mem_left hA nB
+        exact Set.symm_diff_mem_left this nC
+    · intro ⟨hx₁, hx₂⟩
+      apply Or.elim hx₁
+      · intro ⟨hB, nC⟩
+        have : x ∈ A ∆ B := Set.symm_diff_mem_right hx₂ hB
+        exact Set.symm_diff_mem_left this nC
+      · intro ⟨hC, nB⟩
+        have : x ∉ A ∆ B := Set.symm_diff_not_mem_both_not_mem hx₂ nB
+        exact Set.symm_diff_mem_right this hC
+  · show ∀ x, x ∈ (A ∆ B) ∆ C → x ∈ A ∆ (B ∆ C)
+    intro x hx
+    apply Or.elim hx
+    · intro ⟨hAB, nC⟩
+      apply Or.elim hAB
+      · intro ⟨hA, nB⟩
+        have : x ∉ B ∆ C := Set.symm_diff_not_mem_both_not_mem nB nC
+        exact Set.symm_diff_mem_left hA this
+      · intro ⟨hB, nA⟩
+        have : x ∈ B ∆ C := Set.symm_diff_mem_left hB nC
+        exact Set.symm_diff_mem_right nA this
+    · intro ⟨hC, nAB⟩
+      rw [Set.not_mem_symm_diff_inter_or_not_union] at nAB
+      apply Or.elim nAB
+      · intro ⟨hA, hB⟩
+        have : x ∉ B ∆ C := Set.symm_diff_mem_both_not_mem hB hC
+        exact Set.symm_diff_mem_left hA this
+      · intro h
+        have ⟨nA, nB⟩ : x ∉ A ∧ x ∉ B := not_or_de_morgan.mp h
+        have : x ∈ B ∆ C := Set.symm_diff_mem_right nB hC
+        exact Set.symm_diff_mem_right nA this
+
+#check symmDiff_assoc
 
 /-- #### Exercise 2.16
 

@@ -19,7 +19,7 @@ namespace Enderton.Set.Chapter_3
 
 If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
-theorem lemma_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
+lemma lemma_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
   : OrderedPair x y ∈ 𝒫 𝒫 C := by
   have hxs : {x} ⊆ C := Set.singleton_subset_iff.mpr hx
   have hxys : {x, y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy

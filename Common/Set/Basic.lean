@@ -157,6 +157,46 @@ theorem prod_nonempty_nonempty_imp_nonempty_prod {A : Set α} {B : Set β}
 /-! ## Symmetric Difference -/
 
 /--
+If `x ∈ A` and `x ∉ B`, then `x ∈ A ∆ B`.
+-/
+theorem symm_diff_mem_left {A B : Set α} (hA : x ∈ A) (hB : x ∉ B)
+  : x ∈ A ∆ B := by
+  left
+  exact ⟨hA, hB⟩
+
+/--
+If `x ∉ A` and `x ∈ B`, then `x ∈ A ∆ B`.
+-/
+theorem symm_diff_mem_right {A B : Set α} (hA : x ∉ A) (hB : x ∈ B)
+  : x ∈ A ∆ B := by
+  right
+  exact ⟨hB, hA⟩
+
+/--
+If `x ∈ A` and `x ∈ B`, then `x ∉ A ∆ B`.
+-/
+theorem symm_diff_mem_both_not_mem {A B : Set α} (hA : x ∈ A) (hB : x ∈ B)
+  : x ∉ A ∆ B := by
+  intro h
+  apply Or.elim h
+  · intro ⟨_, nB⟩
+    exact absurd hB nB
+  · intro ⟨_, nA⟩
+    exact absurd hA nA
+
+/--
+If `x ∉ A` and `x ∉ B`, then `x ∉ A ∆ B`.
+-/
+theorem symm_diff_not_mem_both_not_mem {A B : Set α} (nA : x ∉ A) (nB : x ∉ B)
+  : x ∉ A ∆ B := by
+  intro h
+  apply Or.elim h
+  · intro ⟨hA, _⟩
+    exact absurd hA nA
+  · intro ⟨hB, _⟩
+    exact absurd hB nB
+
+/--
 `x` is a member of the `symmDiff` of `A` and `B` **iff** `x ∈ A ∧ x ∉ B` or
 `x ∉ A ∧ x ∈ B`.
 -/
