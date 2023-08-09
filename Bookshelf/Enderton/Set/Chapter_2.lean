@@ -38,6 +38,153 @@ theorem commutative_law_ii (A B : Set α)
     exact and_comm
   _ = B ∩ A := rfl
 
+/-! #### Associative Laws
+
+For any sets `A`, `B`, and `C`,
+```
+A ∪ (B ∪ C) = (A ∪ B) ∪ C
+A ∩ (B ∩ C) = (A ∩ B) ∩ C
+```
+-/
+
+#check Set.union_assoc
+
+theorem associative_law_i (A B C : Set α)
+  : A ∪ (B ∪ C) = (A ∪ B) ∪ C := calc A ∪ (B ∪ C)
+  _ = { x | x ∈ A ∨ x ∈ B ∪ C } := rfl
+  _ = { x | x ∈ A ∨ (x ∈ B ∨ x ∈ C) } := rfl
+  _ = { x | (x ∈ A ∨ x ∈ B) ∨ x ∈ C } := by
+    ext _
+    simp only [Set.mem_setOf_eq]
+    rw [← or_assoc]
+  _ = { x | x ∈ A ∪ B ∨ x ∈ C } := rfl
+  _ = (A ∪ B) ∪ C := rfl
+
+#check Set.inter_assoc
+
+theorem associative_law_ii (A B C : Set α)
+  : A ∩ (B ∩ C) = (A ∩ B) ∩ C := calc A ∩ (B ∩ C)
+  _ = { x | x ∈ A ∧ (x ∈ B ∩ C) } := rfl
+  _ = { x | x ∈ A ∧ (x ∈ B ∧ x ∈ C) } := rfl
+  _ = { x | (x ∈ A ∧ x ∈ B) ∧ x ∈ C } := by
+    ext _
+    simp only [Set.mem_setOf_eq]
+    rw [← and_assoc]
+  _ = { x | x ∈ A ∩ B ∧ x ∈ C } := rfl
+  _ = (A ∩ B) ∩ C := rfl
+
+/-! #### Distributive Laws
+
+For any sets `A`, `B`, and `C`,
+```
+A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)
+A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)
+```
+-/
+
+#check Set.inter_distrib_left
+
+theorem distributive_law_i (A B C : Set α)
+  : A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C) := calc A ∩ (B ∪ C)
+  _ = { x | x ∈ A ∧ x ∈ B ∪ C } := rfl
+  _ = { x | x ∈ A ∧ (x ∈ B ∨ x ∈ C) } := rfl
+  _ = { x | (x ∈ A ∧ x ∈ B) ∨ (x ∈ A ∧ x ∈ C) } := by
+    ext _
+    exact and_or_left
+  _ = { x | x ∈ A ∩ B ∨ x ∈ A ∩ C } := rfl
+  _ = (A ∩ B) ∪ (A ∩ C) := rfl
+
+#check Set.union_distrib_left
+
+theorem distributive_law_ii (A B C : Set α)
+  : A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C) := calc A ∪ (B ∩ C)
+  _ = { x | x ∈ A ∨ x ∈ B ∩ C } := rfl
+  _ = { x | x ∈ A ∨ (x ∈ B ∧ x ∈ C) } := rfl
+  _ = { x | (x ∈ A ∨ x ∈ B) ∧ (x ∈ A ∨ x ∈ C) } := by
+    ext _
+    exact or_and_left
+  _ = { x | x ∈ A ∪ B ∧ x ∈ A ∪ C } := rfl
+  _ = (A ∪ B) ∩ (A ∪ C) := rfl
+
+/-! #### De Morgan's Laws
+
+For any sets `A`, `B`, and `C`,
+```
+C - (A ∪ B) = (C - A) ∩ (C - B)
+C - (A ∩ B) = (C - A) ∪ (C - B)
+```
+-/
+
+#check Set.diff_inter_diff
+
+theorem de_morgans_law_i (A B C : Set α)
+  : C \ (A ∪ B) = (C \ A) ∩ (C \ B) := calc C \ (A ∪ B)
+  _ = { x | x ∈ C ∧ x ∉ A ∪ B } := rfl
+  _ = { x | x ∈ C ∧ ¬(x ∈ A ∨ x ∈ B) } := rfl
+  _ = { x | x ∈ C ∧ (x ∉ A ∧ x ∉ B) } := by
+    ext _
+    simp only [Set.mem_setOf_eq]
+    rw [not_or_de_morgan]
+  _ = { x | (x ∈ C ∧ x ∉ A) ∧ (x ∈ C ∧ x ∉ B) } := by
+    ext _
+    exact and_and_left
+  _ = { x | x ∈ C \ A ∧ x ∈ C \ B } := rfl
+  _ = (C \ A) ∩ (C \ B) := rfl
+
+#check Set.diff_inter
+
+theorem de_morgans_law_ii (A B C : Set α)
+  : C \ (A ∩ B) = (C \ A) ∪ (C \ B) := calc C \ (A ∩ B)
+  _ = { x | x ∈ C ∧ x ∉ A ∩ B } := rfl
+  _ = { x | x ∈ C ∧ ¬(x ∈ A ∧ x ∈ B) } := rfl
+  _ = { x | x ∈ C ∧ (x ∉ A ∨ x ∉ B) } := by
+    ext _
+    simp only [Set.mem_setOf_eq]
+    rw [not_and_de_morgan]
+  _ = { x | (x ∈ C ∧ x ∉ A) ∨ (x ∈ C ∧ x ∉ B) } := by
+    ext _
+    exact and_or_left
+  _ = { x | x ∈ C \ A ∨ x ∈ C \ B } := rfl
+  _ = (C \ A) ∪ (C \ B) := rfl
+
+/-! #### Identities Involving ∅
+
+For any set `A`,
+```
+A ∪ ∅ = A
+A ∩ ∅ = ∅
+A ∩ (C - A) = ∅
+```
+-/
+
+#check Set.union_empty
+
+theorem emptyset_identity_i (A : Set α)
+  : A ∪ ∅ = A := calc A ∪ ∅
+  _ = { x | x ∈ A ∨ x ∈ ∅ } := rfl
+  _ = { x | x ∈ A ∨ False } := rfl
+  _ = { x | x ∈ A } := by simp
+  _ = A := rfl
+
+#check Set.inter_empty
+
+theorem emptyset_identity_ii (A : Set α)
+  : A ∩ ∅ = ∅ := calc A ∩ ∅
+  _ = { x | x ∈ A ∧ x ∈ ∅ } := rfl
+  _ = { x | x ∈ A ∧ False } := rfl
+  _ = { x | False } := by simp
+  _ = ∅ := rfl
+
+#check Set.inter_diff_self
+
+theorem emptyset_identity_iii (A C : Set α)
+  : A ∩ (C \ A) = ∅ := calc A ∩ (C \ A)
+  _ = { x | x ∈ A ∧ x ∈ C \ A } := rfl
+  _ = { x | x ∈ A ∧ (x ∈ C ∧ x ∉ A) } := rfl
+  _ = { x | x ∈ C ∧ False } := by simp
+  _ = { x | False } := by simp
+  _ = ∅ := rfl
+
 /-- #### Exercise 2.1
 
 Assume that `A` is the set of integers divisible by `4`. Similarly assume that

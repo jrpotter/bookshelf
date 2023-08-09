@@ -44,61 +44,47 @@
   \label{#1}%
   \hypertarget{#1}{}}
 
-% Denote whether we are working with a standard/Mathlib statement (lean) or a
-% custom one (code).
+% Denote if working with a predefined statement/theorem or a custom one.
 \newcommand\@leanlink[4]{%
-  \textcolor{blue}{\raisebox{-4.5pt}{%
-    \tikz{\draw (0, 0) node[yscale=-1,xscale=1] {\faFont};}}}%
-  {-\;}\href{#1/#2.html\##3}{#4}}
-
+  \textcolor{BlueViolet}{\raisebox{-4.5pt}{%
+    \tikz{\draw (0, 0) node[yscale=-1,xscale=1] {\faFont};}}{-\;}}%
+  \href{#1/#2.html\##3}{\color{BlueViolet}{#4}}}
 \newcommand\@codelink[4]{%
-  \textcolor{blue}{\raisebox{-4.5pt}{%
-    \tikz{\draw (0, 0) node[] {\faCodeBranch};}}}%
-  {-\;}\href{#1/#2.html\##3}{#4}}
+  \textcolor{MidnightBlue}{\raisebox{-4.5pt}{%
+    \tikz{\draw (0, 0) node[xshift=8pt] {\faCodeBranch};}}{-\;}}%
+  \href{#1/#2.html\##3}{\color{MidnightBlue}{#4}}}
 
-% Reference to an anchor of Lean documentation.
+% Reference to an anchor of generated Lean documentation.
 \newcommand\leanref[3]{%
-  \@leanlink{#1}{#2}{#3}{#3}\vspace{10pt}}
-\WithSuffix\newcommand\leanref*[3]{%
   \@leanlink{#1}{#2}{#3}{#3}}
-
 \newcommand\coderef[3]{%
-  \@codelink{#1}{#2}{#3}{#3}\vspace{10pt}}
-\WithSuffix\newcommand\coderef*[3]{%
   \@codelink{#1}{#2}{#3}{#3}}
-
-% Variants that allows customizing display text.
 \newcommand\leanpref[4]{%
-  \@leanlink{#1}{#2}{#3}{#4}\vspace{10pt}}
-\WithSuffix\newcommand\leanpref*[4]{%
   \@leanlink{#1}{#2}{#3}{#4}}
-
 \newcommand\codepref[4]{%
-  \@codelink{#1}{#2}{#3}{#4}\vspace{10pt}}
-\WithSuffix\newcommand\codepref*[4]{%
   \@codelink{#1}{#2}{#3}{#4}}
 
 % Macro to build all Lean related commands relative to a specified directory.
 \newcommand\makeleancommands[1]{%
   \newcommand\lean[2]{%
-    \leanref{#1}{##1}{##2}}
+    \noindent\leanref{#1}{##1}{##2}}
   \WithSuffix\newcommand\lean*[2]{%
-    \leanref*{#1}{##1}{##2}}
+    \vspace{6pt}\noindent\leanref{#1}{##1}{##2}}
 
   \newcommand\code[2]{%
-    \coderef{#1}{##1}{##2}}
+    \noindent\coderef{#1}{##1}{##2}}
   \WithSuffix\newcommand\code*[2]{%
-    \coderef*{#1}{##1}{##2}}
+    \vspace{6pt}\noindent\coderef{#1}{##1}{##2}}
 
   \newcommand\leanp[3]{%
-    \leanpref{#1}{##1}{##2}{##3}}
+    \noindent\leanpref{#1}{##1}{##2}{##3}}
   \WithSuffix\newcommand\leanp*[3]{%
-    \leanpref*{#1}{##1}{##2}{##3}}
+    \vspace{6pt}\noindent\leanpref{#1}{##1}{##2}{##3}}
 
   \newcommand\codep[3]{%
-    \codepref{#1}{##1}{##2}{##3}}
+    \noindent\codepref{#1}{##1}{##2}{##3}}
   \WithSuffix\newcommand\codep*[3]{%
-    \codepref*{#1}{##1}{##2}{##3}}
+    \vspace{6pt}\noindent\codepref{#1}{##1}{##2}{##3}}
 }
 
 % ========================================
@@ -124,11 +110,7 @@
 
 \newcommand\@statement[1]{%
   \linedivider*\paragraph{\normalfont\normalsize\textit{#1.}}}
-\newcommand{\statementpadding}{\ \vspace{8pt}}
-
 \newenvironment{answer}{\@statement{Answer}}{\hfill$\square$}
-\newenvironment{axiom}{\@statement{Axiom}}{\hfill$\square$}
-\newenvironment{definition}{\@statement{Definition}}{\hfill$\square$}
 \renewenvironment{proof}{\@statement{Proof}}{\hfill$\square$}
 
 \newtheorem{corollaryinner}{Corollary}
