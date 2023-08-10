@@ -4,13 +4,13 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage{etoolbox}
 \usepackage{environ}
-\usepackage{fancybox}
 \usepackage{fontawesome5}
 \usepackage{mathabx, mathrsfs}
 \usepackage{soul}
 \usepackage{stmaryrd}
-% Must load `xcolor` before `tikz`.
+% Must load `xcolor` before `tcolorbox` and `tikz`.
 \usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
 \usepackage{tikz}
 % `hyperref` comes after `xr-hyper`.
 \usepackage{xr-hyper}
@@ -91,18 +91,18 @@
 % Admonitions
 % ========================================
 
-\newcommand{\@admonition}[2]{%
-  \begin{center}
-    \doublebox{
-      \begin{minipage}{0.95\textwidth}
-        \vspace{2pt}
-        \hl{#1} #2
-        \vspace{2pt}
-      \end{minipage}}
-  \end{center}}
-
-\NewEnviron{note}{\@admonition{NOTE:}{\BODY}}
-\NewEnviron{todo}{\@admonition{TODO:}{\BODY}}
+\NewEnviron{note}{%
+  \begin{tcolorbox}[%
+      sharp corners,
+      fonttitle=\sffamily\bfseries,
+      toptitle=2pt,
+      bottomtitle=2pt,
+      coltitle=black!80!white,
+      colback=yellow!30,
+      colframe=yellow!80!black,
+      title=Note]
+    \BODY
+  \end{tcolorbox}}
 
 % ========================================
 % Statements
