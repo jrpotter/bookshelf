@@ -213,16 +213,16 @@
     and it is "closed under \nameref{ref:successor}", i.e.
     $$(\forall a \in A) a^+ \in A.$$
 
+  \lean{Prelude}{Nat}
+
+  \lean{Mathlib/Init/Set}{Set.univ}
+
   \begin{note}
     Induction is baked into Lean's type system.
     In particular, the $\emptyset$ and "closed under successor" properties are
       analagous to base and recursive constructors of an inductive data type
       respectively.
   \end{note}
-
-  \lean{Prelude}{Nat}
-
-  \lean{Mathlib/Init/Set}{Set.univ}
 
 \section{\defined{Infinity Axiom}}%
 \hyperlabel{ref:infinity-axiom}
@@ -266,6 +266,8 @@
     \item $R$ is \nameref{ref:trichotomous}.
   \end{enumerate}
 
+  \lean{Mathlib/Init/Algebra/Classes}{IsStrictTotalOrder}
+
   \begin{note}
     This definition does not agree with how Lean defines a linear order.
 
@@ -283,8 +285,6 @@
       \item Transitivity
     \end{enumerate}
   \end{note}
-
-  \lean{Mathlib/Init/Algebra/Classes}{IsStrictTotalOrder}
 
 \section{\defined{Multiplication}}%
 \hyperlabel{ref:multiplication}
@@ -462,13 +462,13 @@
 
   For any set $a$, its \textbf{successor} is defined by $$a^+ = a \cup \{a\}.$$
 
+  \lean{Prelude}{Nat.succ}
+
   \begin{note}
-    The corresponding Lean reference refers to the `Nat.succ` constructor.
+    The corresponding Lean definition refers to the `Nat.succ` constructor.
     This is not represented internally as a union of sets, but serves the same
       role.
   \end{note}
-
-  \lean{Prelude}{Nat.succ}
 
 \section{\defined{Subset Axioms}}%
 \hyperlabel{ref:subset-axioms}
@@ -5763,12 +5763,12 @@
     $\langle \omega, \sigma, 0 \rangle$ is a Peano system.
   \end{theorem}
 
+  \code{Common/Set/Peano}{Peano.instSystemNatUnivSuccOfNatInstOfNatNat}
+
   \begin{note}
     This theorem depends on \nameref{sub:theorem-4e} and
       \nameref{sub:theorem-4f}.
   \end{note}
-
-  \code{Common/Set/Peano}{Peano.instSystemNatUnivSuccOfNatInstOfNatNat}
 
   \begin{proof}
 
@@ -6590,15 +6590,15 @@
     For $m, n \in \omega$, $$m \cdot n = n \cdot m.$$
   \end{theorem}
 
-  \begin{note}
-    We prove commutativity before associativity, though Enderton orders these
-    two properties in the opposite direction.
-  \end{note}
-
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.theorem\_4k\_5}
 
   \lean{Init/Data/Nat/Basic}{Nat.mul\_comm}
+
+  \begin{note}
+    We prove commutativity before associativity, though Enderton orders these
+    two properties in the opposite direction.
+  \end{note}
 
   \begin{proof}
 
@@ -6747,11 +6747,11 @@
     For any natural numbers $m$ and $n$, $$m \in n \iff m^+ \in n^+.$$
   \end{lemma}
 
+  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_lt\_succ\_iff}
+
   \begin{note}
     Here I referred to Enderton's proof in the forward direction.
   \end{note}
-
-  \lean{Std/Data/Nat/Lemmas}{Nat.succ\_lt\_succ\_iff}
 
   \begin{proof}
 
@@ -7242,7 +7242,7 @@
 
   \end{proof}
 
-\subsection{\sorry{%
+\subsection{\pending{%
   Well Ordering of \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:well-ordering-natural-numbers}
 
@@ -7251,8 +7251,57 @@
     Then there is some $m \in A$ such that $m \ineq n$ for all $n \in A$.
   \end{theorem}
 
+  \lean{Mathlib/SetTheory/Ordinal/Basic}{WellOrder}
+
+  \begin{note}
+    This proof was written a few days after reading Enderton's proof as a means
+      of ensuring I remember the main arguments.
+  \end{note}
+
   \begin{proof}
-    TODO
+
+    Let $A$ be a nonempty subset of $\omega$.
+    For the sake of contradiction, suppose $A$ does not have a least element.
+    It then suffices to prove that the complement of $A$ equals $\omega$.
+    If we do so, then $A = \emptyset$, a contradiction.
+    Define
+      \begin{equation}
+        \hyperlabel{sub:well-ordering-natural-numbers-eq1}
+        S = \{n \in \omega \mid (\forall m \in n) m \not\in A\}.
+      \end{equation}
+    We prove $S$ is an \nameref{ref:inductive-set} by showing that (i)
+      $0 \in S$ and (ii) if $n \in S$, then $n^+ \in S$.
+    Afterward we show that $\omega - A = \omega$, completing the proof.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:well-ordering-natural-numbers-i}
+
+      It vacuously holds that $0 \in S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:well-ordering-natural-numbers-ii}
+
+      Suppose $n \in S$.
+      That is, for all $m \in n$, $m \in \omega - A$.
+      Let $p$ be an arbitrary element of $A$.
+      By the \nameref{sub:trichotomy-law-natural-numbers}, only one of the
+        following holds:
+        $$p \in n^+, \quad p = n^+, \quad n^+ \in p.$$
+      It cannot be that $p \in n^+$ since $p \in \omega - A$ by
+        \eqref{sub:well-ordering-natural-numbers-eq1}.
+      But then $n^+ = p$ or $n^+ \in p$, implying that $n^+$ is a least element
+        of $A$.
+      Since $A$ does not have a least element, it must be that $n^+ \not\in A$.
+      Hence $n^+ \in S$.
+
+    \paragraph{Conclusion}%
+
+      By \nameref{par:well-ordering-natural-numbers-i} and
+        \nameref{par:well-ordering-natural-numbers-ii}, $S$ is an inductive set.
+      Since $S \subseteq \omega$, \nameref{sub:theorem-4b} implies $S = \omega$.
+      But this immediately implies $\omega = \omega - A$ meaning $A$ is the
+        empty set.
+
   \end{proof}
 
 \subsection{\sorry{Corollary 4Q}}%
