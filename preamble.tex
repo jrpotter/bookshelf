@@ -44,42 +44,43 @@
   \label{#1}%
   \hypertarget{#1}{}}
 
-% Denote if working with a predefined statement/theorem or a custom one.
-\newcommand\@leanlink[4]{%
+% Links to theorems/statements/etc. that can be found in Mathlib4's index.
+\newcommand\@leanlink[3]{%
   \textcolor{BlueViolet}{\raisebox{-4.5pt}{%
     \tikz{\draw (0, 0) node[yscale=-1,xscale=1] {\faFont};}}{-\;}}%
-  \href{#1/#2.html\##3}{\color{BlueViolet}{#4}}}
+  \href{https://leanprover-community.github.io/mathlib4_docs/#1.html\##2}%
+  {\color{BlueViolet}{#3}}}
+
+\newcommand\lean[2]{%
+  \noindent\@leanlink{#1}{#2}{#2}}
+\WithSuffix\newcommand\lean*[2]{%
+  \vspace{6pt}\lean{#1}{#2}}
+
+\newcommand\leanp[3]{%
+  \noindent\@leanlink{#1}{#2}{#3}}
+\WithSuffix\newcommand\leanp*[3]{%
+  \vspace{6pt}\leanp{#1}{#2}{#3}}
+
+% Links to theorems/statements/etc. found in custom index.
 \newcommand\@codelink[4]{%
   \textcolor{MidnightBlue}{\raisebox{-4.5pt}{%
     \tikz{\draw (0, 0) node[xshift=8pt] {\faCodeBranch};}}{-\;}}%
-  \href{#1/#2.html\##3}{\color{MidnightBlue}{#4}}}
+  \href{#1/#2.html\##3}%
+  {\color{MidnightBlue}{#4}}}
 
-% Reference to an anchor of generated Lean documentation.
-\newcommand\leanref[3]{%
-  \@leanlink{#1}{#2}{#3}{#3}}
 \newcommand\coderef[3]{%
   \@codelink{#1}{#2}{#3}{#3}}
-\newcommand\leanpref[4]{%
-  \@leanlink{#1}{#2}{#3}{#4}}
 \newcommand\codepref[4]{%
   \@codelink{#1}{#2}{#3}{#4}}
 
-% Macro to build all Lean related commands relative to a specified directory.
-\newcommand\makeleancommands[1]{%
-  \newcommand\lean[2]{%
-    \noindent\leanref{#1}{##1}{##2}}
-  \WithSuffix\newcommand\lean*[2]{%
-    \vspace{6pt}\noindent\leanref{#1}{##1}{##2}}
-
+% Macro to build our `code` commands relative to a given directory. For
+% instance, we expect to have invocation `\makecode{..}` if the TeX file exists
+% one directory deep from the root of our project..
+\newcommand\makecode[1]{%
   \newcommand\code[2]{%
     \noindent\coderef{#1}{##1}{##2}}
   \WithSuffix\newcommand\code*[2]{%
     \vspace{6pt}\noindent\coderef{#1}{##1}{##2}}
-
-  \newcommand\leanp[3]{%
-    \noindent\leanpref{#1}{##1}{##2}{##3}}
-  \WithSuffix\newcommand\leanp*[3]{%
-    \vspace{6pt}\noindent\leanpref{#1}{##1}{##2}{##3}}
 
   \newcommand\codep[3]{%
     \noindent\codepref{#1}{##1}{##2}{##3}}
