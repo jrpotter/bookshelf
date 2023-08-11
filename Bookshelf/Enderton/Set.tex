@@ -6863,6 +6863,8 @@
   \code{Bookshelf/Enderton/Set/Chapter\_4}
     {Enderton.Set.Chapter\_4.zero\_least\_nat}
 
+  \lean{Std/Data/Nat/Init/Lemmas}{Nat.pos\_of\_ne\_zero}
+
   \begin{proof}
 
     Let $$S = \{n \in \omega \mid n = 0 \lor 0 \in n\}.$$
@@ -7255,7 +7257,7 @@
 
   \end{proof}
 
-\subsection{\pending{%
+\subsection{\verified{%
   Well Ordering of \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:well-ordering-natural-numbers}
 
@@ -7263,6 +7265,9 @@
     Let $A$ be a nonempty subset of $\omega$.
     Then there is some $m \in A$ such that $m \ineq n$ for all $n \in A$.
   \end{theorem}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.well\_ordering\_nat}
 
   \lean{Mathlib/SetTheory/Ordinal/Basic}{WellOrder}
 
@@ -7295,16 +7300,13 @@
     \hyperlabel{par:well-ordering-natural-numbers-ii}
 
       Suppose $n \in S$.
-      That is, for all $m \in n$, $m \in \omega - A$.
-      Let $p$ be an arbitrary element of $A$.
-      By the \nameref{sub:trichotomy-law-natural-numbers}, only one of the
-        following holds:
-        $$p \in n^+, \quad p = n^+, \quad n^+ \in p.$$
-      It cannot be that $p \in n^+$ since $p \in \omega - A$ by
-        \eqref{sub:well-ordering-natural-numbers-eq1}.
-      But then $n^+ = p$ or $n^+ \in p$, implying that $n^+$ is a least element
-        of $A$.
-      Since $A$ does not have a least element, it must be that $n^+ \not\in A$.
+      We want to prove that $$\forall m, m \in n^+ \Rightarrow m \not\in A.$$
+      To this end, let $m \in \omega$ such that $m \in n^+$.
+      By definition of the \nameref{ref:successor}, $m \in n$ or $m = n$.
+      If the former, $n \in S$ implies $m \not\in A$.
+      If the latter, it isn't possible for $n \in A$ since the
+        \nameref{sub:trichotomy-law-natural-numbers} would otherwise imply
+        $n$ is the least element of $A$, which is assumed to not exist.
       Hence $n^+ \in S$.
 
     \paragraph{Conclusion}%
@@ -7333,7 +7335,7 @@
     Therefore it isn't possible $f(n^+) \in f(n)$ for all $n \in \omega$.
   \end{proof}
 
-\subsection{\pending{%
+\subsection{\verified{%
   Strong Induction Principle for \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:strong-induction-principle-natural-numbers}
 
@@ -7346,6 +7348,9 @@
       \end{equation}
     Then $A = \omega$.
   \end{theorem}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.strong\_induction\_principle\_nat}
 
   \begin{proof}
     For the sake of contradiction, suppose $\omega - A$ is a nonempty set.
@@ -7861,12 +7866,15 @@
     Refer to \nameref{sub:theorem-4k-5}.
   \end{proof}
 
-\subsection{\pending{Exercise 4.17}}%
+\subsection{\verified{Exercise 4.17}}%
 \hyperlabel{sub:exercise-4.17}
 
   Prove that $m^{n+p} = m^n \cdot m^p$.
 
-  \lean*{Data/Nat/Lemmas}{Nat.pow\_add}
+  \code*{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_17}
+
+  \lean{Data/Nat/Lemmas}{Nat.pow\_add}
 
   \begin{proof}
 
@@ -7929,15 +7937,97 @@
     Therefore $$\img{\in_\omega^{-1}}{\{7, 8\}} = \{6, 7\}.$$
   \end{proof}
 
-\subsection{\sorry{Exercise 4.19}}%
+\subsection{\verified{Exercise 4.19}}%
 \hyperlabel{sub:exercise-4.19}
 
   Prove that if $m$ is a natural number and $d$ is a nonzero number, then there
-    exist numbers $q$ and $r$ such that $m = (d \cdot q) + r$ and $r$ is less than
-    $d$.
+    exist numbers $q$ and $r$ such that $m = (d \cdot q) + r$ and $r$ is less
+    than $d$.
+
+  \code*{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_19}
 
   \begin{proof}
-    TODO
+
+    Let $d \in \omega$ such that $d \neq 0$.
+    Define
+      \begin{equation}
+        \hyperlabel{sub:exercise-4.18-eq1}
+        S = \{m \in \omega \mid
+          (\exists q, d \in \omega) m = (d \cdot q) + r \land r < d\}.
+      \end{equation}
+    We prove that $S$ is an \nameref{ref:inductive-set} by showing
+      (i) $0 \in S$ and (ii) if $m \in S$, then $m^+ \in S$.
+    Afterward we prove (iii) the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-4.19-i}
+
+      Let $q = 0$ and $r = 0$.
+      We note $r < d$ by \textref{sub:zero-least-natural-number}.
+      Furthermore,
+        \begin{align*}
+          (d \cdot 0) + 0
+            & = d \cdot 0 & \textref{sub:theorem-4i} \\
+            & = 0. & \textref{sub:theorem-4j}
+        \end{align*}
+      Thus $0 \in S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-4.19-ii}
+
+      Suppose $m \in S$.
+      Then there exists $q, d \in \omega$ such that $m = (d \cdot q) + r$ and
+        $r < d$.
+      Then
+        \begin{align*}
+          m^+
+            & = ((d \cdot q) + r)^+ \\
+            & = (d \cdot q) + r^+. & \textref{sub:theorem-4i}
+        \end{align*}
+      By \nameref{sub:trichotomy-law-natural-numbers}, there are three cases to
+        consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $r^+ \in d$.
+        Then it immediately follows $m^+ \in S$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $r^+ = d$.
+        Then
+          \begin{align*}
+            m^+
+              & = (d \cdot q) + r^+ \\
+              & = (d \cdot q) + d \\
+              & = d \cdot q^+ & \textref{sub:theorem-4j} \\
+              & = (d \cdot q^+) + 0. & \textref{sub:theorem-4i}
+          \end{align*}
+        Hence $m^+ \in S$.
+
+      \subparagraph{Case 3}%
+
+        Suppose $d \in r^+$.
+        Then, by definition of the \nameref{ref:successor}, $d \in r$ or
+          $d = r$.
+        But $r \in d$.
+        Thus, by \nameref{sub:trichotomy-law-natural-numbers}, a contradiction
+          is introduced.
+        Hence this case is not possible.
+
+      \subparagraph{Conclusion}%
+
+        Since the above cases are exhaustive, it follows $m^+ \in S$.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-4.19-i} and \nameref{par:exercise-4.19-ii},
+        $S \subseteq \omega$ is indeed an inductive set.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      Thus for all $m, d \in \omega$ where $d \neq 0$, there exist numbers $q$
+        and $r$ such that $m = (d \cdot q) + r$ and $r < d$.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 4.20}}%
@@ -7950,44 +8040,148 @@
     TODO
   \end{proof}
 
-\subsection{\sorry{Exercise 4.21}}%
+\subsection{\unverified{Exercise 4.21}}%
 \hyperlabel{sub:exercise-4.21}
 
   Show that no natural number is a subset of any of its elements.
 
   \begin{proof}
-    TODO
+    Let $n$ be a natural number.
+    Suppose $m \in n$.
+    By \nameref{sub:trichotomy-law-natural-numbers}, $n \neq m$ and
+      $n \not\in m$.
+    By \nameref{sub:corollary-4m}, $n \not\subseteq m$.
   \end{proof}
 
-\subsection{\sorry{Exercise 4.22}}%
+\subsection{\verified{Exercise 4.22}}%
 \hyperlabel{sub:exercise-4.22}
 
   Show that for any natural numbers $m$ and $p$ we have $m \in m + p^+$.
 
+  \code*{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_22}
+
   \begin{proof}
-    TODO
+
+    Let $m$ be a natural number and $$S = \{p \in \omega \mid m \in m + p^+\}.$$
+    We prove that (i) $0 \in S$ and (ii) if $p \in S$, then $p^+ \in S$.
+    Afterward we prove (iii) the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-4.22-i}
+
+      By definition of the \nameref{ref:successor}, $m^+ = m \cup \{m\}$.
+      Thus $m \in m^+ = m + 1$ (by \nameref{sub:successor-identity}).
+      Hence $0 \in S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-4.22-ii}
+
+      Suppose $p \in S$.
+      That is, $m \in m + p^+$.
+      By definition of the \nameref{ref:successor},
+        \begin{align*}
+          m + p^+
+            & \in (m + p^+) \cup \{m + p^+\} \\
+            & = (m + p^+)^+ \\
+            & = m + p^{++}. & \textref{sub:theorem-4i}.
+        \end{align*}
+      By \nameref{sub:theorem-4f}, $m + p^{++}$ is a
+        \nameref{ref:transitive-set}.
+      Therefore $m \in m + p^+ \in m + p^{++}$ implies $m \in m + p^{++}$.
+      Hence $p^+ \in S$.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-4.22-i} and \nameref{par:exercise-4.22-ii},
+        $S \subseteq \omega$ is an inductive set.
+      Thus \nameref{sub:theorem-4b} implies $S = \omega$.
+      Hence for any natural numbers $m$ and $p$, we have $m \in m + p^+$.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 4.23}}%
+\subsection{\verified{Exercise 4.23}}%
 \hyperlabel{sub:exercise-4.23}
 
   Assume that $m$ and $n$ are natural numbers with $m$ less than $n$.
   Show that there is some $p$ in $\omega$ for which $m + p^+ = n$.
-  (It follows form this and the preceding exercise that $m$ is less than $n$ iff
+  (It follows from this and the preceding exercise that $m$ is less than $n$ iff
     $(\exists p \in \omega)m + p^+ = n$.)
 
+  \code*{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_23}
+
   \begin{proof}
-    TODO
+
+    Let $$S = \{n \in \omega \mid
+      (\forall m \in n, \exists p \in \omega) m + p^+ = n\}.$$
+    We prove that (i) $0 \in S$ and (ii) if $p \in S$, then $p^+ \in S$.
+    Afterward we prove (iii) the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-4.23-i}
+
+      It vacuously holds that $0 \in S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-4.23-ii}
+
+      Suppose $n \in S$.
+      Let $m \in n^+$.
+      By definition of the \nameref{ref:successor}, $m \in n$ or $m = n$.
+      If $m \in n$, then there exists some $p \in \omega$ such that
+        $m + p^+ = n$.
+      But then \nameref{sub:theorem-4i} implies
+        \begin{align*}
+          n^+
+            & = (m + p^+)^+ \\
+            & = m + p^{++}.
+        \end{align*}
+      If instead $m = n$, then \nameref{sub:successor-identity} implies that
+        $$n^+ = m^+ = m + 1 = m + 0^+.$$
+      Hence $n^+ \in S$.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-4.23-i} and \nameref{par:exercise-4.23-ii}, $S$
+        is an \nameref{ref:inductive-set}.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      Thus for all $m, n \in \omega$ such that $m \in n$, there exists some
+        $p \in \omega$ such that $m + p^+ = n$.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 4.24}}%
+\subsection{\verified{Exercise 4.24}}%
 \hyperlabel{sub:exercise-4.24}
 
   Assume that $m + n = p + q$.
-  Show that $$m \in p \iff n \in q.$$
+  Show that $$m \in p \iff q \in n.$$
+
+  \code*{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_24}
 
   \begin{proof}
-    TODO
+
+    Let $m, n, p, q \in \omega$ such that $m + n = p + q$.
+
+    \paragraph{($\Rightarrow$)}%
+
+      Suppose $m \in p$.
+      By \nameref{sub:theorem-4n}, $m + n \in p + n$.
+      By hypothesis, $m + n = p + q$ meaning $p + q \in p + n$.
+      By \nameref{sub:theorem-4k-2}, $q + p \in n + p$.
+      Therefore another application of \nameref{sub:theorem-4n} implies
+        $q \in n$.
+
+    \paragraph{($\Leftarrow$)}%
+
+      Suppose $q \in n$.
+      By \nameref{sub:theorem-4n}, $q + p \in n + p$.
+      By \nameref{sub:theorem-4k-2}, $p + q \in p + n$.
+      By hypothesis, $p + q = m + n$ meaning $m + n \in p + n$.
+      Therefore another application of \nameref{sub:theorem-4n} implies
+        $m \in p$.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 4.25}}%

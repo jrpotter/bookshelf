@@ -154,6 +154,24 @@ theorem prod_nonempty_nonempty_imp_nonempty_prod {A : Set α} {B : Set β}
     rw [← nonempty_iff_ne_empty, ← nonempty_iff_ne_empty]
     exact ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
 
+/-! ## Difference -/
+
+/--
+For any set `A`, the difference between the sample space and `A` is the
+complement of `A`.
+-/
+theorem univ_diff_self_eq_compl (A : Set α) : Set.univ \ A = A.compl := by
+  unfold Set.compl SDiff.sdiff instSDiffSet Set.diff
+  simp only [mem_univ, true_and]
+
+/--
+For any set `A`, the difference between the sample space and the complement of
+`A` is `A`.
+-/
+theorem univ_diff_compl_eq_self (A : Set α) : Set.univ \ A.compl = A := by
+  unfold Set.compl SDiff.sdiff instSDiffSet Set.diff
+  simp only [mem_univ, mem_setOf_eq, not_not, true_and, setOf_mem_eq]
+
 /-! ## Symmetric Difference -/
 
 /--
