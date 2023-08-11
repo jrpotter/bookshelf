@@ -7304,7 +7304,7 @@
 
   \end{proof}
 
-\subsection{\sorry{Corollary 4Q}}%
+\subsection{\unverified{Corollary 4Q}}%
 \hyperlabel{sub:corollary-4q}
 
   \begin{corollary}[4Q]
@@ -7313,7 +7313,11 @@
   \end{corollary}
 
   \begin{proof}
-    TODO
+    Let $f \colon \omega \rightarrow \omega$.
+    Then $\emptyset \subset \ran{f} \subseteq \omega$.
+    By the \nameref{sub:well-ordering-natural-numbers}, $\ran{f}$ must have
+      a least element.
+    Therefore it isn't possible $f(n^+) \in f(n)$ for all $n \in \omega$.
   \end{proof}
 
 \subsection{\sorry{%
@@ -7322,13 +7326,22 @@
 
   \begin{theorem}
     Let $A$ be a subset of $\omega$, and assume that for every $n \in \omega$,
-      $$\text{if every number less than } n \text{ is in } A,
-        \text{ then } n \in A.$$
+      \begin{equation}
+        \hyperlabel{sub:strong-induction-principle-natural-numbers-eq1}
+        \text{if every number less than } n \text{ is in } A,
+          \text{ then } n \in A.
+      \end{equation}
     Then $A = \omega$.
   \end{theorem}
 
   \begin{proof}
-    TODO
+    For the sake of contradiction, suppose $\omega - A$ is a nonempty set.
+    By \nameref{sub:well-ordering-natural-numbers}, there exists a least element
+      $m \in \omega - A$.
+    Then every number less than $m$ is in $A$.
+    But then \eqref{sub:strong-induction-principle-natural-numbers-eq1} implies
+      $m \in A$, a contradiction.
+    Thus $\omega - A$ is an empty set meaning $A = \omega$.
   \end{proof}
 
 \section{Exercises 4}%
@@ -7889,13 +7902,18 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 4.18}}%
+\subsection{\unverified{Exercise 4.18}}%
 \hyperlabel{sub:exercise-4.18}
 
   Simplify $\img{\in_\omega^{-1}}{\{7, 8\}}$.
 
   \begin{proof}
-    TODO
+    By definition,
+      $$\in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}.$$
+    Thus, the \nameref{ref:inverse} of $\in_\omega$ is
+      $$\in_\omega^{-1} =
+        \{\pair{n, m} \in \omega \times \omega \mid m \in n\}.$$
+    Therefore $$\img{\in_\omega^{-1}}{\{7, 8\}} = \{6, 7\}.$$
   \end{proof}
 
 \subsection{\sorry{Exercise 4.19}}%
