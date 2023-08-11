@@ -6895,7 +6895,7 @@
 
   \end{proof}
 
-\subsection{\verified{%
+\subsection{\unverified{%
   Trichotomy Law for \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:trichotomy-law-natural-numbers}
 
@@ -6904,8 +6904,9 @@
       $$m \in n, \quad m = n, \quad n \in m$$ holds.
   \end{theorem}
 
-  \code{Bookshelf/Enderton/Set/Chapter\_4}
-    {Enderton.Set.Chapter\_4.trichotomy\_law\_for\_nat}
+  \lean{Mathlib/Order/RelClasses}{IsAsymm}
+
+  \lean{Mathlib/Init/Algebra/Classes}{IsTrichotomous}
 
   \begin{proof}
 
@@ -6974,7 +6975,7 @@
 
   \end{proof}
 
-\subsection{\verified{%
+\subsection{\unverified{%
   Linear Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:linear-ordering-natural-numbers}
 
@@ -6987,8 +6988,8 @@
       is a linear ordering on $\omega$.
   \end{theorem}
 
-  \code{Bookshelf/Enderton/Set/Chapter\_4}
-    {Enderton.Set.Chapter\_4.linear\_ordering\_on\_nat}
+  \lean{Mathlib/Init/Algebra/Order}
+    {LinearOrder.isStrictTotalOrder\_of\_linearOrder}
 
   \begin{proof}
 
@@ -7083,22 +7084,31 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 4N}}%
+\subsection{\verified{Theorem 4N}}%
 \hyperlabel{sub:theorem-4n}
 
   \begin{theorem}[4N]
-    For any natural numbers $n$, $m$, and $p$, $$m \in n \iff m + p \in n + p.$$
-    If, in addition, $p \neq 0$, then $$m \in n \iff m \cdot p \in n \cdot p.$$
+    For any natural numbers $n$, $m$, and $p$,
+      \begin{equation}
+        m \in n \iff m + p \in n + p. \tag{i}
+      \end{equation}
+    If, in addition, $p \neq 0$, then
+      \begin{equation}
+        m \in n \iff m \cdot p \in n \cdot p. \tag{ii}
+      \end{equation}
   \end{theorem}
 
+  \code{Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4n\_i}
+
   \lean{Std/Data/Nat/Lemmas}{Nat.add\_lt\_add\_iff\_right}
+
+  \code{Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.theorem\_4n\_ii}
 
   \lean{Init/Data/Nat/Basic}{Nat.mul\_lt\_mul\_of\_pos\_right}
 
   \begin{proof}
-
-    We prove that (i) $m \in n$ iff $m + p \in n + p$ and,
-      (ii) if $p \neq 0$, then $m \in n$ iff $m \cdot p \in n \cdot p$.
 
     \paragraph{(i)}%
     \hyperlabel{par:theorem-4n-i}
@@ -7197,7 +7207,7 @@
 
   \end{proof}
 
-\subsection{\pending{Corollary 4P}}%
+\subsection{\verified{Corollary 4P}}%
 \hyperlabel{sub:corollary-4p}
 
   \begin{corollary}[4P]
@@ -7210,9 +7220,12 @@
       \end{align}
   \end{corollary}
 
-  \code{Common/Nat/Basic}{Nat.mul\_right\_cancel}
+  \code{Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.corollary\_4p\_i}
 
   \lean{Init/Data/Nat/Basic}{Nat.add\_right\_cancel}
+
+  \code{Common/Nat/Basic}{Nat.mul\_right\_cancel}
 
   \begin{proof}
 
@@ -7320,7 +7333,7 @@
     Therefore it isn't possible $f(n^+) \in f(n)$ for all $n \in \omega$.
   \end{proof}
 
-\subsection{\sorry{%
+\subsection{\pending{%
   Strong Induction Principle for \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{sub:strong-induction-principle-natural-numbers}
 

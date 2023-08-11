@@ -280,28 +280,123 @@ theorem zero_least_nat (n : ℕ)
     rw [hm]
     exact Nat.succ_pos m
 
-/-- #### Trichotomy Law for ω
+/-! #### Theorem 4N
 
-For any natural numbers `m` and `n`, exactly one of the three conditions
+For any natural numbers `n`, `m`, and `p`,
 ```
-m ∈ n,  m = n,  n ∈ m
+m ∈ n ↔ m ⬝ p ∈ n ⬝ p.
 ```
-holds.
+If, in addition, `p ≠ 0`, then
+```
+m ∈ n ↔ m ⬝ p ∈ n ⬝ p.
+```
 -/
-theorem trichotomy_law_for_nat
-  : IsAsymm ℕ LT.lt ∧ IsTrichotomous ℕ LT.lt :=
-  ⟨instIsAsymmLtToLT, instIsTrichotomousLtToLTToPreorderToPartialOrder⟩
 
-/-- #### Linear Ordering on ω
+theorem theorem_4n_i (m n p : ℕ)
+  : m < n ↔ m + p < n + p := by
+  have hf : ∀ m n : ℕ, m < n → m + p < n + p := by
+    induction p with
+    | zero => simp
+    | succ p ih =>
+      intro m n hp
+      have := ih m n hp
+      rw [← Nat.succ_lt_succ_iff] at this
+      have h₁ : (m + p).succ = m + p.succ := rfl
+      have h₂ : (n + p).succ = n + p.succ := rfl
+      rwa [← h₁, ← h₂]
+  apply Iff.intro
+  · exact hf m n
+  · intro h
+    match @trichotomous ℕ LT.lt _ m n with
+    | Or.inl h₁ =>
+      exact h₁
+    | Or.inr (Or.inl h₁) =>
+      rw [← h₁] at h
+      exact absurd h (lemma_4l_b (m + p))
+    | Or.inr (Or.inr h₁) =>
+      have := hf n m h₁
+      exact absurd this (Nat.lt_asymm h)
 
-Relation
+#check Nat.add_lt_add_iff_right
+
+theorem theorem_4n_ii (m n p : ℕ)
+  : m < n ↔ m * p.succ < n * p.succ := by
+  have hf : ∀ m n : ℕ, m < n → m * p.succ < n * p.succ := by
+    intro m n hp₁
+    induction p with
+    | zero =>
+      simp only [Nat.mul_one]
+      exact hp₁
+    | succ p ih =>
+      have hp₂ : m * p.succ < n * p.succ := by
+        by_cases hp₃ : p = 0
+        · rw [hp₃] at *
+          simp only [Nat.mul_one] at *
+          exact hp₁
+        · exact ih
+      calc m * p.succ.succ
+        _ = m * p.succ + m := rfl
+        _ < n * p.succ + m := (theorem_4n_i (m * p.succ) (n * p.succ) m).mp hp₂
+        _ = m + n * p.succ := by rw [theorem_4k_2]
+        _ < n + n * p.succ := (theorem_4n_i m n (n * p.succ)).mp hp₁
+        _ = n * p.succ + n := by rw [theorem_4k_2]
+        _ = n * p.succ.succ := rfl
+  apply Iff.intro
+  · exact hf m n
+  · intro hp
+    match @trichotomous ℕ LT.lt _ m n with
+    | Or.inl h₁ =>
+      exact h₁
+    | Or.inr (Or.inl h₁) =>
+      rw [← h₁] at hp
+      exact absurd hp (lemma_4l_b (m * p.succ))
+    | Or.inr (Or.inr h₁) =>
+      have := hf n m h₁
+      exact absurd this (Nat.lt_asymm hp)
+
+#check Nat.mul_lt_mul_of_pos_right
+
+/-! #### Corollary 4P
+
+The following cancellation laws hold for `m`, `n`, and `p` in `ω`:
 ```
-∈_ω = {⟨m, n⟩ ∈ ω × ω | m ∈ n} 
+m + p = n + p ⇒ m = n,
+m ⬝ p = n ⬝ p ∧ p ≠ 0 ⇒ m = n.
 ```
-is a linear ordering on `ω`.
 -/
-theorem linear_ordering_on_nat
-  : IsStrictTotalOrder ℕ LT.lt := isStrictTotalOrder_of_linearOrder
+
+theorem corollary_4p_i (m n p : ℕ) (h : m + p = n + p)
+  : m = n := by
+  match @trichotomous ℕ LT.lt _ m n with
+  | Or.inl h₁ =>
+    rw [theorem_4n_i m n p, h] at h₁
+    exact absurd h₁ (lemma_4l_b (n + p))
+  | Or.inr (Or.inl h₁) =>
+    exact h₁
+  | Or.inr (Or.inr h₁) =>
+    rw [theorem_4n_i n m p, h] at h₁
+    exact absurd h₁ (lemma_4l_b (n + p))
+
+#check Nat.add_right_cancel
+
+/-- #### Well Ordering of ω
+
+Let `A` be a nonempty subset of `ω`. Then there is some `m ∈ A` such that
+`m ≤ n` for all `n ∈ A`.
+-/
+theorem well_ordering_nat (A : Set ℕ) (hA : Set.Nonempty A)
+  : ∃ m ∈ A, ∀ n, n ∈ A → m ≤ n := by
+  sorry
+
+/-- #### Strong Induction Principle for ω
+
+Let `A` be a subset of `ω`, and assume that for every `n ∈ ω`, if every number
+less than `n` is in `A`, then `n ∈ A`. Then `A = ω`.
+-/
+theorem strong_induction_principle_nat (A : Set ℕ)
+  (h : ∀ n : ℕ, (∀ m : ℕ, m < n → m ∈ A) → n ∈ A)
+  : A = Set.univ := by
+  sorry
 
 /-- #### Exercise 4.1
 
