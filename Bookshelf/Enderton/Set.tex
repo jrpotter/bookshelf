@@ -8030,14 +8030,50 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 4.20}}%
+\subsection{\unverified{Exercise 4.20}}%
 \hyperlabel{sub:exercise-4.20}
 
   Let $A$ be a nonempty subset of $\omega$ such that $\bigcup A = A$.
   Show that $A = \omega$.
 
   \begin{proof}
-    TODO
+
+    For the sake of contradiction, suppose $\omega - A$ is nonempty.
+    By \nameref{sub:well-ordering-natural-numbers}, there exists a least number
+      $m \in \omega$ of the set.
+
+    Let $n \in \omega$ such that $n > m$.
+    By \nameref{sub:members-natural-numbers}, $n$ is the set of all smaller
+      natural numbers.
+    Thus $m \in n$.
+    Therefore $n \not\in A$ since otherwise $m \in \bigcup A$ but $m \not\in A$.
+    Hence $\omega - A$ consists of all numbers greater than or equal to $m$.
+
+    There are now two cases to consider:
+
+    \paragraph{Case 1}%
+
+      Suppose $m = 0$.
+      Then $A = \emptyset$ by \nameref{sub:zero-least-natural-number}.
+      $A$ is assumed nonempty so this is a contradiction.
+
+    \paragraph{Case 2}%
+
+      Suppose $m \neq 0$.
+      Then \nameref{sub:theorem-4c} implies there exists some $p \in \omega$
+        such that $p^+ = m$.
+      Because $m$ is the least element of $\omega - A$, it follows $p \in A$ is
+        the largest element of $A$.
+      But since $p \not\in p$ by \nameref{sub:lemma-4l-b},
+        $p \not\in \bigcup A$, a contradiction.
+
+    \paragraph{Conclusion}%
+
+      Our above two cases are exhaustive.
+      Since both lead to contradictions, it follows our original assumption
+        must be wrong.
+      That is $\omega - A$ is empty, meaning $A = \omega$.
+
   \end{proof}
 
 \subsection{\unverified{Exercise 4.21}}%
@@ -8184,25 +8220,65 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 4.25}}%
+\subsection{\verified{Exercise 4.25}}%
 \hyperlabel{sub:exercise-4.25}
 
   Assume that $n \in m$ and $q \in p$.
   Show that $$(m \cdot q) + (n \cdot p) \in (m \cdot p) + (n \cdot q).$$
   [\textit{Suggestion:} Use \nameref{sub:exercise-4.23}.]
 
+  \code*{Bookshelf/Enderton/Set/Chapter\_4}
+    {Enderton.Set.Chapter\_4.exercise\_4\_25}
+
   \begin{proof}
-    TODO
+
+    Let $n \in m$ and $q \in p$.
+    By \nameref{sub:exercise-4.23}, there exists some $r \in \omega$ such that
+      $q + r^+ = p$.
+    Then
+      \begin{align*}
+        & \qquad\quad n \in m \\
+        & \iff n \cdot r^+ \in m \cdot r^+ & \textref{sub:theorem-4n} \\
+        & \iff (n \cdot r^+) + ((m \cdot q) + (n \cdot q))
+          & \textref{sub:theorem-4n} \\
+          & \qquad\qquad \in (m \cdot r^+) + ((m \cdot q) + (n \cdot q)) \\
+        & \iff ((m \cdot q) + (n \cdot q)) + (n \cdot r^+)
+          & \textref{sub:theorem-4k-2} \\
+          & \qquad\qquad \in ((m \cdot q) + (n \cdot q)) + (m \cdot r^+) \\
+        & \iff (m \cdot q) + ((n \cdot q) + (n \cdot r^+))
+          & \textref{sub:theorem-4k-1} \\
+          & \qquad\qquad \in ((m \cdot q) + (n \cdot q)) + (m \cdot r^+) \\
+        & \iff (m \cdot q) + ((n \cdot q) + (n \cdot r^+))
+          & \textref{sub:theorem-4k-2} \\
+          & \qquad\qquad \in ((n \cdot q) + (m \cdot q)) + (m \cdot r^+) \\
+        & \iff (m \cdot q) + ((n \cdot q) + (n \cdot r^+))
+          & \textref{sub:theorem-4k-1} \\
+          & \qquad\qquad \in (n \cdot q) + ((m \cdot q) + (m \cdot r^+)) \\
+        & \iff (m \cdot q) + (n \cdot (q + r^+))
+          & \textref{sub:theorem-4k-3} \\
+          & \qquad\qquad \in (n \cdot q) + (m \cdot (q + r^+)) \\
+        & \iff (m \cdot q) + (n \cdot p) \in (n \cdot q) + (m \cdot p) \\
+        & \iff (m \cdot q) + (n \cdot p) \in (m \cdot p) + (n \cdot q).
+          & \textref{sub:theorem-4k-2}
+      \end{align*}
+
   \end{proof}
 
-\subsection{\sorry{Exercise 4.26}}%
+\subsection{\unverified{Exercise 4.26}}%
 \hyperlabel{sub:exercise-4.26}
 
   Assume that $n \in \omega$ and $f \colon n^+ \rightarrow \omega$.
   Show that $\ran{f}$ has a largest element.
 
   \begin{proof}
-    TODO
+
+    By construction, the \nameref{ref:domain} of $f$ is finite.
+    Therefore $\abs{\ran{f}} \leq \abs{\dom{f}}$, i.e. $\ran{f}$ is also a
+      finite set.
+    By the \nameref{sub:trichotomy-law-natural-numbers}, every member of
+      $\ran{f}$ relates to one another.
+    Thus there must exist a largest element.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 4.27}}%

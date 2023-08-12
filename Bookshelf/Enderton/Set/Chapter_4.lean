@@ -82,7 +82,7 @@ Associatve law for addition. For `m, n, p ∈ ω`,
 m + (n + p) = (m + n) + p.
 ```
 -/
-theorem theorem_4k_1 (m n p : ℕ)
+theorem theorem_4k_1 {m n p : ℕ}
   : m + (n + p) = (m + n) + p := by
   induction m with
   | zero => simp
@@ -617,7 +617,7 @@ Assume that `m` and `n` are natural numbers with `m` less than `n`. Show that
 there is some `p` in `ω` for which `m + p⁺ = n`. (It follows from this and the
 preceding exercise that `m` is less than `n` iff (`∃p ∈ ω) m + p⁺ = n`.)
 -/
-theorem exercise_4_23 (m n : ℕ) (hm : m < n)
+theorem exercise_4_23 {m n : ℕ} (hm : m < n)
   : ∃ p : ℕ, m + p.succ = n := by
   induction n with
   | zero => simp at hm
@@ -668,6 +668,20 @@ Assume that `n ∈ m` and `q ∈ p`. Show that
 -/
 theorem exercise_4_25 (m n p q : ℕ) (h₁ : n < m) (h₂ : q < p)
   : (m * q) + (n * p) < (m * p) + (n * q) := by
-  sorry
+  have ⟨r, hr⟩ : ∃ r : ℕ, q + r.succ = p := exercise_4_23 h₂
+  rw [
+    theorem_4n_ii n m r,
+    theorem_4n_i (n * r.succ) (m * r.succ) ((m * q) + (n * q))
+  ] at h₁
+  conv at h₁ => left; rw [theorem_4k_2, ← theorem_4k_1]
+  conv at h₁ => right; rw [theorem_4k_2]; arg 1; rw [theorem_4k_2]
+  conv at h₁ => right; rw [← theorem_4k_1]
+  rw [
+    ← theorem_4k_3 n q r.succ,
+    ← theorem_4k_3 m q r.succ,
+    hr
+  ] at h₁
+  conv at h₁ => right; rw [add_comm]
+  exact h₁
 
 end Enderton.Set.Chapter_4
