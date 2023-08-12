@@ -21,18 +21,29 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
         Where feasible, theorems are also formally proven in
         <a target="_blank" href="https://leanprover.github.io/">Lean</a>.
       </p>
+
+      <h2>In Progress</h2>
       <ul>
         <li>Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.</li>
-        <li>Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.</li>
-        <li>Axler, Sheldon. Linear Algebra Done Right. Undergraduate Texts in Mathematics. Cham: Springer International Publishing, 2015.</li>
-        <li>Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. Introduction to Algorithms. 3rd ed. Cambridge, Mass: MIT Press, 2009.</li>
         <li>Enderton, Herbert B. A Mathematical Introduction to Logic. 2nd ed. San Diego: Harcourt/Academic Press, 2001.</li>
         <li>Enderton, Herbert B. Elements of Set Theory. New York: Academic Press, 1977.</li>
+      </ul>
+
+      <h2>Complete</h2>
+      <ul>
+        <li>Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.</li>
+      </ul>
+
+      <h2>Pending</h2>
+      <ul>
+        <li>Axler, Sheldon. Linear Algebra Done Right. Undergraduate Texts in Mathematics. Cham: Springer International Publishing, 2015.</li>
+        <li>Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. Introduction to Algorithms. 3rd ed. Cambridge, Mass: MIT Press, 2009.</li>
         <li>Gries, David. The Science of Programming. Texts and Monographs in Computer Science. New York: Springer-Verlag, 1981.</li>
         <li>Gustedt, Jens. Modern C. Shelter Island, NY: Manning Publications Co, 2020.</li>
         <li>Ross, Sheldon. A First Course in Probability Theory. 8th ed. Pearson Prentice Hall, n.d.</li>
         <li>Smullyan, Raymond M. To Mock a Mockingbird: And Other Logic Puzzles Including an Amazing Adventure in Combinatory Logic. Oxford: Oxford university press, 2000.</li>
       </ul>
+
       <p>
         A color/symbol code is used on generated PDF headers to indicate their
         status:
