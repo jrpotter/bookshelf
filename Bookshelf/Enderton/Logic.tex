@@ -35,6 +35,14 @@
 
   An \textbf{expression} is a finite sequence of symbols.
 
+\section{\defined{\texorpdfstring{$n$}{n}-tuple}}%
+\hyperlabel{ref:n-tuple}
+
+An \textbf{$n$-tuple} is recursively defined as
+  $$\ltuple{x_1}{x_{n+1}} = \tuple{\ltuple{x_1}{x_n}, x_{n+1}}$$
+  for $n > 1$.
+We also define $\tuple{x} = x$.
+
 \section{\defined{Well-Formed Formula}}%
 \hyperlabel{ref:well-formed-formula}
 
@@ -63,17 +71,52 @@
 \chapter{Useful Facts About Sets}%
 \hyperlabel{chap:useful-facts-about-sets}
 
-\section{\sorry{Lemma 0A}}%
+\section{\unverified{Lemma 0A}}%
 \hyperlabel{sec:lemma-0a}
 
   \begin{lemma}[0A]
-    Assume that $\langle x_1, \ldots, x_m \rangle =
-      \langle y_1, \ldots, y_m, \ldots, y_{m+k} \rangle$.
-    Then $x_1 = \langle y_1, \ldots, y_{k+1} \rangle$.
+    Assume that $\ltuple{x_1}{x_m} = \ltuple{y_1, \ldots, y_m}{y_{m+k}}$.
+    Then $x_1 = \ltuple{y_1}{y_{k+1}}$.
   \end{lemma}
 
   \begin{proof}
-    TODO
+
+    For natural number $m$, let $P(m)$ be the statement:
+    \begin{assumption}
+      \hyperlabel{sec:lemma-0a-eq1}
+      \text{If } \ltuple{x_1}{x_m} = \ltuple{y_1, \ldots, y_m}{y_{m+k}}
+        \text{ then } x_1 = \ltuple{y_1}{y_{k+1}}.
+    \end{assumption}
+    \noindent
+    We proceed by induction on $m$.
+
+    \paragraph{Base Case}%
+
+      Suppose $\tuple{x_1} = \ltuple{y_1}{y_{1 + k}}$.
+      By definition of an \nameref{ref:n-tuple}, $\tuple{x_1} = x_1$.
+      Thus $x_1 = \ltuple{y_1}{y_{k + 1}}$.
+      Hence $P(1)$ holds true.
+
+    \paragraph{Inductive Step}%
+
+      Suppose for $m \geq 1$ that $P(m)$ is true and assume
+        \begin{equation}
+          \hyperlabel{sec:lemma-0a-eq2}
+          \ltuple{x_1}{x_{m+1}} = \ltuple{y_1, \ldots, y_{m+1}}{y_{m+1+k}}.
+        \end{equation}
+      By definition of an \nameref{ref:n-tuple}, we can decompose
+        \eqref{sec:lemma-0a-eq2} into the following two identities
+        \begin{align*}
+          x_{m+1} & = y_{m+1+k} \\
+          \ltuple{x_1}{x_m} & = \ltuple{y_1}{y_{m+k}}.
+        \end{align*}
+      By \eqref{sec:lemma-0a-eq1}, $P(m)$ implies $x_1 = \ltuple{y_1}{y_{k+1}}$.
+      Hence $P(m+1)$ holds true.
+
+    \paragraph{Conclusion}%
+
+      By induction, $P(m)$ holds true for all $m \geq 1$.
+
   \end{proof}
 
 \chapter{Sentential Logic}%

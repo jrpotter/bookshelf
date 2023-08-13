@@ -6,7 +6,6 @@
 \input{../../preamble}
 \makecode{../..}
 
-\newcommand{\pair}[1]{\left< #1 \right>}
 \newcommand{\ineq}{\,\mathop{\underline{\in}}\,}
 
 \begin{document}
@@ -86,7 +85,7 @@
 \hyperlabel{ref:composition}
 
   The \textbf{composition} of sets $F$ and $G$ is
-    $$F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.$$
+    $$F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.$$
 
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.comp}
 
@@ -104,7 +103,7 @@
 \hyperlabel{ref:domain}
 
   The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
-    $$x \in \dom{R} \iff \exists y \pair{x, y} \in R.$$
+    $$x \in \dom{R} \iff \exists y \tuple{x, y} \in R.$$
 
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.dom}
 
@@ -261,7 +260,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{ref:inverse}
 
   The \textbf{inverse} of a set $F$ is the set
-    $$F^{-1} = \{\pair{u, v} \mid vFu\}.$$
+    $$F^{-1} = \{\tuple{u, v} \mid vFu\}.$$
 
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.inv}
 
@@ -335,7 +334,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \section{\defined{Ordered Pair}}%
 \hyperlabel{ref:ordered-pair}
 
-  For any sets $u$ and $v$, the \textbf{ordered pair} $\pair{u, v}$ is
+  For any sets $u$ and $v$, the \textbf{ordered pair} $\tuple{u, v}$ is
     the set $\{\{u\}, \{u, v\}\}$.
 
   \code*{Bookshelf/Enderton/Set/OrderedPair}{OrderedPair}
@@ -446,7 +445,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{ref:range}
 
   The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
-    $$x \in \ran{R} \iff \exists t \pair{t, x} \in R.$$
+    $$x \in \ran{R} \iff \exists t \tuple{t, x} \in R.$$
 
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.ran}
 
@@ -475,7 +474,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{ref:restriction}
 
   The \textbf{restriction} of a set $F$ to set $A$ is the set
-    $$F \restriction A = \{\pair{u, v} \mid uFv \land u \in A\}.$$
+    $$F \restriction A = \{\tuple{u, v} \mid uFv \land u \in A\}.$$
 
   \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.restriction}
 
@@ -2546,7 +2545,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     For any sets $x$, $y$, $u$, and $v$,
       \begin{equation}
         \hyperlabel{sub:theorem-3a-eq1}
-        \pair{u, v} = \pair{x, y} \iff u = x \land v = y.
+        \tuple{u, v} = \tuple{x, y} \iff u = x \land v = y.
       \end{equation}
   \end{theorem}
 
@@ -2562,7 +2561,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
     \paragraph{($\Rightarrow$)}%
 
-      Suppose $\pair{u, v} = \pair{x, y}$.
+      Suppose $\tuple{u, v} = \tuple{x, y}$.
       Then, by definition of an \nameref{ref:ordered-pair},
         \begin{equation}
           \hyperlabel{sub:theorem-3a-eq2}
@@ -2616,7 +2615,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{sub:lemma-3b}
 
   \begin{lemma}[3B]
-    If $x \in C$ and $y \in C$, then $\pair{x, y} \in \powerset{\powerset{C}}$.
+    If $x \in C$ and $y \in C$, then $\tuple{x, y} \in \powerset{\powerset{C}}$.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Chapter\_3}
@@ -2628,7 +2627,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       $\{x\}$ and $\{x, y\}$ are members of $\powerset{C}$.
     Likewise, $\{\{x\}, \{x, y\}\}$ is a member of $\powerset{\powerset{C}}$.
     By definition of an \nameref{ref:ordered-pair},
-      $\pair{x, y} = \{\{x\}, \{x, y\}\}$.
+      $\tuple{x, y} = \{\{x\}, \{x, y\}\}$.
     This concludes our proof.
   \end{proof}
 
@@ -2637,7 +2636,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \begin{theorem}[3C]
     For any sets $A$ and $B$, there is a set whose members are exactly the
-      pairs $\pair{x, y}$ with $x \in A$ and $y \in B$.
+      pairs $\tuple{x, y}$ with $x \in A$ and $y \in B$.
   \end{theorem}
 
   \lean{Mathlib/SetTheory/ZFC/Basic}{Set.prod}
@@ -2646,16 +2645,16 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Define $C = A \cup B$.
     Then for all $x \in A$ and for all $y \in B$, $x$ and $y$ are both in $C$.
     By \nameref{sub:lemma-3b}, it follows that
-      $\pair{x, y} \in \powerset{\powerset{C}}$.
+      $\tuple{x, y} \in \powerset{\powerset{C}}$.
     The \nameref{ref:power-set-axiom} indicates $\powerset{\powerset{C}}$ is
       indeed a set.
     Therefore the \nameref{ref:subset-axioms} are applicable.
     This implies the existence of a set $D$ such that
       $$\forall z, (z \in D \iff z \in \powerset{\powerset{C}} \land
         (\exists x, \exists y, x \in A \land y \in B \land
-          z = \pair{x, y})).$$
+          z = \tuple{x, y})).$$
     By construction $D$ is the set whose members are exactly the pairs
-      $\pair{x, y}$ with $x \in A$ and $y \in B$.
+      $\tuple{x, y}$ with $x \in A$ and $y \in B$.
   \end{proof}
 
 \section{Relations}%
@@ -2665,16 +2664,16 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{sub:theorem-3d}
 
   \begin{theorem}[3D]
-    If $\pair{x, y} \in A$, then $x$ and $y$ belong to $\bigcup\bigcup A$.
+    If $\tuple{x, y} \in A$, then $x$ and $y$ belong to $\bigcup\bigcup A$.
   \end{theorem}
 
   \code{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.theorem\_3d}
 
   \begin{proof}
-    Let $A$ be a set and $\pair{x, y} \in A$.
+    Let $A$ be a set and $\tuple{x, y} \in A$.
     By definition of an \nameref{ref:ordered-pair},
-      $$\pair{x, y} = \{\{x\}, \{x, y\}\}.$$
+      $$\tuple{x, y} = \{\{x\}, \{x, y\}\}.$$
     By \nameref{sub:exercise-2.3}, $\{\{x\}, \{x, y\}\} \subseteq \bigcup A$.
     Then $\{x, y\} \in \bigcup A$.
     Another application of \nameref{sub:exercise-2.3} implies
@@ -2709,9 +2708,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{(i)}%
 
       By definition of the \nameref{ref:domain}, $x \in \dom{(F^{-1})}$ if and
-        only if there exists some $y$ such that $\pair{x, y} \in F^{-1}$.
+        only if there exists some $y$ such that $\tuple{x, y} \in F^{-1}$.
       By definition of the \nameref{ref:inverse} of a set,
-        $\pair{y, x} \in F$.
+        $\tuple{y, x} \in F$.
       By definition of the \nameref{ref:range}, $x \in \ran{F}$.
       Since each step holds biconditionally, it follows
         $\dom{(F^{-1})} = \ran{F}$ as expected.
@@ -2719,9 +2718,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{(ii)}%
 
       By definition of the \nameref{ref:range}, $x \in \ran{(F^{-1})}$ if and
-        only if there exists some $t$ such that $\pair{t, x} \in F^{-1}$.
+        only if there exists some $t$ such that $\tuple{t, x} \in F^{-1}$.
       By definition of the \nameref{ref:inverse} of a set,
-        $\pair{x, t} \in F$.
+        $\tuple{x, t} \in F$.
       By definition of the \nameref{ref:domain}, $x \in \dom{F}$.
       Since each step holds biconditionally, it follows
         $\ran{(F^{-1})} = \dom{F}$.
@@ -2731,8 +2730,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       By definition of the \nameref{ref:inverse} of a set,
         \begin{align*}
           (F^{-1})^{-1}
-            & = \{\pair{u, v} \mid \pair{v, u} \in F^{-1}\} \\
-            & = \{\pair{u, v} \mid \pair{u, v} \in F\} \\
+            & = \{\tuple{u, v} \mid \tuple{v, u} \in F^{-1}\} \\
+            & = \{\tuple{u, v} \mid \tuple{u, v} \in F\} \\
             & = F.
         \end{align*}
 
@@ -2766,22 +2765,22 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
         Suppose $F^{-1}$ is a \nameref{ref:function}.
         By definition, for each $x \in \dom{(F^{-1})}$, there is only one $y$
-          such that $\pair{x, y} \in F^{-1}$.
+          such that $\tuple{x, y} \in F^{-1}$.
         By definition of the \nameref{ref:inverse} of $F$,
-          $F^{-1} = \{\pair{u, v} \mid vFu\}$.
+          $F^{-1} = \{\tuple{u, v} \mid vFu\}$.
         Then for each $x \in \ran{F}$, there exists exactly one $y$ such that
-          $\pair{y, x} \in F$.
+          $\tuple{y, x} \in F$.
         This definitionally means $F$ is single-rooted.
 
       \subparagraph{($\Leftarrow$)}%
 
         Suppose $F$ is single-rooted.
         By definition, for each $x \in \ran{F}$, there is only one $t$ such that
-          $\pair{t, x} \in F$.
+          $\tuple{t, x} \in F$.
         By definition of the \nameref{ref:inverse} of $F$,
-          $F^{-1} = \{\pair{u, v} \mid vFu\}$.
+          $F^{-1} = \{\tuple{u, v} \mid vFu\}$.
         Then for each $x \in \dom{(F^{-1})}$ there exists exactly one $t$ such
-          that $\pair{x, t} \in F^{-1}$.
+          that $\tuple{x, t} \in F^{-1}$.
         This definitionally means $F^{-1}$ is a function.
 
     \paragraph{(ii)}%
@@ -2822,11 +2821,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       By hypothesis, $F$ is one-to-one.
       This means it is single-rooted, i.e. for all $x \in \ran{F}$, there exists
-        exactly one $t$ such that $\pair{t, x} \in F$.
+        exactly one $t$ such that $\tuple{t, x} \in F$.
       By definition of the \nameref{ref:inverse} of $F$,
-        $\pair{x, t} \in F^{-1}$.
+        $\tuple{x, t} \in F^{-1}$.
       But then for all $x \in \dom{(F^{-1})}$, there exists exactly one $t$ such
-        that $\pair{x, t} \in F^{-1}$.
+        that $\tuple{x, t} \in F^{-1}$.
       Thus $F^{-1}$ is a function.
 
     \paragraph{(ii)}%
@@ -2834,11 +2833,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       By hypothesis, $F$ is single-valued.
       That is, for all $x \in \dom{F}$, there exists exactly one $y$ such that
-        $\pair{x, y} \in F$.
+        $\tuple{x, y} \in F$.
       By definition of the \nameref{ref:inverse} of $F$,
-        $\pair{y, x} \in F^{-1}$.
+        $\tuple{y, x} \in F^{-1}$.
       But then for all $x \in \ran{(F^{-1})}$, there exists exactly one $y$ such
-        that $\pair{y, x} \in F^{-1}$.
+        that $\tuple{y, x} \in F^{-1}$.
       Thus $F^{-1}$ is single-rooted.
 
     \paragraph{Conclusion}%
@@ -2867,11 +2866,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Suppose $F$ is a one-to-one \nameref{ref:function}.
     Then \nameref{sub:one-to-one-inverse} indicates $F^{-1}$ is a one-to-one
       function with domain $\ran{F}$ and range $\dom{F}$.
-    For all $x \in \dom{F}$, $\pair{x, F(x)} \in F$.
-    Then $\pair{F(x), x} \in F^{-1}$.
+    For all $x \in \dom{F}$, $\tuple{x, F(x)} \in F$.
+    Then $\tuple{F(x), x} \in F^{-1}$.
     Since $F^{-1}$ is single-valued, $F^{-1}(F(x)) = x$.
-    For all $y \in \ran{F}$, $\pair{y, F^{-1}(y)} \in F^{-1}$.
-    Then $\pair{F^{-1}(y), y} \in F$.
+    For all $y \in \ran{F}$, $\tuple{y, F^{-1}(y)} \in F^{-1}$.
+    Then $\tuple{F^{-1}(y), y} \in F$.
     Since $F$ is single-valued, $F(F^{-1}(y)) = y$.
   \end{proof}
 
@@ -2899,12 +2898,12 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     By definition of the \nameref{ref:composition} of $F$ and $G$,
       \begin{equation}
         \hyperlabel{sub:theorem-3h-eq2}
-        F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.
+        F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.
       \end{equation}
     By construction, $F \circ G$ is a relation.
     By the definition of the \nameref{ref:domain} of a relation,
       $x \in \dom{(F \circ G)}$ if and only if there exists some $y$ such that
-      $\pair{x, y} \in F \circ G$.
+      $\tuple{x, y} \in F \circ G$.
     We prove that (i) $F \circ G$ is a function with domain satisfying
       \eqref{sub:theorem-3h-eq1}, and (ii) $(F \circ G)(x) = F(G(x))$.
 
@@ -2912,22 +2911,22 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \hyperlabel{par:theorem-3h-i}
 
       By \eqref{sub:theorem-3h-eq2}, there exists some $t$ such that
-        $\pair{x, t} \in G$ and $\pair{t, y} \in F$.
+        $\tuple{x, t} \in G$ and $\tuple{t, y} \in F$.
       Since $G$ is single-valued, $t$ is uniquely determined by $x$.
       Since $F$ is single-valued, $y$ is uniquely determined by $t$.
       Therefore, by transitivity, $y$ is uniquely determined by $x$.
       Thus $F \circ G$ is single-valued, i.e. $F \circ G$ is a function.
 
       Furthermore, by definition of function application, $t = G(x)$.
-      Thus $$\pair{x, G(x)} \in G \quad\text{and}\quad \pair{G(x), y} \in F.$$
+      Thus $$\tuple{x, G(x)} \in G \quad\text{and}\quad \tuple{G(x), y} \in F.$$
       This immediately implies \eqref{sub:theorem-3h-eq1} holds true.
 
     \paragraph{(ii)}%
 
       Let $x \in \dom{(F \circ G)}$.
-      By definition, $\pair{x, (F \circ G)(x)} \in F \circ G$.
+      By definition, $\tuple{x, (F \circ G)(x)} \in F \circ G$.
       Then \eqref{sub:theorem-3h-eq2} implies $(F \circ G)(x)$ satisfies
-        $\pair{G(x), (F \circ G)(x)} \in F$.
+        $\tuple{G(x), (F \circ G)(x)} \in F$.
       This is equivalent to saying $F(G(x)) = (F \circ G)(x)$ as expected.
 
   \end{proof}
@@ -2944,13 +2943,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \begin{proof}
     By definition of the \nameref{ref:composition} of $F$ and $G$,
-      $$F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.$$
+      $$F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.$$
     By definition of the \nameref{ref:inverse} of a function,
       \begin{align*}
         (F \circ G)^{-1}
-          & = \{\pair{u, v} \mid \exists t (vGt \land tFu)\} \\
-          & = \{\pair{u, v} \mid \exists t (tFu \land vGt)\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid \exists t (vGt \land tFu)\} \\
+          & = \{\tuple{u, v} \mid \exists t (tFu \land vGt)\} \\
+          & = \{\tuple{u, v} \mid
             \exists t \left[ u(F^{-1})t \land t(G^{-1})v \right]\} \\
           & = G^{-1} \circ F^{-1}.
       \end{align*}
@@ -2985,8 +2984,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         All that remains is to prove $F$ is single-rooted.
         Let $y \in \ran{F}$.
         By definition of the \nameref{ref:range} of a function, there exists
-          some $x_1$ such that $\pair{x_1, y} \in F$.
-        Suppose there exists a set $x_2$ such that $\pair{x_2, y} \in F$.
+          some $x_1$ such that $\tuple{x_1, y} \in F$.
+        Suppose there exists a set $x_2$ such that $\tuple{x_2, y} \in F$.
         By hypothesis, $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
         Thus $x_1 = x_2$.
         Therefore $F$ must be single-rooted.
@@ -3026,14 +3025,14 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         Suppose $F$ maps $A$ \textit{onto} $B$.
         By definition of maps onto, $\ran{F} = B$.
         Then for all $y \in B$, there exists some $x \in A$ such that
-          $\pair{x, y} \in F$.
+          $\tuple{x, y} \in F$.
         Notice though that $F^{-1}[\{y\}]$ may not be a singleton set.
         Then there is no obvious way to \textit{choose} an element from each
           preimage to form a function.
         By the \nameref{ref:axiom-of-choice-1}, there exists a function
           $H \subseteq F^{-1}$ such that $\dom{H} = \dom{F^{-1}} = B$.
-        For all $y \in B$, $\pair{y, H(y)} \in H \subseteq F^{-1}$
-          meaning $\pair{H(y), y} \in F$.
+        For all $y \in B$, $\tuple{y, H(y)} \in H \subseteq F^{-1}$
+          meaning $\tuple{H(y), y} \in F$.
         Thus $F(H(y)) = y$ as expected.
 
   \end{proof}
@@ -3224,8 +3223,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       By definition of the difference of two sets,
         $v \in \img{F}{A}$ and $v \not\in \img{F}{B}$.
       By definition of the \nameref{ref:image} of a set, there exists a set
-        $u \in A$ such that $\pair{u, v} \in F$.
-      Likewise, $\forall w \in B, \pair{w, v} \not\in F$.
+        $u \in A$ such that $\tuple{u, v} \in F$.
+      Likewise, $\forall w \in B, \tuple{w, v} \not\in F$.
       Thus $u \not\in B$, since otherwise we get an immediate contradiction.
       Therefore $u \in A - B$ meaning $v \in \img{F}{A - B}$.
 
@@ -3430,13 +3429,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       $F \colon A \rightarrow A$.
     Suppose $F$ is \nameref{ref:compatible} with $R$.
     Next define \nameref{ref:relation} $\hat{F}$ to be
-      $$\hat{F} = \{\pair{[x]_R, [F(x)]_R} \mid x \in A\}.$$
+      $$\hat{F} = \{\tuple{[x]_R, [F(x)]_R} \mid x \in A\}.$$
     By construction $\hat{F}$ has domain $A / R$ and
       $\ran{\hat{F}} \subseteq A / R$.
     All that remains is proving $\hat{F}$ is single-valued.
     Let $[x_1]_R, [x_2]_R \in \dom{\hat{F}}$ such that $[x_1]_R = [x_2]_R$.
-    By definition of $\hat{F}$, $\pair{[x_1]_R, [F(x_1)]_R} \in \hat{F}$
-      and $\pair{[x_2]_R, [F(x_2)]_R} \in \hat{F}$.
+    By definition of $\hat{F}$, $\tuple{[x_1]_R, [F(x_1)]_R} \in \hat{F}$
+      and $\tuple{[x_2]_R, [F(x_2)]_R} \in \hat{F}$.
     By \nameref{sub:lemma-3n}, $[x_1]_R = [x_2]_R$ implies $x_1Rx_2$.
     Since $F$ is compatible, $F(x_1)RF(x_2)$.
     Another application of \nameref{sub:lemma-3n} implies that
@@ -3484,7 +3483,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Let $x \in A$.
       By definition, $R$ is \nameref{ref:trichotomous}.
       Then only one of $xRx$ and $x = x$ can hold.
-      Since $x = x$ obviously holds, it follows $\pair{x, x} \not\in R$.
+      Since $x = x$ obviously holds, it follows $\tuple{x, x} \not\in R$.
 
     \paragraph{(ii)}%
 
@@ -3503,10 +3502,10 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   Suppose that we attempted to generalize the Kuratowski definitions of ordered
     pairs to ordered triples by defining
-    $$\pair{x, y, z}^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
+    $$\tuple{x, y, z}^* = \{\{x\}, \{x, y\}, \{x, y, z\}\}.$$
   Show that this definition is unsuccessful by giving examples of objects
     $u$, $v$, $w$, $x$, $y$, $z$ with
-    $\pair{x, y, z}^* = \pair{u, v, w}^*$ but with either
+    $\tuple{x, y, z}^* = \tuple{u, v, w}^*$ but with either
     $y \neq v$ or $z \neq w$ (or both).
 
   \code*{Bookshelf/Enderton/Set/Chapter\_3}
@@ -3517,19 +3516,19 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Let $u = 1$, $v = 2$, and $w = 2$.
     Then
       \begin{align*}
-        \pair{x, y, z}^*
+        \tuple{x, y, z}^*
           & = \{\{x\}, \{x, y\}, \{x, y, z\}\} \\
           & = \{\{1\}, \{1, 1\}, \{1, 1, 2\}\} \\
           & = \{\{1\}, \{1, 2\}\}.
       \end{align*}
     Likewise
       \begin{align*}
-        \pair{u, v, w}^*
+        \tuple{u, v, w}^*
           & = \{\{u\}, \{u, v\}, \{u, v, w\}\} \\
           & = \{\{1\}, \{1, 2\}, \{1, 2, 2\}\} \\
           & = \{\{1\}, \{1, 2\}\}.
       \end{align*}
-    Thus $\pair{x, y, z}^* = \pair{u, v, w}^*$ but $y \neq v$.
+    Thus $\tuple{x, y, z}^* = \tuple{u, v, w}^*$ but $y \neq v$.
   \end{proof}
 
 \subsection{\verified{Exercise 3.2a}}%
@@ -3545,13 +3544,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Then by \nameref{sub:corollary-3c} and the definition of the union of sets,
       \begin{align*}
         A \times (B \cup C)
-          & = \{ \pair{x, y} \mid x \in A \land y \in (B \cup C) \} \\
-          & = \{ \pair{x, y} \mid
+          & = \{ \tuple{x, y} \mid x \in A \land y \in (B \cup C) \} \\
+          & = \{ \tuple{x, y} \mid
             x \in A \land (y \in B \lor y \in C) \} \\
-          & = \{ \pair{x, y} \mid
+          & = \{ \tuple{x, y} \mid
             (x \in A \land y \in B) \lor (x \in A \land y \in C) \} \\
-          & = \{ \pair{x, y} \mid (x \in A \land y \in B) \} \cup
-            \{ \pair{x, y} \mid (x \in A \land y \in C) \} \\
+          & = \{ \tuple{x, y} \mid (x \in A \land y \in B) \} \cup
+            \{ \tuple{x, y} \mid (x \in A \land y \in C) \} \\
           & = (A \times B) \cup (A \times C).
       \end{align*}
   \end{proof}
@@ -3568,9 +3567,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Let $A$, $B$, and $C$ be arbitrary sets such that $A \neq \emptyset$.
     By \nameref{sub:corollary-3c},
       \begin{align}
-        A \times B & = \{ \pair{x, y} \mid x \in A \land y \in B \}
+        A \times B & = \{ \tuple{x, y} \mid x \in A \land y \in B \}
           & \hyperlabel{sub:exercise-3.2b-eq1} \\
-        A \times C & = \{ \pair{x, y} \mid x \in A \land y \in C \}.
+        A \times C & = \{ \tuple{x, y} \mid x \in A \land y \in C \}.
           & \hyperlabel{sub:exercise-3.2b-eq2}
       \end{align}
     There are two cases to consider:
@@ -3579,11 +3578,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Suppose $B \neq \emptyset$.
       Then $A \times B \neq \emptyset$ and $A \times C \neq \emptyset$.
-      Let $\pair{x, y} \in A \times B$.
+      Let $\tuple{x, y} \in A \times B$.
       By \eqref{sub:exercise-3.2b-eq1}, $x \in A$ and $y \in B$.
       By the \nameref{ref:extensionality-axiom},
-        $$\pair{x, y} \in A \times B \iff \pair{x, y} \in A \times C.$$
-      Therefore $\pair{x, y} \in A \times C$.
+        $$\tuple{x, y} \in A \times B \iff \tuple{x, y} \in A \times C.$$
+      Therefore $\tuple{x, y} \in A \times C$.
       By \eqref{sub:exercise-3.2b-eq2}, $x \in A$ and $y \in C$.
       Since membership of $y$ in $B$ and in $C$ holds biconditionally, the
         \nameref{ref:extensionality-axiom} indicates $B = C$.
@@ -3591,9 +3590,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{Case 2}%
 
       Suppose $B = \emptyset$.
-      Then there is no $\pair{x, y}$ such that $x \in A$ and $y \in B$.
+      Then there is no $\tuple{x, y}$ such that $x \in A$ and $y \in B$.
       Thus $A \times B = \emptyset$ and $A \times C = \emptyset$.
-      But then there cannot exist an $\pair{x, y}$ such that $x \in A$
+      But then there cannot exist an $\tuple{x, y}$ such that $x \in A$
         and $y \in C$ either.
       Since $A \neq \emptyset$, it must be the case that $C = \emptyset$.
       Thus $B = C$.
@@ -3614,11 +3613,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     By \nameref{sub:corollary-3c} and the definition of the union of sets,
     \begin{align*}
       A \times \bigcup\mathscr{B}
-        & = \{ \pair{x, y} \mid
+        & = \{ \tuple{x, y} \mid
           x \in A \land y \in \bigcup\mathscr{B} \} \\
-        & = \{ \pair{x, y} \mid
+        & = \{ \tuple{x, y} \mid
           x \in A \land (\exists b \in \mathscr{B}), y \in b \} \\
-        & = \{ \pair{x, y} \mid
+        & = \{ \tuple{x, y} \mid
           (\exists b \in \mathscr{B}), x \in A \land y \in b \} \\
         & = \bigcup\; \{ A \times X \mid X \in \mathscr{B} \}.
     \end{align*}
@@ -3632,7 +3631,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   \begin{proof}
     For the sake of contradiction, suppose there exists a set $A$ to which every
       ordered pair belongs.
-    That is, for all sets $x$ and $y$, $\pair{x, y} = \{\{x\}, \{x, y\}\}$
+    That is, for all sets $x$ and $y$, $\tuple{x, y} = \{\{x\}, \{x, y\}\}$
       is a member of $A$.
     By the \nameref{ref:union-axiom}, it follows that $\bigcup\bigcup A$ is the
       set to which every set belongs.
@@ -3667,7 +3666,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Thus, by the \nameref{ref:subset-axioms}, the following is also a set:
       $$C = \{ y \in \powerset{(A \times B)} \mid
         \exists a \in A, \forall x, \left[ x \in y \iff
-          \exists b \in B, x = \pair{a, b} \right] \}.$$
+          \exists b \in B, x = \tuple{a, b} \right] \}.$$
     We now show that $C$ satisfies \eqref{sub:exercise-3.5a-eq1}.
 
     \paragraph{($\Rightarrow$)}%
@@ -3675,12 +3674,12 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Suppose $y \in C$.
       Then there exists some $a \in A$ such that
         $$\forall x, \left[ x \in y \iff
-          \exists b \in B, x = \pair{a, b} \right].$$
+          \exists b \in B, x = \tuple{a, b} \right].$$
       By the \nameref{ref:extensionality-axiom},
         \begin{align*}
           y
-            & = \{ \pair{a, b} \mid b \in B \} \\
-            & = \{ \pair{x, b} \mid x \in \{a\} \land b \in B \} \\
+            & = \{ \tuple{a, b} \mid b \in B \} \\
+            & = \{ \tuple{x, b} \mid x \in \{a\} \land b \in B \} \\
             & = \{ \{a\} \times B \}.
         \end{align*}
 
@@ -3688,9 +3687,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Suppose $y = \{a\} \times B$ for some $a \in A$.
       By \nameref{sub:corollary-3c}, $x \in \{a\} \times B$ if and only if
-        $\exists b \in B$ such that $x = \pair{a, b}$.
+        $\exists b \in B$ such that $x = \tuple{a, b}$.
       But then $x \in y$ if and only if $\exists b \in B$ such that
-        $x = \pair{a, b}$.
+        $x = \tuple{a, b}$.
       This immediately proves $y \in C$.
 
   \end{proof}
@@ -3720,7 +3719,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Let $c \in A \times B$.
       Then there exists some $a \in A$ and $b \in B$ such that
-        $c = \pair{a, b}$.
+        $c = \tuple{a, b}$.
       Thus $c \in \{a\} \times B$.
       We also note $\{a\} \times B \in \{\{x\} \times B \mid x \in A\}$,
         specifically when $x = a$.
@@ -3763,10 +3762,10 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       We show for all $a \in A$, $a \in \dom{A} \times \ran{A}$.
       Let $a \in A$.
       Since $A$ is a relation, $a$ is an ordered pair.
-      Then there exists some sets $x$ and $y$ such that $a = \pair{x, y}$.
+      Then there exists some sets $x$ and $y$ such that $a = \tuple{x, y}$.
       By the definition of the \nameref{ref:domain} and \nameref{ref:range} of
         $A$, $x \in \dom{A}$ and $y \in \ran{A}$.
-      Thus $a = \pair{x, y} \in \dom{A} \times \ran{A}$ as well.
+      Thus $a = \tuple{x, y} \in \dom{A} \times \ran{A}$ as well.
       This proves $A \subseteq \dom{A} \times \ran{A}$.
 
     \paragraph{($\Leftarrow$)}%
@@ -3798,11 +3797,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       That is, $x \in \dom{R}$ or $x \in \ran{R}$.
 
       If $x \in \dom{R}$, then there exists some $y$ such that
-        $\pair{x, y} = \{\{x\}, \{x, y\}\} \in R$.
+        $\tuple{x, y} = \{\{x\}, \{x, y\}\} \in R$.
       Then $\{x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
 
       On the other hand, if $x \in \ran{R}$, then there exists some $t$ such that
-        $\pair{t, x} = \{\{t\}, \{t, x\}\} \in R$.
+        $\tuple{t, x} = \{\{t\}, \{t, x\}\} \in R$.
       Then $\{t, x\} \in \bigcup R$ and $x \in \bigcup\bigcup R$.
 
     \paragraph{(ii)}%
@@ -3811,7 +3810,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Let $t \in \bigcup\bigcup R$.
       Then there exists some member $T \in \bigcup R$ such that $t \in T$.
       Likewise there exists some member $T' \in R$ such that $T \in T'$.
-      By definition of a relation, $T' = \pair{x, y} = \{\{x\}, \{x, y\}\}$ for
+      By definition of a relation, $T' = \tuple{x, y} = \{\{x\}, \{x, y\}\}$ for
         some sets $x$ and $y$.
       Thus $t = x$ or $t = y$.
       By \nameref{sub:exercise-3.6}, $t \in \dom{R}$ or $t \in \ran{R}$.
@@ -3851,11 +3850,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Let $x \in \dom{\bigcup{\mathscr{A}}}$.
       By definition of a domain, there exists some $y$ such that
-        $\pair{x, y} \in \bigcup{\mathscr{A}}$.
+        $\tuple{x, y} \in \bigcup{\mathscr{A}}$.
       By definition of the union of sets,
-        $\exists y, \exists R \in \mathscr{A}, \pair{x, y} \in R$.
+        $\exists y, \exists R \in \mathscr{A}, \tuple{x, y} \in R$.
       Equivalently,
-        $\exists R \in \mathscr{A}, \exists y, \pair{x, y} \in R$.
+        $\exists R \in \mathscr{A}, \exists y, \tuple{x, y} \in R$.
       By another application of the definition of a domain,
         $\exists R \in \mathscr{A}, x \in \dom{R}$.
       By another application of the definition of the union of sets,
@@ -3867,11 +3866,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Let $x \in \ran{\bigcup{\mathscr{A}}}$.
       By definition of a range, there exists some $t$ such that
-        $\pair{t, x} \in \bigcup{\mathscr{A}}$.
+        $\tuple{t, x} \in \bigcup{\mathscr{A}}$.
       By definition of the union of sets,
-        $\exists t, \exists R \in \mathscr{A}, \pair{t, x} \in R$.
+        $\exists t, \exists R \in \mathscr{A}, \tuple{t, x} \in R$.
       Equivalently,
-        $\exists R \in \mathscr{A}, \exists t, \pair{t, x} \in R$.
+        $\exists R \in \mathscr{A}, \exists t, \tuple{t, x} \in R$.
       By another application of the definition of a range,
         $\exists R \in \mathscr{A}, x \in \ran{R}$.
       By another application of the definition of the union of sets,
@@ -3912,11 +3911,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Let $x \in \dom{\bigcap{\mathscr{A}}}$.
       By definition of the \nameref{ref:domain} of a set,
-        $\exists y, \pair{x, y} \in \bigcap{\mathscr{A}}$.
+        $\exists y, \tuple{x, y} \in \bigcap{\mathscr{A}}$.
       By definition of the intersection of sets,
-        $\exists y, \forall R \in \mathscr{A}, \pair{x, y} \in R$.
+        $\exists y, \forall R \in \mathscr{A}, \tuple{x, y} \in R$.
       But this implies that
-        $\forall R \in \mathscr{A}, \exists y, \pair{x, y} \in R$.
+        $\forall R \in \mathscr{A}, \exists y, \tuple{x, y} \in R$.
       By another application of the definition of the \nameref{ref:domain} of a
         set, $\forall R \in \mathscr{A}, x \in \dom{R}$.
       By another application of the intersection of sets,
@@ -3927,11 +3926,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Let $x \in \ran{\bigcap{\mathscr{A}}}$.
       By definition of the \nameref{ref:range} of a set,
-        $\exists t, \pair{t, x} \in \bigcap{\mathscr{A}}$.
+        $\exists t, \tuple{t, x} \in \bigcap{\mathscr{A}}$.
       By definition of the intersection of sets,
-        $\exists t, \forall R \in \mathscr{A}, \pair{t, x} \in R$.
+        $\exists t, \forall R \in \mathscr{A}, \tuple{t, x} \in R$.
       But this implies that
-        $\forall R \in \mathscr{A}, \exists t, \pair{t, x} \in R$.
+        $\forall R \in \mathscr{A}, \exists t, \tuple{t, x} \in R$.
       By another application of the definition of the \nameref{ref:range} of a
         set, $\forall R \in \mathscr{A}, x \in \ran{R}$.
       By another application of the intersection of sets,
@@ -3947,18 +3946,19 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     integer $m$ less than $4$.
 
   \begin{answer}
-    Let $\pair{x_1, x_2, x_3, x_4}$ denote an arbitrary $4$-tuple.
+    Let $\tuple{x_1, x_2, x_3, x_4}$ denote an arbitrary $4$-tuple.
     Then
       \begin{align}
-        \pair{x_1, x_2, x_3, x_4}
-          & = \pair{\pair{x_1, x_2, x_3}, x_4}
+        \tuple{x_1, x_2, x_3, x_4}
+          & = \tuple{\tuple{x_1, x_2, x_3}, x_4}
             & \hyperlabel{sub:exercise-7.10-eq1} \\
-          & = \pair{\pair{\pair{x_1, x_2}, x_3}, x_4}
+          & = \tuple{\tuple{\tuple{x_1, x_2}, x_3}, x_4}
             & \hyperlabel{sub:exercise-7.10-eq2}
       \end{align}
     Here \eqref{sub:exercise-7.10-eq1} is an equivalent ordered $2$-tuple and
       \eqref{sub:exercise-7.10-eq2} is an equivalent ordered $3$-tuple.
-    Furthermore, $\pair{x_1, x_2, x_3, x_4} = \pair{\pair{x_1, x_2, x_3, x_4}}$,
+    Furthermore,
+      $\tuple{x_1, x_2, x_3, x_4} = \tuple{\tuple{x_1, x_2, x_3, x_4}}$,
       showing it can be represented as an ordered $1$-tuple as well.
   \end{answer}
 
@@ -3975,13 +3975,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   \begin{proof}
     Let $F$ and $G$ be functions such that $\dom{F} = \dom{G}$ and $F(x) = G(x)$
       for all $x$ in the common domain.
-    We prove that $\pair{x, y} \in F$ if and only if $\pair{x, y} \in G$.
+    We prove that $\tuple{x, y} \in F$ if and only if $\tuple{x, y} \in G$.
     But this follows immediately:
       \begin{align*}
-        \pair{x, y} \in F
-          & \iff y = F(x) \land \pair{x, F(x)} \in F \\
-          & \iff y = G(x) \land \pair{x, G(x)} \in G \\
-          & \iff \pair{x, y} \in G.
+        \tuple{x, y} \in F
+          & \iff y = F(x) \land \tuple{x, F(x)} \in F \\
+          & \iff y = G(x) \land \tuple{x, G(x)} \in G \\
+          & \iff \tuple{x, y} \in G.
       \end{align*}
     By the \nameref{ref:extensionality-axiom}, $F = G$.
   \end{proof}
@@ -4002,8 +4002,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{($\Rightarrow$)}%
 
       Suppose $f \subseteq g$.
-      Then for all \nameref{ref:ordered-pair}s $\pair{x, y}$,
-        $\pair{x, y} \in f$ implies $\pair{x, y} \in g$.
+      Then for all \nameref{ref:ordered-pair}s $\tuple{x, y}$,
+        $\tuple{x, y} \in f$ implies $\tuple{x, y} \in g$.
       Thus every $x \in \dom{f}$ must be a member of $\dom{g}$.
       Likewise, by definition of a function, $f$ and $g$ are single-valued.
       Thus $f(x) = y$ and $g(x) = y$.
@@ -4014,9 +4014,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       Suppose $\dom{f} \subseteq \dom{g}$ and
         $(\forall x \in \dom{f}) f(x) = g(x)$.
-      Let $\pair{x, y} \in f$.
+      Let $\tuple{x, y} \in f$.
       By hypothesis, $x \in \dom{g}$ and $y = f(x) = g(x)$.
-      Thus $\pair{x, y} \in g$ as well.
+      Thus $\tuple{x, y} \in g$ as well.
       Therefore $f \subseteq g$.
 
   \end{proof}
@@ -4074,10 +4074,10 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         Suppose $f \cup g$ is a function.
         Let $x \in (\dom{f}) \cap (\dom{g})$.
         That is, $x \in \dom{f}$ and $x \in \dom{g}$.
-        Then there exists only one $y_1$ such that $\pair{x, y_1} \in f$.
+        Then there exists only one $y_1$ such that $\tuple{x, y_1} \in f$.
         Likewise there exists only one $y_2$ such that
-          $\pair{x, y_2} \in g$.
-        But $\pair{x, y_1} \in f \cup g$ and $\pair{x, y_2} \in f \cup g$.
+          $\tuple{x, y_2} \in g$.
+        But $\tuple{x, y_1} \in f \cup g$ and $\tuple{x, y_2} \in f \cup g$.
         Since $f \cup g$ is single-valued, it follows $y_1 = y_2$.
         That is, $f(x) = g(x)$.
 
@@ -4090,13 +4090,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         \begin{enumerate}[(i)]
           \item Suppose $x \in \dom{f}$ but not in $\dom{g}$.
             Since $f$ is a function, it follows $f \cup g$ has only one value $y$
-              such that $\pair{x, y} \in f \cup g$.
+              such that $\tuple{x, y} \in f \cup g$.
           \item Suppose $x \in \dom{g}$ but not in $\dom{f}$.
             Again, since $g$ is a function, it follows $f \cup g$ has only one
-              value $y$ such that $\pair{x, y} \in f \cup g$.
+              value $y$ such that $\tuple{x, y} \in f \cup g$.
           \item Suppose $x \in \dom{f}$ and $x \in \dom{g}$.
             By hypothesis, $f(x) = g(x)$ meaning there is only one value $y$ such
-              that $\pair{x, y} \in f \cup g$.
+              that $\tuple{x, y} \in f \cup g$.
         \end{enumerate}
 
         The above cases are exhaustive.
@@ -4119,26 +4119,26 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       and $g$ in $\mathscr{A}$, either $f \subseteq g$ or $g \subseteq f$.
     Let $x \in \dom{\bigcup{\mathscr{A}}}$.
     Then there exists some $y_1$ such that
-      $\pair{x, y_1} \in \bigcup{\mathscr{A}}$.
+      $\tuple{x, y_1} \in \bigcup{\mathscr{A}}$.
     Suppose there also exists some $y_2$ such that
-      $\pair{x, y_2} \in \bigcup{\mathscr{A}}$.
+      $\tuple{x, y_2} \in \bigcup{\mathscr{A}}$.
 
     By definition of the union of sets, there exists some function
-      $f \in \mathscr{A}$ such that $\pair{x, y_1} \in f$.
+      $f \in \mathscr{A}$ such that $\tuple{x, y_1} \in f$.
     Likewise there exists some function $g \in \mathscr{A}$ such that
-      $\pair{x, y_2} \in g$.
+      $\tuple{x, y_2} \in g$.
     There are two cases to consider:
 
     \paragraph{Case 1}%
 
       Suppose $f \subseteq g$.
-      Then $\pair{x, y_1}, \pair{x, y_2} \in g$.
+      Then $\tuple{x, y_1}, \tuple{x, y_2} \in g$.
       Since $g$ is a function, i.e. single-valued, $y_1 = y_2$.
 
     \paragraph{Case 2}%
 
       Suppose $g \subseteq f$.
-      Then $\pair{x, y_1}, \pair{x, y_2} \in f$.
+      Then $\tuple{x, y_1}, \tuple{x, y_2} \in f$.
       Since $f$ is a function, i.e. single-valued, $y_1 = y_2$.
 
     \paragraph{Conclusion}%
@@ -4181,17 +4181,17 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     By definition of the \nameref{ref:composition} of sets,
       \begin{equation}
         \hyperlabel{sub:exercise-3.17-eq1}
-        F \circ G = \{\pair{u, v} \mid \exists t(uGt \land tFv)\}.
+        F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.
       \end{equation}
     Consider any $v \in \ran{(F \circ G)}$.
     By definition of the \nameref{ref:range} of a \nameref{ref:relation}, there
-      exists some $u_1$ such that $\pair{u_1, v} \in F \circ G$.
-    Let $u_2$ be a set such that $\pair{u_2, v} \in F \circ G$.
+      exists some $u_1$ such that $\tuple{u_1, v} \in F \circ G$.
+    Let $u_2$ be a set such that $\tuple{u_2, v} \in F \circ G$.
 
     By \eqref{sub:exercise-3.17-eq1}, there exists a set $t_1$ such that
-      $\pair{u_1, t_1} \in G$ and $\pair{t_1, v} \in F$.
+      $\tuple{u_1, t_1} \in G$ and $\tuple{t_1, v} \in F$.
     Likewise, there exists a set $t_2$ such that
-      $\pair{u_2, t_2} \in G$ and $\pair{t_2, v} \in F$.
+      $\tuple{u_2, t_2} \in G$ and $\tuple{t_2, v} \in F$.
     But $F$ is single-rooted, meaning $t_1 = t_2$.
     Likewise, because $G$ is single-rooted, $u_1 = u_2$.
     Thus $F \circ G$ must also be single-rooted.
@@ -4208,8 +4208,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{sub:exercise-3.18}
 
   Let $R$ be the set
-    $$\{ \pair{0, 1}, \pair{0, 2}, \pair{0, 3},
-         \pair{1, 2}, \pair{1, 3}, \pair{2, 3}\}.$$
+    $$\{ \tuple{0, 1}, \tuple{0, 2}, \tuple{0, 3},
+         \tuple{1, 2}, \tuple{1, 3}, \tuple{2, 3}\}.$$
   Evaluate the following: $R \circ R$, $R \restriction \{1\}$,
     $R^{-1} \restriction \{1\}$, $\img{R}{\{1\}}$, and $\img{R^{-1}}{\{1\}}$.
 
@@ -4230,9 +4230,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \begin{proof}
     \begin{enumerate}[(i)]
-      \item $R \circ R = \{ \pair{0, 2}, \pair{0, 3}, \pair{1, 3} \}$.
-      \item $R \restriction \{1\} = \{ \pair{1, 2}, \pair{1, 3} \}$.
-      \item $R^{-1} \restriction \{1\} = \{\pair{1, 0}\}$.
+      \item $R \circ R = \{ \tuple{0, 2}, \tuple{0, 3}, \tuple{1, 3} \}$.
+      \item $R \restriction \{1\} = \{ \tuple{1, 2}, \tuple{1, 3} \}$.
+      \item $R^{-1} \restriction \{1\} = \{\tuple{1, 0}\}$.
       \item $\img{R}{\{1\}} = \{2, 3\}$.
       \item $\img{R^{-1}}{\{1\}} = \{0\}$.
     \end{enumerate}
@@ -4242,8 +4242,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{sub:exercise-3.19}
 
   Let $$A = \{
-    \pair{\emptyset, \{\emptyset, \{\emptyset\}\}},
-    \pair{\{\emptyset\}, \emptyset}
+    \tuple{\emptyset, \{\emptyset, \{\emptyset\}\}},
+    \tuple{\{\emptyset\}, \emptyset}
     \}.$$
   Evaluate each of the following: $A(\emptyset)$, $\img{A}{\emptyset}$,
     $\img{A}{\{\emptyset\}}$, $\img{A}{\{\emptyset, \{\emptyset\}\}}$,
@@ -4290,14 +4290,14 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       \item $\img{A}{\{\emptyset, \{\emptyset\}\}} =
         \{\{\emptyset, \{\emptyset\}\}, \emptyset\}$.
       \item $A^{-1} = \{
-        \pair{\{\emptyset, \{\emptyset\}\}, \emptyset},
-        \pair{\emptyset, \{\emptyset\}}
+        \tuple{\{\emptyset, \{\emptyset\}\}, \emptyset},
+        \tuple{\emptyset, \{\emptyset\}}
       \}$.
       \item $A \circ A =
-        \{\pair{\{\emptyset\}, \{\emptyset, \{\emptyset\}\}}\}$.
+        \{\tuple{\{\emptyset\}, \{\emptyset, \{\emptyset\}\}}\}$.
       \item $A \restriction \emptyset = \emptyset$
       \item $A \restriction \{\emptyset\} =
-        \{\pair{\emptyset, \{\emptyset, \{\emptyset\}\}}\}$.
+        \{\tuple{\emptyset, \{\emptyset, \{\emptyset\}\}}\}$.
       \item $A \restriction \{\emptyset, \{\emptyset\}\} = A$.
       \item $\bigcup\bigcup A =
         \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}$.
@@ -4318,12 +4318,12 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       \nameref{ref:restriction}, intersection, and \nameref{ref:range} of sets,
       \begin{align*}
         F \restriction A
-          & = \{\pair{u, v} \mid uFv \land u \in A\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid uFv \land u \in A\} \\
+          & = \{\tuple{u, v} \mid
             uFv \land u \in A \land v \in \ran{F}\} \\
-          & = \{\pair{u, v} \mid uFv\} \cap
-            \{\pair{u, v} \mid u \in A \land v \in \ran{F}\} \\
-          & = F \cap \{\pair{u, v} \mid u \in A \land v \in \ran{F}\} \\
+          & = \{\tuple{u, v} \mid uFv\} \cap
+            \{\tuple{u, v} \mid u \in A \land v \in \ran{F}\} \\
+          & = F \cap \{\tuple{u, v} \mid u \in A \land v \in \ran{F}\} \\
           & = F \cap (A \times \ran{F}).
       \end{align*}
   \end{proof}
@@ -4341,17 +4341,17 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     By definition of the \nameref{ref:composition} of sets,
       \begin{align*}
         (R \circ S) \circ T
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid
             \exists t(uTt \land t(R \circ S)v)\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid
             \exists t(uTt \land (\exists a(tSa \land aRv))\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid
             \exists t, \exists a, (uTt \land tSa) \land aRv)\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid
             \exists a, \exists t, (uTt \land tSa) \land aRv)\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid
             \exists a, (\exists t(uTt \land tSa)) \land aRv)\} \\
-          & = \{\pair{u, v} \mid
+          & = \{\tuple{u, v} \mid
             \exists a, u(S \circ T)a \land aRv)\} \\
           & = R \circ (S \circ T).
       \end{align*}
@@ -4398,9 +4398,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         \begin{align*}
           \img{(F \circ G)}{A}
             & = \{v \mid (\exists u \in A) u(F \circ G)v\} \\
-            & = \{v \mid (\exists u \in A) \pair{u, v} \in F \circ G\} \\
+            & = \{v \mid (\exists u \in A) \tuple{u, v} \in F \circ G\} \\
             & = \{v \mid (\exists u \in A)
-              \pair{u, v} \in \{\pair{b, c} \mid
+              \tuple{u, v} \in \{\tuple{b, c} \mid
                 \exists a(bGa \land aFc)\}\} \\
             & = \{v \mid \exists u \in A, \exists a, uGa \land aFv\} \\
             & = \{v \mid \exists a, \exists u \in A, uGa \land aFv\} \\
@@ -4415,12 +4415,12 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       By definition of the \nameref{ref:restriction} of a set,
         \begin{align*}
           Q \restriction (A \cup B)
-            & = \{\pair{u, v} \mid uQv \land u \in A \cup B\} \\
-            & = \{\pair{u, v} \mid uQv \land (u \in A \lor u \in B)\} \\
-            & = \{\pair{u, v} \mid
+            & = \{\tuple{u, v} \mid uQv \land u \in A \cup B\} \\
+            & = \{\tuple{u, v} \mid uQv \land (u \in A \lor u \in B)\} \\
+            & = \{\tuple{u, v} \mid
               (uQv \land u \in A) \lor (uQv \land u \in B)\} \\
-            & = \{\pair{u, v} \mid uQv \land u \in A\} \cup
-              \{\pair{u, v} \mid uQv \land u \in B\} \\
+            & = \{\tuple{u, v} \mid uQv \land u \in A\} \cup
+              \{\tuple{u, v} \mid uQv \land u \in B\} \\
             & = (Q \restriction A) \cup (Q \restriction B).
         \end{align*}
 
@@ -4442,7 +4442,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \begin{proof}
     Let $I_A$ be the identity function on the set $A$.
-    That is, $I_A = \{\pair{u, u} \mid u \in A\}$.
+    That is, $I_A = \{\tuple{u, u} \mid u \in A\}$.
     Let $B$ and $C$ be any sets.
     We show that (i) $B \circ I_A = B \restriction A$ and (ii)
       $\img{I_A}{C} = A \cap C$.
@@ -4454,30 +4454,30 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       \subparagraph{($\subseteq$)}%
 
-        Let $\pair{x, y} \in B \circ I_A$.
+        Let $\tuple{x, y} \in B \circ I_A$.
         By definition of the \nameref{ref:composition} of sets,
           there exists some $t$ such that $x(I_A)t$ and $tBy$.
         By definition of the identity function, $I_A(x) = t$ implies $x = t$.
         Thus $xBy$.
         By hypothesis, $x \in \dom{(B \circ I_A)}$.
         Therefore $x \in \dom{I_A} = A$.
-        Thus $$\pair{x, y} \in \{\pair{u, v} \mid u \in A \land uBv\}
+        Thus $$\tuple{x, y} \in \{\tuple{u, v} \mid u \in A \land uBv\}
           = B \restriction A.$$
 
       \subparagraph{($\supseteq$)}%
 
-        Let $\pair{x, y} \in B \restriction A$.
+        Let $\tuple{x, y} \in B \restriction A$.
         By definition of the \nameref{ref:restriction} of sets,
           $x \in A$ and $xBy$.
-        But $I_A(x) = x$ meaning $\pair{I_A(x), y} \in B$.
-        In other words, $\pair{x, y} \in B \circ I_A$.
+        But $I_A(x) = x$ meaning $\tuple{I_A(x), y} \in B$.
+        In other words, $\tuple{x, y} \in B \circ I_A$.
 
     \paragraph{(ii)}%
 
       By definition of the \nameref{ref:image} of sets,
         \begin{align*}
           \img{I_A}{C}
-            & = \{v \mid (\exists u \in C) \pair{u, v} \in I_A\} \\
+            & = \{v \mid (\exists u \in C) \tuple{u, v} \in I_A\} \\
             & = \{v \mid \exists u \in C, u \in A \land u = v\} \\
             & = \{v \mid v \in C \land v \in A\} \\
             & = C \cap A.
@@ -4501,7 +4501,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         \img{F^{-1}}{A}
           & = \{x \mid (\exists y \in A) yF^{-1}x\} \\
           & = \{x \mid (\exists y \in A) xFy\} \\
-          & = \{x \mid (\exists y \in A) \pair{x, y} \in F\} \\
+          & = \{x \mid (\exists y \in A) \tuple{x, y} \in F\} \\
           & = \{x \mid x \in \dom{F} \land F(x) \in A\} \\
           & = \{x \in \dom{F} \mid F(x) \in A\}.
       \end{align*}
@@ -4535,23 +4535,23 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       \subparagraph{($\subseteq$)}%
 
-        Let $\pair{x, y} \in G \circ G^{-1}$.
+        Let $\tuple{x, y} \in G \circ G^{-1}$.
         By definition of the \nameref{ref:composition} of sets, there exists some
           set $t$ such that $x(G^{-1})t$ and $tGy$.
         By definition of the \nameref{ref:inverse} of a set,
           $$x(G^{-1})t \iff tGx.$$
         The right hand side of the above biconditional indicates $x \in \ran{G}$.
         Since $G$ is single-valued, $tGy \land tGx$ implies $x = y$.
-        Thus $\pair{x, y} \in I_{\ran{G}}$.
+        Thus $\tuple{x, y} \in I_{\ran{G}}$.
 
       \subparagraph{($\supseteq$)}%
 
-        Let $\pair{x, x} \in I_{\ran{G}}$ where $x \in \ran{G}$.
+        Let $\tuple{x, x} \in I_{\ran{G}}$ where $x \in \ran{G}$.
         By definition of the \nameref{ref:range} of a function, there exists some
-          $t$ such that $\pair{t, x} \in G$.
+          $t$ such that $\tuple{t, x} \in G$.
         By definition of the \nameref{ref:inverse} of a set, it follows
-          $\pair{x, t} \in G^{-1}$.
-        Thus $\pair{x, x} \in G \circ G^{-1}$.
+          $\tuple{x, t} \in G^{-1}$.
+        Thus $\tuple{x, x} \in G \circ G^{-1}$.
 
       \subparagraph{Conclusion}%
 
@@ -4591,7 +4591,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{($\subseteq$)}%
 
       Let $x \in \dom{(F \circ G)}$.
-      Then there exists a set $y$ such that $\pair{x, y} \in F \circ G$.
+      Then there exists a set $y$ such that $\tuple{x, y} \in F \circ G$.
       By definition of the \nameref{ref:composition} of sets, there exists a set
         $t$ such that $xGt$ and $tFy$.
       Thus $t \in \dom{F}$.
@@ -4613,7 +4613,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         such that $uFt$.
       Thus $xGu \land uFt$.
       By definition of the \nameref{ref:composition} of sets,
-        $\pair{x, t} \in F \circ G$.
+        $\tuple{x, t} \in F \circ G$.
       Therefore $x \in \dom{(F \circ G)}$.
 
   \end{proof}
@@ -4803,20 +4803,20 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{($\Rightarrow$)}%
 
       Suppose $R$ is \nameref{ref:symmetric}.
-      Let $\pair{x, y} \in R^{-1}$.
+      Let $\tuple{x, y} \in R^{-1}$.
       By definition of the \nameref{ref:inverse} of a set,
-        $\pair{y, x} \in R$.
-      By symmetry, $\pair{x, y} \in R$.
+        $\tuple{y, x} \in R$.
+      By symmetry, $\tuple{x, y} \in R$.
       Thus $R^{-1} \subseteq R$.
 
     \paragraph{($\Leftarrow$)}%
 
       Suppose $R^{-1} \subseteq R$.
-      Let $\pair{x, y} \in R$.
+      Let $\tuple{x, y} \in R$.
       By definition of the \nameref{ref:inverse} of a set,
-        $\pair{y, x} \in R^{-1}$.
-      Since $R^{-1} \subseteq R$, $\pair{y, x} \in R$.
-      Therefore $\pair{x, y}$ and $\pair{y, x}$ are both in $R$.
+        $\tuple{y, x} \in R^{-1}$.
+      Since $R^{-1} \subseteq R$, $\tuple{y, x} \in R$.
+      Therefore $\tuple{x, y}$ and $\tuple{y, x}$ are both in $R$.
       In other words, $R$ is symmetric.
 
   \end{proof}
@@ -4834,20 +4834,20 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{($\Rightarrow$)}%
 
       Suppose $R$ is \nameref{ref:transitive}.
-      Let $\pair{x, y} \in R \circ R$.
+      Let $\tuple{x, y} \in R \circ R$.
       By definition of the \nameref{ref:composition} of a set,
         there exists some $t$ such that $xRt \land tRy$.
-      That is, $\pair{x, t} \in R$ and $\pair{t, y} \in R$.
-      Since $R$ is transitive, it follows $\pair{x, y} \in R$.
+      That is, $\tuple{x, t} \in R$ and $\tuple{t, y} \in R$.
+      Since $R$ is transitive, it follows $\tuple{x, y} \in R$.
 
     \paragraph{($\Leftarrow$)}%
 
       Suppose $R \circ R \subseteq R$.
-      Let $\pair{x, y} \pair{y, z} \in R$.
+      Let $\tuple{x, y} \tuple{y, z} \in R$.
       By definition of the \nameref{ref:composition} of a set,
-        $$R \circ R = \{\pair{u, v} \mid \exists t(uRt \land tRv)\}.$$
-      Then $\pair{x, z} \in R \circ R$.
-      Since $R \circ R \subseteq R$, it follows $\pair{x, z} \in R$.
+        $$R \circ R = \{\tuple{u, v} \mid \exists t(uRt \land tRv)\}.$$
+      Then $\tuple{x, z} \in R \circ R$.
+      Since $R \circ R \subseteq R$, it follows $\tuple{x, z} \in R$.
       Thus $R$ is transitive.
 
   \end{proof}
@@ -4879,21 +4879,21 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       \subparagraph{($\subseteq$)}%
 
-        Let $\pair{x, y} \in R$.
-        Since $R$ is symmetric, $\pair{y, x} \in R$.
-        Since $R$ is transitive, $\pair{x, x} \in R$.
-        Then there exists a $t$ such that $\pair{x, t} \in R$ and
-          $\pair{y, t} \in R$, namely $t = x$.
+        Let $\tuple{x, y} \in R$.
+        Since $R$ is symmetric, $\tuple{y, x} \in R$.
+        Since $R$ is transitive, $\tuple{x, x} \in R$.
+        Then there exists a $t$ such that $\tuple{x, t} \in R$ and
+          $\tuple{y, t} \in R$, namely $t = x$.
         By \eqref{sub:exercise-3.33-eq1},
-          $\pair{x, y} \in R^{-1} \circ R$.
+          $\tuple{x, y} \in R^{-1} \circ R$.
 
       \subparagraph{($\supseteq$)}%
 
-        Let $\pair{x, y} \in R^{-1} \circ R$.
+        Let $\tuple{x, y} \in R^{-1} \circ R$.
         By \eqref{sub:exercise-3.33-eq1}, there exists some $t$ such that
-          $\pair{x, t} \in R$ and $\pair{y, t} \in R$.
-        But $R$ is symmetric meaning $\pair{t, y} \in R$.
-        Since $R$ is transitive, it follows $\pair{x, y} \in R$.
+          $\tuple{x, t} \in R$ and $\tuple{y, t} \in R$.
+        But $R$ is symmetric meaning $\tuple{t, y} \in R$.
+        Since $R$ is transitive, it follows $\tuple{x, y} \in R$.
 
     \paragraph{($\Leftarrow$)}%
 
@@ -4913,20 +4913,20 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
                 & \textref{sub:theorem-3e} \nonumber \\
               & = R \hyperlabel{sub:exercise-3.33-eq2}.
           \end{align}
-        Now let $\pair{x, y} \in R$.
-        By \eqref{sub:exercise-3.33-eq2} $\pair{x, y} \in R^{-1}$.
+        Now let $\tuple{x, y} \in R$.
+        By \eqref{sub:exercise-3.33-eq2} $\tuple{x, y} \in R^{-1}$.
         By definition of the \nameref{ref:inverse} of a set,
-          $\pair{y, x} \in R$.
+          $\tuple{y, x} \in R$.
         Thus $R$ is symmetric.
 
       \subparagraph{(ii)}%
 
-        Let $\pair{x, y}, \pair{y, z} \in R$.
+        Let $\tuple{x, y}, \tuple{y, z} \in R$.
         By \nameref{spar:exercise-3.33-i}, $R$ is symmetric.
-        Thus $\pair{z, y} \in R$.
+        Thus $\tuple{z, y} \in R$.
         By \eqref{sub:exercise-3.33-eq1}, it follows
-          $\pair{x, z} \in R^{-1} \circ R$.
-        Since $R^{-1} \circ R = R$, it follows $\pair{x, z} \in R$.
+          $\tuple{x, z} \in R^{-1} \circ R$.
+        Since $R^{-1} \circ R = R$, it follows $\tuple{x, z} \in R$.
         Thus $R$ is transitive.
 
   \end{proof}
@@ -4954,12 +4954,12 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Because $\mathscr{A} \neq \emptyset$, $\bigcap{\mathscr{A}}$ is
         well-defined.
       We prove that $\bigcap{\mathscr{A}}$ is a transitive relation.
-      Let $\pair{x, y}, \pair{y, z} \in \bigcap{\mathscr{A}}$.
+      Let $\tuple{x, y}, \tuple{y, z} \in \bigcap{\mathscr{A}}$.
       Then forall $A$ in $\mathscr{A}$, it follows
-        $\pair{x, y}, \pair{y, z} \in A$.
-      Since $A$ is transitive, it follows $\pair{x, z} \in A$.
+        $\tuple{x, y}, \tuple{y, z} \in A$.
+      Since $A$ is transitive, it follows $\tuple{x, z} \in A$.
       Since this holds for all $A \in \mathscr{A}$, it follows that
-        $\pair{x, z} \in A$ as well.
+        $\tuple{x, z} \in A$ as well.
       Thus $\bigcap{\mathscr{A}}$ is transitive.
 
     \paragraph{(b)}%
@@ -4967,14 +4967,14 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       We show that $\bigcup{\mathscr{A}}$ is not necessarily transitive with a
         counterexample.
       Suppose $$\mathscr{A} = \{
-        \{\pair{1, 2}, \pair{2, 3}, \pair{1, 3}\}, \{\pair{2, 1}\}
+        \{\tuple{1, 2}, \tuple{2, 3}, \tuple{1, 3}\}, \{\tuple{2, 1}\}
       \}.$$
       Notice that the two members of $\mathscr{A}$ are transitive relations.
       Now $$\bigcup{\mathscr{A}} = \{
-        \pair{1, 2}, \pair{2, 3}, \pair{1, 3}, \pair{2, 1},
+        \tuple{1, 2}, \tuple{2, 3}, \tuple{1, 3}, \tuple{2, 1},
       \}.$$
-      But the above cannot be transitive, for $\pair{1, 2}$ and $\pair{2, 1}$ are
-        members of the set, but $\pair{1, 1}$ is not.
+      But the above cannot be transitive, for $\tuple{1, 2}$ and $\tuple{2, 1}$
+        are members of the set, but $\tuple{1, 1}$ is not.
 
   \end{proof}
 
@@ -5005,7 +5005,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   Define $Q$ to be the set
     \begin{equation}
       \hyperlabel{sub:exercise-3.36-eq1}
-      \{\pair{x, y} \in A \times A \mid \pair{f(x), f(y)} \in R\}.
+      \{\tuple{x, y} \in A \times A \mid \tuple{f(x), f(y)} \in R\}.
     \end{equation}
   Show that $Q$ is an equivalence relation on $A$.
 
@@ -5021,27 +5021,27 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Let $x \in A$.
       By hypothesis, $f(x) \in B$.
       Since $R$ is an equivalence relation on $B$, $R$ is reflexive on $B$.
-      Thus $\pair{f(x), f(x)} \in R$.
-      But then \eqref{sub:exercise-3.36-eq1} implies $\pair{x, x} \in Q$.
+      Thus $\tuple{f(x), f(x)} \in R$.
+      But then \eqref{sub:exercise-3.36-eq1} implies $\tuple{x, x} \in Q$.
       Thus $Q$ is reflexive on $A$.
 
     \paragraph{(ii)}%
 
-      Let $\pair{x, y} \in Q$.
-      By \eqref{sub:exercise-3.36-eq1}, $\pair{f(x), f(y)} \in R$.
+      Let $\tuple{x, y} \in Q$.
+      By \eqref{sub:exercise-3.36-eq1}, $\tuple{f(x), f(y)} \in R$.
       Since $R$ is an equivalence relation on $B$, $R$ is symmetric.
-      Thus $\pair{f(y), f(x)} \in R$.
-      But then \eqref{sub:exercise-3.36-eq1} implies $\pair{y, x} \in Q$.
+      Thus $\tuple{f(y), f(x)} \in R$.
+      But then \eqref{sub:exercise-3.36-eq1} implies $\tuple{y, x} \in Q$.
       Thus $Q$ is symmetric.
 
     \paragraph{(iii)}%
 
-      Let $\pair{x, y}, \pair{y, z} \in Q$.
+      Let $\tuple{x, y}, \tuple{y, z} \in Q$.
       By \eqref{sub:exercise-3.36-eq1},
-        $\pair{f(x), f(y)}, \pair{f(y), f(z)} \in R$.
+        $\tuple{f(x), f(y)}, \tuple{f(y), f(z)} \in R$.
       Since $R$ is an equivalence relation on $B$, $R$ is transitive.
-      Thus $\pair{f(x), f(z)} \in R$.
-      But then \eqref{sub:exercise-3.36-eq1} implies $\pair{x, z} \in Q$.
+      Thus $\tuple{f(x), f(z)} \in R$.
+      But then \eqref{sub:exercise-3.36-eq1} implies $\tuple{x, z} \in Q$.
       Thus $Q$ is transitive.
 
   \end{proof}
@@ -5072,28 +5072,28 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       By definition of a \nameref{ref:partition}, there exists some nonempty set
         $B \in \Pi$ such that $x \in B$.
       Thus $(\exists B \in \Pi)(x \in B \land x \in B)$.
-      By \eqref{sub:exercise-3.37-eq1}, $\pair{x, x} \in R_\Pi$.
+      By \eqref{sub:exercise-3.37-eq1}, $\tuple{x, x} \in R_\Pi$.
       Therefore $R_\Pi$ is reflexive on $A$.
 
     \paragraph{(ii)}%
 
-      Let $\pair{x, y} \in R_\Pi$.
+      Let $\tuple{x, y} \in R_\Pi$.
       By \eqref{sub:exercise-3.37-eq1}, there exists some $B \in \Pi$ such that
         $x \in B \land y \in B$.
       But then $y \in B \land x \in B$.
-      Thus $\pair{y, x} \in R_\Pi$.
+      Thus $\tuple{y, x} \in R_\Pi$.
       In other words, $R_\Pi$ is symmetric.
 
     \paragraph{(iii)}%
 
-      Let $\pair{x, y}, \pair{y, z} \in R_\Pi$.
+      Let $\tuple{x, y}, \tuple{y, z} \in R_\Pi$.
       By \eqref{sub:exercise-3.37-eq1}, there exists some $B_1 \in \Pi$ such that
         $x \in B_1 \land y \in B_1$.
       Likewise there exists some $B_2 \in \Pi$ such that
         $y \in B_2 \land z \in B_2$.
       But $\Pi$ is a \nameref{ref:partition} meaning $y \in B_1$ and $y \in B_2$
         if $B_1 = B_2$.
-      Therefore $x \in B_1 \land z \in B_1$ and $\pair{x, z} \in R_\Pi$.
+      Therefore $x \in B_1 \land z \in B_1$ and $\tuple{x, z} \in R_\Pi$.
       In other words, $R_\Pi$ is transitive.
 
   \end{proof}
@@ -5142,7 +5142,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
           \begin{align*}
             y
               & \in B = [x]_{R_\Pi} \\
-              & = \{t \mid \pair{x, t} \in R_\Pi\} \\
+              & = \{t \mid \tuple{x, t} \in R_\Pi\} \\
               & = \{t \mid (\exists B_1 \in \Pi)(x \in B_1 \land t \in B_1)\}.
                 & \eqref{sub:exercise-3.38-eq1}
           \end{align*}
@@ -5162,7 +5162,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
           \begin{align*}
             y
               & \in \{t \mid (\exists B_1 \in \Pi)(x \in B_1 \land t \in B_1)\} \\
-              & = \{t \mid \pair{x, t} \in R_\Pi\} \\
+              & = \{t \mid \tuple{x, t} \in R_\Pi\} \\
               & = [x]_{R_\Pi} = B.
           \end{align*}
 
@@ -5183,7 +5183,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         \begin{align*}
           B
             & = \{t \mid (\exists B_1 \in \Pi)(x \in B_1 \land t \in B_1)\} \\
-            & = \{ t \mid \pair{x, t} \in R_\Pi \} \\
+            & = \{ t \mid \tuple{x, t} \in R_\Pi \} \\
             & = [x]_{R_\Pi}.
         \end{align*}
       Therefore $B \in A / R_{\Pi}$.
@@ -5260,7 +5260,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \hyperlabel{sub:exercise-3.41}
 
   Let $\mathbb{R}$ be the set of real numbers and define the relation $Q$ on
-    $\mathbb{R} \times \mathbb{R}$ by $\pair{u, v}Q\pair{x, y}$ iff
+    $\mathbb{R} \times \mathbb{R}$ by $\tuple{u, v}Q\tuple{x, y}$ iff
     $u + y = x + v$.
 
 \subsubsection{\verified{Exercise 3.41a}}%
@@ -5278,27 +5278,27 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
     \paragraph{(i)}%
 
-      Let $\pair{x, y} \in R \times R$.
-      Since $x + y = x + y$, it immediately follows $\pair{x, y}Q\pair{x, y}$.
+      Let $\tuple{x, y} \in R \times R$.
+      Since $x + y = x + y$, it immediately follows $\tuple{x, y}Q\tuple{x, y}$.
       Thus $Q$ is reflexive on $\mathbb{R}$.
 
     \paragraph{(ii)}%
 
-      Let $\pair{\pair{u, v}, \pair{x, y}} \in Q$.
+      Let $\tuple{\tuple{u, v}, \tuple{x, y}} \in Q$.
       Then $u + y = x + v$.
       Likewise, $x + v = u + y$.
-      This immediately implies that $\pair{\pair{x, y}, \pair{u, v}} \in Q$.
+      This immediately implies that $\tuple{\tuple{x, y}, \tuple{u, v}} \in Q$.
       Thus $Q$ is symmetric.
 
     \paragraph{(iii)}%
 
-      Let $\pair{\pair{u, v}, \pair{x, y}} \in Q$ and
-        $\pair{\pair{x, y}, \pair{a, b}} \in Q$.
+      Let $\tuple{\tuple{u, v}, \tuple{x, y}} \in Q$ and
+        $\tuple{\tuple{x, y}, \tuple{a, b}} \in Q$.
       Then $u + y = x + v$ and $x + b = a + y$.
       Rearranging terms, we have $u - v = x - y$ and $x - y = a - b$.
       Thus $u - v = a - b$.
       Rearranging terms once more yields $u + b = a + v$.
-      Thus $\pair{\pair{u, v}, \pair{a, b}} \in Q$.
+      Thus $\tuple{\tuple{u, v}, \tuple{a, b}} \in Q$.
       Therefore $Q$ is transitive.
 
   \end{proof}
@@ -5310,21 +5310,21 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \rightarrow (\mathbb{R} \times \mathbb{R}) / Q$ satisfying the equation
     \begin{equation}
       \hyperlabel{ssub:exercise-3.41-b-eq1}
-      G([\pair{x, y}]_Q) = [\pair{x + 2y, y + 2x}]_Q?
+      G([\tuple{x, y}]_Q) = [\tuple{x + 2y, y + 2x}]_Q?
     \end{equation}
 
   \begin{proof}
     Let $f \colon \mathbb{R} \times \mathbb{R}
       \rightarrow \mathbb{R} \times \mathbb{R}$ be given by
-      $f(\pair{x, y}) = \pair{x + 2y, y + 2x}$.
+      $f(\tuple{x, y}) = \tuple{x + 2y, y + 2x}$.
     We show (i) that $f$ is \nameref{ref:compatible} with $Q$ and then (ii)
       there exists such a function satisfying \eqref{ssub:exercise-3.41-b-eq1}.
 
     \paragraph{(i)}%
     \hyperlabel{par:exercise-3.41-b-i}
 
-      Let $\pair{u, v}, \pair{x, y} \in \mathbb{R} \times \mathbb{R}$ such that
-        $\pair{u, v} Q \pair{x, y}$.
+      Let $\tuple{u, v}, \tuple{x, y} \in \mathbb{R} \times \mathbb{R}$ such
+        that $\tuple{u, v} Q \tuple{x, y}$.
       Thus
         \begin{equation}
           \hyperlabel{ssub:exercise-3.41-b-eq2}
@@ -5332,8 +5332,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         \end{equation}
       Next consider
         \begin{align*}
-          f(\pair{u, v}) & = \pair{u + 2v, v + 2u}, \\
-          f(\pair{x, y}) & = \pair{x + 2y, y + 2x}.
+          f(\tuple{u, v}) & = \tuple{u + 2v, v + 2u}, \\
+          f(\tuple{x, y}) & = \tuple{x + 2y, y + 2x}.
         \end{align*}
       Then
         \begin{align*}
@@ -5345,7 +5345,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
           \iff (x + 2y) + (v + 2u) & = (u + 2v) + (y + 2x) \\
           \iff (u + 2v) + (y + 2x) & = (x + 2y) + (v + 2u).
         \end{align*}
-      This last equality shows $f(\pair{u, v}) \,Q\, f(\pair{x, y})$.
+      This last equality shows $f(\tuple{u, v}) \,Q\, f(\tuple{x, y})$.
       Thus $f$ is compatible with $Q$.
 
     \paragraph{(ii)}%
@@ -5385,11 +5385,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \paragraph{(i)}%
     \hyperlabel{par:exercise-3.43-i}
 
-      Let $\pair{x, y}, \pair{y, z} \in R^{-1}$.
+      Let $\tuple{x, y}, \tuple{y, z} \in R^{-1}$.
       By definition of the \nameref{ref:inverse} of a set,
-        $\pair{y, x}$, $\pair{z, y} \in R$.
-      Since $R$ is transitive, it must be that $\pair{z, x} \in R$.
-      Then $\pair{x, z} \in R^{-1}$.
+        $\tuple{y, x}$, $\tuple{z, y} \in R$.
+      Since $R$ is transitive, it must be that $\tuple{z, x} \in R$.
+      Then $\tuple{x, z} \in R^{-1}$.
       Thus $R^{-1}$ is transitive.
 
     \paragraph{(ii)}%
@@ -5507,7 +5507,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   Assume that $<_A$ and $<_B$ are linear orderings on $A$ and $B$, respectively.
   Define the binary relation $<_L$ on the Cartesian product $A \times B$ by:
-    $$\pair{a_1, b_1} <_L \pair{a_2, b_2} \quad\text{iff}\quad
+    $$\tuple{a_1, b_1} <_L \tuple{a_2, b_2} \quad\text{iff}\quad
       \text{either } a_1 <_A a_2 \text{ or } (a_1 = a_2 \land b_1 <_B b_2).$$
   Show that $<_L$ is a linear ordering on $A \times B$.
   (The relation $<_L$ is called \textit{lexicographic} ordering, being the
@@ -5523,8 +5523,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
     \paragraph{(i)}%
 
-      Let $\pair{a_1, b_1} <_L \pair{a_2, b_2}$ and
-        $\pair{a_2, b_2} <_L \pair{a_3, b_3}$.
+      Let $\tuple{a_1, b_1} <_L \tuple{a_2, b_2}$ and
+        $\tuple{a_2, b_2} <_L \tuple{a_3, b_3}$.
       Then either $a_1 <_A a_2$ or $a_1 = a_2 \land b_1 <_B b_2$.
       Likewise, either $a_2 <_A a_3$ or $a_2 = a_3 \land b_2 <_B b_3$.
       We consider each combination of cases in turn:
@@ -5534,19 +5534,19 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         Suppose $a_1 <_A a_2$ and $a_2 <_A a_3$.
         Since $<_A$ is a linear ordering, it follows $<_A$ is transitive.
         Thus $a_1 <_A a_3$.
-        Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+        Therefore $\tuple{a_1, b_2} <_L \tuple{a_3, b_3}$.
 
       \subparagraph{Case 2}%
 
         Suppose $a_1 <_A a_2$, $a_2 = a_3$, and $b_2 <_B b_3$.
         Then $a_1 < a_3$.
-        Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+        Therefore $\tuple{a_1, b_2} <_L \tuple{a_3, b_3}$.
 
       \subparagraph{Case 3}%
 
         Suppose $a_1 = a_2$, $b_1 <_B b_2$, and $a_2 <_A a_3$.
         Then $a_1 <_A a_3$.
-        Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+        Therefore $\tuple{a_1, b_2} <_L \tuple{a_3, b_3}$.
 
       \subparagraph{Case 4}%
 
@@ -5554,7 +5554,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         Then $a_1 = a_3$.
         Since $<_B$ is a linear ordering, it follows $<_B$ is transitive.
         Thus $b_1 <_B b_3$.
-        Therefore $\pair{a_1, b_2} <_L \pair{a_3, b_3}$.
+        Therefore $\tuple{a_1, b_2} <_L \tuple{a_3, b_3}$.
 
       \subparagraph{Conclusion}%
 
@@ -5563,7 +5563,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
     \paragraph{(ii)}%
 
-      Let $\pair{a_1, b_1}, \pair{a_2, b_2} \in A \times B$.
+      Let $\tuple{a_1, b_1}, \tuple{a_2, b_2} \in A \times B$.
       Because $<_A$ and $<_B$ are linear orderings on $A$ and $B$ respectively,
         it follows $<_A$ and $<_B$ are both trichotomous on their respective
         sets.
@@ -5575,19 +5575,19 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       \hyperlabel{spar:exercise-3.45-ii-case-1}
 
         Suppose $a_1 <_A a_2$.
-        Then $\pair{a_1, b_1} <_L \pair{a_2, b_2}$.
+        Then $\tuple{a_1, b_1} <_L \tuple{a_2, b_2}$.
         This is trivially the only possible relationship between the ordered
           pairs.
 
       \subparagraph{Case 2}%
 
         Suppose $a_1 = a_2$.
-        If $b_1 <_B b_2$, then $\pair{a_1, b_1} <_L \pair{a_2, b_2}$ is the only
+        If $b_1 <_B b_2$, then $\tuple{a_1, b_1} <_L \tuple{a_2, b_2}$ is the
+          only possibility.
+        If $b_1 = b_2$, then $\tuple{a_1, b_1} = \tuple{a_2, b_2}$ is the only
           possibility.
-        If $b_1 = b_2$, then $\pair{a_1, b_1} = \pair{a_2, b_2}$ is the only
-          possibility.
-        If $b_2 <_B b_1$, then $\pair{a_2, b_2} <_L \pair{a_1, b_1}$ is the only
-          possibility.
+        If $b_2 <_B b_1$, then $\tuple{a_2, b_2} <_L \tuple{a_1, b_1}$ is the
+          only possibility.
 
       \subparagraph{Case 3}%
 
@@ -5597,9 +5597,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       \subparagraph{Conclusion}%
 
         In each of the above cases, we are always left with exactly one of
-          $$\pair{a_1, b_1} <_L \pair{a_2, b_2}, \quad
-            \pair{a_1, b_1} = \pair{a_2, b_2}, \quad
-            \pair{a_2, b_2} <_L \pair{a_1, b_1}.$$
+          $$\tuple{a_1, b_1} <_L \tuple{a_2, b_2}, \quad
+            \tuple{a_1, b_1} = \tuple{a_2, b_2}, \quad
+            \tuple{a_2, b_2} <_L \tuple{a_1, b_1}.$$
         Thus $<_L$ is trichotomous.
 
   \end{proof}
@@ -5794,7 +5794,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \begin{proof}
 
-    Note $\sigma$ is defined as $\sigma = \{\pair{n, n^+} \mid n \in \omega\}$.
+    Note $\sigma$ is defined as $\sigma = \{\tuple{n, n^+} \mid n \in \omega\}$.
     To prove $\langle \omega, \sigma, 0 \rangle$ is a
       \nameref{ref:peano-system}, we must show that (i) $0 \not\in \ran{S}$,
       (ii) $\sigma$ is one-to-one, and (iii) every subset $A$ of $\omega$
@@ -5949,8 +5949,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
       \subparagraph{(c)}%
 
-        Note $\{\pair{0, a}\}$ is an acceptable function.
-        Thus $\pair{0, a} \in h$.
+        Note $\{\tuple{0, a}\}$ is an acceptable function.
+        Thus $\tuple{0, a} \in h$.
         By \nameref{par:recursion-theorem-natural-numbers-i}, $h$ is a function.
         Therefore $a$ is the only value $h(0)$ takes on.
 
@@ -5959,7 +5959,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         Suppose $n^+ \in \dom{h}$.
         Then there exists some acceptable function $v$ such that
           $v(n^+) = h(n^+)$.
-        By definition of acceptable, $\pair{n, v(n)} \in v$.
+        By definition of acceptable, $\tuple{n, v(n)} \in v$.
         Since \nameref{par:recursion-theorem-natural-numbers-i} indicates $h$ is
           a function, $n \in \dom{h}$ and $h(n) = v(n)$.
         Also by definition of acceptable, $v(n^+) = F(v(n))$.
@@ -5976,7 +5976,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       \subparagraph{(1)}%
       \hyperlabel{spar:recursion-theorem-natural-numbers-iii-1}
 
-        We note that $\{\pair{0, a}\}$ is an acceptable function.
+        We note that $\{\tuple{0, a}\}$ is an acceptable function.
         By construction of $h$, $0 \in \dom{h}$.
 
       \subparagraph{(2)}%
@@ -5985,7 +5985,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         Suppose $n \in \dom{h}$.
         Since $n \in \dom{h}$ there exists an acceptable function $v$ with
           $n \in \dom{v}$.
-        Define $$v' = v \cup \{\pair{n^+, F(v(n))}\}.$$
+        Define $$v' = v \cup \{\tuple{n^+, F(v(n))}\}.$$
         We prove that $v'$ is acceptable:
 
         \begin{enumerate}[(a)]
@@ -6987,7 +6987,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Hence \nameref{sub:theorem-4b} implies $S = \omega$.
       Thus for all $m, n \in \omega$, $$m \in n \lor m = n \lor n \in m.$$
       We now prove that
-        $$\in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}$$
+        $$\in_\omega = \{\tuple{m, n} \in \omega \times \omega \mid m \in n\}$$
         is \nameref{ref:irreflexive} and \nameref{ref:connected}.
       Irreflexivity immediately follows from \nameref{sub:lemma-4l-b}.
       Connectivity follows immediately from the fact $S = \omega$.
@@ -7007,7 +7007,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     Relation
       \begin{equation}
         \hyperlabel{sub:linear-ordering-natural-numbers-eq1}
-        \in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}
+        \in_\omega = \{\tuple{m, n} \in \omega \times \omega \mid m \in n\}
       \end{equation}
       is a linear ordering on $\omega$.
   \end{theorem}
@@ -7952,10 +7952,10 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \begin{proof}
     By definition,
-      $$\in_\omega = \{\pair{m, n} \in \omega \times \omega \mid m \in n\}.$$
+      $$\in_\omega = \{\tuple{m, n} \in \omega \times \omega \mid m \in n\}.$$
     Thus, the \nameref{ref:inverse} of $\in_\omega$ is
       $$\in_\omega^{-1} =
-        \{\pair{n, m} \in \omega \times \omega \mid m \in n\}.$$
+        \{\tuple{n, m} \in \omega \times \omega \mid m \in n\}.$$
     Therefore $$\img{\in_\omega^{-1}}{\{7, 8\}} = \{6, 7\}.$$
   \end{proof}
 

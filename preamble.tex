@@ -92,6 +92,22 @@
 % Admonitions
 % ========================================
 
+\newcommand\@assumptionbody[1]{
+  \begin{equation}
+    \setlength{\abovedisplayskip}{0pt}
+    \setlength{\belowdisplayskip}{0pt}
+    #1
+  \end{equation}}
+
+\NewEnviron{assumption}[1][]{%
+  \ifstrempty{#1}{%
+    \begin{tcolorbox}[bottom=8pt]
+      \@assumptionbody{\BODY}
+    \end{tcolorbox}}{%
+    \begin{tcolorbox}[title=#1,bottom=8pt]
+      \@assumptionbody{\BODY}
+    \end{tcolorbox}}}
+
 \NewEnviron{note}{%
   \begin{tcolorbox}[%
       sharp corners,
@@ -156,6 +172,7 @@
 
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\ctuple}[2]{\left< #1, \cdots, #2 \right>}
 \newcommand{\dom}[1]{\textop{dom}{#1}}
 \newcommand{\fld}[1]{\textop{fld}{#1}}
 \newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
@@ -164,9 +181,12 @@
 \newcommand{\img}[2]{#1\!\left\llbracket#2\right\rrbracket}
 \newcommand{\ioc}[2]{\left(#1, #2\right]}
 \newcommand{\ioo}[2]{\left(#1, #2\right)}
+\newcommand{\ltuple}[2]{\left< #1, \ldots, #2 \right>}
 \newcommand{\powerset}[1]{\mathscr{P}#1}
 \newcommand{\ran}[1]{\textop{ran}{#1}}
 \newcommand{\textop}[1]{\mathop{\text{#1}}}
+\newcommand{\tuple}[1]{\left< #1 \right>}
+
 \newcommand{\ubar}[1]{\text{\b{$#1$}}}
 
 \let\oldemptyset\emptyset
