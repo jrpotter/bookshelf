@@ -117,6 +117,14 @@
 
   \lean{Mathlib/Init/Set}{Set.emptyCollection}
 
+\section{\defined{Equinumerous}}%
+\hyperlabel{ref:equinumerous}
+
+A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
+  only if there is a one-to-one \nameref{ref:function} from $A$ onto $B$.
+
+  \lean*{Mathlib/Init/Function}{Function.Bijective}
+
 \section{\defined{Equivalence Class}}%
 \hyperlabel{ref:equivalence-class}
 
@@ -168,6 +176,14 @@
     is given by $$\fld{R} = \dom{R} \cup \ran{R}.$$
 
   \lean{Bookshelf/Enderton/Set/Relation}{Set.Relation.fld}
+
+\section{\defined{Finite Set}}%
+\hyperlabel{ref:finite-set}
+
+  A set is \textbf{finite} if and only if it is \nameref{ref:equinumerous} to a
+    \nameref{ref:natural-number}.
+
+  \lean{Mathlib/Data/Finset/Basic}{Finset}
 
 \section{\defined{Function}}%
 \hyperlabel{ref:function}
@@ -223,6 +239,12 @@
       analagous to base and recursive constructors of an inductive data type
       respectively.
   \end{note}
+
+\section{\defined{Infinite Set}}%
+\hyperlabel{ref:infinite-set}
+
+  A set is \textbf{infinite} if and only if it is not a
+    \nameref{ref:finite-set}.
 
 \section{\defined{Infinity Axiom}}%
 \hyperlabel{ref:infinity-axiom}
@@ -8300,6 +8322,212 @@
 
   Rewrite the proof of \nameref{sub:theorem-4g} using, in place of induction,
     the well-ordering of $\omega$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\setcounter{chapter}{5}
+\chapter{Cardinal Numbers and the Axiom of Choice}%
+\hyperlabel{chap:cardinal-numbers-axiom-choice}
+
+\section{Equinumerosity}%
+\hyperlabel{sec:equinumerosity}
+
+\subsection{\sorry{Theorem 6A}}%
+\hyperlabel{sub:theorem-6a}
+
+  \begin{theorem}[6A]
+    For any sets $A$, $B$, and $C$,
+      \begin{enumerate}[(a)]
+        \item $A \approx A$.
+        \item If $A \approx B$, then $B \approx A$.
+        \item If $A \approx B$ and $B \approx C$, then $A \approx C$.
+      \end{enumerate}
+  \end{theorem}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Theorem 6B}}%
+\hyperlabel{sub:theorem-6b}
+
+  \begin{theorem}[6B]
+    No set is equinumerous to its powerset.
+  \end{theorem}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\section{Finite Sets}%
+\hyperlabel{sec:finite-sets}
+
+\subsection{\sorry{Pigeonhole Principle}}%
+\hyperlabel{sub:pigeonhole-principle}
+
+  \begin{theorem}
+    No natural number is equinumerous to a proper subset of itself.
+  \end{theorem}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Corollary 6C}}%
+\hyperlabel{sub:corollary-6c}
+
+  \begin{corollary}[6C]
+    No finite set is equinumerous to a proper subset of itself.
+  \end{corollary}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Corollary 6D}}%
+\hyperlabel{sub:corollary-6d}
+
+  \begin{corollary}[6D]
+    \begin{enumerate}[(a)]
+      \item Any set equinumerous to a proper subset of itself is infinite.
+      \item The set $\omega$ is infinite.
+    \end{enumerate}
+  \end{corollary}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Corollary 6E}}%
+\hyperlabel{sub:corollary-6e}
+
+  \begin{corollary}[6E]
+    Any finite set is equinumerous to a unique natural number.
+  \end{corollary}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Lemma 6F}}%
+\hyperlabel{sub:lemma-6f}
+
+  \begin{lemma}[6F]
+    If $C$ is a proper subset of a natural number $n$, then $C \approx m$ for
+      some $m$ less than $n$.
+  \end{lemma}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Corollary 6G}}%
+\hyperlabel{sub:corollary-6g}
+
+  \begin{corollary}[6G]
+    Any subset of a finite set is finite.
+  \end{corollary}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\section{Exercises 6}%
+\hyperlabel{sec:exercises-6}
+
+\subsection{\sorry{Exercise 6.1}}%
+\hyperlabel{sub:exercise-6-1}
+
+  Show that the equation $$f(m, n) = 2^m(2n + 1) - 1$$ defines a one-one-one
+    correspondence between $\omega \times \omega$ and $\omega$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.2}}%
+\hyperlabel{sub:exercise-6-2}
+
+  Show that in Fig. 32 we have:
+    \begin{align*}
+      J(m, n)
+        & = [1 + 2 + \cdots + (m + n)] + m \\
+        & = \frac{1}{2}[(m + n)^2 + 3m + n].
+    \end{align*}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.3}}%
+\hyperlabel{sub:exercise-6-3}
+
+  Find a one-to-one correspondence between the open unit interval $\ioo{0}{1}$
+    and $\mathbb{R}$ that takes rationals to rationals and irrationals to
+    irrationals.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.4}}%
+\hyperlabel{sub:exercise-6-4}
+
+  Construct a one-to-one correspondence between the closed unit interval
+    $$\icc{0}{1} = \{x \in \mathbb{R} \mid 0 \leq x \leq 1\}$$
+    and the open unit interval $\ioo{0}{1}$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.5}}%
+\hyperlabel{sub:exercise-6-5}
+
+  Prove \nameref{sub:theorem-6a}.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.6}}%
+\hyperlabel{sub:exercise-6-6}
+
+  Let $\kappa$ be a nonzero cardinal number.
+  Show there does not exist a set to which every set of cardinality $\kappa$
+    belongs.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.7}}%
+\hyperlabel{sub:exercise-6-7}
+
+  Assume that $A$ is finite and $f \colon A \rightarrow A$.
+  Show that $f$ is one-to-one iff $\ran{f} = A$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.8}}%
+\hyperlabel{sub:exercise-6-8}
+
+  Prove that the union of two finite sets is finite, without any use of
+    arithmetic.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 6.9}}%
+\hyperlabel{sub:exercise-6-9}
+
+  Prove that the Cartesian product of two finite sets is finite, without any use
+    of arithmetic.
 
   \begin{proof}
     TODO
