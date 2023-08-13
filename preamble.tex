@@ -92,21 +92,15 @@
 % Admonitions
 % ========================================
 
-\newcommand\@assumptionbody[1]{
-  \begin{equation}
-    \setlength{\abovedisplayskip}{0pt}
-    \setlength{\belowdisplayskip}{0pt}
-    #1
-  \end{equation}}
+\NewEnviron{induction}[1][]{%
+  \def\title{\ifstrempty{#1}
+    {Induction Hypothesis (IH)}
+    {#1}}
+  \begin{tcolorbox}[title=\title]
+    \BODY
+  \end{tcolorbox}}
 
-\NewEnviron{assumption}[1][]{%
-  \ifstrempty{#1}{%
-    \begin{tcolorbox}[bottom=8pt]
-      \@assumptionbody{\BODY}
-    \end{tcolorbox}}{%
-    \begin{tcolorbox}[title=#1,bottom=8pt]
-      \@assumptionbody{\BODY}
-    \end{tcolorbox}}}
+\newcommand{\ihref}[1]{\hyperref[#1]{(IH)}}
 
 \NewEnviron{note}{%
   \begin{tcolorbox}[%

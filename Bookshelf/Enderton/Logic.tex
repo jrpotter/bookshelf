@@ -18,9 +18,9 @@
 \section{\defined{Construction Sequence}}%
 \hyperlabel{ref:construction-sequence}
 
-  A \textbf{construction sequence} is a finite sequence
-    $\langle \epsilon_1, \ldots, \epsilon_n \rangle$ of expressions such that
-    for each $i \leq n$ we have at least one of
+  A \textbf{construction sequence} is a \nameref{ref:finite-sequence}
+    $\ltuple{\epsilon_1}{\epsilon_n}$ of \nameref{ref:expression}s such that for
+    each $i \leq n$ we have at least one of
     \begin{align*}
       & \epsilon_i \text{ is a sentence symbol} \\
       & \epsilon_i = \mathcal{E}_\neg(\epsilon_j) \text{ for some } j < i \\
@@ -33,7 +33,14 @@
 \section{\defined{Expression}}%
 \hyperlabel{ref:expression}
 
-  An \textbf{expression} is a finite sequence of symbols.
+  An \textbf{expression} is a \nameref{ref:finite-sequence} of symbols.
+
+\section{\defined{Finite Sequence}}%
+\hyperlabel{ref:finite-sequence}
+
+  $S$ is a \textbf{finite sequence} (or \textbf{string}) of members of set $A$
+    if and only if, for some positive integer $n$, we have
+    $S = \ltuple{x_1}{x_n}$, where each $x_i \in A$.
 
 \section{\defined{\texorpdfstring{$n$}{n}-tuple}}%
 \hyperlabel{ref:n-tuple}
@@ -46,10 +53,10 @@ We also define $\tuple{x} = x$.
 \section{\defined{Well-Formed Formula}}%
 \hyperlabel{ref:well-formed-formula}
 
-  An \nameref{ref:expression} that can be built up from the sentence symbols by
-    applying some finite number of times the
-    \textbf{formula-building operations} (on expressions) defined by the
-    equations:
+  A \textbf{well-formed formula} (wff) is an \nameref{ref:expression} that can
+    be built up from the sentence symbols by applying some finite number of
+    times the \textbf{formula-building operations} (on expressions) defined by
+    the equations:
     \begin{align*}
       \mathcal{E}_{\neg}(\alpha)
         & = (\neg \alpha) \\
@@ -82,11 +89,11 @@ We also define $\tuple{x} = x$.
   \begin{proof}
 
     For natural number $m$, let $P(m)$ be the statement:
-    \begin{assumption}
-      \hyperlabel{sec:lemma-0a-eq1}
-      \text{If } \ltuple{x_1}{x_m} = \ltuple{y_1, \ldots, y_m}{y_{m+k}}
-        \text{ then } x_1 = \ltuple{y_1}{y_{k+1}}.
-    \end{assumption}
+      \begin{induction}
+        \hyperlabel{sec:lemma-0a-ih}
+        If $\ltuple{x_1}{x_m} = \ltuple{y_1, \ldots, y_m}{y_{m+k}}$
+          then $x_1 = \ltuple{y_1}{y_{k+1}}$.
+      \end{induction}
     \noindent
     We proceed by induction on $m$.
 
@@ -101,16 +108,16 @@ We also define $\tuple{x} = x$.
 
       Suppose for $m \geq 1$ that $P(m)$ is true and assume
         \begin{equation}
-          \hyperlabel{sec:lemma-0a-eq2}
+          \hyperlabel{sec:lemma-0a-eq1}
           \ltuple{x_1}{x_{m+1}} = \ltuple{y_1, \ldots, y_{m+1}}{y_{m+1+k}}.
         \end{equation}
       By definition of an \nameref{ref:n-tuple}, we can decompose
-        \eqref{sec:lemma-0a-eq2} into the following two identities
+        \eqref{sec:lemma-0a-eq1} into the following two identities
         \begin{align*}
           x_{m+1} & = y_{m+1+k} \\
           \ltuple{x_1}{x_m} & = \ltuple{y_1}{y_{m+k}}.
         \end{align*}
-      By \eqref{sec:lemma-0a-eq1}, $P(m)$ implies $x_1 = \ltuple{y_1}{y_{k+1}}$.
+      By \ihref{sec:lemma-0a-ih}, $P(m)$ implies $x_1 = \ltuple{y_1}{y_{k+1}}$.
       Hence $P(m+1)$ holds true.
 
     \paragraph{Conclusion}%
@@ -125,7 +132,7 @@ We also define $\tuple{x} = x$.
 \section{The Language of Sentential Logic}%
 \hyperlabel{sec:language-sentential-logic}
 
-\subsection{\sorry{Induction Principle}}%
+\subsection{\unverified{Induction Principle}}%
 \hyperlabel{sub:induction-principle-1}
 
   \begin{theorem}
@@ -135,7 +142,78 @@ We also define $\tuple{x} = x$.
   \end{theorem}
 
   \begin{proof}
-    TODO
+    We note every \nameref{ref:well-formed-formula} can be characterized by a
+      \nameref{ref:construction-sequence}.
+    For natural number $m$, let $P(m)$ be the statement:
+      \begin{induction}
+        \hyperlabel{sub:induction-principle-1-ih}
+        Every wff characterized by a construction sequence of length $m$ is in
+          $S$.
+      \end{induction}
+    \noindent
+    We proceed by strong induction on $m$.
+
+    \paragraph{Base Case}%
+
+      Let $\phi$ denote a wff characterized by a construction sequence of length
+        $1$.
+      Then it must be that $\phi$ is a single sentence symbol.
+      By hypothesis, $S$ contains all the sentence symbols.
+      Thus $P(1)$ holds true.
+
+    \paragraph{Inductive Step}%
+
+      Suppose $P(0)$, $P(1)$, $\ldots$, $P(m)$ holds true and let $\phi$ denote
+        a wff characterized by a construction sequence of length $m + 1$.
+      By definition of a construction sequence, one of the following holds:
+        \begin{align}
+          & \phi \text{ is a sentence symbol}
+            & \label{sub:induction-principle-1-eq1} \\
+          & \phi = \mathcal{E}_\neg(\epsilon_j)
+            \text{ for some } j < m + 1
+            & \label{sub:induction-principle-1-eq2} \\
+          & \phi = \mathcal{E}_\square(\epsilon_j, \epsilon_k)
+            \text{ for some } j < m + 1, k < m + 1
+            & \label{sub:induction-principle-1-eq3}
+        \end{align}
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      We consider each case in turn.
+
+      \subparagraph{\eqref{sub:induction-principle-1-eq1}}%
+
+        By hypothesis, all sentence symbols are in $S$.
+        Thus $\phi \in S$.
+
+      \subparagraph{\eqref{sub:induction-principle-1-eq2}}%
+
+        Suppose $\phi = \mathcal{E}_\neg(\epsilon_j)$ for some $j < m + 1$.
+        By \ihref{sub:induction-principle-1-ih}, $\epsilon_j$ is in $S$.
+        By hypothesis, $S$ is closed under $\mathcal{E}_\neg$.
+        Thus $\phi \in S$.
+
+      \subparagraph{\eqref{sub:induction-principle-1-eq3}}%
+
+        Suppose $\phi = \mathcal{E}_\square(\epsilon_j, \epsilon_k)$ for some
+          $j < m + 1, k < m + 1$,
+        By \ihref{sub:induction-principle-1-ih}, $\epsilon_j$ and $\epsilon_k$
+          is in $S$.
+        By hypothesis, $S$ is closed under $\mathcal{E}_\square$ for all
+          possible candidates of $\square$.
+        Thus $\phi \in S$.
+
+      \subparagraph{Subconclusion}%
+
+        Since the above three cases are exhaustive, $P(m + 1)$ holds.
+
+    \paragraph{Conclusion}%
+
+      By strong induction, $P(m)$ holds true for all natural numbers $m \geq 1$.
+      Since every well-formed formula is characterized by a construction
+        sequence, the set of all wffs is a subset of $S$.
+      Likewise, it obviously holds that $S$ is a subset of all wffs.
+      Thus $S$ is precisely the set of all wffs.
+
   \end{proof}
 
 \section{Exercises 1}%
