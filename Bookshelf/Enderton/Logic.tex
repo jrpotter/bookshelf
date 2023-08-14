@@ -3,6 +3,8 @@
 \input{../../preamble}
 \makecode{../..}
 
+\externaldocument[S:]{Set}
+
 \begin{document}
 
 \header{A Mathematical Introduction to Logic}{Herbert B. Enderton}
@@ -42,21 +44,11 @@
     if and only if, for some positive integer $n$, we have
     $S = \ltuple{x_1}{x_n}$, where each $x_i \in A$.
 
-\section{\defined{\texorpdfstring{$n$}{n}-tuple}}%
-\hyperlabel{ref:n-tuple}
+\section{\defined{Formula-Building Operations}}%
+\hyperlabel{ref:formula-building-operations}
 
-An \textbf{$n$-tuple} is recursively defined as
-  $$\ltuple{x_1}{x_{n+1}} = \tuple{\ltuple{x_1}{x_n}, x_{n+1}}$$
-  for $n > 1$.
-We also define $\tuple{x} = x$.
-
-\section{\defined{Well-Formed Formula}}%
-\hyperlabel{ref:well-formed-formula}
-
-  A \textbf{well-formed formula} (wff) is an \nameref{ref:expression} that can
-    be built up from the sentence symbols by applying some finite number of
-    times the \textbf{formula-building operations} (on expressions) defined by
-    the equations:
+  The \textbf{formula-building operations} (on expressions) are defined by the
+  equations:
     \begin{align*}
       \mathcal{E}_{\neg}(\alpha)
         & = (\neg \alpha) \\
@@ -69,6 +61,31 @@ We also define $\tuple{x} = x$.
       \mathcal{E}_{\Leftrightarrow}(\alpha, \beta)
         & = (\alpha \Leftrightarrow \beta)
     \end{align*}
+
+  \lean{Init/Prelude}{Not}
+
+  \lean{Init/Prelude}{And}
+
+  \lean{Init/Prelude}{Or}
+
+  \lean{Init/Core}{Iff}
+
+\section{\defined{\texorpdfstring{$n$}{n}-tuple}}%
+\hyperlabel{ref:n-tuple}
+
+  An \textbf{$n$-tuple} is recursively defined as
+    $$\ltuple{x_1}{x_{n+1}} = \tuple{\ltuple{x_1}{x_n}, x_{n+1}}$$
+    for $n > 1$.
+  We also define $\tuple{x} = x$.
+
+  \lean*{Init/Prelude}{Prod}
+
+\section{\defined{Well-Formed Formula}}%
+\hyperlabel{ref:well-formed-formula}
+
+  A \textbf{well-formed formula} (wff) is an \nameref{ref:expression} that can
+    be built up from the sentence symbols by applying some finite number of
+    times the \nameref{ref:formula-building-operations}.
 
 \endgroup
 
@@ -219,26 +236,119 @@ We also define $\tuple{x} = x$.
 \section{Exercises 1}%
 \hyperlabel{sec:exercises-1}
 
-\subsection{\sorry{Exercise 1.1.1}}%
+\subsection{\unverified{Exercise 1.1.1}}%
 \hyperlabel{sub:exercise-1.1.1}
 
   Give three sentences in English together with translations into our formal
     language.
-  The sentences shoudl be chosen so as to have an interesting structure, and the
+  The sentences should be chosen so as to have an interesting structure, and the
     translations should each contain 15 or more symbols.
 
   \begin{answer}
-    TODO
+
+    We begin first with the English sentences:
+      \begin{enumerate}[i]
+        \item He can juggle beach balls, bowling pins, and hackysacks unless
+          he is tired, in which case he can only juggle beach balls.
+        \item
+          If Lauren goes to the moves with Sam, he will watch Barbie and
+            eat popcorn, but if Lauren does not, he will watch Oppenheimer and
+            eat gummy worms.
+        \item
+          Trees produce oxygen if they are alive and well, able to pull
+            nutrients from the earth, and receive ample water.
+      \end{enumerate}
+
+    \paragraph{(i)}%
+
+      We use the following translation: "To juggle beach balls" (B),
+        "to juggle bowling pins" (P), "to juggle hackysacks" (H), and
+        "he is tired" (T).
+      This yields the following translation:
+        $$(B \land ((\neg T) \Rightarrow (P \land H))).$$
+
+    \paragraph{(ii)}%
+
+      We use the following translation: "Lauren goes to the movies" (L),
+        "Sam will watch Oppenheimer" (O), "Sam will watch "Barbie" (B),
+        "Sam will eat popcorn" (P), and "Sam will eay gummy worms" (G).
+      This yields the following translation:
+        $$(((L \land B) \land P) \lor (((\neg L) \land O) \land G)).$$
+
+    \paragraph{(iii)}%
+
+      We use the following translation: "Trees produce oxygen" (O),
+        "the tree is alive" (A), "the tree is well" (W), "can pull nutrients
+        from the earth" (N), and "receives ample water" (R).
+      This yields the following translation:
+        $$(O \iff (((A \land W) \land N) \land R)).$$
+
   \end{answer}
 
-\subsection{\sorry{Exercise 1.1.2}}%
+\subsection{\unverified{Exercise 1.1.2}}%
 \hyperlabel{sub:exercise-1.1.2}
 
   Show that there are no wffs of length 2, 3, or 6, but that any other positive
     length is possible.
 
   \begin{proof}
-    TODO
+
+    Define $$S = \{ \phi \mid
+      \phi \text{ is a wff and the length of } \phi
+        \text{ is not } 2, 3, \text{or } 6. \}.$$
+    We prove that (i) all the sentence symbols are members of $S$ and (ii)
+      $S$ is closed under the five \nameref{ref:formula-building-operations}.
+    We then conclude with (iii) the proof of the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.1.2-i}
+
+      Sentence symbols, by definition, have length 1.
+      Thus every sentence symbol is a member of $S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-1.1.2-ii}
+
+      Define $L$ to be the length function mapping arbitrary wff to its length.
+      Let $\phi, \psi \in S$.
+      Then $L(\phi)$ and $L(\psi)$ each evaluate to 1, 4, 5, or a value larger
+        than 6.
+
+      By definition, $\mathcal{E}_{\neg}(\phi) = (\neg \phi)$.
+      Thus $L(\mathcal{E}_{\neg}(\phi)) = L(\phi) + 3$.
+      Enumerating through the possible values of $L(\phi)$ shows
+        $\mathcal{E}_{\neg}(\phi) \in S$.
+      Likewise,
+        $\mathcal{E}_{\square}(\phi, \psi) = (\phi \mathop{\square} \psi)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      Thus $L(\mathcal{E}_{\square}(\phi, \psi)) = L(\phi) + L(\psi) + 3$.
+      Again, enumerating through the possible values of $L(\phi)$ and $L(\psi)$
+        shows $\mathcal{E}_{\square}(\phi, \psi) \in S$.
+
+      Hence $S$ is closed under the five formula-building operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-1.1.2-i} and \nameref{par:exercise-1.1.2-ii}, the
+        \nameref{sub:induction-principle-1} implies $S$ is the set of all wffs.
+      It remains to be shown that a wff of any positive length excluding 2, 3,
+        and 6 are possible.
+
+      Let $\phi_1 = A_1$, $\phi_2 = (A_1 \land A_2)$, and
+        $\phi_3 = ((A_1 \land A_2) \land A_3)$.
+      Note these are wffs of lengths 1, 5, and 9 respectively.
+      Then $n$ repeated applications of $\mathcal{E}_{\neg}$ yields wffs of
+        length $1 + 3n$, $5 + 3n$, and $9 + 3n$ respectively.
+      But
+        \begin{align*}
+          & \{ 1 + 3n \mid n \in \mathbb{N} \}, \\
+          & \{ 5 + 3n \mid n \in \mathbb{N} \}, \text{ and } \\
+          & \{ 9 + 3n \mid n \in \mathbb{N} \}
+        \end{align*}
+        form a \nameref{S:ref:partition} of set $\mathbb{N} - \{ 2, 3, 6 \}$.
+      Thus a wff of any other positive length besides 2, 3, and 6 is possible.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 1.1.3}}%
