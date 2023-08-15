@@ -62,13 +62,20 @@
         & = (\alpha \Leftrightarrow \beta)
     \end{align*}
 
-  \lean{Init/Prelude}{Not}
+  \code*{Bookshelf/Enderton/Logic/Chapter\_1}
+    {Enderton.Logic.Chapter\_1.WFF}
 
-  \lean{Init/Prelude}{And}
+  \lean{Init/Prelude}
+    {Not}
 
-  \lean{Init/Prelude}{Or}
+  \lean{Init/Prelude}
+    {And}
 
-  \lean{Init/Core}{Iff}
+  \lean{Init/Prelude}
+    {Or}
+
+  \lean{Init/Core}
+    {Iff}
 
 \section{\defined{\texorpdfstring{$n$}{n}-tuple}}%
 \hyperlabel{ref:n-tuple}
@@ -78,7 +85,8 @@
     for $n > 1$.
   We also define $\tuple{x} = x$.
 
-  \lean*{Init/Prelude}{Prod}
+  \lean*{Init/Prelude}
+    {Prod}
 
 \section{\defined{Well-Formed Formula}}%
 \hyperlabel{ref:well-formed-formula}
@@ -86,6 +94,9 @@
   A \textbf{well-formed formula} (wff) is an \nameref{ref:expression} that can
     be built up from the sentence symbols by applying some finite number of
     times the \nameref{ref:formula-building-operations}.
+
+  \code*{Bookshelf/Enderton/Logic/Chapter\_1}
+    {Enderton.Logic.Chapter\_1.WFF}
 
 \endgroup
 
@@ -285,11 +296,17 @@
 
   \end{answer}
 
-\subsection{\unverified{Exercise 1.1.2}}%
+\subsection{\pending{Exercise 1.1.2}}%
 \hyperlabel{sub:exercise-1.1.2}
 
   Show that there are no wffs of length 2, 3, or 6, but that any other positive
     length is possible.
+
+  \code*{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_2\_i}
+
+  \code{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_2\_ii}
 
   \begin{proof}
 
@@ -351,7 +368,7 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 1.1.3}}%
+\subsection{\pending{Exercise 1.1.3}}%
 \hyperlabel{sub:exercise-1.1.3}
 
   Let $\alpha$ be a wff; let $c$ be the number of places at which binary
@@ -363,10 +380,64 @@
   Show by using the induction principle that $s = c + 1$.
 
   \begin{proof}
-    TODO
+
+    Define
+      \begin{equation}
+        \hyperlabel{sub:exercise-1.1.3-eq1}
+        S = \{\phi \mid \phi \text{ is a wff such that } s = c + 1\}.
+      \end{equation}
+    We prove that (i) all the sentence symbols are members of $S$ and (ii)
+      $S$ is closed under the five \nameref{ref:formula-building-operations}.
+    We then conclude with (iii) the proof of the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.1.3-i}
+
+      Let $\phi = A_n$ be an arbitrary sentence symbol.
+      The number of places at which sentence symbols occur in $\phi$ is 1.
+      The number of places at which binary connective symbols occur in $\phi$ is
+        0.
+      Hence $\phi \in S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-1.1.3-ii}
+
+      Let $\alpha, \beta \in S$.
+      Denote the number of places at which sentence symbols occur in each as
+        $s_\alpha$ and $s_\beta$ respectively.
+      Likewise, denote the number of places at which binary connective symbols
+        occur as $c_\alpha$ and $c_\beta$.
+
+      By definition, $\mathcal{E}_{\neg}(\alpha) = (\neg\alpha)$.
+      The number of sentence and binary connective symbols in
+        $\mathcal{E}_{\neg}(\alpha)$ does not change.
+      Thus $\mathcal{E}_{\neg}(\alpha) \in S$.
+      Likewise,
+        $\mathcal{E}_{\square}(\phi, \psi) = (\phi \mathop{\square} \psi)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      Therefore $\mathcal{E}_{\square}(\phi, \psi)$ has $s_\alpha + s_\beta$
+        sentence symbols and $c_\alpha + c_\beta + 1$ binary connective symbols.
+      But \eqref{sub:exercise-1.1.3-eq1} implies
+        \begin{align*}
+          s_\alpha + s_\beta
+            & = (c_\alpha + 1) + (c_\beta + 1) \\
+            & = (c_\alpha + c_\beta + 1) + 1,
+        \end{align*}
+      meaning $\mathcal{E}_{\square}(\phi, \psi) \in S$.
+
+      Hence $S$ is closed under the five formula-building operations.
+
+    \paragraph{(iii)}%
+    \hyperlabel{par:exercise-1.1.3-iii}
+
+      By \nameref{par:exercise-1.1.3-i} and \nameref{par:exercise-1.1.3-ii}, the
+        \nameref{sub:induction-principle-1} indicates $S$ is the set of all
+        wffs.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 1.1.4}}%
+\subsection{\unverified{Exercise 1.1.4}}%
 \hyperlabel{sub:exercise-1.1.4}
 
   Assume we have a construction sequence ending in $\phi$, where $\phi$ does not
@@ -376,20 +447,75 @@
   Show that the result is still a legal construction sequence.
 
   \begin{proof}
-    TODO
+
+
+    Let $S$ denote a \nameref{ref:construction-sequence}
+      $\ltuple{\epsilon_1}{\epsilon_n}$ such that $\epsilon_n = \phi$.
+    Let $S' = \ltuple{\epsilon_{i_1}}{\epsilon_{i_m}}$ denote the construction
+      sequence resulting from deleting all expressions in $S$ containing $A_4$.
+    Fix $1 \leq j \leq m$.
+    Then there exists some $1 \leq k \leq n$ such that
+      $\epsilon_{i_j} = \epsilon_k$.
+    By definition of a construction sequence, there are three cases to consider:
+
+    \paragraph{Case 1}%
+
+      Suppose $\epsilon_k$ is a sentence symbol.
+      Then $\epsilon_{i_j}$ is also sentence symbol.
+
+    \paragraph{Case 2}%
+
+      Suppose $\epsilon_k = \mathcal{E}_{\neg}(\epsilon_a)$ for some $a < k$.
+      It must be that $A_4$ is not found in $\epsilon_a$, else an immediate
+        contradiction is raised.
+      Therefore $\epsilon_a$ is a member of $S'$ that precedes $\epsilon_{i_j}$.
+      Hence $\epsilon_{i_j} = \mathcal{E}_{\neg}(\epsilon_{i_a})$ for some
+        $a < j$.
+
+    \paragraph{Case 3}%
+
+      Suppose $\epsilon_k = \mathcal{E}_{\square}(\epsilon_a, \epsilon_b)$ for
+        some $a, b < k$ where $\square$ is one of the binary connectives
+        $\land$, $\lor$, $\Rightarrow$, $\Leftrightarrow$.
+      It must be that $A_4$ is found in neither $\epsilon_a$ nor $\epsilon_b$,
+        else an immediate contradiction is raised.
+      Therefore $\epsilon_a$ and $\epsilon_b$ is a member of $S'$, both of which
+        precede $\epsilon_{i_j}$.
+      Hence
+        $\epsilon_{i_j} = \mathcal{E}_{\square}(\epsilon_{i_a}, \epsilon_{i_b})$
+        for some $a, b < j$.
+
+    \paragraph{Conclusion}%
+
+      Since the above cases are exhaustive and apply to an arbitrary member of
+        $S'$, it must be that every member of $S'$ is valid.
+      Hence $S'$ is still a legal construction sequence.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 1.1.5}}%
 \hyperlabel{sub:exercise-1.1.5}
 
   Suppose that $\alpha$ is a wff not containing the negation symbol $\neg$.
-  \begin{enumerate}[(a)]
-    \item Show that the length of $\alpha$ (i.e., the number of symbols in the
-      string) is odd.
-    \item Show that more than a quarter of the symbols are sentence symbols.
-  \end{enumerate}
+
+\subsubsection{\sorry{Exercise 1.1.5a}}%
+\hyperlabel{ssub:exercise-1.1.5-a}
+
+  Show that the length of $\alpha$ (i.e., the number of symbols in the string)
+    is odd.
   \textit{Suggestion}: Apply induction to show that the length is of the form
-    $4k + 1$ and the number of sentence symbols is $k + 1$.
+    $4k + 1$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsubsection{\sorry{Exercise 1.1.6a}}%
+\hyperlabel{ssub:exercise-1.1.6-a}
+
+  Show that more than a quarter of the symbols are sentence symbols.
+  \textit{Suggestion}: Apply induction to show that the number of sentence
+    symbols is $k + 1$.
 
   \begin{proof}
     TODO

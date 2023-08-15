@@ -35,7 +35,8 @@
   \textbf{Addition} ($+$) is the \nameref{ref:binary-operation} on $\omega$ such
     that for any $m$ and $n$ in $\omega$, $$m + n = A_m(n).$$
 
-  \lean{Init/Prelude}{Add.add}
+  \lean{Init/Prelude}
+    {Add.add}
 
 \section{\defined{Axiom of Choice, First Form}}%
 \hyperlabel{ref:axiom-of-choice-1}
@@ -43,7 +44,8 @@
   For any relation $R$ there is a function $H \subseteq R$ with
     $\dom{H} = \dom{R}$.
 
-  \lean*{Init/Prelude}{Classical.choice}
+  \lean*{Init/Prelude}
+    {Classical.choice}
 
 \section{\defined{Axiom of Choice, Second Form}}%
 \hyperlabel{ref:axiom-of-choice-2}
@@ -51,7 +53,8 @@
   For any set $I$ and any function $H$ with domain $I$, if $H(i) \neq \emptyset$
     for all $i \in I$, then $$\bigtimes_{i \in I} H(i) \neq \emptyset.$$
 
-  \lean{Init/Prelude}{Classical.choice}
+  \lean{Init/Prelude}
+    {Classical.choice}
 
 \section{\defined{Binary Operation}}%
 \hyperlabel{ref:binary-operation}
@@ -79,7 +82,8 @@
     only if for all $x$ and $y$ in $A$,
     $$xRy \Rightarrow F(x)RF(y).$$
 
-  \lean{Init/Core}{Quotient.lift}
+  \lean{Init/Core}
+    {Quotient.lift}
 
 \section{\defined{Composition}}%
 \hyperlabel{ref:composition}
@@ -87,9 +91,11 @@
   The \textbf{composition} of sets $F$ and $G$ is
     $$F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.$$
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.comp}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.comp}
 
-  \lean{Mathlib/Data/Rel}{Rel.comp}
+  \lean{Mathlib/Data/Rel}
+    {Rel.comp}
 
 \section{\defined{Connected}}%
 \hyperlabel{ref:connected}
@@ -105,9 +111,11 @@
   The \textbf{domain} of set $R$, denoted $\dom{R}$, is given by
     $$x \in \dom{R} \iff \exists y \tuple{x, y} \in R.$$
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.dom}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.dom}
 
-  \lean{Mathlib/Data/Rel}{Rel.dom}
+  \lean{Mathlib/Data/Rel}
+    {Rel.dom}
 
 \section{\defined{Empty Set Axiom}}%
 \hyperlabel{ref:empty-set-axiom}
@@ -122,7 +130,8 @@
 A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   only if there is a one-to-one \nameref{ref:function} from $A$ onto $B$.
 
-  \lean*{Mathlib/Init/Function}{Function.Bijective}
+  \lean*{Mathlib/Init/Function}
+    {Function.Bijective}
 
 \section{\defined{Equivalence Class}}%
 \hyperlabel{ref:equivalence-class}
@@ -133,7 +142,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     (\textbf{modulo $R$}).
   If the relation $R$ is fixed by the context, we may write just $[x]$.
 
-  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.modEquiv}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.modEquiv}
 
 \section{\defined{Equivalence Relation}}%
 \hyperlabel{ref:equivalence-relation}
@@ -142,7 +152,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $R$ is a binary \nameref{ref:relation} on $A$ that is \nameref{ref:reflexive}
     on $A$, \nameref{ref:symmetric}, and \nameref{ref:transitive}.
 
-  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isEquivalence}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isEquivalence}
 
 \section{\defined{Exponentiation}}%
 \hyperlabel{ref:exponentiation}
@@ -157,7 +168,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   \textbf{Exponentiation} is the \nameref{ref:binary-operation} on $\omega$
     such that for any $m$ and $n$ in $\omega$, $$m^n = E_m(n).$$
 
-  \lean{Init/Prelude}{Pow.pow}
+  \lean{Init/Prelude}
+    {Pow.pow}
 
 \section{\defined{Extensionality Axiom}}%
 \hyperlabel{ref:extensionality-axiom}
@@ -166,7 +178,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$\forall A, \forall B,
         \left[\forall x, (x \in A \iff x \in B) \Rightarrow A = B\right].$$
 
-  \lean{Mathlib/Init/Set}{Set.ext}
+  \lean{Mathlib/Init/Set}
+    {Set.ext}
 
 \section{\defined{Field}}%
 \hyperlabel{ref:field}
@@ -174,7 +187,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   Given \nameref{ref:relation} $R$, the \textbf{field} of $R$, denoted $\fld{R}$,
     is given by $$\fld{R} = \dom{R} \cup \ran{R}.$$
 
-  \lean{Bookshelf/Enderton/Set/Relation}{Set.Relation.fld}
+  \lean{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.fld}
 
 \section{\defined{Finite Set}}%
 \hyperlabel{ref:finite-set}
@@ -182,7 +196,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   A set is \textbf{finite} if and only if it is \nameref{ref:equinumerous} to a
     \nameref{ref:natural-number}.
 
-  \lean{Mathlib/Data/Finset/Basic}{Finset}
+  \lean{Mathlib/Data/Finset/Basic}
+    {Finset}
 
 \section{\defined{Function}}%
 \hyperlabel{ref:function}
@@ -200,11 +215,14 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     only one $x$ such that $xFy$.
   One-to-one functions are sometimes called \textbf{injections}.
 
-  \lean*{Mathlib/Init/Function}{Function.Injective}
+  \lean*{Mathlib/Init/Function}
+    {Function.Injective}
 
-  \lean{Mathlib/Init/Function}{Function.Surjective}
+  \lean{Mathlib/Init/Function}
+    {Function.Surjective}
 
-  \lean{Mathlib/Init/Function}{Function.Bijective}
+  \lean{Mathlib/Init/Function}
+    {Function.Bijective}
 
 \section{\defined{Image}}%
 \hyperlabel{ref:image}
@@ -217,9 +235,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         & = \{v \mid (\exists u \in A) uFv\}.
     \end{align*}
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.image}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.image}
 
-  \lean{Mathlib/Data/Rel}{Rel.image}
+  \lean{Mathlib/Data/Rel}
+    {Rel.image}
 
 \section{\defined{Inductive Set}}%
 \hyperlabel{ref:inductive-set}
@@ -228,9 +248,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     and it is "closed under \nameref{ref:successor}", i.e.
     $$(\forall a \in A) a^+ \in A.$$
 
-  \lean{Prelude}{Nat}
+  \lean{Prelude}
+    {Nat}
 
-  \lean{Mathlib/Init/Set}{Set.univ}
+  \lean{Mathlib/Init/Set}
+    {Set.univ}
 
   \begin{note}
     Induction is baked into Lean's type system.
@@ -252,9 +274,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$(\exists A)\left[
       \emptyset \in A \land (\forall a \in A) a^+ \in A\right].$$
 
-  \lean{Prelude}{Nat}
+  \lean{Prelude}
+    {Nat}
 
-  \lean{Mathlib/Init/Set}{Set.univ}
+  \lean{Mathlib/Init/Set}
+    {Set.univ}
 
 \section{\defined{Inverse}}%
 \hyperlabel{ref:inverse}
@@ -262,9 +286,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   The \textbf{inverse} of a set $F$ is the set
     $$F^{-1} = \{\tuple{u, v} \mid vFu\}.$$
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.inv}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.inv}
 
-  \lean{Mathlib/Data/Rel}{Rel.inv}
+  \lean{Mathlib/Data/Rel}
+    {Rel.inv}
 
 \section{\defined{Irreflexive}}%
 \hyperlabel{ref:irreflexive}
@@ -272,7 +298,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   A binary relation $R$ on set $A$ is \textbf{irreflexive} if there is no
     $x \in A$ for which $xRx$.
 
-  \lean*{Mathlib/Init/Algebra/Classes}{IsIrrefl}
+  \lean*{Mathlib/Init/Algebra/Classes}
+    {IsIrrefl}
 
 \section{\defined{Linear Ordering}}
 \hyperlabel{ref:linear-ordering}
@@ -287,7 +314,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     \item $R$ is \nameref{ref:trichotomous}.
   \end{enumerate}
 
-  \lean{Mathlib/Init/Algebra/Classes}{IsStrictTotalOrder}
+  \lean{Mathlib/Init/Algebra/Classes}
+    {IsStrictTotalOrder}
 
   \begin{note}
     This definition does not agree with how Lean defines a linear order.
@@ -320,7 +348,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   \textbf{Multiplication} ($\cdot$) is the \nameref{ref:binary-operation} on
     $\omega$ such that for any $m$ and $n$ in $\omega$, $$m \cdot n = M_m(n).$$
 
-  \lean{Init/Prelude}{Mul.mul}
+  \lean{Init/Prelude}
+    {Mul.mul}
 
 \section{\defined{Natural Number}}%
 \hyperlabel{ref:natural-number}
@@ -329,7 +358,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   The set of all natural numbers exists by virtue of \nameref{sub:theorem-4a}.
   This set is denoted as $\omega$.
 
-  \lean*{Prelude}{Nat}
+  \lean*{Prelude}
+    {Nat}
 
 \section{\defined{Ordered Pair}}%
 \hyperlabel{ref:ordered-pair}
@@ -337,9 +367,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   For any sets $u$ and $v$, the \textbf{ordered pair} $\tuple{u, v}$ is
     the set $\{\{u\}, \{u, v\}\}$.
 
-  \code*{Bookshelf/Enderton/Set/OrderedPair}{OrderedPair}
+  \code*{Bookshelf/Enderton/Set/OrderedPair}
+    {OrderedPair}
 
-  \lean{Prelude}{Prod}
+  \lean{Prelude}
+    {Prod}
 
 \section{\defined{Ordering on \texorpdfstring{$\omega$}{Natural Numbers}}}%
 \hyperlabel{ref:ordering-natural-numbers}
@@ -356,7 +388,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         & \iff m < n \lor m = n.
     \end{align*}
 
-  \lean{Init/Prelude}{Nat.lt}
+  \lean{Init/Prelude}
+    {Nat.lt}
 
 \section{\defined{Pair Set}}%
 \hyperlabel{ref:pair-set}
@@ -364,9 +397,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   For any sets $u$ and $v$, the \textbf{pair set $\{u, v\}$} is the set whose
     only members are $u$ and $v$.
 
-  \lean*{Mathlib/Init/Set}{Set.insert}
+  \lean*{Mathlib/Init/Set}
+    {Set.insert}
 
-  \lean{Mathlib/Init/Set}{Set.singleton}
+  \lean{Mathlib/Init/Set}
+    {Set.singleton}
 
 \section{\defined{Pairing Axiom}}%
 \hyperlabel{ref:pairing-axiom}
@@ -375,9 +410,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$\forall u, \forall v, \exists B, \forall x,
         (x \in B \iff x = u \text{ or } x = v).$$
 
-  \lean{Mathlib/Init/Set}{Set.insert}
+  \lean{Mathlib/Init/Set}
+    {Set.insert}
 
-  \lean{Mathlib/Init/Set}{Set.singleton}
+  \lean{Mathlib/Init/Set}
+    {Set.singleton}
 
 \section{\defined{Partition}}%
 \hyperlabel{ref:partition}
@@ -389,7 +426,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       \item each element of $A$ is in some set in $\Pi$.
     \end{enumerate}
 
-  \lean{Mathlib/Data/Setoid/Partition}{Setoid.IsPartition}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.Partition}
+
+  \lean{Mathlib/Data/Setoid/Partition}
+    {Setoid.IsPartition}
 
 \section{\defined{Peano System}}%
 \hyperlabel{ref:peano-system}
@@ -404,7 +445,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       itself.
   \end{enumerate}
 
-  \code{Common/Set/Peano}{Peano.System}
+  \code{Common/Set/Peano}
+    {Peano.System}
 
 \section{\defined{Power Set}}%
 \hyperlabel{ref:power-set}
@@ -412,7 +454,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   For any set $a$, the \textbf{power set $\powerset{a}$} is the set whose
     members are exactly the subsets of $a$.
 
-  \lean*{Mathlib/Init/Set}{Set.powerset}
+  \lean*{Mathlib/Init/Set}
+    {Set.powerset}
 
 \section{\defined{Power Set Axiom}}%
 \hyperlabel{ref:power-set-axiom}
@@ -420,7 +463,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   For any set $a$, there is a set whose members are exactly the subsets of $a$:
     $$\forall a, \exists B, \forall x, (x \in B \iff x \subseteq a).$$
 
-  \lean{Mathlib/Init/Set}{Set.powerset}
+  \lean{Mathlib/Init/Set}
+    {Set.powerset}
 
 \section{\defined{Proper Subset}}%
 \hyperlabel{ref:proper-subset}
@@ -429,7 +473,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     only if it is a subset of $B$ that is unequal to $B$.
   $$A \subset B \iff A \subseteq B \land A \neq B.$$
 
-  \lean{Std/Classes/SetNotation}{HasSSubset}
+  \lean{Std/Classes/SetNotation}
+    {HasSSubset}
 
 \section{\defined{Quotient Set}}%
 \hyperlabel{ref:quotient-set}
@@ -439,7 +484,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     are the equivalence classes.
   The expression $A / R$ is read "$A$ modulo $R$.
 
-  \lean*{Init/Core}{Quotient}
+  \lean*{Init/Core}
+    {Quotient}
 
 \section{\defined{Range}}%
 \hyperlabel{ref:range}
@@ -447,9 +493,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   The \textbf{range} of set $R$, denoted $\ran{R}$, is given by
     $$x \in \ran{R} \iff \exists t \tuple{t, x} \in R.$$
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.ran}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.ran}
 
-  \lean{Mathlib/Data/Rel}{Rel.codom}
+  \lean{Mathlib/Data/Rel}
+    {Rel.codom}
 
 \section{\defined{Reflexive}}%
 \hyperlabel{ref:reflexive}
@@ -457,16 +505,19 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   A binary relation $R$ is \textbf{reflexive} on $A$ if and only if $xRx$ for
     all $x \in A$.
 
-  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isReflexive}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isReflexive}
 
-  \lean{Mathlib/Init/Algebra/Classes}{IsRefl}
+  \lean{Mathlib/Init/Algebra/Classes}
+    {IsRefl}
 
 \section{\defined{Relation}}%
 \hyperlabel{ref:relation}
 
   A \textbf{relation} is a set of \nameref{ref:ordered-pair}s.
 
-  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation}
 
   \lean{Mathlib/Data/Rel}{Rel}
 
@@ -476,14 +527,16 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   The \textbf{restriction} of a set $F$ to set $A$ is the set
     $$F \restriction A = \{\tuple{u, v} \mid uFv \land u \in A\}.$$
 
-  \code{Bookshelf/Enderton/Set/Relation}{Set.Relation.restriction}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.restriction}
 
 \section{\defined{Successor}}%
 \hyperlabel{ref:successor}
 
   For any set $a$, its \textbf{successor} is defined by $$a^+ = a \cup \{a\}.$$
 
-  \lean{Prelude}{Nat.succ}
+  \lean{Prelude}
+    {Nat.succ}
 
   \begin{note}
     The corresponding Lean definition refers to the `Nat.succ` constructor.
@@ -498,7 +551,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$\forall t_1, \cdots \forall t_k, \forall c,
         \exists B, \forall x, (x \in B \iff x \in c \land \phi).$$
 
-  \lean{Mathlib/Init/Set}{Set.Subset}
+  \lean{Mathlib/Init/Set}
+    {Set.Subset}
 
 \section{\defined{Symmetric}}%
 \hyperlabel{ref:symmetric}
@@ -506,7 +560,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   A binary relation $R$ is \textbf{symmetric} if and only if whenever $xRy$ then
     $yRx$.
 
-  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isSymmetric}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isSymmetric}
 
 \section{\defined{Symmetric Difference}}%
 \hyperlabel{ref:symmetric-difference}
@@ -514,7 +569,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   The \textbf{symmetric difference} $A + B$ of sets $A$ and $B$ is the set
     $(A - B) \cup (B - A)$.
 
-  \lean*{Mathlib/Data/Set/Basic}{symmDiff\_def}
+  \lean*{Mathlib/Data/Set/Basic}
+    {symmDiff\_def}
 
 \section{\defined{Transitive}}%
 \hyperlabel{ref:transitive}
@@ -522,9 +578,11 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
   A binary relation $R$ is \textbf{transitive} if and only if whenever $xRy$ and
     $yRz$, then $xRz$.
 
-  \code*{Bookshelf/Enderton/Set/Relation}{Set.Relation.isTransitive}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isTransitive}
 
-  \lean{Mathlib/Init/Algebra/Classes}{IsTrans}
+  \lean{Mathlib/Init/Algebra/Classes}
+    {IsTrans}
 
 \section{\defined{Transitive Set}}%
 \hyperlabel{ref:transitive-set}
@@ -541,7 +599,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$xRy, \quad x = y, \quad yRx$$
     holds.
 
-  \lean*{Mathlib/Init/Algebra/Classes}{IsTrichotomous}
+  \lean*{Mathlib/Init/Algebra/Classes}
+    {IsTrichotomous}
 
 \section{\defined{Union Axiom}}%
 \hyperlabel{ref:union-axiom}
@@ -551,7 +610,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$\forall A, \exists B, \forall x
       \left[ x \in B \iff (\exists b \in A) x \in b \right]$$
 
-  \lean{Mathlib/Data/Set/Lattice}{Set.sUnion}
+  \lean{Mathlib/Data/Set/Lattice}
+    {Set.sUnion}
 
 \section{\defined{Union Axiom, Preliminary Form}}%
 \hyperlabel{ref:union-axiom-preliminary-form}
@@ -561,7 +621,8 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     $$\forall a, \forall b, \exists B, \forall x,
         (x \in B \iff x \in a \text{ or } x \in b).$$
 
-  \lean{Mathlib/Init/Set}{Set.union}
+  \lean{Mathlib/Init/Set}
+    {Set.union}
 
 \endgroup
 

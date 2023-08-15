@@ -44,6 +44,7 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
         <li>Smullyan, Raymond M. To Mock a Mockingbird: And Other Logic Puzzles Including an Amazing Adventure in Combinatory Logic. Oxford: Oxford university press, 2000.</li>
       </ul>
 
+      <h2>Legend</h2>
       <p>
         A color/symbol code is used on generated PDF headers to indicate their
         status:

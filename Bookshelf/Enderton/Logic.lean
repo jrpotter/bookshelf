@@ -1,3 +1,1 @@
-import Bookshelf.Enderton.Logic.Chapter_0
-
-#check Iff
+import Bookshelf.Enderton.Logic.Chapter_1

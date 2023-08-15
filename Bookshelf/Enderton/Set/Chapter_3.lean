@@ -1941,7 +1941,7 @@ Show that `Rₚ` is an equivalence relation on `A`. (This is a formalized versio
 of the discussion at the beginning of this section.)
 -/
 theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
-  (hP : isPartition P A) (Rₚ : Set.Relation α)
+  (hP : Partition P A) (Rₚ : Set.Relation α)
   (hRₚ : ∀ x y, (x, y) ∈ Rₚ ↔ ∃ B ∈ P, x ∈ B ∧ y ∈ B)
   : isEquivalence Rₚ A := by
   have hRₚ_eq : Rₚ = { p | ∃ B ∈ P, p.1 ∈ B ∧ p.2 ∈ B } := by
@@ -2014,7 +2014,7 @@ equivalence relation on `A`. Show that if we start with the equivalence relation
 `Rₚ` of the preceding exercise, then the partition `A / Rₚ` is just `P`.
 -/
 theorem exercise_3_38 {P : Set (Set α)} {A : Set α}
-  (hP : isPartition P A) (Rₚ : Set.Relation α)
+  (hP : Partition P A) (Rₚ : Set.Relation α)
   (hRₚ : ∀ x y, (x, y) ∈ Rₚ ↔ ∃ B ∈ P, x ∈ B ∧ y ∈ B)
   : modEquiv (exercise_3_37 hP Rₚ hRₚ) = P := by
   have hRₚ_eq : Rₚ = { p | ∃ B ∈ P, p.1 ∈ B ∧ p.2 ∈ B } := by

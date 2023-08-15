@@ -575,7 +575,7 @@ theorem neighborhood_mem_imp_relate {R : Set.Relation α} {A : Set α}
 A **partition** `Π` of a set `A` is a set of nonempty subsets of `A` that is
 disjoint and exhaustive.
 -/
-structure isPartition (P : Set (Set α)) (A : Set α) : Prop where
+structure Partition (P : Set (Set α)) (A : Set α) : Prop where
   p_subset : ∀ p ∈ P, p ⊆ A 
   nonempty : ∀ p ∈ P, Set.Nonempty p
   disjoint : ∀ a ∈ P, ∀ b, b ∈ P → a ≠ b → a ∩ b = ∅
@@ -585,7 +585,7 @@ structure isPartition (P : Set (Set α)) (A : Set α) : Prop where
 Membership of sets within `P` is unique.
 -/
 theorem partition_mem_mem_eq {P : Set (Set α)} {A : Set α}
-  (hP : isPartition P A) (hx : x ∈ A)
+  (hP : Partition P A) (hx : x ∈ A)
   : ∃! B, B ∈ P ∧ x ∈ B := by
   have ⟨B, hB⟩ := hP.exhaustive x hx
   refine ⟨B, hB, ?_⟩
@@ -606,7 +606,7 @@ def modEquiv {A : Set α} {R : Relation α} (_ : isEquivalence R A) :=
 Show the sets formed by `modEquiv` do indeed form a `partition`.
 -/
 theorem modEquiv_partition {A : Set α} {R : Relation α} (hR : isEquivalence R A)
-  : isPartition (modEquiv hR) A := by
+  : Partition (modEquiv hR) A := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro p hp
     have ⟨x, hx⟩ := hp
