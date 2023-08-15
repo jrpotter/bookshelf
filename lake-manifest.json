@@ -20,6 +20,12 @@
     "name": "lake",
     "inputRev?": "master"}},
   {"git":
+   {"url": "https://github.com/fgdorais/lean4-unicode-basic",
+    "subDir?": null,
+    "rev": "f09250282cea3ed8c010f430264d9e8e50d7bc32",
+    "name": "lean4-unicode-basic",
+    "inputRev?": "main"}},
+  {"git":
    {"url": "https://github.com/mhuisi/lean4-cli",
     "subDir?": null,
     "rev": "5a858c32963b6b19be0d477a30a1f4b6c120be7e",
@@ -28,7 +34,7 @@
   {"git":
    {"url": "https://github.com/leanprover-community/mathlib4.git",
     "subDir?": null,
-    "rev": "fa6fd7946dd9c980955a878da81134c4f6e01e9e",
+    "rev": "280a9f50ed49fc27396d06d438fde63691818268",
     "name": "mathlib",
     "inputRev?": "master"}},
   {"git":
@@ -40,7 +46,7 @@
   {"git":
    {"url": "https://github.com/JLimperg/aesop",
     "subDir?": null,
-    "rev": "354432d437fb37738ed93ac6988669d78a870ed0",
+    "rev": "d13a9666e6f430b940ef8d092f1219e964b52a09",
     "name": "aesop",
     "inputRev?": "master"}},
   {"git":
@@ -50,20 +56,8 @@
     "name": "leanInk",
     "inputRev?": "doc-gen"}},
   {"git":
-   {"url": "https://github.com/fgdorais/lean4-unicode-basic",
-    "subDir?": null,
-    "rev": "f09250282cea3ed8c010f430264d9e8e50d7bc32",
-    "name": "UnicodeBasic",
-    "inputRev?": "main"}},
-  {"git":
    {"url": "https://github.com/leanprover/std4.git",
     "subDir?": null,
-    "rev": "7601c54efadd70b688a163f5dcc11ae0ccdf7621",
-    "name": "std4",
-    "inputRev?": "main"}},
-  {"git":
-   {"url": "https://github.com/leanprover/std4",
-    "subDir?": null,
-    "rev": "e3c2be331da9ddeef7f82ca363f072a68d7210b3",
+    "rev": "dbffa8cb31b0c51b151453c4ff8f00ede2a84ed8",
     "name": "std",
     "inputRev?": "main"}}]}

@@ -14,7 +14,7 @@ require Cli from git
 require CMark from git
   "https://github.com/xubaiw/CMark.lean" @
     "main"
-require UnicodeBasic from git
+require «lean4-unicode-basic» from git
   "https://github.com/fgdorais/lean4-unicode-basic" @
     "main"
 require lake from git
@@ -26,7 +26,7 @@ require leanInk from git
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git" @
     "master"
-require std4 from git
+require std from git
   "https://github.com/leanprover/std4.git" @
     "main"
 
