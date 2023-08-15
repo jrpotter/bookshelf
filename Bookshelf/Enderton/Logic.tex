@@ -63,7 +63,7 @@
     \end{align*}
 
   \code*{Bookshelf/Enderton/Logic/Chapter\_1}
-    {Enderton.Logic.Chapter\_1.WFF}
+    {Enderton.Logic.Chapter\_1.Wff}
 
   \lean{Init/Prelude}
     {Not}
@@ -96,7 +96,7 @@
     times the \nameref{ref:formula-building-operations}.
 
   \code*{Bookshelf/Enderton/Logic/Chapter\_1}
-    {Enderton.Logic.Chapter\_1.WFF}
+    {Enderton.Logic.Chapter\_1.Wff}
 
 \endgroup
 
@@ -168,6 +168,9 @@
       all five formula-building operations, then $S$ is the set of \textit{all}
       wffs.
   \end{theorem}
+
+  \code{Bookshelf/Enderton/Logic/Chapter\_1}
+    {Enderton.Logic.Chapter\_1.Wff.rec}
 
   \begin{proof}
     We note every \nameref{ref:well-formed-formula} can be characterized by a
@@ -244,6 +247,109 @@
 
   \end{proof}
 
+\subsection{\unverified{Balanced Parentheses}}%
+\hyperlabel{sub:balanced-parentheses}
+
+  \begin{lemma}
+    All well-formed formulas have an equal number of left and right parentheses.
+  \end{lemma}
+
+  \begin{proof}
+
+    Define $$S = \{ \phi \mid
+      \phi \text{ is a wff with a balanced number of parentheses} \}.$$
+    We prove that (i) all the sentence symbols are members of $S$ and (ii)
+      $S$ is closed under the five \nameref{ref:formula-building-operations}.
+    We then conclude with (iii) the proof of the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:balanced-parentheses-i}
+
+      By definition, well-formed formulas comprising a single sentence symbol
+        do not have any parentheses.
+      Thus all sentence symbols are members of $S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:balanced-parentheses-ii}
+
+      Let $\alpha, \beta \in S$.
+      By definition, $\mathcal{E}_{\neg}(\alpha) = (\neg\alpha)$.
+      Thus one additional left and right parenthesis is introduced.
+      Since $\alpha$ is assumed to have an equal number of left and right
+        parentheses, $\mathcal{E}_{\neg}(\alpha) \in S$.
+      Likewise,
+        $\mathcal{E}_{\square}(\alpha, \beta) = (\alpha \mathop{\square} \beta)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      Again, an additional left and right parenthesis is introduced.
+      Since $\alpha$ and $\beta$ are assumed to have a balanced number of
+        parentheses, $\mathcal{E}_{\square}(\alpha, \beta) \in S$.
+      Hence $S$ is closed under the five formula-building operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:balanced-parentheses-i} and
+        \nameref{par:balanced-parentheses-ii}, the
+        \nameref{sub:induction-principle-1} implies $S$ is the set of all wffs.
+      Thus all well-formed formulas have an equal number of left and right
+        parentheses.
+
+  \end{proof}
+
+\subsection{\verified{Parentheses Count}}%
+\hyperlabel{sub:parentheses-count}
+
+  \begin{lemma}
+    Let $\phi$ be a well-formed formula and $c$ be the number of places at which
+      a sentential connective symbol exists.
+    Then there is $2c$ parentheses in $\phi$.
+  \end{lemma}
+
+  \code{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.paren\_count\_double\_sentential\_count}
+
+  \begin{proof}
+
+    Define $$S = \{ \phi \mid
+      \phi \text{ is a wff with } 2c \text{ parentheses} \}.$$
+    We prove that (i) all the sentence symbols are members of $S$ and (ii)
+      $S$ is closed under the five \nameref{ref:formula-building-operations}.
+    We then conclude with (iii) the proof of the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:parentheses-count-i}
+
+      A sentence symbol, by itself, has no sentential connectives.
+      Likewise, it has 0 parentheses.
+      Thus $S$ contains every sentence symbol.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:parentheses-count-ii}
+
+      Let $\alpha, \beta \in S$.
+      By definition, $\mathcal{E}_{\neg}(\alpha) = (\neg \alpha)$.
+      Then $\mathcal{E}_{\neg}(\alpha)$ introduces two additional parentheses
+         and one additional sentential connective symbol.
+      Thus $\mathcal{E}_{\neg}(\alpha) \in S$.
+      Likewise,
+        $\mathcal{E}_{\square}(\alpha, \beta) = (\alpha \mathop{\square} \beta)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      $\mathcal{E}_{\square}(\alpha, \beta)$ also introduces two additional
+        parentheses and one additional connective symbol.
+      Thus $\mathcal{E}_{\square}(\alpha, \beta) \in S$.
+      Hence $S$ is closed under the five formula-building operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:parentheses-count-i} and
+        \nameref{par:parentheses-count-ii}, the
+        \nameref{sub:induction-principle-1} implies $S$ is the set of all wffs.
+      Thus every wff has $2c$ parentheses in $\phi$, where $c$ denotes the
+        number of places at which a sentential connective symbol exists.
+
+  \end{proof}
+
 \section{Exercises 1}%
 \hyperlabel{sec:exercises-1}
 
@@ -258,7 +364,7 @@
   \begin{answer}
 
     We begin first with the English sentences:
-      \begin{enumerate}[i]
+      \begin{enumerate}[(i)]
         \item He can juggle beach balls, bowling pins, and hackysacks unless
           he is tired, in which case he can only juggle beach balls.
         \item
@@ -327,21 +433,21 @@
     \hyperlabel{par:exercise-1.1.2-ii}
 
       Define $L$ to be the length function mapping arbitrary wff to its length.
-      Let $\phi, \psi \in S$.
-      Then $L(\phi)$ and $L(\psi)$ each evaluate to 1, 4, 5, or a value larger
-        than 6.
+      Let $\alpha, \beta \in S$.
+      Then $L(\alpha)$ and $L(\beta)$ each evaluate to 1, 4, 5, or a value
+        larger than 6.
 
-      By definition, $\mathcal{E}_{\neg}(\phi) = (\neg \phi)$.
-      Thus $L(\mathcal{E}_{\neg}(\phi)) = L(\phi) + 3$.
-      Enumerating through the possible values of $L(\phi)$ shows
-        $\mathcal{E}_{\neg}(\phi) \in S$.
+      By definition, $\mathcal{E}_{\neg}(\alpha) = (\neg \alpha)$.
+      Thus $L(\mathcal{E}_{\neg}(\alpha)) = L(\alpha) + 3$.
+      Enumerating through the possible values of $L(\alpha)$ shows
+        $\mathcal{E}_{\neg}(\alpha) \in S$.
       Likewise,
-        $\mathcal{E}_{\square}(\phi, \psi) = (\phi \mathop{\square} \psi)$
+        $\mathcal{E}_{\square}(\alpha, \beta) = (\alpha \mathop{\square} \beta)$
         where $\square$ is one of the binary connectives $\land$, $\lor$,
           $\Rightarrow$, $\Leftrightarrow$.
-      Thus $L(\mathcal{E}_{\square}(\phi, \psi)) = L(\phi) + L(\psi) + 3$.
-      Again, enumerating through the possible values of $L(\phi)$ and $L(\psi)$
-        shows $\mathcal{E}_{\square}(\phi, \psi) \in S$.
+      Thus $L(\mathcal{E}_{\square}(\alpha, \beta)) = L(\alpha) + L(\beta) + 3$.
+      Again, enumerating through the possible values of $L(\alpha)$ and
+        $L(\beta)$ shows $\mathcal{E}_{\square}(\alpha, \beta) \in S$.
 
       Hence $S$ is closed under the five formula-building operations.
 
@@ -368,7 +474,7 @@
 
   \end{proof}
 
-\subsection{\pending{Exercise 1.1.3}}%
+\subsection{\verified{Exercise 1.1.3}}%
 \hyperlabel{sub:exercise-1.1.3}
 
   Let $\alpha$ be a wff; let $c$ be the number of places at which binary
@@ -378,6 +484,9 @@
   (For example, if $\alpha$ is $(A \Rightarrow (\neg A))$ then $c = 1$ and
     $s = 2$.)
   Show by using the induction principle that $s = c + 1$.
+
+  \code*{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_3}
 
   \begin{proof}
 
@@ -413,10 +522,10 @@
         $\mathcal{E}_{\neg}(\alpha)$ does not change.
       Thus $\mathcal{E}_{\neg}(\alpha) \in S$.
       Likewise,
-        $\mathcal{E}_{\square}(\phi, \psi) = (\phi \mathop{\square} \psi)$
+        $\mathcal{E}_{\square}(\alpha, \beta) = (\alpha \mathop{\square} \beta)$
         where $\square$ is one of the binary connectives $\land$, $\lor$,
           $\Rightarrow$, $\Leftrightarrow$.
-      Therefore $\mathcal{E}_{\square}(\phi, \psi)$ has $s_\alpha + s_\beta$
+      Therefore $\mathcal{E}_{\square}(\alpha, \beta)$ has $s_\alpha + s_\beta$
         sentence symbols and $c_\alpha + c_\beta + 1$ binary connective symbols.
       But \eqref{sub:exercise-1.1.3-eq1} implies
         \begin{align*}
@@ -424,7 +533,7 @@
             & = (c_\alpha + 1) + (c_\beta + 1) \\
             & = (c_\alpha + c_\beta + 1) + 1,
         \end{align*}
-      meaning $\mathcal{E}_{\square}(\phi, \psi) \in S$.
+      meaning $\mathcal{E}_{\square}(\alpha, \beta) \in S$.
 
       Hence $S$ is closed under the five formula-building operations.
 
@@ -493,46 +602,101 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 1.1.5}}%
+\subsection{\pending{Exercise 1.1.5}}%
 \hyperlabel{sub:exercise-1.1.5}
 
   Suppose that $\alpha$ is a wff not containing the negation symbol $\neg$.
 
-\subsubsection{\sorry{Exercise 1.1.5a}}%
-\hyperlabel{ssub:exercise-1.1.5-a}
+\subsubsection{\verified{Exercise 1.1.5a}}%
+\hyperlabel{ssub:exercise-1.1.5.a}
 
   Show that the length of $\alpha$ (i.e., the number of symbols in the string)
     is odd.
   \textit{Suggestion}: Apply induction to show that the length is of the form
     $4k + 1$.
 
+  \code*{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_5\_a}
+
   \begin{proof}
-    TODO
+
+    Define $L$ to be the length function mapping arbitrary
+      \nameref{ref:well-formed-formula} to its length and let
+      \begin{equation}
+        \hyperlabel{ssub:exercise-1.1.5.a-eq1}
+        S = \{\phi \mid
+          \phi \text{ is a wff containing } \neg \text{ or }
+          \exists k \in \mathbb{N}, L(\phi) = 4k + 1\}.
+      \end{equation}
+    We prove that (i) all the sentence symbols are members of $S$ and (ii)
+      $S$ is closed under the five \nameref{ref:formula-building-operations}.
+    We then conclude with (iii) the proof of the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.1.5.a-i}
+
+      Every sentence symbol has length 1 by definition.
+      That is, every sentence symbol has length $(4)(0) + 1$.
+      Hence $S$ contains every sentence symbol.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-1.1.5.a-ii}
+
+      Let $\alpha, \beta \in S$.
+      Then there exists some $k_\alpha$ and $k_\beta$ such that
+        $L(\alpha) = 4k_\alpha + 1$ and $L(\beta) = 4k_\beta + 1$.
+      Clearly $S$ is closed under $\mathcal{E}_{\neg}$.
+      Next consider
+        $\mathcal{E}_{\square}(\alpha, \beta) = (\alpha \mathop{\square} \beta)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      Then
+        \begin{align*}
+          L(\alpha, \beta)
+            & = L(\alpha) + L(\beta) + 3 \\
+            & = (4k_\alpha + 1) + (4k_\beta + 1) + 3 \\
+            & = 4k_\alpha + 4k_\beta + 4 + 1 \\
+            & = 4(k_\alpha + k_\beta + 1) + 1.
+        \end{align*}
+      Therefore, there exists a $k \in \mathbb{N}$, namely
+        $k = k_\alpha + k_\beta + 1$, such that
+        $L(\mathcal{E}_{\square}(\alpha, \beta)) = 4k + 1$.
+
+      Hence $S$ is closed under the five formula-building operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-1.1.5.a-i} and \nameref{par:exercise-1.1.5.a-ii},
+        the \nameref{sub:induction-principle-1} indicates $S$ is the set of all
+        wffs.
+      Thus all well-formed formulas not containing symbol $\neg$ has length
+        $4k + 1$ for some $k \in \mathbb{N}$.
+      Therefore these well-formed formulas have odd length.
+
   \end{proof}
 
-\subsubsection{\sorry{Exercise 1.1.6a}}%
-\hyperlabel{ssub:exercise-1.1.6-a}
+\subsubsection{\pending{Exercise 1.1.5b}}%
+\hyperlabel{ssub:exercise-1.1.5-b}
 
   Show that more than a quarter of the symbols are sentence symbols.
   \textit{Suggestion}: Apply induction to show that the number of sentence
-    symbols is $k + 1$.
+    symbols is of the form $k + 1$.
+
+  \code*{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_5\_b}
 
   \begin{proof}
-    TODO
-  \end{proof}
 
-\subsection{\sorry{Exercise 1.1.6}}%
-\hyperlabel{sub:exercise-1.1.6}
+    Let $\phi$ be a \nameref{ref:well-formed-formula}.
+    By \nameref{sub:exercise-1.1.3}, the number of sentence symbols of $\phi$ is
+      $k + 1$, where $k$ is the number of places at which binary connective
+      symbols occur in $\phi$.
+    By \nameref{sub:parentheses-count}, the number of parentheses in $\phi$ is
+      $2k$.
+    Thus $\phi$ has length $(k + 1) + k + 2k = 4k + 1$.
+    But $$\frac{k + 1}{4k + 1} > \frac{k + 1}{4k + 4} = \frac{1}{4}.$$
+    Hence more than a quarter of the symbols of $\phi$ are sentence symbols.
 
-  Suppose that $\alpha$ is a wff not containing the negation symbol $\neg$.
-  \begin{enumerate}[(a)]
-    \item Show that the length of $\alpha$ (i.e., the number of symbols in the
-      string) is odd.
-    \item Show that more than a quarter of the symbols are sentence symbols.
-  \end{enumerate}
-
-  \begin{proof}
-    TODO
   \end{proof}
 
 \end{document}

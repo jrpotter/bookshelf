@@ -1,6 +1,9 @@
+import Common.Logic.Basic
 import Common.Nat.Basic
+import Mathlib.Algebra.Parity
 import Mathlib.Data.Nat.Basic
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 /-! # Enderton.Logic.Chapter_1
 
@@ -23,7 +26,7 @@ inductive Wff where
 namespace Wff
 
 /--
-Returns the length of the expression, including symbols.
+Returns the length of the expression, i.e. a count of all symbols..
 -/
 def length : Wff → ℕ
   | Wff.SS   _     => 1
@@ -34,7 +37,7 @@ def length : Wff → ℕ
   | Wff.Iff  e₁ e₂ => length e₁ + length e₂ + 3
 
 /--
-Every well-formed formula has a positive length.
+Every `Wff` has a positive length.
 -/
 theorem length_gt_zero (φ : Wff)
   : length φ > 0 := by
@@ -47,16 +50,122 @@ theorem length_gt_zero (φ : Wff)
   | Cond _ _
   |  Iff _ _ => simp
 
+/--
+The number of sentence symbols found in the provided `Wff`.
+-/
+def sentenceSymbolCount : Wff → ℕ
+  | Wff.SS   _     => 1
+  | Wff.Not  e     => sentenceSymbolCount e
+  | Wff.And  e₁ e₂
+  | Wff.Or   e₁ e₂
+  | Wff.Cond e₁ e₂
+  | Wff.Iff  e₁ e₂ => sentenceSymbolCount e₁ + sentenceSymbolCount e₂
+
+/--
+The number of sentential connective symbols found in the provided `Wff`.
+-/
+def sententialSymbolCount : Wff → ℕ
+  | Wff.SS   _     => 0
+  | Wff.Not  e     => sententialSymbolCount e + 1
+  | Wff.And  e₁ e₂
+  | Wff.Or   e₁ e₂
+  | Wff.Cond e₁ e₂
+  | Wff.Iff  e₁ e₂ => sententialSymbolCount e₁ + sententialSymbolCount e₂ + 1
+
+/--
+The number of binary connective symbols found in the provided `Wff`.
+-/
+def binarySymbolCount : Wff → ℕ
+  | Wff.SS   _     => 0
+  | Wff.Not  e     => binarySymbolCount e
+  | Wff.And  e₁ e₂
+  | Wff.Or   e₁ e₂
+  | Wff.Cond e₁ e₂
+  | Wff.Iff  e₁ e₂ => binarySymbolCount e₁ + binarySymbolCount e₂ + 1
+
+/--
+The number of parentheses found in the provided `Wff`.
+-/
+def parenCount : Wff → ℕ
+  | Wff.SS   _     => 0
+  | Wff.Not  e     => 2 + parenCount e
+  | Wff.And  e₁ e₂
+  | Wff.Or   e₁ e₂
+  | Wff.Cond e₁ e₂
+  | Wff.Iff  e₁ e₂ => 2 + parenCount e₁ + parenCount e₂
+
+/--
+Whether or not the `Wff` contains a `¬`.
+-/
+def hasNotSymbol : Wff → Prop
+  | Wff.SS   _     => False
+  | Wff.Not  _     => True
+  | Wff.And  e₁ e₂
+  | Wff.Or   e₁ e₂
+  | Wff.Cond e₁ e₂
+  | Wff.Iff  e₁ e₂ => hasNotSymbol e₁ ∨ hasNotSymbol e₂
+
+/--
+If a `Wff` does not contain the `¬` symbol, it has the same number of sentential
+connective symbols as it does binary connective symbols. In other words, the
+negation symbol is the only non-binary sentential connective.
+-/
+lemma no_neg_sentential_count_eq_binary_count {φ : Wff} (h : ¬φ.hasNotSymbol)
+  : φ.sententialSymbolCount = φ.binarySymbolCount := by
+  sorry
+
+/-- #### Parentheses Count
+
+Let `φ` be a well-formed formula and `c` be the number of places at which a
+sentential connective symbol exists. Then there is `2c` parentheses in `φ`.
+-/
+theorem paren_count_double_sentential_count (φ : Wff)
+  : φ.parenCount = 2 * φ.sententialSymbolCount := by
+  induction φ with
+  | SS _ =>
+    unfold parenCount sententialSymbolCount
+    simp
+  | Not e ih =>
+    unfold parenCount sententialSymbolCount
+    rw [ih]
+    ring
+  | And  e₁ e₂ ih₁ ih₂
+  | Or   e₁ e₂ ih₁ ih₂
+  | Cond e₁ e₂ ih₁ ih₂
+  | Iff  e₁ e₂ ih₁ ih₂ =>
+    unfold parenCount sententialSymbolCount
+    rw [ih₁, ih₂]
+    ring
+
+/--
+The length of a `Wff` corresponds to the summation of sentence symbols,
+sentential connective symbols, and parentheses.
+-/
+theorem length_eq_sum_symbol_count (φ : Wff)
+  : φ.length = φ.sentenceSymbolCount +
+               φ.sententialSymbolCount +
+               φ.parenCount := by
+  induction φ with
+  | SS _ =>
+    unfold length sentenceSymbolCount sententialSymbolCount parenCount
+    simp
+  | Not e ih =>
+    unfold length sentenceSymbolCount sententialSymbolCount parenCount
+    rw [ih]
+    ac_rfl
+  | And  e₁ e₂ ih₁ ih₂
+  | Or   e₁ e₂ ih₁ ih₂
+  | Cond e₁ e₂ ih₁ ih₂
+  | Iff  e₁ e₂ ih₁ ih₂ =>
+    unfold length sentenceSymbolCount sententialSymbolCount parenCount
+    rw [ih₁, ih₂]
+    ac_rfl
+
 end Wff
 
-/-! #### Exercise 1.1.2
-
-Show that there are no wffs of length `2`, `3`, or `6`, but that any other
-positive length is possible.
+/--
+An enumeration of values `m` and `n` can take on in equation `m + n = 3`.
 -/
-
-section Exercise_1_1_2
-
 private lemma eq_3_by_cases (m n : ℕ) (h : m + n = 3)
   : m = 0 ∧ n = 3 ∨
     m = 1 ∧ n = 2 ∨
@@ -93,10 +202,16 @@ private lemma eq_3_by_cases (m n : ℕ) (h : m + n = 3)
     right; right; right
     exact ⟨m_eq_3, h⟩
 
+/-! #### Exercise 1.1.2
+
+Show that there are no wffs of length `2`, `3`, or `6`, but that any other
+positive length is possible.
+-/
+
 theorem exercise_1_1_2_i (φ : Wff)
   : φ.length ≠ 2 ∧ φ.length ≠ 3 ∧ φ.length ≠ 6 := by
   induction φ with
-  | SS c =>
+  | SS _ =>
     unfold Wff.length
     simp
   | Not e ih =>
@@ -140,45 +255,95 @@ theorem exercise_1_1_2_i (φ : Wff)
         intro h₃
         exact absurd h₃.left ih₁.right.left
 
-theorem exercise_1_1_2_ii (n : ℕ) (h : n ≠ 2 ∧ n ≠ 3 ∧ n ≠ 6)
+theorem exercise_1_1_2_ii (n : ℕ) (h : n ∈ Set.univ \ {2, 3, 6})
   : ∃ φ : Wff, φ.length = n := by
   let φ₁ := Wff.SS 1
   let φ₂ := Wff.And φ₁ (Wff.SS 2)
   let φ₃ := Wff.And φ₂ (Wff.SS 3)
   sorry
 
-end Exercise_1_1_2
-
-/-! #### Exercise 1.1.3
+/-- #### Exercise 1.1.3
 
 Let `α` be a wff; let `c` be the number of places at which binary connective
 symbols (`∧`, `∨`, `→`, `↔`) occur in `α`; let `s` be the number of places at
 which sentence symbols occur in `α`. (For example, if `α` is `(A → (¬ A))` then
 `c = 1` and `s = 2`.) Show by using the induction principle that `s = c + 1`.
 -/
-
-section Exercise_1_1_3
-
-private def binary_symbol_count : Wff → ℕ
-  | Wff.SS   _     => 0
-  | Wff.Not  e     => binary_symbol_count e
-  | Wff.And  e₁ e₂
-  | Wff.Or   e₁ e₂
-  | Wff.Cond e₁ e₂
-  | Wff.Iff  e₁ e₂ => binary_symbol_count e₁ + binary_symbol_count e₂ + 1
-
-private def sentence_symbol_count : Wff → ℕ
-  | Wff.SS   _     => 1
-  | Wff.Not  e     => sentence_symbol_count e
-  | Wff.And  e₁ e₂
-  | Wff.Or   e₁ e₂
-  | Wff.Cond e₁ e₂
-  | Wff.Iff  e₁ e₂ => sentence_symbol_count e₁ + sentence_symbol_count e₂
-
 theorem exercise_1_1_3 (φ : Wff)
-  : sentence_symbol_count φ = binary_symbol_count φ + 1 := by
-  sorry
+  : φ.sentenceSymbolCount = φ.binarySymbolCount + 1 := by
+  induction φ with
+  | SS _ =>
+    unfold Wff.sentenceSymbolCount Wff.binarySymbolCount
+    simp
+  | Not e ih =>
+    unfold Wff.sentenceSymbolCount Wff.binarySymbolCount
+    exact ih
+  | And  e₁ e₂ ih₁ ih₂
+  | Or   e₁ e₂ ih₁ ih₂
+  | Cond e₁ e₂ ih₁ ih₂
+  | Iff  e₁ e₂ ih₁ ih₂ =>
+    unfold Wff.sentenceSymbolCount Wff.binarySymbolCount
+    rw [ih₁, ih₂]
+    ring
 
-end Exercise_1_1_3
+/-- #### Exercise 1.1.5 (a)
+
+Suppose that `α` is a wff not containing the negation symbol `¬`. Show that the
+length of `α` (i.e., the number of symbols in the string) is odd.
+
+*Suggestion*: Apply induction to show that the length is of the form `4k + 1`.
+-/
+theorem exercise_1_1_5_a (α : Wff) (hα : ¬α.hasNotSymbol)
+  : Odd α.length := by
+  suffices ∃ k : ℕ, α.length = 4 * k + 1 by
+    have ⟨k, hk⟩ := this
+    unfold Odd
+    exact ⟨2 * k, by rw [hk, ← mul_assoc]; norm_num⟩
+  induction α with
+  | SS _ =>
+    refine ⟨0, ?_⟩
+    unfold Wff.length
+    simp
+  | Not e _ =>
+    unfold Wff.hasNotSymbol at hα
+    exfalso
+    exact hα trivial
+  | And  e₁ e₂ ih₁ ih₂
+  | Or   e₁ e₂ ih₁ ih₂
+  | Cond e₁ e₂ ih₁ ih₂
+  | Iff  e₁ e₂ ih₁ ih₂  =>
+    unfold Wff.hasNotSymbol at hα
+    rw [not_or_de_morgan] at hα
+    have ⟨k₁, hk₁⟩ := ih₁ hα.left
+    have ⟨k₂, hk₂⟩ := ih₂ hα.right
+    refine ⟨k₁ + k₂ + 1, ?_⟩
+    unfold Wff.length
+    rw [hk₁, hk₂]
+    ring
+
+/-- #### Exercise 1.1.5 (b)
+
+Suppose that `α` is a wff not containing the negation symbol `¬`. Show that more
+than a quarter of the symbols are sentence symbols.
+
+*Suggestion*: Apply induction to show that the number of sentence symbols is
+`k + 1`.
+-/
+theorem exercise_1_1_5_b (α : Wff) (hα : ¬α.hasNotSymbol)
+  : α.sentenceSymbolCount > α.length / 4 := by
+  have h₁ := α.sentenceSymbolCount
+  have h₂ := α.sententialSymbolCount
+  have h₃ := α.parenCount
+  rw [
+    α.length_eq_sum_symbol_count,
+    Wff.paren_count_double_sentential_count α,
+    Wff.no_neg_sentential_count_eq_binary_count hα,
+    exercise_1_1_3 α
+  ]
+  generalize Wff.binarySymbolCount α = k
+  calc k + 1
+    _ = 4 * (k + 1) / 4 := Eq.symm $ Nat.mul_div_cancel_left (k + 1) (by simp)
+    _ = (k + 4 + k + 2 * k) / 4 := by ring_nf
+    _ > (k + 1 + k + 2 * k) / 4 := by sorry
 
 end Enderton.Logic.Chapter_1
