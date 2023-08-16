@@ -2,6 +2,8 @@ import Common.Logic.Basic
 import Common.Nat.Basic
 import Mathlib.Algebra.Parity
 import Mathlib.Data.Nat.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Setoid.Partition
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
@@ -112,7 +114,22 @@ negation symbol is the only non-binary sentential connective.
 -/
 lemma no_neg_sentential_count_eq_binary_count {φ : Wff} (h : ¬φ.hasNotSymbol)
   : φ.sententialSymbolCount = φ.binarySymbolCount := by
-  sorry
+  induction φ with
+  | SS _ =>
+    unfold sententialSymbolCount binarySymbolCount
+    rfl
+  | Not  _ _ =>
+    unfold hasNotSymbol at h
+    exfalso
+    exact h trivial
+  | And  e₁ e₂ ih₁ ih₂
+  | Or   e₁ e₂ ih₁ ih₂
+  | Cond e₁ e₂ ih₁ ih₂
+  | Iff  e₁ e₂ ih₁ ih₂ =>
+    unfold hasNotSymbol at h
+    rw [not_or_de_morgan] at h
+    unfold sententialSymbolCount binarySymbolCount
+    rw [ih₁ h.left, ih₂ h.right]
 
 /-- #### Parentheses Count
 
@@ -163,6 +180,14 @@ theorem length_eq_sum_symbol_count (φ : Wff)
 
 end Wff
 
+/-! #### Exercise 1.1.2
+
+Show that there are no wffs of length `2`, `3`, or `6`, but that any other
+positive length is possible.
+-/
+
+section Exercise_1_1_2
+
 /--
 An enumeration of values `m` and `n` can take on in equation `m + n = 3`.
 -/
@@ -201,12 +226,6 @@ private lemma eq_3_by_cases (m n : ℕ) (h : m + n = 3)
     norm_num at h
     right; right; right
     exact ⟨m_eq_3, h⟩
-
-/-! #### Exercise 1.1.2
-
-Show that there are no wffs of length `2`, `3`, or `6`, but that any other
-positive length is possible.
--/
 
 theorem exercise_1_1_2_i (φ : Wff)
   : φ.length ≠ 2 ∧ φ.length ≠ 3 ∧ φ.length ≠ 6 := by
@@ -255,12 +274,27 @@ theorem exercise_1_1_2_i (φ : Wff)
         intro h₃
         exact absurd h₃.left ih₁.right.left
 
-theorem exercise_1_1_2_ii (n : ℕ) (h : n ∈ Set.univ \ {2, 3, 6})
+private def recNot : ℕ → Wff → Wff
+  |     0, φ => φ
+  | n + 1, φ => Wff.Not (recNot n φ)
+
+theorem exercise_1_1_2_ii (n : ℕ) (hn : n ≠ 2 ∧ n ≠ 3 ∧ n ≠ 6)
   : ∃ φ : Wff, φ.length = n := by
   let φ₁ := Wff.SS 1
   let φ₂ := Wff.And φ₁ (Wff.SS 2)
   let φ₃ := Wff.And φ₂ (Wff.SS 3)
+
+  let S : Set (Set { n : ℕ // n ≠ 2 ∧ n ≠ 3 ∧ n ≠ 6 }) := {
+    { m | ∃ n : ℕ, (recNot n φ₁).length = m.1 },
+    { m | ∃ n : ℕ, (recNot n φ₂).length = m.1 },
+    { m | ∃ n : ℕ, (recNot n φ₃).length = m.1 }
+  }
+  have hS : Setoid.IsPartition S := by
+    sorry
+
   sorry
+
+end Exercise_1_1_2
 
 /-- #### Exercise 1.1.3
 
@@ -330,10 +364,7 @@ than a quarter of the symbols are sentence symbols.
 `k + 1`.
 -/
 theorem exercise_1_1_5_b (α : Wff) (hα : ¬α.hasNotSymbol)
-  : α.sentenceSymbolCount > α.length / 4 := by
-  have h₁ := α.sentenceSymbolCount
-  have h₂ := α.sententialSymbolCount
-  have h₃ := α.parenCount
+  : α.sentenceSymbolCount > (Nat.cast α.length : ℝ) / 4 := by
   rw [
     α.length_eq_sum_symbol_count,
     Wff.paren_count_double_sentential_count α,
@@ -341,9 +372,22 @@ theorem exercise_1_1_5_b (α : Wff) (hα : ¬α.hasNotSymbol)
     exercise_1_1_3 α
   ]
   generalize Wff.binarySymbolCount α = k
-  calc k + 1
-    _ = 4 * (k + 1) / 4 := Eq.symm $ Nat.mul_div_cancel_left (k + 1) (by simp)
-    _ = (k + 4 + k + 2 * k) / 4 := by ring_nf
-    _ > (k + 1 + k + 2 * k) / 4 := by sorry
+  simp only [
+    Nat.cast_add,
+    Nat.cast_one,
+    Nat.cast_mul,
+    Nat.cast_ofNat,
+    gt_iff_lt
+  ]
+  ring_nf
+  simp only [
+    Int.ofNat_eq_coe,
+    Nat.cast_one,
+    Int.cast_one,
+    Nat.cast_ofNat,
+    one_div,
+    add_lt_add_iff_right
+  ]
+  exact inv_lt_one (by norm_num)
 
 end Enderton.Logic.Chapter_1
