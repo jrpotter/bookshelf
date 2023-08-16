@@ -127,8 +127,8 @@
 \section{\defined{Equinumerous}}%
 \hyperlabel{ref:equinumerous}
 
-A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
-  only if there is a one-to-one \nameref{ref:function} from $A$ onto $B$.
+A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
+  if and only if there is a one-to-one \nameref{ref:function} from $A$ onto $B$.
 
   \lean*{Mathlib/Init/Function}
     {Function.Bijective}
@@ -215,14 +215,26 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
     only one $x$ such that $xFy$.
   One-to-one functions are sometimes called \textbf{injections}.
 
-  \lean*{Mathlib/Init/Function}
-    {Function.Injective}
+  \code*{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isSingleValued}
 
-  \lean{Mathlib/Init/Function}
-    {Function.Surjective}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isSingleRooted}
 
-  \lean{Mathlib/Init/Function}
-    {Function.Bijective}
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.isOneToOne}
+
+  \lean{Mathlib/Data/Set/Function}
+    {Set.MapsTo}
+
+  \lean{Mathlib/Data/Set/Function}
+    {Set.InjOn}
+
+  \lean{Mathlib/Data/Set/Function}
+    {Set.SurjOn}
+
+  \lean{Mathlib/Data/Set/Function}
+    {Set.BijOn}
 
 \section{\defined{Image}}%
 \hyperlabel{ref:image}
@@ -2863,11 +2875,10 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \end{proof}
 
-\subsection{\verified{Lemma 1}}%
-\hyperlabel{sub:lemma-1}
+\subsection{\verified{One-to-One Inverse}}%
 \hyperlabel{sub:one-to-one-inverse}
 
-  \begin{lemma}[1]
+  \begin{lemma}
     For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
   \end{lemma}
 
@@ -2990,6 +3001,43 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
         $\tuple{G(x), (F \circ G)(x)} \in F$.
       This is equivalent to saying $F(G(x)) = (F \circ G)(x)$ as expected.
 
+  \end{proof}
+
+\subsection{\verified{One-to-One Composition}}%
+\hyperlabel{sub:one-to-one-composition}
+
+  \begin{lemma}
+    Let $F$ and $G$ be one-to-one functions.
+    Then $F \circ G$ is one-to-one as well.
+  \end{lemma}
+
+  \code{Bookshelf/Enderton/Set/Relation}
+    {Set.Relation.one\_to\_one\_comp\_is\_one\_to\_one}
+
+  \begin{proof}
+    Let $F \colon B \rightarrow C$ and $G \colon A \rightarrow B$ be
+      one-to-one \nameref{ref:function}s from sets $A$, $B$, and $C$.
+    By definition of the \nameref{ref:composition} of functions,
+      \begin{equation}
+        \hyperlabel{sub:one-to-one-composition-eq1}
+        F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.
+      \end{equation}
+    By \nameref{sub:theorem-3h}, $F \circ G$ is a function.
+    All that remains is proving $F \circ G$ is single-valued, i.e. for each
+      $y \in \ran{F \circ G}$, there is only one $x$ such that
+      $\tuple{x, y} \in F \circ G$.
+
+    To that end let $y \in \ran{(F \circ G)}$.
+    Then there exists some $x_1 \in \dom{(F \circ G)}$ such that
+      $\tuple{x_1, y} \in F \circ G$.
+    Suppose there also exists some $x_2 \in \dom{(F \circ G)}$ such that
+      $\tuple{x_2, y} \in F \circ G$.
+    By \eqref{sub:one-to-one-composition-eq1}, there exists a $t_1$ such that
+      $x_1Gt_1$ and $t_1Fy$.
+    Likewise, there exists some $t_2$ such that $x_2Gt_2$ and $t_2Fy$.
+    But $F$ is one-to-one meaning $t_1 = t_2$.
+    Similarly, $G$ is one-to-one meaning $x_1 = x_2$.
+    Hence $F \circ G$ is single-valued.
   \end{proof}
 
 \subsection{\verified{Theorem 3I}}%
@@ -6232,11 +6280,10 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 
   \end{proof}
 
-\subsection{\verified{Lemma 2}}%
-\hyperlabel{sub:lemma-2}
-\hyperlabel{sub:succ-add-eq-add-succ}
+\subsection{\verified{Successor Commutativity}}%
+\hyperlabel{sub:successor-commutativity}
 
-  \begin{lemma}[2]
+  \begin{lemma}
     For all $m, n \in \omega$, $A_{m^+}(n) = A_m(n^+)$.
     In other words, $$m^+ + n = m + n^+.$$
   \end{lemma}
@@ -6314,13 +6361,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Then
         \begin{align*}
           m^+ + (n + p)
-            & = m + (n + p)^+ & \textref{sub:succ-add-eq-add-succ} \\
+            & = m + (n + p)^+ & \textref{sub:successor-commutativity} \\
             & = (m + (n + p))^+ & \textref{sub:theorem-4i} \\
             & = ((m + n) + p)^+ & \eqref{sub:theorem-4k-1-eq1} \\
             & = (m + n) + p^+ & \textref{sub:theorem-4i} \\
-            & = (m + n)^+ + p & \textref{sub:succ-add-eq-add-succ} \\
+            & = (m + n)^+ + p & \textref{sub:successor-commutativity} \\
             & = (m + n^+) + p & \textref{sub:theorem-4i} \\
-            & = (m^+ + n) + p. & \textref{sub:succ-add-eq-add-succ}
+            & = (m^+ + n) + p. & \textref{sub:successor-commutativity}
         \end{align*}
       Thus $m^+ \in S$.
 
@@ -6371,7 +6418,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Then
         \begin{align*}
           m^+ + n
-            & = m + n^+ & \textref{sub:succ-add-eq-add-succ} \\
+            & = m + n^+ & \textref{sub:successor-commutativity} \\
             & = (m + n)^+ & \textref{sub:theorem-4i} \\
             & = (n + m)^+ & \eqref{sub:theorem-4k-2-eq1} \\
             & = n + m^+. & \textref{sub:theorem-4i}
@@ -6479,7 +6526,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
             & = m^+ \cdot n + m^+ & \textref{sub:theorem-4j} \\
             & = (m \cdot n + n) + m^+ & \eqref{sub:successor-distribution-eq1} \\
             & = m \cdot n + (n + m^+) & \textref{sub:theorem-4k-1} \\
-            & = m \cdot n + (n^+ + m) & \textref{sub:succ-add-eq-add-succ} \\
+            & = m \cdot n + (n^+ + m) & \textref{sub:successor-commutativity} \\
             & = m \cdot n + (m + n^+) & \textref{sub:theorem-4k-2} \\
             & = (m \cdot n + m) + n^+ & \textref{sub:theorem-4k-1} \\
             & = m \cdot n^+ + n^+. & \textref{sub:theorem-4j}
@@ -6597,7 +6644,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
       Then
         \begin{align*}
           m^+ + 1
-            & = m + 1^+ & \textref{sub:succ-add-eq-add-succ} \\
+            & = m + 1^+ & \textref{sub:successor-commutativity} \\
             & = (m + 1)^+ & \textref{sub:theorem-4i} \\
             & = (m^+)^+. & \eqref{sub:successor-identity-eq1}
         \end{align*}
@@ -8395,20 +8442,55 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \approx B$) if and
 \section{Equinumerosity}%
 \hyperlabel{sec:equinumerosity}
 
-\subsection{\sorry{Theorem 6A}}%
+\subsection{\verified{Theorem 6A}}%
 \hyperlabel{sub:theorem-6a}
 
   \begin{theorem}[6A]
     For any sets $A$, $B$, and $C$,
       \begin{enumerate}[(a)]
-        \item $A \approx A$.
-        \item If $A \approx B$, then $B \approx A$.
-        \item If $A \approx B$ and $B \approx C$, then $A \approx C$.
+        \item $\equinumerous{A}{A}$.
+        \item If $\equinumerous{A}{B}$, then $\equinumerous{B}{A}$.
+        \item If $\equinumerous{A}{B}$ and $\equinumerous{B}{C}$, then
+          $\equinumerous{A}{C}$.
       \end{enumerate}
   \end{theorem}
 
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.theorem\_6a\_a}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.theorem\_6a\_b}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.theorem\_6a\_c}
+
   \begin{proof}
-    TODO
+
+    Let $A$, $B$, and $C$ be arbitrary sets.
+
+    \paragraph{(a)}%
+
+      Consider function $I_A \colon A \rightarrow A$ given by $I_A(x) = x$.
+      This function is trivially a bijection between $A$ and $A$.
+      Thus $A$ is \nameref{ref:equinumerous} to $A$.
+
+    \paragraph{(b)}%
+
+      Suppose $\equinumerous{A}{B}$.
+      Then there exists a one-to-one function $f \colon A \rightarrow B$.
+      By \nameref{sub:one-to-one-inverse}, $f^{-1} \colon B \rightarrow A$
+        is also one-to-one.
+      Thus $\equinumerous{B}{A}$.
+
+    \paragraph{(c)}%
+
+      Suppose $\equinumerous{A}{B}$ and $\equinumerous{B}{C}$.
+      Then there exist one-to-one functions $f \colon A \rightarrow B$ and
+        $g \colon B \rightarrow C$.
+      Then, by \nameref{sub:one-to-one-composition},
+        $g \circ f \colon A \rightarrow C$ is one-to-one.
+      Thus $\equinumerous{A}{C}$.
+
   \end{proof}
 
 \subsection{\sorry{Theorem 6B}}%

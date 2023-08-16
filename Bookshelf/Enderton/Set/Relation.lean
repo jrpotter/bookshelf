@@ -441,6 +441,26 @@ theorem single_valued_comp_is_single_valued
   rw [hk₁, hk₂]
 
 /--
+The composition of two one-to-one `Relation`s is one-to-one.
+-/
+theorem one_to_one_comp_is_one_to_one
+  {F : HRelation β γ} {G : HRelation α β}
+  (hF : isOneToOne F) (hG : isOneToOne G)
+  : isOneToOne (comp F G) := by
+  refine ⟨single_valued_comp_is_single_valued hF.left hG.left, ?_⟩
+  intro y hy
+  unfold ExistsUnique
+  have ⟨x₁, hx₁⟩ := ran_exists hy
+  refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
+  intro x₂ ⟨_, hx₂⟩
+  have ⟨t₁, ht₁⟩ := hx₁
+  have ⟨t₂, ht₂⟩ := hx₂
+  simp only at ht₁ ht₂
+  have ht : t₁ = t₂ := single_rooted_eq_unique hF.right ht₁.right ht₂.right
+  rw [ht] at ht₁
+  exact single_rooted_eq_unique hG.right ht₂.left ht₁.left
+
+/--
 For `Relation`s `F` and `G`, `(F ∘ G)⁻¹ = G⁻¹ ∘ F⁻¹`.
 -/
 theorem comp_inv_eq_inv_comp_inv {F : HRelation β γ} {G : HRelation α β}
