@@ -489,8 +489,6 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
     _ < x := hx.right
   simp at this
 
-/-! ## Exercises -/
-
 /-- #### Exercise 1
 
 If `x` and `y` are arbitrary real numbers with `x < y`, prove that there is at

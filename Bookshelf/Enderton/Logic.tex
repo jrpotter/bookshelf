@@ -88,6 +88,71 @@
   \lean*{Init/Prelude}
     {Prod}
 
+\section{\defined{Tautological Implication}}%
+\hyperlabel{ref:tautological-implication}
+
+  Consider a set $\Sigma$ of \nameref{ref:well-formed-formula}s and another wff
+    $\tau$.
+  $\Sigma$ \textbf{tautologically implies} $\tau$ (written $\Sigma \vDash \tau$)
+    if and only if every \nameref{ref:truth-assignment} for the sentence symbols
+    in $\Sigma$ and $\tau$ that satisfies every member of $\Sigma$ also
+    satisfies $\tau$.
+  If $\Sigma$ is singleton $\{\sigma\}$, then we write "$\sigma \vDash \tau$" in
+    place of "$\{\sigma\} \vDash \tau$."
+
+  If both $\sigma \vDash \tau$ and $\tau \vDash \sigma$, then $\sigma$ and
+    $\tau$ are said to be \textbf{tautologically equivalent} (written
+    $\sigma \vDash \Dashv \tau$).
+
+\section{\defined{Truth Assignment}}%
+\hyperlabel{ref:truth-assignment}
+
+  A \textbf{truth assignment} $v$ for a set $\mathcal{S}$ of sentence symbols is
+    a function $$v \colon \mathcal{S} \rightarrow \{F, T\}$$ assigning either
+    $T$ or $F$ to each symbol in $\mathcal{S}$.
+
+  Let $\bar{\mathcal{S}}$ be the set of \nameref{ref:well-formed-formula}s that
+    can be built up from $\mathcal{S}$ by the five
+    \nameref{ref:formula-building-operations}.
+  We define \textbf{extension} $\bar{v}$ of $v$,
+    $$\bar{v} \colon \bar{\mathcal{S}} \rightarrow \{F, T\},$$
+    as the function that satisfies the following conditions for any
+    $\alpha, \beta \in \mathcal{S}$:
+    \begin{enumerate}[(1)]
+      \setcounter{enumi}{-1}
+      \item For any $A \in \mathcal{S}$, $\bar{v}(A) = v(A)$.
+        (Thus $\bar{v}$ is indeed an extension of $v$.)
+      \item $\bar{v}((\neg\alpha)) = \begin{cases}
+          T & \text{if } \bar{v}(\alpha) = F, \\
+          F & \text{otherwise}.
+        \end{cases}$
+      \item $\bar{v}((\alpha \land \beta)) = \begin{cases}
+          T & \text{if } \bar{v}(\alpha) = T \text{ and } \bar{v}(\beta) = T, \\
+          F & \text{otherwise}.
+        \end{cases}$
+      \item $\bar{v}((\alpha \lor \beta)) = \begin{cases}
+          T & \text{if } \bar{v}(\alpha) = T \text{ or }
+            \bar{v}(\beta) = T \text{ (or both)}, \\
+          F & \text{otherwise}.
+        \end{cases}$
+      \item $\bar{v}((\alpha \Rightarrow \beta)) = \begin{cases}
+          F & \text{if } \bar{v}(\alpha) = T \text{ and } \bar{v}(\beta) = F, \\
+          T & \text{otherwise}.
+        \end{cases}$
+      \item $\bar{v}((\alpha \Leftrightarrow \beta)) = \begin{cases}
+          T & \text{if } \bar{v}(\alpha) = \bar{v}(\beta), \\
+          F & \text{otherwise}.
+        \end{cases}$
+    \end{enumerate}
+  We say that truth assignment $v$ \textbf{satisfies} $\phi$ if and only if
+    $\bar{v}(\phi) = T$.
+
+  \lean*{Init/Prelude}
+    {True}
+
+  \lean{Init/Prelude}
+    {False}
+
 \section{\defined{Well-Formed Formula}}%
 \hyperlabel{ref:well-formed-formula}
 
@@ -164,16 +229,17 @@
 \hyperlabel{sub:induction-principle-1}
 
   \begin{theorem}
-    If $S$ is a set of wffs containing all the sentence symbols and closed under
-      all five formula-building operations, then $S$ is the set of \textit{all}
-      wffs.
+    If $S$ is a set of \nameref{ref:well-formed-formula}s containing all the
+      sentence symbols and closed under all five
+      \nameref{ref:formula-building-operations}, then $S$ is the set of
+      \textit{all} wffs.
   \end{theorem}
 
   \code{Bookshelf/Enderton/Logic/Chapter\_1}
     {Enderton.Logic.Chapter\_1.Wff.rec}
 
   \begin{proof}
-    We note every \nameref{ref:well-formed-formula} can be characterized by a
+    We note every well-formed formula can be characterized by a
       \nameref{ref:construction-sequence}.
     For natural number $m$, let $P(m)$ be the statement:
       \begin{induction}
@@ -251,7 +317,8 @@
 \hyperlabel{sub:balanced-parentheses}
 
   \begin{lemma}
-    All well-formed formulas have an equal number of left and right parentheses.
+    All \nameref{ref:well-formed-formula}s have an equal number of left and
+      right parentheses.
   \end{lemma}
 
   \begin{proof}
@@ -300,8 +367,8 @@
 \hyperlabel{sub:parentheses-count}
 
   \begin{lemma}
-    Let $\phi$ be a well-formed formula and $c$ be the number of places at which
-      a sentential connective symbol exists.
+    Let $\phi$ be a \nameref{ref:well-formed-formula} and $c$ be the number of
+      places at which a sentential connective symbol exists.
     Then there is $2c$ parentheses in $\phi$.
   \end{lemma}
 
@@ -348,6 +415,36 @@
       Thus every wff has $2c$ parentheses in $\phi$, where $c$ denotes the
         number of places at which a sentential connective symbol exists.
 
+  \end{proof}
+
+\section{Truth Assignments}%
+\hyperlabel{sec:truth-assignments}
+
+\subsection{\sorry{Theorem 12A}}%
+\hyperlabel{sub:theorem-12a}
+
+  \begin{theorem}[12A]
+    For any \nameref{ref:truth-assignment} $v$ for a set $\mathcal{S}$ there is
+      a unique extension
+      $\bar{v} \colon \bar{\mathcal{S}} \rightarrow \{F, T\}$.
+  \end{theorem}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Compactness Theorem}}%
+\hyperlabel{sub:compactness-theorem}
+
+  \begin{theorem}
+    Let $\Sigma$ be an infinite set of \nameref{ref:well-formed-formula}s such
+      that for any finite subset $\Sigma_0$ of $\Sigma$, there is a
+      \nameref{ref:truth-assignment} that satisfies every member of $\Sigma_0$.
+    Then there is a truth assignment that satisfies every member of $\Sigma$.
+  \end{theorem}
+
+  \begin{proof}
+    TODO
   \end{proof}
 
 \section{Exercises 1}%
@@ -697,6 +794,302 @@
     But $$\frac{k + 1}{4k + 1} > \frac{k + 1}{4k + 4} = \frac{1}{4}.$$
     Hence more than a quarter of the symbols of $\phi$ are sentence symbols.
 
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.1}}%
+\hyperlabel{sub:exercise-1.2.1}
+
+  Show that neither of the following two formulas tautologically implies the
+    other:
+    \begin{gather*}
+      (A \Leftrightarrow (B \Leftrightarrow C)), \\
+      ((A \land (B \land C)) \lor ((\neg A) \land ((\neg B) \land (\neg C)))).
+    \end{gather*}
+  \textit{Suggestion}: Only two \nameref{ref:truth-assignment}s are needed, not
+    eight.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.2a}}%
+\hyperlabel{sub:exercise-1.2.2a}
+
+  Is $(((P \Rightarrow Q) \Rightarrow P) \Rightarrow P)$ a tautology?
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.2b}}%
+\hyperlabel{sub:exercise-1.2.2b}
+
+  Define $\sigma_k$ recursively as follows: $\sigma_0 = (P \Rightarrow Q)$ and
+    $\sigma_{k + 1} = (\sigma_k \Rightarrow P)$. For which values of $k$ is
+    $\sigma_k$ a tautology? (Part (a) corresponds to $k = 2$.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.3a}}%
+\hyperlabel{sub:exercise-1.2.3a}
+
+  Determine whether or not $((P \Rightarrow Q) \lor (Q \Rightarrow P))$ is a
+    tautology.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.3b}}%
+\hyperlabel{sub:exercise-1.2.3b}
+
+  Determine whether or not $((P \land Q) \Rightarrow R)$ tautologically implies
+    $((P \Rightarrow R) \lor (Q \Rightarrow R))$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.4}}%
+\hyperlabel{sub:exercise-1.2.4}
+
+  Show that the following hold:
+    \begin{enumerate}[(a)]
+      \item $\Sigma; \alpha \vDash \beta$ iff
+        $\Sigma \vDash (\alpha \Rightarrow \beta)$.
+      \item $\alpha \vDash \Dashv \beta$ iff
+        $\vDash (\alpha \Leftrightarrow \beta)$.
+    \end{enumerate}
+  (Recall that $\Sigma; \alpha = \Sigma \cup \{\alpha\}$, the set $\Sigma$
+    together with the one possibly new member $\alpha$.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.5}}%
+\hyperlabel{sub:exercise-1.2.5}
+
+  Prove or refute each of the following assertions:
+    \begin{enumerate}[(a)]
+      \item If either $\Sigma \vDash \alpha$ or $\Sigma \vDash \beta$, then
+        $\Sigma \vDash (\alpha \lor \beta)$.
+      \item If $\Sigma \vDash (\alpha \lor \beta)$, then either
+        $\Sigma \vDash \alpha$ or $\Sigma \vDash \beta$.
+    \end{enumerate}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.6a}}%
+\hyperlabel{sub:exercise-1.2.6a}
+
+  Show that if $v_1$ and $v_2$ are \nameref{ref:truth-assignment}s which agree
+    on all the sentence symbols in the wff $\alpha$, then
+    $\bar{v}_1(\alpha) = \bar{v}_2(\alpha)$.
+  Use the \nameref{sub:induction-principle-1}.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.6b}}%
+\hyperlabel{sub:exercise-1.2.6b}
+
+  Let $\mathcal{S}$ be a set of sentence symbols that includes those in $\Sigma$
+    and $\tau$ (and possibly more).
+  Show that $\Sigma \vDash \tau$ iff every truth assignment for $\mathcal{S}$
+    which satisfies every member of $\Sigma$ also satisfies $\tau$.
+  (This is an easy consequence of part (a). The point of part (b) is that we do
+    not need to worry aboutgetting the domain of a truth assignment
+    \textit{exactly} perfect, as long as it is big enough. For example, one
+    option would be always to use truth assignments on the set of \textit{all}
+    sentence symbols. The drawback is that these are infinite objects, and there
+    are a great many -- uncountably many -- of them.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.7}}%
+\hyperlabel{sub:exercise-1.2.7}
+
+  You are in a land inhabited by people who either always tell the truth or
+    always tell falsehoods.
+  You come to a fork in the road and you need to know which fork leads to the
+    capital.
+  There is a local resident there, but he has time only to reply to one
+    yes-or-no question.
+  What one question should you ask so as to learn which fork to take?
+  \textit{Suggestion}: Make a table.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.8}}%
+\hyperlabel{sub:exercise-1.2.8}
+
+  (Substitution) Consider a suquence $\alpha_1, \alpha_2, \ldots$ of wffs.
+  For each wff $\phi$ let $\phi^*$ be the result of replacing the sentence
+    symbol $A_n$ by $\alpha_n$ for each $n$.
+
+\subsubsection{\sorry{Exercise 1.2.8a}}%
+\hyperlabel{ssub:exercise-1.2.8a}
+
+  Let $v$ be a truth assignment for the set of all sentence symbols; define $u$
+    to be the truth assignment for which $u(A_n) = \bar{v}(\alpha_n)$.
+  Show that $\bar{u}(\phi) = \bar{v}(\phi^*)$.
+  Use the induction principle.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsubsection{\sorry{Exercise 1.2.8b}}%
+\hyperlabel{ssub:exercise-1.2.8b}
+
+  Show that if $\phi$ is a tautology, then so is $\phi^*$.
+  (For example, one of our selected tautologies is
+    $((A \land B) \Leftrightarrow (B \land A))$. From this we can conclude, by
+    substitution, that
+    $((\alpha \land \beta) \Leftrightarrow (\beta \land \alpha))$ is a
+    tautology, for any wffs $\alpha$ and $\beta$.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.9}}%
+\hyperlabel{sub:exercise-1.2.9}
+
+  (Duality) Let $\alpha$ be a wff whose only connective symbols are $\land$,
+    $\lor$, and $\neg$.
+  Let $\alpha^*$ be the result of interchanging $\land$ and $\lor$ and replacing
+    each sentence symbol by its negation.
+  Show that $\alpha^*$ is tautologically equivalent to $(\neg \alpha)$.
+  Use the \nameref{sub:induction-principle-1}.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.10}}%
+\hyperlabel{sub:exercise-1.2.10}
+
+  Say that a set $\Sigma_1$ of wffs is \textit{equivalent} to a set $\Sigma_2$
+    of wffs iff for any wff $\alpha$, we have $\Sigma_1 \vDash \alpha$ iff
+    $\Sigma_2 \vDash \alpha$.
+  A set $\Sigma$ is \textit{independent} iff no member of $\Sigma$ is
+    tautologically implied by the remaining members in $\Sigma$.
+  Show that the following hold.
+
+\subsubsection{\sorry{Exercise 1.2.10a}}%
+\hyperlabel{ssub:exercise-1.2.10a}
+
+  A finite set of wffs has an independent equivalent subset.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsubsection{\sorry{Exercise 1.2.10b}}%
+\hyperlabel{ssub:exercise-1.2.10b}
+
+  An infinite set need not have an independent equivalent subset.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsubsection{\sorry{Exercise 1.2.10c}}%
+\hyperlabel{ssub:exercise-1.2.10c}
+
+  Let $\Sigma = \{\sigma_0, \sigma_1, \ldots\}$; show that there is an
+    independent equivalent set $\Sigma'$.
+  (By part (b), we cannot hope to have $\Sigma' \subseteq \Sigma$ in general.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.11}}%
+\hyperlabel{sub:exercise-1.2.11}
+
+  Show that a truth assignment $v$ satisfies the wff
+    $$(\cdots (A_1 \Leftrightarrow A_2)
+      \Leftrightarrow \cdots \Leftrightarrow A_n)$$
+    iff $v(A_i) = F$ for an even number of $i$'s, $1 \leq i \leq n$.
+  (By the associative law for $\Leftrightarrow$, the placement of the
+    parentheses is not crucial.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.12}}%
+\hyperlabel{sub:exercise-1.2.12}
+
+  There are three suspects for a murder: Adams, Brown, and Clark.
+  Adams says "I didn't do it. The victim was an old acquaintance of Brown's.
+    But Clark hated him."
+  Brown states "I didn't do it. I didn't even know the guy. Besides I was out of
+    town all that week."
+  Clark says "I didn't do it. I saw both ADams and Brown downtown with the
+    victim that day; one of them must have done it."
+  Assume that the two innocent men are telling the truth, but that the guilty
+    man might not be.
+  Who did it?
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.13}}%
+\hyperlabel{sub:exercise-1.2.13}
+
+  An advertisement for a tennis magazine states, "If I'm not playing tennis,
+    I'm watching tennis. And if I'm not watching tennis, I'm reading about
+    tennis."
+  We can assume that the speaker cannot do more than one of these activities at
+    a time.
+  What is the speaker doing?
+  (Translate the given sentences into our formal language; consider the possible
+    truth assignments.)
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.14}}%
+\hyperlabel{sub:exercise-1.2.14}
+
+  Let $\mathcal{S}$ be the set of all sentence symbols, and assume that
+    $v \colon \mathcal{S} \rightarrow \{F, T\}$ is a truth assignment.
+  Show there is \textit{at most} one extension $\bar{v}$ meeting conditions 0-5
+    listed at the beginning of this section.
+  (Suppose that $\bar{v}_1$ and $\bar{v}_2$ are both such extensions. Use the
+    \nameref{sub:induction-principle-1} to show that $\bar{v}_1 = \bar{v}_2$.
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
+\subsection{\sorry{Exercise 1.2.15}}%
+\hyperlabel{sub:exercise-1.2.15}
+
+  Of the following three formulas, which tautologically implies which?
+    \begin{enumerate}[(a)]
+      \item $(A \Leftrightarrow B)$
+      \item $(\neg((A \Rightarrow B) \Rightarrow (\neg(B \Rightarrow A))))$
+      \item $(((\neg A) \lor B) \land (A \lor (\neg B)))$
+    \end{enumerate}
+
+  \begin{proof}
+    TODO
   \end{proof}
 
 \end{document}

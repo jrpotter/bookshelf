@@ -213,11 +213,9 @@
     \textbf{maps $A$ into $B$} (written $F \colon A \rightarrow B$) iff $F$ is a
     function, $\dom{F} = A$, and $\ran{F} \subseteq B$.
   If $\ran{F} = B$, then $F$ is a function from \textbf{$A$ onto $B$}.
-
   A function $F$ is \textbf{one-to-one} iff for each $y \in \ran{F}$ there is
     only one $x$ such that $xFy$.
   One-to-one functions are sometimes called \textbf{injections}.
-
   A one-to-one function from $A$ onto $B$ is a
     \textbf{one-to-one correspondence} between $A$ and $B$.
 
@@ -6173,7 +6171,7 @@
 \hyperlabel{sub:theorem-4i}
 
   \begin{theorem}[4I]
-    For natural numbers $m$ and $n$,
+    For \nameref{ref:natural-number}s $m$ and $n$,
       \begin{align}
         m + 0 & = m, \hyperlabel{sub:theorem-4i-eq1} \\
         m + n^+ & = (m + n)^+. \hyperlabel{sub:theorem-4i-eq2}
@@ -6328,7 +6326,7 @@
 \hyperlabel{sub:theorem-4k-1}
 
   \begin{theorem}[4K-1]
-    Associative law for addition.
+    Associative law for \nameref{ref:addition}.
     For $m, n, p \in \omega$, $$m + (n + p) = (m + n) + p.$$
   \end{theorem}
 
@@ -6385,7 +6383,7 @@
 \hyperlabel{sub:theorem-4k-2}
 
   \begin{theorem}[4K-2]
-    Commutative law for addition.
+    Commutative law for \nameref{ref:addition}.
     For $m, n \in \omega$, $$m + n = n + m.$$
   \end{theorem}
 
@@ -6716,7 +6714,7 @@
 \hyperlabel{sub:theorem-4k-5}
 
   \begin{theorem}[4K-5]
-    Commutative law for multiplication.
+    Commutative law for \nameref{ref:multiplication}.
     For $m, n \in \omega$, $$m \cdot n = n \cdot m.$$
   \end{theorem}
 
@@ -6777,7 +6775,7 @@
 \hyperlabel{sub:theorem-4k-4}
 
   \begin{theorem}[4K-4]
-    Associative law for multiplication.
+    Associative law for \nameref{ref:multiplication}.
     For $m, n, p \in \omega$, $$m \cdot (n \cdot p) = (m \cdot n) \cdot p.$$
   \end{theorem}
 
@@ -6859,7 +6857,8 @@
 \hyperlabel{sub:members-natural-numbers}
 
   \begin{lemma}
-    Every natural number is the set of all smaller natural numbers.
+    Every \nameref{ref:natural-number} is the set of all smaller natural
+      numbers.
   \end{lemma}
 
   \begin{proof}
@@ -6874,7 +6873,8 @@
 \hyperlabel{sub:lemma-4l-a}
 
   \begin{lemma}[4L(a)]
-    For any natural numbers $m$ and $n$, $$m \in n \iff m^+ \in n^+.$$
+    For any \nameref{ref:natural-number}s $m$ and $n$,
+      $$m \in n \iff m^+ \in n^+.$$
   \end{lemma}
 
   \lean{Std/Data/Nat/Lemmas}{Nat.succ\_lt\_succ\_iff}
@@ -6940,7 +6940,7 @@
 \hyperlabel{sub:lemma-4l-b}
 
   \begin{lemma}[4L(b)]
-    No natural number is a member of itself.
+    No \nameref{ref:natural-number} is a member of itself.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Chapter\_4}
@@ -6987,7 +6987,7 @@
 \hyperlabel{sub:zero-least-natural-number}
 
   \begin{lemma}
-    For every natural number $n \neq 0$, $0 \in n$.
+    For every \nameref{ref:natural-number} $n \neq 0$, $0 \in n$.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Chapter\_4}
@@ -7032,8 +7032,8 @@
 \hyperlabel{sub:trichotomy-law-natural-numbers}
 
   \begin{theorem}
-    For any natural numbers $m$ and $n$, exactly one of the three conditions
-      $$m \in n, \quad m = n, \quad n \in m$$ holds.
+    For any \nameref{ref:natural-number}s $m$ and $n$, exactly one of the three
+      conditions $$m \in n, \quad m = n, \quad n \in m$$ holds.
   \end{theorem}
 
   \lean{Mathlib/Order/RelClasses}{IsAsymm}
@@ -7112,12 +7112,12 @@
 \hyperlabel{sub:linear-ordering-natural-numbers}
 
   \begin{theorem}
-    Relation
+    \nameref{ref:relation}
       \begin{equation}
         \hyperlabel{sub:linear-ordering-natural-numbers-eq1}
         \in_\omega = \{\tuple{m, n} \in \omega \times \omega \mid m \in n\}
       \end{equation}
-      is a linear ordering on $\omega$.
+      is a \nameref{ref:linear-ordering} on $\omega$.
   \end{theorem}
 
   \lean{Mathlib/Init/Algebra/Order}
@@ -7125,9 +7125,8 @@
 
   \begin{proof}
 
-    By definition, \eqref{sub:linear-ordering-natural-numbers-eq1} is a
-      \nameref{ref:linear-ordering} on $\omega$ if it is (i) transitive and
-      (ii) trichotomous.
+    By definition, \eqref{sub:linear-ordering-natural-numbers-eq1} is a linear
+      ordering on $\omega$ if it is (i) transitive and (ii) trichotomous.
 
     \paragraph{(i)}%
 
@@ -8510,7 +8509,7 @@
 \hyperlabel{sub:theorem-6b}
 
   \begin{theorem}[6B]
-    No set is equinumerous to its powerset.
+    No set is \nameref{ref:equinumerous} to its powerset.
   \end{theorem}
 
   \begin{proof}
