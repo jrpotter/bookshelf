@@ -3023,7 +3023,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
         F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.
       \end{equation}
     By \nameref{sub:theorem-3h}, $F \circ G$ is a function.
-    All that remains is proving $F \circ G$ is single-valued, i.e. for each
+    All that remains is proving $F \circ G$ is single-rooted, i.e. for each
       $y \in \ran{F \circ G}$, there is only one $x$ such that
       $\tuple{x, y} \in F \circ G$.
 
@@ -8442,7 +8442,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
 \section{Equinumerosity}%
 \hyperlabel{sec:equinumerosity}
 
-\subsection{\verified{Theorem 6A}}%
+\subsection{\pending{Theorem 6A}}%
 \hyperlabel{sub:theorem-6a}
 
   \begin{theorem}[6A]
@@ -8477,19 +8477,12 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
     \paragraph{(b)}%
 
       Suppose $\equinumerous{A}{B}$.
-      Then there exists a one-to-one function $f \colon A \rightarrow B$.
-      By \nameref{sub:one-to-one-inverse}, $f^{-1} \colon B \rightarrow A$
-        is also one-to-one.
-      Thus $\equinumerous{B}{A}$.
+      Then there exists a one-to-one function $f$ from $A$ onto $B$.
+      TODO
 
     \paragraph{(c)}%
 
-      Suppose $\equinumerous{A}{B}$ and $\equinumerous{B}{C}$.
-      Then there exist one-to-one functions $f \colon A \rightarrow B$ and
-        $g \colon B \rightarrow C$.
-      Then, by \nameref{sub:one-to-one-composition},
-        $g \circ f \colon A \rightarrow C$ is one-to-one.
-      Thus $\equinumerous{A}{C}$.
+      TODO
 
   \end{proof}
 
