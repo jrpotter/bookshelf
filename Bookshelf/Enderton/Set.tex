@@ -127,8 +127,10 @@
 \section{\defined{Equinumerous}}%
 \hyperlabel{ref:equinumerous}
 
-A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
-  if and only if there is a one-to-one \nameref{ref:function} from $A$ onto $B$.
+  A set $A$ is \textbf{equinumerous} to a set $B$ (written
+    $\equinumerous{A}{B}$) if and only if there is a one-to-one
+    \nameref{ref:function} from $A$ onto $B$.
+  In other words, there exists a one-to-one correspondence between $A$ and $B$.
 
   \lean*{Mathlib/Init/Function}
     {Function.Bijective}
@@ -149,8 +151,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
 \hyperlabel{ref:equivalence-relation}
 
   Relation $R$ is an \textbf{equivalence relation} on set $A$ if and only if
-    $R$ is a binary \nameref{ref:relation} on $A$ that is \nameref{ref:reflexive}
-    on $A$, \nameref{ref:symmetric}, and \nameref{ref:transitive}.
+    $R$ is a binary \nameref{ref:relation} on $A$ that is
+    \nameref{ref:reflexive} on $A$, \nameref{ref:symmetric}, and
+    \nameref{ref:transitive}.
 
   \code*{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.isEquivalence}
@@ -214,6 +217,9 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
   A function $F$ is \textbf{one-to-one} iff for each $y \in \ran{F}$ there is
     only one $x$ such that $xFy$.
   One-to-one functions are sometimes called \textbf{injections}.
+
+  A one-to-one function from $A$ onto $B$ is a
+    \textbf{one-to-one correspondence} between $A$ and $B$.
 
   \code*{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.isSingleValued}
@@ -2879,7 +2885,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
 \hyperlabel{sub:one-to-one-inverse}
 
   \begin{lemma}
-    For any one-to-one function $F$, $F^{-1}$ is also one-to-one.
+    For any one-to-one function $F$, $F^{-1}$ is also a one-to-one function.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Relation}
@@ -3008,7 +3014,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
 
   \begin{lemma}
     Let $F$ and $G$ be one-to-one functions.
-    Then $F \circ G$ is one-to-one as well.
+    Then $F \circ G$ is also a one-to-one function.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Relation}
@@ -3023,21 +3029,15 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
         F \circ G = \{\tuple{u, v} \mid \exists t(uGt \land tFv)\}.
       \end{equation}
     By \nameref{sub:theorem-3h}, $F \circ G$ is a function.
-    All that remains is proving $F \circ G$ is single-rooted, i.e. for each
-      $y \in \ran{F \circ G}$, there is only one $x$ such that
-      $\tuple{x, y} \in F \circ G$.
 
-    To that end let $y \in \ran{(F \circ G)}$.
-    Then there exists some $x_1 \in \dom{(F \circ G)}$ such that
-      $\tuple{x_1, y} \in F \circ G$.
-    Suppose there also exists some $x_2 \in \dom{(F \circ G)}$ such that
-      $\tuple{x_2, y} \in F \circ G$.
-    By \eqref{sub:one-to-one-composition-eq1}, there exists a $t_1$ such that
+    All that remains is proving $F \circ G$ is one-to-one.
+    Let $(F \circ G)(x_1) = (F \circ G)(x_2) = y$.
+    By \eqref{sub:one-to-one-composition-eq1}, there exists some $t_1$ such that
       $x_1Gt_1$ and $t_1Fy$.
     Likewise, there exists some $t_2$ such that $x_2Gt_2$ and $t_2Fy$.
-    But $F$ is one-to-one meaning $t_1 = t_2$.
-    Similarly, $G$ is one-to-one meaning $x_1 = x_2$.
-    Hence $F \circ G$ is single-valued.
+    Since $F$ is one-to-one, it follows $t_1 = t_2$.
+    Then, since $G$ is also one-to-one, it follows $x_1 = x_2$.
+    Hence $F \circ G$ is one-to-one.
   \end{proof}
 
 \subsection{\verified{Theorem 3I}}%
@@ -8442,7 +8442,7 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
 \section{Equinumerosity}%
 \hyperlabel{sec:equinumerosity}
 
-\subsection{\pending{Theorem 6A}}%
+\subsection{\verified{Theorem 6A}}%
 \hyperlabel{sub:theorem-6a}
 
   \begin{theorem}[6A]
@@ -8470,23 +8470,43 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
 
     \paragraph{(a)}%
 
-      Consider function $I_A \colon A \rightarrow A$ given by $I_A(x) = x$.
-      This function is trivially a bijection between $A$ and $A$.
+      Consider \nameref{ref:function} $I_A \colon A \rightarrow A$ given by
+        $I_A(x) = x$.
+      $I_A$ is trivially a one-to-one correspondence between $A$ and $A$.
       Thus $A$ is \nameref{ref:equinumerous} to $A$.
 
     \paragraph{(b)}%
 
       Suppose $\equinumerous{A}{B}$.
-      Then there exists a one-to-one function $f$ from $A$ onto $B$.
-      TODO
+      Then there exists a one-to-one correspondence $F$ between $A$ and $B$.
+      Consider now \nameref{ref:inverse} $$F^{-1} = \{\tuple{u, v} \mid vFu\}.$$
+      By \nameref{sub:one-to-one-inverse}, $F^{-1}$ is a one-to-one function.
+      For all $y \in A$, $\tuple{y, F(y)} \in F$.
+      Then $\tuple{F(y), y} \in F^{-1}$ meaning $F^{-1}$ is onto $A$.
+      Hence $F^{-1}$ is a one-to-one correspondence between $B$ and $A$, i.e.
+        $\equinumerous{B}{A}$.
 
     \paragraph{(c)}%
 
-      TODO
+      Suppose $\equinumerous{A}{B}$ and $\equinumerous{B}{C}$.
+      Then there exists a one-to-one correspondence $G$ between $A$ and $B$ and
+        a one-to-one correspondence $F$ between $B$ and $C$.
+      By \nameref{sub:one-to-one-composition}, $F \circ G$ is a one-to-one
+        function.
+      Thus we're left with proving $F \circ G$ is onto $C$.
+
+      Let $y \in C$.
+      Since $F$ is onto $C$, there exists some $t \in B$ such that $F(t) = y$.
+      Likewise, since $G$ is onto $B$, there exists some $x \in A$ such that
+        $G(x) = t$.
+      Then $F(G(x)) = y$.
+      Thus $\ran{(F \circ G)} = C$ meaning $F \circ G$ is onto $C$.
+      Hence $F \circ G$ is a one-to-one correspondence function between $A$ and
+        $C$, i.e. $\equinumerous{A}{C}$.
 
   \end{proof}
 
-\subsection{\sorry{Theorem 6B}}%
+\subsection{\unverified{Theorem 6B}}%
 \hyperlabel{sub:theorem-6b}
 
   \begin{theorem}[6B]
@@ -8494,7 +8514,16 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
   \end{theorem}
 
   \begin{proof}
-    TODO
+    Let $A$ be an arbitrary set and $f \colon A \rightarrow \powerset{A}$.
+    Define $\phi = \{a \in A \mid a \not\in f(a)\}$.
+    Clearly $\phi \in \powerset{A}$.
+    Furthermore, for all $a \in A$, $\phi \neq f(a)$ since $a \in \phi$ if and
+      only if $a \not\in f(a)$.
+    Thus $f$ cannot be onto $\powerset{A}$.
+    Since $f$ was arbitrarily chosen, there exists no one-to-one correspondence
+      between $A$ and $\powerset{A}$.
+    Since $A$ was arbitrarily chosen, there is no set equinumerous to its
+      powerset.
   \end{proof}
 
 \section{Finite Sets}%
@@ -8619,13 +8648,13 @@ A set $A$ is \textbf{equinumerous} to a set $B$ (written $\equinumerous{A}{B}$)
     TODO
   \end{proof}
 
-\subsection{\sorry{Exercise 6.5}}%
+\subsection{\verified{Exercise 6.5}}%
 \hyperlabel{sub:exercise-6-5}
 
   Prove \nameref{sub:theorem-6a}.
 
   \begin{proof}
-    TODO
+    Refer to \nameref{sub:theorem-6a}.
   \end{proof}
 
 \subsection{\sorry{Exercise 6.6}}%
