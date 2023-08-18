@@ -8603,14 +8603,83 @@
 \section{Exercises 6}%
 \hyperlabel{sec:exercises-6}
 
-\subsection{\sorry{Exercise 6.1}}%
+\subsection{\unverified{Exercise 6.1}}%
 \hyperlabel{sub:exercise-6-1}
 
   Show that the equation $$f(m, n) = 2^m(2n + 1) - 1$$ defines a one-one-one
     correspondence between $\omega \times \omega$ and $\omega$.
 
   \begin{proof}
-    TODO
+
+    We prove that (i) $f$ is one-to-one and (ii) $f$ is onto $\omega$.
+
+    \paragraph{(i)}%
+
+      Let $y \in \ran{f}$.
+      Then there exists $(m_1, n_1) \in \omega \times \omega$ such that
+        $f(m_1, n_1) = y$.
+      Suppose there exists $(m_2, n_2) \in \omega \times \omega$ such that
+        $f(m_2, n_2) = y$.
+      We show that $m_1 = m_2$ and $n_1 = n_2$.
+
+      By \nameref{sub:trichotomy-law-natural-numbers}, we know either
+        $m_1 \leq m_2$ or $m_2 \leq m_1$ and either $n_1 \leq n_2$ or
+        $n_2 \leq n_1$.
+      WLOG, assume $m_1 \leq m_2$ and $n_1 \leq n_2$.
+      Then by \nameref{sub:exercise-4.23}, there exists some $p \in \omega$ such
+        that $m_1 + p = m_2$.
+      Likewise, there exists some $q \in \omega$ such that $n_1 + q = n_2$.
+      Therefore
+        \begin{align*}
+          & f(m_1, n_1) = f(m_2, n_2) \\
+          & \iff 2^{m_1}(2n_1 + 1) - 1 = 2^{m_2}(2n_2 + 1) - 1 \\
+          & \iff 2^{m_1}(2n_1 + 1) = 2^{m_2}(2n_2 + 1) \\
+          & \iff 2^{m_1}(2n_1 + 1) = 2^{m_1+p}(2(n_1 + q) + 1) \\
+          & \iff 2^{m_1}(2n_1 + 1) = 2^{m_1}2^p(2n_1 + 2q + 1) \\
+          & \iff 2n_1 + 1 = 2^p(2n_1 + 2q + 1) \\
+          & \iff 2n_1 + 1 = 2^{p+1}n_1 + 2^{p+1}q + 2^p.
+        \end{align*}
+      Notice though that the right-hand side of the above equality is smallest
+        when $p = 0$ and $q = 0$.
+      Since when evaluated at $p = 0$ and $q = 0$, the equality holds, it
+        follows this value of $p$ and $q$ are the only possible values that
+        $p$ and $q$ can take on.
+      Thus $m_1 + p = m_1 = m_2$ and $n_1 + q = n_1 = n_2$.
+
+    \paragraph{(ii)}%
+
+      We show $\ran{f} = \omega$ by the
+        \nameref{sub:strong-induction-principle-natural-numbers}.
+      It is clear that $\ran{f}$ is a subset of $\omega$.
+      Let $x \in \omega$ and suppose every number less than $x$ is in $\ran{f}$.
+      All that remains to be shown is that $x \in \ran{f}$.
+      By \nameref{sub:exercise-4.14}, there are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $x$ is an even number.
+        Then $x = 2 \cdot y$ for some $y \in \omega$.
+        Then $f(0, y) = 2^0(2y + 1) - 1 = 2y = x$.
+        Hence $x \in \ran{f}$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $x$ is an odd number.
+        Then $x = (2 \cdot y) + 1$ for some $y$.
+        It immediately follows $x - 1$ is an even number, meaning there exists
+          some $z$ such that $x - 1 = 2z$.
+        Since $z \in x$, the induction hypothesis states that there exists
+          some $m, n \in \omega$ such that $$f(m, n) = z = 2^m(2n + 1) - 1.$$
+        Therefore
+          \begin{align*}
+            f(m + 1, n)
+              & = 2^{m+1}(2n + 1) - 1 \\
+              & = (2)(2^m)(2n + 1) - 1 \\
+              & = 2z + 1 \\
+              & = x.
+          \end{align*}
+        Hence $x \in \ran{f}$.
+
   \end{proof}
 
 \subsection{\unverified{Exercise 6.2}}%
@@ -8652,7 +8721,7 @@
     Hence $J$ is correctly defined.
   \end{proof}
 
-\subsection{\sorry{Exercise 6.3}}%
+\subsection{\unverified{Exercise 6.3}}%
 \hyperlabel{sub:exercise-6-3}
 
   Find a one-to-one correspondence between the open unit interval $\ioo{0}{1}$
@@ -8660,7 +8729,150 @@
     irrationals.
 
   \begin{proof}
-    TODO
+
+    \begin{figure}[ht]
+      \label{sub:exercise-6-3-fig1}
+      \includegraphics[width=0.6\textwidth]{exercise-6.3.png}
+      \centering
+    \end{figure}
+
+    Consider function $f \colon (0, 1) \rightarrow \mathbb{R}$ given by
+      $$f(x) = \begin{cases}
+        \frac{1}{2x} - 1 & \text{if } x \leq \frac{1}{2} \\
+        \frac{1}{2(x - 1)} + 1 & \text{otherwise}.
+      \end{cases}$$
+    We prove that (i) $f$ is a one-to-one into $\mathbb{R}$, (ii) $f$ is onto
+      $\mathbb{R}$, and (iii) $f$ takes rationals to rationals and irrationals
+      to irrationals.
+
+    \paragraph{(i)}%
+
+      Before proceeding, consider the solutions to the following identity:
+        \begin{align*}
+          \frac{1}{2x} - 1 = \frac{1}{2(x - 1)} + 1
+          & \iff -8x^2 + 8x - 2 = 0 \\
+          & \iff 4x^2 - 4x + 1 = 0.
+        \end{align*}
+      Applying the quadratic equation shows $x = 1 / 2$ is the only solution.
+      Thus for any $x_1, x_2 \in \ioo{0}{1}$ such that $f(x_1) = f(x_2)$, it
+        must be that $x_1, x_2 \leq 1 / 2$ or $x_1, x_2 > 1 / 2$.
+
+      We now prove $f$ is one-to-one.
+      Let $y \in \ran{f}$.
+      Then there exists some $x_1 \in \ioo{0}{1}$ such that $f(x_1) = y$.
+      Suppose there exists some $x_2 \in \ioo{0}{1}$ such that $f(x_1) = f(x_2)$.
+      We prove that $x_1 = x_2$ by case analysis:
+
+      \subparagraph{Case 1}%
+
+        Suppose $x_1, x_2 \leq 1 / 2$.
+        Then $$\frac{1}{2x_1} - 1 = \frac{1}{2x_2} - 1$$ which straightforwardly
+          simplifies to $x_1 = x_2$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $x_1, x_2 > 1 / 2$.
+        Then $$\frac{1}{2(x_1 - 1)} + 1 = \frac{1}{2(x_2 - 1)} + 1$$ also
+          straightfowardly simplies to $x_1 = x_2$.
+
+      \subparagraph{Subconclusion}%
+
+        The above cases are exhaustive.
+        Therefore $f(x_1) = f(x_2)$ implies $x_1 = x_2$.
+        Hence $f$ is one-to-one.
+
+    \paragraph{(ii)}%
+
+      Let $y \in \mathbb{R}$.
+      We prove that there exists an $x \in (0, 1)$ such that $f(x) = y$.
+      There are three cases we consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $y = 0$.
+        Then $f(1 / 2) = 0 = y$ is a readily identifiable solution.
+
+      \subparagraph{Case 2}%
+
+        Suppose $y > 0$.
+        Consider $x = \frac{1}{2(y + 1)}$.
+        We note that $x < 1 / 2$ meaning
+          \begin{align*}
+            f(x)
+              & = f\left(\frac{1}{2(y + 1)}\right) \\
+              & = \frac{1}{2(\frac{1}{2(y + 1)})} - 1 \\
+              & = (y + 1) - 1 \\
+              & = y.
+          \end{align*}
+
+      \subparagraph{Case 3}%
+
+        Suppose $y < 0$.
+        Consider $x = \frac{1}{2(y - 1)} + 1$.
+        We note that $x > 1 / 2$ meaning
+          \begin{align*}
+            f(x)
+              & = f\left(\frac{1}{2(y - 1)} + 1\right) \\
+              & = \frac{1}{2((\frac{1}{2(y - 1)} + 1) - 1)} + 1 \\
+              & = (y - 1) + 1 \\
+              & = y.
+          \end{align*}
+
+      \subparagraph{Subconclusion}%
+
+        The above three cases are exhaustive.
+        Thus $\ran{f} = \mathbb{R}$, i.e. $f$ is onto $\mathbb{R}$.
+
+    \paragraph{(iii)}%
+
+      Let $x \in (0, 1)$.
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $x$ is a rational number.
+        Then there exist integers $m$ and $n$ such that $x = m / n$.
+        If $x \leq 1 / 2$, then
+          \begin{align*}
+            f(x)
+              & = f(m / n) \\
+              & = \frac{1}{2\left(\frac{m}{n}\right)} - 1 \\
+              & = \frac{n}{2m} - 1 \\
+              & = \frac{n - 2m}{2m}.
+          \end{align*}
+        Since $n - 2m$ and $2m$ are integers, $f(x)$ is a rational number.
+        If instead $x > 1 / 2$, then
+          \begin{align*}
+            f(x)
+              & = f(m / n) \\
+              & = \frac{1}{2\left(\frac{m}{n} - 1\right)} + 1 \\
+              & = \frac{n}{2(m - n)} + 1 \\
+              & = \frac{n + 2(m - n)}{2(m - n)}.
+          \end{align*}
+        Since $n + 2(m - n)$ and $2(m - n)$ are integers, $f(x)$ is again a
+          rational number.
+        Thus $f$ maps every rational number to a rational number.
+
+      \subparagraph{Case 2}%
+
+        Suppose $x$ is an irrational number.
+        First, consider the case where $x \leq 1 / 2$ and, for the sake of
+          contradiction, suppose $f(x)$ was a rational number.
+        Then there exist integers $m$ and $n$ such that
+          $$f(x) = \frac{1}{2x} - 1 = \frac{m}{n}.$$
+        But this would imply $$x = \frac{n}{2(m + n)},$$ a contradiction.
+        Thus $f(x)$ must be irrational.
+
+        Likewise, consider the case where $x > 1 / 2$.
+        Again, for the sake of contradiction, suppose $f(x)$ was a rational
+          number.
+        Then there exist integers $m$ and $n$ such that
+          $$f(x) = \frac{1}{2(x - 1)} + 1 = \frac{m}{n}.$$
+        But this would imply $$x = \frac{n}{2(m - n)} + 1,$$ a contradiction.
+        Thus $f(x)$ must be irrational.
+
+        Hence $f$ maps every irrational number to an irrational number.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 6.4}}%

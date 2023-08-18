@@ -327,7 +327,7 @@ length of `α` (i.e., the number of symbols in the string) is odd.
 
 *Suggestion*: Apply induction to show that the length is of the form `4k + 1`.
 -/
-theorem exercise_1_1_5_a (α : Wff) (hα : ¬α.hasNotSymbol)
+theorem exercise_1_1_5a (α : Wff) (hα : ¬α.hasNotSymbol)
   : Odd α.length := by
   suffices ∃ k : ℕ, α.length = 4 * k + 1 by
     have ⟨k, hk⟩ := this
@@ -363,7 +363,7 @@ than a quarter of the symbols are sentence symbols.
 *Suggestion*: Apply induction to show that the number of sentence symbols is
 `k + 1`.
 -/
-theorem exercise_1_1_5_b (α : Wff) (hα : ¬α.hasNotSymbol)
+theorem exercise_1_1_5b (α : Wff) (hα : ¬α.hasNotSymbol)
   : α.sentenceSymbolCount > (Nat.cast α.length : ℝ) / 4 := by
   rw [
     α.length_eq_sum_symbol_count,

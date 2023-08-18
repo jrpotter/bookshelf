@@ -8,6 +8,7 @@
 % Truth table start and final color
 \definecolor{TTStart}{gray}{0.95}
 \definecolor{TTEnd}{rgb}{1,1,0}
+\colorlet{TTInvalid}{Salmon}
 \newcolumntype{s}{>{\columncolor{TTStart}}c}
 \newcolumntype{e}{>{\columncolor{TTEnd}}c}
 
@@ -711,7 +712,7 @@
   Suppose that $\alpha$ is a wff not containing the negation symbol $\neg$.
 
 \subsubsection{\verified{Exercise 1.1.5a}}%
-\hyperlabel{ssub:exercise-1.1.5.a}
+\hyperlabel{ssub:exercise-1.1.5a}
 
   Show that the length of $\alpha$ (i.e., the number of symbols in the string)
     is odd.
@@ -719,14 +720,14 @@
     $4k + 1$.
 
   \code*{Enderton.Logic.Chapter\_1}
-    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_5\_a}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_5a}
 
   \begin{proof}
 
     Define $L$ to be the length function mapping arbitrary
       \nameref{ref:well-formed-formula} to its length and let
       \begin{equation}
-        \hyperlabel{ssub:exercise-1.1.5.a-eq1}
+        \hyperlabel{ssub:exercise-1.1.5a-eq1}
         S = \{\phi \mid
           \phi \text{ is a wff containing } \neg \text{ or }
           \exists k \in \mathbb{N}, L(\phi) = 4k + 1\}.
@@ -736,14 +737,14 @@
     We then conclude with (iii) the proof of the theorem statement.
 
     \paragraph{(i)}%
-    \hyperlabel{par:exercise-1.1.5.a-i}
+    \hyperlabel{par:exercise-1.1.5a-i}
 
       Every sentence symbol has length 1 by definition.
       That is, every sentence symbol has length $(4)(0) + 1$.
       Hence $S$ contains every sentence symbol.
 
     \paragraph{(ii)}%
-    \hyperlabel{par:exercise-1.1.5.a-ii}
+    \hyperlabel{par:exercise-1.1.5a-ii}
 
       Let $\alpha, \beta \in S$.
       Then there exists some $k_\alpha$ and $k_\beta$ such that
@@ -769,7 +770,7 @@
 
     \paragraph{(iii)}%
 
-      By \nameref{par:exercise-1.1.5.a-i} and \nameref{par:exercise-1.1.5.a-ii},
+      By \nameref{par:exercise-1.1.5a-i} and \nameref{par:exercise-1.1.5a-ii},
         the \nameref{sub:induction-principle-1} indicates $S$ is the set of all
         wffs.
       Thus all well-formed formulas not containing symbol $\neg$ has length
@@ -779,14 +780,14 @@
   \end{proof}
 
 \subsubsection{\verified{Exercise 1.1.5b}}%
-\hyperlabel{ssub:exercise-1.1.5-b}
+\hyperlabel{ssub:exercise-1.1.5b}
 
   Show that more than a quarter of the symbols are sentence symbols.
   \textit{Suggestion}: Apply induction to show that the number of sentence
     symbols is of the form $k + 1$.
 
   \code*{Enderton.Logic.Chapter\_1}
-    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_5\_b}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_1\_5b}
 
   \begin{proof}
 
@@ -847,16 +848,14 @@
   \begin{proof}
     Yes.
     To prove, consider the following truth table:
-    $$
-      \begin{array}{s|c|s|c|s|e|s}
+      $$\begin{array}{s|c|s|c|s|e|s}
         (((P & \Rightarrow & Q) & \Rightarrow & P) & \Rightarrow & P) \\
         \hline
         T & T & T & T & T & T & T \\
         T & F & F & T & T & T & T \\
         F & T & T & F & F & T & F \\
         F & T & F & F & F & T & F
-      \end{array}
-    $$
+      \end{array}$$
   \end{proof}
 
 \subsection{\pending{Exercise 1.2.2b}}%
@@ -894,16 +893,14 @@
         By definition,
           $$\sigma_{k + 2} = ((\sigma_{k} \Rightarrow P) \Rightarrow P).$$
         Consider the truth table of the above:
-        $$
-          \begin{array}{c|c|s|e|s}
+          $$\begin{array}{c|c|s|e|s}
             ((\sigma_k & \Rightarrow & P) & \Rightarrow & P) \\
             \hline
             T & T & T & T & T \\
             T & T & T & T & T \\
             T & F & F & T & F \\
             T & F & F & T & F
-          \end{array}
-        $$
+          \end{array}$$
         This shows $\sigma_{k+2}$ is a tautology.
         Hence $P(k + 2)$ is true.
 
@@ -927,16 +924,14 @@
         Suppose $k = 1$.
         Then $\sigma_k = \sigma_1 = ((P \Rightarrow Q) \Rightarrow P)$.
         The following truth table shows $\sigma_1$ is not a tautology:
-        $$
-          \begin{array}{s|c|s|e|s}
+          $$\begin{array}{s|c|s|e|s}
             (((P & \Rightarrow & Q) & \Rightarrow & P) \\
             \hline
             T & T & T & T & T \\
             T & F & F & T & T \\
             F & T & T & F & F \\
             F & T & F & F & F
-          \end{array}
-        $$
+          \end{array}$$
 
       \subparagraph{Case 2}%
 
@@ -945,40 +940,65 @@
         By definition, $$\sigma_k = (\sigma_{k-1} \Rightarrow P).$$
         By \eqref{par:exercise-1.2.2b-i}, $\sigma_{k-1}$ is a tautology.
         The following truth table shows $\sigma_k$ is not:
-        $$
-          \begin{array}{c|e|s}
+          $$\begin{array}{c|e|s}
             (\sigma_{k-1} & \Rightarrow & P) \\
             \hline
             T & T & T \\
             T & T & T \\
             T & F & F \\
             T & F & F
-          \end{array}
-        $$
+          \end{array}$$
 
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.3a}}%
+\subsection{\pending{Exercise 1.2.3a}}%
 \hyperlabel{sub:exercise-1.2.3a}
 
   Determine whether or not $((P \Rightarrow Q) \lor (Q \Rightarrow P))$ is a
     tautology.
 
   \begin{proof}
-    TODO
+    Consider the following truth table:
+      $$\begin{array}{s|c|s|e|s|c|s}
+        ((P & \Rightarrow & Q) & \lor & (Q & \Rightarrow & P)) \\
+        \hline
+        T & T & T & T & T & T & T \\
+        T & F & F & T & F & T & T \\
+        F & T & T & T & T & F & F \\
+        F & T & F & T & F & T & F
+      \end{array}$$
+    The above makes it immediately evident that
+      $((P \Rightarrow Q) \lor (Q \Rightarrow P))$ is a tautology.
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.3b}}%
+\subsection{\pending{Exercise 1.2.3b}}%
 \hyperlabel{sub:exercise-1.2.3b}
 
   Determine whether or not $((P \land Q) \Rightarrow R)$ tautologically implies
     $((P \Rightarrow R) \lor (Q \Rightarrow R))$.
 
   \begin{proof}
-    TODO
+    Consider the following truth table:
+      $$\begin{array}{s|s|s|e|e}
+        P & Q & R &
+          ((P \land Q) \Rightarrow R) &
+          ((P \Rightarrow R) \lor (Q \Rightarrow R)) \\
+        \hline
+        T & T & T & T & T \\
+        T & T & F & F & F \\
+        T & F & T & T & T \\
+        T & F & F & T & T \\
+        F & T & T & T & T \\
+        F & T & F & T & T \\
+        F & F & T & T & T \\
+        F & F & F & T & T
+      \end{array}$$
+    The above makes it immediately evident that
+      $((P \land Q) \Rightarrow R)$ tautologically implies
+      $((P \Rightarrow R) \lor (Q \Rightarrow R))$.
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.4}}%
+\subsection{\pending{Exercise 1.2.4}}%
 \hyperlabel{sub:exercise-1.2.4}
 
   Show that the following hold:
@@ -992,10 +1012,98 @@
     together with the one possibly new member $\alpha$.)
 
   \begin{proof}
-    TODO
+
+    \paragraph{(a)}%
+
+      We prove each direction of the biconditional.
+
+      \subparagraph{($\Rightarrow$)}%
+
+        Assume $\Sigma; \alpha \vDash \beta$.
+        Let $v$ be a truth assignment for the sentence symbols in
+          $\Sigma; \alpha$ and $\beta$.
+        Then if $v$ satisfies every member of $\Sigma$ and $\alpha$, it must
+          also satisfy $\beta$.
+        Denote $\bar{v}(\Sigma)$ as the proposition that $v$ satisfies every
+          member of $\Sigma$ and consider the following truth table:
+          $$\begin{array}{s|s|s|e}
+            \bar{v}(\Sigma) & \bar{v}(\alpha) & \bar{v}(\beta) &
+              \bar{v}((\alpha \Rightarrow \beta)) \\
+            \hline
+            T & T & T & T \\
+            \rowcolor{TTInvalid}
+              T & T & F & F \\
+            T & F & T & T \\
+            T & F & F & T \\
+            F & T & T & T \\
+            F & T & F & F \\
+            F & F & T & T \\
+            F & F & F & T
+          \end{array}$$
+        The red row denotes a contradiction: it is not possible for
+          $\bar{v}(\Sigma)$ and $\bar{v}(\alpha)$ to be true but
+          $\bar{v}(\beta)$ to be false.
+        All remaining rows show that when $\bar{v}(\Sigma)$ is true, so is
+          $\bar{v}((\alpha \Rightarrow \beta))$.
+        Thus $\Sigma \vDash (\alpha \Rightarrow \beta)$.
+
+      \subparagraph{($\Leftarrow$)}%
+
+        Assume $\Sigma \vDash (\alpha \Rightarrow \beta)$.
+        Let $v$ be a \nameref{ref:truth-assignment} for the sentence symbols in
+          $\Sigma$, $\alpha$, and $\beta$.
+        Then if $v$ satisfies every member of $\Sigma$, it must also satisfy
+          $(\alpha \Rightarrow \beta)$.
+        Denote $\bar{v}(\Sigma)$ as the proposition that $v$ satisfies every
+          member of $\Sigma$.
+        By definition, $\bar{v}((\alpha \Rightarrow \beta)) = T$ if and only if
+          $\bar{v}(\alpha) = F$ or $\bar{v}(\alpha)$ and $\bar{v}(\beta)$ are
+          both true.
+        Thus the only situation in which both $\bar{v}(\Sigma) = T$ and
+          $\bar{v}(\alpha) = T$ corresponds to when $\bar{v}(\beta) = T$.
+        Hence $\Sigma; \alpha \vDash \beta$.
+
+    \paragraph{(b)}%
+
+      We prove each direction of the biconditional.
+
+      \subparagraph{($\Rightarrow$)}%
+
+        Suppose $\alpha \vDash \Dashv \beta$.
+        Let $v$ be a \nameref{ref:truth-assignment} for the sentence symbols in
+          $\alpha$ and $\beta$.
+        Consider the following truth table:
+          $$\begin{array}{s|e|s}
+            (\alpha & \Leftrightarrow & \beta) \\
+            \hline
+            T & T & T \\
+            \rowcolor{TTInvalid}
+              T & F & F \\
+            \rowcolor{TTInvalid}
+              F & F & T \\
+            F & T & F
+          \end{array}$$
+        The red rows indicate possibilites that cannot occur, for
+          $\alpha \vDash \beta$ and $\beta \vDash \alpha$ by hypothesis.
+        Of the remaining rows, $(\alpha \Leftrightarrow \beta)$ is true.
+        Hence $\vDash (\alpha \Leftrightarrow \beta)$.
+
+      \subparagraph{($\Leftarrow$)}%
+
+        Assume $\vDash (\alpha \Rightarrow \beta)$.
+        Let $v$ be a \nameref{ref:truth-assignment} for the sentence symbols in
+          $\alpha$ and $\beta$.
+        By definition, $\bar{v}((\alpha \Leftrightarrow \beta)) = T$ if and only
+          if $\bar{v}(\alpha) = \bar{v}(\beta)$.
+        Thus if $\bar{v}(\alpha)$ is true, so must $\bar{v}(\beta)$.
+        That is, $\alpha \vDash \beta$.
+        Likewise, if $\bar{v}(\beta)$ is true, so must $\bar{v}(\alpha)$.
+        Therefore $\beta \vDash \alpha$.
+        Hence $\alpha \vDash \Dashv \beta$.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.5}}%
+\subsection{\pending{Exercise 1.2.5}}%
 \hyperlabel{sub:exercise-1.2.5}
 
   Prove or refute each of the following assertions:
@@ -1007,10 +1115,62 @@
     \end{enumerate}
 
   \begin{proof}
-    TODO
+
+    \paragraph{(a)}%
+
+      WLOG, suppose $\Sigma \vDash \alpha$.
+      That is, every truth assignment for sentence symbols found in $\Sigma$ and
+        $\alpha$ that satisfies every member of $\Sigma$ also satisfies
+        $\alpha$.
+      Let $v$ be one of these truth assignments.
+      Denote $\bar{v}(\Sigma)$ as the proposition that $v$ satisfies every
+        member of $\Sigma$ and consider the following truth table:
+        $$\begin{array}{s|s|s|e}
+          \bar{v}(\Sigma) & \bar{v}(\alpha) & \bar{v}(\beta) &
+            \bar{v}((\alpha \lor \beta)) \\
+          \hline
+          T & T & T & T \\
+          T & T & F & T \\
+          \rowcolor{TTInvalid}
+            T & F & T & T \\
+          \rowcolor{TTInvalid}
+            T & F & F & T \\
+          F & T & T & T \\
+          F & T & F & T \\
+          F & F & T & T \\
+          F & F & F & F
+        \end{array}$$
+      The red rows indicate possiblities that cannot occur since
+        $\Sigma \vDash \alpha$ by hypothesis.
+      All remaining rows show that when $\bar{v}(\Sigma)$ is true, so is
+        $\bar{v}((\alpha \lor \beta))$.
+      Hence $\Sigma \vDash (\alpha \lor \beta)$.
+
+    \paragraph{(b)}%
+
+      We proceed by counterexample.
+      Suppose $\Sigma = \emptyset$.
+      That is, assume $(\alpha \lor \beta)$ is a tautology, i.e.
+        $\vDash (\alpha \lor \beta)$.
+      Consider the following truth table:
+        $$\begin{array}{s|e|s}
+          (\alpha & \lor & \beta) \\
+          \hline
+          T & T & T \\
+          T & T & F \\
+          F & T & T \\
+          \rowcolor{TTInvalid}
+            F & F & F
+        \end{array}$$
+      The red row indicates an impossibility, since $(\alpha \lor \beta)$ should
+        always be true by hypothesis.
+      But this table also clearly demonstrates that $\not\vDash \alpha$ and
+        $\not\vDash \beta$.
+      Thus the conditional statement proposed must not be generally true.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.6a}}%
+\subsection{\pending{Exercise 1.2.6a}}%
 \hyperlabel{sub:exercise-1.2.6a}
 
   Show that if $v_1$ and $v_2$ are \nameref{ref:truth-assignment}s which agree
@@ -1019,7 +1179,104 @@
   Use the \nameref{sub:induction-principle-1}.
 
   \begin{proof}
-    TODO
+
+    Let $\sigma$ map a \nameref{ref:well-formed-formula} $\phi$ to the set of
+      sentence symbols found in $\phi$.
+    Define
+      \begin{equation}
+        \hyperlabel{sub:exercise-1.2.6a-eq1}
+        S = \{\phi \mid ((\sigma(\phi) = \sigma(\alpha)) \Rightarrow
+          (\bar{v}_1(\phi) = \bar{v}_2(\phi)))\}.
+      \end{equation}
+    We prove that (i) the set of sentence symbols is found in $\phi$ and (ii)
+      $S$ is closed under the five \nameref{ref:formula-building-operations}.
+    Afterward we show that (iii) our theorem statement holds.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.2.6a-i}
+
+      Let $A_n$ denote an arbitrary sentence symbol.
+      Suppose $\sigma(A_n) = \{A_n\} = \sigma(\alpha)$.
+      But then $\bar{v}_1(A_n) = \bar{v}_2(A_n)$ since, by hypothesis, $v_1$
+        and $v_2$ agree on all the sentence symbols found in $\alpha$.
+      Hence $S$ contains all the sentence symbols.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-1.2.6a-ii}
+
+      Let $\beta, \gamma \in S$.
+      There are three cases to consider:
+
+      \subparagraph{Case 1}%
+      \hyperlabel{spar:exercise-1.2.6a-ii-1}
+
+        Suppose $\sigma(\beta) \neq \sigma(\alpha)$.
+        By definition, $\mathcal{E}_{\neg}(\beta) = (\neg\beta)$.
+        Then clearly $\sigma(\mathcal{E}_{\neg}(\beta)) \neq \sigma(\alpha)$.
+        Therefore $\mathcal{E}_{\neg}(\beta) \in S$.
+        Likewise,
+          $\mathcal{E}_{\square}(\beta, \gamma) =
+            (\beta \mathop{\square} \gamma)$
+          where $\square$ is one of the binary connectives $\land$, $\lor$,
+            $\Rightarrow$, $\Leftrightarrow$.
+        Again, it clearly follows that
+          $\mathcal{E}_{\square}(\beta, \gamma) \neq \sigma(\alpha)$.
+        Thus $\mathcal{E}_{\square}(\beta, \gamma) \in S$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $\sigma(\gamma) \neq \sigma(\alpha)$.
+        This case mirrors \nameref{spar:exercise-1.2.6a-ii-1}.
+
+      \subparagraph{Case 3}%
+
+        Suppose $\sigma(\beta) = \sigma(\alpha) = \sigma(\alpha)$.
+        By definition, $\mathcal{E}_{\neg}(\beta) = (\neg\beta)$.
+        Then clearly $\sigma(\mathcal{E}_{\neg}(\beta)) = \sigma(\alpha)$.
+        Since
+          \begin{align*}
+            \bar{v}_1((\neg\beta))
+              & = (\neg\bar{v}_1(\beta)) \\
+              & = (\neg\bar{v}_2(\beta)) & \eqref{sub:exercise-1.2.6a-eq1} \\
+              & = \bar{v}_2((\neg\beta)),
+          \end{align*}
+          it follows that $\mathcal{E}_{\neg}(\beta) \in S$.
+
+        Likewise,
+          $\mathcal{E}_{\square}(\beta, \gamma) =
+            (\beta \mathop{\square} \gamma)$
+          where $\square$ is one of the binary connectives $\land$, $\lor$,
+            $\Rightarrow$, $\Leftrightarrow$.
+        Again, it clearly follows that
+          $\mathcal{E}_{\square}(\beta, \gamma) \neq \sigma(\alpha)$.
+        Since
+          \begin{align*}
+            \bar{v}_1((\alpha \mathop{\square} \beta))
+              & = (\bar{v}_1(\alpha) \mathop{\square} \bar{v}_1(\beta)) \\
+              & = (\bar{v}_2(\alpha) \mathop{\square} \bar{v}_2(\beta)
+                & \eqref{sub:exercise-1.2.6a-eq1} \\
+              & = \bar{v}_2((\alpha \mathop{\square} \beta)),
+          \end{align*}
+          it follows that $\mathcal{E}_{\square}(\beta, \gamma) \in S$.
+
+      \subparagraph{Subconclusion}%
+
+        The above three cases are exhaustive.
+        Thus it follows $S$ is closed under the five formula-buildiong
+          operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-1.2.6a-i} and \nameref{par:exercise-1.2.6a-ii},
+        the \nameref{sub:induction-principle-1} indicates $S$ is the set of all
+        wffs.
+      Since $\alpha$ is a well-formed formula, it follows $\alpha \in S$.
+      Therefore
+        $$((\sigma(\alpha) = \sigma(\alpha)) \Rightarrow
+          \bar{v}_1(\alpha) = \bar{v}_2(\alpha)).$$
+      The antecedent clearly holds true.
+      Hence $\bar{v}_1(\alpha) = \bar{v}_2(\alpha)$ as expected.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 1.2.6b}}%
@@ -1030,7 +1287,7 @@
   Show that $\Sigma \vDash \tau$ iff every truth assignment for $\mathcal{S}$
     which satisfies every member of $\Sigma$ also satisfies $\tau$.
   (This is an easy consequence of part (a). The point of part (b) is that we do
-    not need to worry aboutgetting the domain of a truth assignment
+    not need to worry about getting the domain of a truth assignment
     \textit{exactly} perfect, as long as it is big enough. For example, one
     option would be always to use truth assignments on the set of \textit{all}
     sentence symbols. The drawback is that these are infinite objects, and there
