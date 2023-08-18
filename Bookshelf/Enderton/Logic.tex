@@ -5,6 +5,12 @@
 
 \externaldocument[S:]{Set}
 
+% Truth table start and final color
+\definecolor{TTStart}{gray}{0.95}
+\definecolor{TTEnd}{rgb}{1,1,0}
+\newcolumntype{s}{>{\columncolor{TTStart}}c}
+\newcolumntype{e}{>{\columncolor{TTEnd}}c}
+
 \begin{document}
 
 \header{A Mathematical Introduction to Logic}{Herbert B. Enderton}
@@ -796,32 +802,64 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.1}}%
+\subsection{\verified{Exercise 1.2.1}}%
 \hyperlabel{sub:exercise-1.2.1}
 
   Show that neither of the following two formulas tautologically implies the
     other:
-    \begin{gather*}
-      (A \Leftrightarrow (B \Leftrightarrow C)), \\
+    \begin{gather}
+      (A \Leftrightarrow (B \Leftrightarrow C)),
+        \hyperlabel{sub:exercise-1.2.1-eq1} \\
       ((A \land (B \land C)) \lor ((\neg A) \land ((\neg B) \land (\neg C)))).
-    \end{gather*}
+        \hyperlabel{sub:exercise-1.2.1-eq2}
+    \end{gather}
   \textit{Suggestion}: Only two \nameref{ref:truth-assignment}s are needed, not
     eight.
 
+  \code*{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_2\_1\_i}
+
+  \code{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_2\_1\_ii}
+
   \begin{proof}
-    TODO
+    First, suppose $A = T$, $B = F$, and $C = F$.
+    Then \eqref{sub:exercise-1.2.1-eq1} evaluates to $T$ but
+      \eqref{sub:exercise-1.2.1-eq2} evaluates to $F$.
+    Therefore $\eqref{sub:exercise-1.2.1-eq1} \not\vDash
+      \eqref{sub:exercise-1.2.1-eq2}$.
+
+    Next, suppose $A = F$, $B = F$, and $C = F$.
+    Then \eqref{sub:exercise-1.2.1-eq2} evaluates to $T$ but
+      \eqref{sub:exercise-1.2.1-eq1} evaluates to $F$.
+    Therefore $\eqref{sub:exercise-1.2.1-eq2} \not\vDash
+      \eqref{sub:exercise-1.2.1-eq1}$.
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.2a}}%
+\subsection{\verified{Exercise 1.2.2a}}%
 \hyperlabel{sub:exercise-1.2.2a}
 
   Is $(((P \Rightarrow Q) \Rightarrow P) \Rightarrow P)$ a tautology?
 
+  \code*{Enderton.Logic.Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_2\_2a}
+
   \begin{proof}
-    TODO
+    Yes.
+    To prove, consider the following truth table:
+    $$
+      \begin{array}{s|c|s|c|s|e|s}
+        (((P & \Rightarrow & Q) & \Rightarrow & P) & \Rightarrow & P) \\
+        \hline
+        T & T & T & T & T & T & T \\
+        T & F & F & T & T & T & T \\
+        F & T & T & F & F & T & F \\
+        F & T & F & F & F & T & F
+      \end{array}
+    $$
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.2b}}%
+\subsection{\pending{Exercise 1.2.2b}}%
 \hyperlabel{sub:exercise-1.2.2b}
 
   Define $\sigma_k$ recursively as follows: $\sigma_0 = (P \Rightarrow Q)$ and
@@ -829,7 +867,95 @@
     $\sigma_k$ a tautology? (Part (a) corresponds to $k = 2$.)
 
   \begin{proof}
-    TODO
+
+    We prove that $\sigma_k$ is a tautology if and only if $k$ is an even
+      integer greater than zero.
+    To do so, we show (i) that $\sigma_k$ is a tautology for all even $k > 0$,
+      (ii) $\sigma_0$ is not a tautology, and (iii) $\sigma_k$ is not a
+      tautology for all odd $k$.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.2.2b-i}
+
+      Let $P(k)$ be the predicate, "$\sigma_k$ is a tautology."
+      We prove $P(k)$ holds true for all even $k > 0$ via induction.
+
+      \subparagraph{Base Case}%
+
+        Let $k = 2$.
+        By definition,
+          $$\sigma_2 = (((P \Rightarrow Q) \Rightarrow P) \Rightarrow P).$$
+        \nameref{sub:exercise-1.2.2a} indicates $\sigma_2$ is a tautology.
+        Hence $P(2)$ is true.
+
+      \subparagraph{Inductive Step}%
+
+        Suppose $P(k)$ holds for some even $k > 0$.
+        By definition,
+          $$\sigma_{k + 2} = ((\sigma_{k} \Rightarrow P) \Rightarrow P).$$
+        Consider the truth table of the above:
+        $$
+          \begin{array}{c|c|s|e|s}
+            ((\sigma_k & \Rightarrow & P) & \Rightarrow & P) \\
+            \hline
+            T & T & T & T & T \\
+            T & T & T & T & T \\
+            T & F & F & T & F \\
+            T & F & F & T & F
+          \end{array}
+        $$
+        This shows $\sigma_{k+2}$ is a tautology.
+        Hence $P(k + 2)$ is true.
+
+      \subparagraph{Subconclusion}%
+
+        By induction, $P(k)$ is true for all even $k > 0$.
+
+    \paragraph{(ii)}%
+
+      By definition, $$\sigma_0 = (P \Rightarrow Q).$$
+      This is clearly not a tautology since $\sigma_0$ evaluates to $F$ when
+        $P = T$ and $Q = F$.
+
+    \paragraph{(iii)}%
+
+      Let $k > 0$ be an odd natural number.
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $k = 1$.
+        Then $\sigma_k = \sigma_1 = ((P \Rightarrow Q) \Rightarrow P)$.
+        The following truth table shows $\sigma_1$ is not a tautology:
+        $$
+          \begin{array}{s|c|s|e|s}
+            (((P & \Rightarrow & Q) & \Rightarrow & P) \\
+            \hline
+            T & T & T & T & T \\
+            T & F & F & T & T \\
+            F & T & T & F & F \\
+            F & T & F & F & F
+          \end{array}
+        $$
+
+      \subparagraph{Case 2}%
+
+        Suppose $k > 1$.
+        Then $k - 1 > 0$ is an even number.
+        By definition, $$\sigma_k = (\sigma_{k-1} \Rightarrow P).$$
+        By \eqref{par:exercise-1.2.2b-i}, $\sigma_{k-1}$ is a tautology.
+        The following truth table shows $\sigma_k$ is not:
+        $$
+          \begin{array}{c|e|s}
+            (\sigma_{k-1} & \Rightarrow & P) \\
+            \hline
+            T & T & T \\
+            T & T & T \\
+            T & F & F \\
+            T & F & F
+          \end{array}
+        $$
+
   \end{proof}
 
 \subsection{\sorry{Exercise 1.2.3a}}%

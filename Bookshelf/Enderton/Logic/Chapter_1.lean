@@ -390,4 +390,68 @@ theorem exercise_1_1_5_b (α : Wff) (hα : ¬α.hasNotSymbol)
   ]
   exact inv_lt_one (by norm_num)
 
+/-! #### Exercise 1.2.1
+
+Show that neither of the following two formulas tautologically implies the
+other:
+```
+(A ↔ (B ↔ C))
+((A ∧ (B ∧ C)) ∨ ((¬ A) ∧ ((¬ B) ∧ (¬ C)))).
+```
+*Suggestion*: Only two truth assignments are needed, not eight.
+-/
+section Exercise_1_2_1
+
+private def f₁ (A B C : Prop) : Prop :=
+  A ↔ (B ↔ C)
+
+private def f₂ (A B C : Prop) : Prop :=
+  ((A ∧ (B ∧ C)) ∨ ((¬ A) ∧ ((¬ B) ∧ (¬ C))))
+
+theorem exercise_1_2_1_i
+  : f₁ True False False ≠ f₂ True False False := by
+  unfold f₁ f₂
+  simp
+
+theorem exercise_1_2_1_ii
+  : f₁ False False False ≠ f₂ False False False := by
+  unfold f₁ f₂
+  simp
+
+end Exercise_1_2_1
+
+section Exercise_1_2_2
+
+/-- #### Exercise 1.2.2a
+
+Is `(((P → Q) → P) → P)` a tautology?
+-/
+theorem exercise_1_2_2a (P Q : Prop)
+  : (((P → Q) → P) → P) := by
+  tauto
+
+/-! #### Exercise 1.2.2b
+
+Define `σₖ` recursively as follows: `σ₀ = (P → Q)` and `σₖ₊₁ = (σₖ → P)`. For
+which values of `k` is `σₖ` a tautology? (Part (a) corresponds to `k = 2`.)
+-/
+
+private def σ (P Q : Prop) : ℕ → Prop
+  | 0 => P → Q
+  | n + 1 => σ P Q n → P
+
+theorem exercise_1_2_2b_i (k : ℕ) (h : Even k ∧ k > 0)
+  : σ P Q k := by
+  sorry
+
+theorem exercise_1_2_2b_ii
+  : ¬ σ True False 0 := by
+  sorry
+
+theorem exercise_1_2_2b_iii (n : ℕ) (h : Odd n)
+ : ¬ σ False Q n := by
+ sorry
+
+end Exercise_1_2_2
+
 end Enderton.Logic.Chapter_1

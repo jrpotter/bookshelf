@@ -6,6 +6,8 @@
 \input{../../preamble}
 \makecode{../..}
 
+\externaldocument[S:]{../../Common/Real/Sequence}
+
 \newcommand{\ineq}{\,\mathop{\underline{\in}}\,}
 
 \begin{document}
@@ -854,7 +856,7 @@
       Therefore $V_1 = A \cup \powerset{V_0}$.
       This proves $P(1)$ holds true.
 
-    \paragraph{Induction Step}%
+    \paragraph{Inductive Step}%
 
       Suppose $P(n)$ holds true for some $n \geq 1$.
       Consider $V_{n+1}$.
@@ -8611,7 +8613,7 @@
     TODO
   \end{proof}
 
-\subsection{\sorry{Exercise 6.2}}%
+\subsection{\unverified{Exercise 6.2}}%
 \hyperlabel{sub:exercise-6-2}
 
   Show that in Fig. 32 we have:
@@ -8622,7 +8624,32 @@
     \end{align*}
 
   \begin{proof}
-    TODO
+    \begin{figure}[ht]
+      \label{sub:exercise-6-2-fig1}
+      \includegraphics[width=0.6\textwidth]{fig-32}
+      \centering
+    \end{figure}
+    Let $m, n \in \omega$.
+    We note the next point following $(m, n)$ that coincides with the $x$-axis
+      is $(m + n, 0)$.
+    We can then formulate the sum of points seen as
+      \begin{equation}
+        \hyperlabel{sub:exercise-5-2-eq1}
+        \left[ \sum_{i=0}^{m + n} (i + 1) \right] - n.
+      \end{equation}
+    All that remains is showing \eqref{sub:exercise-5-2-eq1} identifies with
+      the equation for $J$.
+    \eqref{sub:exercise-5-2-eq1} is an arithmetic series.
+    By \nameref{S:sub:sum-arithmetic-series},
+      \begin{align*}
+        \left[ \sum_{i=0}^{m + n} (i + 1) \right] - n
+          & = \frac{[(m + n) + 1][1 + (m + n + 1)]}{2} - n \\
+          & = \frac{[(m + n) + 1][(m + n) + 2]}{2} - n \\
+          & = \frac{(m + n)^2 + 2(m + n) + (m + n) - 2n}{2} \\
+          & = \frac{1}{2}[(m + n)^2 + 3m + n] \\
+          & = J(m, n).
+      \end{align*}
+    Hence $J$ is correctly defined.
   \end{proof}
 
 \subsection{\sorry{Exercise 6.3}}%
