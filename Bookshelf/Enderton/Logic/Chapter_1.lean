@@ -422,7 +422,7 @@ end Exercise_1_2_1
 
 section Exercise_1_2_2
 
-/-- #### Exercise 1.2.2a
+/-- #### Exercise 1.2.2 (a)
 
 Is `(((P → Q) → P) → P)` a tautology?
 -/
@@ -430,7 +430,7 @@ theorem exercise_1_2_2a (P Q : Prop)
   : (((P → Q) → P) → P) := by
   tauto
 
-/-! #### Exercise 1.2.2b
+/-! #### Exercise 1.2.2 (b)
 
 Define `σₖ` recursively as follows: `σ₀ = (P → Q)` and `σₖ₊₁ = (σₖ → P)`. For
 which values of `k` is `σₖ` a tautology? (Part (a) corresponds to `k = 2`.)
@@ -440,18 +440,83 @@ private def σ (P Q : Prop) : ℕ → Prop
   | 0 => P → Q
   | n + 1 => σ P Q n → P
 
-theorem exercise_1_2_2b_i (k : ℕ) (h : Even k ∧ k > 0)
-  : σ P Q k := by
-  sorry
+theorem exercise_1_2_2b_i (P Q : Prop) {k : ℕ} (h : k > 0)
+  : σ P Q (2 * k) := by
+  induction k with
+  | zero => simp at h
+  | succ k ih =>
+    by_cases hk : k = 0
+    · rw [hk]
+      simp only [Nat.mul_one]
+      unfold σ σ σ
+      exact exercise_1_2_2a P Q
+    · have := ih (Nat.pos_of_ne_zero hk)
+      unfold σ σ
+      have hk₁ := calc 2 * k.succ
+        _ = 2 * (k + 1) := rfl
+        _ = 2 * k + 2 * 1 := rfl
+        _ = 2 * k + 2 := by simp
+      rw [hk₁]
+      simp only [Nat.add_eq, add_zero]
+      tauto
 
 theorem exercise_1_2_2b_ii
   : ¬ σ True False 0 := by
-  sorry
+  unfold σ
+  simp
 
-theorem exercise_1_2_2b_iii (n : ℕ) (h : Odd n)
- : ¬ σ False Q n := by
- sorry
+theorem exercise_1_2_2b_iii {k : ℕ} (h : Odd k)
+  : ¬ σ False Q k := by
+  by_cases hk : k = 1
+  · unfold σ σ
+    rw [hk]
+    simp
+  · have ⟨n, hn₁, hn₂⟩ : ∃ n : ℕ, k = (2 * n) + 1 ∧ n > 0 := by
+      have ⟨r, hr⟩ := h
+      refine ⟨r, hr, ?_⟩
+      by_contra nr
+      have : r = 0 := Nat.eq_zero_of_nonpos r nr
+      rw [this] at hr
+      simp only [mul_zero, zero_add] at hr
+      exact absurd hr hk
+    unfold σ
+    rw [hn₁]
+    simp only [Nat.add_eq, add_zero, not_forall, exists_prop, and_true]
+    exact exercise_1_2_2b_i False Q hn₂
 
 end Exercise_1_2_2
+
+/-- #### Exercise 1.2.3 (a)
+
+Determine whether or not `((P → Q)) ∨ (Q → P)` is a tautology.
+-/
+theorem exercise_1_2_3a (P Q : Prop)
+  : ((P → Q) ∨ (Q → P)) := by
+  tauto
+
+/-- #### Exercise 1.2.3 (b)
+
+Determine whether or not `((P ∧ Q) → R))` tautologically implies
+`((P → R) ∨ (Q → R))`.
+-/
+theorem exercise_1_2_3b (P Q R : Prop)
+  : ((P ∧ Q) → R) ↔ ((P → R) ∨ (Q → R)) := by
+  tauto
+
+/-! #### Exercise 1.2.5
+
+Prove or refute each of the following assertions:
+
+(a) If either `Σ ⊨ α` or `Σ ⊨ β`, then `Σ ⊨ (α ∨ β)`.
+(b) If `Σ ⊨ (α ∨ β)`, then either `Σ ⊨ α` or `Σ ⊨ β`.
+-/
+
+theorem exercise_1_2_5a (P α β : Prop)
+  : ((P → α) ∨ (P → β)) → (P → (α ∨ β)) := by
+  tauto
+
+theorem exercise_1_2_6b
+  : (False ∨ True) ∧ ¬ False := by
+  simp
 
 end Enderton.Logic.Chapter_1
