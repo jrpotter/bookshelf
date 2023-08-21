@@ -272,13 +272,13 @@
       By definition of a construction sequence, one of the following holds:
         \begin{align}
           & \phi \text{ is a sentence symbol}
-            & \label{sub:induction-principle-1-eq1} \\
+            & \hyperlabel{sub:induction-principle-1-eq1} \\
           & \phi = \mathcal{E}_\neg(\epsilon_j)
             \text{ for some } j < m + 1
-            & \label{sub:induction-principle-1-eq2} \\
+            & \hyperlabel{sub:induction-principle-1-eq2} \\
           & \phi = \mathcal{E}_\square(\epsilon_j, \epsilon_k)
             \text{ for some } j < m + 1, k < m + 1
-            & \label{sub:induction-principle-1-eq3}
+            & \hyperlabel{sub:induction-principle-1-eq3}
         \end{align}
         where $\square$ is one of the binary connectives $\land$, $\lor$,
           $\Rightarrow$, $\Leftrightarrow$.
@@ -1300,7 +1300,7 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.6b}}%
+\subsection{\unverified{Exercise 1.2.6b}}%
 \hyperlabel{sub:exercise-1.2.6b}
 
   Let $\mathcal{S}$ be a set of sentence symbols that includes those in $\Sigma$
@@ -1315,10 +1315,32 @@
     are a great many -- uncountably many -- of them.)
 
   \begin{proof}
-    TODO
+
+    Let $\mathcal{S}$ be a set of sentence symbols that includes those in
+      $\Sigma$ and $\tau$ (and possibly more).
+    Let $\mathcal{S}' \subseteq \mathcal{S}$ be the set containing precisely
+      the sentence symbols found in $\Sigma$ and $\tau$.
+
+    Let $v$ be a truth assignment for $S'$ that satisfies every member of
+      $\Sigma$ and $w$ be an arbitrary extension of $v$ for $S$.
+    By construction, $v$ and $w$ agree on all the sentence symbols found in both
+      $\Sigma$ and $\tau$.
+    \nameref{sub:exercise-1.2.6a} then implies $\bar{v}(\tau) = \bar{w}(\tau)$
+      and $\bar{v}(\sigma) = \bar{w}(\sigma)$ for all $\sigma \in \Sigma$.
+    Thus $v$ satisfies every member of $\Sigma$ if and only if $w$ satisfies
+      every member of $\Sigma$.
+    Likewise, $v$ satisfies $\tau$ if and only if $w$ satisfies $\tau$.
+
+    Hence, by definition of \nameref{ref:tautological-implication},
+      $\Sigma \vDash \tau$ if and only if every truth assignment for the
+      sentence symbols in $S'$ that satisfies every member of $\Sigma$ also
+      satisfies $\tau$ if and only if every truth assignment for the sentence
+      symbols in $S$ that satisfies every member of $\Sigma$ also satisfies
+      $\tau$.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.7}}%
+\subsection{\unverified{Exercise 1.2.7}}%
 \hyperlabel{sub:exercise-1.2.7}
 
   You are in a land inhabited by people who either always tell the truth or
@@ -1331,29 +1353,103 @@
   \textit{Suggestion}: Make a table.
 
   \begin{proof}
-    TODO
+    Consider the self-referential question,
+      "Would you respond 'yes' to the question,
+        'Should I take the left road to get to the capital?'"
+    Let $I$ denote whether the inhabitant is truthful, and $L$ denote whether
+      the left road actually goes to the capital.
+    We have $R$ denote the answer given by the inhabitant in the following
+      "truth table":
+      $$\begin{array}{s|s|e}
+        I & L & R \\
+        \hline
+        T & T & \text{Yes} \\
+        T & F & \text{No} \\
+        F & T & \text{Yes} \\
+        F & F & \text{No}
+      \end{array}$$
+    Regardless of the inhabitant's honesty, we receive the answer "Yes" if and
+      only if the left road actually goes to the capital.
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.8}}%
+\subsection{\unverified{Exercise 1.2.8}}%
 \hyperlabel{sub:exercise-1.2.8}
 
-  (Substitution) Consider a suquence $\alpha_1, \alpha_2, \ldots$ of wffs.
+  (Substitution) Consider a sequence $\alpha_1, \alpha_2, \ldots$ of wffs.
   For each wff $\phi$ let $\phi^*$ be the result of replacing the sentence
     symbol $A_n$ by $\alpha_n$ for each $n$.
 
-\subsubsection{\sorry{Exercise 1.2.8a}}%
+\subsubsection{\unverified{Exercise 1.2.8a}}%
 \hyperlabel{ssub:exercise-1.2.8a}
 
   Let $v$ be a truth assignment for the set of all sentence symbols; define $u$
     to be the truth assignment for which $u(A_n) = \bar{v}(\alpha_n)$.
   Show that $\bar{u}(\phi) = \bar{v}(\phi^*)$.
-  Use the induction principle.
+  Use the \nameref{sub:induction-principle-1}.
 
   \begin{proof}
-    TODO
+
+    Let $$S = \{\phi \mid
+      \phi \text{ is a wff such that } \bar{u}(\phi) = \bar{v}(\phi^*)\}.$$
+    We prove that (i) $S$ contains the set of all sentence symbols and (ii) $S$
+      is closed under the five \nameref{ref:formula-building-operations}.
+    Afterward we prove that (iii) our theorem statement holds.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.2.8-i}
+
+      Let $\phi = A_n$ be an arbitrary sentence symbol.
+      By definition, $u(A_n) = \bar{v}(\alpha_n)$.
+      Then $$\bar{u}(\phi)
+        = \bar{u}(A_n) \\
+        = u(A_n) \\
+        = \bar{v}(\alpha_n) \\
+        = \bar{v}(\phi^*).$$
+      Hence every sentence symbol is in $S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-1.2.8-ii}
+
+      Let $\beta, \gamma \in S$.
+      That is, $\bar{u}(\beta) = \bar{v}(\beta^*)$ and
+        $\bar{u}(\gamma) = \bar{v}(\gamma^*)$.
+      By definition, $\mathcal{E}_{\neg}(\beta) = (\neg\beta)$.
+      Therefore
+        \begin{align*}
+          \bar{u}(\mathcal{E}_{\neg}(\beta))
+            & = (\neg\bar{u}(\beta)) \\
+            & = (\neg\bar{v}(\beta^*)) \\
+            & = \bar{v}((\neg\beta^*)) \\
+            & = \bar{v}((\neg\beta)^*) \\
+            & = \bar{v}(\mathcal{E}_{\neg}(\beta)^*).
+        \end{align*}
+      Likewise,
+        $\mathcal{E}_{\square}(\beta, \gamma) =
+          (\beta \mathop{\square} \gamma)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      Therefore
+        \begin{align*}
+          \bar{u}(\mathcal{E}_{\square}(\beta, \gamma))
+            & = \bar{u}(\beta) \mathop{\square} \bar{u}(\gamma) \\
+            & = \bar{v}(\beta^*) \mathop{\square} \bar{v}(\gamma^*) \\
+            & = \bar{v}((\beta^* \mathop{\square} \gamma^*)) \\
+            & = \bar{v}((\beta \mathop{\square} \gamma)^*) \\
+            & = \bar{v}(\mathcal{E}_{\square}(\beta, \gamma)^*).
+        \end{align*}
+      Hence $S$ is closed under the five formula-building operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-1.2.8-i} and \nameref{par:exercise-1.2.8-ii},
+        the \nameref{sub:induction-principle-1} implies $S$ is the set of all
+        wffs.
+      Thus for any well-formed formula $\phi$,
+        $\bar{u}(\phi) = \bar{v}(\phi^*)$.
+
   \end{proof}
 
-\subsubsection{\sorry{Exercise 1.2.8b}}%
+\subsubsection{\unverified{Exercise 1.2.8b}}%
 \hyperlabel{ssub:exercise-1.2.8b}
 
   Show that if $\phi$ is a tautology, then so is $\phi^*$.
@@ -1364,21 +1460,130 @@
     tautology, for any wffs $\alpha$ and $\beta$.)
 
   \begin{proof}
-    TODO
+    Suppose $\phi$ is a tautology and let $S$ be the set of all sentence
+      symbols.
+    Let $v$ be a truth assignment for $S$ and define $u$ to be the truth
+      assignment for which $u(A_n) = \bar{v}(\alpha_n)$.
+    By \nameref{ssub:exercise-1.2.8a}, $\bar{u}(\phi) = \bar{v}(\phi^*)$.
+    Since $\phi$ is a tautology, $\bar{u}(\phi)$ is true meaning
+      $\bar{v}(\phi^*)$ is also true.
+    Since $v$ is an arbitrary truth assignment, it follows that every truth
+      assignment for $S$ satisfies $\phi^*$.
+    By \nameref{sub:exercise-1.2.6b}, $\vDash \phi^*$, i.e. $\phi^*$ is a
+      tautology.
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.9}}%
+\subsection{\unverified{Exercise 1.2.9}}%
 \hyperlabel{sub:exercise-1.2.9}
 
   (Duality) Let $\alpha$ be a wff whose only connective symbols are $\land$,
     $\lor$, and $\neg$.
   Let $\alpha^*$ be the result of interchanging $\land$ and $\lor$ and replacing
     each sentence symbol by its negation.
-  Show that $\alpha^*$ is tautologically equivalent to $(\neg \alpha)$.
+  Show that $\alpha^*$ is tautologically equivalent to $(\neg\alpha)$.
   Use the \nameref{sub:induction-principle-1}.
 
+  \code*{Common/Logic/Basic}
+    {not\_and\_de\_morgan}
+
+  \code{Common/Logic/Basic}
+    {not\_or\_de\_morgan}
+
   \begin{proof}
-    TODO
+
+    Let
+      \begin{align*}
+        S = \{ \alpha \mid
+          & \alpha \text{ is a wff containing a } \Rightarrow \text{ or } \\
+          & \alpha \text{ is a wff containing a } \Leftrightarrow \text{ or } \\
+          & \alpha^* \vDash \Dashv (\neg\alpha) \}.
+      \end{align*}
+    We prove that (i) $S$ contains the set of all sentence symbols and (ii) $S$
+      is closed under the five \nameref{ref:formula-building-operations}.
+    Afterward we prove that (iii) our theorem statement holds.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-1.2.9-i}
+
+      Let $\alpha = A_n$ be an arbitrary sentence symbol.
+      By definition, $$\alpha^* = A_n^* = (\neg A_n) = (\neg\alpha).$$
+      Hence every sentence symbol is in $S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:exercise-1.2.9-ii}
+
+      Let $\alpha, \beta \in S$.
+      Suppose $\alpha$ contains a $\Rightarrow$ or $\Leftrightarrow$ symbol.
+      Then $\mathcal{E}_{\neg}(\alpha)$ also does.
+      The same holds for $\beta$.
+      Furthermore, if either $\alpha$ or $\beta$ contains a $\Rightarrow$ or
+        $\Leftrightarrow$ symbol, then so does
+        $\mathcal{E}_{\square}(\alpha, \beta)$
+        where $\square$ is one of the binary connectives $\land$, $\lor$,
+          $\Rightarrow$, $\Leftrightarrow$.
+      In any of these above cases, it is trivial to see each of the five-formula
+        building operations take a wff from $S$ and produce another wff in $S$.
+
+      Now, suppose neither $\alpha$ nor $\beta$ contain a $\Rightarrow$ or
+        $\Leftrightarrow$ symbol.
+      Then it must be that $\alpha^* \vDash\Dashv (\neg\alpha)$ and
+        $\beta^* \vDash\Dashv (\neg\beta)$.
+      Consider first $\mathcal{E}_{\neg}(\alpha) = (\neg\alpha)$.
+      By definition,
+        $$\mathcal{E}_{\neg}(\alpha)^*
+          = (\neg\alpha^*)
+          \vDash\Dashv (\neg(\neg\alpha))
+          = (\neg(\mathcal{E}_{\neg}(\alpha))).$$
+      Therefore $\mathcal{E}_{\neg}(\alpha) \in S$.
+
+      Likewise, consider $\mathcal{E}_{\square}(\alpha, \beta)$ where $\square$
+        is one of the binary connectives $\land$, $\lor$, $\Rightarrow$,
+        $\Leftrightarrow$.
+      It trivially follows that $\mathcal{E}_{\Rightarrow}(\alpha, \beta) \in S$
+        and $\mathcal{E}_{\Leftrightarrow}(\alpha, \beta) \in S$.
+      We cover the remaining two cases in turn:
+
+      \subparagraph{Case 1}%
+
+        Suppose $\square = \land$.
+        Then
+          \begin{align*}
+            \mathcal{E}_{\land}(\alpha, \beta)^*
+              & = (\alpha \land \beta)^* \\
+              & = (\alpha^* \lor \beta^*) \\
+              & \vDash\Dashv ((\neg\alpha) \lor (\neg\beta)) \\
+              & \vDash\Dashv \neg(\alpha \land \beta) \\
+              & = (\neg(\mathcal{E}_{\land}(\alpha, \beta))),
+          \end{align*}
+          where the last tautological equivalence follows from De Morgan's laws.
+
+      \subparagraph{Case 2}%
+
+        Suppose $\square = \lor$.
+        Then
+          \begin{align*}
+            \mathcal{E}_{\lor}(\alpha, \beta)^*
+              & = (\alpha \lor \beta)^* \\
+              & = (\alpha^* \land \beta^*) \\
+              & \vDash\Dashv ((\neg\alpha) \land (\neg\beta)) \\
+              & \vDash\Dashv \neg(\alpha \lor \beta) \\
+              & = (\neg(\mathcal{E}_{\lor}(\alpha, \beta))),
+          \end{align*}
+          where the last tautological equivalence follows from De Morgan's laws.
+
+      \subparagraph{Subconclusion}%
+
+        The foregoing analysis shows that $S$ is indeed closed under the five
+          formula-building operations.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:exercise-1.2.9-i} and \nameref{par:exercise-1.2.9-ii},
+        the \nameref{sub:induction-principle-1} implies $S$ is the set of all
+        wffs.
+      Thus for any well-formed formula $\alpha$ whose only connective symbols
+        are $\land$, $\lor$, and $\neg$, $\alpha^* \vDash\Dashv (\neg\alpha)$.
+
   \end{proof}
 
 \subsection{\sorry{Exercise 1.2.10}}%
