@@ -519,4 +519,20 @@ theorem exercise_1_2_6b
   : (False ∨ True) ∧ ¬ False := by
   simp
 
+/-! #### Exercise 1.2.15
+
+Of the following three formulas, which tautologically implies which?
+(a) `(A ↔ B)`
+(b) `(¬((A → B) →(¬(B → A))))`
+(c) `(((¬ A) ∨ B) ∧ (A ∨ (¬ B)))`
+-/
+
+theorem exercise_1_2_15_i (A B : Prop)
+  : (A ↔ B) ↔ (¬((A → B) → (¬(B → A)))) := by
+  tauto
+
+theorem exercise_1_2_15_ii (A B : Prop)
+  : (A ↔ B) ↔ (((¬ A) ∨ B) ∧ (A ∨ (¬ B))) := by
+  tauto
+
 end Enderton.Logic.Chapter_1

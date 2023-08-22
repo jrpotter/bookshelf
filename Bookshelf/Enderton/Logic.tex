@@ -118,6 +118,9 @@
     a function $$v \colon \mathcal{S} \rightarrow \{F, T\}$$ assigning either
     $T$ or $F$ to each symbol in $\mathcal{S}$.
 
+  \suitdivider
+
+  \noindent
   Let $\bar{\mathcal{S}}$ be the set of \nameref{ref:well-formed-formula}s that
     can be built up from $\mathcal{S}$ by the five
     \nameref{ref:formula-building-operations}.
@@ -246,6 +249,7 @@
     {Enderton.Logic.Chapter\_1.Wff.rec}
 
   \begin{proof}
+
     We note every well-formed formula can be characterized by a
       \nameref{ref:construction-sequence}.
     For natural number $m$, let $P(m)$ be the statement:
@@ -1586,7 +1590,7 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.10}}%
+\subsection{\unverified{Exercise 1.2.10}}%
 \hyperlabel{sub:exercise-1.2.10}
 
   Say that a set $\Sigma_1$ of wffs is \textit{equivalent} to a set $\Sigma_2$
@@ -1596,36 +1600,126 @@
     tautologically implied by the remaining members in $\Sigma$.
   Show that the following hold.
 
-\subsubsection{\sorry{Exercise 1.2.10a}}%
+\subsubsection{\unverified{Exercise 1.2.10a}}%
 \hyperlabel{ssub:exercise-1.2.10a}
 
   A finite set of wffs has an independent equivalent subset.
 
   \begin{proof}
-    TODO
+
+    For natural number $n$, let $P(n)$ be the statement:
+      \begin{induction}
+        \hyperlabel{sub:exercise-1.2.10a-ih}
+        A set of wffs \nameref{S:ref:equinumerous} to $n$ has an independent
+          equivalent subset.
+      \end{induction}
+    \noindent
+    We proceed by induction on $n$.
+
+    \paragraph{Base Case}%
+
+      Consider a finite set of wffs equinumerous to $0$.
+      This is simply the empty set.
+      It is vacuously true that $\emptyset$ is independent.
+      Thus $\emptyset \subseteq \emptyset$ is an independent equivalent subset
+        meaning $P(0)$ is true.
+
+    \paragraph{Inductive Step}%
+
+      Suppose $P(n)$ holds true for some $n \geq 0$.
+      That is, every finite set of wffs equinumerous to $n$ has an independent
+        equivalent subset.
+      Consider now set $\Sigma$ of wffs equinumerous to $n + 1$.
+      There are two possibilities to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $\Sigma$ is independent.
+        Then $\Sigma \subseteq \Sigma$ is an independent equivalent subset.
+
+      \subparagraph{Case 2}%
+
+        Suppose $\Sigma$ is not independent.
+        Then there exists some $\sigma \in \Sigma$ such that $\sigma$ is
+          tautologically implied by the remaining members of $\Sigma$.
+        Let $\Sigma_1 = \Sigma - \{\sigma\}$.
+        By \ihref{sub:exercise-1.2.10a-ih}, $\Sigma_1$ has an independent
+          equivalent subset $\Sigma_2$.
+
+        Now let $\phi$ be an arbitrary wff.
+        Then
+          \begin{align*}
+            \Sigma_2 \vDash \phi
+              & \Rightarrow \Sigma_1 \vDash \phi
+                & \text{def'n of equivalent} \\
+              & \Rightarrow \Sigma_1; \sigma \vDash \phi
+                & \sigma \text{ is redundant} \\
+              & \Rightarrow \Sigma \vDash \phi.
+          \end{align*}
+        Likewise,
+          \begin{align*}
+            \Sigma \vDash \phi
+              & \Rightarrow \Sigma_1; \sigma \vDash \phi \\
+              & \Rightarrow \Sigma_1 \vDash \phi
+                & \sigma \text{ is redundant} \\
+              & \Rightarrow \Sigma_2 \vDash \phi.
+                & \text{def'n of equivalent}
+          \end{align*}
+        Thus $\Sigma_2$ is an independent equivalent subset of $\Sigma$.
+
+      \subparagraph{Subconclusion}%
+
+        The above two cases are exhaustive.
+        Hence $P(n + 1)$ holds true.
+
+    \paragraph{Conclusion}%
+
+      By induction, it follows $P(n)$ holds true for all $n \geq 0$.
+      That is, every set of wffs equinumerous to a natural number has an
+        independent equivalent subset.
+      In other words, every finite set of wffs has an independent equivalent
+        subset.
+
   \end{proof}
 
-\subsubsection{\sorry{Exercise 1.2.10b}}%
+\subsubsection{\unverified{Exercise 1.2.10b}}%
 \hyperlabel{ssub:exercise-1.2.10b}
 
   An infinite set need not have an independent equivalent subset.
 
   \begin{proof}
-    TODO
+
+    Let $$S = \{A_1 \land \cdots \land A_n \mid n \in \omega\}$$ be an infinite
+      set of wffs.
+    For the sake of contradiction, suppose $S$ has an independent equivalent
+      subset $S'$.
+    There are two cases to consider:
+
+    \paragraph{Case 1}%
+
+      Suppose $S' = \emptyset$.
+      Then it trivally follows $S'$ is not equivalent to $S$, a contradiction.
+
+    \paragraph{Case 1}%
+
+      Suppose $S' \neq \emptyset$.
+      By the \nameref{S:sub:well-ordering-natural-numbers}, there exists a least
+        $n \in \mathbb{N}$ such that $\phi = A_1 \land \cdots \land A_n$ is in
+        $S'$.
+      It cannot be that another element of $S'$ exists since such an element
+        would tautologically imply $\phi$, contradicting independence.
+      Thus $S' = \{\phi\}$.
+      But $\{\phi\}$ cannot be equivalent to $S$ since it has no information
+        about sentence symbol e.g. $A_{n+1}$, another contradiction.
+
+    \paragraph{Conclusion}%
+
+      The above two cases are exhaustive and both yield contradictions.
+      It must be that $S$ does not have an independent equivalent subset.
+
   \end{proof}
 
-\subsubsection{\sorry{Exercise 1.2.10c}}%
-\hyperlabel{ssub:exercise-1.2.10c}
-
-  Let $\Sigma = \{\sigma_0, \sigma_1, \ldots\}$; show that there is an
-    independent equivalent set $\Sigma'$.
-  (By part (b), we cannot hope to have $\Sigma' \subseteq \Sigma$ in general.)
-
-  \begin{proof}
-    TODO
-  \end{proof}
-
-\subsection{\sorry{Exercise 1.2.11}}%
+\subsection{\unverified{Exercise 1.2.11}}%
 \hyperlabel{sub:exercise-1.2.11}
 
   Show that a truth assignment $v$ satisfies the wff
@@ -1636,10 +1730,88 @@
     parentheses is not crucial.)
 
   \begin{proof}
-    TODO
+
+    Define $\sigma_n$ recursively as follows:
+      $\sigma_0 = (A_1 \Leftrightarrow A_2)$ and
+      $\sigma_{n+1} = (\sigma_n \Leftrightarrow A_{n+3})$.
+    For natural number $n$, let $P(n)$ be the statement:
+      \begin{induction}
+        \hyperlabel{sub:exercise-1.2.11-ih}
+        Truth assignment $v$ satisfies $\sigma_n$ if and only if $v(A_i) = F$
+          for an even number of $i$'s, $1 \leq i \leq n + 2$.
+      \end{induction}
+    \noindent
+    We proceed by induction on $n$.
+
+    \paragraph{Base Case}%
+
+      Let $n = 0$.
+      Then $\sigma_n = \sigma_0 = (A_1 \Leftrightarrow A_2)$.
+      We proceed by truth table:
+        $$\begin{array}{s|e|s}
+          (A_1 & \Leftrightarrow & A_2) \\
+          \hline
+          T & T & T \\
+          T & F & F \\
+          F & F & T \\
+          F & T & F
+        \end{array}$$
+      Here we see $A_1 \Leftrightarrow A_2$ is true if and only if both $A_1$
+        and $A_2$ are true or neither $A_1$ nor $A_2$ are true.
+      Thus $P(0)$ holds true.
+
+    \paragraph{Inductive Step}%
+
+      Suppose $P(n)$ holds true for some $n \geq 0$.
+      Consider now $$\sigma_{n+1} = (\sigma_k \Leftrightarrow A_{n+3}).$$
+      Let $v$ be a truth assignment for $A_1, \ldots, A_{n+3}$.
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $v(A_i) = F$ for an even number of $i$'s, $1 \leq i \leq n + 2$.
+        By \ihref{sub:exercise-1.2.11-ih}, $v$ satisfies $\sigma_n$.
+        We now have the following truth table:
+          $$\begin{array}{s|e|s}
+            (\sigma_n & \Leftrightarrow & A_{n+3}) \\
+            \hline
+            T & T & T \\
+            T & F & F \\
+          \end{array}$$
+        In this case, it follows $v$ satisfies $\sigma_{n+1}$ if and only if
+          $v(A_i) = F$ for an even number of $i$'s, $1 \leq i \leq n + 3$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $v(A_i) = F$ for an odd number of $i$'s, $1 \leq i \leq n + 2$.
+        By \ihref{sub:exercise-1.2.11-ih}, $v$ does not satisfy $\sigma_n$.
+        We now have the following truth table:
+          $$\begin{array}{s|e|s}
+            (\sigma_n & \Leftrightarrow & A_{n+3}) \\
+            \hline
+            F & F & T \\
+            F & T & F \\
+          \end{array}$$
+        In this case, it follows $v$ satisfies $\sigma_{n+1}$ if and only if
+          $v(A_i) = F$ for an even number of $i$'s, $1 \leq i \leq n + 3$.
+
+      \subparagraph{Subconclusion}%
+
+        The above two cases are exhaustive.
+        Hence $P(n + 1)$ holds true.
+
+    \paragraph{Conclusion}%
+
+      By induction, it follows $P(n)$ holds true for all $n \geq 0$.
+      That is, truth assignment $v$ satisfies
+        $$(\cdots (A_1 \Leftrightarrow A_2)
+          \Leftrightarrow \cdots \Leftrightarrow A_n)$$
+        if and only if $v(A_i) = F$ for an even number of $i$'s,
+        $1 \leq i \leq n$.
+
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.12}}%
+\subsection{\unverified{Exercise 1.2.12}}%
 \hyperlabel{sub:exercise-1.2.12}
 
   There are three suspects for a murder: Adams, Brown, and Clark.
@@ -1647,17 +1819,20 @@
     But Clark hated him."
   Brown states "I didn't do it. I didn't even know the guy. Besides I was out of
     town all that week."
-  Clark says "I didn't do it. I saw both ADams and Brown downtown with the
+  Clark says "I didn't do it. I saw both Adams and Brown downtown with the
     victim that day; one of them must have done it."
   Assume that the two innocent men are telling the truth, but that the guilty
     man might not be.
   Who did it?
 
   \begin{proof}
-    TODO
+    It must be that Brown is the guilty one.
+    Adam claims the victim was an old acquaintance of Brown's.
+    Clark claims Brown was downtown with the victim that day.
+    Brown's testimony conflicts with both of these statements.
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.13}}%
+\subsection{\unverified{Exercise 1.2.13}}%
 \hyperlabel{sub:exercise-1.2.13}
 
   An advertisement for a tennis magazine states, "If I'm not playing tennis,
@@ -1670,7 +1845,17 @@
     truth assignments.)
 
   \begin{proof}
-    TODO
+    Let $P$ denote playing tennis, $W$ denote watching tennis, and $R$ denote
+      reading about tennis.
+    These statements can be translated as:
+      \begin{enumerate}[(a)]
+        \item $\neg P \Rightarrow W$.
+        \item $\neg W \Rightarrow R$.
+      \end{enumerate}
+    Thus either the speaker is playing tennis, or, if not, he is watching
+      tennis.
+    Since we assume the speaker cannot do more than one of these activities at
+      a time, reading is never a possibility.
   \end{proof}
 
 \subsection{\sorry{Exercise 1.2.14}}%
@@ -1684,10 +1869,11 @@
     \nameref{sub:induction-principle-1} to show that $\bar{v}_1 = \bar{v}_2$.
 
   \begin{proof}
+    The conditions 0-5 can be found at \nameref{ref:truth-assignment}.
     TODO
   \end{proof}
 
-\subsection{\sorry{Exercise 1.2.15}}%
+\subsection{\verified{Exercise 1.2.15}}%
 \hyperlabel{sub:exercise-1.2.15}
 
   Of the following three formulas, which tautologically implies which?
@@ -1697,8 +1883,51 @@
       \item $(((\neg A) \lor B) \land (A \lor (\neg B)))$
     \end{enumerate}
 
+  \code{Bookshelf/Enderton/Logic/Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_2\_15\_i}
+
+  \code{Bookshelf/Enderton/Logic/Chapter\_1}
+    {Enderton.Logic.Chapter\_1.exercise\_1\_2\_15\_ii}
+
   \begin{proof}
-    TODO
+
+    All three are tautologically equivalent.
+    We prove that (i) (a) is tautologically equivalent to (b) and (ii) (a) is
+      tautologically equivalent to (c). It then immediately follows that (b) is
+      tautologically equivalent to (c).
+
+    \paragraph{(i)}%
+
+      By \nameref{sub:exercise-1.2.4}, $(a) \vDash\Dashv (b)$ if and only if
+        $\vDash ((a) \Leftrightarrow (b))$.
+      We now construct the corresponding truth table:
+        $$\begin{array}{s|c|s|e|c|s|c|s|c|c|s|c|s}
+          (A & \Leftrightarrow & B) & \Leftrightarrow &
+            (\neg & ((A & \Rightarrow & B) &
+              \Rightarrow & (\neg & (B & \Rightarrow & A)))) \\
+          \hline
+          T & T & T & T & T & T & T & T & F & F & T & T & T \\
+          T & F & F & T & F & T & F & F & T & F & F & T & T \\
+          F & F & T & T & F & F & T & T & T & T & T & F & F \\
+          F & T & F & T & T & F & T & F & F & F & F & T & F
+        \end{array}$$
+      Therefore (a) and (b) are tautologically equivalent.
+
+    \paragraph{(ii)}%
+
+      By \nameref{sub:exercise-1.2.4}, $(a) \vDash\Dashv (c)$ if and only if
+        $\vDash ((a) \Leftrightarrow (c))$.
+      We now construct the corresponding truth table:
+        $$\begin{array}{s|c|s|e|c|s|c|s|c|s|c|c|s}
+          (A & \Leftrightarrow & B) & \Leftrightarrow &
+            (((\neg & A) & \lor & B) & \land & (A & \lor & (\neg & B))) \\
+          \hline
+          T & T & T & T & F & T & T & T & T & T & T & F & T \\
+          T & F & F & T & F & T & F & F & F & T & T & T & F \\
+          F & F & T & T & T & F & T & T & F & F & F & F & T \\
+          F & T & F & T & T & F & T & F & T & F & T & T & F
+        \end{array}$$
+
   \end{proof}
 
 \end{document}
