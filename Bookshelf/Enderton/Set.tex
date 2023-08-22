@@ -8507,7 +8507,7 @@
 
   \end{proof}
 
-\subsection{\unverified{Theorem 6B}}%
+\subsection{\pending{Theorem 6B}}%
 \hyperlabel{sub:theorem-6b}
 
   \begin{theorem}[6B]
@@ -8530,7 +8530,7 @@
 \section{Finite Sets}%
 \hyperlabel{sec:finite-sets}
 
-\subsection{\sorry{Pigeonhole Principle}}%
+\subsection{\pending{Pigeonhole Principle}}%
 \hyperlabel{sub:pigeonhole-principle}
 
   \begin{theorem}
@@ -8538,10 +8538,70 @@
   \end{theorem}
 
   \begin{proof}
-    TODO
+
+    Let
+      \begin{equation}
+        \hyperlabel{sub:pigeonhole-principle-eq1}
+        S = \{n \in \omega \mid
+          \forall m \in n, \text{every one-to-one function }
+            f \colon m \rightarrow n \text{ is not onto}\}.
+      \end{equation}
+    We show that (i) $0 \in S$ and (ii) if $n \in S$, then so is $n^+$.
+    Afterward we prove (iii) the theorem statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:pigeonhole-principle-i}
+
+      By \nameref{sub:zero-least-natural-number}, $0$ is the least natural
+        number.
+      Therefore, $0 \in S$ vacuously.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:pigeonhole-principle-ii}
+
+      Suppose $n \in S$ and let $m \in n^+$.
+      Furthermore, let $f \colon m \rightarrow n^+$ be a one-to-one
+        \nameref{ref:function} (as proof of a one-to-one function's existence,
+        just consider the identity function).
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $n^+ \not\in \ran{f}$.
+        Then it obviously follows $f$ is not onto $n^+$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $n^+ \in \ran{f}$.
+        Then there exists some $t$ such that $\tuple{t, n^+} \in f$.
+        Consider $f' = f \restriction n$.
+        Since $f$ is one-to-one, it follows $f'$ is also one-to-one.
+        By \eqref{sub:pigeonhole-principle-eq1}, $f'$ is not onto $n$.
+        That is, there exists some $p \in n$ such that $p \not\in \ran{f'}$.
+        But since $p \in n \in n^+$, \nameref{sub:theorem-4f} implies
+          $p \in n^+$.
+        Furthermore, $p \not\in \ran{f}$ by virtue of how $f'$ was constructed.
+        Thus $f$ is not onto $n^+$.
+
+      \subparagraph{Subconclusion}%
+
+        The foregoing cases are exhaustive.
+        Hence $n^+ \in S$.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:pigeonhole-principle-i} and
+        \nameref{par:pigeonhole-principle-ii}, $S$ is an
+        \nameref{ref:inductive-set}.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      Thus for all natural numbers $n$, there is no one-to-one correspondence
+        between $n$ and a proper subset of $n$.
+      In other words, no natural number is equinumerous to a proper subset of
+        itself.
+
   \end{proof}
 
-\subsection{\sorry{Corollary 6C}}%
+\subsection{\pending{Corollary 6C}}%
 \hyperlabel{sub:corollary-6c}
 
   \begin{corollary}[6C]
@@ -8549,13 +8609,31 @@
   \end{corollary}
 
   \begin{proof}
-    TODO
+    Let $S$ be a \nameref{ref:finite-set} and $S'$ be a
+      \nameref{ref:proper-subset} $S'$ of $S$.
+    Then there exists some nonempty set $T$, disjoint from $S'$, such that
+      $S' \cup T = S$.
+    By definition of a finite set, $S$ is \nameref{ref:equinumerous} to a
+      natural number $n$.
+    By \nameref{sub:theorem-6a}, $\equinumerous{S' \cup T}{S}$ which, by the
+      same theorem, implies $\equinumerous{S' \cup T}{n}$.
+
+    Let $f$ be a one-to-one correspondence between $S' \cup T$ and $n$.
+    Since $T$ is nonempty, $f \restriction S'$ is a one-to-one correspondence
+      between $S'$ and a proper subset of $n$.
+    By the \nameref{sub:pigeonhole-principle}, $n$ is not equinumerous to any
+      proper subset of itself.
+    Therefore \nameref{sub:theorem-6a} implies $S'$ cannot be equinumerous to
+      $n$, which, by the same theorem, implies $S'$ cannot be equinumerous to
+      $S$.
+    Hence no finite set is equinumerous to a proper subset of itself.
   \end{proof}
 
-\subsection{\sorry{Corollary 6D}}%
+\subsection{\pending{Corollary 6D}}%
 \hyperlabel{sub:corollary-6d}
 
   \begin{corollary}[6D]
+    \  % Force a newline.
     \begin{enumerate}[(a)]
       \item Any set equinumerous to a proper subset of itself is infinite.
       \item The set $\omega$ is infinite.
@@ -8563,10 +8641,56 @@
   \end{corollary}
 
   \begin{proof}
-    TODO
+
+    \paragraph{(a)}%
+    \hyperlabel{par:corollary-6d-a}
+
+      Let $S$ be a set \nameref{ref:equinumerous} to \nameref{ref:proper-subset}
+        $S'$ of itself.
+      Then $S$ cannot be a \nameref{ref:finite-set} by
+        \nameref{sub:corollary-6c}.
+      By definition, $S$ is an \nameref{ref:infinite-set}.
+
+    \paragraph{(b)}%
+
+      Consider set $S = \{n \in \omega \mid n \text{ is even}\}$.
+      We prove that (i) $S$ is \nameref{ref:equinumerous} to $\omega$ and (ii)
+        that $\omega$ is infinite.
+
+      \subparagraph{(i)}%
+      \hyperlabel{spar:corollary-6d-i}
+
+        Define $f \colon \omega \rightarrow S$ given by $f(n) = 2 \cdot n$.
+        Notice $f$ is well-defined by the definition of an even natural number,
+          introduced in \nameref{sub:exercise-4.14}.
+        We first show $f$ is one-to-one and then that $f$ is onto.
+
+        Suppose $f(n_1) = f(n_2) = 2 \cdot n_1$.
+        We must prove that $n_1 = n_2$.
+        By the \nameref{sub:trichotomy-law-natural-numbers}, exactly one of the
+          following may occur: $n_1 = n_2$, $n_1 < n_2$, or $n_2 < n_1$.
+        If $n_1 < n_2$, then \nameref{sub:theorem-4n} implies
+          $n_1 \cdot 2 < n_2 \cdot 2$.
+        \nameref{sub:theorem-4k-5} then indicates $2 \cdot n_1 < 2 \cdot n_2$,
+          a contradiction to $2 \cdot n_1 = 2 \cdot n_2$.
+        A parallel argument holds for when $n_2 < n_1$.
+        Thus $n_1 = n_2$.
+
+        Next, let $m \in S$.
+        That is, $m$ is an even number.
+        By definition, there exists some $n \in \omega$ such that
+          $m = 2 \cdot n$.
+        Thus $f(n) = m$.
+
+      \subparagraph{(ii)}%
+
+        By \nameref{spar:corollary-6d-i}, $\omega$ is equinumerous to a subset
+          of itself.
+        By \nameref{par:corollary-6d-a}, $\omega$ is infinite.
+
   \end{proof}
 
-\subsection{\sorry{Corollary 6E}}%
+\subsection{\pending{Corollary 6E}}%
 \hyperlabel{sub:corollary-6e}
 
   \begin{corollary}[6E]
@@ -8574,10 +8698,22 @@
   \end{corollary}
 
   \begin{proof}
-    TODO
+    Let $S$ be a \nameref{ref:finite-set}.
+    By definition $S$ is equinumerous to a natural number $n$.
+    Suppose $S$ is equinumerous to another natural number $m$.
+    By \nameref{sub:trichotomy-law-natural-numbers}, exactly one of three
+      situations is possible: $n = m$, $n < m$, or $m < n$.
+
+    If $n < m$, then $\equinumerous{m}{S}$ and $\equinumerous{S}{n}$.
+    By \nameref{sub:theorem-6a}, it follows $\equinumerous{m}{n}$.
+    But \nameref{sub:pigeonhole-principle} indicates no natural number is
+      equinumerous to a proper subset of itself, a contradiction.
+    If $m < n$, a parallel argument applies.
+    Hence $n = m$, proving every finite set is equinumerous to a unique natural
+      number.
   \end{proof}
 
-\subsection{\sorry{Lemma 6F}}%
+\subsection{\pending{Lemma 6F}}%
 \hyperlabel{sub:lemma-6f}
 
   \begin{lemma}[6F]
@@ -8586,10 +8722,73 @@
   \end{lemma}
 
   \begin{proof}
-    TODO
+
+    Let
+      \begin{equation}
+        \hyperlabel{sub:lemma-6f-eq1}
+        S = \{n \in \omega \mid \forall C \subset n,
+          \exists m < n \text{ such that } \equinumerous{C}{m}\}.
+      \end{equation}
+    We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+    Afterward we prove (iii) the lemma statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:lemma-6f-i}
+
+      By definition, $0 = \emptyset$.
+      Thus $0$ has no proper subsets.
+      Hence $0 \in S$ vacuously.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:lemma-6f-ii}
+
+      Suppose $n \in S$ and consider $n^+$.
+      By definition of the \nameref{ref:successor}, $n^+ = n \cup \{n\}$.
+      Let $C$ be an arbitrary, \nameref{ref:proper-subset} of $n^+$.
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+      \hyperlabel{spar:lemma-6f-1}
+
+        Suppose $n \not\in C$.
+        Then $C \subseteq n$.
+        If $C$ is a proper subset of $n$, \eqref{sub:lemma-6f-eq1} implies $C$
+          is \nameref{ref:equinumerous} to some $m < n < n^+$.
+        If $C = n$, then \nameref{sub:theorem-6a} implies $C$ is equinumerous to
+          $n < n^+$.
+
+      \subparagraph{Case 2}%
+
+        Suppose $n \in C$.
+        Since $C$ is a proper subset of $n^+$, the set $n^+ - C$ is nonempty.
+        By \nameref{sub:well-ordering-natural-numbers}, $n^+ - C$ has a least
+          element, say $p$ (which does not equal $n$).
+        Consider now set $C' = (C - \{n\}) \cup \{p\}$.
+        By construction, $C' \subseteq n$.
+        As seen in \nameref{spar:lemma-6f-1}, $C'$ is equinumerous to some
+          $m < n^+$.
+
+        It suffices to show there exists a one-to-one correspondence between
+          $C'$ and $C$, since then \nameref{sub:theorem-6a} implies $C$ is
+          equinumerous to $m$ as well.
+        Function $f \colon C' \rightarrow C$ given by
+          $$f(x) = \begin{cases}
+            n & \text{if } x = p \\
+            x & \text{otherwise}
+          \end{cases}$$
+          is trivially one-to-one and onto as expected.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:lemma-6f-i} and \nameref{par:lemma-6f-ii}, $S$ is an
+        \nameref{ref:inductive-set}.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      Therefore, for every proper subset $C$ of a natural number $n$, there
+        exists some $m < n$ such that $\equinumerous{C}{n}$.
+
   \end{proof}
 
-\subsection{\sorry{Corollary 6G}}%
+\subsection{\pending{Corollary 6G}}%
 \hyperlabel{sub:corollary-6g}
 
   \begin{corollary}[6G]
@@ -8597,7 +8796,19 @@
   \end{corollary}
 
   \begin{proof}
-    TODO
+    Let $S$ be a \nameref{ref:finite-set} and $S' \subseteq S$.
+    Clearly, if $S' = S$, then $S'$ is finite.
+    Therefore suppose $S'$ is a proper subset of $S$.
+
+    By definition of finite set, $S$ is \nameref{ref:equinumerous} to some
+      natural number $n$.
+    Let $f$ be a one-to-one correspondence between $S$ and $n$.
+    Then $f \restriction S'$ is a one-to-one correspondence between $S'$ and
+      some proper subset of $n$.
+    By \nameref{sub:lemma-6f}, $\ran{(f \restriction S')}$ is equinumerous to
+      some $m < n$.
+    Then \nameref{sub:theorem-6a} indicates $\equinumerous{S'}{m}$.
+    Hence $S'$ is a finite set.
   \end{proof}
 
 \section{Exercises 6}%
