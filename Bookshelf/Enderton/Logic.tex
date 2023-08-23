@@ -458,6 +458,32 @@
     TODO
   \end{proof}
 
+\section{A Parsing Algorithm}%
+\hyperlabel{sec:parsing-algorithmm}
+
+\subsection{\unverified{Lemma 13A}}%
+\hyperlabel{sub:lemma-13a}
+
+  \begin{lemma}[13A]
+    Every wff has the same number of left as right parentheses.
+  \end{lemma}
+
+  \begin{proof}
+    Refer to \nameref{sub:balanced-parentheses}.
+  \end{proof}
+
+\subsection{\sorry{Lemma 13B}}%
+\hyperlabel{sub:lemma-13b}
+
+  \begin{lemma}[13B]
+    Any proper initial segment of a wff contains an excess of left parentheses.
+    Thus no proper initial segment of a wff can itself be a wff.
+  \end{lemma}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
 \section{Exercises 1}%
 \hyperlabel{sec:exercises-1}
 
@@ -1929,5 +1955,92 @@
         \end{array}$$
 
   \end{proof}
+
+\subsection{\sorry{Exercise 1.3.1}}%
+\hyperlabel{sub:exercise-1.3.1}
+
+  Rewrite the tautologies in the "selected list" at the end of Section 1.2, but
+    using the conventions of the present section to minimize the number of
+    parentheses.
+
+  \begin{answer}
+    TODO
+  \end{answer}
+
+\subsection{\sorry{Exercise 1.3.2}}%
+\hyperlabel{sub:exercise-1.3.2}
+
+  Give an example of wffs $\alpha$ and $\beta$ and expressions $\gamma$ and
+    $\delta$ such that $(\alpha \land \beta) = (\gamma \land \delta)$ but
+    $\alpha \neq \gamma$.
+
+  \begin{answer}
+    TODO
+  \end{answer}
+
+\subsection{\sorry{Exercise 1.3.3}}%
+\hyperlabel{sub:exercise-1.3.3}
+
+  Carry out the argument for \nameref{sub:lemma-13b} for the case of the
+    operation $\mathcal{E}_{\neg}$.
+
+  \begin{answer}
+    TODO
+  \end{answer}
+
+\subsection{\sorry{Exercise 1.3.4}}%
+\hyperlabel{sub:exercise-1.3.4}
+
+  Suppose that we modify our definition of wff by omitting all \textit{right}
+    parentheses.
+  Thus instead of
+    $$((A \land (\neg B)) \Rightarrow (C \lor D))$$
+    we use $$((A \land (\neg B \Rightarrow (C \land D.$$
+  Show that we still have unique readability (i.e., each wff still has only one
+    possible decomposition).
+  \textit{Suggestion}: These expressions have the same number of parentheses as
+    connective symbols.
+
+  \begin{answer}
+    TODO
+  \end{answer}
+
+\subsection{\sorry{Exercise 1.3.5}}%
+\hyperlabel{sub:exercise-1.3.5}
+
+  The English language has a tendency to use two-part connectives: "both
+    $\ldots$ and $\ldots$" "either $\ldots$ or $\ldots$" "if $\ldots$, then
+    $\ldots$."
+  How does this affect unique readability in English?
+
+  \begin{answer}
+    TODO
+  \end{answer}
+
+\subsection{\sorry{Exercise 1.3.6}}%
+\hyperlabel{sub:exercise-1.3.6}
+
+  We have given an algorithm for analyzing a wff by constructing its tree from
+    the top down.
+  There are also ways of constructing the tree from the bottom up.
+  This can be done by looking through the formula for innermost pairs of
+    parentheses.
+  Give a complete description of an algorithm of this sort.
+
+  \begin{answer}
+    TODO
+  \end{answer}
+
+\subsection{\sorry{Exercise 1.3.7}}%
+\hyperlabel{sub:exercise-1.3.7}
+
+  Suppose that left and right parentheses are indistinguishable.
+  Thus, instead of $\alpha \lor (\beta \land \gamma))$ we have
+    $|\alpha \lor |\beta \land \gamma||$.
+  Do formulas still have unique decomposition?
+
+  \begin{answer}
+    TODO
+  \end{answer}
 
 \end{document}
