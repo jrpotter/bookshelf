@@ -114,32 +114,152 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `G : B → A` (a "left inverse") such that `G ∘ F` is the identity function on `A`
 **iff** `F` is one-to-one.
 -/
-theorem theorem_3j_a {F : Set.HRelation α β} {A : Set α} {B : Set β}
+theorem theorem_3j_a {F : Set.HRelation α β}
   (hF : mapsInto F A B) (hA : Set.Nonempty A)
-  : (∃ G : Set.HRelation β α,
-      mapsInto G B A ∧
-        (comp G F = { p | p.1 ∈ A ∧ p.1 = p.2 })) ↔ isOneToOne F := by
+  : isOneToOne F ↔
+      ∃ G, mapsInto G B A ∧ comp G F = { p | p.1 ∈ A ∧ p.1 = p.2 } := by
   apply Iff.intro
-  · intro ⟨G, hG⟩
+  · intro h
+    have ⟨a, ha⟩ := hA
+    -- `G(y) = if y ∈ ran F then F⁻¹(y) else a`
+    let G : Set.HRelation β α :=
+      restriction (inv F) B ∪ { p | p.1 ∈ B ∧ p.1 ∉ ran F ∧ p.2 = a }
+
+    refine ⟨G, ⟨?_, ?_, ?_⟩, ?_⟩
+    · show isSingleValued G
+      intro x hx
+      have ⟨y, hy⟩ := dom_exists hx
+      refine ⟨y, ⟨mem_pair_imp_snd_mem_ran hy, hy⟩, ?_⟩
+      intro y₁ hy₁
+      dsimp only at hy₁
+      apply Or.elim hy₁.right
+      · -- Supposes `y₁ ∈ ran F`.
+        intro hF_inv
+        unfold restriction at hF_inv
+        simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq] at hF_inv
+        dsimp only at hy
+        unfold restriction at hy
+        simp only [Set.mem_union, Set.mem_setOf_eq] at hy
+        apply Or.elim hy
+        · intro ⟨hz, _⟩
+          have : isOneToOne (inv F) := one_to_one_self_iff_one_to_one_inv.mp h
+          exact single_valued_eq_unique this.left hF_inv.left hz
+        · intro hz
+          rw [hz.right.right]
+          simp only [mem_self_comm_mem_inv] at hF_inv
+          have := mem_pair_imp_snd_mem_ran hF_inv.left
+          exact absurd this hz.right.left
+      · -- Supposes `y₁ ∉ ran F`.
+        intro hF_id
+        simp at hF_id
+        dsimp only at hy
+        unfold restriction at hy
+        simp at hy
+        apply Or.elim hy
+        · intro hz
+          have := mem_pair_imp_snd_mem_ran hz.left
+          exact absurd this hF_id.right.left
+        · intro hz
+          rw [hF_id.right.right, hz.right.right]
+
+    · show dom G = B
+      ext b
+      unfold dom Prod.fst Set.image
+      simp only [
+        Set.mem_union,
+        Set.mem_setOf_eq,
+        Prod.exists,
+        exists_and_right,
+        exists_eq_right
+      ]
+      apply Iff.intro
+      · intro ⟨x, hx⟩
+        apply Or.elim hx (fun hb => hb.right) (fun hb => hb.left)
+      · intro hb
+        by_cases hb' : b ∈ ran F
+        · have ⟨t, ht⟩ := ran_exists hb'
+          refine ⟨t, ?_⟩
+          left
+          unfold restriction inv
+          simp only [Prod.exists, Set.mem_setOf_eq, Prod.mk.injEq]
+          exact ⟨⟨t, b, ht, rfl, rfl⟩, hb⟩
+        · refine ⟨a, ?_⟩
+          right
+          exact ⟨hb, hb', rfl⟩
+
+    · show ∀ t, t ∈ ran G → t ∈ A  -- `ran G ⊆ A`
+      intro t ht
+      dsimp only at ht
+      unfold ran Prod.snd restriction inv at ht
+      simp only [
+        Prod.exists,
+        Set.mem_setOf_eq,
+        Set.mem_image,
+        exists_eq_right,
+        not_exists,
+        Set.mem_union,
+        Prod.mk.injEq
+      ] at ht
+      have ⟨a₁, ha₁⟩ := ht 
+      apply Or.elim ha₁
+      · intro ⟨⟨a, b, hab⟩, _⟩
+        have := mem_pair_imp_fst_mem_dom hab.left
+        rwa [← hab.right.right, ← hF.dom_eq]
+      · intro h
+        rwa [h.right.right]
+
+    · -- Show that `G ∘ F` is the identity function on `A`.
+      show comp G F = {p | p.fst ∈ A ∧ p.fst = p.snd}
+      unfold comp
+      ext p
+      have (x, y) := p
+      simp only [Set.mem_union, Set.mem_setOf_eq]
+      apply Iff.intro
+      · intro ⟨t, hx, ht⟩
+        refine ⟨hF.dom_eq ▸ mem_pair_imp_fst_mem_dom hx, ?_⟩
+        apply Or.elim ht
+        · intro ht'
+          unfold restriction inv at ht'
+          simp at ht'
+          have ⟨c, d, hcd⟩ := ht'.left
+          rw [hcd.right.left, hcd.right.right] at hcd
+          exact single_rooted_eq_unique h.right hx hcd.left
+        · intro ht'
+          exact absurd (mem_pair_imp_snd_mem_ran hx) ht'.right.left
+      · intro hx
+        rw [← hF.dom_eq] at hx
+        have ⟨t, ht⟩ := dom_exists hx.left
+        refine ⟨t, ht, ?_⟩
+        left
+        unfold restriction
+        simp only [Set.mem_setOf_eq, mem_self_comm_mem_inv]
+        rw [← hx.right]
+        exact ⟨ht, hF.ran_ss (mem_pair_imp_snd_mem_ran ht)⟩
+
+  · intro ⟨G, hG₁, hG₂⟩
     refine ⟨hF.is_func, ?_⟩
+    unfold isSingleRooted
     intro y hy
     have ⟨x₁, hx₁⟩ := ran_exists hy
     refine ⟨x₁, ⟨mem_pair_imp_fst_mem_dom hx₁, hx₁⟩, ?_⟩
     intro x₂ hx₂
-    
-    have hG' : y ∈ dom G := by
-      rw [hG.left.dom_eq]
-      exact hF.ran_ss hy
-    have ⟨z, hz⟩ := dom_exists hG'
-
-    have := hG.right
-    unfold comp at this
-    rw [Set.ext_iff] at this
-    have h₁ := (this (x₁, z)).mp ⟨y, hx₁, hz⟩
-    have h₂ := (this (x₂, z)).mp ⟨y, hx₂.right, hz⟩
-    simp only [Set.mem_setOf_eq] at h₁ h₂
-    rw [h₁.right, h₂.right]
-  · sorry
+    have hc_x₁ : (x₁, x₁) ∈ comp G F := by
+      rw [hG₂]
+      simp only [Set.mem_setOf_eq, and_true]
+      rw [← hF.dom_eq]
+      exact mem_pair_imp_fst_mem_dom hx₁
+    have hc_x₂ : (x₂, x₂) ∈ comp G F := by
+      rw [hG₂]
+      simp only [Set.mem_setOf_eq, and_true]
+      rw [← hF.dom_eq]
+      exact hx₂.left
+    unfold comp at hc_x₁ hc_x₂
+    have ⟨t₁, ht₁⟩ := hc_x₁
+    have ⟨t₂, ht₂⟩ := hc_x₂
+    simp only at ht₁ ht₂
+    rw [← single_valued_eq_unique hF.is_func hx₁ ht₁.left] at ht₁
+    rw [← single_valued_eq_unique hF.is_func hx₂.right ht₂.left] at ht₂
+    exact single_valued_eq_unique hG₁.is_func ht₂.right ht₁.right
 
 /-- #### Theorem 3J (b)
 
@@ -147,12 +267,18 @@ Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `H : B → A` (a "right inverse") such that `F ∘ H` is the identity function on
 `B` **iff** `F` maps `A` onto `B`.
 -/
-theorem theorem_3j_b {F : Set.HRelation α β} {A : Set α} {B : Set β}
-  (hF : mapsInto F A B) (hA : Set.Nonempty A)
-  : (∃ H : Set.HRelation β α,
-      mapsInto H B A ∧
-        (comp F H = { p | p.1 ∈ B ∧ p.1 = p.2 })) ↔ mapsOnto F A B := by
-  sorry
+theorem theorem_3j_b {F : Set.HRelation α β} (hF : mapsInto F A B)
+  : (∃ H, mapsInto H B A ∧ comp F H = { p | p.1 ∈ B ∧ p.1 = p.2 }) →
+      mapsOnto F A B := by
+  intro ⟨H, _, hH₂⟩
+  refine ⟨hF.is_func, hF.dom_eq, Set.Subset.antisymm hF.ran_ss ?_⟩
+  show ∀ y, y ∈ B → y ∈ ran F
+  intro y hy
+  suffices y ∈ ran (comp F H) from ran_comp_imp_ran_self this
+  rw [hH₂]
+  unfold ran Prod.snd Set.image
+  simp only [Set.mem_setOf_eq, Prod.exists, exists_eq_right, Set.setOf_mem_eq]
+  exact hy
 
 /-- #### Theorem 3K (a)
 
@@ -330,6 +456,26 @@ theorem corollary_3l_iii {G : Set.HRelation β α} {A B : Set α}
   have hG' : isSingleRooted (inv G) :=
     single_valued_self_iff_single_rooted_inv.mp hG
   exact (theorem_3k_c_ii hG').symm
+
+/-- #### Theorem 3M
+
+If `R` is a symmetric and transitive relation, then `R` is an equivalence
+relation on `fld R`.
+-/
+theorem theorem_3m {R : Set.Relation α}
+  (hS : R.isSymmetric) (hT : R.isTransitive)
+  : R.isEquivalence (fld R) := by
+  refine ⟨Eq.subset rfl, ?_, hS, hT⟩
+  intro x hx
+  apply Or.elim hx
+  · intro h
+    have ⟨y, hy⟩ := dom_exists h
+    have := hS hy
+    exact hT hy this
+  · intro h
+    have ⟨t, ht⟩ := ran_exists h
+    have := hS ht
+    exact hT this ht
 
 /-- #### Theorem 3R
 
@@ -1710,25 +1856,140 @@ theorem exercise_3_29 {f : Set.HRelation α β} {G : Set.HRelation β (Set α)}
   rw [heq] at this
   exact single_valued_eq_unique hf.is_func this.right ht
 
-/-- #### Theorem 3M
+/-! #### Exercise 3.30
 
-If `R` is a symmetric and transitive relation, then `R` is an equivalence
-relation on `fld R`.
+Assume that `F : 𝒫 A → 𝒫 A` and that `F` has the monotonicity property:
+```
+X ⊆ Y ⊆ A → F(X) ⊆ F(Y).
+```
+Define `B = ⋂ {X ⊆ A | F(X) ⊆ X}` and `C = ⋃ {X ⊆ A | X ⊆ F(X)}`.
 -/
-theorem theorem_3m {R : Set.Relation α}
-  (hS : R.isSymmetric) (hT : R.isTransitive)
-  : R.isEquivalence (fld R) := by
-  refine ⟨Eq.subset rfl, ?_, hS, hT⟩
-  intro x hx
-  apply Or.elim hx
-  · intro h
-    have ⟨y, hy⟩ := dom_exists h
-    have := hS hy
-    exact hT hy this
-  · intro h
-    have ⟨t, ht⟩ := ran_exists h
-    have := hS ht
-    exact hT this ht
+
+section Exercise_3_30
+
+variable {F : Set α → Set α} {A B C : Set α}
+         (hF : Set.MapsTo F (𝒫 A) (𝒫 A))
+         (hMono : ∀ X Y, X ⊆ Y ∧ Y ⊆ A → F X ⊆ F Y)
+         (hB : B = ⋂₀ { X | X ⊆ A ∧ F X ⊆ X })
+         (hC : C = ⋃₀ { X | X ⊆ A ∧ X ⊆ F X })
+
+/-- ##### Exercise 3.30 (a)
+
+Show that `F(B) = B` and `F(C) = C`.
+-/
+theorem exercise_3_30_a : F B = B ∧ F C = C := by
+
+  have hB_subset : F B ⊆ B := by
+    intro x hx
+    have : ∀ X, X ⊆ A ∧ F X ⊆ X → x ∈ X := by
+      intro X ⟨hX₁, hX₂⟩
+      have hB₁ : B ⊆ X := by
+        show ∀ t, t ∈ B → t ∈ X
+        intro t ht
+        rw [hB] at ht
+        simp only [Set.mem_sInter] at ht 
+        exact ht X ⟨hX₁, hX₂⟩
+      exact hX₂ (hMono B X ⟨hB₁, hX₁⟩ hx)
+    rw [hB]
+    exact this
+  
+  have hC_supset : C ⊆ F C := by
+    intro x hx
+    rw [hC] at hx
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq] at hx
+    have ⟨X, hX⟩ := hx
+    have hC₁ : X ⊆ C := by
+      show ∀ t, t ∈ X → t ∈ C
+      intro t ht
+      rw [hC]
+      simp only [Set.mem_sUnion, Set.mem_setOf_eq]
+      exact ⟨X, hX.left, ht⟩
+    have hC₂ : C ⊆ A := by
+      show ∀ t, t ∈ C → t ∈ A
+      intro t ht
+      rw [hC] at ht
+      simp only [Set.mem_sUnion, Set.mem_setOf_eq] at ht
+      have ⟨T, hT⟩ := ht
+      exact hT.left.left hT.right
+    exact hMono X C ⟨hC₁, hC₂⟩ (hX.left.right hX.right)
+  
+  have hC_sub_A : C ⊆ A := by
+    show ∀ t, t ∈ C → t ∈ A
+    intro t ht
+    rw [hC] at ht
+    simp at ht
+    have ⟨X, hX⟩ := ht
+    exact hX.left.left hX.right
+
+  have hFC_sub_A : F C ⊆ A := by
+    show ∀ t, t ∈ F C → t ∈ A
+    intro t ht
+    have := hF hC_sub_A
+    simp only [Set.mem_powerset_iff] at this
+    exact this ht
+
+  have hC_subset : F C ⊆ C := by
+    suffices ∀ X, X ∈ {X | X ⊆ A ∧ X ⊆ F X} → X ⊆ C from
+      this (F C) ⟨hFC_sub_A, hMono C (F C) ⟨hC_supset, hFC_sub_A⟩⟩
+    intro X hX
+    simp at hX
+    rw [hC]
+    show ∀ t, t ∈ X → t ∈ ⋃₀ {X | X ⊆ A ∧ X ⊆ F X}
+    intro t ht
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq]
+    exact ⟨X, hX, ht⟩
+  
+  have hB_sub_A : B ⊆ A := by
+    show ∀ t, t ∈ B → t ∈ A
+    intro t ht
+    rw [hB] at ht
+    simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht
+    have := ht C ⟨hC_sub_A, hC_subset⟩
+    exact hC_sub_A this
+
+  apply And.intro
+  · rw [Set.Subset.antisymm_iff]
+    apply And.intro
+    · exact hB_subset
+    · have hInter : ∀ X, X ∈ {X | X ⊆ A ∧ F X ⊆ X} → B ⊆ X := by
+        intro X hX
+        simp only [Set.mem_setOf_eq] at hX 
+        rw [hB]
+        show ∀ t, t ∈ ⋂₀ {X | X ⊆ A ∧ F X ⊆ X} → t ∈ X
+        intro t ht
+        simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht 
+        exact ht X hX
+      refine hInter (F B) ⟨?_, ?_⟩
+      · show ∀ t, t ∈ F B → t ∈ A
+        intro t ht
+        have := hF hB_sub_A
+        simp only [Set.mem_powerset_iff] at this
+        exact this ht
+      · refine hMono (F B) B ⟨hB_subset, hB_sub_A⟩
+  · rw [Set.Subset.antisymm_iff]
+    exact ⟨hC_subset, hC_supset⟩
+
+/-- ##### Exercise 3.30 (b)
+
+Show that if `F(X) = X`, then `B ⊆ X ⊆ C`.
+-/
+theorem exercise_3_30_b : ∀ X, X ⊆ A ∧ F X = X → B ⊆ X ∧ X ⊆ C := by
+  intro X ⟨hX₁, hX₂⟩
+  apply And.intro
+  · have : F X ⊆ X := Eq.subset hX₂
+    rw [hB]
+    show ∀ t, t ∈ ⋂₀ {X | X ⊆ A ∧ F X ⊆ X} → t ∈ X
+    intro t ht
+    simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht 
+    exact ht X ⟨hX₁, this⟩
+  · have : X ⊆ F X := Eq.subset (id (Eq.symm hX₂))
+    rw [hC]
+    show ∀ t, t ∈ X → t ∈ ⋃₀ {X | X ⊆ A ∧ X ⊆ F X}
+    intro t ht
+    simp only [Set.mem_sUnion, Set.mem_setOf_eq]
+    exact ⟨X, ⟨hX₁, this⟩, ht⟩
+
+end Exercise_3_30
 
 /-- #### Exercise 3.32 (a)
 

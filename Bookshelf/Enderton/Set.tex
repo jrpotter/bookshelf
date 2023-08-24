@@ -3083,7 +3083,7 @@
       \end{align*}
   \end{proof}
 
-\subsection{\pending{Theorem 3J}}%
+\subsection{\verified{Theorem 3J}}%
 \hyperlabel{sub:theorem-3j}
 
   \begin{theorem}[3J]
@@ -3097,6 +3097,12 @@
         on $B$ iff $F$ maps $A$ \textit{onto} $B$.
     \end{enumerate}
   \end{theorem}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3j\_a}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.theorem\_3j\_b}
 
   \begin{proof}
     Let $F$ be a \nameref{ref:function} from nonempty set $A$ to set $B$.
@@ -3577,20 +3583,35 @@
       $$\hat{F} = \{\tuple{[x]_R, [F(x)]_R} \mid x \in A\}.$$
     By construction $\hat{F}$ has domain $A / R$ and
       $\ran{\hat{F}} \subseteq A / R$.
-    All that remains is proving $\hat{F}$ is single-valued.
-    Let $[x_1]_R, [x_2]_R \in \dom{\hat{F}}$ such that $[x_1]_R = [x_2]_R$.
-    By definition of $\hat{F}$, $\tuple{[x_1]_R, [F(x_1)]_R} \in \hat{F}$
-      and $\tuple{[x_2]_R, [F(x_2)]_R} \in \hat{F}$.
-    By \nameref{sub:lemma-3n}, $[x_1]_R = [x_2]_R$ implies $x_1Rx_2$.
-    Since $F$ is compatible, $F(x_1)RF(x_2)$.
-    Another application of \nameref{sub:lemma-3n} implies that
-      $[F(x_1)]_R = [F(x_2)]_R$.
-    Thus $\hat{F}$ is single-valued.
+    All that remains is proving (i) $\hat{F}$ is single-valued and (ii)
+      $\hat{F}$ is unique.
 
-    Uniqueness follows immediately from the \nameref{ref:extensionality-axiom}.
+    \paragraph{(i)}%
+
+      Let $[x_1]_R, [x_2]_R \in \dom{\hat{F}}$ such that $[x_1]_R = [x_2]_R$.
+      By definition of $\hat{F}$, $\tuple{[x_1]_R, [F(x_1)]_R} \in \hat{F}$
+        and $\tuple{[x_2]_R, [F(x_2)]_R} \in \hat{F}$.
+      By \nameref{sub:lemma-3n}, $[x_1]_R = [x_2]_R$ implies $x_1Rx_2$.
+      Since $F$ is compatible, $F(x_1)RF(x_2)$.
+      Another application of \nameref{sub:lemma-3n} implies that
+        $[F(x_1)]_R = [F(x_2)]_R$.
+      Thus $\hat{F}$ is single-valued, i.e. a function.
+
+    \paragraph{(ii)}%
+
+      Suppose there exists another function, say $\hat{G}$, that satisfies
+        \eqref{sub:theorem-3q-eq1}.
+      That is,
+        $$\hat{G}([x]_R) = [F(x)]_R \quad\text{for all } x \text{ in } A.$$
+      Let $x \in A$.
+      Then $\hat{G}([x]_R) = [F(x)]_R$ and $\hat{F}([x]_R) = [F(x)]_R$.
+      Since this holds for all $x \in A$, $\hat{F}$ and $\hat{G}$ agree on all
+        equivalence classes in $A / R$.
+      Hence, by the \nameref{ref:extensionality-axiom}, $\hat{F} = \hat{G}$.
 
     \suitdivider
 
+    \noindent
     Suppose $F$ is not compatible with $R$.
     Then there exists some $x, y \in A$ such that $xRy$ and $\neg F(x)RF(y)$.
     By \nameref{sub:lemma-3n}, $[x]_R = [y]_R$.
@@ -3599,7 +3620,7 @@
     Then $\hat{F}([x]_R) = \hat{F}([y]_R)$ meaning $[F(x)]_R = [F(y)]_R$.
     Then \nameref{sub:lemma-3n} implies $F(x)RF(y)$, a contradiction.
     Therefore our original hypothesis must be incorrect.
-    That is, there is no function $\hat{F}$ satisfying
+    That is, there is no incompatible function $\hat{F}$ satisfying
       \eqref{sub:theorem-3q-eq1}.
   \end{proof}
 
@@ -4808,7 +4829,7 @@
   Does the converse hold?
 
   \code*{Bookshelf/Enderton/Set/Chapter\_3}
-    {Enderton.Set.Chapter\_3.exercise\_3\_39}
+    {Enderton.Set.Chapter\_3.exercise\_3\_29}
 
   \begin{proof}
     Let $f \colon A \rightarrow B$ such that $f$ maps $A$ onto $B$.
@@ -4847,7 +4868,7 @@
       corresponds to value $2$.
   \end{proof}
 
-\subsection{\sorry{Exercise 3.30}}%
+\subsection{\verified{Exercise 3.30}}%
 \hyperlabel{sub:exercise-3.30}
 
   Assume that $F \colon \powerset{A} \rightarrow \powerset{A}$ and that $F$ has
@@ -4857,22 +4878,89 @@
     $$B = \bigcap\{X \subseteq A \mid F(X) \subseteq X\} \quad\text{and}\quad
       C = \bigcup\{X \subseteq A \mid X \subseteq F(X)\}.$$
 
-\subsubsection{\sorry{Exercise 3.30 (a)}}%
+\subsubsection{\verified{Exercise 3.30 (a)}}%
 \hyperlabel{ssub:exercise-3.30-a}
 
   Show that $F(B) = B$ and $F(C) = C$.
 
+  \code*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_30\_a}
+
   \begin{proof}
-    TODO
+
+    We prove that (i) $F(B) = B$ and (ii) $F(C) = C$.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:exercise-3.30-a-i}
+
+      To prove $F(B) = B$, we show $F(B) \subseteq B$ and $F(B) \supseteq B$.
+
+      \subparagraph{($\subseteq$)}%
+      \hyperlabel{spar:exercise-3.30-i-sub}
+
+        Let $x \in F(B)$ and $X \subseteq A$ such that $F(X) \subseteq X$.
+        By definition of $B$, $B \subseteq X$.
+        Then monotonicity implies $F(B) \subseteq F(X) \subseteq X$.
+        Therefore $x \in X$.
+        Since $X$ was arbitrarily chosen, it follows that
+          $$\forall X, X \subseteq A \land F(X) \subseteq X \Rightarrow
+            x \in X.$$
+        By definition of the intersection of sets,
+          $$x \in \bigcap\{X \subseteq A \mid F(X) \subseteq X\} = B.$$
+        Hence $F(B) \subseteq B$.
+
+      \subparagraph{($\supseteq$)}%
+
+        By \nameref{spar:exercise-3.30-i-sub}, $F(B) \subseteq B$.
+        Then monotonicity implies $F(F(B)) \subseteq F(B)$.
+        Thus $F(B) \in \{X \subseteq A \mid F(X) \subseteq X\}$.
+        Hence, by definition of $B$, $B \subseteq F(B)$.
+
+    \paragraph{(ii)}%
+
+      To prove $F(C) = C$, we show $F(C) \supseteq C$ and $F(C) \subseteq C$.
+
+      \subparagraph{($\supseteq$)}%
+      \hyperlabel{spar:exercise-3.30-i-sup}
+
+        Let $x \in C$.
+        By definition of $C$, there exists some $X \subseteq A$ such that
+          $X \subseteq F(X)$ and $x \in X$.
+        Since $C$ contains $X$, $X \subseteq C$.
+        Then monotonicity implies $X \subseteq F(X) \subseteq F(C)$.
+        Therefore $x \in F(C)$.
+
+      \subparagraph{($\subseteq$)}%
+
+        By \nameref{spar:exercise-3.30-i-sup}, $C \subseteq F(C)$.
+        Then monotonicity implies $F(C) \subseteq F(F(C))$.
+        Thus $F(C) \in \{X \subseteq A \mid X \subseteq F(X)\}$.
+        Hence, by definition of $C$, $F(C) \subseteq C$.
+
   \end{proof}
 
-\subsubsection{\sorry{Exercise 3.30 (b)}}%
+\subsubsection{\verified{Exercise 3.30 (b)}}%
 \hyperlabel{ssub:exercise-3.30-b}
 
   Show that if $F(X) = X$, then $B \subseteq X \subseteq C$.
 
+  \code*{Bookshelf/Enderton/Set/Chapter\_3}
+    {Enderton.Set.Chapter\_3.exercise\_3\_30\_b}
+
   \begin{proof}
-    TODO
+    Suppose $F(X) = X$ for some $X \subseteq A$.
+    By the \nameref{ref:extensionality-axiom}, $F(X) \subseteq X$ and
+      $X \subseteq F(X)$.
+    Therefore
+      \begin{align}
+        X & \in \{X \subseteq A \mid F(X) \subseteq X\}
+          & \hyperlabel{ssub:exercise-3.30-b-eq1} \\
+        X & \in \{X \subseteq A \mid X \subseteq F(X)\}.
+          & \hyperlabel{ssub:exercise-3.30-b-eq2}
+      \end{align}
+    \eqref{ssub:exercise-3.30-b-eq1} immediately implies $B \subseteq X$ and
+      \eqref{ssub:exercise-3.30-b-eq2} immediately implies $X \subseteq C$.
+    Thus $B \subseteq X \subseteq C$.
   \end{proof}
 
 \subsection{\unverified{Exercise 3.31}}%
@@ -5502,14 +5590,93 @@
 
   \end{proof}
 
-\subsection{\sorry{Exercise 3.42}}%
+\subsection{\unverified{Exercise 3.42}}%
 \hyperlabel{sub:exercise-3.42}
 
-  State precisely the "analogous results" mentioned in Theorem 3Q.
+  State precisely the "analogous results" mentioned in \nameref{sub:theorem-3q}.
   (This will require extending the concept of compatibility in a suitable way.)
 
+  \linedivider
+
+  \begin{theorem}[3.42]
+    A function $F \colon A \times A \rightarrow A$ is said to be
+      \textbf{compatible} with relation $R$ if and only if for all
+      $x_1, y_1, x_2, y_2 \in A$,
+      $$x_1Rx_2 \land y_1Ry_2 \Rightarrow F(x_1, y_1)RF(x_2, y_2).$$
+
+    \noindent
+    Assume that $R$ is an equivalence relation on $A$ and that
+      $F \colon A \times A \rightarrow A$.
+    If $F$ is compatible with $R$, then there exists a unique function
+      $\hat{F} \colon A / R \times A / R \rightarrow A / R$ such that
+      \begin{equation}
+        \hyperlabel{sub:exercise-3.42-eq1}
+        \hat{F}([x]_R, [y]_R) = [F(x, y)]_R
+      \end{equation}
+      for all $x, y \in A$.
+    If $F$ is not compatible with $R$, then no such $\hat{F}$ exists.
+  \end{theorem}
+
   \begin{proof}
-    TODO
+    Let $R$ be an equivalence relation on $A$ and
+      $F \colon A \times A \rightarrow A$ be compatible with $R$.
+    Define relation $\hat{F}$ to be
+      $$\hat{F} = \{\tuple{[x]_R, [y]_R, [F(x, y)]_R} \mid x, y \in A\}.$$
+    By construction, $\dom{\hat{F}} = A / R \times A / R$ and
+      $\ran{\hat{F}} \subseteq A / R$.
+    All that remains is proving (i) $\hat{F}$ is single-valued and (ii)
+      $\hat{F}$ is unique.
+
+    \paragraph{(i)}%
+
+      Let $[x_1]_R, [y_1]_R, [x_2]_R, [y_2]_R \in \dom{\hat{F}}$ such that
+        \begin{equation}
+          \hyperlabel{par:theorem-3q-i-eq1}
+          \tuple{[x_1]_R, [y_1]_R} = \tuple{[x_2]_R, [y_2]_R}.
+        \end{equation}
+      By definition of $\hat{F}$,
+        \begin{align*}
+          \tuple{[x_1]_R, [y_1]_R, [F(x_1, y_1)]_R} & \in \hat{F} \\
+          \tuple{[x_2]_R, [y_2]_R, [F(x_2, y_2)]_R} & \in \hat{F}.
+        \end{align*}
+      By \eqref{par:theorem-3q-i-eq1}, $[x_1]_R = [x_2]_R$ and
+        $[y_1]_R = [y_2]_R$.
+      Then \nameref{sub:lemma-3n} implies $x_1Rx_2$ and $y_1Ry_2$ respectively.
+      Since $F$ is compatible, it follows $F(x_1, y_1)RF(x_2, y_2)$.
+      Another application of \nameref{sub:lemma-3n} implies that
+        $[F(x_1, y_1)]_R = [F(x_2, y_2)]_R$.
+      Thus $\hat{F}$ is single-valued, i.e. a function.
+
+    \paragraph{(ii)}%
+
+      Suppose there exists another function, say $\hat{G}$, that satisfies
+        \eqref{sub:exercise-3.42-eq1}.
+      That is,
+        $$\hat{G}([x]_R, [y]_R) = [F(x, y)]_R \quad\text{for all } x, y \in A.$$
+      Let $x, y \in A$.
+      Then $\hat{G}([x]_R, [y]_R) = [F(x, y)]_R$ and
+        $\hat{F}([x]_R, [y]_R) = [F(x, y)]_R$.
+      Since this holds for all $x, y \in A$, $\hat{F}$ and $\hat{G}$ agree on
+        all members of $A / R \times A / R$.
+      Hence, by the \nameref{ref:extensionality-axiom}, $\hat{F} = \hat{G}$.
+
+    \suitdivider
+
+    \noindent
+    Suppose $F$ is not compatible with $R$.
+    Then there exists some $x_1, y_1, x_2, y_2 \in A$ such that $x_1Rx_2$ and
+      $y_1Ry_2$ but $\neg F(x_1, y_1)RF(x_2, y_2)$.
+    By \nameref{sub:lemma-3n}, $[x_1]_R = [x_2]_R$ and $[y_1]_R = [y_2]_R$.
+    For the sake of contradiction, suppose a function $\hat{F}$ exists
+      satisfying \eqref{sub:exercise-3.42-eq1}.
+    Then $\hat{F}([x_1]_R, [y_1]_R) = \hat{F}([x_2]_R, [y_2]_R)$ meaning
+      $[F(x_1, y_1)]_R = [F(x_2, y_2)]_R$.
+    Then \nameref{sub:lemma-3n} implies $F(x_1, y_1)RF(x_2, y_2)$, a
+      contradiction.
+    Therefore our original hypothesis must be incorrect.
+    That is, there is no incompatible function $\hat{F}$ satisfying
+      \eqref{sub:exercise-3.42-eq1}.
+
   \end{proof}
 
 \subsection{\verified{Exercise 3.43}}%
