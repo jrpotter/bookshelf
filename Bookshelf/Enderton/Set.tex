@@ -3171,8 +3171,8 @@
 
   \end{proof}
 
-\subsection{\unverified{Bijections are Two-Sided Inverses}}%
-\hyperlabel{sub:bijections-two-sided-inverses}
+\subsection{\unverified{Bijections and Inverses}}%
+\hyperlabel{sub:bijections-inverses}
 
   \begin{corollary}
     A function $f$ is a one-to-one correspondence if and only if it has a left
@@ -3186,6 +3186,30 @@
       inverse.
     The same theorem states that $f$ is onto $B$ if and only if it has a right
       inverse.
+  \end{proof}
+
+\subsection{\unverified{Left and Right Inverses and Two-Sided Inverses}}%
+\hyperlabel{sub:left-right-inverse-two-sided-inverse}
+
+  \begin{lemma}
+    Let $f$ be a function with left inverse $g_1$ and right inverse $g_2$.
+    Then $g_1 = g_2 = f^{-1}$.
+  \end{lemma}
+
+  \begin{proof}
+    Let $I$ denote the identity map with appropriate domain and codomain
+      depending on placement in the following:
+      \begin{align*}
+        g_1
+          & = g_1 \circ I \\
+          & = g_1 \circ (f \circ g_2) \\
+          & = (g_1 \circ f) \circ g_2 \\
+          & = I \circ g_2 \\
+          & = g_2.
+      \end{align*}
+    By \nameref{sub:bijections-inverses}, $f$ is a bijection meaning $f^{-1}$
+      is both a left and right inverse.
+    Hence $g_1 = g_2 = f^{-1}$.
   \end{proof}
 
 \subsection{\verified{Theorem 3K(a)}}%

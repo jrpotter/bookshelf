@@ -67,7 +67,12 @@ No natural number is equinumerous to a proper subset of itself.
 -/
 theorem pigeonhole_principle (m n : ℕ) (hm : m < n)
   : ∀ f : Fin m → Fin n, ¬ Function.Bijective f := by
-  sorry
+  induction n with
+  | zero =>
+    intro f hf
+    simp at hm
+  | succ n ih =>
+    sorry
 
 /-- #### Corollary 6C
 
@@ -97,8 +102,8 @@ theorem corollary_6d_b
 
 Any finite set is equinumerous to a unique natural number.
 -/
-theorem corollary_6e (S : Set α) (f : S → Fin n) (hf : Function.Bijective f)
-  : S ≃ Fin m → m = n := by
+theorem corollary_6e (S : Set α) (hn : S ≃ Fin n) (hm : S ≃ Fin m)
+  : m = n := by
   sorry
 
 /-- #### Lemma 6F
@@ -106,8 +111,12 @@ theorem corollary_6e (S : Set α) (f : S → Fin n) (hf : Function.Bijective f)
 If `C` is a proper subset of a natural number `n`, then `C ≈ m` for some `m`
 less than `n`.
 -/
-lemma lemma_6f {n : ℕ} (C S : Finset ℕ) (hC : C ⊂ S) (hS : S ≃ Fin n)
+lemma lemma_6f {n : ℕ} (hC : C ⊂ Finset.range n)
   : ∃ m : ℕ, m < n ∧ ∃ f : C → Fin m, Function.Bijective f := by
+  sorry
+
+theorem corollary_6g (S S' : Set α) (hS : Finite S) (hS' : S' ⊆ S)
+  : Finite S' := by
   sorry
 
 /-- #### Exercise 6.1
