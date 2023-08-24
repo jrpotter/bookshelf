@@ -150,6 +150,9 @@
   \lean*{Mathlib/Init/Function}
     {Function.Bijective}
 
+  \lean{Mathlib/Logic/Equiv/Defs}
+    {Equiv}
+
 \section{\defined{Equivalence Class}}%
 \hyperlabel{ref:equivalence-class}
 
@@ -214,8 +217,8 @@
   A set is \textbf{finite} if and only if it is \nameref{ref:equinumerous} to a
     \nameref{ref:natural-number}.
 
-  \lean{Mathlib/Data/Finset/Basic}
-    {Finset}
+  \lean*{Mathlib/Data/Set/Finite}
+    {Set.Finite}
 
 \section{\defined{Function}}%
 \hyperlabel{ref:function}
@@ -297,6 +300,9 @@
 
   A set is \textbf{infinite} if and only if it is not a
     \nameref{ref:finite-set}.
+
+  \lean*{Mathlib/Data/Set/Finite}
+    {Set.Infinite}
 
 \section{\defined{Infinity Axiom}}%
 \hyperlabel{ref:infinity-axiom}
@@ -3157,6 +3163,23 @@
           meaning $\tuple{H(y), y} \in F$.
         Thus $F(H(y)) = y$ as expected.
 
+  \end{proof}
+
+\subsection{\unverified{Bijections are Two-Sided Inverses}}%
+\hyperlabel{sub:bijections-two-sided-inverses}
+
+  \begin{corollary}
+    A function $f$ is a one-to-one correspondence if and only if it has a left
+      and right inverse.
+  \end{corollary}
+
+  \begin{proof}
+    By definition, a one-to-one correspondence $f$ between sets $A$ and $B$ must
+      be both one-to-one and onto.
+    By \nameref{sub:theorem-3j}, $f$ is one-to-one if and only if it has a left
+      inverse.
+    The same theorem states that $f$ is onto $B$ if and only if it has a right
+      inverse.
   \end{proof}
 
 \subsection{\verified{Theorem 3K(a)}}%
@@ -8520,12 +8543,15 @@
 
   \end{proof}
 
-\subsection{\pending{Theorem 6B}}%
+\subsection{\verified{Theorem 6B}}%
 \hyperlabel{sub:theorem-6b}
 
   \begin{theorem}[6B]
     No set is \nameref{ref:equinumerous} to its powerset.
   \end{theorem}
+
+  \code*{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.theorem\_6b}
 
   \begin{proof}
     Let $A$ be an arbitrary set and $f \colon A \rightarrow \powerset{A}$.

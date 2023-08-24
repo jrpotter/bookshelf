@@ -1,3 +1,5 @@
+import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Set.Finite
 import Mathlib.Data.Set.Function
 import Mathlib.Data.Rel
 
@@ -35,6 +37,78 @@ theorem theorem_6a_c (A : Set α) (B : Set β) (C : Set γ)
   (G : β → γ) (hG : Set.BijOn G B C)
   : ∃ H, Set.BijOn H A C := by
   exact ⟨G ∘ F, Set.BijOn.comp hG hF⟩
+
+/-- #### Theorem 6B
+
+No set is equinumerous to its powerset.
+-/
+theorem theorem_6b (A : Set α)
+  : ∀ f, ¬ Set.BijOn f A (𝒫 A) := by
+  intro f hf
+  unfold Set.BijOn at hf
+  let φ := { a ∈ A | a ∉ f a }
+  suffices ∀ a ∈ A, f a ≠ φ by
+    have hφ := hf.right.right (show φ ∈ 𝒫 A by simp)
+    have ⟨a, ha⟩ := hφ
+    exact absurd ha.right (this a ha.left)
+  intro a ha hfa
+  by_cases h : a ∈ f a
+  · have h' := h
+    rw [hfa] at h
+    simp only [Set.mem_setOf_eq] at h
+    exact absurd h' h.right
+  · rw [Set.Subset.antisymm_iff] at hfa
+    have := hfa.right ⟨ha, h⟩
+    exact absurd this h
+
+/-- #### Pigeonhole Principle
+
+No natural number is equinumerous to a proper subset of itself.
+-/
+theorem pigeonhole_principle (m n : ℕ) (hm : m < n)
+  : ∀ f : Fin m → Fin n, ¬ Function.Bijective f := by
+  sorry
+
+/-- #### Corollary 6C
+
+No finite set is equinumerous to a proper subset of itself.
+-/
+theorem corollary_6c (S S' : Finset α) (hS : S' ⊂ S)
+  : ∀ f : S → S', ¬ Function.Bijective f := by
+  sorry
+
+/-- #### Corollary 6D (a)
+
+Any set equinumerous to a proper subset of itself is infinite.
+-/
+theorem corollary_6d_a (S S' : Set α) (hS : S' ⊂ S) (hf : S' ≃ S)
+  : Set.Infinite S := by
+  sorry
+
+/-- #### Corollary 6D (b)
+
+The set `ω` is infinite.
+-/
+theorem corollary_6d_b
+  : Set.Infinite (@Set.univ ℕ) := by
+  sorry
+
+/-- #### Corollary 6E
+
+Any finite set is equinumerous to a unique natural number.
+-/
+theorem corollary_6e (S : Set α) (f : S → Fin n) (hf : Function.Bijective f)
+  : S ≃ Fin m → m = n := by
+  sorry
+
+/-- #### Lemma 6F
+
+If `C` is a proper subset of a natural number `n`, then `C ≈ m` for some `m`
+less than `n`.
+-/
+lemma lemma_6f {n : ℕ} (C S : Finset ℕ) (hC : C ⊂ S) (hS : S ≃ Fin n)
+  : ∃ m : ℕ, m < n ∧ ∃ f : C → Fin m, Function.Bijective f := by
+  sorry
 
 /-- #### Exercise 6.1
 
