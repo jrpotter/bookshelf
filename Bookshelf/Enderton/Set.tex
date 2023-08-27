@@ -6378,7 +6378,7 @@
 
   \end{proof}
 
-\subsection{\sorry{Theorem 4H}}%
+\subsection{\pending{Theorem 4H}}%
 \hyperlabel{sub:theorem-4h}
 
   \begin{theorem}[4H]
@@ -6390,7 +6390,91 @@
   \end{theorem}
 
   \begin{proof}
-    TODO
+
+    Let $\langle N, S, e \rangle$ be a \nameref{ref:peano-system}.
+    By the \nameref{sub:recursion-theorem-natural-numbers}, there exists a
+      unique function $h \colon \omega \rightarrow N$ such that $h(0) = e$ and
+      for every $n \in \omega$, $h(n^+) = h(\sigma(n)) = S(h(n))$.
+    All that remains is proving $h$ is one-to-one and onto.
+    \suitdivider
+
+    \noindent
+    We first show $h$ is one-to-one by induction.
+    Define
+      $$S = \{n \in \omega \mid \forall m, h(m) = h(n) \Rightarrow m = n\}.$$
+    We show that (i) $0 \in S$ and (ii) if $n \in S$, then $n^+ \in S$.
+    Afterward we show (iii) that $h$ is one-to-one.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:theorem-4h-i}
+
+      Let $m \in \omega$ such that $h(m) = h(0) = e$.
+      Suppose $m \neq 0$.
+      Then \nameref{sub:theorem-4c} indicates there exists some natural number
+        $p$ such that $p^+ = m$.
+      But then $h(m) = h(p^+) = S(h(p)) = e$.
+      By definition of a Peano system, $e \not\in \ran{S}$.
+      This is a contradiction.
+      Hence $m = 0$, i.e. $0 \in S$.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:theorem-4h-ii}
+
+      Suppose $n \in S$.
+      Let $m \in \omega$ such that $h(m) = h(n^+) = S(h(n))$.
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Suppose $m = 0$.
+        Then $h(0) = e = S(h(n))$.
+        But, by definition of a Peano system, $e \not\in \ran{S}$.
+        Thus we have a contradiction.
+
+      \subparagraph{Case 2}%
+
+        Suppose $m \neq 0$.
+        Then \nameref{sub:theorem-4c} indicates there exists some natural number
+          $p$ such that $p^+ = m$.
+        Then $$S(h(n)) = h(m) = h(p^+) = S(h(p)).$$
+        By definition of a Peano system, $S$ is one-to-one.
+        Therefore $h(n) = h(p)$.
+        Since $n \in S$, it follows $n = p$.
+        Therefore $n^+ = p^+ = m$.
+
+      \subparagraph{Subconclusion}%
+
+        The above two cases are exhaustive.
+        Hence $n^+ \in S$.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:theorem-4h-i} and \nameref{par:theorem-4h-ii}, $S$ is an
+        \nameref{ref:inductive-set}.
+      By \nameref{sub:theorem-4b}, $S = \omega$.
+      Thus for all natural numbers $m, n \in \omega$, if $h(m) = h(n)$, then
+        $m = n$.
+      In other words, $f$ is one-to-one.
+    \suitdivider
+
+    \noindent
+    We next show that $\ran{h} = N$.
+    By the Peano posulate, every subset $A$ of $N$ containing $e$ and closed under $S$ is $N$ itself.
+    Thus it suffices to prove that (i) $e \in \ran{h}$ and (ii) $\ran{h}$ is closed under $S$.
+
+    \paragraph{(i)}%
+
+      That is, $h(0) = e$ by definition.
+      Thus $e \in \ran{h}$.
+
+    \paragraph{(ii)}%
+
+      Let $y \in \ran{h}$.
+      Then there exists some $n \in \omega$ such that $h(n) = y$.
+      By definition of $h$, $h(n^+) = S(h(n)) = S(y)$.
+      Therefore $S(y) \in \ran{h}$.
+      Since this holds for any $y \in \ran{h}$, $\ran{h}$ is closed under $S$.
+
   \end{proof}
 
 \section{Arithmetic}%
