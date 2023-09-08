@@ -74,8 +74,8 @@ def sourceLinker (ws : Lake.Workspace) : IO (Name → Option DeclarationRange �
       |>.toIO (fun _ => IO.userError "Failed to load lake manifest")
   for pkg in manifest.entryArray do
     match pkg with
-    | .git _ url rev .. => gitMap := gitMap.insert pkg.name (getGithubBaseUrl url, rev)
-    | .path _ path =>
+    | .git _ _ _ url rev .. => gitMap := gitMap.insert pkg.name (getGithubBaseUrl url, rev)
+    | .path _ _ _ path =>
       let pkgBaseUrl := getGithubBaseUrl (← getProjectGithubUrl path)
       let pkgCommit ← getProjectCommit path
       gitMap := gitMap.insert pkg.name (pkgBaseUrl, pkgCommit)
@@ -86,6 +86,8 @@ def sourceLinker (ws : Lake.Workspace) : IO (Name → Option DeclarationRange �
     let root := module.getRoot
     let basic := if root == `Lean ∨ root == `Init then
       s!"https://github.com/leanprover/lean4/blob/{leanHash}/src/{path}.lean"
+    else if root == `Lake then
+      s!"https://github.com/leanprover/lean4/blob/{leanHash}/src/lake/{path}.lean"
     else
       match ws.packageArray.find? (·.isLocalModule module) with
       | some pkg =>
