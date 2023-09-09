@@ -74,26 +74,34 @@ theorem pigeonhole_principle (n : ℕ)
   induction n with
   | zero => intro _ hm; simp at hm
   | succ n ih =>
-    intro m hm f
+    intro m hm f inj_f surj_f
     by_cases hm' : m = 0
-    · intro inj_f surj_f
-      have ⟨a, ha⟩ := surj_f 0
+    · have ⟨a, ha⟩ := surj_f 0
       rw [hm'] at a
       have := a.isLt
       simp only [not_lt_zero'] at this
     · have ⟨p, hp⟩ : ∃ p : ℕ, p.succ = m := by sorry
       by_cases hn : ∃ t, f t = n
-      · have ⟨t, ht⟩ := hn
-        let f' : Fin m → Fin n.succ := sorry
-        let g : Fin p → Fin n := sorry
+      · -- `n ∈ ran f`.
+        have ⟨t, ht⟩ := hn
+        -- `f'` is a variant of `f` in which the largest element of its domain
+        -- (i.e. `p`) corresponds to value `n`.
+        let f' : Fin m → Fin (n + 1) := fun x =>
+          if x == p then n
+          else if x == t then f ⟨p, calc p
+            _ < p + 1 := by simp
+            _ = m := hp⟩
+          else f x
+        -- `g = f' - {⟨p, n⟩}`.
+        let g  : Fin p → Fin n := Subtype.restrict (fun x => x < p) f'
         have hg_inj : Function.Injective g := sorry
         have hg := ih p (calc p
           _ < p + 1 := by simp
           _ = m := hp
           _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
         sorry
-      · intro _ nf
-        exact absurd (nf n) hn
+      · -- `n ∉ ran f`.
+        exact absurd (surj_f n) hn
 
 /-- #### Corollary 6C
 
