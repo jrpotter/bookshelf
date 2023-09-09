@@ -86,7 +86,6 @@ theorem theorem_3h_dom {F : Set.HRelation β γ} {G : Set.HRelation α β}
     simp only [Set.mem_setOf_eq]
     have ⟨z, hz⟩ := dom_exists ht
     refine ⟨dom_comp_imp_dom_self ht, ?_⟩
-    simp only [Set.mem_setOf_eq] at hz
     have ⟨a, ha⟩ := hz
     unfold dom
     simp only [Set.mem_image, Prod.exists, exists_and_right, exists_eq_right]
@@ -675,7 +674,6 @@ theorem exercise_3_5b {A : Set α} (B : Set β)
   apply And.intro
   · show ∀ t, t ∈ Set.prod A B → t ∈ ⋃₀ {Set.prod {x} B | x ∈ A}
     intro t h
-    simp only [Set.mem_setOf_eq] at h
     unfold Set.sUnion sSup Set.instSupSetSet
     simp only [Set.mem_setOf_eq, exists_exists_and_eq_and]
     unfold Set.prod at h
