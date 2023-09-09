@@ -17,9 +17,6 @@ require CMark from git
 require «lean4-unicode-basic» from git
   "https://github.com/fgdorais/lean4-unicode-basic" @
     "main"
-require lake from git
-  "https://github.com/leanprover/lake" @
-    "master"
 require leanInk from git
   "https://github.com/hargonix/LeanInk" @
     "doc-gen"

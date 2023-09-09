@@ -18,14 +18,6 @@
     "inputRev?": "v0.0.13",
     "inherited": true}},
   {"git":
-   {"url": "https://github.com/leanprover/lake",
-    "subDir?": null,
-    "rev": "a2ced44b7e5e30c2a6b84b420e1bbdd8d6d8e079",
-    "opts": {},
-    "name": "lake",
-    "inputRev?": "master",
-    "inherited": false}},
-  {"git":
    {"url": "https://github.com/fgdorais/lean4-unicode-basic",
     "subDir?": null,
     "rev": "2491e781ae478b6e6f1d86a7157f1c58fc50f895",
@@ -44,7 +36,7 @@
   {"git":
    {"url": "https://github.com/leanprover-community/mathlib4.git",
     "subDir?": null,
-    "rev": "d04897a61efc29f2393f448154f212472c91b47d",
+    "rev": "43718b8bde561e133edfd4ab8b5def9fb438c18d",
     "opts": {},
     "name": "mathlib",
     "inputRev?": "master",
@@ -76,7 +68,7 @@
   {"git":
    {"url": "https://github.com/leanprover/std4.git",
     "subDir?": null,
-    "rev": "14e723aabf3165e2590572bb8fd7bd3243f25542",
+    "rev": "28459f72f3190b0f540b49ab769745819eeb1c5e",
     "opts": {},
     "name": "std",
     "inputRev?": "main",
