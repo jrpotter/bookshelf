@@ -1,7 +1,9 @@
+import Common.Logic.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Set.Finite
 import Mathlib.Data.Set.Function
 import Mathlib.Data.Rel
+import Mathlib.Tactic.Ring
 
 /-! # Enderton.Set.Chapter_6
 
@@ -65,14 +67,33 @@ theorem theorem_6b (A : Set α)
 
 No natural number is equinumerous to a proper subset of itself.
 -/
-theorem pigeonhole_principle (m n : ℕ) (hm : m < n)
-  : ∀ f : Fin m → Fin n, ¬ Function.Bijective f := by
+theorem pigeonhole_principle (n : ℕ)
+  : ∀ m : ℕ, m < n →
+      ∀ f : Fin m → Fin n, Function.Injective f →
+        ¬ Function.Surjective f := by
   induction n with
-  | zero =>
-    intro f hf
-    simp at hm
+  | zero => intro _ hm; simp at hm
   | succ n ih =>
-    sorry
+    intro m hm f
+    by_cases hm' : m = 0
+    · intro inj_f surj_f
+      have ⟨a, ha⟩ := surj_f 0
+      rw [hm'] at a
+      have := a.isLt
+      simp only [not_lt_zero'] at this
+    · have ⟨p, hp⟩ : ∃ p : ℕ, p.succ = m := by sorry
+      by_cases hn : ∃ t, f t = n
+      · have ⟨t, ht⟩ := hn
+        let f' : Fin m → Fin n.succ := sorry
+        let g : Fin p → Fin n := sorry
+        have hg_inj : Function.Injective g := sorry
+        have hg := ih p (calc p
+          _ < p + 1 := by simp
+          _ = m := hp
+          _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
+        sorry
+      · intro _ nf
+        exact absurd (nf n) hn
 
 /-- #### Corollary 6C
 
