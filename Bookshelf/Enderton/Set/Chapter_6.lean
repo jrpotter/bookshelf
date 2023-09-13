@@ -1,9 +1,12 @@
 import Common.Logic.Basic
+import Common.Nat.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Set.Finite
 import Mathlib.Data.Set.Function
 import Mathlib.Data.Rel
 import Mathlib.Tactic.Ring
+import Mathlib.Tactic.LibrarySearch
+import Std.Data.Fin.Lemmas
 
 /-! # Enderton.Set.Chapter_6
 
@@ -72,36 +75,122 @@ theorem pigeonhole_principle (n : ℕ)
       ∀ f : Fin m → Fin n, Function.Injective f →
         ¬ Function.Surjective f := by
   induction n with
-  | zero => intro _ hm; simp at hm
+  | zero =>
+    intro _ hm
+    simp at hm
   | succ n ih =>
-    intro m hm f inj_f surj_f
+    intro m hm f hf_inj hf_surj
+
     by_cases hm' : m = 0
-    · have ⟨a, ha⟩ := surj_f 0
+    · have ⟨a, ha⟩ := hf_surj 0
       rw [hm'] at a
       have := a.isLt
       simp only [not_lt_zero'] at this
-    · have ⟨p, hp⟩ : ∃ p : ℕ, p.succ = m := by sorry
-      by_cases hn : ∃ t, f t = n
-      · -- `n ∈ ran f`.
-        have ⟨t, ht⟩ := hn
-        -- `f'` is a variant of `f` in which the largest element of its domain
-        -- (i.e. `p`) corresponds to value `n`.
-        let f' : Fin m → Fin (n + 1) := fun x =>
-          if x == p then n
-          else if x == t then f ⟨p, calc p
-            _ < p + 1 := by simp
-            _ = m := hp⟩
-          else f x
-        -- `g = f' - {⟨p, n⟩}`.
-        let g  : Fin p → Fin n := Subtype.restrict (fun x => x < p) f'
-        have hg_inj : Function.Injective g := sorry
-        have hg := ih p (calc p
-          _ < p + 1 := by simp
-          _ = m := hp
-          _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
-        sorry
-      · -- `n ∉ ran f`.
-        exact absurd (surj_f n) hn
+
+    -- `m ≠ 0` so `∃ p, p + 1 = m`. Represent as both a `ℕ` and `Fin` type.
+    have ⟨nat_p, hnat_p⟩ := Nat.exists_eq_succ_of_ne_zero hm'
+    have hnat_p_lt_m : nat_p < m := calc nat_p
+      _ < nat_p + 1 := by simp
+      _ = m := hnat_p.symm
+    let fin_p : Fin m := ⟨nat_p, hnat_p_lt_m⟩
+
+    by_cases hn : ¬ ∃ t, f t = n
+    -- Trivial case. `f` must not be onto if this is the case.
+    · exact absurd (hf_surj n) hn
+
+    -- Continue under the assumption `n ∈ ran f`.
+    simp only [not_not] at hn
+    have ⟨fin_t, hfin_t⟩ := hn
+
+    -- `f'` is a variant of `f` in which the largest element of its domain
+    -- (i.e. `p`) corresponds to value `n`.
+    let f' : Fin m → Fin (n + 1) := fun x =>
+      if x = fin_p then n
+      else if x = fin_t then f fin_p
+      else f x
+    have hf'_inj : Function.Injective f' := by
+      intro x₁ x₂ hf'
+      by_cases hx₁ : x₁ = fin_p
+      · by_cases hx₂ : x₂ = fin_p
+        · rw [hx₁, hx₂]
+        · rw [hx₁] at hf'
+          simp only [ite_self, ite_true] at hf'
+          by_cases ht : x₂ = fin_t
+          · rw [if_neg hx₂, if_pos ht, ← hfin_t] at hf'
+            have := (hf_inj hf').symm
+            rwa [hx₁, ht]
+          · rw [if_neg hx₂, if_neg ht, ← hfin_t] at hf'
+            have := (hf_inj hf').symm
+            exact absurd this ht
+      · by_cases hx₂ : x₂ = fin_p
+        · rw [hx₂] at hf'
+          simp only [ite_self, ite_true] at hf'
+          by_cases ht : x₁ = fin_t
+          · rw [if_neg hx₁, if_pos ht, ← hfin_t] at hf'
+            have := (hf_inj hf').symm
+            rw [← ht] at this
+            exact absurd this hx₁
+          · rw [if_neg hx₁, if_neg ht, ← hfin_t] at hf'
+            have := hf_inj hf'
+            exact absurd this ht
+        · dsimp only at hf'
+          rw [if_neg hx₁, if_neg hx₂] at hf'
+          by_cases ht₁ : x₁ = fin_t
+          · by_cases ht₂ : x₂ = fin_t
+            · rw [ht₁, ht₂]
+            · rw [if_pos ht₁, if_neg ht₂] at hf'
+              have := (hf_inj hf').symm
+              exact absurd this hx₂
+          · by_cases ht₂ : x₂ = fin_t
+            · rw [if_neg ht₁, if_pos ht₂] at hf'
+              have := hf_inj hf'
+              exact absurd this hx₁
+            · rw [if_neg ht₁, if_neg ht₂] at hf'
+              exact hf_inj hf'
+
+    -- `g = f' - {⟨p, n⟩}`. This restriction allows us to use the induction
+    -- hypothesis to prove `g` isn't surjective. 
+    let g : Fin nat_p → Fin n := fun x =>
+      let hxm := calc ↑x
+        _ < nat_p := x.isLt
+        _ < m := hnat_p_lt_m
+      let y := f' ⟨x, hxm⟩
+      ⟨y, by
+        suffices y ≠ ↑n by
+          apply Or.elim (Nat.lt_or_eq_of_lt y.isLt)
+          · simp
+          · intro hy
+            rw [← Fin.val_ne_iff] at this
+            refine absurd ?_ this
+            rw [hy]
+            simp only [Fin.coe_ofNat_eq_mod]
+            exact Eq.symm (Nat.mod_succ_eq_iff_lt.mpr (by simp))
+        by_contra ny
+        have hp₁ : f' fin_p = f' ⟨↑x, hxm⟩ := by
+          rw [show f' fin_p = n by simp, ← ny]
+        have hp₂ := Fin.val_eq_of_eq (hf'_inj hp₁)
+        exact (lt_self_iff_false ↑x).mp $ calc ↑x
+          _ < nat_p := x.isLt
+          _ = ↑fin_p := by simp
+          _ = ↑x := hp₂⟩
+    have hg_inj : Function.Injective g := sorry
+    have ng_surj : ¬ Function.Surjective g := ih nat_p (calc nat_p
+        _ < m := hnat_p_lt_m
+        _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
+    
+    -- By construction, if `g` isn't surjective then neither is `f'`. Likewise,
+    -- if `f'` isn't surjective, then neither is `f`.
+    have ⟨a, ha⟩ : ∃ a, a ∉ Set.range g := by
+      unfold Function.Surjective at ng_surj
+      simp only [not_forall, not_exists] at ng_surj 
+      have ⟨a, ha⟩ := ng_surj
+      sorry
+    have hf'a : ↑a ∉ Set.range f' := sorry
+    have hfa : ↑a ∉ Set.range f := sorry
+
+    simp only [Fin.coe_eq_castSucc, Set.mem_setOf_eq] at hfa
+    have := hf_surj (Fin.castSucc a)
+    exact absurd this hfa
 
 /-- #### Corollary 6C
 
