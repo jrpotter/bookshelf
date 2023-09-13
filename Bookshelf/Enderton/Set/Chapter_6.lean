@@ -173,7 +173,10 @@ theorem pigeonhole_principle (n : ℕ)
           _ < nat_p := x.isLt
           _ = ↑fin_p := by simp
           _ = ↑x := hp₂⟩
-    have hg_inj : Function.Injective g := sorry
+    have hg_inj : Function.Injective g := by
+      intro x₁ x₂ hg
+      simp only [Fin.mk.injEq] at hg
+      sorry
     have ng_surj : ¬ Function.Surjective g := ih nat_p (calc nat_p
         _ < m := hnat_p_lt_m
         _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
