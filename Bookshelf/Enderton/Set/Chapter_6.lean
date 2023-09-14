@@ -5,7 +5,6 @@ import Mathlib.Data.Set.Finite
 import Mathlib.Data.Set.Function
 import Mathlib.Data.Rel
 import Mathlib.Tactic.Ring
-import Mathlib.Tactic.LibrarySearch
 import Std.Data.Fin.Lemmas
 
 /-! # Enderton.Set.Chapter_6
