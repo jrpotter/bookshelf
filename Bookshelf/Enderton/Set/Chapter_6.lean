@@ -65,11 +65,12 @@ theorem theorem_6b (A : Set α)
     have := hfa.right ⟨ha, h⟩
     exact absurd this h
 
-/-- #### Pigeonhole Principle
+/-! #### Pigeonhole Principle
 
 No natural number is equinumerous to a proper subset of itself.
 -/
-theorem pigeonhole_principle (n : ℕ)
+
+lemma pigeonhole_principle_aux (n : ℕ)
   : ∀ m : ℕ, m < n →
       ∀ f : Fin m → Fin n, Function.Injective f →
         ¬ Function.Surjective f := by
@@ -317,6 +318,12 @@ theorem pigeonhole_principle (n : ℕ)
 
     simp only [Fin.coe_eq_castSucc, Set.mem_setOf_eq] at hfa
     exact absurd (hf_surj $ Fin.castSucc a) hfa
+
+theorem pigeonhole_principle (m n : ℕ) (h : m < n)
+  : ∀ f : Fin m → Fin n, ¬ Function.Bijective f := by
+  intro f nf
+  have := pigeonhole_principle_aux n m h f nf.left
+  exact absurd nf.right this
 
 /-- #### Corollary 6C
 
