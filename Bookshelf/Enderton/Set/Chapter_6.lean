@@ -108,6 +108,7 @@ theorem pigeonhole_principle (n : ℕ)
       if x = fin_p then n
       else if x = fin_t then f fin_p
       else f x
+
     have hf'_inj : Function.Injective f' := by
       intro x₁ x₂ hf'
       by_cases hx₁ : x₁ = fin_p
@@ -173,6 +174,7 @@ theorem pigeonhole_principle (n : ℕ)
           _ < nat_p := x.isLt
           _ = ↑fin_p := by simp
           _ = ↑x := hp₂⟩
+
     have hg_inj : Function.Injective g := by
       intro x₁ x₂ hg
       simp only [Fin.mk.injEq] at hg
@@ -200,6 +202,7 @@ theorem pigeonhole_principle (n : ℕ)
           have := hf_inj hg
           simp only [Fin.mk.injEq] at this
           exact Fin.ext_iff.mpr this
+
     have ng_surj : ¬ Function.Surjective g := ih nat_p (calc nat_p
         _ < m := hnat_p_lt_m
         _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
@@ -219,42 +222,70 @@ theorem pigeonhole_principle (n : ℕ)
 
     -- By construction, if `g` isn't surjective then neither is `f'`.
     have hf'a : ↑a ∉ Set.range f' := by
-      simp only [Fin.coe_eq_castSucc, Set.mem_range, not_exists]
-      suffices ∀ t : Fin m, (ht : t < fin_p) → f' t = g ⟨t, ht⟩ by
-        intro x nx
+
+      -- It suffices to prove that `f'` and `g` agree on all values found in
+      -- `g`'s domain. The only input that complicates things is `p`, which is
+      -- found in the domains of `f'` and `f`. So long as we can prove
+      -- `f' p ≠ a`, then we can be sure `a` appears nowhere in `ran f'`.
+      suffices ∀ x : Fin m, (ht : x < fin_p) → f' x = g ⟨x, ht⟩ by
+        unfold Set.range
+        simp only [Set.mem_setOf_eq, not_exists]
+
+        intro x
         by_cases hp : x = fin_p
-        · rw [if_pos hp, Fin.ext_iff] at nx
-          simp only [Fin.coe_ofNat_eq_mod, Fin.coe_castSucc] at nx
+        · intro nx
+          rw [if_pos hp, Fin.ext_iff] at nx
+          simp only [
+            Fin.coe_ofNat_eq_mod,
+            Fin.coe_eq_castSucc,
+            Fin.coe_castSucc
+          ] at nx
           rw [Nat.mod_succ_eq_iff_lt.mpr (show n < n + 1 by simp)] at nx
           exact absurd nx (Nat.ne_of_lt a.isLt).symm
-        · rw [if_neg hp] at nx
-          sorry
+
+        · show f' x ≠ ↑↑a
+          rw [show ¬x = fin_p ↔ x ≠ fin_p from Iff.rfl, ← Fin.val_ne_iff] at hp
+
+          -- Apply our `suffice` hypothesis.
+          have hx_lt_fin_p : x < fin_p := by
+            refine Or.elim (Nat.lt_or_eq_of_lt $ calc ↑x
+              _ < m := x.isLt
+              _ = nat_p + 1 := hnat_p) id ?_
+            intro hxp
+            exact absurd hxp hp
+          rw [this x hx_lt_fin_p]
+
+          have ha₁ : ¬∃ y, g y = a := ha
+          simp only [not_exists] at ha₁
+          have ha₂ : g ⟨↑x, _⟩ ≠ a :=
+            ha₁ ⟨↑x, by rwa [Fin.lt_iff_val_lt_val] at hx_lt_fin_p⟩
+          norm_cast at ha₂ ⊢
+          intro nx
+          exact absurd (Fin.castSucc_injective n nx) ha₂
+
       intro t ht
       rw [Fin.ext_iff]
       simp only [Fin.coe_ofNat_eq_mod]
-      generalize hy : (
-        if t = { val := nat_p, isLt := hnat_p_lt_m } then ↑n
-        else if t = fin_t then f { val := nat_p, isLt := hnat_p_lt_m }
+      generalize (
+        if t = fin_p then ↑n
+        else if t = fin_t then f fin_p
         else f t
       ) = y
       exact (Nat.mod_succ_eq_iff_lt.mpr y.isLt).symm
 
     -- Likewise, if `f'` isn't surjective then neither is `f`.
     have hfa : ↑a ∉ Set.range f := by
-      suffices Set.range f = Set.range f' by
-        rw [this]
-        exact hf'a
+      suffices Set.range f = Set.range f' by rw [this]; exact hf'a
       unfold Set.range
       ext x
       apply Iff.intro
-      · intro hx
-        have ⟨y, hy⟩ := hx
+      · intro ⟨y, hy⟩
         simp only [Set.mem_setOf_eq]
         by_cases hx₁ : x = n
         · refine ⟨fin_p, ?_⟩
           simp only [ite_self, ite_true]
           exact hx₁.symm
-        · by_cases hx₂ : x = ⟨f fin_p, show ↑(f fin_p) < n + 1 from (f fin_p).isLt⟩
+        · by_cases hx₂ : x = ⟨f fin_p, (f fin_p).isLt⟩
           · refine ⟨fin_t, ?_⟩
             by_cases ht : fin_t = fin_p
             · rw [if_pos ht, hx₂]
@@ -272,8 +303,7 @@ theorem pigeonhole_principle (n : ℕ)
               exact absurd hy.symm hx₁
             rw [if_neg hy₁, if_neg hy₂]
             exact hy
-      · intro hx
-        have ⟨y, hy⟩ := hx
+      · intro ⟨y, hy⟩
         dsimp only at hy
         by_cases hy₁ : y = fin_p
         · rw [if_pos hy₁] at hy
@@ -287,8 +317,7 @@ theorem pigeonhole_principle (n : ℕ)
             exact ⟨y, hy⟩
 
     simp only [Fin.coe_eq_castSucc, Set.mem_setOf_eq] at hfa
-    have := hf_surj (Fin.castSucc a)
-    exact absurd this hfa
+    exact absurd (hf_surj $ Fin.castSucc a) hfa
 
 /-- #### Corollary 6C
 
