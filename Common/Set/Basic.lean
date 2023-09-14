@@ -1,6 +1,7 @@
 import Common.Logic.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Prod
+import Mathlib.Tactic.LibrarySearch
 
 /-! # Common.Set.Basic
 
@@ -68,11 +69,15 @@ theorem pair_eq_singleton_mem_imp_eq_all {x y z : α}
 /-! ## Subsets -/
 
 /--
-Every `Set` is a subset of itself.
+There exists no proper subset of `∅`.
 -/
-theorem subset_self (S : Set α) : S ⊆ S := by
-  intro _ hs
-  exact hs
+theorem ssubset_empty_iff_false (S : Set α)
+  : S ⊂ ∅ ↔ False := by
+  apply Iff.intro
+  · intro h
+    rw [ssubset_iff_subset_ne, subset_empty_iff] at h
+    exact absurd h.left h.right
+  · simp only [IsEmpty.forall_iff]
 
 /--
 If `Set` `A` is a subset of `Set` `B`, then `A ∪ B = B`.
@@ -116,7 +121,7 @@ theorem mem_mem_imp_pair_subset {x y : α}
 Every `Set` is a member of its own powerset.
 -/
 theorem self_mem_powerset_self {A : Set α}
-  : A ∈ 𝒫 A := subset_self A
+  : A ∈ 𝒫 A := fun _ => mem_preimage.mp
 
 /-! ## Cartesian Product -/
 
@@ -155,6 +160,20 @@ theorem prod_nonempty_nonempty_imp_nonempty_prod {A : Set α} {B : Set β}
     exact ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
 
 /-! ## Difference -/
+
+/--
+For any sets `A ⊂ B`, if `x ∈ A` then `A - {x} ⊂ B - {x}`.
+-/
+theorem diff_ssubset_diff_left {A B : Set α} (h : A ⊂ B)
+  : x ∈ A → A \ {x} ⊂ B \ {x} := by
+  intro hx
+  rw [Set.ssubset_def]
+  apply And.intro
+  · exact diff_subset_diff_left (subset_of_ssubset h)
+  · by_contra nh
+    have : {x} ⊆ A := singleton_subset_iff.mpr hx
+    rw [diff_subset_iff, union_diff_cancel this] at nh
+    exact LT.lt.false (Set.ssubset_of_ssubset_of_subset h nh)
 
 /--
 For any set `A`, the difference between the sample space and `A` is the

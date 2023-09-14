@@ -99,7 +99,7 @@ end Hermite
 
 open BigOperators
 
-/-- ### Hermite's Identity
+/-- #### Hermite's Identity
 
 The following decomposes the floor of a multiplication into a sum of floors.
 -/

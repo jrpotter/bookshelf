@@ -217,7 +217,10 @@
   A set is \textbf{finite} if and only if it is \nameref{ref:equinumerous} to a
     \nameref{ref:natural-number}.
 
-  \lean*{Mathlib/Data/Set/Finite}
+  \code*{Common/Set/Finite}
+    {Set.finite\_iff\_equinumerous\_nat}
+
+  \lean{Mathlib/Data/Set/Finite}
     {Set.Finite}
 
 \section{\defined{Function}}%
@@ -8770,14 +8773,14 @@
       \end{enumerate}
   \end{theorem}
 
-  \code{Bookshelf/Enderton/Set/Chapter\_6}
-    {Enderton.Set.Chapter\_6.theorem\_6a\_a}
+  \code{Common/Set/Finite}
+    {Set.equinumerous\_refl}
 
-  \code{Bookshelf/Enderton/Set/Chapter\_6}
-    {Enderton.Set.Chapter\_6.theorem\_6a\_b}
+  \code{Common/Set/Finite}
+    {Set.equinumerous\_symm}
 
-  \code{Bookshelf/Enderton/Set/Chapter\_6}
-    {Enderton.Set.Chapter\_6.theorem\_6a\_c}
+  \code{Common/Set/Finite}
+    {Set.equinumerous\_trans}
 
   \begin{proof}
 
@@ -8857,14 +8860,17 @@
   \code{Bookshelf/Enderton/Set/Chapter\_6}
     {Enderton.Set.Chapter\_6.pigeonhole\_principle}
 
+  \lean{Mathlib/Data/Finset/Card}
+    {Finset.exists\_ne\_map\_eq\_of\_card\_lt\_of\_maps\_to}
+
   \begin{proof}
 
     Let
       \begin{equation}
         \hyperlabel{sub:pigeonhole-principle-eq1}
         S = \{n \in \omega \mid
-          \forall m \in n, \text{every one-to-one function }
-            f \colon m \rightarrow n \text{ is not onto}\}.
+          \forall M \subset n, \text{every one-to-one function }
+            f \colon M \rightarrow n \text{ is not onto}\}.
       \end{equation}
     We show that (i) $0 \in S$ and (ii) if $n \in S$, then so is $n^+$.
     Afterward we prove (iii) the theorem statement.
@@ -8872,20 +8878,20 @@
     \paragraph{(i)}%
     \hyperlabel{par:pigeonhole-principle-i}
 
-      By \nameref{sub:zero-least-natural-number}, $0$ is the least natural
-        number.
-      Therefore, $0 \in S$ vacuously.
+      By definition, $0 = \emptyset$.
+      Then $0$ has no proper subsets.
+      Hence $0 \in S$ vacuously.
 
     \paragraph{(ii)}%
     \hyperlabel{par:pigeonhole-principle-ii}
 
-      Suppose $n \in S$ and let $m \in n^+$.
-      Furthermore, let $f \colon m \rightarrow n^+$ be a one-to-one
-        \nameref{ref:function} (as proof of a one-to-one function's existence,
-        just consider the identity function).
-      If $m = 0$, it vacuously holds that $f$ is not onto $n^+$.
-      If $m \neq 0$, \nameref{sub:theorem-4c} shows there exists some $p$ such
-        that $p^+ = m$.
+      Suppose $n \in S$ and $M \subset n^+$.
+      Furthermore, let $f \colon M \rightarrow n^+$ be a one-to-one
+        \nameref{ref:function}.
+      If $M = \emptyset$, it vacuously holds that $f$ is not onto $n^+$.
+      Otherwise $M \neq \emptyset$.
+      Because $M$ is finite, the \nameref{sub:trichotomy-law-natural-numbers}
+        implies the existence of a largest member $p \in M$.
       There are two cases to consider:
 
       \subparagraph{Case 1}%
@@ -8896,8 +8902,8 @@
       \subparagraph{Case 2}%
 
         Suppose $n \in \ran{f}$.
-        Then there exists some $t \in m$ such that $\tuple{t, n} \in f$.
-        Define $f' \colon m \rightarrow n^+$ given by
+        Then there exists some $t \in M$ such that $\tuple{t, n} \in f$.
+        Define $f' \colon M \rightarrow n^+$ given by
           \begin{align*}
             f'(p) & = f(t) = n \\
             f'(t) & = f(p) \\
@@ -8906,18 +8912,17 @@
         That is, $f'$ is a variant of $f$ in which the largest element of its
           domain (i.e. $p$) corresponds to value $n$.
         Next define $g = f' - \{\tuple{p, n}\}$.
-        Then $g$ is a function from $p$ to $n$.
+        Then $g$ is a function mapping $M - \{p\}$ to $n$.
 
         Since $f$ is one-to-one, $f'$ and $g$ are also one-to-one.
-        Since $p \in m \in n$, \nameref{sub:theorem-4f} implies $p \in n$.
-        Thus \eqref{sub:pigeonhole-principle-eq1} indicates $g$ must not be onto
+        Then \eqref{sub:pigeonhole-principle-eq1} indicates $g$ must not be onto
           $n$.
-        In other words, there exists some $a \in n$ such that
-          $a \not\in \ran{g}$.
-        Hence $a \not\in \ran{f'}$ and, consequently, $a \not\in \ran{f}$.
-        But $a \in n \in n^+$ meaning, by another application of
-          \nameref{sub:theorem-4f}, $a \in n^+$.
-        Therefore $f$ is not onto $n^+$.
+        That is, there exists some $a \in n$ such that $a \not\in \ran{g}$.
+        By the \nameref{sub:trichotomy-law-natural-numbers}, $a \neq n$.
+        Therefore $a \not\in \ran{f'}$.
+        $\ran{f'} = \ran{f}$ meaning $a \not\in \ran{f}$.
+        Because $a \in n \in n^+$, \nameref{sub:theorem-4f} implies $a \in n^+$.
+        Hence $f$ is not onto $n^+$.
 
       \subparagraph{Subconclusion}%
 
@@ -8937,26 +8942,29 @@
 
   \end{proof}
 
-\subsection{\pending{Corollary 6C}}%
+\subsection{\verified{Corollary 6C}}%
 \hyperlabel{sub:corollary-6c}
 
   \begin{corollary}[6C]
     No finite set is equinumerous to a proper subset of itself.
   \end{corollary}
 
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.corollary\_6c}
+
   \begin{proof}
     Let $S$ be a \nameref{ref:finite-set} and $S'$ be a
       \nameref{ref:proper-subset} $S'$ of $S$.
-    Then there exists some nonempty set $T$, disjoint from $S'$, such that
+    Then there exists some set $T$, disjoint from $S'$, such that
       $S' \cup T = S$.
-    By definition of a finite set, $S$ is \nameref{ref:equinumerous} to a
-      natural number $n$.
+    By definition of a \nameref{ref:finite-set}, $S$ is
+      \nameref{ref:equinumerous} to a natural number $n$.
     By \nameref{sub:theorem-6a}, $\equinumerous{S' \cup T}{S}$ which, by the
       same theorem, implies $\equinumerous{S' \cup T}{n}$.
 
     Let $f$ be a one-to-one correspondence between $S' \cup T$ and $n$.
-    Since $T$ is nonempty, $f \restriction S'$ is a one-to-one correspondence
-      between $S'$ and a proper subset of $n$.
+    Then $f \restriction S'$ is a one-to-one correspondence between $S'$ and a
+      proper subset of $n$.
     By the \nameref{sub:pigeonhole-principle}, $n$ is not equinumerous to any
       proper subset of itself.
     Therefore \nameref{sub:theorem-6a} implies $S'$ cannot be equinumerous to

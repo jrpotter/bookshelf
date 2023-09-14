@@ -389,7 +389,7 @@ theorem corollary_4p_i (m n p : ℕ) (h : m + p = n + p)
 Let `A` be a nonempty subset of `ω`. Then there is some `m ∈ A` such that
 `m ≤ n` for all `n ∈ A`.
 -/
-theorem well_ordering_nat (A : Set ℕ) (hA : Set.Nonempty A)
+theorem well_ordering_nat {A : Set ℕ} (hA : Set.Nonempty A)
   : ∃ m ∈ A, ∀ n, n ∈ A → m ≤ n := by
   -- Assume `A` does not have a least element.
   by_contra nh
@@ -453,7 +453,7 @@ theorem strong_induction_principle_nat (A : Set ℕ)
     exact h'.symm
 
   by_contra nh
-  have ⟨m, hm⟩ := well_ordering_nat A.compl (Set.nmem_singleton_empty.mp nh)
+  have ⟨m, hm⟩ := well_ordering_nat (Set.nmem_singleton_empty.mp nh)
   refine absurd (h m ?_) hm.left
   
   -- Show that every number less than `m` is in `A`.
