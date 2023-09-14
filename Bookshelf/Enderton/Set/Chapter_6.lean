@@ -176,7 +176,30 @@ theorem pigeonhole_principle (n : ℕ)
     have hg_inj : Function.Injective g := by
       intro x₁ x₂ hg
       simp only [Fin.mk.injEq] at hg
-      sorry
+      rw [if_neg (Nat.ne_of_lt x₁.isLt), if_neg (Nat.ne_of_lt x₂.isLt)] at hg
+      let x₁m : Fin m := ⟨↑x₁, calc ↑x₁
+        _ < nat_p := x₁.isLt
+        _ < m := hnat_p_lt_m⟩
+      let x₂m : Fin m := ⟨↑x₂, calc ↑x₂
+        _ < nat_p := x₂.isLt
+        _ < m := hnat_p_lt_m⟩
+      by_cases hx₁ : x₁m = fin_t
+      · by_cases hx₂ : x₂m = fin_t
+        · rw [Fin.ext_iff] at hx₁ hx₂ ⊢
+          rw [show x₁.1 = x₁m.1 from rfl, show x₂.1 = x₂m.1 from rfl, hx₁, hx₂]
+        · rw [if_pos hx₁, if_neg hx₂, ← Fin.ext_iff] at hg
+          have := hf_inj hg
+          rw [Fin.ext_iff] at this
+          exact absurd this.symm (Nat.ne_of_lt x₂.isLt)
+      · by_cases hx₂ : x₂m = fin_t
+        · rw [if_neg hx₁, if_pos hx₂, ← Fin.ext_iff] at hg
+          have := hf_inj hg
+          rw [Fin.ext_iff] at this
+          exact absurd this (Nat.ne_of_lt x₁.isLt)
+        · rw [if_neg hx₁, if_neg hx₂, ← Fin.ext_iff] at hg
+          have := hf_inj hg
+          simp only [Fin.mk.injEq] at this
+          exact Fin.ext_iff.mpr this
     have ng_surj : ¬ Function.Surjective g := ih nat_p (calc nat_p
         _ < m := hnat_p_lt_m
         _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
@@ -185,10 +208,17 @@ theorem pigeonhole_principle (n : ℕ)
     -- if `f'` isn't surjective, then neither is `f`.
     have ⟨a, ha⟩ : ∃ a, a ∉ Set.range g := by
       unfold Function.Surjective at ng_surj
+      unfold Set.range
       simp only [not_forall, not_exists] at ng_surj 
-      have ⟨a, ha⟩ := ng_surj
+      have ⟨a, ha₁⟩ := ng_surj
+      simp only [Fin.mk.injEq] at ha₁
+      refine ⟨a, ?_⟩
+      intro ha₂
+      simp only [Fin.mk.injEq, Set.mem_setOf_eq] at ha₂
+      have ⟨y, hy⟩ := ha₂
+      exact absurd hy (ha₁ y)
+    have hf'a : ↑a ∉ Set.range f' := by
       sorry
-    have hf'a : ↑a ∉ Set.range f' := sorry
     have hfa : ↑a ∉ Set.range f := sorry
 
     simp only [Fin.coe_eq_castSucc, Set.mem_setOf_eq] at hfa
