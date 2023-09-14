@@ -204,8 +204,7 @@ theorem pigeonhole_principle (n : ℕ)
         _ < m := hnat_p_lt_m
         _ ≤ n := Nat.lt_succ.mp hm) g hg_inj
     
-    -- By construction, if `g` isn't surjective then neither is `f'`. Likewise,
-    -- if `f'` isn't surjective, then neither is `f`.
+    -- We have shown `g` isn't surjective. This is another way of saying that.
     have ⟨a, ha⟩ : ∃ a, a ∉ Set.range g := by
       unfold Function.Surjective at ng_surj
       unfold Set.range
@@ -217,9 +216,75 @@ theorem pigeonhole_principle (n : ℕ)
       simp only [Fin.mk.injEq, Set.mem_setOf_eq] at ha₂
       have ⟨y, hy⟩ := ha₂
       exact absurd hy (ha₁ y)
+
+    -- By construction, if `g` isn't surjective then neither is `f'`.
     have hf'a : ↑a ∉ Set.range f' := by
-      sorry
-    have hfa : ↑a ∉ Set.range f := sorry
+      simp only [Fin.coe_eq_castSucc, Set.mem_range, not_exists]
+      suffices ∀ t : Fin m, (ht : t < fin_p) → f' t = g ⟨t, ht⟩ by
+        intro x nx
+        by_cases hp : x = fin_p
+        · rw [if_pos hp, Fin.ext_iff] at nx
+          simp only [Fin.coe_ofNat_eq_mod, Fin.coe_castSucc] at nx
+          rw [Nat.mod_succ_eq_iff_lt.mpr (show n < n + 1 by simp)] at nx
+          exact absurd nx (Nat.ne_of_lt a.isLt).symm
+        · rw [if_neg hp] at nx
+          sorry
+      intro t ht
+      rw [Fin.ext_iff]
+      simp only [Fin.coe_ofNat_eq_mod]
+      generalize hy : (
+        if t = { val := nat_p, isLt := hnat_p_lt_m } then ↑n
+        else if t = fin_t then f { val := nat_p, isLt := hnat_p_lt_m }
+        else f t
+      ) = y
+      exact (Nat.mod_succ_eq_iff_lt.mpr y.isLt).symm
+
+    -- Likewise, if `f'` isn't surjective then neither is `f`.
+    have hfa : ↑a ∉ Set.range f := by
+      suffices Set.range f = Set.range f' by
+        rw [this]
+        exact hf'a
+      unfold Set.range
+      ext x
+      apply Iff.intro
+      · intro hx
+        have ⟨y, hy⟩ := hx
+        simp only [Set.mem_setOf_eq]
+        by_cases hx₁ : x = n
+        · refine ⟨fin_p, ?_⟩
+          simp only [ite_self, ite_true]
+          exact hx₁.symm
+        · by_cases hx₂ : x = ⟨f fin_p, show ↑(f fin_p) < n + 1 from (f fin_p).isLt⟩
+          · refine ⟨fin_t, ?_⟩
+            by_cases ht : fin_t = fin_p
+            · rw [if_pos ht, hx₂]
+              rw [ht] at hfin_t
+              exact hfin_t.symm
+            · rw [if_neg ht, if_pos rfl, hx₂]
+          · refine ⟨y, ?_⟩
+            have hy₁ : y ≠ fin_p := by
+              by_contra ny
+              rw [ny] at hy
+              exact absurd hy.symm hx₂
+            have hy₂ : y ≠ fin_t := by
+              by_contra ny
+              rw [ny, hfin_t] at hy
+              exact absurd hy.symm hx₁
+            rw [if_neg hy₁, if_neg hy₂]
+            exact hy
+      · intro hx
+        have ⟨y, hy⟩ := hx
+        dsimp only at hy
+        by_cases hy₁ : y = fin_p
+        · rw [if_pos hy₁] at hy
+          have := hf_surj ⟨n, show n < n + 1 by simp⟩
+          rwa [← hy]
+        · rw [if_neg hy₁] at hy
+          by_cases hy₂ : y = fin_t
+          · rw [if_pos hy₂] at hy
+            exact ⟨fin_p, hy⟩
+          · rw [if_neg hy₂] at hy
+            exact ⟨y, hy⟩
 
     simp only [Fin.coe_eq_castSucc, Set.mem_setOf_eq] at hfa
     have := hf_surj (Fin.castSucc a)
