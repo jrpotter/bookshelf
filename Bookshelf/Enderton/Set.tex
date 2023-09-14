@@ -8847,12 +8847,15 @@
 \section{Finite Sets}%
 \hyperlabel{sec:finite-sets}
 
-\subsection{\pending{Pigeonhole Principle}}%
+\subsection{\verified{Pigeonhole Principle}}%
 \hyperlabel{sub:pigeonhole-principle}
 
   \begin{theorem}
     No natural number is equinumerous to a proper subset of itself.
   \end{theorem}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.pigeonhole\_principle}
 
   \begin{proof}
 
@@ -8880,25 +8883,41 @@
       Furthermore, let $f \colon m \rightarrow n^+$ be a one-to-one
         \nameref{ref:function} (as proof of a one-to-one function's existence,
         just consider the identity function).
+      If $m = 0$, it vacuously holds that $f$ is not onto $n^+$.
+      If $m \neq 0$, \nameref{sub:theorem-4c} shows there exists some $p$ such
+        that $p^+ = m$.
       There are two cases to consider:
 
       \subparagraph{Case 1}%
 
-        Suppose $n^+ \not\in \ran{f}$.
-        Then it obviously follows $f$ is not onto $n^+$.
+        Suppose $n \not\in \ran{f}$.
+        Then $f$ is not onto $n^+$.
 
       \subparagraph{Case 2}%
 
-        Suppose $n^+ \in \ran{f}$.
-        Then there exists some $t$ such that $\tuple{t, n^+} \in f$.
-        Consider $f' = f \restriction n$.
-        Since $f$ is one-to-one, it follows $f'$ is also one-to-one.
-        By \eqref{sub:pigeonhole-principle-eq1}, $f'$ is not onto $n$.
-        That is, there exists some $p \in n$ such that $p \not\in \ran{f'}$.
-        But since $p \in n \in n^+$, \nameref{sub:theorem-4f} implies
-          $p \in n^+$.
-        Furthermore, $p \not\in \ran{f}$ by virtue of how $f'$ was constructed.
-        Thus $f$ is not onto $n^+$.
+        Suppose $n \in \ran{f}$.
+        Then there exists some $t \in m$ such that $\tuple{t, n} \in f$.
+        Define $f' \colon m \rightarrow n^+$ given by
+          \begin{align*}
+            f'(p) & = f(t) = n \\
+            f'(t) & = f(p) \\
+            f'(x) & = f(x) & \text{for all other } x.
+          \end{align*}
+        That is, $f'$ is a variant of $f$ in which the largest element of its
+          domain (i.e. $p$) corresponds to value $n$.
+        Next define $g = f' - \{\tuple{p, n}\}$.
+        Then $g$ is a function from $p$ to $n$.
+
+        Since $f$ is one-to-one, $f'$ and $g$ are also one-to-one.
+        Since $p \in m \in n$, \nameref{sub:theorem-4f} implies $p \in n$.
+        Thus \eqref{sub:pigeonhole-principle-eq1} indicates $g$ must not be onto
+          $n$.
+        In other words, there exists some $a \in n$ such that
+          $a \not\in \ran{g}$.
+        Hence $a \not\in \ran{f'}$ and, consequently, $a \not\in \ran{f}$.
+        But $a \in n \in n^+$ meaning, by another application of
+          \nameref{sub:theorem-4f}, $a \in n^+$.
+        Therefore $f$ is not onto $n^+$.
 
       \subparagraph{Subconclusion}%
 
