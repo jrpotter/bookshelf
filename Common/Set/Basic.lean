@@ -176,6 +176,24 @@ theorem diff_ssubset_diff_left {A B : Set α} (h : A ⊂ B)
     exact LT.lt.false (Set.ssubset_of_ssubset_of_subset h nh)
 
 /--
+For any sets `A ⊂ B`, `B \ A` is nonempty.
+-/
+theorem diff_ssubset_nonempty {A B : Set α} (h : A ⊂ B)
+  : Set.Nonempty (B \ A) := by
+  have : B = A ∪ (B \ A) := by
+    simp only [Set.union_diff_self]
+    exact (Set.left_subset_union_eq_self (subset_of_ssubset h)).symm
+  rw [this, Set.ssubset_def] at h
+  have : ¬ ∀ x, x ∈ A ∪ (B \ A) → x ∈ A := h.right
+  simp only [Set.mem_union, not_forall, exists_prop] at this
+  have ⟨x, hx⟩ := this
+  apply Or.elim hx.left
+  · intro nx
+    exact absurd nx hx.right
+  · intro hx
+    exact ⟨x, hx⟩
+
+/--
 For any set `A`, the difference between the sample space and `A` is the
 complement of `A`.
 -/
