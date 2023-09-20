@@ -64,6 +64,47 @@
   A \textbf{binary operation} on a set $A$ is a \nameref{ref:function} from
     $A \times A$ into $A$.
 
+\section{\defined{Cardinal Arithmetic}}%
+\hyperlabel{sec:cardinal-arithmetic}
+
+  Let $\kappa$ and $\lambda$ be any cardinal numbers.
+  \begin{enumerate}[(a)]
+    \item $\kappa + \lambda = \card{(K \cup L)}$, where $K$ and $L$ are any
+      disjoint sets of cardinality $\kappa$ and $\lambda$, respectively.
+    \item $\kappa \cdot \lambda = \card{(K \times L)}$, where $K$ and $L$ are
+      any sets of cardinality $\kappa$ and $\lambda$, respectively.
+    \item $\kappa^\lambda = \card{(^L{K})}$, where $K$ and $L$ are any sets of
+      cardinality $\kappa$ and $\lambda$, respectively.
+  \end{enumerate}
+
+  \lean{Mathlib/SetTheory/Cardinal/Basic}
+    {Cardinal.add\_def}
+
+  \lean{Mathlib/SetTheory/Cardinal/Basic}
+    {Cardinal.mul\_def}
+
+  \lean{Mathlib/SetTheory/Cardinal/Basic}
+    {Cardinal.power\_def}
+
+\section{\defined{Cardinal Number}}%
+\hyperlabel{ref:cardinal-number}
+
+  For any set $C$, the \textbf{cardinal number} of set $C$ is denoted as
+    $\card{C}$.
+  Furthermore,
+    \begin{enumerate}[(a)]
+      \item For any sets $A$ and $B$,
+        $$\card{A} = \card{B} \quad\text{iff}\quad \equinumerous{A}{B}.$$
+      \item For a finite set $A$, $\card{A}$ is the \nameref{ref:natural-number}
+        $n$ for which $\equinumerous{A}{n}$.
+    \end{enumerate}
+
+  \lean{Mathlib/Data/Finset/Card}
+    {Finset.card}
+
+  \lean{Mathlib/SetTheory/Cardinal/Basic}
+    {Cardinal}
+
 \section{\defined{Cartesian Product}}%
 \hyperlabel{ref:cartesian-product}
 
@@ -76,19 +117,6 @@
         (\forall i \in I) f(i) \in H(i)\}.$$
 
   \lean{Mathlib/Data/Set/Prod}{Set.prod}
-
-\section{\defined{Cardinal Arithmetic}}%
-\hyperlabel{sec:cardinal-arithmetic}
-
-  Let $\kappa$ and $\lambda$ be any cardinal numbers.
-  \begin{enumerate}[(a)]
-    \item $\kappa + \lambda = \card{(K \cup L)}$, where $K$ and $L$ are any
-      disjoint sets of cardinality $\kappa$ and $\lambda$, respectively.
-    \item $\kappa \cdot \lambda = \card{(K \times L)}$, where $K$ and $L$ are
-      any sets of cardinality $\kappa$ and $\lambda$, respectively.
-    \item $\kappa^\lambda = \card{^L{K}}$, where $K$ and $L$ are any sets of
-      cardinality $\kappa$ and $\lambda$, respectively.
-  \end{enumerate}
 
 \section{\defined{Compatible}}%
 \hyperlabel{ref:compatible}
@@ -1876,7 +1904,7 @@
     We proceed by contradiction.
     Suppose there existed a set $A$ consisting of every singleton.
     Then the \nameref{ref:union-axiom} suggests $\bigcup A$ is a set.
-    But this set is precisely the class of all sets, which is \textit{not} a
+    But this "set" is precisely the class of all sets, which is \textit{not} a
       set.
     Thus our original assumption was incorrect.
     That is, there is no set to which every singleton belongs.
@@ -9530,7 +9558,7 @@
     Refer to \nameref{sub:theorem-6a}.
   \end{proof}
 
-\subsection{\sorry{Exercise 6.6}}%
+\subsection{\unverified{Exercise 6.6}}%
 \hyperlabel{sub:exercise-6.6}
 
   Let $\kappa$ be a nonzero cardinal number.
@@ -9538,20 +9566,49 @@
     belongs.
 
   \begin{proof}
-    TODO
+    Let $\kappa$ be a nonzero cardinal number and define
+      $$\mathbf{K}_\kappa = \{ X \mid \card{X} = \kappa \}.$$
+    For the sake of contradiction, suppose $\mathbf{K}_\kappa$ is a set.
+    Then the \nameref{ref:union-axiom} suggests $\bigcup \mathbf{K}_{\kappa}$ is
+      a set.
+    But this "set" is precisely the class of all sets, which is \textit{not} a
+      set.
+    Thus our original assumption was incorrect.
+    That is, there does not exist a set to which every set of cardinality
+      $\kappa$ belongs.
   \end{proof}
 
-\subsection{\sorry{Exercise 6.7}}%
+\subsection{\pending{Exercise 6.7}}%
 \hyperlabel{sub:exercise-6.7}
 
   Assume that $A$ is finite and $f \colon A \rightarrow A$.
   Show that $f$ is one-to-one iff $\ran{f} = A$.
 
+  \code*{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.exercise\_6\_7}
+
   \begin{proof}
-    TODO
+    Let $A$ be a \nameref{ref:finite-set} and $f \colon A \rightarrow A$.
+
+    \paragraph{($\Rightarrow$)}%
+
+      Suppose $f$ is one-to-one.
+      Then $f$ is a one-to-one correspondence between $A$ and $\ran{f}$.
+      That is, $\equinumerous{A}{\ran{f}}$.
+      Because $f$ maps $A$ onto $A$, $\ran{f} \subseteq A$.
+      Hence $\ran{f} \subset A$ or $\ran{f} = A$.
+      But, by \nameref{sub:corollary-6c}, $\ran{f}$ cannot be a proper subset of
+        $A$.
+      Thus $\ran{f} = A$.
+
+    \paragraph{($\Leftarrow$)}%
+
+      Suppose $\ran{f} = A$.
+      TODO: by induction?
+
   \end{proof}
 
-\subsection{\sorry{Exercise 6.8}}%
+\subsection{\pending{Exercise 6.8}}%
 \hyperlabel{sub:exercise-6.8}
 
   Prove that the union of two finite sets is finite, without any use of
@@ -9561,7 +9618,7 @@
     TODO
   \end{proof}
 
-\subsection{\sorry{Exercise 6.9}}%
+\subsection{\pending{Exercise 6.9}}%
 \hyperlabel{sub:exercise-6.9}
 
   Prove that the Cartesian product of two finite sets is finite, without any use

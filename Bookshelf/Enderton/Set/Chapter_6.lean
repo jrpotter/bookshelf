@@ -675,50 +675,52 @@ theorem corollary_6g {S S' : Set α} (hS : Set.Finite S) (hS' : S' ⊆ S)
   · intro h
     rwa [h]
 
-/-- #### Exercise 6.1
+/-- #### Exercise 6.7
 
-Show that the equation
-```
-f(m, n) = 2ᵐ(2n + 1) - 1
-```
-defines a one-to-one correspondence between `ω × ω` and `ω`.
+Assume that `A` is finite and `f : A → A`. Show that `f` is one-to-one **iff**
+`ran f = A`.
 -/
-theorem exercise_6_1
-  : Function.Bijective (fun p : ℕ × ℕ => 2 ^ p.1 * (2 * p.2 + 1) - 1) := by
+theorem exercise_6_7 [DecidableEq α] [Nonempty α] {A : Set α} {f : α → α}
+  (hA₁ : Set.Finite A) (hA₂ : Set.MapsTo f A A)
+  : Set.InjOn f A ↔ f '' A = A := by
+  apply Iff.intro
+  · intro hf
+    have hf₂ : A ≈ f '' A := by
+      refine ⟨f, ?_, hf, ?_⟩
+      · -- `Set.MapsTo f A (f '' A)`
+        intro x hx
+        simp only [Set.mem_image]
+        exact ⟨x, hx, rfl⟩
+      · -- `Set.SurjOn f A (f '' A)`
+        intro _ hx
+        exact hx
+    have hf₃ : f '' A  ⊆ A := by
+      show ∀ x, x ∈ f '' A → x ∈ A
+      intro x ⟨a, ha₁, ha₂⟩
+      rw [← ha₂]
+      exact hA₂ ha₁
+    rw [subset_iff_ssubset_or_eq] at hf₃
+    exact Or.elim hf₃ (fun h => absurd hf₂ (corollary_6c hA₁ h)) id
+  · intro hf₁
+    sorry
+
+/-- #### Exercise 6.8
+
+Prove that the union of two finites sets is finite, without any use of
+arithmetic.
+-/
+theorem exercise_6_8 {A B : Set α} (hA : Set.Finite A) (hB : Set.Finite B)
+  : Set.Finite (A ∪ B) := by
   sorry
 
-/-- #### Exercise 6.2
+/-- #### Exercise 6.9
 
-Show that in Fig. 32 we have:
-```
-J(m, n) = [1 + 2 + ⋯ + (m + n)] + m
-        = (1 / 2)[(m + n)² + 3m + n].
-```
+Prove that the Cartesian product of two finites sets is finite, without any use
+of arithmetic.
 -/
-theorem exercise_6_2
-  : Function.Bijective
-      (fun p : ℕ × ℕ => (1 / 2) * ((p.1 + p.2) ^ 2 + 3 * p.1 + p.2)) := by
-  sorry
-
-/-- #### Exercise 6.3
-
-Find a one-to-one correspondence between the open unit interval `(0, 1)` and `ℝ`
-that takes rationals to rationals and irrationals to irrationals.
--/
-theorem exercise_6_3
-  : True := by
-  sorry
-
-/-- #### Exercise 6.4
-
-Construct a one-to-one correspondence between the closed unit interval
-```
-[0, 1] = {x ∈ ℝ | 0 ≤ x ≤ 1}
-```
-and the open unit interval `(0, 1)`.
--/
-theorem exercise_6_4
-  : ∃ F, Set.BijOn F (Set.Ioo 0 1) (@Set.univ ℝ) := by
+theorem exercise_6_9 {A : Set α} {B : Set β}
+  (hA : Set.Finite A) (hB : Set.Finite B)
+  : Set.Finite (Set.prod A B) := by
   sorry
 
 end Enderton.Set.Chapter_6
