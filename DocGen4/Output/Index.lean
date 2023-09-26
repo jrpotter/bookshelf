@@ -24,14 +24,15 @@ def index : BaseHtmlM Html := do templateExtends (baseHtml "Index") <|
 
       <h2>In Progress</h2>
       <ul>
-        <li>Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.</li>
-        <li>Enderton, Herbert B. A Mathematical Introduction to Logic. 2nd ed. San Diego: Harcourt/Academic Press, 2001.</li>
-        <li>Enderton, Herbert B. Elements of Set Theory. New York: Academic Press, 1977.</li>
+        <li><a href={s!"{← getRoot}Bookshelf/Apostol.html"}>Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.</a></li>
+        <li><a href={s!"{← getRoot}Bookshelf/Enderton/Logic.html"}>Enderton, Herbert B. A Mathematical Introduction to Logic. 2nd ed. San Diego: Harcourt/Academic Press, 2001.</a></li>
+        <li><a href={s!"{← getRoot}Bookshelf/Enderton/Set.html"}>Enderton, Herbert B. Elements of Set Theory. New York: Academic Press, 1977.</a></li>
+        <li><a href={s!"{← getRoot}Bookshelf/Fraleigh.html"}>Fraleigh, John B. A First Course in Abstract Algebra, n.d.</a></li>
       </ul>
 
       <h2>Complete</h2>
       <ul>
-        <li>Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.</li>
+        <li><a href={s!"{← getRoot}Bookshelf/Avigad.html"}>Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.</a></li>
       </ul>
 
       <h2>Pending</h2>
