@@ -421,6 +421,17 @@
   \lean{Init/Prelude}
     {Mul.mul}
 
+\section{\defined{Natural Map}}%
+\hyperlabel{ref:natural-map}
+
+  Let $R$ be an \nameref{ref:equivalence-relation} on $A$.
+  Then the \textbf{natural map} (or \textbf{canonical map})
+    $\phi \colon A \rightarrow A / R$ is defined as $$\phi(x) = [x]_R$$ for
+    $x \in A$.
+
+  \lean*{Init/Core}
+    {Quotient.lift}
+
 \section{\defined{Natural Number}}%
 \hyperlabel{ref:natural-number}
 
@@ -9099,7 +9110,7 @@
 \hyperlabel{sub:lemma-6f}
 
   \begin{lemma}[6F]
-    If $C$ is a proper subset of a natural number $n$, then $C \approx m$ for
+    If $C$ is a proper subset of a natural number $n$, then $C \equin m$ for
       some $m$ less than $n$.
   \end{lemma}
 
@@ -9255,7 +9266,7 @@
 
   \end{proof}
 
-\subsection{\sorry{Finite Domain and Range Size}}%
+\subsection{\pending{Finite Domain and Range Size}}%
 \hyperlabel{sub:finite-domain-range-size}
 
   \begin{lemma}
@@ -9264,8 +9275,38 @@
       $\dom{f} \equin m$, $\ran{f} \equin n$, and $m \geq n$.
   \end{lemma}
 
+  \begin{note}
+    This proof avoids the \nameref{ref:axiom-of-choice-1} because $A$ and $B$
+      are finite.
+    In particular, we are able to choose a "smallest" element of each preimage
+      set.
+    Contrast this to \nameref{sub:theorem-3j}.
+  \end{note}
+
   \begin{proof}
-    TODO
+    Let $A$ and $B$ be \nameref{ref:finite-set}s and $f \colon A \rightarrow B$
+      be a function.
+    By definition of finite sets, there exists \nameref{ref:natural-number}s
+      $m, p \in \omega$ such that $A \equin m$ and $B \equin p$.
+    By definition of the \nameref{ref:domain} of a function, $\dom{f} = A$.
+    Thus $\dom{f} \equin m$.
+
+    By \nameref{sub:theorem-6a}, there exists a one-to-one correspondence $g$
+      between $m$ and $\dom{f} = A$.
+    For all $y \in \ran{f}$, consider $\img{f^{-1}}{\{y\}}$.
+    Let $$A_y = \{ x \in m \mid f(g(x)) = y \}.$$
+    Since $g$ is a one-to-one correspondence, it follows that
+      $A_y \equin \img{f^{-1}}{\{y\}}$.
+    Since $A_y$ is a nonempty subset of natural numbers, the
+      \nameref{sub:well-ordering-natural-numbers} implies there exists a least
+      element, say $q_y$.
+    Define $C = \{q_y \mid y \in \ran{f}\}$.
+    Thus $h \colon C \rightarrow \ran{f}$ given by $h(x) = f(g(x))$ is a
+      one-to-one correspondence between $C$ and $\ran{f}$ by construction.
+    That is, $C \equin \ran{f}$.
+    By \nameref{sub:lemma-6f}, there exists some $n \leq m$ such that
+      $C \equin n$.
+    By \nameref{sub:theorem-6a}, $n \equin \ran{f}$.
   \end{proof}
 
 \subsection{\sorry{Theorem 6H}}%
@@ -9670,24 +9711,32 @@
 
     \paragraph{($\Leftarrow$)}%
 
-      TODO: Two cases, one when $A = \emptyset$.
+      If $A = \emptyset$, then $f$ is trivially one-to-one.
+      Assume now $A \neq \emptyset$ and $\ran{f} = A$.
+      Let $x_1, x_2 \in A$ such that $f(x_1) = f(x_2) = y$ for some $y \in A$.
+      We must prove that $x_1 = x_2$.
 
-      Suppose $\ran{f} = A$.
-      Let $x_1, x_2 \in A$ such that $f(x_1) = f(x_2) = y$.
-      Define $B = \{ x \in A \mid f(x) = y \}$ which we note contains at least
-        members $x_1$ and $x_2$.
-      Because $B$ is a proper subset of finite set $A$, \nameref{} indicates
-        there exist $m, n \in \omega$ with $m < n$ such that $B \equin m$ and
-        $A \equin n$.
+      Let $B = \img{f^{-1}}{\{y\}}$.
+      Then $x_1, x_2 \in B$.
+      Since $B \subseteq A$, \nameref{sub:proper-subset-size} indicates that
+        there exist natural numbers $m_1, n_1 \in \omega$ such that
+        $B \equin m_1$, $A \equin n_1$, and $m_1 \leq n_1$.
       Define $f' \colon (A - B) \rightarrow (A - \{y\})$ as the
-        \nameref{ref:restriction} of $f$ by $A - B$.
-
-      By construction, $\dom{f'} \equin n - m$ and $\ran{f'} \equin n - 1$.
-      Since $\ran{f'} = A - \{y\}$, for all $d \in \ran{f'}$, there exists some $c \in A - B$ such that $f'(c) = d$.
-      Since functions are single-valued by definition, this implies $n - m \geq n - 1$.
-      But $n - 1$ cannot be less than $n - m$ because $m \geq 1$.
-      Thus it follows $n - m = n - 1$, i.e. $m = 1$.
-      Hence $x_1 = x_2$.
+        \nameref{ref:restriction} of $f$ to $A - B$.
+      Since $\ran{f} = A$, it follows $\ran{f'} = A - \{y\}$.
+      By \nameref{sub:finite-domain-range-size}, there exist natural numbers
+        $m_2, n_2 \in \omega$ such that $\dom{f'} \equin m_2$,
+        $\ran{f'} \equin n_2$, and $m_2 \geq n_2$.
+      Thus
+        \begin{align*}
+          m_2 & \equin \dom{f'} \equin A - B \equin n_1 - m_1 \\
+          n_2 & \equin \ran{f'} \equin A - \{y\} \equin n_1 - 1.
+        \end{align*}
+      By \nameref{sub:corollary-6e}, $m_2 = n_1 - m_1$ and $n_2 = n_1 - 1$.
+      Since $m_2 \geq n_2$, $n_1 - m_1 \geq n_1 - 1$.
+      But $1 \leq m_1 \leq n_1$ meaning $m_1 = 1$.
+      Hence $B$ is a singleton.
+      Therefore $x_1 = x_2$, i.e. $f$ is one-to-one.
 
   \end{proof}
 
