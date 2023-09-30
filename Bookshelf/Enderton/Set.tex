@@ -94,9 +94,9 @@
   Furthermore,
     \begin{enumerate}[(a)]
       \item For any sets $A$ and $B$,
-        $$\card{A} = \card{B} \quad\text{iff}\quad \equinumerous{A}{B}.$$
+        $$\card{A} = \card{B} \quad\text{iff}\quad A \equin B.$$
       \item For a finite set $A$, $\card{A}$ is the \nameref{ref:natural-number}
-        $n$ for which $\equinumerous{A}{n}$.
+        $n$ for which $A \equin n$.
     \end{enumerate}
 
   \lean{Mathlib/Data/Finset/Card}
@@ -170,9 +170,8 @@
 \section{\defined{Equinumerous}}%
 \hyperlabel{ref:equinumerous}
 
-  A set $A$ is \textbf{equinumerous} to a set $B$ (written
-    $\equinumerous{A}{B}$) if and only if there is a one-to-one
-    \nameref{ref:function} from $A$ onto $B$.
+  A set $A$ is \textbf{equinumerous} to a set $B$ (written $A \equin B$) if and
+    only if there is a one-to-one \nameref{ref:function} from $A$ onto $B$.
   In other words, there exists a one-to-one correspondence between $A$ and $B$.
 
   \lean*{Mathlib/Init/Function}
@@ -8797,10 +8796,9 @@
   \begin{theorem}[6A]
     For any sets $A$, $B$, and $C$,
       \begin{enumerate}[(a)]
-        \item $\equinumerous{A}{A}$.
-        \item If $\equinumerous{A}{B}$, then $\equinumerous{B}{A}$.
-        \item If $\equinumerous{A}{B}$ and $\equinumerous{B}{C}$, then
-          $\equinumerous{A}{C}$.
+        \item $A \equin A$.
+        \item If $A \equin B$, then $B \equin A$.
+        \item If $A \equin B$ and $B \equin C$, then $A \equin C$.
       \end{enumerate}
   \end{theorem}
 
@@ -8826,18 +8824,18 @@
 
     \paragraph{(b)}%
 
-      Suppose $\equinumerous{A}{B}$.
+      Suppose $A \equin B$.
       Then there exists a one-to-one correspondence $F$ between $A$ and $B$.
       Consider now \nameref{ref:inverse} $$F^{-1} = \{\tuple{u, v} \mid vFu\}.$$
       By \nameref{sub:one-to-one-inverse}, $F^{-1}$ is a one-to-one function.
       For all $y \in A$, $\tuple{y, F(y)} \in F$.
       Then $\tuple{F(y), y} \in F^{-1}$ meaning $F^{-1}$ is onto $A$.
       Hence $F^{-1}$ is a one-to-one correspondence between $B$ and $A$, i.e.
-        $\equinumerous{B}{A}$.
+        $B \equin A$.
 
     \paragraph{(c)}%
 
-      Suppose $\equinumerous{A}{B}$ and $\equinumerous{B}{C}$.
+      Suppose $A \equin B$ and $B \equin C$.
       Then there exists a one-to-one correspondence $G$ between $A$ and $B$ and
         a one-to-one correspondence $F$ between $B$ and $C$.
       By \nameref{sub:one-to-one-composition}, $F \circ G$ is a one-to-one
@@ -8851,7 +8849,7 @@
       Then $F(G(x)) = y$.
       Thus $\ran{(F \circ G)} = C$ meaning $F \circ G$ is onto $C$.
       Hence $F \circ G$ is a one-to-one correspondence function between $A$ and
-        $C$, i.e. $\equinumerous{A}{C}$.
+        $C$, i.e. $A \equin C$.
 
   \end{proof}
 
@@ -8990,8 +8988,8 @@
       $S' \cup T = S$.
     By definition of a \nameref{ref:finite-set}, $S$ is
       \nameref{ref:equinumerous} to a natural number $n$.
-    By \nameref{sub:theorem-6a}, $\equinumerous{S' \cup T}{S}$ which, by the
-      same theorem, implies $\equinumerous{S' \cup T}{n}$.
+    By \nameref{sub:theorem-6a}, $S' \cup T \equin S$ which, by the same
+      theorem, implies $S' \cup T \equin n$.
 
     Let $f$ be a one-to-one correspondence between $S' \cup T$ and $n$.
     Then $f \restriction S'$ is a one-to-one correspondence between $S'$ and a
@@ -9088,8 +9086,8 @@
     By \nameref{sub:trichotomy-law-natural-numbers}, exactly one of three
       situations is possible: $n = m$, $n < m$, or $m < n$.
 
-    If $n < m$, then $\equinumerous{m}{S}$ and $\equinumerous{S}{n}$.
-    By \nameref{sub:theorem-6a}, it follows $\equinumerous{m}{n}$.
+    If $n < m$, then $m \equin S$ and $S \equin n$.
+    By \nameref{sub:theorem-6a}, it follows $m \equin n$.
     But \nameref{sub:pigeonhole-principle} indicates no natural number is
       equinumerous to a proper subset of itself, a contradiction.
     If $m < n$, a parallel argument applies.
@@ -9114,7 +9112,7 @@
       \begin{equation}
         \hyperlabel{sub:lemma-6f-eq1}
         S = \{n \in \omega \mid \forall C \subset n,
-          \exists m < n \text{ such that } \equinumerous{C}{m}\}.
+          \exists m < n \text{ such that } C \equin m\}.
       \end{equation}
     We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
     Afterward we prove (iii) the lemma statement.
@@ -9171,7 +9169,7 @@
         \nameref{ref:inductive-set}.
       By \nameref{sub:theorem-4b}, $S = \omega$.
       Therefore, for every proper subset $C$ of a natural number $n$, there
-        exists some $m < n$ such that $\equinumerous{C}{n}$.
+        exists some $m < n$ such that $C \equin n$.
 
   \end{proof}
 
@@ -9197,19 +9195,19 @@
       some proper subset of $n$.
     By \nameref{sub:lemma-6f}, $\ran{(f \restriction S')}$ is equinumerous to
       some $m < n$.
-    Then \nameref{sub:theorem-6a} indicates $\equinumerous{S'}{m}$.
+    Then \nameref{sub:theorem-6a} indicates $S' \equin m$.
     Hence $S'$ is a finite set.
   \end{proof}
 
 \subsection{\sorry{Theorem 6H}}%
 \hyperlabel{sub:theorem-6h}
 
-  Assume that $\equinumerous{K_1}{K_2}$ and $\equinumerous{L_1}{L_2}$.
+  Assume that $K_1 \equin K_2$ and $L_1 \equin L_2$.
     \begin{enumerate}[(a)]
       \item If $K_1 \cap L_1 = K_2 \cap L_2 = \emptyset$, then
-        $\equinumerous{K_1 \cup L_1}{K_2 \cup L_2}$.
-      \item $\equinumerous{K_1 \times L_1}{K_2 \times L_2}$.
-      \item $\equinumerous{^{(L_1)}{K_1}}{^{(L_2)}{K_2}}$.
+        $K_1 \cup L_1 \equin K_2 \cup L_2$.
+      \item $K_1 \times L_1 \equin K_2 \times L_2$.
+      \item $^{(L_1)}{K_1} \equin ^{(L_2)}{K_2}$.
     \end{enumerate}
 
   \begin{proof}
@@ -9594,7 +9592,7 @@
 
       Suppose $f$ is one-to-one.
       Then $f$ is a one-to-one correspondence between $A$ and $\ran{f}$.
-      That is, $\equinumerous{A}{\ran{f}}$.
+      That is, $A \equin \ran{f}$.
       Because $f$ maps $A$ onto $A$, $\ran{f} \subseteq A$.
       Hence $\ran{f} \subset A$ or $\ran{f} = A$.
       But, by \nameref{sub:corollary-6c}, $\ran{f}$ cannot be a proper subset of
