@@ -9199,6 +9199,75 @@
     Hence $S'$ is a finite set.
   \end{proof}
 
+\subsection{\pending{Proper Subset Size}}%
+\hyperlabel{sub:proper-subset-size}
+
+  \begin{lemma}
+    Let $A$ be a finite set and $B \subset A$.
+    Then there exist natural numbers $m, n \in \omega$ such that
+      $B \equin m$, $A \equin n$, and $m < n$.
+  \end{lemma}
+
+  \begin{proof}
+
+    Let $A$ be a \nameref{ref:finite-set} and $B$ be a
+      \nameref{ref:proper-subset} of $A$.
+    By \nameref{sub:corollary-6g}, $B$ must be finite.
+    By definition of a finite set, there exists natural numbers
+      $m, n \in \omega$ such that $B \equin m$ and $A \equin n$.
+    By \nameref{sub:trichotomy-law-natural-numbers}, there are two mutually
+      exclusive possibilities to consider:
+
+    \paragraph{Case 1}%
+
+      Assume $m = n$.
+      Then by \nameref{sub:theorem-6a}, $A \equin n \equin m \equin B$.
+      But by \nameref{sub:corollary-6c}, no finite set is equinumerous to a
+        proper subset of itself.
+      This is a contradiction.
+
+    \paragraph{Case 2}%
+
+      Assume $m > n$.
+      By definition of \nameref{ref:equinumerous}, there exists a one-to-one
+        correspondence between $B$ and $m$.
+      \nameref{sub:theorem-6a} indicates there then exists a one-to-one
+        correspondence $f$ between $m$ and $B$.
+      Likewise, there exists a one-to-one correspondence $g$ between $A$ and
+        $n$.
+
+      Define $h \colon A \rightarrow B$ as $h(x) = f(g(x))$ for all $x \in A$.
+      Since $n \subset m$ by \nameref{sub:corollary-4m}, $h$ is well-defined.
+      By \nameref{sub:one-to-one-composition}, $h$ must be one-to-one.
+      Thus $h$ is a one-to-one correspondence between $A$ and $\ran{h}$, i.e.
+        $A \equin \ran{h}$.
+      But $n < m$ meaning $\ran{h} \subset B$ which in turn is a proper subset
+        of $A$ by hypothesis.
+      \nameref{sub:corollary-6c} states no finite set is equinumerous to a
+        proper subset of itself, a contradiction.
+
+    \paragraph{Conclusion}%
+
+      The \nameref{sub:trichotomy-law-natural-numbers} tells us that $m < n$ is
+        the only possibility.
+      Hence there indeed exists natural numbers $m, n \in \omega$ such that
+        $B \equin m$, $A \equin n$, and $m < n$.
+
+  \end{proof}
+
+\subsection{\sorry{Finite Domain and Range Size}}%
+\hyperlabel{sub:finite-domain-range-size}
+
+  \begin{lemma}
+    Let $A$ and $B$ be finite sets and $f \colon A \rightarrow B$ be a function.
+    Then there exist natural numbers $m, n \in \omega$ such that
+      $\dom{f} \equin m$, $\ran{f} \equin n$, and $m \geq n$.
+  \end{lemma}
+
+  \begin{proof}
+    TODO
+  \end{proof}
+
 \subsection{\sorry{Theorem 6H}}%
 \hyperlabel{sub:theorem-6h}
 
@@ -9602,19 +9671,18 @@
     \paragraph{($\Leftarrow$)}%
 
       TODO: Two cases, one when $A = \emptyset$.
-      TODO: Change equinumerous to just an \equi command instead.
 
       Suppose $\ran{f} = A$.
       Let $x_1, x_2 \in A$ such that $f(x_1) = f(x_2) = y$.
       Define $B = \{ x \in A \mid f(x) = y \}$ which we note contains at least
         members $x_1$ and $x_2$.
       Because $B$ is a proper subset of finite set $A$, \nameref{} indicates
-        there exist $m, n \in \omega$ with $m < n$ such that
-        $\equinumerous{B}{m}$ and $\equinumerous{A}{n}$.
+        there exist $m, n \in \omega$ with $m < n$ such that $B \equin m$ and
+        $A \equin n$.
       Define $f' \colon (A - B) \rightarrow (A - \{y\})$ as the
         \nameref{ref:restriction} of $f$ by $A - B$.
 
-      By construction, $\equinumerous{\dom{f'}}{n - m}$ and $\equinumerous{\ran{f'}}{n - 1}$.
+      By construction, $\dom{f'} \equin n - m$ and $\ran{f'} \equin n - 1$.
       Since $\ran{f'} = A - \{y\}$, for all $d \in \ran{f'}$, there exists some $c \in A - B$ such that $f'(c) = d$.
       Since functions are single-valued by definition, this implies $n - m \geq n - 1$.
       But $n - 1$ cannot be less than $n - m$ because $m \geq 1$.
