@@ -9601,8 +9601,25 @@
 
     \paragraph{($\Leftarrow$)}%
 
+      TODO: Two cases, one when $A = \emptyset$.
+      TODO: Change equinumerous to just an \equi command instead.
+
       Suppose $\ran{f} = A$.
-      TODO: by induction?
+      Let $x_1, x_2 \in A$ such that $f(x_1) = f(x_2) = y$.
+      Define $B = \{ x \in A \mid f(x) = y \}$ which we note contains at least
+        members $x_1$ and $x_2$.
+      Because $B$ is a proper subset of finite set $A$, \nameref{} indicates
+        there exist $m, n \in \omega$ with $m < n$ such that
+        $\equinumerous{B}{m}$ and $\equinumerous{A}{n}$.
+      Define $f' \colon (A - B) \rightarrow (A - \{y\})$ as the
+        \nameref{ref:restriction} of $f$ by $A - B$.
+
+      By construction, $\equinumerous{\dom{f'}}{n - m}$ and $\equinumerous{\ran{f'}}{n - 1}$.
+      Since $\ran{f'} = A - \{y\}$, for all $d \in \ran{f'}$, there exists some $c \in A - B$ such that $f'(c) = d$.
+      Since functions are single-valued by definition, this implies $n - m \geq n - 1$.
+      But $n - 1$ cannot be less than $n - m$ because $m \geq 1$.
+      Thus it follows $n - m = n - 1$, i.e. $m = 1$.
+      Hence $x_1 = x_2$.
 
   \end{proof}
 
