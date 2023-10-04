@@ -675,6 +675,55 @@ theorem corollary_6g {S S' : Set α} (hS : Set.Finite S) (hS' : S' ⊆ S)
   · intro h
     rwa [h]
 
+/-- #### Proper Subset Size
+
+Let `A` be a finite set and `B ⊂ A`. Then there exist natural numbers `m, n ∈ ω`
+such that `B ≈ m`, `A ≈ n`, and `m < n`.
+-/
+lemma proper_subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
+  (h : B ⊂ A) (hA : Set.Finite A)
+  : ∃ m n : ℕ, B ≈ Set.Iio m ∧ A ≈ Set.Iio n ∧ m < n := by
+  have ⟨n, hn⟩ := Set.finite_iff_equinumerous_nat.mp hA
+  have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp
+    (corollary_6g hA $ subset_of_ssubset h)
+  refine ⟨m, n, hm, hn, ?_⟩
+  match @trichotomous ℕ LT.lt _ m n with
+  | Or.inr (Or.inl r) =>  -- m = n
+    rw [r] at hm
+    have : A ≈ B := Set.equinumerous_trans hn (Set.equinumerous_symm hm)
+    exact absurd this (corollary_6c hA h)
+  | Or.inr (Or.inr r) =>  -- m > n
+    have ⟨f, hf⟩ := Set.equinumerous_symm hm
+    have ⟨g, hg⟩ := hn
+    let h x := f (g x)
+    have hh : Set.BijOn h A (Set.range h) := by
+      refine ⟨?_, ?_, ?_⟩
+      · -- `Set.MapsTo h A (ran h)`
+        intro x hx
+        unfold Set.range
+        simp only [Set.mem_setOf_eq, exists_apply_eq_apply]
+      · -- `Set.InjOn h A`
+        intro x₁ hx₁ x₂ hx₂ hh
+        dsimp only at hh
+        have hnm : Set.Iio n ⊆ Set.Iio m := by
+          show ∀ x, x ∈ Set.Iio n → x ∈ Set.Iio m
+          intro x hx
+          simp only [Set.mem_Iio] at hx ⊢
+          exact Nat.lt_trans hx r
+        have hgx₁ : g x₁ ∈ Set.Iio m := hnm (hg.left hx₁)
+        have hgx₂ : g x₂ ∈ Set.Iio m := hnm (hg.left hx₂)
+        exact hg.right.left hx₁ hx₂ (hf.right.left hgx₁ hgx₂ hh)
+      · -- `Set.SurjOn h A (Set.range h)`
+        sorry
+    have : Set.range h ⊂ A := by
+      rw [Set.ssubset_def]
+      apply And.intro
+      · sorry
+      · sorry
+    exact absurd ⟨h, hh⟩ (corollary_6c hA this)
+  | Or.inl r =>  -- m < n
+    exact r
+
 /-- #### Exercise 6.7
 
 Assume that `A` is finite and `f : A → A`. Show that `f` is one-to-one **iff**
