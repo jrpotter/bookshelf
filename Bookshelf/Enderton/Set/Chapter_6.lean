@@ -675,59 +675,90 @@ theorem corollary_6g {S S' : Set α} (hS : Set.Finite S) (hS' : S' ⊆ S)
   · intro h
     rwa [h]
 
-/-- #### Proper Subset Size
+/-- #### Subset Size
 
 Let `A` be a finite set and `B ⊂ A`. Then there exist natural numbers `m, n ∈ ω`
-such that `B ≈ m`, `A ≈ n`, and `m < n`.
+such that `B ≈ m`, `A ≈ n`, and `m ≤ n`.
 -/
-lemma proper_subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
-  (hBA : B ⊂ A) (hA : Set.Finite A)
-  : ∃ m n : ℕ, B ≈ Set.Iio m ∧ A ≈ Set.Iio n ∧ m < n := by
+lemma subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
+  (hBA : B ⊆ A) (hA : Set.Finite A)
+  : ∃ m n : ℕ, B ≈ Set.Iio m ∧ A ≈ Set.Iio n ∧ m ≤ n := by
   have ⟨n, hn⟩ := Set.finite_iff_equinumerous_nat.mp hA
-  have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp
-    (corollary_6g hA $ subset_of_ssubset hBA)
+  have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp (corollary_6g hA hBA)
   refine ⟨m, n, hm, hn, ?_⟩
-  match @trichotomous ℕ LT.lt _ m n with
-  | Or.inr (Or.inl r) =>  -- m = n
-    rw [r] at hm
-    have : A ≈ B := Set.equinumerous_trans hn (Set.equinumerous_symm hm)
-    exact absurd this (corollary_6c hA hBA)
-  | Or.inr (Or.inr r) =>  -- m > n
-    have ⟨f, hf⟩ := Set.equinumerous_symm hm
-    have ⟨g, hg⟩ := hn
-    let h x := f (g x)
-    have hh : Set.BijOn h A (h '' A) := by
-      refine ⟨?_, ?_, Eq.subset rfl⟩
-      · -- `Set.MapsTo h A (ran h)`
-        intro x hx
-        simp only [Set.mem_image]
-        exact ⟨x, hx, rfl⟩
-      · -- `Set.InjOn h A`
-        refine Set.InjOn.comp hf.right.left hg.right.left ?_
-        intro x hx
-        exact Nat.lt_trans (hg.left hx) r
-    have : h '' A ⊂ A := by
-      rw [Set.ssubset_def]
-      apply And.intro
-      · show ∀ x, x ∈ h '' A → x ∈ A
-        intro x hx
-        have ⟨y, hy₁, hy₂⟩ := hx
-        have h₁ : g y ∈ Set.Iio n := hg.left hy₁
-        have h₂ : f (g y) ∈ B := hf.left (Nat.lt_trans h₁ r)
-        have h₃ : x ∈ B := by rwa [← hy₂]
-        exact (subset_of_ssubset hBA) h₃
-      · rw [Set.subset_def]
-        simp only [Set.mem_image, not_forall, not_exists, not_and, exists_prop]
-        refine ⟨f n, subset_of_ssubset hBA (hf.left r), ?_⟩
-        intro x hx
-        by_contra nh
-        have h₁ : g x < n := hg.left hx
-        have h₂ : g x ∈ Set.Iio m := Nat.lt_trans h₁ r
-        rw [hf.right.left h₂ r nh] at h₁
-        simp at h₁
-    exact absurd ⟨h, hh⟩ (corollary_6c hA this)
-  | Or.inl r =>  -- m < n
-    exact r
+
+  suffices ¬ m > n by
+    match @trichotomous ℕ LT.lt _ m n with
+    | Or.inr (Or.inl hr) =>  -- m = n
+      rw [hr]
+    | Or.inr (Or.inr hr) =>  -- m > n
+      exact absurd hr this
+    | Or.inl hr          =>  -- m < n
+      exact Nat.le_of_lt hr
+
+  by_contra nr
+  have ⟨f, hf⟩ := Set.equinumerous_symm hm
+  have ⟨g, hg⟩ := hn
+
+  let h x := f (g x)
+  have hh : Set.BijOn h A (h '' A) := by
+    refine ⟨?_, ?_, Eq.subset rfl⟩
+    · -- `Set.MapsTo h A (ran h)`
+      intro x hx
+      simp only [Set.mem_image]
+      exact ⟨x, hx, rfl⟩
+    · -- `Set.InjOn h A`
+      refine Set.InjOn.comp hf.right.left hg.right.left ?_
+      intro x hx
+      exact Nat.lt_trans (hg.left hx) nr
+
+  have : h '' A ⊂ A := by
+    rw [Set.ssubset_def]
+    apply And.intro
+    · show ∀ x, x ∈ h '' A → x ∈ A
+      intro x hx
+      have ⟨y, hy₁, hy₂⟩ := hx
+      have h₁ : g y ∈ Set.Iio n := hg.left hy₁
+      have h₂ : f (g y) ∈ B := hf.left (Nat.lt_trans h₁ nr)
+      have h₃ : x ∈ B := by rwa [← hy₂]
+      exact hBA h₃
+    · rw [Set.subset_def]
+      simp only [Set.mem_image, not_forall, not_exists, not_and, exists_prop]
+      refine ⟨f n, hBA (hf.left nr), ?_⟩
+      intro x hx
+      by_contra nh
+      have h₁ : g x < n := hg.left hx
+      have h₂ : g x ∈ Set.Iio m := Nat.lt_trans h₁ nr
+      rw [hf.right.left h₂ nr nh] at h₁
+      simp at h₁
+  exact absurd ⟨h, hh⟩ (corollary_6c hA this)
+
+/-- #### Finite Domain and Range Size
+
+Let `A` and `B` be finite sets and `f : A → B` be a function. Then there exist
+natural numbers `m, n ∈ ω` such that `dom f ≈ m`, `ran f ≈ n`, and `m ≥ n`.
+-/
+theorem finite_dom_ran_size [Nonempty α] {A B : Set α}
+  (hA : Set.Finite A) (hB : Set.Finite B) (hf : Set.MapsTo f A B)
+  : ∃ m n : ℕ, A ≈ Set.Iio m ∧ f '' A ≈ Set.Iio n ∧ m ≥ n := by
+  have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp hA
+  have ⟨p, hp⟩ := Set.finite_iff_equinumerous_nat.mp hB
+  have ⟨g, hg⟩ := Set.equinumerous_symm hm
+
+  let A_y y := { x ∈ Set.Iio m | f (g x) = y }
+  have hA₁ : ∀ y ∈ B, A_y y ≈ f ⁻¹' {y} := by
+    sorry
+  have hA₂ : ∀ y ∈ B, Set.Nonempty (A_y y) := by
+    sorry
+  have hA₃ : ∀ y ∈ B, ∃ q : ℕ, ∀ p ∈ A_y y, q ≤ p := by
+    sorry
+
+  let C := { q | ∃ y ∈ B, ∀ p ∈ A_y y, q ≤ p }
+  let h x := f (g x)
+  have hh : C ≈ f '' A := by
+    sorry
+
+  sorry
 
 /-- #### Exercise 6.7
 
@@ -756,7 +787,27 @@ theorem exercise_6_7 [DecidableEq α] [Nonempty α] {A : Set α} {f : α → α}
     rw [subset_iff_ssubset_or_eq] at hf₃
     exact Or.elim hf₃ (fun h => absurd hf₂ (corollary_6c hA₁ h)) id
   · intro hf₁
-    sorry
+    by_cases hA₃ : A = ∅
+    · rw [hA₃]
+      simp
+    · intro x₁ hx₁ x₂ hx₂ hf₂
+      let y := f x₁
+      let B := f ⁻¹' {y}
+      have hB₁ : x₁ ∈ B := sorry
+      have hB₂ : x₂ ∈ B := sorry
+      have hB₃ : B ⊆ A := sorry
+      have ⟨m₁, n₁, hm₁, hn₁, hmn₁⟩ := subset_size hB₃ hA₁
+      
+      have hf'₁ : Set.MapsTo f (A \ B) (A \ {y}) := sorry
+      have hf'₂ : f '' (A \ B) = A \ {y} := sorry
+      have hf'₃ : Set.Finite (A \ B) := sorry
+      have hf'₄ : Set.Finite (A \ {y}) := sorry
+
+      have ⟨m₂, n₂, hm₂, hn₂, hmn₂⟩ := finite_dom_ran_size hf'₃ hf'₄ hf'₁
+      
+      have h₁ : A \ B ≈ Set.Iio (n₁ - m₁) := sorry
+      have h₂ : A \ {y} ≈ Set.Iio (n₁ - 1) := sorry
+      sorry
 
 /-- #### Exercise 6.8
 

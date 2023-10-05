@@ -9215,62 +9215,44 @@
     Hence $S'$ is a finite set.
   \end{proof}
 
-\subsection{\verified{Proper Subset Size}}%
-\hyperlabel{sub:proper-subset-size}
+\subsection{\verified{Subset Size}}%
+\hyperlabel{sub:subset-size}
 
   \begin{lemma}
-    Let $A$ be a finite set and $B \subset A$.
+    Let $A$ be a finite set and $B \subseteq A$.
     Then there exist natural numbers $m, n \in \omega$ such that
-      $B \equin m$, $A \equin n$, and $m < n$.
+      $B \equin m$, $A \equin n$, and $m \leq n$.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Chapter\_6}
-    {Enderton.Set.Chapter\_6.proper\_subset\_size}
+    {Enderton.Set.Chapter\_6.subset\_size}
 
   \begin{proof}
 
-    Let $A$ be a \nameref{ref:finite-set} and $B$ be a
-      \nameref{ref:proper-subset} of $A$.
+    Let $A$ be a \nameref{ref:finite-set} and $B$ be a subset of $A$.
     By \nameref{sub:corollary-6g}, $B$ must be finite.
     By definition of a finite set, there exists natural numbers
       $m, n \in \omega$ such that $B \equin m$ and $A \equin n$.
-    By \nameref{sub:trichotomy-law-natural-numbers}, there are two mutually
-      exclusive possibilities to consider:
+    By \nameref{sub:trichotomy-law-natural-numbers}, it suffices to prove that
+      $m > n$ is not possible for then either $m < n$ or $m = n$.
 
-    \paragraph{Case 1}%
+    For the sake of contradiction, assume $m > n$.
+    By definition of \nameref{ref:equinumerous}, there exists a one-to-one
+      correspondence between $B$ and $m$.
+    \nameref{sub:theorem-6a} indicates there then exists a one-to-one
+      correspondence $f$ between $m$ and $B$.
+    Likewise, there exists a one-to-one correspondence $g$ between $A$ and
+      $n$.
 
-      Assume $m = n$.
-      Then by \nameref{sub:theorem-6a}, $A \equin n \equin m \equin B$.
-      But by \nameref{sub:corollary-6c}, no finite set is equinumerous to a
-        proper subset of itself.
-      This is a contradiction.
-
-    \paragraph{Case 2}%
-
-      Assume $m > n$.
-      By definition of \nameref{ref:equinumerous}, there exists a one-to-one
-        correspondence between $B$ and $m$.
-      \nameref{sub:theorem-6a} indicates there then exists a one-to-one
-        correspondence $f$ between $m$ and $B$.
-      Likewise, there exists a one-to-one correspondence $g$ between $A$ and
-        $n$.
-
-      Define $h \colon A \rightarrow B$ as $h(x) = f(g(x))$ for all $x \in A$.
-      Since $n \subset m$ by \nameref{sub:corollary-4m}, $h$ is well-defined.
-      By \nameref{sub:one-to-one-composition}, $h$ must be one-to-one.
-      Thus $h$ is a one-to-one correspondence between $A$ and $\ran{h}$, i.e.
-        $A \equin \ran{h}$.
-      But $n < m$ meaning $\ran{h} \subset B$ which in turn is a proper subset
-        of $A$ by hypothesis.
-      \nameref{sub:corollary-6c} states no finite set is equinumerous to a
-        proper subset of itself, a contradiction.
-
-    \paragraph{Conclusion}%
-
-      The \nameref{sub:trichotomy-law-natural-numbers} tells us that $m < n$ is
-        the only possibility.
-      Hence there indeed exists natural numbers $m, n \in \omega$ such that
-        $B \equin m$, $A \equin n$, and $m < n$.
+    Define $h \colon A \rightarrow B$ as $h(x) = f(g(x))$ for all $x \in A$.
+    Since $n \subset m$ by \nameref{sub:corollary-4m}, $h$ is well-defined.
+    By \nameref{sub:one-to-one-composition}, $h$ must be one-to-one.
+    Thus $h$ is a one-to-one correspondence between $A$ and $\ran{h}$, i.e.
+      $A \equin \ran{h}$.
+    But $n < m$ meaning $\ran{h} \subset B$ which in turn is a proper subset
+      of $A$ by hypothesis.
+    \nameref{sub:corollary-6c} states no finite set is equinumerous to a
+      proper subset of itself, a contradiction.
 
   \end{proof}
 
@@ -9315,6 +9297,18 @@
     By \nameref{sub:lemma-6f}, there exists some $n \leq m$ such that
       $C \equin n$.
     By \nameref{sub:theorem-6a}, $n \equin \ran{f}$.
+  \end{proof}
+
+\subsection{\sorry{Set Difference Size}}%
+\hyperlabel{sub:set-difference-size}
+
+  \begin{lemma}
+    Let $A \approx m$ for some natural number $m$ and let $B \subseteq A$.
+    Then $B \approx n$ for some natural number $n$ and $A - B \approx m - n$.
+  \end{lemma}
+
+  \begin{proof}
+    TODO
   \end{proof}
 
 \subsection{\sorry{Theorem 6H}}%
@@ -9726,16 +9720,17 @@
 
       Let $B = \img{f^{-1}}{\{y\}}$.
       Then $x_1, x_2 \in B$.
-      Since $B \subseteq A$, \nameref{sub:proper-subset-size} indicates that
-        there exist natural numbers $m_1, n_1 \in \omega$ such that
-        $B \equin m_1$, $A \equin n_1$, and $m_1 \leq n_1$.
+      Since $B \subseteq A$, \nameref{sub:subset-size} indicates that there
+        exist natural numbers $m_1, n_1 \in \omega$ such that $B \equin m_1$,
+        $A \equin n_1$, and $m_1 \leq n_1$.
       Define $f' \colon (A - B) \rightarrow (A - \{y\})$ as the
         \nameref{ref:restriction} of $f$ to $A - B$.
       Since $\ran{f} = A$, it follows $\ran{f'} = A - \{y\}$.
-      By \nameref{sub:finite-domain-range-size}, there exist natural numbers
-        $m_2, n_2 \in \omega$ such that $\dom{f'} \equin m_2$,
-        $\ran{f'} \equin n_2$, and $m_2 \geq n_2$.
-      Thus
+      Since \nameref{sub:corollary-6g} implies $A - B$ and $A - \{y\}$ are
+        finite sets, \nameref{sub:finite-domain-range-size} implies the
+        existence of natural numbers $m_2, n_2 \in \omega$ such that
+        $\dom{f'} \equin m_2$, $\ran{f'} \equin n_2$, and $m_2 \geq n_2$.
+      Thus, by \nameref{sub:set-difference-size},
         \begin{align*}
           m_2 & \equin \dom{f'} \equin A - B \equin n_1 - m_1 \\
           n_2 & \equin \ran{f'} \equin A - \{y\} \equin n_1 - 1.
