@@ -681,45 +681,50 @@ Let `A` be a finite set and `B ⊂ A`. Then there exist natural numbers `m, n �
 such that `B ≈ m`, `A ≈ n`, and `m < n`.
 -/
 lemma proper_subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
-  (h : B ⊂ A) (hA : Set.Finite A)
+  (hBA : B ⊂ A) (hA : Set.Finite A)
   : ∃ m n : ℕ, B ≈ Set.Iio m ∧ A ≈ Set.Iio n ∧ m < n := by
   have ⟨n, hn⟩ := Set.finite_iff_equinumerous_nat.mp hA
   have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp
-    (corollary_6g hA $ subset_of_ssubset h)
+    (corollary_6g hA $ subset_of_ssubset hBA)
   refine ⟨m, n, hm, hn, ?_⟩
   match @trichotomous ℕ LT.lt _ m n with
   | Or.inr (Or.inl r) =>  -- m = n
     rw [r] at hm
     have : A ≈ B := Set.equinumerous_trans hn (Set.equinumerous_symm hm)
-    exact absurd this (corollary_6c hA h)
+    exact absurd this (corollary_6c hA hBA)
   | Or.inr (Or.inr r) =>  -- m > n
     have ⟨f, hf⟩ := Set.equinumerous_symm hm
     have ⟨g, hg⟩ := hn
     let h x := f (g x)
-    have hh : Set.BijOn h A (Set.range h) := by
-      refine ⟨?_, ?_, ?_⟩
+    have hh : Set.BijOn h A (h '' A) := by
+      refine ⟨?_, ?_, Eq.subset rfl⟩
       · -- `Set.MapsTo h A (ran h)`
         intro x hx
-        unfold Set.range
-        simp only [Set.mem_setOf_eq, exists_apply_eq_apply]
+        simp only [Set.mem_image]
+        exact ⟨x, hx, rfl⟩
       · -- `Set.InjOn h A`
-        intro x₁ hx₁ x₂ hx₂ hh
-        dsimp only at hh
-        have hnm : Set.Iio n ⊆ Set.Iio m := by
-          show ∀ x, x ∈ Set.Iio n → x ∈ Set.Iio m
-          intro x hx
-          simp only [Set.mem_Iio] at hx ⊢
-          exact Nat.lt_trans hx r
-        have hgx₁ : g x₁ ∈ Set.Iio m := hnm (hg.left hx₁)
-        have hgx₂ : g x₂ ∈ Set.Iio m := hnm (hg.left hx₂)
-        exact hg.right.left hx₁ hx₂ (hf.right.left hgx₁ hgx₂ hh)
-      · -- `Set.SurjOn h A (Set.range h)`
-        sorry
-    have : Set.range h ⊂ A := by
+        refine Set.InjOn.comp hf.right.left hg.right.left ?_
+        intro x hx
+        exact Nat.lt_trans (hg.left hx) r
+    have : h '' A ⊂ A := by
       rw [Set.ssubset_def]
       apply And.intro
-      · sorry
-      · sorry
+      · show ∀ x, x ∈ h '' A → x ∈ A
+        intro x hx
+        have ⟨y, hy₁, hy₂⟩ := hx
+        have h₁ : g y ∈ Set.Iio n := hg.left hy₁
+        have h₂ : f (g y) ∈ B := hf.left (Nat.lt_trans h₁ r)
+        have h₃ : x ∈ B := by rwa [← hy₂]
+        exact (subset_of_ssubset hBA) h₃
+      · rw [Set.subset_def]
+        simp only [Set.mem_image, not_forall, not_exists, not_and, exists_prop]
+        refine ⟨f n, subset_of_ssubset hBA (hf.left r), ?_⟩
+        intro x hx
+        by_contra nh
+        have h₁ : g x < n := hg.left hx
+        have h₂ : g x ∈ Set.Iio m := Nat.lt_trans h₁ r
+        rw [hf.right.left h₂ r nh] at h₁
+        simp at h₁
     exact absurd ⟨h, hh⟩ (corollary_6c hA this)
   | Or.inl r =>  -- m < n
     exact r

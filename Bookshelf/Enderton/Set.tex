@@ -3083,6 +3083,9 @@
   \code{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.one\_to\_one\_comp\_is\_one\_to\_one}
 
+  \lean{Mathlib/Data/Set/Function}
+    {Set.InjOn.comp}
+
   \begin{proof}
     Let $F \colon B \rightarrow C$ and $G \colon A \rightarrow B$ be
       one-to-one \nameref{ref:function}s from sets $A$, $B$, and $C$.
@@ -9212,7 +9215,7 @@
     Hence $S'$ is a finite set.
   \end{proof}
 
-\subsection{\pending{Proper Subset Size}}%
+\subsection{\verified{Proper Subset Size}}%
 \hyperlabel{sub:proper-subset-size}
 
   \begin{lemma}
@@ -9220,6 +9223,9 @@
     Then there exist natural numbers $m, n \in \omega$ such that
       $B \equin m$, $A \equin n$, and $m < n$.
   \end{lemma}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.proper\_subset\_size}
 
   \begin{proof}
 
