@@ -9303,12 +9303,50 @@
 \hyperlabel{sub:set-difference-size}
 
   \begin{lemma}
-    Let $A \approx m$ for some natural number $m$ and let $B \subseteq A$.
-    Then $B \approx n$ for some natural number $n$ and $A - B \approx m - n$.
+    Let $A \equin m$ for some natural number $m$ and $B \subseteq A$.
+    Then there exists some $n \in \omega$ such that $B \equin n$ and
+      $A - B \equin m - n$.
   \end{lemma}
 
   \begin{proof}
-    TODO
+
+    Let
+      \begin{equation}
+        \hyperlabel{sub:set-difference-size-ih}
+        S = \{m \in \omega \mid
+          \forall A \equin m, \forall B \subseteq A, \exists n
+            \in \omega (B \equin n \land A - B \equin m - n)\}.
+      \end{equation}
+    We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+    Afterward we prove (iii) the lemma statement.
+
+    \paragraph{(i)}%
+
+      Let $A \equin 0$ and $B \subseteq A$.
+      Then it follows $A = B = \emptyset$.
+      Therefore $B \equin 0$ and $$A - B = \emptyset \equin 0 = 0 - 0$$ as
+        expected.
+
+    \paragraph{(ii)}%
+
+      Suppose $m \in S$ and consider $m^+$.
+      Let $A \equin m^+$ and let $B \subseteq A$.
+      By definition of \nameref{ref:equinumerous}, there exists a one-to-one
+        correspondence $f$ between $A$ and $m^+$.
+      Since $f$ is one-to-one and onto, there exists a unique value $a \in A$
+        such that $f(a) = m$.
+      Then $B - \{a\} \subseteq A - \{a\}$ and $f$ is a one-to-one
+        correspondence between $A - \{a\}$ and $m$.
+      By \ihref{sub:set-difference-size-ih}, there exists some $n \in \omega$
+        such that $B - \{a\} \equin n$ and
+        $$(A - \{a\}) - (B - \{a\}) \equin m - n.$$
+      Therefore there exists a one-to-one corresondence $g$ between $A - \{a\}$
+        and $B - \{a\}$.
+
+    \paragraph{(iii)}%
+
+      TODO
+
   \end{proof}
 
 \subsection{\sorry{Theorem 6H}}%
