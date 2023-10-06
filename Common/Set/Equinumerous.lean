@@ -64,6 +64,45 @@ axiom finite_iff_equinumerous_nat {α : Type _} {S : Set α}
   : Set.Finite S ↔ ∃ n : ℕ, S ≈ Set.Iio n
 
 /--
+Any set equinumerous to the emptyset is the emptyset.
+-/
+@[simp]
+theorem equinumerous_zero_iff_emptyset {S : Set α}
+  : S ≈ Set.Iio 0 ↔ S = ∅ := by
+  apply Iff.intro
+  · intro ⟨f, hf⟩
+    by_contra nh
+    rw [← Ne.def, ← Set.nonempty_iff_ne_empty] at nh
+    have ⟨x, hx⟩ := nh
+    have := hf.left hx
+    simp at this
+  · intro h
+    rw [h]
+    refine ⟨fun _ => ⊥, ?_, ?_, ?_⟩
+    · intro _ hx
+      simp at hx
+    · intro _ hx
+      simp at hx
+    · unfold SurjOn
+      simp only [bot_eq_zero', image_empty]
+      show ∀ x, x ∈ Set.Iio 0 → x ∈ ∅
+      intro _ hx
+      simp at hx
+
+/--
+Empty sets are always equinumerous, regardless of their underlying type.
+-/
+theorem equinumerous_emptyset_emptyset [Bot β]
+  : (∅ : Set α) ≈ (∅ : Set β) := by
+  refine ⟨fun _ => ⊥, ?_, ?_, ?_⟩
+  · intro _ hx
+    simp at hx
+  · intro _ hx
+    simp at hx
+  · unfold SurjOn
+    simp
+
+/--
 A set `A` is not equinumerous to a set `B` (written `A ≉ B`) if and only if
 there is no one-to-one function from `A` onto `B`.
 -/

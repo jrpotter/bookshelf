@@ -9299,7 +9299,7 @@
     By \nameref{sub:theorem-6a}, $n \equin \ran{f}$.
   \end{proof}
 
-\subsection{\sorry{Set Difference Size}}%
+\subsection{\pending{Set Difference Size}}%
 \hyperlabel{sub:set-difference-size}
 
   \begin{lemma}
@@ -9307,6 +9307,9 @@
     Then there exists some $n \in \omega$ such that $B \equin n$ and
       $A - B \equin m - n$.
   \end{lemma}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.sdiff\_size}
 
   \begin{proof}
 
@@ -9321,6 +9324,7 @@
     Afterward we prove (iii) the lemma statement.
 
     \paragraph{(i)}%
+    \hyperlabel{par:set-difference-size-i}
 
       Let $A \equin 0$ and $B \subseteq A$.
       Then it follows $A = B = \emptyset$.
@@ -9328,6 +9332,7 @@
         expected.
 
     \paragraph{(ii)}%
+    \hyperlabel{par:set-difference-size-ii}
 
       Suppose $m \in S$ and consider $m^+$.
       Let $A \equin m^+$ and let $B \subseteq A$.
@@ -9340,12 +9345,40 @@
       By \ihref{sub:set-difference-size-ih}, there exists some $n \in \omega$
         such that $B - \{a\} \equin n$ and
         $$(A - \{a\}) - (B - \{a\}) \equin m - n.$$
-      Therefore there exists a one-to-one corresondence $g$ between $A - \{a\}$
-        and $B - \{a\}$.
+      Therefore there exists a one-to-one corresondence $g$ between
+        $(A - \{a\}) - (B - \{a\})$ and $m - n$.
+      By definition of set difference,
+        \begin{align*}
+          (A - \{a\}) & - (B - \{a\}) \\
+            & = \{x \mid x \in A - \{a\} \land x \not\in B - \{a\}\} \\
+            & = \{x \mid
+                  (x \in A \land x \neq a) \land
+                  \neg(x \in B \land x \neq a)\} \\
+            & = \{x \mid
+                  (x \in A \land x \neq a) \land
+                  (x \not\in B \lor x = a)\} \\
+            & = \{x \mid
+                  (x \in A \land x \neq a \land x \not\in B) \lor
+                  (x \in A \land x \neq a \land x = a)\} \\
+            & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B) \lor F\} \\
+            & = \{x \mid (x \in A \land x \neq a \land x \not\in B)\} \\
+            & = \{x \mid x \in A - B \land x \neq a\} \\
+            & = \{x \mid x \in A - B \land x \not\in \{a\}\} \\
+            & = (A - B) - \{a\}
+        \end{align*}
+      Thus $g \cup \{\tuple{a, m}\}$ is a one-to-one correspondence between
+        $A - B$ and $m^+ - n$.
 
     \paragraph{(iii)}%
 
-      TODO
+      By \nameref{par:set-difference-size-i} and
+        \nameref{par:set-difference-size-ii}, $S \subseteq \omega$ is an
+        \nameref{ref:inductive-set}.
+      Thus \nameref{sub:theorem-4b} implies $S = \omega$.
+      Hence, for all $A \equin m$ for some $m \in \omega$, if $B \subseteq A$,
+        then there exists some $n \in \omega$ such that $B \equin n$ and
+        $A - B \equin m - n$.
 
   \end{proof}
 

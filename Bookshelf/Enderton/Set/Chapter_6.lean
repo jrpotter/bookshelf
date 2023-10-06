@@ -760,6 +760,40 @@ theorem finite_dom_ran_size [Nonempty α] {A B : Set α}
 
   sorry
 
+/-- #### Set Difference Size
+
+Let `A ≈ m` for some natural number `m` and `B ⊆ A`. Then there exists some
+`n ∈ ω` such that `B ≈ n` and `A - B ≈ m - n`.
+-/
+lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
+  : ∀ A : Set α, A ≈ Set.Iio m →
+      ∀ B, B ⊆ A →
+        ∃ n : ℕ, B ≈ Set.Iio n ∧ A \ B ≈ (Set.Iio m) \ (Set.Iio n) := by
+  induction m with
+  | zero =>
+    intro A hA B hB
+    refine ⟨0, ?_⟩
+    simp only [
+      Nat.zero_eq,
+      sdiff_self,
+      Set.bot_eq_empty,
+      Set.equinumerous_zero_iff_emptyset
+    ] at hA ⊢
+    have hB' : B = ∅ := Set.subset_eq_empty hB hA
+    have : A \ B = ∅ := by
+      rw [hB']
+      simp only [Set.diff_empty]
+      exact hA
+    rw [this]
+    refine ⟨hB', Set.equinumerous_emptyset_emptyset⟩
+  | succ m ih =>
+    sorry
+
+lemma sdiff_size [DecidableEq α] [Nonempty α] {A B : Set α}
+  (hB : B ⊆ A) (hA : A ≈ Set.Iio m)
+  : ∃ n : ℕ, B ≈ Set.Iio n ∧ A \ B ≈ (Set.Iio m) \ (Set.Iio n) :=
+  sdiff_size_aux A hA B hB
+
 /-- #### Exercise 6.7
 
 Assume that `A` is finite and `f : A → A`. Show that `f` is one-to-one **iff**
