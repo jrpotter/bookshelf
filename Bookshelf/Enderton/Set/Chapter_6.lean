@@ -796,12 +796,38 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
     unfold Set.SurjOn at hfa
     have ⟨a, ha₁, ha₂⟩ := (Set.subset_def ▸ hfa) m (by simp)
 
-    have hBA : B \ {a} ⊆ A \ {a} := by
-      sorry
+    -- `f` is a one-to-one correspondence between `A - {a}` and `m`.
+    have hBA : B \ {a} ⊆ A \ {a} := Set.diff_subset_diff_left hB
     have hfBA : Set.BijOn f (A \ {a}) (Set.Iio m) := by
-      sorry
+      refine ⟨?_, ?_, ?_⟩
+      · intro x hx
+        have := hf.left hx.left
+        simp only [Set.mem_Iio, gt_iff_lt] at this ⊢
+        apply Or.elim (Nat.lt_or_eq_of_lt this)
+        · simp
+        · intro h
+          rw [← ha₂] at h
+          exact absurd (hf.right.left hx.left ha₁ h) hx.right
+      · intro x₁ hx₁ x₂ hx₂ h
+        exact hf.right.left hx₁.left hx₂.left h
+      · have := hf.right.right
+        unfold Set.SurjOn Set.image at this ⊢
+        rw [Set.subset_def] at this ⊢
+        simp only [
+          Set.mem_Iio,
+          Set.mem_diff,
+          Set.mem_singleton_iff,
+          Set.mem_setOf_eq
+        ] at this ⊢
+        intro x hx
+        have ⟨b, hb⟩ := this x (Nat.lt.step hx)
+        refine ⟨b, ⟨hb.left, ?_⟩, hb.right⟩
+        by_contra nb
+        rw [← nb, hb.right] at ha₂
+        exact absurd ha₂ (Nat.ne_of_lt hx)
+
+    -- `(A - {a}) - (B - {a}) ≈ m - n`
     have ⟨n, hn₁, hn₂⟩ := ih (A \ {a}) ⟨f, hfBA⟩ (B \ {a}) hBA
-    
     by_cases hc : a ∈ B
     · refine ⟨n.succ, ?_, ?_⟩
       · sorry
