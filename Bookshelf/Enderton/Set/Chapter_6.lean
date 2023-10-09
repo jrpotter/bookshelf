@@ -786,9 +786,9 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
       exact hA
     rw [this]
     refine ⟨hB', Set.equinumerous_emptyset_emptyset⟩
+
   | succ m ih =>
-    intro A hA B hB
-    have ⟨f, hf⟩ := hA
+    intro A ⟨f, hf⟩ B hB
 
     -- Since `f` is one-to-one and onto, there exists a unique value `a ∈ A`
     -- such that `f(a) = m`.
@@ -830,10 +830,91 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
     have ⟨n, hn₁, hn₂⟩ := ih (A \ {a}) ⟨f, hfBA⟩ (B \ {a}) hBA
     by_cases hc : a ∈ B
     · refine ⟨n.succ, ?_, ?_⟩
-      · sorry
-      · sorry
+      · -- `B ≈ Set.Iio n.succ`
+        have ⟨g, hg⟩ := hn₁
+        let g' x := if x = a then n else g x
+        refine ⟨g', ⟨?_, ?_, ?_⟩⟩
+        · -- `Set.MapsTo g' B (Set.Iio n.succ)`
+          intro x hx
+          dsimp only
+          by_cases hx' : x = a
+          · rw [if_pos hx']
+            simp
+          · rw [if_neg hx']
+            calc g x
+              _ < n := hg.left ⟨hx, hx'⟩
+              _ < n + 1 := by simp
+        · -- `Set.InjOn g' B`
+          intro x₁ hx₁ x₂ hx₂ h
+          dsimp only at h
+          by_cases hc₁ : x₁ = a <;> by_cases hc₂ : x₂ = a
+          · rw [hc₁, hc₂]
+          · rw [if_pos hc₁, if_neg hc₂] at h
+            exact absurd h.symm (Nat.ne_of_lt $ hg.left ⟨hx₂, hc₂⟩)
+          · rw [if_neg hc₁, if_pos hc₂] at h
+            exact absurd h (Nat.ne_of_lt $ hg.left ⟨hx₁, hc₁⟩)
+          · rw [if_neg hc₁, if_neg hc₂] at h
+            exact hg.right.left ⟨hx₁, hc₁⟩ ⟨hx₂, hc₂⟩ h
+        · -- `Set.SurjOn g' B (Set.Iio n.succ)`
+          have := hg.right.right
+          unfold Set.SurjOn Set.image at this ⊢
+          rw [Set.subset_def] at this ⊢
+          simp only [Set.mem_Iio, Set.mem_setOf_eq] at this ⊢
+          intro x hx
+          by_cases hc₁ : x = n
+          · refine ⟨a, hc, ?_⟩
+            simp only [ite_true]
+            exact hc₁.symm
+          · apply Or.elim (Nat.lt_or_eq_of_lt hx)
+            · intro hx₁
+              have ⟨b, ⟨hb₁, hb₂⟩, hb₃⟩ := this x hx₁
+              refine ⟨b, hb₁, ?_⟩
+              simp only [Set.mem_singleton_iff] at hb₂
+              rwa [if_neg hb₂]
+            · intro hx₁
+              exact absurd hx₁ hc₁
+      · have hA₁ : (A \ {a}) \ (B \ {a}) = (A \ B) \ {a} :=
+          Set.diff_mem_diff_mem_eq_diff_diff_mem
+        have hA₂ : (A \ B) \ {a} = A \ B := by
+          refine Set.not_mem_diff_eq_self ?_
+          by_contra na
+          exact absurd hc na.right
+        rw [hA₁, hA₂] at hn₂
+        suffices (Set.Iio m) \ (Set.Iio n) ≈ (Set.Iio m.succ) \ (Set.Iio n.succ)
+          from Set.equinumerous_trans hn₂ this
+        -- `m - n ≈ m⁺ - n⁺`
+        refine ⟨fun x => x + 1, ?_, ?_, ?_⟩
+        · intro x ⟨hx₁, hx₂⟩
+          simp at hx₁ hx₂ ⊢
+          exact ⟨Nat.le_add_of_sub_le hx₂, Nat.add_lt_of_lt_sub hx₁⟩
+        · intro _ _ _ _ h
+          simp only [add_left_inj] at h
+          exact h
+        · unfold Set.SurjOn Set.image
+          rw [Set.subset_def]
+          intro x ⟨hx₁, hx₂⟩
+          simp only [
+            Set.Iio_diff_Iio,
+            gt_iff_lt,
+            not_lt,
+            ge_iff_le,
+            Set.mem_setOf_eq,
+            Set.mem_Iio
+          ] at hx₁ hx₂ ⊢
+          have ⟨p, hp⟩ : ∃ p : ℕ, x = p.succ := by
+            refine Nat.exists_eq_succ_of_ne_zero ?_
+            have := calc 0
+              _ < n.succ := by simp
+              _ ≤ x := hx₂
+            exact Nat.pos_iff_ne_zero.mp this
+          refine ⟨p, ⟨?_, ?_⟩, hp.symm⟩
+          · rw [hp] at hx₂
+            exact Nat.lt_succ.mp hx₂
+          · rw [hp] at hx₁
+            exact Nat.succ_lt_succ_iff.mp hx₁
     · refine ⟨n, ?_, ?_⟩
-      · sorry
+      · suffices B \ {a} = B by rwa [← this]
+        exact Set.not_mem_diff_eq_self hc
       · sorry
 
 lemma sdiff_size [DecidableEq α] [Nonempty α] {A B : Set α}
