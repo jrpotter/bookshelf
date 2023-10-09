@@ -9344,31 +9344,70 @@
         correspondence between $A - \{a\}$ and $m$.
       By \ihref{sub:set-difference-size-ih}, there exists some $n \in \omega$
         such that $B - \{a\} \equin n$ and
-        $$(A - \{a\}) - (B - \{a\}) \equin m - n.$$
-      Therefore there exists a one-to-one corresondence $g$ between
-        $(A - \{a\}) - (B - \{a\})$ and $m - n$.
-      By definition of set difference,
-        \begin{align*}
-          (A - \{a\}) & - (B - \{a\}) \\
-            & = \{x \mid x \in A - \{a\} \land x \not\in B - \{a\}\} \\
-            & = \{x \mid
-                  (x \in A \land x \neq a) \land
-                  \neg(x \in B \land x \neq a)\} \\
-            & = \{x \mid
-                  (x \in A \land x \neq a) \land
-                  (x \not\in B \lor x = a)\} \\
-            & = \{x \mid
-                  (x \in A \land x \neq a \land x \not\in B) \lor
-                  (x \in A \land x \neq a \land x = a)\} \\
-            & = \{x \mid
-                (x \in A \land x \neq a \land x \not\in B) \lor F\} \\
-            & = \{x \mid (x \in A \land x \neq a \land x \not\in B)\} \\
-            & = \{x \mid x \in A - B \land x \neq a\} \\
-            & = \{x \mid x \in A - B \land x \not\in \{a\}\} \\
-            & = (A - B) - \{a\}
-        \end{align*}
-      Thus $g \cup \{\tuple{a, m}\}$ is a one-to-one correspondence between
-        $A - B$ and $m^+ - n$.
+        \begin{equation}
+          \hyperlabel{par:set-difference-size-ii-eq1}
+          (A - \{a\}) - (B - \{a\}) \equin m - n.
+        \end{equation}
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Assume $a \in B$.
+        Then $B \equin n^+$.
+        Furthermore, by definition of the set difference,
+          \begin{align}
+            (A - \{a\}) & - (B - \{a\}) \nonumber \\
+              & = \{x \mid
+                x \in A - \{a\} \land x \not\in B - \{a\}\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a) \land
+                \neg(x \in B \land x \neq a)\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a) \land
+                (x \not\in B \lor x = a)\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B) \lor
+                (x \in A \land x \neq a \land x = a)\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B) \lor F\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B)\} \nonumber \\
+              & = \{x \mid x \in A - B \land x \neq a\} \nonumber \\
+              & = \{x \mid x \in A - B \land x \not\in \{a\}\} \nonumber \\
+              & = (A - B) - \{a\}.
+                \label{par:set-difference-size-ii-eq2}
+          \end{align}
+        Since $a \in A$ and $a \in B$, $(A - B) - \{a\} = A - B$.
+        Thus
+          \begin{align*}
+            (A - \{a\} - (B - \{a\})
+              & = (A - B) - \{a\} & \eqref{par:set-difference-size-ii-eq2} \\
+              & = A - B \\
+              & \equin m - n & \eqref{par:set-difference-size-ii-eq1} \\
+              & \equin m^+ - n^+ & \textref{sub:theorem-6a}.
+          \end{align*}
+
+      \subparagraph{Case 2}%
+
+        Assume $a \not\in B$.
+        Then $B - \{a\} = B$, i.e. $B \approx n$.
+        By \eqref{par:set-difference-size-ii-eq1}, there exists a one-to-one
+          correspondence $g$ between $(A - \{a\}) - (B - \{a\})$ and $m - n$.
+        Thus
+          \begin{align*}
+            (A - \{a\}) - (B - \{a\})
+              & = (A - \{a\}) - B \\
+              & \equin m - n.
+          \end{align*}
+        Therefore $g \cup \{\tuple{a, m}\}$ is a one-to-one correspondence
+          between $A - B$ and $(m - n) + 1$.
+        By \nameref{sub:theorem-6a}, $$A - B \equin m - n + 1 \equin m^+ - n.$$
+
+      \subparagraph{Subconclusion}%
+
+        The above two cases are exhaustive and both conclude the existence of
+          some $n \in \omega$ such that $B \equin n$ and $A - B \equin m^+ - n$.
+        Hence $m^+ \in S$.
 
     \paragraph{(iii)}%
 

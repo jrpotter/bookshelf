@@ -787,7 +787,28 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
     rw [this]
     refine ⟨hB', Set.equinumerous_emptyset_emptyset⟩
   | succ m ih =>
-    sorry
+    intro A hA B hB
+    have ⟨f, hf⟩ := hA
+
+    -- Since `f` is one-to-one and onto, there exists a unique value `a ∈ A`
+    -- such that `f(a) = m`.
+    have hfa := hf.right.right
+    unfold Set.SurjOn at hfa
+    have ⟨a, ha₁, ha₂⟩ := (Set.subset_def ▸ hfa) m (by simp)
+
+    have hBA : B \ {a} ⊆ A \ {a} := by
+      sorry
+    have hfBA : Set.BijOn f (A \ {a}) (Set.Iio m) := by
+      sorry
+    have ⟨n, hn₁, hn₂⟩ := ih (A \ {a}) ⟨f, hfBA⟩ (B \ {a}) hBA
+    
+    by_cases hc : a ∈ B
+    · refine ⟨n.succ, ?_, ?_⟩
+      · sorry
+      · sorry
+    · refine ⟨n, ?_, ?_⟩
+      · sorry
+      · sorry
 
 lemma sdiff_size [DecidableEq α] [Nonempty α] {A B : Set α}
   (hB : B ⊆ A) (hA : A ≈ Set.Iio m)
