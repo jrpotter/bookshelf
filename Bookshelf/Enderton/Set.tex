@@ -9390,18 +9390,18 @@
       \subparagraph{Case 2}%
 
         Assume $a \not\in B$.
-        Then $B - \{a\} = B$, i.e. $B \approx n$.
-        By \eqref{par:set-difference-size-ii-eq1}, there exists a one-to-one
-          correspondence $g$ between $(A - \{a\}) - (B - \{a\})$ and $m - n$.
-        Thus
+        Then $B - \{a\} = B$ (i.e. $B \approx n$) and
           \begin{align*}
             (A - \{a\}) - (B - \{a\})
               & = (A - \{a\}) - B \\
-              & \equin m - n.
+              & \equin m - n & \eqref{par:set-difference-size-ii-eq1}.
           \end{align*}
+        The above implies that there exists a one-to-one correspondence $g$
+          between $(A - \{a\}) - B$ and $m - n$.
         Therefore $g \cup \{\tuple{a, m}\}$ is a one-to-one correspondence
-          between $A - B$ and $(m - n) + 1$.
-        By \nameref{sub:theorem-6a}, $$A - B \equin m - n + 1 \equin m^+ - n.$$
+          between $A - B$ and $(m - n) \cup \{m\}$.
+        By \nameref{sub:theorem-6a},
+          $$A - B \equin (m - n) \cup \{m\} \equin m^+ - n.$$
 
       \subparagraph{Subconclusion}%
 
