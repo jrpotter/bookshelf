@@ -8,6 +8,8 @@ Additional theorems around finite sets.
 
 namespace Set
 
+/-! ### Definitions -/
+
 /--
 A set `A` is equinumerous to a set `B` (written `A ≈ B`) if and only if there is
 a one-to-one function from `A` onto `B`.
@@ -18,6 +20,26 @@ infix:50 " ≈ " => Equinumerous
 
 theorem equinumerous_def (A : Set α) (B : Set β)
   : A ≈ B ↔ ∃ F, Set.BijOn F A B := Iff.rfl
+
+/--
+A set `A` is not equinumerous to a set `B` (written `A ≉ B`) if and only if
+there is no one-to-one function from `A` onto `B`.
+-/
+def NotEquinumerous (A : Set α) (B : Set β) : Prop := ¬ Equinumerous A B
+
+infix:50 " ≉ " => NotEquinumerous
+
+@[simp]
+theorem not_equinumerous_def : A ≉ B ↔ ∀ F, ¬ Set.BijOn F A B := by
+  apply Iff.intro
+  · intro h
+    unfold NotEquinumerous Equinumerous at h
+    simp only [not_exists] at h
+    exact h
+  · intro h
+    unfold NotEquinumerous Equinumerous
+    simp only [not_exists]
+    exact h
 
 /--
 For any set `A`, `A ≈ A`.
@@ -57,11 +79,15 @@ theorem eq_imp_equinumerous {A B : Set α} (h : A = B)
   conv at this => right; rw [h]
   exact this
 
+/-! ### Finite Sets -/
+
 /--
 A set is finite if and only if it is equinumerous to a natural number.
 -/
 axiom finite_iff_equinumerous_nat {α : Type _} {S : Set α}
   : Set.Finite S ↔ ∃ n : ℕ, S ≈ Set.Iio n
+
+/-! ### Emptyset -/
 
 /--
 Any set equinumerous to the emptyset is the emptyset.
@@ -101,25 +127,5 @@ theorem equinumerous_emptyset_emptyset [Bot β]
     simp at hx
   · unfold SurjOn
     simp
-
-/--
-A set `A` is not equinumerous to a set `B` (written `A ≉ B`) if and only if
-there is no one-to-one function from `A` onto `B`.
--/
-def NotEquinumerous (A : Set α) (B : Set β) : Prop := ¬ Equinumerous A B
-
-infix:50 " ≉ " => NotEquinumerous
-
-@[simp]
-theorem not_equinumerous_def : A ≉ B ↔ ∀ F, ¬ Set.BijOn F A B := by
-  apply Iff.intro
-  · intro h
-    unfold NotEquinumerous Equinumerous at h
-    simp only [not_exists] at h
-    exact h
-  · intro h
-    unfold NotEquinumerous Equinumerous
-    simp only [not_exists]
-    exact h
 
 end Set

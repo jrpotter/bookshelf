@@ -3,10 +3,10 @@ import Common.Logic.Basic
 import Common.Nat.Basic
 import Common.Set.Basic
 import Common.Set.Equinumerous
+import Common.Set.Function
 import Common.Set.Intervals
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Set.Finite
-import Mathlib.Tactic.LibrarySearch
 
 /-! # Enderton.Set.Chapter_6
 
@@ -83,11 +83,8 @@ lemma pigeonhole_principle_aux (n : ℕ)
     intro M hM f ⟨hf_maps, hf_inj⟩ hf_surj
 
     by_cases hM' : M = ∅
-    · unfold Set.SurjOn at hf_surj
-      rw [hM'] at hf_surj
-      simp only [Set.image_empty] at hf_surj
-      rw [Set.subset_def] at hf_surj
-      exact hf_surj n (show n < n + 1 by simp)
+    · rw [hM', Set.SurjOn_emptyset_Iio_iff_eq_zero] at hf_surj
+      simp at hf_surj
 
     by_cases h : ¬ ∃ t, t ∈ M ∧ f t = n
     -- Trivial case. `f` must not be onto if this is the case.
@@ -95,17 +92,18 @@ lemma pigeonhole_principle_aux (n : ℕ)
       exact absurd ⟨t, ht⟩ h
 
     -- Continue under the assumption `n ∈ ran f`.
-    simp only [not_not] at h
-    have ⟨t, ht₁, ht₂⟩ := h
+    have ⟨t, ht₁, ht₂⟩ := not_not.mp h
 
-    -- `M ≠ ∅` so `∃ p, ∀ x ∈ M, p ≥ x`.
+    -- `M ≠ ∅` so `∃ p, ∀ x ∈ M, p ≥ x`, i.e. a maximum member.
     have ⟨p, hp₁, hp₂⟩ : ∃ p ∈ M, ∀ x, x ∈ M → p ≥ x := by
       refine subset_finite_max_nat (show Set.Finite M from ?_) ?_ ?_
-      · have := Set.finite_lt_nat (n + 1)
+      · show Set.Finite M
+        have := Set.finite_lt_nat (n + 1)
         exact Set.Finite.subset this (subset_of_ssubset hM)
-      · exact Set.nmem_singleton_empty.mp hM'
-      · show ∀ t, t ∈ M → t ∈ M
-        simp only [imp_self, forall_const]
+      · show Set.Nonempty M
+        exact Set.nmem_singleton_empty.mp hM'
+      · show M ⊆ M
+        exact Eq.subset rfl
 
     -- `g` is a variant of `f` in which the largest element of its domain
     -- (i.e. `p`) corresponds to value `n`.
