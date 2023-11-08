@@ -171,8 +171,7 @@ theorem emptyset_identity_ii (A : Set α)
   : A ∩ ∅ = ∅ := calc A ∩ ∅
   _ = { x | x ∈ A ∧ x ∈ ∅ } := rfl
   _ = { x | x ∈ A ∧ False } := rfl
-  _ = { x | False } := by simp
-  _ = ∅ := rfl
+  _ = ∅ := by simp
 
 #check Set.inter_empty
 
@@ -181,8 +180,7 @@ theorem emptyset_identity_iii (A C : Set α)
   _ = { x | x ∈ A ∧ x ∈ C \ A } := rfl
   _ = { x | x ∈ A ∧ (x ∈ C ∧ x ∉ A) } := rfl
   _ = { x | x ∈ C ∧ False } := by simp
-  _ = { x | False } := by simp
-  _ = ∅ := rfl
+  _ = ∅ := by simp
 
 #check Set.inter_diff_self
 
@@ -636,7 +634,7 @@ lemma left_diff_eq_singleton_one : (A \ B) \ C = {1} := by
     have ⟨⟨ha, hb⟩, hc⟩ := hx
     rw [not_or_de_morgan] at hb hc
     apply Or.elim ha
-    · simp 
+    · simp
     · intro hy
       apply Or.elim hy
       · intro hz
@@ -792,11 +790,11 @@ theorem exercise_2_17_ii {A B : Set α} (h : A \ B = ∅)
 
 theorem exercise_2_17_iii {A B : Set α} (h : A ∪ B = B)
   : A ∩ B = A := by
-  suffices A ⊆ B from Set.inter_eq_left_iff_subset.mpr this
-  exact Set.union_eq_right_iff_subset.mp h
+  suffices A ⊆ B from Set.inter_eq_left.mpr this
+  exact Set.union_eq_right.mp h
 
 theorem exercise_2_17_iv {A B : Set α} (h : A ∩ B = A)
-  : A ⊆ B := Set.inter_eq_left_iff_subset.mp h
+  : A ⊆ B := Set.inter_eq_left.mp h
 
 /-- #### Exercise 2.19
 
@@ -954,7 +952,7 @@ theorem exercise_2_24b {𝓐 : Set (Set α)}
 /-- #### Exercise 2.25
 
 Is `A ∪ (⋃ 𝓑)` always the same as `⋃ { A ∪ X | X ∈ 𝓑 }`? If not, then under
-what conditions does equality hold? 
+what conditions does equality hold?
 -/
 theorem exercise_2_25 {A : Set α} (𝓑 : Set (Set α))
   : (A ∪ (⋃₀ 𝓑) = ⋃₀ { A ∪ X | X ∈ 𝓑 }) ↔ (A = ∅ ∨ Set.Nonempty 𝓑) := by

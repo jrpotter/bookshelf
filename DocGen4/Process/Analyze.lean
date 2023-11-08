@@ -84,10 +84,10 @@ def shouldRender : ModuleMember → Bool
 end ModuleMember
 
 inductive AnalyzeTask where
-| loadAll (load : List Name) : AnalyzeTask
-| loadAllLimitAnalysis (analyze : List Name) : AnalyzeTask
+| loadAll (load : Array Name) : AnalyzeTask
+| loadAllLimitAnalysis (analyze : Array Name) : AnalyzeTask
 
-def AnalyzeTask.getLoad : AnalyzeTask → List Name
+def AnalyzeTask.getLoad : AnalyzeTask → Array Name
 | loadAll load => load
 | loadAllLimitAnalysis load => load
 

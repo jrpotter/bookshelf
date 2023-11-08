@@ -475,7 +475,7 @@ theorem exercise_1_2_2b_iii {k : ℕ} (h : Odd k)
       have ⟨r, hr⟩ := h
       refine ⟨r, hr, ?_⟩
       by_contra nr
-      have : r = 0 := Nat.eq_zero_of_nonpos r nr
+      have : r = 0 := Nat.eq_zero_of_not_pos nr
       rw [this] at hr
       simp only [mul_zero, zero_add] at hr
       exact absurd hr hk

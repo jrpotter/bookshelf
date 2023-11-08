@@ -118,7 +118,7 @@ Derive the result analytically as follows: By changing the index of summation,
 note that `Σ_{n=1}^{b-1} ⌊na / b⌋ = Σ_{n=1}^{b-1} ⌊a(b - n) / b⌋`. Now apply
 Exercises 4(a) and (b) to the bracket on the right.
 -/
-theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.coprime a b)
+theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.Coprime a b)
   : ∑ n in (Finset.range b).filter (· > 0), ⌊n * ((a : ℕ) : ℝ) / b⌋ =
       ((a - 1) * (b - 1)) / 2 := by
   sorry

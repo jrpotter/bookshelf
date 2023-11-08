@@ -1,4 +1,5 @@
 import Mathlib.Logic.Basic
+import Mathlib.Data.Set.Basic
 import Mathlib.Tactic.Tauto
 
 /-! # Common.Logic.Basic
