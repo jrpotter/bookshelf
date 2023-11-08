@@ -110,7 +110,7 @@ def process (task : AnalyzeTask) : MetaM (AnalyzerResult × Hierarchy) := do
   let env ← getEnv
   let relevantModules := match task with
     | .loadAll _ => HashSet.fromArray env.header.moduleNames
-    | .loadAllLimitAnalysis analysis => HashSet.fromArray analysis.toArray
+    | .loadAllLimitAnalysis analysis => HashSet.fromArray analysis
   let allModules := env.header.moduleNames
 
   let mut res ← getAllModuleDocs relevantModules.toArray

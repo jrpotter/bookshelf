@@ -36,17 +36,22 @@ structure JsonModule where
   deriving FromJson, ToJson
 
 structure JsonHeaderIndex where
-  headers : List (String × String) := []
+  declarations : List (String × JsonDeclaration) := []
+
+structure JsonIndexedDeclarationInfo where
+  kind : String
+  docLink : String
+  deriving FromJson, ToJson
 
 structure JsonIndex where
-  declarations : List (String × JsonDeclarationInfo) := []
+  declarations : List (String × JsonIndexedDeclarationInfo) := []
   instances : HashMap String (RBTree String Ord.compare) := .empty
   importedBy : HashMap String (Array String) := .empty
   modules : List (String × String) := []
   instancesFor : HashMap String (RBTree String Ord.compare) := .empty
 
 instance : ToJson JsonHeaderIndex where
-  toJson idx := Json.mkObj <| idx.headers.map (fun (k, v) => (k, toJson v))
+  toJson idx := Json.mkObj <| idx.declarations.map (fun (k, v) => (k, toJson v))
 
 instance : ToJson JsonIndex where
   toJson idx := Id.run do
@@ -65,13 +70,16 @@ instance : ToJson JsonIndex where
     return finalJson
 
 def JsonHeaderIndex.addModule (index : JsonHeaderIndex) (module : JsonModule) : JsonHeaderIndex :=
-  let merge idx decl := { idx with headers := (decl.info.name, decl.header) :: idx.headers }
+  let merge idx decl := { idx with declarations := (decl.info.name, decl) :: idx.declarations }
   module.declarations.foldl merge index
 
 def JsonIndex.addModule (index : JsonIndex) (module : JsonModule) : BaseHtmlM JsonIndex := do
   let mut index := index
   let newModule := (module.name, ← moduleNameToHtmlLink (String.toName module.name))
-  let newDecls := module.declarations.map (fun d => (d.info.name, d.info))
+  let newDecls := module.declarations.map (fun d => (d.info.name, {
+    kind := d.info.kind,
+    docLink := d.info.docLink,
+  }))
   index := { index with
     modules := newModule :: index.modules
     declarations := newDecls ++ index.declarations

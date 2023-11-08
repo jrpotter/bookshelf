@@ -1,5 +1,6 @@
 # Lean
 build
+lakefile.olean
 lake-packages
 _target
 leanpkg.path

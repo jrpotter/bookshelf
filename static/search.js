@@ -112,7 +112,7 @@ function handleSearch(dataCenter, err, ev, sr, maxResults, autocomplete) {
   
     // update autocomplete results
     removeAllChildren(sr);
-    for (const { name, kind, doc, docLink } of result) {
+    for (const { name, kind, docLink } of result) {
       const row = sr.appendChild(document.createElement("div"));
       row.classList.add("search_result")
       const linkdiv = row.appendChild(document.createElement("div"))
@@ -121,11 +121,6 @@ function handleSearch(dataCenter, err, ev, sr, maxResults, autocomplete) {
       link.innerText = name;
       link.title = name;
       link.href = SITE_ROOT + docLink;
-      if (!autocomplete) {
-        const doctext = row.appendChild(document.createElement("div"));
-        doctext.innerText = doc
-        doctext.classList.add("result_doc")
-      }
     }
   }
   // handle error
@@ -151,7 +146,7 @@ const debounce = (callback, wait) => {
 DeclarationDataCenter.init()
   .then((dataCenter) => {
     // Search autocompletion.
-    SEARCH_INPUT.addEventListener("input", debounce(ev => handleSearch(dataCenter, null, ev, ac_results, AC_MAX_RESULTS, true), 500));
+    SEARCH_INPUT.addEventListener("input", debounce(ev => handleSearch(dataCenter, null, ev, ac_results, AC_MAX_RESULTS, true), 300));
     if(SEARCH_PAGE_INPUT) {
       SEARCH_PAGE_INPUT.addEventListener("input", ev => handleSearch(dataCenter, null, ev, SEARCH_RESULTS, SEARCH_PAGE_MAX_RESULTS, false))
       document.querySelectorAll(".kind_checkbox").forEach((checkbox) =>
@@ -162,7 +157,7 @@ DeclarationDataCenter.init()
     SEARCH_INPUT.dispatchEvent(new Event("input"))
   })
   .catch(e => {
-    SEARCH_INPUT.addEventListener("input", debounce(ev => handleSearch(null, e, ev, ac_results, AC_MAX_RESULTS, true), 500));
+    SEARCH_INPUT.addEventListener("input", debounce(ev => handleSearch(null, e, ev, ac_results, AC_MAX_RESULTS, true), 300));
     if(SEARCH_PAGE_INPUT) {
       SEARCH_PAGE_INPUT.addEventListener("input", ev => handleSearch(null, e, ev, SEARCH_RESULTS, SEARCH_PAGE_MAX_RESULTS, false));
     }

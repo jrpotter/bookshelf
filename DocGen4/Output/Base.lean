@@ -33,14 +33,6 @@ structure SiteBaseContext where
   pages that don't have a module name.
   -/
   currentName : Option Name
-  /--
-  The Github URL of the project that we are building docs for.
-  -/
-  projectGithubUrl : String
-  /--
-  The commit of the project that we are building docs for.
-  -/
-  projectCommit : String
 
 /--
 The context used in the `HtmlM` monad for HTML templating.
@@ -94,8 +86,6 @@ def getCurrentName : BaseHtmlM (Option Name) := do return (← read).currentName
 def getResult : HtmlM AnalyzerResult := do return (← read).result
 def getSourceUrl (module : Name) (range : Option DeclarationRange): HtmlM String := do return (← read).sourceLinker module range
 def leanInkEnabled? : HtmlM Bool := do return (← read).leanInkEnabled
-def getProjectGithubUrl : BaseHtmlM String := do return (← read).projectGithubUrl
-def getProjectCommit : BaseHtmlM String := do return (← read).projectCommit
 
 /--
 If a template is meant to be extended because it for example only provides the
@@ -156,7 +146,9 @@ are used in documentation generation, notably JS and CSS ones.
   def styleCss : String := include_str "../../static/style.css"
   def declarationDataCenterJs : String := include_str "../../static/declaration-data.js"
   def colorSchemeJs : String := include_str "../../static/color-scheme.js"
+  def jumpSrcJs : String := include_str "../../static/jump-src.js"
   def navJs : String := include_str "../../static/nav.js"
+  def expandNavJs : String := include_str "../../static/expand-nav.js"
   def howAboutJs : String := include_str "../../static/how-about.js"
   def searchJs : String := include_str "../../static/search.js"
   def instancesJs : String := include_str "../../static/instances.js"
@@ -261,11 +253,12 @@ partial def infoFormatToHtml (i : CodeWithInfos) : HtmlM (Array Html) := do
       | .sort _ =>
         match t with
         | .text t =>
-          let mut sortPrefix :: rest := t.splitOn " " | unreachable!
+          let sortPrefix :: rest := t.splitOn " " | unreachable!
           let sortLink := <a href={s!"{← getRoot}foundational_types.html"}>{sortPrefix}</a>
-          if rest != [] then
-            rest := " " :: rest
-          return #[sortLink, Html.text <| String.join rest]
+          let mut restStr := String.intercalate " " rest
+          if restStr.length != 0 then
+            restStr := " " ++ restStr
+          return #[sortLink, Html.text restStr]
         | _ =>
           return #[<a href={s!"{← getRoot}foundational_types.html"}>[← infoFormatToHtml t]</a>]
       | _ =>

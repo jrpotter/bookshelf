@@ -54,7 +54,12 @@ export class DeclarationDataCenter {
     );
 
     // try to use cache first
-    const data = await fetchCachedDeclarationData().catch(_e => null);
+    // TODO: This API is not thought 100% through. If we have a DB cached
+    // already it will not even ask the remote for a new one so we end up
+    // with outdated declaration-data. This has to have some form of cache
+    // invalidation: https://github.com/leanprover/doc-gen4/issues/133
+    // const data = await fetchCachedDeclarationData().catch(_e => null);
+    const data = null;
     if (data) {
       // if data is defined, use the cached one.
       return new DeclarationDataCenter(data);
@@ -72,7 +77,7 @@ export class DeclarationDataCenter {
    * Search for a declaration.
    * @returns {Array<any>}
    */
-  search(pattern, strict = true, allowedKinds=undefined, maxResults=undefined) {
+  search(pattern, strict = true, allowedKinds = undefined, maxResults = undefined) {
     if (!pattern) {
       return [];
     }
@@ -135,7 +140,7 @@ export class DeclarationDataCenter {
   }
 }
 
-function isSeparater(char) {
+function isSeparator(char) {
   return char === "." || char === "_";
 }
 
@@ -148,11 +153,11 @@ function matchCaseSensitive(declName, lowerDeclName, pattern) {
     lastMatch = 0;
   while (i < declName.length && j < pattern.length) {
     if (pattern[j] === declName[i] || pattern[j] === lowerDeclName[i]) {
-      err += (isSeparater(pattern[j]) ? 0.125 : 1) * (i - lastMatch);
+      err += (isSeparator(pattern[j]) ? 0.125 : 1) * (i - lastMatch);
       if (pattern[j] !== declName[i]) err += 0.5;
       lastMatch = i + 1;
       j++;
-    } else if (isSeparater(declName[i])) {
+    } else if (isSeparator(declName[i])) {
       err += 0.125 * (i + 1 - lastMatch);
       lastMatch = i + 1;
     }
@@ -168,12 +173,9 @@ function getMatches(declarations, pattern, allowedKinds = undefined, maxResults 
   const lowerPats = pattern.toLowerCase().split(/\s/g);
   const patNoSpaces = pattern.replace(/\s/g, "");
   const results = [];
-  for (const [_, {
-    name,
+  for (const [name, {
     kind,
-    doc,
     docLink,
-    sourceLink,
   }] of Object.entries(declarations)) {
     // Apply "kind" filter
     if (allowedKinds !== undefined) {
@@ -182,26 +184,14 @@ function getMatches(declarations, pattern, allowedKinds = undefined, maxResults 
       }
     }
     const lowerName = name.toLowerCase();
-    const lowerDoc = doc.toLowerCase();
     let err = matchCaseSensitive(name, lowerName, patNoSpaces);
-    // match all words as substrings of docstring
-    if (
-      err >= 3 &&
-      pattern.length > 3 &&
-      lowerPats.every((l) => lowerDoc.indexOf(l) != -1)
-    ) {
-      err = 3;
-    }
     if (err !== undefined) {
       results.push({
         name,
         kind,
-        doc,
         err,
         lowerName,
-        lowerDoc,
         docLink,
-        sourceLink,
       });
     }
   }
@@ -273,12 +263,7 @@ async function fetchCachedDeclarationData() {
   return new Promise((resolve, reject) => {
     let transactionRequest = store.get(CACHE_DB_KEY);
     transactionRequest.onsuccess = function (event) {
-      // TODO: This API is not thought 100% through. If we have a DB cached
-      // already it will not even ask the remote for a new one so we end up
-      // with outdated declaration-data. This has to have some form of cache
-      // invalidation: https://github.com/leanprover/doc-gen4/issues/133
-      // resolve(event.target.result);
-      resolve(undefined);
+      resolve(event.target.result);
     };
     transactionRequest.onerror = function (event) {
       reject(new Error(`fail to store declaration data`));

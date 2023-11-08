@@ -70,7 +70,9 @@ partial def xmlGetHeadingId (el : Xml.Element) : String :=
 -/
 def nameToLink? (s : String) : HtmlM (Option String) := do
   let res ← getResult
-  if let some name := Lean.Syntax.decodeNameLit ("`" ++ s) then
+  if s.endsWith ".lean" && s.contains '/' then
+    return (← getRoot) ++ s.dropRight 5 ++ ".html"
+  else if let some name := Lean.Syntax.decodeNameLit ("`" ++ s) then
     -- with exactly the same name
     if res.name2ModIdx.contains name then
       declNameToLink name
@@ -208,7 +210,7 @@ partial def modifyElement (element : Element) : HtmlM Element :=
 
 /-- Convert docstring to Html. -/
 def docStringToHtml (s : String) : HtmlM (Array Html) := do
-  let rendered := CMark.renderHtml s
+    let rendered := CMark.renderHtml (Html.escape s)
   match manyDocument rendered.mkIterator with
   | Parsec.ParseResult.success _ res =>
     res.mapM fun x => do return Html.text <| toString (← modifyElement x)

@@ -16,19 +16,23 @@ open Lean Meta
 def getInstanceTypes (typ : Expr) : MetaM (Array Name) := do
   let (_, _, tail) ← forallMetaTelescopeReducing typ
   let args := tail.getAppArgs
-  let (_, names) ← args.mapM (Expr.forEach · findName) |>.run .empty
+  let (_, bis, _) ← forallMetaTelescopeReducing (← inferType tail.getAppFn)
+  let (_, names) ← (bis.zip args).mapM findName |>.run .empty
   return names
 where
-  findName : Expr → StateRefT (Array Name) MetaM Unit
-    | .const name _ => modify (·.push name)
-    | .sort .zero => modify (·.push "_builtin_prop")
-    | .sort (.succ _) => modify (·.push "_builtin_typeu")
-    | .sort _ => modify (·.push "_builtin_sortu")
+  findName : BinderInfo × Expr → StateRefT (Array Name) MetaM Unit
+    | (.default, .sort .zero) => modify (·.push "_builtin_prop")
+    | (.default, .sort (.succ _)) => modify (·.push "_builtin_typeu")
+    | (.default, .sort _) => modify (·.push "_builtin_sortu")
+    | (.default, e) =>
+      match e.getAppFn with
+      | .const name .. => modify (·.push name)
+      | _ => return ()
     | _ => return ()
 
 def InstanceInfo.ofDefinitionVal (v : DefinitionVal) : MetaM InstanceInfo := do
   let mut info ← DefinitionInfo.ofDefinitionVal v
-  let some className ← isClass? v.type | unreachable!
+  let some className ← isClass? v.type | panic! s!"isClass? on {v.name} returned none"
   if let some instAttr ← getDefaultInstance v.name className then
     info := { info with attrs := info.attrs.push instAttr }
   let typeNames ← getInstanceTypes v.type
