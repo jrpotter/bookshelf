@@ -3,10 +3,10 @@ import Common.Logic.Basic
 import Common.Nat.Basic
 import Common.Set.Basic
 import Common.Set.Equinumerous
+import Common.Set.Function
 import Common.Set.Intervals
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Set.Finite
-import Mathlib.Tactic.LibrarySearch
 
 /-! # Enderton.Set.Chapter_6
 
@@ -83,11 +83,8 @@ lemma pigeonhole_principle_aux (n : ℕ)
     intro M hM f ⟨hf_maps, hf_inj⟩ hf_surj
 
     by_cases hM' : M = ∅
-    · unfold Set.SurjOn at hf_surj
-      rw [hM'] at hf_surj
-      simp only [Set.image_empty] at hf_surj
-      rw [Set.subset_def] at hf_surj
-      exact hf_surj n (show n < n + 1 by simp)
+    · rw [hM', Set.SurjOn_emptyset_Iio_iff_eq_zero] at hf_surj
+      simp at hf_surj
 
     by_cases h : ¬ ∃ t, t ∈ M ∧ f t = n
     -- Trivial case. `f` must not be onto if this is the case.
@@ -95,17 +92,18 @@ lemma pigeonhole_principle_aux (n : ℕ)
       exact absurd ⟨t, ht⟩ h
 
     -- Continue under the assumption `n ∈ ran f`.
-    simp only [not_not] at h
-    have ⟨t, ht₁, ht₂⟩ := h
+    have ⟨t, ht₁, ht₂⟩ := not_not.mp h
 
-    -- `M ≠ ∅` so `∃ p, ∀ x ∈ M, p ≥ x`.
+    -- `M ≠ ∅` so `∃ p, ∀ x ∈ M, p ≥ x`, i.e. a maximum member.
     have ⟨p, hp₁, hp₂⟩ : ∃ p ∈ M, ∀ x, x ∈ M → p ≥ x := by
       refine subset_finite_max_nat (show Set.Finite M from ?_) ?_ ?_
-      · have := Set.finite_lt_nat (n + 1)
+      · show Set.Finite M
+        have := Set.finite_lt_nat (n + 1)
         exact Set.Finite.subset this (subset_of_ssubset hM)
-      · exact Set.nmem_singleton_empty.mp hM'
-      · show ∀ t, t ∈ M → t ∈ M
-        simp only [imp_self, forall_const]
+      · show Set.Nonempty M
+        exact Set.nmem_singleton_empty.mp hM'
+      · show M ⊆ M
+        exact Eq.subset rfl
 
     -- `g` is a variant of `f` in which the largest element of its domain
     -- (i.e. `p`) corresponds to value `n`.
@@ -675,6 +673,349 @@ theorem corollary_6g {S S' : Set α} (hS : Set.Finite S) (hS' : S' ⊆ S)
   · intro h
     rwa [h]
 
+/-- #### Subset Size
+
+Let `A` be a finite set and `B ⊂ A`. Then there exist natural numbers `m, n ∈ ω`
+such that `B ≈ m`, `A ≈ n`, and `m ≤ n`.
+-/
+lemma subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
+  (hBA : B ⊆ A) (hA : Set.Finite A)
+  : ∃ m n : ℕ, B ≈ Set.Iio m ∧ A ≈ Set.Iio n ∧ m ≤ n := by
+  have ⟨n, hn⟩ := Set.finite_iff_equinumerous_nat.mp hA
+  have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp (corollary_6g hA hBA)
+  refine ⟨m, n, hm, hn, ?_⟩
+
+  suffices ¬ m > n by
+    match @trichotomous ℕ LT.lt _ m n with
+    | Or.inr (Or.inl hr) =>  -- m = n
+      rw [hr]
+    | Or.inr (Or.inr hr) =>  -- m > n
+      exact absurd hr this
+    | Or.inl hr          =>  -- m < n
+      exact Nat.le_of_lt hr
+
+  by_contra nr
+  have ⟨f, hf⟩ := Set.equinumerous_symm hm
+  have ⟨g, hg⟩ := hn
+
+  let h x := f (g x)
+  have hh : Set.BijOn h A (h '' A) := by
+    refine ⟨?_, ?_, Eq.subset rfl⟩
+    · -- `Set.MapsTo h A (ran h)`
+      intro x hx
+      simp only [Set.mem_image]
+      exact ⟨x, hx, rfl⟩
+    · -- `Set.InjOn h A`
+      refine Set.InjOn.comp hf.right.left hg.right.left ?_
+      intro x hx
+      exact Nat.lt_trans (hg.left hx) nr
+
+  have : h '' A ⊂ A := by
+    rw [Set.ssubset_def]
+    apply And.intro
+    · show ∀ x, x ∈ h '' A → x ∈ A
+      intro x hx
+      have ⟨y, hy₁, hy₂⟩ := hx
+      have h₁ : g y ∈ Set.Iio n := hg.left hy₁
+      have h₂ : f (g y) ∈ B := hf.left (Nat.lt_trans h₁ nr)
+      have h₃ : x ∈ B := by rwa [← hy₂]
+      exact hBA h₃
+    · rw [Set.subset_def]
+      simp only [Set.mem_image, not_forall, not_exists, not_and, exists_prop]
+      refine ⟨f n, hBA (hf.left nr), ?_⟩
+      intro x hx
+      by_contra nh
+      have h₁ : g x < n := hg.left hx
+      have h₂ : g x ∈ Set.Iio m := Nat.lt_trans h₁ nr
+      rw [hf.right.left h₂ nr nh] at h₁
+      simp at h₁
+  exact absurd ⟨h, hh⟩ (corollary_6c hA this)
+
+/-- #### Finite Domain and Range Size
+
+Let `A` and `B` be finite sets and `f : A → B` be a function. Then there exist
+natural numbers `m, n ∈ ω` such that `dom f ≈ m`, `ran f ≈ n`, and `m ≥ n`.
+-/
+theorem finite_dom_ran_size [Nonempty α] {A B : Set α}
+  (hA : Set.Finite A) (hB : Set.Finite B) (hf : Set.MapsTo f A B)
+  : ∃ m n : ℕ, A ≈ Set.Iio m ∧ f '' A ≈ Set.Iio n ∧ m ≥ n := by
+  have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp hA
+  have ⟨p, hp⟩ := Set.finite_iff_equinumerous_nat.mp hB
+  have ⟨g, hg⟩ := Set.equinumerous_symm hm
+
+  let A_y y := { x ∈ Set.Iio m | f (g x) = y }
+  have hA₁ : ∀ y ∈ B, A_y y ≈ f ⁻¹' {y} := by
+    sorry
+  have hA₂ : ∀ y ∈ B, Set.Nonempty (A_y y) := by
+    sorry
+  have hA₃ : ∀ y ∈ B, ∃ q : ℕ, ∀ p ∈ A_y y, q ≤ p := by
+    sorry
+
+  let C := { q | ∃ y ∈ B, ∀ p ∈ A_y y, q ≤ p }
+  let h x := f (g x)
+  have hh : C ≈ f '' A := by
+    sorry
+
+  sorry
+
+/-- #### Set Difference Size
+
+Let `A ≈ m` for some natural number `m` and `B ⊆ A`. Then there exists some
+`n ∈ ω` such that `B ≈ n` and `A - B ≈ m - n`.
+-/
+lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
+  : ∀ A : Set α, A ≈ Set.Iio m →
+      ∀ B, B ⊆ A →
+        ∃ n : ℕ, n ≤ m ∧ B ≈ Set.Iio n ∧ A \ B ≈ (Set.Iio m) \ (Set.Iio n) := by
+  induction m with
+  | zero =>
+    intro A hA B hB
+    refine ⟨0, ?_⟩
+    simp only [
+      Nat.zero_eq,
+      sdiff_self,
+      Set.bot_eq_empty,
+      Set.equinumerous_zero_iff_emptyset
+    ] at hA ⊢
+    have hB' : B = ∅ := Set.subset_eq_empty hB hA
+    have : A \ B = ∅ := by
+      rw [hB']
+      simp only [Set.diff_empty]
+      exact hA
+    rw [this]
+    refine ⟨trivial, hB', Set.equinumerous_emptyset_emptyset⟩
+
+  | succ m ih =>
+    intro A ⟨f, hf⟩ B hB
+
+    -- Since `f` is one-to-one and onto, there exists a unique value `a ∈ A`
+    -- such that `f(a) = m`.
+    have hfa := hf.right.right
+    unfold Set.SurjOn at hfa
+    have ⟨a, ha₁, ha₂⟩ := (Set.subset_def ▸ hfa) m (by simp)
+
+    -- `f` is a one-to-one correspondence between `A - {a}` and `m`.
+    have hBA : B \ {a} ⊆ A \ {a} := Set.diff_subset_diff_left hB
+    have hfBA : Set.BijOn f (A \ {a}) (Set.Iio m) := by
+      refine ⟨?_, ?_, ?_⟩
+      · intro x hx
+        have := hf.left hx.left
+        simp only [Set.mem_Iio, gt_iff_lt] at this ⊢
+        apply Or.elim (Nat.lt_or_eq_of_lt this)
+        · simp
+        · intro h
+          rw [← ha₂] at h
+          exact absurd (hf.right.left hx.left ha₁ h) hx.right
+      · intro x₁ hx₁ x₂ hx₂ h
+        exact hf.right.left hx₁.left hx₂.left h
+      · have := hf.right.right
+        unfold Set.SurjOn Set.image at this ⊢
+        rw [Set.subset_def] at this ⊢
+        simp only [
+          Set.mem_Iio,
+          Set.mem_diff,
+          Set.mem_singleton_iff,
+          Set.mem_setOf_eq
+        ] at this ⊢
+        intro x hx
+        have ⟨b, hb⟩ := this x (Nat.lt.step hx)
+        refine ⟨b, ⟨hb.left, ?_⟩, hb.right⟩
+        by_contra nb
+        rw [← nb, hb.right] at ha₂
+        exact absurd ha₂ (Nat.ne_of_lt hx)
+
+    -- `(A - {a}) - (B - {a}) ≈ m - n`
+    have ⟨n, hn₁, hn₂, hn₃⟩ := ih (A \ {a}) ⟨f, hfBA⟩ (B \ {a}) hBA
+    by_cases hc : a ∈ B
+
+    · refine ⟨n.succ, ?_, ?_, ?_⟩
+      · exact Nat.succ_le_succ hn₁
+      · -- `B ≈ Set.Iio n.succ`
+        have ⟨g, hg⟩ := hn₂
+        let g' x := if x = a then n else g x
+        refine ⟨g', ⟨?_, ?_, ?_⟩⟩
+        · -- `Set.MapsTo g' B (Set.Iio n.succ)`
+          intro x hx
+          dsimp only
+          by_cases hx' : x = a
+          · rw [if_pos hx']
+            simp
+          · rw [if_neg hx']
+            calc g x
+              _ < n := hg.left ⟨hx, hx'⟩
+              _ < n + 1 := by simp
+        · -- `Set.InjOn g' B`
+          intro x₁ hx₁ x₂ hx₂ h
+          dsimp only at h
+          by_cases hc₁ : x₁ = a <;> by_cases hc₂ : x₂ = a
+          · rw [hc₁, hc₂]
+          · rw [if_pos hc₁, if_neg hc₂] at h
+            exact absurd h.symm (Nat.ne_of_lt $ hg.left ⟨hx₂, hc₂⟩)
+          · rw [if_neg hc₁, if_pos hc₂] at h
+            exact absurd h (Nat.ne_of_lt $ hg.left ⟨hx₁, hc₁⟩)
+          · rw [if_neg hc₁, if_neg hc₂] at h
+            exact hg.right.left ⟨hx₁, hc₁⟩ ⟨hx₂, hc₂⟩ h
+        · -- `Set.SurjOn g' B (Set.Iio n.succ)`
+          have := hg.right.right
+          unfold Set.SurjOn Set.image at this ⊢
+          rw [Set.subset_def] at this ⊢
+          simp only [Set.mem_Iio, Set.mem_setOf_eq] at this ⊢
+          intro x hx
+          by_cases hc₁ : x = n
+          · refine ⟨a, hc, ?_⟩
+            simp only [ite_true]
+            exact hc₁.symm
+          · apply Or.elim (Nat.lt_or_eq_of_lt hx)
+            · intro hx₁
+              have ⟨b, ⟨hb₁, hb₂⟩, hb₃⟩ := this x hx₁
+              refine ⟨b, hb₁, ?_⟩
+              simp only [Set.mem_singleton_iff] at hb₂
+              rwa [if_neg hb₂]
+            · intro hx₁
+              exact absurd hx₁ hc₁
+      · have hA₁ : (A \ {a}) \ (B \ {a}) = (A \ B) \ {a} :=
+          Set.diff_mem_diff_mem_eq_diff_diff_mem
+        have hA₂ : (A \ B) \ {a} = A \ B := by
+          refine Set.not_mem_diff_eq_self ?_
+          by_contra na
+          exact absurd hc na.right
+        rw [hA₁, hA₂] at hn₃
+        suffices (Set.Iio m) \ (Set.Iio n) ≈ (Set.Iio m.succ) \ (Set.Iio n.succ)
+          from Set.equinumerous_trans hn₃ this
+        -- `m - n ≈ m⁺ - n⁺`
+        refine ⟨fun x => x + 1, ?_, ?_, ?_⟩
+        · intro x ⟨hx₁, hx₂⟩
+          simp at hx₁ hx₂ ⊢
+          exact ⟨Nat.le_add_of_sub_le hx₂, Nat.add_lt_of_lt_sub hx₁⟩
+        · intro _ _ _ _ h
+          simp only [add_left_inj] at h
+          exact h
+        · unfold Set.SurjOn Set.image
+          rw [Set.subset_def]
+          intro x ⟨hx₁, hx₂⟩
+          simp only [
+            Set.Iio_diff_Iio,
+            gt_iff_lt,
+            not_lt,
+            ge_iff_le,
+            Set.mem_setOf_eq,
+            Set.mem_Iio
+          ] at hx₁ hx₂ ⊢
+          have ⟨p, hp⟩ : ∃ p : ℕ, x = p.succ := by
+            refine Nat.exists_eq_succ_of_ne_zero ?_
+            have := calc 0
+              _ < n.succ := by simp
+              _ ≤ x := hx₂
+            exact Nat.pos_iff_ne_zero.mp this
+          refine ⟨p, ⟨?_, ?_⟩, hp.symm⟩
+          · rw [hp] at hx₂
+            exact Nat.lt_succ.mp hx₂
+          · rw [hp] at hx₁
+            exact Nat.succ_lt_succ_iff.mp hx₁
+
+    · have hB : B \ {a} = B := Set.not_mem_diff_eq_self hc
+      refine ⟨n, ?_, ?_, ?_⟩
+      · calc n
+          _ ≤ m := hn₁
+          _ ≤ m + 1 := by simp
+      · rwa [← hB]
+      · rw [hB] at hn₃
+        have ⟨g, hg⟩ := hn₃
+        have hAB : A \ B ≈ (Set.Iio m) \ (Set.Iio n) ∪ {m} := by
+          refine ⟨fun x => if x = a then m else g x, ?_, ?_, ?_⟩
+          · intro x hx
+            dsimp only
+            by_cases hc₁ : x = a
+            · rw [if_pos hc₁]
+              simp
+            · rw [if_neg hc₁]
+              have := hg.left ⟨⟨hx.left, hc₁⟩, hx.right⟩
+              simp only [
+                Set.Iio_diff_Iio,
+                gt_iff_lt,
+                not_lt,
+                ge_iff_le,
+                Set.union_singleton,
+                Set.mem_Ico,
+                lt_self_iff_false,
+                and_false,
+                Set.mem_insert_iff
+              ] at this ⊢
+              right
+              exact this
+          · intro x₁ hx₁ x₂ hx₂ h
+            dsimp only at h
+            by_cases hc₁ : x₁ = a <;> by_cases hc₂ : x₂ = a
+            · rw [hc₁, hc₂]
+            · rw [if_pos hc₁, if_neg hc₂] at h
+              have := hg.left ⟨⟨hx₂.left, hc₂⟩, hx₂.right⟩
+              simp at this
+              exact absurd h.symm (Nat.ne_of_lt this.right)
+            · rw [if_neg hc₁, if_pos hc₂] at h
+              have := hg.left ⟨⟨hx₁.left, hc₁⟩, hx₁.right⟩
+              simp at this
+              exact absurd h (Nat.ne_of_lt this.right)
+            · rw [if_neg hc₁, if_neg hc₂] at h
+              exact hg.right.left ⟨⟨hx₁.left, hc₁⟩, hx₁.right⟩ ⟨⟨hx₂.left, hc₂⟩, hx₂.right⟩ h
+          · have := hg.right.right
+            unfold Set.SurjOn Set.image at this ⊢
+            rw [Set.subset_def] at this ⊢
+            simp at this ⊢
+            refine ⟨⟨a, ⟨ha₁, hc⟩, ?_⟩, ?_⟩
+            · intro ha
+              simp at ha
+            · intro x hx₁ hx₂
+              have ⟨y, hy₁, hy₂⟩ := this x hx₁ hx₂
+              refine ⟨y, ?_, ?_⟩
+              · exact ⟨hy₁.left.left, hy₁.right⟩
+              · rwa [if_neg hy₁.left.right]
+
+        suffices (Set.Iio m) \ (Set.Iio n) ∪ {m} ≈ (Set.Iio m.succ) \ (Set.Iio n)
+          from Set.equinumerous_trans hAB this
+
+        refine ⟨fun x => x, ?_, ?_, ?_⟩
+        · intro x hx
+          simp at hx ⊢
+          apply Or.elim hx
+          · intro hx₁
+            rw [hx₁]
+            exact ⟨hn₁, by simp⟩
+          · intro ⟨hx₁, hx₂⟩
+            exact ⟨hx₁, calc x
+              _ < m := hx₂
+              _ < m + 1 := by simp⟩
+        · intro _ _ _ _ h
+          exact h
+        · unfold Set.SurjOn Set.image
+          rw [Set.subset_def]
+          simp only [
+            Set.Iio_diff_Iio,
+            gt_iff_lt,
+            not_lt,
+            ge_iff_le,
+            Set.mem_Ico,
+            Set.union_singleton,
+            lt_self_iff_false,
+            and_false,
+            Set.mem_insert_iff,
+            exists_eq_right,
+            Set.mem_setOf_eq,
+            and_imp
+          ]
+          intro x hn hm
+          apply Or.elim (Nat.lt_or_eq_of_lt hm)
+          · intro hx
+            right
+            exact ⟨hn, hx⟩
+          · intro hx
+            left
+            exact hx
+
+lemma sdiff_size [DecidableEq α] [Nonempty α] {A B : Set α}
+  (hB : B ⊆ A) (hA : A ≈ Set.Iio m)
+  : ∃ n : ℕ, n ≤ m ∧ B ≈ Set.Iio n ∧ A \ B ≈ (Set.Iio m) \ (Set.Iio n) :=
+  sdiff_size_aux A hA B hB
+
 /-- #### Exercise 6.7
 
 Assume that `A` is finite and `f : A → A`. Show that `f` is one-to-one **iff**
@@ -702,7 +1043,27 @@ theorem exercise_6_7 [DecidableEq α] [Nonempty α] {A : Set α} {f : α → α}
     rw [subset_iff_ssubset_or_eq] at hf₃
     exact Or.elim hf₃ (fun h => absurd hf₂ (corollary_6c hA₁ h)) id
   · intro hf₁
-    sorry
+    by_cases hA₃ : A = ∅
+    · rw [hA₃]
+      simp
+    · intro x₁ hx₁ x₂ hx₂ hf₂
+      let y := f x₁
+      let B := f ⁻¹' {y}
+      have hB₁ : x₁ ∈ B := sorry
+      have hB₂ : x₂ ∈ B := sorry
+      have hB₃ : B ⊆ A := sorry
+      have ⟨m₁, n₁, hm₁, hn₁, hmn₁⟩ := subset_size hB₃ hA₁
+      
+      have hf'₁ : Set.MapsTo f (A \ B) (A \ {y}) := sorry
+      have hf'₂ : f '' (A \ B) = A \ {y} := sorry
+      have hf'₃ : Set.Finite (A \ B) := sorry
+      have hf'₄ : Set.Finite (A \ {y}) := sorry
+
+      have ⟨m₂, n₂, hm₂, hn₂, hmn₂⟩ := finite_dom_ran_size hf'₃ hf'₄ hf'₁
+      
+      have h₁ : A \ B ≈ Set.Iio (n₁ - m₁) := sorry
+      have h₂ : A \ {y} ≈ Set.Iio (n₁ - 1) := sorry
+      sorry
 
 /-- #### Exercise 6.8
 

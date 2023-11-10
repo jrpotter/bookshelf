@@ -264,7 +264,7 @@ theorem theorem_3j_a {F : Set.HRelation α β}
 
 Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `H : B → A` (a "right inverse") such that `F ∘ H` is the identity function on
-`B` **iff** `F` maps `A` onto `B`.
+`B` only if `F` maps `A` onto `B`.
 -/
 theorem theorem_3j_b {F : Set.HRelation α β} (hF : mapsInto F A B)
   : (∃ H, mapsInto H B A ∧ comp F H = { p | p.1 ∈ B ∧ p.1 = p.2 }) →

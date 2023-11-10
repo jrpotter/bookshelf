@@ -421,6 +421,17 @@
   \lean{Init/Prelude}
     {Mul.mul}
 
+\section{\defined{Natural Map}}%
+\hyperlabel{ref:natural-map}
+
+  Let $R$ be an \nameref{ref:equivalence-relation} on $A$.
+  Then the \textbf{natural map} (or \textbf{canonical map})
+    $\phi \colon A \rightarrow A / R$ is defined as $$\phi(x) = [x]_R$$ for
+    $x \in A$.
+
+  \lean*{Init/Core}
+    {Quotient.lift}
+
 \section{\defined{Natural Number}}%
 \hyperlabel{ref:natural-number}
 
@@ -3072,6 +3083,9 @@
   \code{Bookshelf/Enderton/Set/Relation}
     {Set.Relation.one\_to\_one\_comp\_is\_one\_to\_one}
 
+  \lean{Mathlib/Data/Set/Function}
+    {Set.InjOn.comp}
+
   \begin{proof}
     Let $F \colon B \rightarrow C$ and $G \colon A \rightarrow B$ be
       one-to-one \nameref{ref:function}s from sets $A$, $B$, and $C$.
@@ -3116,91 +3130,93 @@
       \end{align*}
   \end{proof}
 
-\subsection{\verified{Theorem 3J}}%
-\hyperlabel{sub:theorem-3j}
+\subsection{\verified{Theorem 3J (a)}}%
+\hyperlabel{sub:theorem-3j-a}
 
-  \begin{theorem}[3J]
+  \begin{theorem}[3J(a)]
     Assume that $F \colon A \rightarrow B$, and that $A$ is nonempty.
-    \begin{enumerate}[(a)]
-      \item There exists a function $G \colon B \rightarrow A$
-        (a "left inverse") such that $G \circ F$ is the identity function $I_A$
-        on $A$ iff $F$ is one-to-one.
-      \item There exists a function $H \colon B \rightarrow A$
-        (a "right inverse") such that $F \circ H$ is the identity function $I_B$
-        on $B$ iff $F$ maps $A$ \textit{onto} $B$.
-    \end{enumerate}
+    There exists a function $G \colon B \rightarrow A$ (a "left inverse") such
+      that $G \circ F$ is the identity function $I_A$ on $A$ iff $F$ is
+      one-to-one.
   \end{theorem}
 
   \code{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.theorem\_3j\_a}
 
+  \begin{proof}
+
+    Let $F$ be a \nameref{ref:function} from nonempty set $A$ to set $B$.
+
+    \subparagraph{($\Rightarrow$)}%
+
+      Let $G \colon B \rightarrow A$ such that $G \circ F = I_A$.
+      All that remains is to prove $F$ is single-rooted.
+      Let $y \in \ran{F}$.
+      By definition of the \nameref{ref:range} of a function, there exists
+        some $x_1$ such that $\tuple{x_1, y} \in F$.
+      Suppose there exists a set $x_2$ such that $\tuple{x_2, y} \in F$.
+      By hypothesis, $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
+      Thus $x_1 = x_2$.
+      Therefore $F$ must be single-rooted.
+
+    \subparagraph{($\Leftarrow$)}%
+
+      Let $F$ be one-to-one.
+      Since $A$ is nonempty, there exists some $a \in A$.
+      Let $G \colon B \rightarrow A$ be given by
+        $$G(y) = \begin{cases}
+          F^{-1}(y) & \text{if } y \in \ran{F} \\
+          a & \text{otherwise}.
+        \end{cases}$$
+      $G$ is a function by virtue of \nameref{sub:one-to-one-inverse} and
+        choice of mapping for all values $y \not\in \ran{F}$.
+      Furthermore, for all $x \in A$, $F(x) \in \ran{F}$.
+      Thus $(G \circ F)(x) = G(F(x)) = F^{-1}(F(x)) = x$ by
+        \nameref{sub:theorem-3g}.
+
+  \end{proof}
+
+\subsection{\unverified{Theorem 3J (b)}}%
+\hyperlabel{sub:theorem-3j-b}
+
+  \begin{theorem}[3J(b)]
+    Assume that $F \colon A \rightarrow B$, and that $A$ is nonempty.
+    There exists a function $H \colon B \rightarrow A$ (a "right inverse") such
+      that $F \circ H$ is the identity function $I_B$ on $B$ iff $F$ maps $A$
+      \textit{onto} $B$.
+  \end{theorem}
+
   \code{Bookshelf/Enderton/Set/Chapter\_3}
     {Enderton.Set.Chapter\_3.theorem\_3j\_b}
 
   \begin{proof}
+
     Let $F$ be a \nameref{ref:function} from nonempty set $A$ to set $B$.
 
-    \paragraph{(a)}%
+    \subparagraph{($\Rightarrow$)}%
 
-      We prove there exists a function $G \colon B \rightarrow A$ such that
-        $G \circ F = I_A$ if and only if $F$ is one-to-one.
+      Suppose $H \colon B \rightarrow A$ such that $F \circ H = I_A$.
+      All that remains is to prove $\ran{F} = B$.
+      Note that $\ran{F} \subseteq B$ by hypothesis.
+      Let $y \in B$.
+      But $F(H(y)) = y$ meaning $y \in \ran{F}$.
+      Thus $B \subseteq \ran{F}$.
+      Since $\ran{F} \subseteq B$ and $B \subseteq \ran{F}$, $\ran{F} = B$.
 
-      \subparagraph{($\Rightarrow$)}%
+    \subparagraph{($\Leftarrow$)}%
 
-        Let $G \colon B \rightarrow A$ such that $G \circ F = I_A$.
-        All that remains is to prove $F$ is single-rooted.
-        Let $y \in \ran{F}$.
-        By definition of the \nameref{ref:range} of a function, there exists
-          some $x_1$ such that $\tuple{x_1, y} \in F$.
-        Suppose there exists a set $x_2$ such that $\tuple{x_2, y} \in F$.
-        By hypothesis, $G(F(x_1)) = G(F(x_2))$ implies $I_A(x_1) = I_A(x_2)$.
-        Thus $x_1 = x_2$.
-        Therefore $F$ must be single-rooted.
-
-      \subparagraph{($\Leftarrow$)}%
-
-        Let $F$ be one-to-one.
-        Since $A$ is nonempty, there exists some $a \in A$.
-        Let $G \colon B \rightarrow A$ be given by
-          $$G(y) = \begin{cases}
-            F^{-1}(y) & \text{if } y \in \ran{F} \\
-            a & \text{otherwise}.
-          \end{cases}$$
-        $G$ is a function by virtue of \nameref{sub:one-to-one-inverse} and
-          choice of mapping for all values $y \not\in \ran{F}$.
-        Furthermore, for all $x \in A$, $F(x) \in \ran{F}$.
-        Thus $(G \circ F)(x) = G(F(x)) = F^{-1}(F(x)) = x$ by
-          \nameref{sub:theorem-3g}.
-
-    \paragraph{(b)}%
-
-      We prove there exists a function $H \colon B \rightarrow A$ such that
-        $F \circ H = I_A$ if and only if $F$ maps $A$ onto $B$.
-
-      \subparagraph{($\Rightarrow$)}%
-
-        Suppose $H \colon B \rightarrow A$ such that $F \circ H = I_A$.
-        All that remains is to prove $\ran{F} = B$.
-        Note that $\ran{F} \subseteq B$ by hypothesis.
-        Let $y \in B$.
-        But $F(H(y)) = y$ meaning $y \in \ran{F}$.
-        Thus $B \subseteq \ran{F}$.
-        Since $\ran{F} \subseteq B$ and $B \subseteq \ran{F}$, $\ran{F} = B$.
-
-      \subparagraph{($\Leftarrow$)}%
-
-        Suppose $F$ maps $A$ \textit{onto} $B$.
-        By definition of maps onto, $\ran{F} = B$.
-        Then for all $y \in B$, there exists some $x \in A$ such that
-          $\tuple{x, y} \in F$.
-        Notice though that $F^{-1}[\{y\}]$ may not be a singleton set.
-        Then there is no obvious way to \textit{choose} an element from each
-          preimage to form a function.
-        By the \nameref{ref:axiom-of-choice-1}, there exists a function
-          $H \subseteq F^{-1}$ such that $\dom{H} = \dom{F^{-1}} = B$.
-        For all $y \in B$, $\tuple{y, H(y)} \in H \subseteq F^{-1}$
-          meaning $\tuple{H(y), y} \in F$.
-        Thus $F(H(y)) = y$ as expected.
+      Suppose $F$ maps $A$ \textit{onto} $B$.
+      By definition of maps onto, $\ran{F} = B$.
+      Then for all $y \in B$, there exists some $x \in A$ such that
+        $\tuple{x, y} \in F$.
+      Notice though that $F^{-1}[\{y\}]$ may not be a singleton set.
+      Then there is no obvious way to \textit{choose} an element from each
+        preimage to form a function.
+      By the \nameref{ref:axiom-of-choice-1}, there exists a function
+        $H \subseteq F^{-1}$ such that $\dom{H} = \dom{F^{-1}} = B$.
+      For all $y \in B$, $\tuple{y, H(y)} \in H \subseteq F^{-1}$
+        meaning $\tuple{H(y), y} \in F$.
+      Thus $F(H(y)) = y$ as expected.
 
   \end{proof}
 
@@ -3215,9 +3231,9 @@
   \begin{proof}
     By definition, a one-to-one correspondence $f$ between sets $A$ and $B$ must
       be both one-to-one and onto.
-    By \nameref{sub:theorem-3j}, $f$ is one-to-one if and only if it has a left
-      inverse.
-    The same theorem states that $f$ is onto $B$ if and only if it has a right
+    By \nameref{sub:theorem-3j-a}, $f$ is one-to-one if and only if it has a
+      left inverse.
+    By \nameref{sub:theorem-3j-b}, $f$ is onto $B$ if and only if it has a right
       inverse.
   \end{proof}
 
@@ -9099,7 +9115,7 @@
 \hyperlabel{sub:lemma-6f}
 
   \begin{lemma}[6F]
-    If $C$ is a proper subset of a natural number $n$, then $C \approx m$ for
+    If $C$ is a proper subset of a natural number $n$, then $C \equin m$ for
       some $m$ less than $n$.
   \end{lemma}
 
@@ -9197,6 +9213,214 @@
       some $m < n$.
     Then \nameref{sub:theorem-6a} indicates $S' \equin m$.
     Hence $S'$ is a finite set.
+  \end{proof}
+
+\subsection{\verified{Subset Size}}%
+\hyperlabel{sub:subset-size}
+
+  \begin{lemma}
+    Let $A$ be a finite set and $B \subseteq A$.
+    Then there exist natural numbers $m, n \in \omega$ such that
+      $B \equin m$, $A \equin n$, and $m \leq n$.
+  \end{lemma}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.subset\_size}
+
+  \begin{proof}
+
+    Let $A$ be a \nameref{ref:finite-set} and $B$ be a subset of $A$.
+    By \nameref{sub:corollary-6g}, $B$ must be finite.
+    By definition of a finite set, there exists natural numbers
+      $m, n \in \omega$ such that $B \equin m$ and $A \equin n$.
+    By \nameref{sub:trichotomy-law-natural-numbers}, it suffices to prove that
+      $m > n$ is not possible for then either $m < n$ or $m = n$.
+
+    For the sake of contradiction, assume $m > n$.
+    By definition of \nameref{ref:equinumerous}, there exists a one-to-one
+      correspondence between $B$ and $m$.
+    \nameref{sub:theorem-6a} indicates there then exists a one-to-one
+      correspondence $f$ between $m$ and $B$.
+    Likewise, there exists a one-to-one correspondence $g$ between $A$ and
+      $n$.
+
+    Define $h \colon A \rightarrow B$ as $h(x) = f(g(x))$ for all $x \in A$.
+    Since $n \subset m$ by \nameref{sub:corollary-4m}, $h$ is well-defined.
+    By \nameref{sub:one-to-one-composition}, $h$ must be one-to-one.
+    Thus $h$ is a one-to-one correspondence between $A$ and $\ran{h}$, i.e.
+      $A \equin \ran{h}$.
+    But $n < m$ meaning $\ran{h} \subset B$ which in turn is a proper subset
+      of $A$ by hypothesis.
+    \nameref{sub:corollary-6c} states no finite set is equinumerous to a
+      proper subset of itself, a contradiction.
+
+  \end{proof}
+
+\subsection{\pending{Finite Domain and Range Size}}%
+\hyperlabel{sub:finite-domain-range-size}
+
+  \begin{lemma}
+    Let $A$ and $B$ be finite sets and $f \colon A \rightarrow B$ be a function.
+    Then there exist natural numbers $m, n \in \omega$ such that
+      $\dom{f} \equin m$, $\ran{f} \equin n$, and $m \geq n$.
+  \end{lemma}
+
+  \begin{note}
+    This proof avoids the \nameref{ref:axiom-of-choice-1} because $A$ and $B$
+      are finite.
+    In particular, we are able to choose a "smallest" element of each preimage
+      set.
+    Contrast this to \nameref{sub:theorem-3j-b}.
+  \end{note}
+
+  \begin{proof}
+    Let $A$ and $B$ be \nameref{ref:finite-set}s and $f \colon A \rightarrow B$
+      be a function.
+    By definition of finite sets, there exists \nameref{ref:natural-number}s
+      $m, p \in \omega$ such that $A \equin m$ and $B \equin p$.
+    By definition of the \nameref{ref:domain} of a function, $\dom{f} = A$.
+    Thus $\dom{f} \equin m$.
+
+    By \nameref{sub:theorem-6a}, there exists a one-to-one correspondence $g$
+      between $m$ and $\dom{f} = A$.
+    For all $y \in \ran{f}$, consider $\img{f^{-1}}{\{y\}}$.
+    Let $$A_y = \{ x \in m \mid f(g(x)) = y \}.$$
+    Since $g$ is a one-to-one correspondence, it follows that
+      $A_y \equin \img{f^{-1}}{\{y\}}$.
+    Since $A_y$ is a nonempty subset of natural numbers, the
+      \nameref{sub:well-ordering-natural-numbers} implies there exists a least
+      element, say $q_y$.
+    Define $C = \{q_y \mid y \in \ran{f}\}$.
+    Thus $h \colon C \rightarrow \ran{f}$ given by $h(x) = f(g(x))$ is a
+      one-to-one correspondence between $C$ and $\ran{f}$ by construction.
+    That is, $C \equin \ran{f}$.
+    By \nameref{sub:lemma-6f}, there exists some $n \leq m$ such that
+      $C \equin n$.
+    By \nameref{sub:theorem-6a}, $n \equin \ran{f}$.
+  \end{proof}
+
+\subsection{\pending{Set Difference Size}}%
+\hyperlabel{sub:set-difference-size}
+
+  \begin{lemma}
+    Let $A \equin m$ for some natural number $m$ and $B \subseteq A$.
+    Then there exists some $n \in \omega$ such that $B \equin n$ and
+      $A - B \equin m - n$.
+  \end{lemma}
+
+  \code{Bookshelf/Enderton/Set/Chapter\_6}
+    {Enderton.Set.Chapter\_6.sdiff\_size}
+
+  TODO: Update IH and add additional lemmas to fully prove this out.
+
+  \begin{proof}
+
+    Let
+      \begin{equation}
+        \hyperlabel{sub:set-difference-size-ih}
+        S = \{m \in \omega \mid
+          \forall A \equin m, \forall B \subseteq A, \exists n
+            \in \omega (B \equin n \land A - B \equin m - n)\}.
+      \end{equation}
+    We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
+    Afterward we prove (iii) the lemma statement.
+
+    \paragraph{(i)}%
+    \hyperlabel{par:set-difference-size-i}
+
+      Let $A \equin 0$ and $B \subseteq A$.
+      Then it follows $A = B = \emptyset$.
+      Therefore $B \equin 0$ and $$A - B = \emptyset \equin 0 = 0 - 0$$ as
+        expected.
+
+    \paragraph{(ii)}%
+    \hyperlabel{par:set-difference-size-ii}
+
+      Suppose $m \in S$ and consider $m^+$.
+      Let $A \equin m^+$ and let $B \subseteq A$.
+      By definition of \nameref{ref:equinumerous}, there exists a one-to-one
+        correspondence $f$ between $A$ and $m^+$.
+      Since $f$ is one-to-one and onto, there exists a unique value $a \in A$
+        such that $f(a) = m$.
+      Then $B - \{a\} \subseteq A - \{a\}$ and $f$ is a one-to-one
+        correspondence between $A - \{a\}$ and $m$.
+      By \ihref{sub:set-difference-size-ih}, there exists some $n \in \omega$
+        such that $B - \{a\} \equin n$ and
+        \begin{equation}
+          \hyperlabel{par:set-difference-size-ii-eq1}
+          (A - \{a\}) - (B - \{a\}) \equin m - n.
+        \end{equation}
+      There are two cases to consider:
+
+      \subparagraph{Case 1}%
+
+        Assume $a \in B$.
+        Then $B \equin n^+$.
+        Furthermore, by definition of the set difference,
+          \begin{align}
+            (A - \{a\}) & - (B - \{a\}) \nonumber \\
+              & = \{x \mid
+                x \in A - \{a\} \land x \not\in B - \{a\}\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a) \land
+                \neg(x \in B \land x \neq a)\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a) \land
+                (x \not\in B \lor x = a)\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B) \lor
+                (x \in A \land x \neq a \land x = a)\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B) \lor F\} \nonumber \\
+              & = \{x \mid
+                (x \in A \land x \neq a \land x \not\in B)\} \nonumber \\
+              & = \{x \mid x \in A - B \land x \neq a\} \nonumber \\
+              & = \{x \mid x \in A - B \land x \not\in \{a\}\} \nonumber \\
+              & = (A - B) - \{a\}.
+                \label{par:set-difference-size-ii-eq2}
+          \end{align}
+        Since $a \in A$ and $a \in B$, $(A - B) - \{a\} = A - B$.
+        Thus
+          \begin{align*}
+            (A - \{a\} - (B - \{a\})
+              & = (A - B) - \{a\} & \eqref{par:set-difference-size-ii-eq2} \\
+              & = A - B \\
+              & \equin m - n & \eqref{par:set-difference-size-ii-eq1} \\
+              & \equin m^+ - n^+ & \textref{sub:theorem-6a}.
+          \end{align*}
+
+      \subparagraph{Case 2}%
+
+        Assume $a \not\in B$.
+        Then $B - \{a\} = B$ (i.e. $B \approx n$) and
+          \begin{align*}
+            (A - \{a\}) - (B - \{a\})
+              & = (A - \{a\}) - B \\
+              & \equin m - n & \eqref{par:set-difference-size-ii-eq1}.
+          \end{align*}
+        The above implies that there exists a one-to-one correspondence $g$
+          between $(A - \{a\}) - B$ and $m - n$.
+        Therefore $g \cup \{\tuple{a, m}\}$ is a one-to-one correspondence
+          between $A - B$ and $(m - n) \cup \{m\}$.
+        By \nameref{sub:theorem-6a},
+          $$A - B \equin (m - n) \cup \{m\} \equin m^+ - n.$$
+
+      \subparagraph{Subconclusion}%
+
+        The above two cases are exhaustive and both conclude the existence of
+          some $n \in \omega$ such that $B \equin n$ and $A - B \equin m^+ - n$.
+        Hence $m^+ \in S$.
+
+    \paragraph{(iii)}%
+
+      By \nameref{par:set-difference-size-i} and
+        \nameref{par:set-difference-size-ii}, $S \subseteq \omega$ is an
+        \nameref{ref:inductive-set}.
+      Thus \nameref{sub:theorem-4b} implies $S = \omega$.
+      Hence, for all $A \equin m$ for some $m \in \omega$, if $B \subseteq A$,
+        then there exists some $n \in \omega$ such that $B \equin n$ and
+        $A - B \equin m - n$.
+
   \end{proof}
 
 \subsection{\sorry{Theorem 6H}}%
@@ -9601,8 +9825,33 @@
 
     \paragraph{($\Leftarrow$)}%
 
-      Suppose $\ran{f} = A$.
-      TODO: by induction?
+      If $A = \emptyset$, then $f$ is trivially one-to-one.
+      Assume now $A \neq \emptyset$ and $\ran{f} = A$.
+      Let $x_1, x_2 \in A$ such that $f(x_1) = f(x_2) = y$ for some $y \in A$.
+      We must prove that $x_1 = x_2$.
+
+      Let $B = \img{f^{-1}}{\{y\}}$.
+      Then $x_1, x_2 \in B$.
+      Since $B \subseteq A$, \nameref{sub:subset-size} indicates that there
+        exist natural numbers $m_1, n_1 \in \omega$ such that $B \equin m_1$,
+        $A \equin n_1$, and $m_1 \leq n_1$.
+      Define $f' \colon (A - B) \rightarrow (A - \{y\})$ as the
+        \nameref{ref:restriction} of $f$ to $A - B$.
+      Since $\ran{f} = A$, it follows $\ran{f'} = A - \{y\}$.
+      Since \nameref{sub:corollary-6g} implies $A - B$ and $A - \{y\}$ are
+        finite sets, \nameref{sub:finite-domain-range-size} implies the
+        existence of natural numbers $m_2, n_2 \in \omega$ such that
+        $\dom{f'} \equin m_2$, $\ran{f'} \equin n_2$, and $m_2 \geq n_2$.
+      Thus, by \nameref{sub:set-difference-size},
+        \begin{align*}
+          m_2 & \equin \dom{f'} \equin A - B \equin n_1 - m_1 \\
+          n_2 & \equin \ran{f'} \equin A - \{y\} \equin n_1 - 1.
+        \end{align*}
+      By \nameref{sub:corollary-6e}, $m_2 = n_1 - m_1$ and $n_2 = n_1 - 1$.
+      Since $m_2 \geq n_2$, $n_1 - m_1 \geq n_1 - 1$.
+      But $1 \leq m_1 \leq n_1$ meaning $m_1 = 1$.
+      Hence $B$ is a singleton.
+      Therefore $x_1 = x_2$, i.e. $f$ is one-to-one.
 
   \end{proof}
 

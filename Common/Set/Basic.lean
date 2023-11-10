@@ -194,6 +194,62 @@ theorem diff_ssubset_nonempty {A B : Set α} (h : A ⊂ B)
     exact ⟨x, hx⟩
 
 /--
+If an element `x` is not a member of a set `A`, then `A - {x} = A`. 
+-/
+theorem not_mem_diff_eq_self {A : Set α} (h : a ∉ A)
+  : A \ {a} = A := by
+  ext x
+  apply Iff.intro
+  · exact And.left
+  · intro hx
+    refine ⟨hx, ?_⟩
+    simp only [mem_singleton_iff]
+    by_contra nx
+    rw [nx] at hx
+    exact absurd hx h
+
+/--
+Given two sets `A` and `B`, `(A - {a}) - (B - {b}) = (A - B) - {a}`.
+-/
+theorem diff_mem_diff_mem_eq_diff_diff_mem {A B : Set α} {a : α}
+  : (A \ {a}) \ (B \ {a}) = (A \ B) \ {a} := by
+  calc (A \ {a}) \ (B \ {a})
+    _ = { x | x ∈ A \ {a} ∧ x ∉ B \ {a} } := rfl
+    _ = { x | x ∈ A \ {a} ∧ ¬(x ∈ B \ {a}) } := rfl
+    _ = { x | (x ∈ A ∧ x ≠ a) ∧ ¬(x ∈ B ∧ x ≠ a) } := rfl
+    _ = { x | (x ∈ A ∧ x ≠ a) ∧ (x ∉ B ∨ x = a) } := by
+      ext x
+      rw [mem_setOf_eq, not_and_de_morgan]
+      simp
+    _ = { x | (x ∈ A ∧ x ≠ a ∧ x ∉ B) ∨ (x ∈ A ∧ x ≠ a ∧ x = a) } := by
+      ext x
+      simp only [mem_setOf_eq]
+      rw [and_or_left, and_assoc, and_assoc]
+    _ = { x | x ∈ A ∧ x ≠ a ∧ x ∉ B } := by simp
+    _ = { x | x ∈ A ∧ x ∉ B ∧ x ≠ a } := by
+      ext x
+      simp only [ne_eq, sep_and, mem_inter_iff, mem_setOf_eq]
+      apply Iff.intro <;>
+      · intro ⟨⟨_, hx₂⟩, hx₃, hx₄⟩
+        exact ⟨⟨hx₃, hx₄⟩, ⟨hx₃, hx₂⟩⟩
+    _ = { x | x ∈ A ∧ x ∉ B ∧ x ∉ ({a} : Set α) } := rfl
+    _ = { x | x ∈ A \ B ∧ x ∉ ({a} : Set α) } := by
+      ext x
+      simp only [
+        mem_singleton_iff,
+        sep_and,
+        mem_inter_iff,
+        mem_setOf_eq,
+        mem_diff,
+        and_congr_right_iff,
+        and_iff_right_iff_imp,
+        and_imp
+      ]
+      intro hx _ _
+      exact hx
+    _ = (A \ B) \ {a} := rfl
+
+/--
 For any set `A`, the difference between the sample space and `A` is the
 complement of `A`.
 -/
