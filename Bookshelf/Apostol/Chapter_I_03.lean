@@ -100,7 +100,7 @@ theorem is_lub_neg_set_iff_is_glb_set_neg (S : Set ℝ)
     _ = IsGreatest (lowerBounds S) (-x) := by rw [is_least_neg_set_eq_is_greatest_set_neq]
     _ = IsGLB S (-x) := rfl
 
-/-- #### Theorem I.27
+/-- ### Theorem I.27
 
 Every nonempty set `S` that is bounded below has a greatest lower bound; that
 is, there is a real number `L` such that `L = inf S`.
@@ -143,11 +143,11 @@ lemma leq_nat_abs_ceil_self (x : ℝ) : x ≤ Int.natAbs ⌈x⌉ := by
   · have h' : ((Int.natAbs ⌈x⌉) : ℝ) ≥ 0 := by simp
     calc x
       _ ≤ 0 := le_of_lt (lt_of_not_le h)
-      _ ≤ ↑(Int.natAbs ⌈x⌉) := GE.ge.le h'    
+      _ ≤ ↑(Int.natAbs ⌈x⌉) := GE.ge.le h'
 
 /-! ## The Archimedean property of the real-number system -/
 
-/-- #### Theorem I.29
+/-- ### Theorem I.29
 
 For every real `x` there exists a positive integer `n` such that `n > x`.
 -/
@@ -159,7 +159,7 @@ theorem exists_pnat_geq_self (x : ℝ) : ∃ n : ℕ+, ↑n > x := by
     _ = n := rfl
   exact ⟨n, this⟩
 
-/-- #### Theorem I.30
+/-- ### Theorem I.30
 
 If `x > 0` and if `y` is an arbitrary real number, there exists a positive
 integer `n` such that `nx > y`.
@@ -174,7 +174,7 @@ theorem exists_pnat_mul_self_geq_of_pos {x y : ℝ}
   rw [div_mul, div_self (show x ≠ 0 from LT.lt.ne' hx), div_one] at p'
   exact ⟨n, p'⟩
 
-/-- #### Theorem I.31
+/-- ### Theorem I.31
 
 If three real numbers `a`, `x`, and `y` satisfy the inequalities
 `a ≤ x ≤ a + y / n` for every integer `n ≥ 1`, then `x = a`.
@@ -243,7 +243,7 @@ theorem forall_pnat_frac_leq_self_leq_imp_eq {x y a : ℝ}
 
 /--
 Every member of a set `S` is less than or equal to some value `ub` if and only
-if `ub` is an upper bound of `S`. 
+if `ub` is an upper bound of `S`.
 -/
 lemma mem_upper_bounds_iff_forall_le {S : Set ℝ}
   : ub ∈ upperBounds S ↔ ∀ x ∈ S, x ≤ ub := by
@@ -270,7 +270,7 @@ lemma mem_imp_ge_lub {x : ℝ} (h : IsLUB S s) : x ∈ upperBounds S → x ≥ s
   intro hx
   exact h.right hx
 
-/-- #### Theorem I.32a
+/-- ### Theorem I.32a
 
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
 has a supremum, then for some `x` in `S` we have `x > sup S - h`.
@@ -294,7 +294,7 @@ theorem sup_imp_exists_gt_sup_sub_delta {S : Set ℝ} {s h : ℝ} (hp : h > 0)
 
 /--
 Every member of a set `S` is greater than or equal to some value `lb` if and
-only if `lb` is a lower bound of `S`. 
+only if `lb` is a lower bound of `S`.
 -/
 lemma mem_lower_bounds_iff_forall_ge {S : Set ℝ}
   : lb ∈ lowerBounds S ↔ ∀ x ∈ S, x ≥ lb := by
@@ -321,7 +321,7 @@ lemma mem_imp_le_glb {x : ℝ} (h : IsGLB S s) : x ∈ lowerBounds S → x ≤ s
   intro hx
   exact h.right hx
 
-/-- #### Theorem I.32b
+/-- ### Theorem I.32b
 
 Let `h` be a given positive number and let `S` be a set of real numbers. If `S`
 has an infimum, then for some `x` in `S` we have `x < inf S + h`.
@@ -343,7 +343,7 @@ theorem inf_imp_exists_lt_inf_add_delta {S : Set ℝ} {s h : ℝ} (hp : h > 0)
     exact le_of_not_gt (not_and.mp (nb x) hx)
   rwa [← mem_lower_bounds_iff_forall_ge] at nb'
 
-/-- #### Theorem I.33a (Additive Property)
+/-- ### Theorem I.33a (Additive Property)
 
 Given nonempty subsets `A` and `B` of `ℝ`, let `C` denote the set
 `C = {a + b : a ∈ A, b ∈ B}`. If each of `A` and `B` has a supremum, then `C`
@@ -393,7 +393,7 @@ theorem sup_minkowski_sum_eq_sup_add_sup (A B : Set ℝ) (a b : ℝ)
       _ ≤ a' + b' + 1 / n := le_of_lt hab'
       _ ≤ c + 1 / n := add_le_add_right hc' (1 / n)
 
-/-- #### Theorem I.33b (Additive Property)
+/-- ### Theorem I.33b (Additive Property)
 
 Given nonempty subsets `A` and `B` of `ℝ`, let `C` denote the set
 `C = {a + b : a ∈ A, b ∈ B}`. If each of `A` and `B` has an infimum, then `C`
@@ -443,7 +443,7 @@ theorem inf_minkowski_sum_eq_inf_add_inf (A B : Set ℝ)
       _ ≤ a + b := le_of_lt hab'
   · exact hc.right hlb
 
-/-- #### Theorem I.34
+/-- ### Theorem I.34
 
 Given two nonempty subsets `S` and `T` of `ℝ` such that `s ≤ t` for every `s` in
 `S` and every `t` in `T`. Then `S` has a supremum, and `T` has an infimum, and
@@ -489,7 +489,7 @@ theorem forall_mem_le_forall_mem_imp_sup_le_inf (S T : Set ℝ)
     _ < x := hx.right
   simp at this
 
-/-- #### Exercise 1
+/-- ### Exercise 1
 
 If `x` and `y` are arbitrary real numbers with `x < y`, prove that there is at
 least one real `z` satisfying `x < z < y`.
@@ -506,7 +506,7 @@ theorem exercise_1 (x y : ℝ) (h : x < y) : ∃ z, x < z ∧ z < y := by
       _ < x + z := (add_lt_add_iff_left x).mpr hz'
       _ = y := hz.right
 
-/-- #### Exercise 2
+/-- ### Exercise 2
 
 If `x` is an arbitrary real number, prove that there are integers `m` and `n`
 such that `m < x < n`.
@@ -514,7 +514,7 @@ such that `m < x < n`.
 theorem exercise_2 (x : ℝ) : ∃ m n : ℝ, m < x ∧ x < n := by
   refine ⟨x - 1, ⟨x + 1, ⟨?_, ?_⟩⟩⟩ <;> norm_num
 
-/-- #### Exercise 3
+/-- ### Exercise 3
 
 If `x > 0`, prove that there is a positive integer `n` such that `1 / n < x`.
 -/
@@ -525,7 +525,7 @@ theorem exercise_3 (x : ℝ) (h : x > 0) : ∃ n : ℕ+, 1 / n < x := by
   conv at hr => arg 2; rw [mul_comm, ← mul_assoc]; simp
   rwa [one_mul] at hr
 
-/-- #### Exercise 4
+/-- ### Exercise 4
 
 If `x` is an arbitrary real number, prove that there is exactly one integer `n`
 which satisfies the inequalities `n ≤ x < n + 1`. This `n` is called the
@@ -540,7 +540,7 @@ theorem exercise_4 (x : ℝ) : ∃! n : ℤ, n ≤ x ∧ x < n + 1 := by
     rw [← Int.floor_eq_iff] at hy
     exact Eq.symm hy
 
-/-- #### Exercise 5
+/-- ### Exercise 5
 
 If `x` is an arbitrary real number, prove that there is exactly one integer `n`
 which satisfies `x ≤ n < x + 1`.
@@ -559,7 +559,7 @@ theorem exercise_5 (x : ℝ) : ∃! n : ℤ, x ≤ n ∧ n < x + 1 := by
       rwa [add_sub_cancel] at this
     · exact hy.left
 
-/-! #### Exercise 6
+/-! ### Exercise 6
 
 If `x` and `y` are arbitrary real numbers, `x < y`, prove that there exists at
 least one rational number `r` satisfying `x < r < y`, and hence infinitely many.
@@ -569,7 +569,7 @@ in the real-number system.
 ###### TODO
 -/
 
-/-! #### Exercise 7
+/-! ### Exercise 7
 
 If `x` is rational, `x ≠ 0`, and `y` irrational, prove that `x + y`, `x - y`,
 `xy`, `x / y`, and `y / x` are all irrational.
@@ -577,14 +577,14 @@ If `x` is rational, `x ≠ 0`, and `y` irrational, prove that `x + y`, `x - y`,
 ###### TODO
 -/
 
-/-! #### Exercise 8
+/-! ### Exercise 8
 
 Is the sum or product of two irrational numbers always irrational?
 
 ###### TODO
 -/
 
-/-! #### Exercise 9
+/-! ### Exercise 9
 
 If `x` and `y` are arbitrary real numbers, `x < y`, prove that there exists at
 least one irrational number `z` satisfying `x < z < y`, and hence infinitely
@@ -593,7 +593,7 @@ many.
 ###### TODO
 -/
 
-/-! #### Exercise 10
+/-! ### Exercise 10
 
 An integer `n` is called *even* if `n = 2m` for some integer `m`, and *odd* if
 `n + 1` is even. Prove the following statements:
@@ -618,7 +618,7 @@ def isEven (n : ℤ) := ∃ m : ℤ, n = 2 * m
 
 def isOdd (n : ℤ) := isEven (n + 1)
 
-/-! #### Exercise 11
+/-! ### Exercise 11
 
 Prove that there is no rational number whose square is `2`.
 
@@ -629,7 +629,7 @@ contradiction.]
 ###### TODO
 -/
 
-/-! #### Exercise 12
+/-! ### Exercise 12
 
 The Archimedean property of the real-number system was deduced as a consequence
 of the least-upper-bound axiom. Prove that the set of rational numbers satisfies

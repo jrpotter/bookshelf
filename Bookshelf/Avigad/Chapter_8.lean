@@ -5,7 +5,7 @@ Induction and Recursion
 
 namespace Avigad.Chapter8
 
-/-! #### Exercise 1
+/-! ### Exercise 1
 
 Open a namespace `Hidden` to avoid naming conflicts, and use the equation
 compiler to define addition, multiplication, and exponentiation on the natural
@@ -29,7 +29,7 @@ def exp : Nat → Nat → Nat
 
 end ex1
 
-/-! #### Exercise 2
+/-! ### Exercise 2
 
 Similarly, use the equation compiler to define some basic operations on lists
 (like the reverse function) and prove theorems about lists by induction (such as
@@ -48,7 +48,7 @@ def reverse : List α → List α
 
 end ex2
 
-/-! #### Exercise 3
+/-! ### Exercise 3
 
 Define your own function to carry out course-of-value recursion on the natural
 numbers. Similarly, see if you can figure out how to define `WellFounded.fix` on
@@ -86,7 +86,7 @@ noncomputable def brecOn {motive : Nat → Sort u}
 
 end ex3
 
-/-! #### Exercise 4
+/-! ### Exercise 4
 
 Following the examples in Section Dependent Pattern Matching, define a function
 that will append two vectors. This is tricky; you will have to define an
@@ -113,7 +113,7 @@ end Vector
 
 end ex4
 
-/-! #### Exercise 5
+/-! ### Exercise 5
 
 Consider the following type of arithmetic expressions.
 -/
@@ -149,7 +149,7 @@ def sampleVal : Nat → Nat
 -- Try it out. You should get 47 here.
 #eval eval sampleVal sampleExpr
 
-/-! ##### Constant Fusion
+/-! ### Constant Fusion
 
 Implement "constant fusion," a procedure that simplifies subterms like `5 + 7
 to `12`. Using the auxiliary function `simpConst`, define a function "fuse": to
@@ -189,7 +189,7 @@ theorem simpConst_eq (v : Nat → Nat)
   | times _ (var     _)
   | times _ (plus  _ _)
   | times _ (times _ _) => simp only
-  
+
 
 theorem fuse_eq (v : Nat → Nat)
   : ∀ e : Expr, eval v (fuse e) = eval v e := by

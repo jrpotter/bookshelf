@@ -19,7 +19,7 @@ The `∅` does not equal the singleton set containing `∅`.
 lemma empty_ne_singleton_empty (h : ∅ = ({∅} : Set (Set α))) : False :=
   absurd h (Ne.symm $ Set.singleton_ne_empty (∅ : Set α))
 
-/-- #### Exercise 1.1a
+/-- ### Exercise 1.1a
 
 `{∅} ___ {∅, {∅}}`
 -/
@@ -27,7 +27,7 @@ theorem exercise_1_1a
   : {∅} ∈ ({∅, {∅}} : Set (Set (Set α)))
   ∧ {∅} ⊆ ({∅, {∅}} : Set (Set (Set α))) := ⟨by simp, by simp⟩
 
-/-- #### Exercise 1.1b
+/-- ### Exercise 1.1b
 
 `{∅} ___ {∅, {{∅}}}`
 -/
@@ -39,7 +39,7 @@ theorem exercise_1_1b
   simp at h
   exact empty_ne_singleton_empty h
 
-/-- #### Exercise 1.1c
+/-- ### Exercise 1.1c
 
 `{{∅}} ___ {∅, {∅}}`
 -/
@@ -47,7 +47,7 @@ theorem exercise_1_1c
   : {{∅}} ∉ ({∅, {∅}} : Set (Set (Set (Set α))))
   ∧ {{∅}} ⊆ ({∅, {∅}} : Set (Set (Set (Set α)))) := ⟨by simp, by simp⟩
 
-/-- #### Exercise 1.1d
+/-- ### Exercise 1.1d
 
 `{{∅}} ___ {∅, {{∅}}}`
 -/
@@ -59,7 +59,7 @@ theorem exercise_1_1d
   simp at h
   exact empty_ne_singleton_empty h
 
-/-- #### Exercise 1.1e
+/-- ### Exercise 1.1e
 
 `{{∅}} ___ {∅, {∅, {∅}}}`
 -/

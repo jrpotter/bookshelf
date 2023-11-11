@@ -131,7 +131,7 @@ lemma no_neg_sentential_count_eq_binary_count {φ : Wff} (h : ¬φ.hasNotSymbol)
     unfold sententialSymbolCount binarySymbolCount
     rw [ih₁ h.left, ih₂ h.right]
 
-/-- #### Parentheses Count
+/-- ### Parentheses Count
 
 Let `φ` be a well-formed formula and `c` be the number of places at which a
 sentential connective symbol exists. Then there is `2c` parentheses in `φ`.
@@ -180,7 +180,7 @@ theorem length_eq_sum_symbol_count (φ : Wff)
 
 end Wff
 
-/-! #### Exercise 1.1.2
+/-! ### Exercise 1.1.2
 
 Show that there are no wffs of length `2`, `3`, or `6`, but that any other
 positive length is possible.
@@ -296,7 +296,7 @@ theorem exercise_1_1_2_ii (n : ℕ) (hn : n ≠ 2 ∧ n ≠ 3 ∧ n ≠ 6)
 
 end Exercise_1_1_2
 
-/-- #### Exercise 1.1.3
+/-- ### Exercise 1.1.3
 
 Let `α` be a wff; let `c` be the number of places at which binary connective
 symbols (`∧`, `∨`, `→`, `↔`) occur in `α`; let `s` be the number of places at
@@ -320,7 +320,7 @@ theorem exercise_1_1_3 (φ : Wff)
     rw [ih₁, ih₂]
     ring
 
-/-- #### Exercise 1.1.5 (a)
+/-- ### Exercise 1.1.5 (a)
 
 Suppose that `α` is a wff not containing the negation symbol `¬`. Show that the
 length of `α` (i.e., the number of symbols in the string) is odd.
@@ -355,7 +355,7 @@ theorem exercise_1_1_5a (α : Wff) (hα : ¬α.hasNotSymbol)
     rw [hk₁, hk₂]
     ring
 
-/-- #### Exercise 1.1.5 (b)
+/-- ### Exercise 1.1.5 (b)
 
 Suppose that `α` is a wff not containing the negation symbol `¬`. Show that more
 than a quarter of the symbols are sentence symbols.
@@ -390,7 +390,7 @@ theorem exercise_1_1_5b (α : Wff) (hα : ¬α.hasNotSymbol)
   ]
   exact inv_lt_one (by norm_num)
 
-/-! #### Exercise 1.2.1
+/-! ### Exercise 1.2.1
 
 Show that neither of the following two formulas tautologically implies the
 other:
@@ -430,7 +430,7 @@ theorem exercise_1_2_2a (P Q : Prop)
   : (((P → Q) → P) → P) := by
   tauto
 
-/-! #### Exercise 1.2.2 (b)
+/-! ### Exercise 1.2.2 (b)
 
 Define `σₖ` recursively as follows: `σ₀ = (P → Q)` and `σₖ₊₁ = (σₖ → P)`. For
 which values of `k` is `σₖ` a tautology? (Part (a) corresponds to `k = 2`.)
@@ -486,7 +486,7 @@ theorem exercise_1_2_2b_iii {k : ℕ} (h : Odd k)
 
 end Exercise_1_2_2
 
-/-- #### Exercise 1.2.3 (a)
+/-- ### Exercise 1.2.3 (a)
 
 Determine whether or not `((P → Q)) ∨ (Q → P)` is a tautology.
 -/
@@ -494,7 +494,7 @@ theorem exercise_1_2_3a (P Q : Prop)
   : ((P → Q) ∨ (Q → P)) := by
   tauto
 
-/-- #### Exercise 1.2.3 (b)
+/-- ### Exercise 1.2.3 (b)
 
 Determine whether or not `((P ∧ Q) → R))` tautologically implies
 `((P → R) ∨ (Q → R))`.
@@ -503,7 +503,7 @@ theorem exercise_1_2_3b (P Q R : Prop)
   : ((P ∧ Q) → R) ↔ ((P → R) ∨ (Q → R)) := by
   tauto
 
-/-! #### Exercise 1.2.5
+/-! ### Exercise 1.2.5
 
 Prove or refute each of the following assertions:
 
@@ -519,7 +519,7 @@ theorem exercise_1_2_6b
   : (False ∨ True) ∧ ¬ False := by
   simp
 
-/-! #### Exercise 1.2.15
+/-! ### Exercise 1.2.15
 
 Of the following three formulas, which tautologically implies which?
 (a) `(A ↔ B)`

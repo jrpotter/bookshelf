@@ -168,7 +168,7 @@ theorem ran_inv_eq_dom_self {F : HRelation α β}
 The restriction of a `Relation` to a `Set`.
 -/
 def restriction (R : HRelation α β) (A : Set α) : HRelation α β :=
-  { p ∈ R | p.1 ∈ A } 
+  { p ∈ R | p.1 ∈ A }
 
 /-! ## Image -/
 
@@ -580,7 +580,7 @@ theorem neighborhood_eq_iff_mem_relate {R : Set.Relation α} {A : Set α}
 
 /--
 Assume that `R` is an equivalence relation on `A`. If two sets `x` and `y`
-belong to the same neighborhood, then `xRy`. 
+belong to the same neighborhood, then `xRy`.
 -/
 theorem neighborhood_mem_imp_relate {R : Set.Relation α} {A : Set α}
   (hR : isEquivalence R A)
@@ -596,7 +596,7 @@ A **partition** `Π` of a set `A` is a set of nonempty subsets of `A` that is
 disjoint and exhaustive.
 -/
 structure Partition (P : Set (Set α)) (A : Set α) : Prop where
-  p_subset : ∀ p ∈ P, p ⊆ A 
+  p_subset : ∀ p ∈ P, p ⊆ A
   nonempty : ∀ p ∈ P, Set.Nonempty p
   disjoint : ∀ a ∈ P, ∀ b, b ∈ P → a ≠ b → a ∩ b = ∅
   exhaustive : ∀ a ∈ A, ∃ p, p ∈ P ∧ a ∈ p

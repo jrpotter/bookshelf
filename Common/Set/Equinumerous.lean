@@ -8,7 +8,7 @@ Additional theorems around finite sets.
 
 namespace Set
 
-/-! ### Definitions -/
+/-! ## Definitions -/
 
 /--
 A set `A` is equinumerous to a set `B` (written `A ≈ B`) if and only if there is
@@ -79,7 +79,7 @@ theorem eq_imp_equinumerous {A B : Set α} (h : A = B)
   conv at this => right; rw [h]
   exact this
 
-/-! ### Finite Sets -/
+/-! ## Finite Sets -/
 
 /--
 A set is finite if and only if it is equinumerous to a natural number.
@@ -87,7 +87,7 @@ A set is finite if and only if it is equinumerous to a natural number.
 axiom finite_iff_equinumerous_nat {α : Type _} {S : Set α}
   : Set.Finite S ↔ ∃ n : ℕ, S ≈ Set.Iio n
 
-/-! ### Emptyset -/
+/-! ## Emptyset -/
 
 /--
 Any set equinumerous to the emptyset is the emptyset.

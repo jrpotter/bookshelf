@@ -3,7 +3,7 @@
 Dependent Type Theory
 -/
 
-/-! #### Exercise 1
+/-! ### Exercise 1
 
 Define the function `Do_Twice`, as described in Section 2.4.
 -/
@@ -20,7 +20,7 @@ def doTwiceTwice (f : (Nat → Nat) → (Nat → Nat)) (x : Nat → Nat) := f (f
 
 end ex1
 
-/-! #### Exercise 2
+/-! ### Exercise 2
 
 Define the functions `curry` and `uncurry`, as described in Section 2.4.
 -/
@@ -35,7 +35,7 @@ def uncurry (f : α → β → γ) : (α × β → γ) :=
 
 end ex2
 
-/-! #### Exercise 3
+/-! ### Exercise 3
 
 Above, we used the example `vec α n` for vectors of elements of type `α` of
 length `n`. Declare a constant `vec_add` that could represent a function that
@@ -70,7 +70,7 @@ variable (c d : vec Prop 2)
 
 end ex3
 
-/-! #### Exercise 4
+/-! ### Exercise 4
 
 Similarly, declare a constant `matrix` so that `matrix α m n` could represent
 the type of `m` by `n` matrices. Declare some constants to represent functions

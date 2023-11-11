@@ -28,8 +28,7 @@ theorem ext_iff {x y u v : α}
     ] at hu huv
     apply Or.elim hu <;> apply Or.elim huv
 
-    · -- #### Case 1
-      -- `{u} = {x}` and `{u, v} = {x}`.
+    · -- `{u} = {x}` and `{u, v} = {x}`.
       intro huv_x hu_x
       rw [Set.singleton_eq_singleton_iff] at hu_x
       rw [hu_x] at huv_x
@@ -41,8 +40,7 @@ theorem ext_iff {x y u v : α}
       rw [← hx_v] at this
       exact ⟨hu_x.symm, this⟩
 
-    · -- #### Case 2
-      -- `{u} = {x}` and `{u, v} = {x, y}`.
+    · -- `{u} = {x}` and `{u, v} = {x, y}`.
       intro huv_xy hu_x
       rw [Set.singleton_eq_singleton_iff] at hu_x
       rw [hu_x] at huv_xy
@@ -58,8 +56,7 @@ theorem ext_iff {x y u v : α}
         ] at this
         exact ⟨hu_x.symm, Or.elim this (absurd ·.symm hx_v) (·.symm)⟩
 
-    · -- #### Case 3
-      -- `{u} = {x, y}` and `{u, v} = {x}`.
+    · -- `{u} = {x, y}` and `{u, v} = {x}`.
       intro huv_x hu_xy
       rw [Set.ext_iff] at huv_x hu_xy
       have hu_x := huv_x u
@@ -71,7 +68,7 @@ theorem ext_iff {x y u v : α}
         true_iff,
         or_true,
         iff_true
-      ] at hu_x hy_u 
+      ] at hu_x hy_u
       apply Or.elim huv
       · intro huv_x
         rw [← hu_x, Set.ext_iff] at huv_x
@@ -93,19 +90,18 @@ theorem ext_iff {x y u v : α}
         · intro hv_y
           exact ⟨hu_x.symm, hv_y.symm⟩
 
-    · -- #### Case 4
-      -- `{u} = {x, y}` and `{u, v} = {x, y}`.
+    · -- `{u} = {x, y}` and `{u, v} = {x, y}`.
       intro huv_xy hu_xy
       rw [Set.ext_iff] at huv_xy hu_xy
       have hx_u := hu_xy x
       have hy_u := hu_xy y
       simp only [
         Set.mem_singleton_iff, Set.mem_insert_iff, true_or, iff_true, or_true
-      ] at hx_u hy_u 
+      ] at hx_u hy_u
       have := huv_xy v
       simp only [
         Set.mem_singleton_iff, Set.mem_insert_iff, or_true, true_iff
-      ] at this 
+      ] at this
       apply Or.elim this
       · intro hv_x
         rw [hv_x, hx_u]

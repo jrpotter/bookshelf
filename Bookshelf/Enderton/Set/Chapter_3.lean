@@ -17,7 +17,7 @@ namespace Enderton.Set.Chapter_3
 
 open Set.Relation
 
-/-- #### Lemma 3B
+/-- ### Lemma 3B
 
 If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
@@ -35,7 +35,7 @@ lemma lemma_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
 -/
   exact Set.mem_mem_imp_pair_subset hxs hxys
 
-/-- #### Theorem 3D
+/-- ### Theorem 3D
 
 If `⟨x, y⟩ ∈ A`, then `x` and `y` belong to `⋃ ⋃ A`.
 -/
@@ -61,7 +61,7 @@ theorem theorem_3d {A : Set (Set (Set α))} (h : OrderedPair x y ∈ A)
   exact ⟨this (by simp), this (by simp)⟩
 
 
-/-- #### Theorem 3G (i)
+/-- ### Theorem 3G (i)
 
 Assume that `F` is a one-to-one function. If `x ∈ dom F`, then `F⁻¹(F(x)) = x`.
 -/
@@ -75,7 +75,7 @@ theorem theorem_3g_i {F : Set.HRelation α β}
   unfold isOneToOne at hF
   exact (single_valued_eq_unique hF.left hy hy₁).symm
 
-/-- #### Theorem 3G (ii)
+/-- ### Theorem 3G (ii)
 
 Assume that `F` is a one-to-one function. If `y ∈ ran F`, then `F(F⁻¹(y)) = y`.
 -/
@@ -89,7 +89,7 @@ theorem theorem_3g_ii {F : Set.HRelation α β}
   unfold isOneToOne at hF
   exact (single_rooted_eq_unique hF.right hx hx₁).symm
 
-/-- #### Theorem 3H
+/-- ### Theorem 3H
 
 Assume that `F` and `G` are functions. Then
 ```
@@ -128,7 +128,7 @@ theorem theorem_3h_dom {F : Set.HRelation β γ} {G : Set.HRelation α β}
     simp only [Set.mem_setOf_eq]
     exact ⟨a, ha.left.left, hb⟩
 
-/-- #### Theorem 3J (a)
+/-- ### Theorem 3J (a)
 
 Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `G : B → A` (a "left inverse") such that `G ∘ F` is the identity function on `A`
@@ -281,7 +281,7 @@ theorem theorem_3j_a {F : Set.HRelation α β}
     rw [← single_valued_eq_unique hF.is_func hx₂.right ht₂.left] at ht₂
     exact single_valued_eq_unique hG₁.is_func ht₂.right ht₁.right
 
-/-- #### Theorem 3J (b)
+/-- ### Theorem 3J (b)
 
 Assume that `F : A → B`, and that `A` is nonempty. There exists a function
 `H : B → A` (a "right inverse") such that `F ∘ H` is the identity function on
@@ -300,7 +300,7 @@ theorem theorem_3j_b {F : Set.HRelation α β} (hF : mapsInto F A B)
   simp only [Set.mem_setOf_eq, Prod.exists, exists_eq_right, Set.setOf_mem_eq]
   exact hy
 
-/-- #### Theorem 3K (a)
+/-- ### Theorem 3K (a)
 
 The following hold for any sets. (`F` need not be a function.)
 The image of a union is the union of the images:
@@ -335,7 +335,7 @@ theorem theorem_3k_a {F : Set.HRelation α β} {𝓐 : Set (Set α)}
     simp only [Set.mem_sUnion, Set.mem_setOf_eq]
     exact ⟨u, ⟨A, hA.left, hu.left⟩, hu.right⟩
 
-/-! #### Theorem 3K (b)
+/-! ### Theorem 3K (b)
 
 The following hold for any sets. (`F` need not be a function.)
 The image of an intersection is included in the intersection of the images:
@@ -395,7 +395,7 @@ theorem theorem_3k_b_ii {F : Set.HRelation α β} {𝓐 : Set (Set α)}
   simp only [Set.mem_sInter, Set.mem_setOf_eq]
   exact ⟨u, hu⟩
 
-/-! #### Theorem 3K (c)
+/-! ### Theorem 3K (c)
 
 The following hold for any sets. (`F` need not be a function.)
 The image of a difference includes the difference of the images:
@@ -449,7 +449,7 @@ theorem theorem_3k_c_ii {F : Set.HRelation α β} {A B : Set α}
     exact absurd hu₁.left hu.left.right
   exact ⟨hv₁, hv₂⟩
 
-/-! #### Corollary 3L
+/-! ### Corollary 3L
 
 For any function `G` and sets `A`, `B`, and `𝓐`:
 
@@ -477,7 +477,7 @@ theorem corollary_3l_iii {G : Set.HRelation β α} {A B : Set α}
     single_valued_self_iff_single_rooted_inv.mp hG
   exact (theorem_3k_c_ii hG').symm
 
-/-- #### Theorem 3M
+/-- ### Theorem 3M
 
 If `R` is a symmetric and transitive relation, then `R` is an equivalence
 relation on `fld R`.
@@ -497,7 +497,7 @@ theorem theorem_3m {R : Set.Relation α}
     have := hS ht
     exact hT this ht
 
-/-- #### Theorem 3R
+/-- ### Theorem 3R
 
 Let `R` be a linear ordering on `A`.
 
@@ -521,7 +521,7 @@ theorem theorem_3r {R : Rel α α} (hR : IsStrictTotalOrder α R)
         right
         exact h₂
 
-/-- #### Exercise 3.1
+/-- ### Exercise 3.1
 
 Suppose that we attempted to generalize the Kuratowski definitions of ordered
 pairs to ordered triples by defining
@@ -544,7 +544,7 @@ theorem exercise_3_1 {x y z u v w : ℕ}
   · rw [hy, hv]
     simp only
 
-/-- #### Exercise 3.2a
+/-- ### Exercise 3.2a
 
 Show that `A × (B ∪ C) = (A × B) ∪ (A × C)`.
 -/
@@ -560,7 +560,7 @@ theorem exercise_3_2a {A : Set α} {B C : Set β}
     _ = { p | p ∈ Set.prod A B ∨ (p ∈ Set.prod A C) } := rfl
     _ = (Set.prod A B) ∪ (Set.prod A C) := rfl
 
-/-- #### Exercise 3.2b
+/-- ### Exercise 3.2b
 
 Show that if `A × B = A × C` and `A ≠ ∅`, then `B = C`.
 -/
@@ -589,7 +589,7 @@ theorem exercise_3_2b {A : Set α} {B C : Set β}
     have ⟨c, hc⟩ := Set.nonempty_iff_ne_empty.mpr (Ne.symm nC)
     exact (h (a, c)).mpr ⟨ha, hc⟩
 
-/-- #### Exercise 3.3
+/-- ### Exercise 3.3
 
 Show that `A × ⋃ 𝓑 = ⋃ {A × X | X ∈ 𝓑}`.
 -/
@@ -617,7 +617,7 @@ theorem exercise_3_3 {A : Set (Set α)} {𝓑 : Set (Set β)}
       · intro ⟨b, h₁, h₂, h₃⟩
         exact ⟨b, h₁, h₂, h₃⟩
 
-/-- #### Exercise 3.5a
+/-- ### Exercise 3.5a
 
 Assume that `A` and `B` are given sets, and show that there exists a set `C`
 such that for any `y`,
@@ -685,7 +685,7 @@ theorem exercise_3_5a {A : Set α} {B : Set β}
         rw [hab.right]
         exact ⟨hab.left, hb⟩
 
-/-- #### Exercise 3.5b
+/-- ### Exercise 3.5b
 
 With `A`, `B`, and `C` as above, show that `A × B = ∪ C`.
 -/
@@ -718,7 +718,7 @@ theorem exercise_3_5b {A : Set α} (B : Set β)
     exact ⟨h, hb⟩
 
 
-/-- #### Exercise 3.6
+/-- ### Exercise 3.6
 
 Show that a set `A` is a relation **iff** `A ⊆ dom A × ran A`.
 -/
@@ -736,7 +736,7 @@ theorem exercise_3_6 {A : Set.HRelation α β}
   ]
   exact ⟨⟨b, ht⟩, ⟨a, ht⟩⟩
 
-/-- #### Exercise 3.7
+/-- ### Exercise 3.7
 
 Show that if `R` is a relation, then `fld R = ⋃ ⋃ R`.
 -/
@@ -815,7 +815,7 @@ theorem exercise_3_7 {R : Set.Relation α}
       simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at this
       exact hxy_mem this
 
-/-- #### Exercise 3.8 (i)
+/-- ### Exercise 3.8 (i)
 
 Show that for any set `𝓐`:
 ```
@@ -841,7 +841,7 @@ theorem exercise_3_8_i {A : Set (Set.HRelation α β)}
   · intro ⟨t, ht, y, hx⟩
     exact ⟨y, t, ht, hx⟩
 
-/-- #### Exercise 3.8 (ii)
+/-- ### Exercise 3.8 (ii)
 
 Show that for any set `𝓐`:
 ```
@@ -866,7 +866,7 @@ theorem exercise_3_8_ii {A : Set (Set.HRelation α β)}
   · intro ⟨y, ⟨hy, ⟨t, ht⟩⟩⟩
     exact ⟨t, ⟨y, ⟨hy, ht⟩⟩⟩
 
-/-- #### Exercise 3.9 (i)
+/-- ### Exercise 3.9 (i)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -892,7 +892,7 @@ theorem exercise_3_9_i {A : Set (Set.HRelation α β)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- #### Exercise 3.9 (ii)
+/-- ### Exercise 3.9 (ii)
 
 Discuss the result of replacing the union operation by the intersection
 operation in the preceding problem.
@@ -918,7 +918,7 @@ theorem exercise_3_9_ii {A : Set (Set.HRelation α β)}
   intro _ y hy R hR
   exact ⟨y, hy R hR⟩
 
-/-- #### Exercise 3.12
+/-- ### Exercise 3.12
 
 Assume that `f` and `g` are functions and show that
 ```
@@ -948,7 +948,7 @@ theorem exercise_3_12 {f g : Set.HRelation α β}
     rw [single_valued_eq_unique hf hp hy₁.left.left]
     exact hy₁.left.right
 
-/-- #### Exercise 3.13
+/-- ### Exercise 3.13
 
 Assume that `f` and `g` are functions with `f ⊆ g` and `dom g ⊆ dom f`. Show
 that `f = g`.
@@ -972,7 +972,7 @@ theorem exercise_3_13 {f g : Set.HRelation α β}
     rw [single_valued_eq_unique hg hp hx.left.right]
     exact hx.left.left
 
-/-- #### Exercise 3.14 (a)
+/-- ### Exercise 3.14 (a)
 
 Assume that `f` and `g` are functions. Show that `f ∩ g` is a function.
 -/
@@ -981,7 +981,7 @@ theorem exercise_3_14_a {f g : Set.HRelation α β}
   : isSingleValued (f ∩ g) :=
   single_valued_subset hf (Set.inter_subset_left f g)
 
-/-- #### Exercise 3.14 (b)
+/-- ### Exercise 3.14 (b)
 
 Assume that `f` and `g` are functions. Show that `f ∪ g` is a function **iff**
 `f(x) = g(x)` for every `x` in `(dom f) ∩ (dom g)`.
@@ -1061,7 +1061,7 @@ theorem exercise_3_14_b {f g : Set.HRelation α β}
       · intro hz
         exact absurd (mem_pair_imp_fst_mem_dom hz) hgx
 
-/-- #### Exercise 3.15
+/-- ### Exercise 3.15
 
 Let `𝓐` be a set of functions such that for any `f` and `g` in `𝓐`, either
 `f ⊆ g` or `g ⊆ f`. Show that `⋃ 𝓐` is a function.
@@ -1084,7 +1084,7 @@ theorem exercise_3_15 {𝓐 : Set (Set.HRelation α β)}
     have := hg' hg.right
     exact single_valued_eq_unique (h𝓐 f hf.left) this hf.right
 
-/-! #### Exercise 3.17
+/-! ### Exercise 3.17
 
 Show that the composition of two single-rooted sets is again single-rooted.
 Conclude that the composition of two one-to-one functions is again one-to-one.
@@ -1119,7 +1119,7 @@ theorem exercise_3_17_ii {F : Set.HRelation β γ} {G : Set.HRelation α β}
       (single_valued_comp_is_single_valued hF.left hG.left)
       (exercise_3_17_i hF.right hG.right)
 
-/-! #### Exercise 3.18
+/-! ### Exercise 3.18
 
 Let `R` be the set
 ```
@@ -1252,7 +1252,7 @@ theorem exercise_3_18_v
 
 end Exercise_3_18
 
-/-! #### Exercise 3.19
+/-! ### Exercise 3.19
 
 Let
 ```
@@ -1502,7 +1502,7 @@ theorem exercise_3_19_x
 
 end Exercise_3_19
 
-/-- #### Exercise 3.20
+/-- ### Exercise 3.20
 
 Show that `F ↾ A = F ∩ (A × ran F)`.
 -/
@@ -1522,7 +1522,7 @@ theorem exercise_3_20 {F : Set.HRelation α β} {A : Set α}
     _ = F ∩ {p | p.fst ∈ A ∧ p.snd ∈ ran F} := rfl
     _ = F ∩ (Set.prod A (ran F)) := rfl
 
-/-- #### Exercise 3.22 (a)
+/-- ### Exercise 3.22 (a)
 
 Show that the following is correct for any sets.
 ```
@@ -1537,7 +1537,7 @@ theorem exercise_3_22_a {A B : Set α} {F : Set.HRelation α β} (h : A ⊆ B)
   have := h hu.left
   exact ⟨u, this, hu.right⟩
 
-/-- #### Exercise 3.22 (b)
+/-- ### Exercise 3.22 (b)
 
 Show that the following is correct for any sets.
 ```
@@ -1567,7 +1567,7 @@ theorem exercise_3_22_b {A B : Set α} {F : Set.HRelation α β}
     _ = { v | ∃ a ∈ image G A, (a, v) ∈ F } := rfl
     _ = image F (image G A) := rfl
 
-/-- #### Exercise 3.22 (c)
+/-- ### Exercise 3.22 (c)
 
 Show that the following is correct for any sets.
 ```
@@ -1585,7 +1585,7 @@ theorem exercise_3_22_c {A B : Set α} {Q : Set.Relation α}
     _ = { p | p ∈ Q ∧ p.1 ∈ A} ∪ { p | p ∈ Q ∧ p.1 ∈ B } := rfl
     _ = (restriction Q A) ∪ (restriction Q B) := rfl
 
-/-- #### Exercise 3.23 (i)
+/-- ### Exercise 3.23 (i)
 
 Let `I` be the identity function on the set `A`. Show that for any sets `B` and
 `C`, `B ∘ I = B ↾ A`.
@@ -1609,7 +1609,7 @@ theorem exercise_3_23_i {A : Set α} {B : Set.HRelation α β} {I : Set.Relation
     intro (x, y) hp
     refine ⟨x, ⟨hp.right, rfl⟩, hp.left⟩
 
-/-- #### Exercise 3.23 (ii)
+/-- ### Exercise 3.23 (ii)
 
 Let `I` be the identity function on the set `A`. Show that for any sets `B` and
 `C`, `I⟦C⟧ = A ∩ C`.
@@ -1641,7 +1641,7 @@ theorem exercise_3_23_ii {A C : Set α} {I : Set.Relation α}
     _ = C ∩ A := rfl
     _ = A ∩ C := Set.inter_comm C A
 
-/-- #### Exercise 3.24
+/-- ### Exercise 3.24
 
 Show that for a function `F`, `F⁻¹⟦A⟧ = { x ∈ dom F | F(x) ∈ A }`.
 -/
@@ -1671,7 +1671,7 @@ theorem exercise_3_24 {F : Set.HRelation α β} {A : Set β}
       · intro ⟨y, hy⟩
         exact ⟨y, hy.left⟩
 
-/-- #### Exercise 3.25 (b)
+/-- ### Exercise 3.25 (b)
 
 Show that the result of part (a) holds for any function `G`, not necessarily
 one-to-one.
@@ -1694,7 +1694,7 @@ theorem exercise_3_25_b {G : Set.HRelation α β} (hG : isSingleValued G)
     have ⟨t, ht⟩ := ran_exists h.left
     exact ⟨t, ⟨t, x, ht, rfl, rfl⟩, by rwa [← h.right]⟩
 
-/-- #### Exercise 3.25 (a)
+/-- ### Exercise 3.25 (a)
 
 Assume that `G` is a one-to-one function. Show that `G ∘ G⁻¹` is the identity
 function on `ran G`.
@@ -1703,7 +1703,7 @@ theorem exercise_3_25_a {G : Set.HRelation α β} (hG : isOneToOne G)
   : comp G (inv G) = { p | p.1 ∈ ran G ∧ p.1 = p.2 } :=
   exercise_3_25_b hG.left
 
-/-- #### Exercise 3.27
+/-- ### Exercise 3.27
 
 Show that `dom (F ∘ G) = G⁻¹⟦dom F⟧` for any sets `F` and `G`. (`F` and `G` need
 not be functions.)
@@ -1737,7 +1737,7 @@ theorem exercise_3_27 {F : Set.HRelation β γ} {G : Set.HRelation α β}
     ]
     exact ⟨t, u, hu.right, ht⟩
 
-/-- #### Exercise 3.28
+/-- ### Exercise 3.28
 
 Assume that `f` is a one-to-one function from `A` into `B`, and that `G` is the
 function with `dom G = 𝒫 A` defined by the equation `G(X) = f⟦X⟧`. Show that `G`
@@ -1832,7 +1832,7 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
     have hz := mem_pair_imp_snd_mem_ran hb.right
     exact hf.right.ran_ss hz
 
-/-- #### Exercise 3.29
+/-- ### Exercise 3.29
 
 Assume that `f : A → B` and define a function `G : B → 𝒫 A` by
 ```
@@ -1875,7 +1875,7 @@ theorem exercise_3_29 {f : Set.HRelation α β} {G : Set.HRelation β (Set α)}
   rw [heq] at this
   exact single_valued_eq_unique hf.is_func this.right ht
 
-/-! #### Exercise 3.30
+/-! ### Exercise 3.30
 
 Assume that `F : 𝒫 A → 𝒫 A` and that `F` has the monotonicity property:
 ```
@@ -1892,7 +1892,7 @@ variable {F : Set α → Set α} {A B C : Set α}
          (hB : B = ⋂₀ { X | X ⊆ A ∧ F X ⊆ X })
          (hC : C = ⋃₀ { X | X ⊆ A ∧ X ⊆ F X })
 
-/-- ##### Exercise 3.30 (a)
+/-- #### Exercise 3.30 (a)
 
 Show that `F(B) = B` and `F(C) = C`.
 -/
@@ -1988,7 +1988,7 @@ theorem exercise_3_30_a : F B = B ∧ F C = C := by
   · rw [Set.Subset.antisymm_iff]
     exact ⟨hC_subset, hC_supset⟩
 
-/-- ##### Exercise 3.30 (b)
+/-- #### Exercise 3.30 (b)
 
 Show that if `F(X) = X`, then `B ⊆ X ⊆ C`.
 -/
@@ -2010,7 +2010,7 @@ theorem exercise_3_30_b : ∀ X, X ⊆ A ∧ F X = X → B ⊆ X ∧ X ⊆ C := 
 
 end Exercise_3_30
 
-/-- #### Exercise 3.32 (a)
+/-- ### Exercise 3.32 (a)
 
 Show that `R` is symmetric **iff** `R⁻¹ ⊆ R`.
 -/
@@ -2028,7 +2028,7 @@ theorem exercise_3_32_a {R : Set.Relation α}
     rw [← mem_self_comm_mem_inv] at hp
     exact hR hp
 
-/-- #### Exercise 3.32 (b)
+/-- ### Exercise 3.32 (b)
 
 Show that `R` is transitive **iff** `R ∘ R ⊆ R`.
 -/
@@ -2045,7 +2045,7 @@ theorem exercise_3_32_b {R : Set.Relation α}
     have : (x, z) ∈ comp R R := ⟨y, hx, hz⟩
     exact hR this
 
-/-- #### Exercise 3.33
+/-- ### Exercise 3.33
 
 Show that `R` is a symmetric and transitive relation **iff** `R = R⁻¹ ∘ R`.
 -/
@@ -2095,7 +2095,7 @@ theorem exercise_3_33 {R : Set.Relation α}
     rw [h, hR]
     exact ⟨y, hx, this⟩
 
-/-- #### Exercise 3.34 (a)
+/-- ### Exercise 3.34 (a)
 
 Assume that `𝓐` is a nonempty set, every member of which is a transitive
 relation. Is the set `⋂ 𝓐` a transitive relation?
@@ -2110,7 +2110,7 @@ theorem exercise_3_34_a {𝓐 : Set (Set.Relation α)}
   have hy' := hy A hA
   exact h𝓐 A hA hx' hy'
 
-/-- #### Exercise 3.34 (b)
+/-- ### Exercise 3.34 (b)
 
 Assume that `𝓐` is a nonempty set, every member of which is a transitive
 relation. Is `⋃ 𝓐` a transitive relation?
@@ -2157,7 +2157,7 @@ theorem exercise_3_34_b {𝓐 : Set (Set.Relation ℕ)}
         simp at this
     exact absurd (h h₁ h₂) h₃
 
-/-- #### Exercise 3.35
+/-- ### Exercise 3.35
 
 Show that for any `R` and `x`, we have `[x]_R = R⟦{x}⟧`.
 -/
@@ -2168,7 +2168,7 @@ theorem exercise_3_35 {R : Set.Relation α} {x : α}
     _ = { t | ∃ u ∈ ({x} : Set α), (u, t) ∈ R } := by simp
     _ = image R {x} := rfl
 
-/-- #### Exercise 3.36
+/-- ### Exercise 3.36
 
 Assume that `f : A → B` and that `R` is an equivalence relation on `B`. Define
 `Q` to be the set `{⟨x, y⟩ ∈ A × A | ⟨f(x), f(y)⟩ ∈ R}`. Show that `Q` is an
@@ -2234,7 +2234,7 @@ theorem exercise_3_36 {f : Set.HRelation α β}
     simp only [exists_and_left, Set.mem_setOf_eq]
     exact ⟨fx, hfx, fz, hfz, hR.trans h₁ h₂⟩
 
-/-- #### Exercise 3.37
+/-- ### Exercise 3.37
 
 Assume that `P` is a partition of a set `A`. Define the relation `Rₚ` as
 follows:
@@ -2311,7 +2311,7 @@ theorem exercise_3_37 {P : Set (Set α)} {A : Set α}
     simp only [Set.mem_setOf_eq]
     exact ⟨B₁, hB₁.left, hB₁.right.left, by rw [hB]; exact hB₂.right.right⟩
 
-/-- #### Exercise 3.38
+/-- ### Exercise 3.38
 
 Theorem 3P shows that `A / R` is a partition of `A` whenever `R` is an
 equivalence relation on `A`. Show that if we start with the equivalence relation
@@ -2379,7 +2379,7 @@ theorem exercise_3_38 {P : Set (Set α)} {A : Set α}
         simp only [Set.mem_setOf_eq]
       _ = neighborhood Rₚ x := rfl
 
-/-- #### Exercise 3.39
+/-- ### Exercise 3.39
 
 Assume that we start with an equivalence relation `R` on `A` and define `P` to
 be the partition `A / R`. Show that `Rₚ`, as defined in Exercise 37, is just
@@ -2417,7 +2417,7 @@ theorem exercise_3_39 {P : Set (Set α)} {R Rₚ : Set.Relation α} {A : Set α}
     rw [hP]
     exact ⟨x, hxA, rfl⟩
 
-/-- #### Exercise 3.41 (a)
+/-- ### Exercise 3.41 (a)
 
 Let `ℝ` be the set of real numbers and define the realtion `Q` on `ℝ × ℝ` by
 `⟨u, v⟩ Q ⟨x, y⟩` **iff** `u + y = x + v`. Show that `Q` is an equivalence
@@ -2470,7 +2470,7 @@ theorem exercise_3_41_a {Q : Set.Relation (ℝ × ℝ)}
     conv => right; rw [add_comm]
     exact this
 
-/-- #### Exercise 3.43
+/-- ### Exercise 3.43
 
 Assume that `R` is a linear ordering on a set `A`. Show that `R⁻¹` is also a
 linear ordering on `A`.
@@ -2493,7 +2493,7 @@ theorem exercise_3_43 {R : Rel α α} (hR : IsStrictTotalOrder α R)
     unfold Rel.inv flip at *
     exact hR.trans c b a hac hab
 
-/-! #### Exercise 3.44
+/-! ### Exercise 3.44
 
 Assume that `<` is a linear ordering on a set `A`. Assume that `f : A → A` and
 that `f` has the property that whenever `x < y`, then `f(x) < f(y)`. Show that
@@ -2537,7 +2537,7 @@ theorem exercise_3_44_ii {R : Rel α α} (hR : IsStrictTotalOrder α R)
       have := hR.trans (f x) (f y) (f x) h (hf y x h₂)
       exact absurd this (hR.irrefl (f x))
 
-/-- #### Exercise 3.45
+/-- ### Exercise 3.45
 
 Assume that `<_A` and `<_B` are linear orderings on `A` and `B`, respectively.
 Define the binary relation `<_L` on the Cartesian product `A × B` by:

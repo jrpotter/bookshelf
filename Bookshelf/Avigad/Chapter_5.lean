@@ -13,7 +13,7 @@ namespace Avigad.Chapter5
 
 namespace ex1
 
-/-! ##### Exercises 3.1 -/
+/-! #### Exercises 3.1 -/
 
 section ex3_1
 
@@ -154,7 +154,7 @@ theorem imp_imp_not_imp_not : (p → q) → (¬q → ¬p) := by
 
 end ex3_1
 
-/-! ##### Exercises 3.2 -/
+/-! #### Exercises 3.2 -/
 
 section ex3_2
 
@@ -223,7 +223,7 @@ theorem imp_imp_imp : (((p → q) → p) → p) := by
 
 end ex3_2
 
-/-! ##### Exercises 3.3 -/
+/-! #### Exercises 3.3 -/
 
 section ex3_3
 
@@ -235,7 +235,7 @@ theorem iff_not_self (hp : p) : ¬(p ↔ ¬p) := by
 
 end ex3_3
 
-/-! ##### Exercises 4.1 -/
+/-! #### Exercises 4.1 -/
 
 section ex4_1
 
@@ -264,7 +264,7 @@ theorem forall_or_distrib : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x
 
 end ex4_1
 
-/-! ##### Exercises 4.2 -/
+/-! #### Exercises 4.2 -/
 
 section ex4_2
 
@@ -316,7 +316,7 @@ theorem forall_swap : (∀ x, r → p x) ↔ (r → ∀ x, p x) := by
 
 end ex4_2
 
-/-! ##### Exercises 4.3 -/
+/-! #### Exercises 4.3 -/
 
 section ex4_3
 
@@ -336,7 +336,7 @@ theorem barber_paradox (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x)
 
 end ex4_3
 
-/-! ##### Exercises 4.5 -/
+/-! #### Exercises 4.5 -/
 
 section ex4_5
 
@@ -448,7 +448,7 @@ end ex4_5
 
 end ex1
 
-/-! #### Exercise 2
+/-! ### Exercise 2
 
 Use tactic combinators to obtain a one line proof of the following:
 -/

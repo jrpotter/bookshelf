@@ -5,7 +5,7 @@ Inductive Types
 
 namespace Avigad.Chapter7
 
-/-! #### Exercise 1
+/-! ### Exercise 1
 
 Try defining other operations on the natural numbers, such as multiplication,
 the predecessor function (with `pred 0 = 0`), truncated subtraction (with
@@ -77,7 +77,7 @@ end Nat
 
 end ex1
 
-/-! #### Exercise 2
+/-! ### Exercise 2
 
 Define some operations on lists, like a `length` function or the `reverse`
 function. Prove some properties, such as the following:
@@ -178,7 +178,7 @@ theorem reverse_reverse (t : List α)
 
 end ex2
 
-/-! #### Exercise 3
+/-! ### Exercise 3
 
 Define an inductive data type consisting of terms built up from the following
 constructors:

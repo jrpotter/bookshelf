@@ -40,7 +40,7 @@ theorem forall_or_distrib
 
 end ex1
 
-/-! #### Exercise 2
+/-! ### Exercise 2
 
 It is often possible to bring a component of a formula outside a universal
 quantifier, when it does not depend on the quantified variable. Try proving
@@ -78,7 +78,7 @@ theorem forall_swap : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
 
 end ex2
 
-/-! #### Exercise 3
+/-! ### Exercise 3
 
 Consider the "barber paradox," that is, the claim that in a certain town there
 is a (male) barber that shaves all and only the men who do not shave themselves.
@@ -101,7 +101,7 @@ theorem barber_paradox (h : ∀ x : men, shaves barber x ↔ ¬shaves x x) : Fal
 
 end ex3
 
-/-! #### Exercise 4
+/-! ### Exercise 4
 
 Remember that, without any parameters, an expression of type `Prop` is just an
 assertion. Fill in the definitions of `prime` and `Fermat_prime` below, and
@@ -143,7 +143,7 @@ def Fermat'sLastTheorem : Prop :=
 
 end ex4
 
-/-! #### Exercise 5
+/-! ### Exercise 5
 
 Prove as many of the identities listed in Section 4.4 as you can.
 -/
@@ -228,7 +228,7 @@ theorem exists_self_iff_self_exists (a : α) : (∃ x, r → p x) ↔ (r → ∃
 
 end ex5
 
-/-! #### Exercise 6
+/-! ### Exercise 6
 
 Give a calculational proof of the theorem `log_mul` below.
 -/

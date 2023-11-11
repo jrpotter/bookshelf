@@ -8,21 +8,21 @@ namespace Apostol.Chapter_1_11
 
 open BigOperators
 
-/-- #### Exercise 4a
+/-- ### Exercise 4a
 
 `⌊x + n⌋ = ⌊x⌋ + n` for every integer `n`.
 -/
 theorem exercise_4a (x : ℝ) (n : ℤ) : ⌊x + n⌋ = ⌊x⌋ + n :=
   Int.floor_add_int x n
 
-/-- #### Exercise 4b.1
+/-- ### Exercise 4b.1
 
 `⌊-x⌋ = -⌊x⌋` if `x` is an integer.
 -/
 theorem exercise_4b_1 (x : ℤ) : ⌊-x⌋ = -⌊x⌋ := by
   simp only [Int.floor_int, id_eq]
 
-/-- #### Exercise 4b.2
+/-- ### Exercise 4b.2
 
 `⌊-x⌋ = -⌊x⌋ - 1` otherwise.
 -/
@@ -42,7 +42,7 @@ theorem exercise_4b_2 (x : ℝ) (h : ∃ n : ℤ, x ∈ Set.Ioo ↑n (↑n + (1 
   · exact (Set.mem_Ioo.mp hn).left
   · exact le_of_lt (Set.mem_Ico.mp hn').right
 
-/-- #### Exercise 4c
+/-- ### Exercise 4c
 
 `⌊x + y⌋ = ⌊x⌋ + ⌊y⌋` or `⌊x⌋ + ⌊y⌋ + 1`.
 -/
@@ -72,7 +72,7 @@ theorem exercise_4c (x y : ℝ)
       rw [← sub_lt_iff_lt_add', ← sub_sub, add_sub_cancel, add_sub_cancel]
       exact add_lt_add (Int.fract_lt_one x) (Int.fract_lt_one y)
 
-/-- #### Exercise 5
+/-- ### Exercise 5
 
 The formulas in Exercises 4(d) and 4(e) suggest a generalization for `⌊nx⌋`.
 State and prove such a generalization.
@@ -81,7 +81,7 @@ theorem exercise_5 (n : ℕ) (x : ℝ)
   : ⌊n * x⌋ = Finset.sum (Finset.range n) (fun i => ⌊x + i/n⌋) :=
   Real.Floor.floor_mul_eq_sum_range_floor_add_index_div n x
 
-/-- #### Exercise 4d
+/-- ### Exercise 4d
 
 `⌊2x⌋ = ⌊x⌋ + ⌊x + 1/2⌋`
 -/
@@ -94,7 +94,7 @@ theorem exercise_4d (x : ℝ)
   simp
   rw [add_comm]
 
-/-- #### Exercise 4e
+/-- ### Exercise 4e
 
 `⌊3x⌋ = ⌊x⌋ + ⌊x + 1/3⌋ + ⌊x + 2/3⌋`
 -/
@@ -108,7 +108,7 @@ theorem exercise_4e (x : ℝ)
   conv => rhs; rw [← add_rotate']; arg 2; rw [add_comm]
   rw [← add_assoc]
 
-/-- #### Exercise 7b
+/-- ### Exercise 7b
 
 If `a` and `b` are positive integers with no common factor, we have the formula
 `∑_{n=1}^{b-1} ⌊na / b⌋ = ((a - 1)(b - 1)) / 2`. When `b = 1`, the sum on the
@@ -125,7 +125,7 @@ theorem exercise_7b (ha : a > 0) (hb : b > 0) (hp : Nat.Coprime a b)
 
 section
 
-/-- #### Exercise 8
+/-- ### Exercise 8
 
 Let `S` be a set of points on the real line. The *characteristic function* of
 `S` is, by definition, the function `Χ` such that `Χₛ(x) = 1` for every `x` in

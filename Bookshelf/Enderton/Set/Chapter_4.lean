@@ -11,7 +11,7 @@ Natural Numbers
 
 namespace Enderton.Set.Chapter_4
 
-/-- #### Theorem 4C
+/-- ### Theorem 4C
 
 Every natural number except `0` is the successor of some natural number.
 -/
@@ -23,7 +23,7 @@ theorem theorem_4c (n : ℕ)
 
 #check Nat.exists_eq_succ_of_ne_zero
 
-/-- #### Theorem 4I
+/-- ### Theorem 4I
 
 For natural numbers `m` and `n`,
 ```
@@ -34,7 +34,7 @@ m + n⁺ = (m + n)⁺
 theorem theorem_4i (m n : ℕ)
   : m + 0 = m ∧ m + n.succ = (m + n).succ := ⟨rfl, rfl⟩
 
-/-- #### Theorem 4J
+/-- ### Theorem 4J
 
 For natural numbers `m` and `n`,
 ```
@@ -45,7 +45,7 @@ m ⬝ n⁺ = m ⬝ n + m .
 theorem theorem_4j (m n : ℕ)
   : m * 0 = 0 ∧ m * n.succ = m * n + m := ⟨rfl, rfl⟩
 
-/-- #### Left Additive Identity
+/-- ### Left Additive Identity
 
 For all `n ∈ ω`, `A₀(n) = n`. In other words, `0 + n = n`.
 -/
@@ -60,7 +60,7 @@ lemma left_additive_identity (n : ℕ)
 
 #check Nat.zero_add
 
-/-- #### Lemma 2
+/-- ### Lemma 2
 
 For all `m, n ∈ ω`, `Aₘ₊(n) = Aₘ(n⁺)`. In other words, `m⁺ + n = m + n⁺`.
 -/
@@ -76,7 +76,7 @@ lemma lemma_2 (m n : ℕ)
 
 #check Nat.succ_add_eq_succ_add
 
-/-- #### Theorem 4K-1
+/-- ### Theorem 4K-1
 
 Associatve law for addition. For `m, n, p ∈ ω`,
 ```
@@ -99,7 +99,7 @@ theorem theorem_4k_1 {m n p : ℕ}
 
 #check Nat.add_assoc
 
-/-- #### Theorem 4K-2
+/-- ### Theorem 4K-2
 
 Commutative law for addition. For `m, n ∈ ω`,
 ```
@@ -119,7 +119,7 @@ theorem theorem_4k_2 {m n : ℕ}
 
 #check Nat.add_comm
 
-/-- #### Zero Multiplicand
+/-- ### Zero Multiplicand
 
 For all `n ∈ ω`, `M₀(n) = 0`. In other words, `0 ⬝ n = 0`.
 -/
@@ -135,7 +135,7 @@ theorem zero_multiplicand (n : ℕ)
 
 #check Nat.zero_mul
 
-/-- #### Successor Distribution
+/-- ### Successor Distribution
 
 For all `m, n ∈ ω`, `Mₘ₊(n) = Mₘ(n) + n`. In other words,
 ```
@@ -159,7 +159,7 @@ theorem succ_distrib (m n : ℕ)
 
 #check Nat.succ_mul
 
-/-- #### Theorem 4K-3
+/-- ### Theorem 4K-3
 
 Distributive law. For `m, n, p ∈ ω`,
 ```
@@ -181,7 +181,7 @@ theorem theorem_4k_3 (m n p : ℕ)
     _ = (m * n + n) + (m * p + p) := by rw [theorem_4k_1, theorem_4k_1]
     _ = m.succ * n + m.succ * p := by rw [succ_distrib, succ_distrib]
 
-/-- #### Successor Identity
+/-- ### Successor Identity
 
 For all `m ∈ ω`, `Aₘ(1) = m⁺`. In other words, `m + 1 = m⁺`.
 -/
@@ -197,7 +197,7 @@ theorem succ_identity (m : ℕ)
 
 #check Nat.succ_eq_one_add
 
-/-- #### Right Multiplicative Identity
+/-- ### Right Multiplicative Identity
 
 For all `m ∈ ω`, `Mₘ(1) = m`. In other words, `m ⬝ 1 = m`.
 -/
@@ -213,9 +213,9 @@ theorem right_mul_id (m : ℕ)
 
 #check Nat.mul_one
 
-/-- #### Theorem 4K-5
+/-- ### Theorem 4K-5
 
-Commutative law for multiplication. For `m, n ∈ ω`, `m ⬝ n = n ⬝ m`. 
+Commutative law for multiplication. For `m, n ∈ ω`, `m ⬝ n = n ⬝ m`.
 -/
 theorem theorem_4k_5 (m n : ℕ)
   : m * n = n * m := by
@@ -232,7 +232,7 @@ theorem theorem_4k_5 (m n : ℕ)
 
 #check Nat.mul_comm
 
-/-- #### Theorem 4K-4
+/-- ### Theorem 4K-4
 
 Associative law for multiplication. For `m, n, p ∈ ω`,
 ```
@@ -254,7 +254,7 @@ theorem theorem_4k_4 (m n p : ℕ)
 
 #check Nat.mul_assoc
 
-/-- #### Lemma 4L(b)
+/-- ### Lemma 4L(b)
 
 No natural number is a member of itself.
 -/
@@ -269,7 +269,7 @@ lemma lemma_4l_b (n : ℕ)
 
 #check Nat.lt_irrefl
 
-/-- #### Lemma 10
+/-- ### Lemma 10
 
 For every natural number `n ≠ 0`, `0 ∈ n`.
 -/
@@ -285,7 +285,7 @@ theorem zero_least_nat (n : ℕ)
 
 #check Nat.pos_of_ne_zero
 
-/-! #### Theorem 4N
+/-! ### Theorem 4N
 
 For any natural numbers `n`, `m`, and `p`,
 ```
@@ -361,7 +361,7 @@ theorem theorem_4n_ii (m n p : ℕ)
 
 #check Nat.mul_lt_mul_of_pos_right
 
-/-! #### Corollary 4P
+/-! ### Corollary 4P
 
 The following cancellation laws hold for `m`, `n`, and `p` in `ω`:
 ```
@@ -384,7 +384,7 @@ theorem corollary_4p_i (m n p : ℕ) (h : m + p = n + p)
 
 #check Nat.add_right_cancel
 
-/-- #### Well Ordering of ω
+/-- ### Well Ordering of ω
 
 Let `A` be a nonempty subset of `ω`. Then there is some `m ∈ A` such that
 `m ≤ n` for all `n ∈ A`.
@@ -401,7 +401,7 @@ theorem well_ordering_nat {A : Set ℕ} (hA : Set.Nonempty A)
     rw [this] at h
     simp only [sdiff_self, Set.bot_eq_empty] at h
     exact absurd h.symm (Set.Nonempty.ne_empty hA)
-  
+
   -- Use strong induction to prove every element of `ω` is in the complement.
   have : ∀ n : ℕ, (∀ m, m < n → m ∈ A.compl) := by
     intro n
@@ -438,7 +438,7 @@ theorem well_ordering_nat {A : Set ℕ} (hA : Set.Nonempty A)
 
 #check WellOrder
 
-/-- #### Strong Induction Principle for ω
+/-- ### Strong Induction Principle for ω
 
 Let `A` be a subset of `ω`, and assume that for every `n ∈ ω`, if every number
 less than `n` is in `A`, then `n ∈ A`. Then `A = ω`.
@@ -455,21 +455,21 @@ theorem strong_induction_principle_nat (A : Set ℕ)
   by_contra nh
   have ⟨m, hm⟩ := well_ordering_nat (Set.nmem_singleton_empty.mp nh)
   refine absurd (h m ?_) hm.left
-  
+
   -- Show that every number less than `m` is in `A`.
   intro x hx
   by_contra nx
   have : x < x := Nat.lt_of_lt_of_le hx (hm.right x nx)
   simp at this
 
-/-- #### Exercise 4.1
+/-- ### Exercise 4.1
 
 Show that `1 ≠ 3` i.e., that `∅⁺ ≠ ∅⁺⁺⁺`.
 -/
 theorem exercise_4_1 : 1 ≠ 3 := by
   simp
 
-/-- #### Exercise 4.13
+/-- ### Exercise 4.13
 
 Let `m` and `n` be natural numbers such that `m ⬝ n = 0`. Show that either
 `m = 0` or `n = 0`.
@@ -498,7 +498,7 @@ Call a natural number *odd* if it has the form `(2 ⬝ p) + 1` for some `p`.
 -/
 def odd (n : ℕ) : Prop := ∃ p, (2 * p) + 1 = n
 
-/-- #### Exercise 4.14
+/-- ### Exercise 4.14
 
 Show that each natural number is either even or odd, but never both.
 -/
@@ -549,7 +549,7 @@ theorem exercise_4_14 (n : ℕ)
       have : even n := ⟨q, hq'⟩
       exact absurd this h
 
-/-- #### Exercise 4.17
+/-- ### Exercise 4.17
 
 Prove that `mⁿ⁺ᵖ = mⁿ ⬝ mᵖ.`
 -/
@@ -567,7 +567,7 @@ theorem exercise_4_17 (m n p : ℕ)
     _ = m ^ n * (m ^ p * m) := by rw [theorem_4k_4]
     _ = m ^ n * m ^ p.succ := rfl
 
-/-- #### Exercise 4.19
+/-- ### Exercise 4.19
 
 Prove that if `m` is a natural number and `d` is a nonzero number, then there
 exist numbers `q` and `r` such that `m = (d ⬝ q) + r` and `r` is less than `d`.
@@ -600,7 +600,7 @@ theorem exercise_4_19 (m d : ℕ) (hd : d ≠ 0)
         _ < d := hr
       simp at this
 
-/-- #### Exercise 4.22
+/-- ### Exercise 4.22
 
 Show that for any natural numbers `m` and `p` we have `m ∈ m + p⁺`.
 -/
@@ -612,7 +612,7 @@ theorem exercise_4_22 (m p : ℕ)
     _ < m + p.succ := ih
     _ < m + p.succ.succ := Nat.lt.base (m + p.succ)
 
-/-- #### Exercise 4.23
+/-- ### Exercise 4.23
 
 Assume that `m` and `n` are natural numbers with `m` less than `n`. Show that
 there is some `p` in `ω` for which `m + p⁺ = n`. (It follows from this and the
@@ -637,7 +637,7 @@ theorem exercise_4_23 {m n : ℕ} (hm : m < n)
       refine ⟨0, ?_⟩
       rw [hm₁]
 
-/-- #### Exercise 4.24
+/-- ### Exercise 4.24
 
 Assume that `m + n = p + q`. Show that
 ```
@@ -660,7 +660,7 @@ theorem exercise_4_24 (m n p q : ℕ) (h : m + n = p + q)
     rw [← h] at hr
     exact (theorem_4n_i m p n).mpr hr
 
-/-- #### Exercise 4.25
+/-- ### Exercise 4.25
 
 Assume that `n ∈ m` and `q ∈ p`. Show that
 ```

@@ -3,7 +3,7 @@
 Propositions and Proofs
 -/
 
-/-! #### Exercise 1
+/-! ### Exercise 1
 
 Prove the following identities.
 -/
@@ -104,7 +104,7 @@ theorem imp_imp_not_imp_not : (p → q) → (¬q → ¬p) :=
 
 end ex1
 
-/-! #### Exercise 2
+/-! ### Exercise 2
 
 Prove the following identities. These require classical reasoning.
 -/
@@ -150,7 +150,7 @@ theorem imp_imp_imp : (((p → q) → p) → p) :=
 
 end ex2
 
-/-! #### Exercise 3
+/-! ### Exercise 3
 
 Prove `¬(p ↔ ¬p)` without using classical logic.
 -/
