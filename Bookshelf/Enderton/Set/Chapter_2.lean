@@ -20,7 +20,8 @@ A ∩ B = B ∩ A
 -/
 
 theorem commutative_law_i (A B : Set α)
-  : A ∪ B = B ∪ A := calc A ∪ B
+  : A ∪ B = B ∪ A :=
+  calc A ∪ B
   _ = { x | x ∈ A ∨ x ∈ B } := rfl
   _ = { x | x ∈ B ∨ x ∈ A } := by
     ext

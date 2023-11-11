@@ -5,7 +5,7 @@ import Mathlib.Data.Set.Function
 Additional theorems around functions defined on sets.
 -/
 
-namespace Set
+namespace Set.Function
 
 /--
 Produce a new function that swaps the outputs of the two specified inputs.
@@ -232,4 +232,4 @@ theorem self_iff_swap_BijOn [DecidableEq α]
   : BijOn (swap f a₁ a₂) A B ↔ BijOn f A B :=
   ⟨self_BijOn_swap ha₁ ha₂, swap_BijOn_self ha₁ ha₂⟩
 
-end Set
+end Set.Function

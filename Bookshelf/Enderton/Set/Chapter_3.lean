@@ -23,8 +23,16 @@ If `x ∈ C` and `y ∈ C`, then `⟨x, y⟩ ∈ 𝒫 𝒫 C`.
 -/
 lemma lemma_3b {C : Set α} (hx : x ∈ C) (hy : y ∈ C)
   : OrderedPair x y ∈ 𝒫 𝒫 C := by
+/-
+> Let `C` be an arbitrary set and `x, y ∈ C`. Then by definition of the power
+> set, `{x}` and `{x, y}` are members of `𝒫 C`.
+-/
   have hxs : {x} ⊆ C := Set.singleton_subset_iff.mpr hx
   have hxys : {x, y} ⊆ C := Set.mem_mem_imp_pair_subset hx hy
+/-
+> Likewise `{{x}, {x, y}}` is a member of `𝒫 𝒫 C`. By definition of an ordered
+> pair, `⟨x, y⟩ = {{x}, {x, y}}`. This concludes our proof.
+-/
   exact Set.mem_mem_imp_pair_subset hxs hxys
 
 /-- #### Theorem 3D
@@ -33,10 +41,23 @@ If `⟨x, y⟩ ∈ A`, then `x` and `y` belong to `⋃ ⋃ A`.
 -/
 theorem theorem_3d {A : Set (Set (Set α))} (h : OrderedPair x y ∈ A)
   : x ∈ ⋃₀ (⋃₀ A) ∧ y ∈ ⋃₀ (⋃₀ A) := by
+/-
+> Let `A` be a set and `⟨x, y⟩ ∈ A`. By definition of an ordered pair,
+>
+> `⟨x, y⟩ = {{x}, {x, y}}`.
+>
+> By Exercise 2.3, `{{x}, {x, y}} ⊆ ∪ A`. Then `{x, y} ∈ ∪ A`.
+-/
   have hp := Chapter_2.exercise_2_3 (OrderedPair x y) h
-  unfold OrderedPair at hp  
+  unfold OrderedPair at hp
   have hq : {x, y} ∈ ⋃₀ A := hp (by simp)
+/-
+> Another application of Exercise 2.3 implies `{x, y} ∈ ∪ ∪ A`.
+-/
   have : {x, y} ⊆ ⋃₀ ⋃₀ A := Chapter_2.exercise_2_3 {x, y} hq
+/-
+> Therefore `x, y ∈ ∪ ∪ A`.
+-/
   exact ⟨this (by simp), this (by simp)⟩
 
 
@@ -199,7 +220,7 @@ theorem theorem_3j_a {F : Set.HRelation α β}
         Set.mem_union,
         Prod.mk.injEq
       ] at ht
-      have ⟨a₁, ha₁⟩ := ht 
+      have ⟨a₁, ha₁⟩ := ht
       apply Or.elim ha₁
       · intro ⟨⟨a, b, hab⟩, _⟩
         have := mem_pair_imp_fst_mem_dom hab.left
@@ -1073,7 +1094,7 @@ theorem exercise_3_17_i {F : Set.HRelation β γ} {G : Set.HRelation α β}
   (hF : isSingleRooted F) (hG : isSingleRooted G)
   : isSingleRooted (comp F G):= by
   intro v hv
-  
+
   have ⟨u₁, hu₁⟩ := ran_exists hv
   have hu₁' := hu₁
   unfold comp at hu₁'
@@ -1081,13 +1102,13 @@ theorem exercise_3_17_i {F : Set.HRelation β γ} {G : Set.HRelation α β}
   have ⟨t₁, ht₁⟩ := hu₁'
   unfold ExistsUnique
   refine ⟨u₁, ⟨mem_pair_imp_fst_mem_dom hu₁, hu₁⟩, ?_⟩
-  
+
   intro u₂ hu₂
   have hu₂' := hu₂
   unfold comp at hu₂'
   simp only [Set.mem_setOf_eq] at hu₂'
   have ⟨_, ⟨t₂, ht₂⟩⟩ := hu₂'
-  
+
   have ht : t₁ = t₂ := single_rooted_eq_unique hF ht₁.right ht₂.right
   rw [ht] at ht₁
   exact single_rooted_eq_unique hG ht₂.left ht₁.left
@@ -1435,7 +1456,7 @@ theorem exercise_3_19_x
     apply Or.elim ht₁
     · intro ht
       rw [← ht] at ht₂
-      simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at ht₂ 
+      simp only [Set.mem_singleton_iff, Set.mem_insert_iff] at ht₂
       apply Or.elim ht₂
       · intro ha
         rw [ha] at hx
@@ -1780,7 +1801,7 @@ theorem exercise_3_28 {A : Set α} {B : Set β}
       have hX₁sub := mem_pair_imp_fst_mem_dom hX₁
       rw [dG] at hX₁sub
       simp only [Set.mem_powerset_iff] at hX₁sub
-      
+
       have ht' := hX₁sub ht
       rw [← hf.right.dom_eq] at ht'
       have ⟨ft, hft⟩ := dom_exists ht'
@@ -1885,12 +1906,12 @@ theorem exercise_3_30_a : F B = B ∧ F C = C := by
         show ∀ t, t ∈ B → t ∈ X
         intro t ht
         rw [hB] at ht
-        simp only [Set.mem_sInter] at ht 
+        simp only [Set.mem_sInter] at ht
         exact ht X ⟨hX₁, hX₂⟩
       exact hX₂ (hMono B X ⟨hB₁, hX₁⟩ hx)
     rw [hB]
     exact this
-  
+
   have hC_supset : C ⊆ F C := by
     intro x hx
     rw [hC] at hx
@@ -1910,7 +1931,7 @@ theorem exercise_3_30_a : F B = B ∧ F C = C := by
       have ⟨T, hT⟩ := ht
       exact hT.left.left hT.right
     exact hMono X C ⟨hC₁, hC₂⟩ (hX.left.right hX.right)
-  
+
   have hC_sub_A : C ⊆ A := by
     show ∀ t, t ∈ C → t ∈ A
     intro t ht
@@ -1936,7 +1957,7 @@ theorem exercise_3_30_a : F B = B ∧ F C = C := by
     intro t ht
     simp only [Set.mem_sUnion, Set.mem_setOf_eq]
     exact ⟨X, hX, ht⟩
-  
+
   have hB_sub_A : B ⊆ A := by
     show ∀ t, t ∈ B → t ∈ A
     intro t ht
@@ -1951,11 +1972,11 @@ theorem exercise_3_30_a : F B = B ∧ F C = C := by
     · exact hB_subset
     · have hInter : ∀ X, X ∈ {X | X ⊆ A ∧ F X ⊆ X} → B ⊆ X := by
         intro X hX
-        simp only [Set.mem_setOf_eq] at hX 
+        simp only [Set.mem_setOf_eq] at hX
         rw [hB]
         show ∀ t, t ∈ ⋂₀ {X | X ⊆ A ∧ F X ⊆ X} → t ∈ X
         intro t ht
-        simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht 
+        simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht
         exact ht X hX
       refine hInter (F B) ⟨?_, ?_⟩
       · show ∀ t, t ∈ F B → t ∈ A
@@ -1978,7 +1999,7 @@ theorem exercise_3_30_b : ∀ X, X ⊆ A ∧ F X = X → B ⊆ X ∧ X ⊆ C := 
     rw [hB]
     show ∀ t, t ∈ ⋂₀ {X | X ⊆ A ∧ F X ⊆ X} → t ∈ X
     intro t ht
-    simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht 
+    simp only [Set.mem_sInter, Set.mem_setOf_eq] at ht
     exact ht X ⟨hX₁, this⟩
   · have : X ⊆ F X := Eq.subset (id (Eq.symm hX₂))
     rw [hC]
@@ -2173,7 +2194,7 @@ theorem exercise_3_36 {f : Set.HRelation α β}
       Prod.exists,
       exists_and_right,
       exists_eq_right
-    ] at hx 
+    ] at hx
     apply Or.elim hx
     · intro ⟨_, _, hx₁⟩
       rw [← hf.dom_eq]
