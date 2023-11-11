@@ -72,28 +72,72 @@ lemma pigeonhole_principle_aux (n : ℕ)
       ∀ f : ℕ → ℕ,
         Set.MapsTo f M (Set.Iio n) ∧ Set.InjOn f M →
         ¬ Set.SurjOn f M (Set.Iio n) := by
+/-
+> Let
+>
+> `S = {n ∈ ω | ∀ M ⊂ n, every one-to-one function f: M → n is not onto}`. (1)
+>
+> We show that (i) `0 ∈ S` and (ii) if `n ∈ S`, then so is `n⁺`. Afterward we
+> prove (iii) the theorem statement.
+-/
   induction n with
+/-
+## (i)
+> By definition, `0 = ∅`.
+-/
   | zero =>
     intro _ hM
     unfold Set.Iio at hM
     simp only [Nat.zero_eq, not_lt_zero', Set.setOf_false] at hM
+/-
+> Then `0` has no proper subsets.
+-/
     rw [Set.ssubset_empty_iff_false] at hM
+/-
+> Hence `0 ∈ S` vacuously.
+-/
     exact False.elim hM
+/-
+## (ii)
+> Suppose `n ∈ S` and `M ⊂ n⁺`. Furthermore, let `f: M → n⁺` be a one-to-one
+> function.
+-/
   | succ n ih =>
     intro M hM f ⟨hf_maps, hf_inj⟩ hf_surj
-
+/-
+> If `M = ∅`, it vacuously holds that `f` is not onto `n⁺`.
+-/
     by_cases hM' : M = ∅
     · rw [hM', Set.SurjOn_emptyset_Iio_iff_eq_zero] at hf_surj
       simp at hf_surj
-
+/-
+> Otherwise `M ≠ 0`. Because `M` is finite, the trichotomy law for `ω` implies
+> the existence of a largest member `p ∈ M`. There are two cases to consider:
+-/
     by_cases h : ¬ ∃ t, t ∈ M ∧ f t = n
-    -- Trivial case. `f` must not be onto if this is the case.
+/-
+### Case 1
+> `n ∉ ran f`.
+> Then `f` is not onto `n⁺`.
+-/
     · have ⟨t, ht⟩ := hf_surj (show n ∈ _ by simp)
       exact absurd ⟨t, ht⟩ h
-
-    -- Continue under the assumption `n ∈ ran f`.
+/-
+### Case 2
+> `n ∈ ran f`.
+> Then there exists some `t ∈ M` such that `⟨t, n⟩ ∈ f`.
+-/
     have ⟨t, ht₁, ht₂⟩ := not_not.mp h
-
+/-
+> Define `f': M → n⁺` given by
+>
+> `f'(p) = f(t) = n`
+> `f'(t) = f(p)`
+> `f'(x) = f(x)` for all other `x`.
+>
+> That is, `f'` is a variant of `f` in which the largest element of its domain
+> (i.e. `p`) corresponds to value `n`.
+-/
     -- `M ≠ ∅` so `∃ p, ∀ x ∈ M, p ≥ x`, i.e. a maximum member.
     have ⟨p, hp₁, hp₂⟩ : ∃ p ∈ M, ∀ x, x ∈ M → p ≥ x := by
       refine subset_finite_max_nat (show Set.Finite M from ?_) ?_ ?_
@@ -104,69 +148,19 @@ lemma pigeonhole_principle_aux (n : ℕ)
         exact Set.nmem_singleton_empty.mp hM'
       · show M ⊆ M
         exact Eq.subset rfl
-
-    -- `g` is a variant of `f` in which the largest element of its domain
-    -- (i.e. `p`) corresponds to value `n`.
-    let g x := if x = p then n else if x = t then f p else f x
-
-    have hg_maps : Set.MapsTo g M (Set.Iio (n + 1)) := by
-      intro x hx
-      dsimp only
-      by_cases hx₁ : x = p
-      · rw [hx₁]
-        simp
-      · rw [if_neg hx₁]
-        by_cases hx₂ : x = t
-        · rw [hx₂]
-          simp only [ite_true, Set.mem_Iio]
-          exact hf_maps hp₁
-        · rw [if_neg hx₂]
-          simp only [Set.mem_Iio]
-          exact hf_maps hx
-
-    have hg_inj : Set.InjOn g M := by
-      intro x₁ hx₁ x₂ hx₂ hf'
-      by_cases hc₁ : x₁ = p
-      · by_cases hc₂ : x₂ = p
-        · rw [hc₁, hc₂]
-        · dsimp at hf'
-          rw [hc₁] at hf'
-          simp only [ite_self, ite_true] at hf'
-          by_cases hc₃ : x₂ = t
-          · rw [if_neg hc₂, if_pos hc₃, ← ht₂] at hf'
-            rw [hc₁] at hx₁ ⊢
-            rw [hc₃] at hx₂ ⊢
-            exact hf_inj hx₁ hx₂ hf'.symm
-          · rw [if_neg hc₂, if_neg hc₃, ← ht₂] at hf'
-            have := hf_inj ht₁ hx₂ hf'
-            exact absurd this.symm hc₃
-      · by_cases hc₂ : x₂ = p
-        · rw [hc₂] at hf'
-          simp only [ite_self, ite_true] at hf'
-          by_cases hc₃ : x₁ = t
-          · rw [if_neg hc₁, if_pos hc₃, ← ht₂] at hf'
-            rw [hc₃] at hx₁ ⊢
-            rw [hc₂] at hx₂ ⊢
-            have := hf_inj hx₂ hx₁ hf'
-            exact this.symm
-          · rw [if_neg hc₁, if_neg hc₃, ← ht₂] at hf'
-            have := hf_inj hx₁ ht₁ hf'
-            exact absurd this hc₃
-        · dsimp only at hf'
-          rw [if_neg hc₁, if_neg hc₂] at hf'
-          by_cases hc₃ : x₁ = t
-          · by_cases hc₄ : x₂ = t
-            · rw [hc₃, hc₄]
-            · rw [if_pos hc₃, if_neg hc₄] at hf'
-              have := hf_inj hp₁ hx₂ hf'
-              exact absurd this.symm hc₂
-          · by_cases hc₄ : x₂ = t
-            · rw [if_neg hc₃, if_pos hc₄] at hf'
-              have := hf_inj hx₁ hp₁ hf'
-              exact absurd this hc₁
-            · rw [if_neg hc₃, if_neg hc₄] at hf'
-              exact hf_inj hx₁ hx₂ hf'
-
+/-
+> Next define `g = f' - {⟨p, n⟩}`. Then `g` is a function mapping `M - {p}` to
+> `n`.
+-/
+    let g := Set.Function.swap f p t
+/-
+> Since `f` is one-to-one, `f'` and `g` are also one-to-one.
+-/
+    have hg_maps := Set.Function.swap_MapsTo_self hp₁ ht₁ hf_maps
+    have hg_inj := Set.Function.swap_InjOn_self hp₁ ht₁ hf_inj
+/-
+> Then (1) indicates `g` must not be onto `n`.
+-/
     let M' := M \ {p}
     have hM' : M' ⊂ Set.Iio n := by
       by_cases hc : p = n
@@ -209,18 +203,28 @@ lemma pigeonhole_principle_aux (n : ℕ)
       · -- `Set.MapsTo g M' (Set.Iio n)`
         intro x hx
         have hx₁ : x ∈ M := Set.mem_of_mem_diff hx
-        apply Or.elim (Nat.lt_or_eq_of_lt $ hg_maps hx₁)
-        · exact id
-        · intro hx₂
-          rw [← show g p = n by simp] at hx₂
-          exact absurd (hg_inj hx₁ hp₁ hx₂) hx.right
+        apply Or.elim (Nat.lt_or_eq_of_lt $ hg_maps hx₁) id
+        intro hx₂
+        unfold Set.Function.swap at hx₂
+        by_cases hc₁ : x = p
+        · exact absurd hc₁ hx.right
+        · rw [if_neg hc₁] at hx₂
+          by_cases hc₂ : x = t
+          · rw [if_pos hc₂, ← ht₂] at hx₂
+            have := hf_inj hp₁ ht₁ hx₂
+            rw [← hc₂] at this
+            exact absurd this.symm hc₁
+          · rw [if_neg hc₂, ← ht₂] at hx₂
+            have := hf_inj hx₁ ht₁ hx₂
+            exact absurd this hc₂
       · -- `Set.InjOn g M'`
         intro x₁ hx₁ x₂ hx₂ hg
         have hx₁' : x₁ ∈ M := (Set.diff_subset M {p}) hx₁
         have hx₂' : x₂ ∈ M := (Set.diff_subset M {p}) hx₂
         exact hg_inj hx₁' hx₂' hg
-
-    -- We have shown `g` isn't surjective. This is another way of saying that.
+/-
+> That is, there exists some `a ∈ n` such that `a ∉ ran g`.
+-/
     have ⟨a, ha₁, ha₂⟩ : ∃ a, a < n ∧ a ∉ g '' M' := by
       unfold Set.SurjOn at ng_surj
       rw [Set.subset_def] at ng_surj
@@ -231,12 +235,15 @@ lemma pigeonhole_principle_aux (n : ℕ)
         not_exists,
         not_and,
         exists_prop
-      ] at ng_surj 
+      ] at ng_surj
       unfold Set.image
       simp only [Set.mem_Iio, Set.mem_setOf_eq, not_exists, not_and]
       exact ng_surj
-
-    -- If `g` isn't surjective then neither is `f`.
+/-
+> By the trichotomy law for `ω`, `a ≠ n`. Therefore `a ∉ ran f'`.
+> `ran f' = ran f` meaning `a ∉ ran f`. Because `a ∈ n ∈n⁺`, Theorem 4F implies
+> `a ∈ n⁺`. Hence `f` is not onto `n⁺`.
+-/
     refine absurd (hf_surj $ calc a
       _ < n := ha₁
       _ < n + 1 := by simp) (show ↑a ∉ f '' M from ?_)
@@ -248,17 +255,20 @@ lemma pigeonhole_principle_aux (n : ℕ)
       simp only [Set.mem_Iio, Set.mem_setOf_eq, not_exists, not_and] at ha₂ ⊢
       intro x hx
       by_cases hxp : x = p
-      · rw [if_pos hxp]
+      · unfold Set.Function.swap
+        rw [if_pos hxp, ht₂]
         exact (Nat.ne_of_lt ha₁).symm
       · refine ha₂ x ?_
         exact Set.mem_diff_of_mem hx hxp
 
     ext x
+    dsimp only
+    unfold Set.Function.swap
     simp only [Set.mem_image, Set.mem_Iio]
     apply Iff.intro
     · intro ⟨y, hy₁, hy₂⟩
       by_cases hc₁ : y = p
-      · rw [if_pos hc₁] at hy₂
+      · rw [if_pos hc₁, ht₂] at hy₂
         rw [hy₂] at ht₂
         exact ⟨t, ht₁, ht₂⟩
       · rw [if_neg hc₁] at hy₂
@@ -274,15 +284,25 @@ lemma pigeonhole_principle_aux (n : ℕ)
         · rw [hc₂, ht₂] at hy₂
           rw [← hc₁, ← hc₂]
           simp only [ite_self, ite_true]
-          exact hy₂
+          rwa [hc₂, ht₂]
         · rw [hc₁, ← Ne.def] at hc₂
           rwa [if_neg hc₂.symm, if_pos rfl, ← hc₁]
       · by_cases hc₂ : y = t
         · refine ⟨p, hp₁, ?_⟩
           simp only [ite_self, ite_true]
-          rwa [hc₂, ht₂] at hy₂
+          rwa [hc₂] at hy₂
         · refine ⟨y, hy₁, ?_⟩
           rwa [if_neg hc₁, if_neg hc₂]
+/-
+### Subconclusion
+> The foregoing cases are exhaustive. Hence `n⁺ ∈ S`.
+
+## (iii)
+> By (i) and (ii), `S` is an inductive set. By Theorem 4B, `S = ω`. Thus for all
+> natural numbers `n`, there is no one-to-one correspondence between `n` and a
+> proper subset of `n`. In other words, no natural number is equinumerous to a
+> proper subset of itself.
+-/
 
 /--
 No natural number is equinumerous to a proper subset of itself.
@@ -339,7 +359,7 @@ theorem corollary_6c [DecidableEq α] [Nonempty α]
         Set.le_eq_subset,
         Set.singleton_subset_iff,
         Set.mem_empty_iff_false
-      ] at hx₃ 
+      ] at hx₃
     · -- `Set.InjOn H S'`
       intro x₁ hx₁ x₂ hx₂ h
       have hc₁ : x₁ ∈ S' ∪ T := Set.mem_union_left T hx₁
@@ -368,7 +388,7 @@ theorem corollary_6c [DecidableEq α] [Nonempty α]
   have hf₂ : R ≈ Set.Iio n := by
     have ⟨k, hk⟩ := Set.equinumerous_symm hf₁
     exact Set.equinumerous_trans ⟨k, hk⟩ hG
-    
+
   refine absurd hf₂ (pigeonhole_principle ?_)
   show R ⊂ Set.Iio n
   apply And.intro
@@ -536,7 +556,7 @@ lemma lemma_6f {n : ℕ}
 
       suffices C' ≈ C from
         ⟨m, hm₁, Set.equinumerous_trans (Set.equinumerous_symm this) hm₂⟩
-      
+
       -- Proves `f` is a one-to-one correspondence between `C'` and `C`.
       let f x := if x = p then n else x
       refine ⟨f, ?_, ?_, ?_⟩
@@ -1053,14 +1073,14 @@ theorem exercise_6_7 [DecidableEq α] [Nonempty α] {A : Set α} {f : α → α}
       have hB₂ : x₂ ∈ B := sorry
       have hB₃ : B ⊆ A := sorry
       have ⟨m₁, n₁, hm₁, hn₁, hmn₁⟩ := subset_size hB₃ hA₁
-      
+
       have hf'₁ : Set.MapsTo f (A \ B) (A \ {y}) := sorry
       have hf'₂ : f '' (A \ B) = A \ {y} := sorry
       have hf'₃ : Set.Finite (A \ B) := sorry
       have hf'₄ : Set.Finite (A \ {y}) := sorry
 
       have ⟨m₂, n₂, hm₂, hn₂, hmn₂⟩ := finite_dom_ran_size hf'₃ hf'₄ hf'₁
-      
+
       have h₁ : A \ B ≈ Set.Iio (n₁ - m₁) := sorry
       have h₂ : A \ {y} ≈ Set.Iio (n₁ - 1) := sorry
       sorry
