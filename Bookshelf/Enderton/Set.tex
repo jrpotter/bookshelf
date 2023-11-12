@@ -9204,7 +9204,7 @@
     Clearly, if $S' = S$, then $S'$ is finite.
     Therefore suppose $S'$ is a proper subset of $S$.
 
-    By definition of finite set, $S$ is \nameref{ref:equinumerous} to some
+    By definition of a finite set, $S$ is \nameref{ref:equinumerous} to some
       natural number $n$.
     Let $f$ be a one-to-one correspondence between $S$ and $n$.
     Then $f \restriction S'$ is a one-to-one correspondence between $S'$ and
@@ -9299,19 +9299,17 @@
     By \nameref{sub:theorem-6a}, $n \equin \ran{f}$.
   \end{proof}
 
-\subsection{\pending{Set Difference Size}}%
+\subsection{\verified{Set Difference Size}}%
 \hyperlabel{sub:set-difference-size}
 
   \begin{lemma}
     Let $A \equin m$ for some natural number $m$ and $B \subseteq A$.
-    Then there exists some $n \in \omega$ such that $B \equin n$ and
+    Then there exists some $n \in \omega$ such that $n \leq m$, $B \equin n$ and
       $A - B \equin m - n$.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Chapter\_6}
     {Enderton.Set.Chapter\_6.sdiff\_size}
-
-  TODO: Update IH and add additional lemmas to fully prove this out.
 
   \begin{proof}
 
@@ -9320,7 +9318,7 @@
         \hyperlabel{sub:set-difference-size-ih}
         S = \{m \in \omega \mid
           \forall A \equin m, \forall B \subseteq A, \exists n
-            \in \omega (B \equin n \land A - B \equin m - n)\}.
+            \in \omega (n \leq m \land B \equin n \land A - B \equin m - n)\}.
       \end{equation}
     We prove that (i) $0 \in S$ and (ii) if $n \in S$ then $n^+ \in S$.
     Afterward we prove (iii) the lemma statement.
@@ -9329,9 +9327,9 @@
     \hyperlabel{par:set-difference-size-i}
 
       Let $A \equin 0$ and $B \subseteq A$.
-      Then it follows $A = B = \emptyset$.
-      Therefore $B \equin 0$ and $$A - B = \emptyset \equin 0 = 0 - 0$$ as
-        expected.
+      Then it follows $A = B = \emptyset = 0$.
+      Since $0 \leq 0$, $B \equin 0$, and $A - B = \emptyset \equin 0 = 0 - 0$,
+        it follows $0 \in S$.
 
     \paragraph{(ii)}%
     \hyperlabel{par:set-difference-size-ii}
@@ -9345,7 +9343,7 @@
       Then $B - \{a\} \subseteq A - \{a\}$ and $f$ is a one-to-one
         correspondence between $A - \{a\}$ and $m$.
       By \ihref{sub:set-difference-size-ih}, there exists some $n \in \omega$
-        such that $B - \{a\} \equin n$ and
+        such that $n \leq m$, $B - \{a\} \equin n$ and
         \begin{equation}
           \hyperlabel{par:set-difference-size-ii-eq1}
           (A - \{a\}) - (B - \{a\}) \equin m - n.
@@ -9377,7 +9375,7 @@
               & = \{x \mid x \in A - B \land x \neq a\} \nonumber \\
               & = \{x \mid x \in A - B \land x \not\in \{a\}\} \nonumber \\
               & = (A - B) - \{a\}.
-                \label{par:set-difference-size-ii-eq2}
+                \hyperlabel{par:set-difference-size-ii-eq2}
           \end{align}
         Since $a \in A$ and $a \in B$, $(A - B) - \{a\} = A - B$.
         Thus
@@ -9396,7 +9394,7 @@
           \begin{align*}
             (A - \{a\}) - (B - \{a\})
               & = (A - \{a\}) - B \\
-              & \equin m - n & \eqref{par:set-difference-size-ii-eq1}.
+              & \equin m - n. & \eqref{par:set-difference-size-ii-eq1}
           \end{align*}
         The above implies that there exists a one-to-one correspondence $g$
           between $(A - \{a\}) - B$ and $m - n$.
@@ -9408,7 +9406,8 @@
       \subparagraph{Subconclusion}%
 
         The above two cases are exhaustive and both conclude the existence of
-          some $n \in \omega$ such that $B \equin n$ and $A - B \equin m^+ - n$.
+          some $n \in \omega$ such that $n \leq m^+$, $B \equin n$ and
+          $A - B \equin m^+ - n$.
         Hence $m^+ \in S$.
 
     \paragraph{(iii)}%
@@ -9418,8 +9417,8 @@
         \nameref{ref:inductive-set}.
       Thus \nameref{sub:theorem-4b} implies $S = \omega$.
       Hence, for all $A \equin m$ for some $m \in \omega$, if $B \subseteq A$,
-        then there exists some $n \in \omega$ such that $B \equin n$ and
-        $A - B \equin m - n$.
+        then there exists some $n \in \omega$ such that $n \leq m$,
+        $B \equin n$, and $A - B \equin m - n$.
 
   \end{proof}
 

@@ -299,9 +299,25 @@ m ∈ n ↔ m ⬝ p ∈ n ⬝ p.
 
 theorem theorem_4n_i (m n p : ℕ)
   : m < n ↔ m + p < n + p := by
+/-
+> Let `m` and `n` be natural numbers.
+>
+> ##### (⇒)
+> Suppose `m ∈ n`. Let
+>
+> `S = {p ∈ ω | m + p ∈ n + p}`
+-/
   have hf : ∀ m n : ℕ, m < n → m + p < n + p := by
     induction p with
+/-
+> It trivially follows that `0 ∈ S`.
+-/
     | zero => simp
+/-
+> Next, suppose `p ∈ S`. That is, suppose `m + p ∈ n + p`. By *Lemma 4L(a)*,
+> this holds if and only if `(m + p)⁺ ∈ (n + p)⁺`. *Theorem 4I* then implies
+> that `m + p⁺ ∈ n + p⁺` meaning `p⁺ ∈ S`.
+-/
     | succ p ih =>
       intro m n hp
       have := ih m n hp
@@ -310,29 +326,76 @@ theorem theorem_4n_i (m n p : ℕ)
       have h₂ : (n + p).succ = n + p.succ := rfl
       rwa [← h₁, ← h₂]
   apply Iff.intro
+/-
+> Thus `S` is an inductive set. Hence *Theorem 4B* implies `S = ω`. Therefore,
+> for all `p ∈ ω`, `m ∈n` implies `m + p ∈ n + p`.
+-/
   · exact hf m n
+/-
+> ##### (⇐)
+> Let `p` be a natural number and suppose `m + p ∈ n + p`. By the
+> *Trichotomy Law for `ω`*, there are two cases to consider regarding how `m`
+> and `n` relate to one another:
+-/
   · intro h
     match @trichotomous ℕ LT.lt _ m n with
-    | Or.inl h₁ =>
-      exact h₁
     | Or.inr (Or.inl h₁) =>
+/-
+> ###### Case 1
+> Suppose `m = n`. Then `m + p ∈ n + p = m + p`. *Lemma 4L(b)* shows this is
+> impossible.
+-/
       rw [← h₁] at h
       exact absurd h (lemma_4l_b (m + p))
     | Or.inr (Or.inr h₁) =>
+/-
+> ###### Case 2
+> Suppose `n ∈ m`. Then *(⇒)* indicates `n + p ∈ m + p`. But this contradicts
+> the *Trichotomy Law for `ω`* since, by hypothesis, `m + p ∈ n + p`.
+-/
       have := hf n m h₁
       exact absurd this (Nat.lt_asymm h)
+    | Or.inl h₁ =>
+/-
+> ###### Conclusion
+> By trichotomy, it follows `m ∈ n`.
+-/
+      exact h₁
 
 #check Nat.add_lt_add_iff_right
 
 theorem theorem_4n_ii (m n p : ℕ)
   : m < n ↔ m * p.succ < n * p.succ := by
+/-
+> Let `m` and `n` be natural numbers.
+>
+> ##### (⇒)
+> Suppose `m ∈ n`. Let
+>
+> `S = {p ∈ ω | m ⬝ p⁺ ∈ n ⬝ p⁺}`.
+-/
   have hf : ∀ m n : ℕ, m < n → m * p.succ < n * p.succ := by
     intro m n hp₁
     induction p with
     | zero =>
+/-
+> `0 ∈ S` by *Right Multiplicative Identity*.
+-/
       simp only [Nat.mul_one]
       exact hp₁
     | succ p ih =>
+/-
+> Next, suppose `p ∈ S`. That is, `m ⬝ p⁺ ∈ n ⬝ p⁺`. Then
+>
+> `m ⬝ p⁺⁺ = m ⬝ p⁺ + m` *Theorem 4J*
+>       ` ∈ n ⬝ p⁺ + m` *(i)*
+>       ` = m + n ⬝ p⁺` *Theorem 4K-2*
+>       ` ∈ n + n ⬝ p⁺` *(i)*
+>       ` = n ⬝p⁺ + n`  *Theorem 4K-2*
+>       ` n ⬝ p⁺⁺`      *Theorem 4J*
+>
+> Therefore `p⁺ ∈ S`.
+-/
       have hp₂ : m * p.succ < n * p.succ := by
         by_cases hp₃ : p = 0
         · rw [hp₃] at *
@@ -347,17 +410,43 @@ theorem theorem_4n_ii (m n p : ℕ)
         _ = n * p.succ + n := by rw [theorem_4k_2]
         _ = n * p.succ.succ := rfl
   apply Iff.intro
+/-
+> Thus `S` is an inductive set. Hence *Theorem 4B* implies `S = ω`. By
+> *Theorem 4C*, every natural number except `0` is the successor of some natural
+> number. Therefore, for all `p ∈ ω` such that `p ≠ 0`, `m ∈ n` implies
+`m ⬝ p ∈ n ⬝ p`.
+-/
   · exact hf m n
-  · intro hp
-    match @trichotomous ℕ LT.lt _ m n with
-    | Or.inl h₁ =>
-      exact h₁
-    | Or.inr (Or.inl h₁) =>
-      rw [← h₁] at hp
-      exact absurd hp (lemma_4l_b (m * p.succ))
-    | Or.inr (Or.inr h₁) =>
-      have := hf n m h₁
-      exact absurd this (Nat.lt_asymm hp)
+/-
+> ##### (⇐)
+> Let `p ≠ 0` be a natural number and suppose `m ⬝ p ∈ n ⬝ p`. By the
+> *Trichotomy Law for `ω`*, there are two cases to consider regarding how `m`
+> and `n` relate to one another.
+-/
+  intro hp
+  match @trichotomous ℕ LT.lt _ m n with
+  | Or.inr (Or.inl h₁) =>
+/-
+> ###### Case 1
+> Suppose `m = n`. Then `m ⬝ p ∈ n ⬝ p = m ⬝ p`. *Lemma 4L(b)* shows this is
+> impossible.
+-/
+    rw [← h₁] at hp
+    exact absurd hp (lemma_4l_b (m * p.succ))
+  | Or.inr (Or.inr h₁) =>
+/-
+> ###### Case 2
+> Suppose `n ∈ m`. Then *(⇒)* indicates `n ⬝ p ∈ m ⬝ p`. But this contradicts
+> *Trichotomy Law for `ω`* since, by hypothesis, `m ⬝ p ∈ n ⬝ p`.
+-/
+    have := hf n m h₁
+    exact absurd this (Nat.lt_asymm hp)
+  | Or.inl h₁ =>
+/-
+> ###### Conclusion
+> By trichotomy, it follows `m ∈ n`.
+-/
+    exact h₁
 
 #check Nat.mul_lt_mul_of_pos_right
 
@@ -372,15 +461,30 @@ m ⬝ p = n ⬝ p ∧ p ≠ 0 ⇒ m = n.
 
 theorem corollary_4p_i (m n p : ℕ) (h : m + p = n + p)
   : m = n := by
+/-
+> Suppose `m + p = n + p`. By the *Trichotomy Law for `ω`*, there are two cases
+> to consider regarding how `m` and `n` relate to one another.
+-/
   match @trichotomous ℕ LT.lt _ m n with
   | Or.inl h₁ =>
+/-
+> If `m ∈n`, then *Theorem 4N* implies `m + p ∈ n + p`.
+-/
     rw [theorem_4n_i m n p, h] at h₁
     exact absurd h₁ (lemma_4l_b (n + p))
-  | Or.inr (Or.inl h₁) =>
-    exact h₁
   | Or.inr (Or.inr h₁) =>
+/-
+> If `n ∈ m`, then *Theorem 4N* implies `n + p ∈ m + p`.
+-/
     rw [theorem_4n_i n m p, h] at h₁
     exact absurd h₁ (lemma_4l_b (n + p))
+/-
+> Both of these contradict the *Trichotomy Law for `ω`* of `m + p` and `n + p`.
+> Thus `m = n` is the only remaining possibility.
+-/
+  | Or.inr (Or.inl h₁) =>
+    exact h₁
+
 
 #check Nat.add_right_cancel
 
@@ -391,25 +495,53 @@ Let `A` be a nonempty subset of `ω`. Then there is some `m ∈ A` such that
 -/
 theorem well_ordering_nat {A : Set ℕ} (hA : Set.Nonempty A)
   : ∃ m ∈ A, ∀ n, n ∈ A → m ≤ n := by
-  -- Assume `A` does not have a least element.
+/-
+> Let `A` be a nonempty subset of `ω`. For the sake of contradiciton, suppose
+> `A` does not have a least element.
+-/
   by_contra nh
   simp only [not_exists, not_and, not_forall, not_le, exists_prop] at nh
-
-  -- If we show the complement of `A` is `ω`, then `A = ∅`, a contradiction.
+/-
+> It then suffices to prove that the complement of `A` equals `ω`. If we do so,
+> then `A = ∅`, a contradiction.
+-/
   suffices A.compl = Set.univ by
     have h := Set.univ_diff_compl_eq_self A
     rw [this] at h
     simp only [sdiff_self, Set.bot_eq_empty] at h
     exact absurd h.symm (Set.Nonempty.ne_empty hA)
-
-  -- Use strong induction to prove every element of `ω` is in the complement.
+/-
+> Define
+>
+> `S = {n ∈ ω | (∀ m ∈ n)m ∉ A}`.
+>
+> We prove `S` is an inductive set by showing that (i) `0 ∈ S` and (ii) if
+> `n ∈ S`, then `n⁺ ∈ S`. Afterward we show that `ω - A = ω`, completing the
+> proof.
+-/
   have : ∀ n : ℕ, (∀ m, m < n → m ∈ A.compl) := by
     intro n
     induction n with
     | zero =>
+/-
+> #### (i)
+> It vacuously holds that `0 ∈ S`.
+-/
       intro m hm
       exact False.elim (Nat.not_lt_zero m hm)
     | succ n ih =>
+/-
+> #### (ii)
+> Suppose `n ∈ S`. We want to prove that
+>
+> `∀ m, m ∈ n⁺ ⇒ m ∉ A`.
+>
+> To this end, let `m ∈ ω` such that `m ∈ n⁺`. By definition of the successor,
+> `m ∈ n` or `m = n`. If the former, `n ∈ S` implies `m ∉ A`. If the latter, it
+> isn't possible for `n ∈ A` since the *Trichotomy Law for `ω`* would otherwise
+> imply `n` is the least element of `A`, which is assumed to not exist. Hence
+> `n⁺ ∈ S`.
+-/
       intro m hm
       have hm' : m < n ∨ m = n := by
         rw [Nat.lt_succ] at hm
@@ -429,7 +561,12 @@ theorem well_ordering_nat {A : Set ℕ} (hA : Set.Nonempty A)
           exact absurd hp.left (ih p hp.right)
         · rw [h]
           exact hn
-
+/-
+> #### Conclusion
+> By *(i)* and *(ii)*, `S` is an inductive set. Since `S ⊆ ω`, *Theorem 4B*
+> implies `S = ω`. Bu this immediately implies `ω = ω - A` meaning `A` is the
+> empty set.
+-/
   ext x
   simp only [Set.mem_univ, iff_true]
   by_contra nh'
@@ -451,11 +588,17 @@ theorem strong_induction_principle_nat (A : Set ℕ)
     rw [this] at h'
     simp only [Set.diff_empty] at h'
     exact h'.symm
-
+/-
+> For the sake of contradiction, suppose `ω - A` is a nonempty set. By
+> *Well Ordering of `ω`*, there exists a least element `m ∈ ω - A`.
+-/
   by_contra nh
   have ⟨m, hm⟩ := well_ordering_nat (Set.nmem_singleton_empty.mp nh)
   refine absurd (h m ?_) hm.left
-
+/-
+> Then every number less than `m` is in `A`. But then *(4.23)* implies `m ∈ A`,
+> a contradiction. Thus `ω - A` is an empty set meaning `A = ω`.
+-/
   -- Show that every number less than `m` is in `A`.
   intro x hx
   by_contra nx

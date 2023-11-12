@@ -763,54 +763,69 @@ Any subset of a finite set is finite.
 -/
 theorem corollary_6g {S S' : Set α} (hS : Set.Finite S) (hS' : S' ⊆ S)
   : Set.Finite S' := by
-  rw [subset_iff_ssubset_or_eq] at hS'
+/-
+> Let `S` be a finite set and `S' ⊆ S`.
+-/
+  rw [subset_iff_ssubset_or_eq, or_comm] at hS'
   apply Or.elim hS'
+/-
+> Clearly, if `S' = S`, then `S'` is finite.
+-/
   · intro h
-    rw [Set.finite_iff_equinumerous_nat] at hS
-    have ⟨n, F, hF⟩ := hS
+    rwa [h]
+/-
+> Therefore suppose `S'` is a proper subset of `S`.
+-/
+  intro h
+/-
+> By definition of a finite set, `S` is equinumerous to some natural number `n`.
+> Let `f` be a one-to-one correspondence between `S` and `n`.
+-/
+  rw [Set.finite_iff_equinumerous_nat] at hS
+  have ⟨n, f, hf⟩ := hS
+/-
+> Then `f ↾ S'` is a one-to-one correspondence between `S'` and some proper
+> subset of `n`.
+-/
+  -- Mirrors logic found in `corollary_6c`.
+  let T := S \ S'
+  let R := (Set.Iio n) \ (f '' T)
+  have hR : R ⊂ Set.Iio n := by
+    rw [Set.ssubset_def]
+    apply And.intro
+    · show ∀ x, x ∈ R → x ∈ Set.Iio n
+      intro _ hx
+      exact hx.left
+    · show ¬ ∀ x, x ∈ Set.Iio n → x ∈ R
+      intro nr
+      have ⟨t, ht₁⟩ : Set.Nonempty T := Set.diff_ssubset_nonempty h
+      have ht₂ : f t ∈ Set.Iio n := hf.left ht₁.left
+      have ht₃ : f t ∈ R := nr (f t) ht₂
+      exact absurd ⟨t, ht₁, rfl⟩ ht₃.right
 
-    -- Mirrors logic found in `corollary_6c`.
-    let T := S \ S'
-    let R := (Set.Iio n) \ (F '' T)
-    have hR : R ⊂ Set.Iio n := by
-      rw [Set.ssubset_def]
-      apply And.intro
-      · show ∀ x, x ∈ R → x ∈ Set.Iio n
-        intro _ hx
-        exact hx.left
-      · show ¬ ∀ x, x ∈ Set.Iio n → x ∈ R
-        intro nr
-        have ⟨t, ht₁⟩ : Set.Nonempty T := Set.diff_ssubset_nonempty h
-        have ht₂ : F t ∈ Set.Iio n := hF.left ht₁.left
-        have ht₃ : F t ∈ R := nr (F t) ht₂
-        exact absurd ⟨t, ht₁, rfl⟩ ht₃.right
-
-    suffices Set.BijOn F S' R by
-      have ⟨m, hm⟩ := lemma_6f hR
-      have := Set.equinumerous_trans ⟨F, this⟩ hm.right
-      exact Set.finite_iff_equinumerous_nat.mpr ⟨m, this⟩
+  have : Set.BijOn f S' R := by
     refine ⟨?_, ?_, ?_⟩
     · -- `Set.MapsTo f S' R`
       intro x hx
       dsimp only
       simp only [Set.mem_diff, Set.mem_Iio, Set.mem_image, not_exists, not_and]
       apply And.intro
-      · exact hF.left (subset_of_ssubset h hx)
+      · exact hf.left (subset_of_ssubset h hx)
       · intro y hy
         by_contra nf
-        have := hF.right.left (subset_of_ssubset h hx) hy.left nf.symm
+        have := hf.right.left (subset_of_ssubset h hx) hy.left nf.symm
         rw [this] at hx
         exact absurd hx hy.right
     · -- `Set.InjOn f S'`
-      intro x₁ hx₁ x₂ hx₂ hf
+      intro x₁ hx₁ x₂ hx₂ hf'
       have h₁ : x₁ ∈ S := subset_of_ssubset h hx₁
       have h₂ : x₂ ∈ S := subset_of_ssubset h hx₂
-      exact hF.right.left h₁ h₂ hf
+      exact hf.right.left h₁ h₂ hf'
     · -- `Set.SurjOn f S' R`
-      show ∀ x, x ∈ R → x ∈ F '' S'
+      show ∀ x, x ∈ R → x ∈ f '' S'
       intro x hx
 
-      have h₁ := hF.right.right
+      have h₁ := hf.right.right
       unfold Set.SurjOn at h₁
       rw [Set.subset_def] at h₁
       have ⟨y, hy⟩ := h₁ x hx.left
@@ -820,9 +835,16 @@ theorem corollary_6g {S S' : Set α} (hS : Set.Finite S) (hS' : S' ⊆ S)
       simp only [Set.mem_image, Set.mem_diff, not_exists, not_and] at hx
       by_contra ny
       exact (hx.right y ⟨hy.left, ny⟩) rfl
+/-
+> By *Lemma 6f*, `ran (f ↾ S')` is equinumerous to some `m < n`.
+-/
+  have ⟨m, hm⟩ := lemma_6f hR
+/-
+> Then *Theorem 6A* indicates `S' ≈ m`. Hence `S'` is a finite set.
+-/
+  have := Set.equinumerous_trans ⟨f, this⟩ hm.right
+  exact Set.finite_iff_equinumerous_nat.mpr ⟨m, this⟩
 
-  · intro h
-    rwa [h]
 
 /-- ### Subset Size
 
@@ -832,10 +854,18 @@ such that `B ≈ m`, `A ≈ n`, and `m ≤ n`.
 lemma subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
   (hBA : B ⊆ A) (hA : Set.Finite A)
   : ∃ m n : ℕ, B ≈ Set.Iio m ∧ A ≈ Set.Iio n ∧ m ≤ n := by
+/-
+> Let `A` be a finite set and `B` be a subset of `A`. By *Corollary 6G*, `B`
+> must be finite. By definition of a finite set, there exists natural numbers
+> `m, n ∈ ω` such that `B ≈ m` and `A ≈ n`.
+-/
   have ⟨n, hn⟩ := Set.finite_iff_equinumerous_nat.mp hA
   have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp (corollary_6g hA hBA)
   refine ⟨m, n, hm, hn, ?_⟩
-
+/-
+> By the *Trichotomy Law for `ω`*, it suffices to prove that `m > n` is not
+> possible for then either `m < n` or `m = n`.
+-/
   suffices ¬ m > n by
     match @trichotomous ℕ LT.lt _ m n with
     | Or.inr (Or.inl hr) =>  -- m = n
@@ -844,11 +874,22 @@ lemma subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
       exact absurd hr this
     | Or.inl hr          =>  -- m < n
       exact Nat.le_of_lt hr
-
+/-
+> For the sake of contradiction, assume `m > n`. By definition of equinumerous,
+> there exists a one-to-one correspondence between `B` and `m`. *Theorem 6A*
+> indicates there then exists a one-to-one correspondence `f` between `m` and
+> `B`. Likewise, there exists a one-to-one correspondence `g` between `A` and
+> `n`.
+-/
   by_contra nr
   have ⟨f, hf⟩ := Set.equinumerous_symm hm
   have ⟨g, hg⟩ := hn
-
+/-
+> Define `h : A → B` as `h(x) = f(g(x))` for all `x ∈ A`. Since `n ⊂ m` by
+> *Corollary 4M*, `h` is well-defined. By *One-to-One Composition*, `h` must be
+> one-to-one. thus `h` is a one-to-one correspondence between `A` and `ran h`,
+> i.e. `A ≈ ran h`.
+-/
   let h x := f (g x)
   have hh : Set.BijOn h A (h '' A) := by
     refine ⟨?_, ?_, Eq.subset rfl⟩
@@ -860,7 +901,11 @@ lemma subset_size [DecidableEq α] [Nonempty α] {A B : Set α}
       refine Set.InjOn.comp hf.right.left hg.right.left ?_
       intro x hx
       exact Nat.lt_trans (hg.left hx) nr
-
+/-
+> But `n < m` meaning `ran h ⊂ B` which in turn is a proper subset of `A` by
+> hypothesis. *Corollary 6C* states no finite set is equinumerous to a proper
+> subset of itself, a contradiction.
+-/
   have : h '' A ⊂ A := by
     rw [Set.ssubset_def]
     apply And.intro
@@ -918,8 +963,21 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
   : ∀ A : Set α, A ≈ Set.Iio m →
       ∀ B, B ⊆ A →
         ∃ n : ℕ, n ≤ m ∧ B ≈ Set.Iio n ∧ A \ B ≈ (Set.Iio m) \ (Set.Iio n) := by
+/-
+> `Let
+>
+> `S = {m ∈ ω | ∀ A ≈ m, ∀ B ⊆ A, ∃ n ∈ ω(n ≤ m ∧ B ≈ n ∧ A - B ≈ m - n) }`.
+>
+> We prove that (i) `0 ∈ S` and (ii) if `n ∈ S` then `n⁺ ∈ S`. Afterward we
+> prove (iii) the lemma statement.
+-/
   induction m with
   | zero =>
+/-
+> #### (i)
+> Let `A ≈ 0` and `B ⊆ A`. Then it follows `A = B = ∅ = 0`. Since `0 ≤ 0`,
+> `B ≈ 0`, and `A - B = ∅ ≈ 0 = 0 - 0`, it follows `0 ∈ S`.
+-/
     intro A hA B hB
     refine ⟨0, ?_⟩
     simp only [
@@ -935,17 +993,25 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
       exact hA
     rw [this]
     refine ⟨trivial, hB', Set.equinumerous_emptyset_emptyset⟩
-
   | succ m ih =>
+/-
+> #### (ii)
+> Suppose `m ∈ S` and consider `m⁺`. Let `A ≈ m⁺` and let `B ⊆ A`. By definition
+> of equinumerous, there exists a one-to-one corerspondnece `f` between `A` and
+> `m⁺`.
+-/
     intro A ⟨f, hf⟩ B hB
-
-    -- Since `f` is one-to-one and onto, there exists a unique value `a ∈ A`
-    -- such that `f(a) = m`.
+/-
+> Since `f` is one-to-one and onto, there exists a unique value `a ∈ A` such
+> that `f(a) = m`.
+-/
     have hfa := hf.right.right
     unfold Set.SurjOn at hfa
     have ⟨a, ha₁, ha₂⟩ := (Set.subset_def ▸ hfa) m (by simp)
-
-    -- `f` is a one-to-one correspondence between `A - {a}` and `m`.
+/-
+> Then `B - {a} ⊆A - {a}` and `f` is a one-to-one correspondence between
+> `A - {a}` and `m`.
+-/
     have hBA : B \ {a} ⊆ A \ {a} := Set.diff_subset_diff_left hB
     have hfBA : Set.BijOn f (A \ {a}) (Set.Iio m) := by
       refine ⟨?_, ?_, ?_⟩
@@ -974,12 +1040,21 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
         by_contra nb
         rw [← nb, hb.right] at ha₂
         exact absurd ha₂ (Nat.ne_of_lt hx)
-
+/-
+> By *(IH)*, there exists some `n ∈ ω` such that `n ≤ m`, `B - {a} ≈ n` and
+>
+> `(A - {a}) - (B - {a}) ≈ m - n`. (6.4)
+>
+> There are two cases to consider:
+-/
     -- `(A - {a}) - (B - {a}) ≈ m - n`
     have ⟨n, hn₁, hn₂, hn₃⟩ := ih (A \ {a}) ⟨f, hfBA⟩ (B \ {a}) hBA
     by_cases hc : a ∈ B
-
     · refine ⟨n.succ, ?_, ?_, ?_⟩
+/-
+> ##### Case 1
+> Assume `a ∈ B`. Then `B ≈ n⁺`.
+-/
       · exact Nat.succ_le_succ hn₁
       · -- `B ≈ Set.Iio n.succ`
         have ⟨g, hg⟩ := hn₂
@@ -1024,12 +1099,28 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
               rwa [if_neg hb₂]
             · intro hx₁
               exact absurd hx₁ hc₁
+/-
+> Furthermore, by definition of the set difference,
+>
+> `...`
+-/
       · have hA₁ : (A \ {a}) \ (B \ {a}) = (A \ B) \ {a} :=
           Set.diff_mem_diff_mem_eq_diff_diff_mem
+/-
+> Since `a ∈ A` and `a ∈ B`, `(A - B) - {a} = A - B`.
+-/
         have hA₂ : (A \ B) \ {a} = A \ B := by
           refine Set.not_mem_diff_eq_self ?_
           by_contra na
           exact absurd hc na.right
+/-
+> Thus
+>
+> `(A - {a} - (B - {a})) = (A - B) - {a}`
+>                      ` = A - B`
+>                      ` ≈ m - n`          *(6.4)*
+>                      ` ≈ m⁺ - n⁺`        *(Theorem 6A)*
+-/
         rw [hA₁, hA₂] at hn₃
         suffices (Set.Iio m) \ (Set.Iio n) ≈ (Set.Iio m.succ) \ (Set.Iio n.succ)
           from Set.equinumerous_trans hn₃ this
@@ -1063,13 +1154,24 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
             exact Nat.lt_succ.mp hx₂
           · rw [hp] at hx₁
             exact Nat.succ_lt_succ_iff.mp hx₁
-
+/-
+> ##### Case 2
+> Assume `a ∉ B`. Then `B - {a} = B` (i.e. `B ≈ n`) and
+>
+> `(A - {a}) - (B - {a}) = (A - {a}) - B`
+>                      ` ≈ m - n`.         *(6.4)
+-/
     · have hB : B \ {a} = B := Set.not_mem_diff_eq_self hc
       refine ⟨n, ?_, ?_, ?_⟩
       · calc n
           _ ≤ m := hn₁
           _ ≤ m + 1 := by simp
       · rwa [← hB]
+/-
+> The above implies that there exists a one-to-one correspondence `g` between
+> `(A - {a}) - B` and `m - n`. Therefore `g ∪ {⟨a, m⟩}` is a one-to-one
+> correspondence between `A - B` and `(m - n) ∪ {m}`.
+-/
       · rw [hB] at hn₃
         have ⟨g, hg⟩ := hn₃
         have hAB : A \ B ≈ (Set.Iio m) \ (Set.Iio n) ∪ {m} := by
@@ -1104,7 +1206,7 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
               exact absurd h.symm (Nat.ne_of_lt this.right)
             · rw [if_neg hc₁, if_pos hc₂] at h
               have := hg.left ⟨⟨hx₁.left, hc₁⟩, hx₁.right⟩
-              simp at this
+              simp only [Set.Iio_diff_Iio, gt_iff_lt, not_lt, ge_iff_le, Set.mem_Ico] at this
               exact absurd h (Nat.ne_of_lt this.right)
             · rw [if_neg hc₁, if_neg hc₂] at h
               exact hg.right.left ⟨⟨hx₁.left, hc₁⟩, hx₁.right⟩ ⟨⟨hx₂.left, hc₂⟩, hx₂.right⟩ h
@@ -1120,10 +1222,13 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
               refine ⟨y, ?_, ?_⟩
               · exact ⟨hy₁.left.left, hy₁.right⟩
               · rwa [if_neg hy₁.left.right]
-
+/-
+> By *Theorem 6A*
+>
+> `A - B ≈ (m - n) ∪ {m} ≈ m⁺ - n`.
+-/
         suffices (Set.Iio m) \ (Set.Iio n) ∪ {m} ≈ (Set.Iio m.succ) \ (Set.Iio n)
           from Set.equinumerous_trans hAB this
-
         refine ⟨fun x => x, ?_, ?_, ?_⟩
         · intro x hx
           simp at hx ⊢
@@ -1161,6 +1266,16 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
           · intro hx
             left
             exact hx
+/-
+> ##### Subconclusion
+> The above two cases are exhaustive and both conclude the existence of some
+> `n ∈ ω` such that `n ≤ m⁺`, `B ≈ n`, and `A - B ≈ m⁺ - n`. Hence `m⁺ ∈ S`.
+>
+> #### (iii)
+> By *(i)* and *(ii)*, `S ⊆ ω` is an inductive set. Thus *Theorem 4B* implies
+> `S = ω`. Hence, for all `A ≈ m` for some `m ∈ ω`, if `B ⊆ A`, then there
+> exists some `n ∈ ω` such that `n ≤ m`, `B ≈ n`, and `A - B ≈ m - n`.
+-/
 
 lemma sdiff_size [DecidableEq α] [Nonempty α] {A B : Set α}
   (hB : B ⊆ A) (hA : A ≈ Set.Iio m)
