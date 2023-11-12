@@ -1119,41 +1119,11 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
 > `(A - {a} - (B - {a})) = (A - B) - {a}`
 >                      ` = A - B`
 >                      ` ≈ m - n`          *(6.4)*
->                      ` ≈ m⁺ - n⁺`        *(Theorem 6A)*
+>                      ` ≈ m⁺ - n⁺`
 -/
         rw [hA₁, hA₂] at hn₃
-        suffices (Set.Iio m) \ (Set.Iio n) ≈ (Set.Iio m.succ) \ (Set.Iio n.succ)
-          from Set.equinumerous_trans hn₃ this
-        -- `m - n ≈ m⁺ - n⁺`
-        refine ⟨fun x => x + 1, ?_, ?_, ?_⟩
-        · intro x ⟨hx₁, hx₂⟩
-          simp at hx₁ hx₂ ⊢
-          exact ⟨Nat.le_add_of_sub_le hx₂, Nat.add_lt_of_lt_sub hx₁⟩
-        · intro _ _ _ _ h
-          simp only [add_left_inj] at h
-          exact h
-        · unfold Set.SurjOn Set.image
-          rw [Set.subset_def]
-          intro x ⟨hx₁, hx₂⟩
-          simp only [
-            Set.Iio_diff_Iio,
-            gt_iff_lt,
-            not_lt,
-            ge_iff_le,
-            Set.mem_setOf_eq,
-            Set.mem_Iio
-          ] at hx₁ hx₂ ⊢
-          have ⟨p, hp⟩ : ∃ p : ℕ, x = p.succ := by
-            refine Nat.exists_eq_succ_of_ne_zero ?_
-            have := calc 0
-              _ < n.succ := by simp
-              _ ≤ x := hx₂
-            exact Nat.pos_iff_ne_zero.mp this
-          refine ⟨p, ⟨?_, ?_⟩, hp.symm⟩
-          · rw [hp] at hx₂
-            exact Nat.lt_succ.mp hx₂
-          · rw [hp] at hx₁
-            exact Nat.succ_lt_succ_iff.mp hx₁
+        exact Set.equinumerous_trans hn₃
+          (Set.equinumerous_symm Set.succ_diff_succ_equinumerous_diff)
 /-
 > ##### Case 2
 > Assume `a ∉ B`. Then `B - {a} = B` (i.e. `B ≈ n`) and
@@ -1223,49 +1193,11 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
               · exact ⟨hy₁.left.left, hy₁.right⟩
               · rwa [if_neg hy₁.left.right]
 /-
-> By *Theorem 6A*
+> Hence
 >
 > `A - B ≈ (m - n) ∪ {m} ≈ m⁺ - n`.
 -/
-        suffices (Set.Iio m) \ (Set.Iio n) ∪ {m} ≈ (Set.Iio m.succ) \ (Set.Iio n)
-          from Set.equinumerous_trans hAB this
-        refine ⟨fun x => x, ?_, ?_, ?_⟩
-        · intro x hx
-          simp at hx ⊢
-          apply Or.elim hx
-          · intro hx₁
-            rw [hx₁]
-            exact ⟨hn₁, by simp⟩
-          · intro ⟨hx₁, hx₂⟩
-            exact ⟨hx₁, calc x
-              _ < m := hx₂
-              _ < m + 1 := by simp⟩
-        · intro _ _ _ _ h
-          exact h
-        · unfold Set.SurjOn Set.image
-          rw [Set.subset_def]
-          simp only [
-            Set.Iio_diff_Iio,
-            gt_iff_lt,
-            not_lt,
-            ge_iff_le,
-            Set.mem_Ico,
-            Set.union_singleton,
-            lt_self_iff_false,
-            and_false,
-            Set.mem_insert_iff,
-            exists_eq_right,
-            Set.mem_setOf_eq,
-            and_imp
-          ]
-          intro x hn hm
-          apply Or.elim (Nat.lt_or_eq_of_lt hm)
-          · intro hx
-            right
-            exact ⟨hn, hx⟩
-          · intro hx
-            left
-            exact hx
+        exact Set.equinumerous_trans hAB (Set.diff_union_equinumerous_succ_diff hn₁)
 /-
 > ##### Subconclusion
 > The above two cases are exhaustive and both conclude the existence of some

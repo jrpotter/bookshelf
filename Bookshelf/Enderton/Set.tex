@@ -9304,8 +9304,8 @@
 
   \begin{lemma}
     Let $A \equin m$ for some natural number $m$ and $B \subseteq A$.
-    Then there exists some $n \in \omega$ such that $n \leq m$, $B \equin n$ and
-      $A - B \equin m - n$.
+    Then there exists some $n \in \omega$ such that $n \leq m$, $B \equin n$,
+      and $A - B \equin m - n$.
   \end{lemma}
 
   \code{Bookshelf/Enderton/Set/Chapter\_6}
@@ -9384,7 +9384,7 @@
               & = (A - B) - \{a\} & \eqref{par:set-difference-size-ii-eq2} \\
               & = A - B \\
               & \equin m - n & \eqref{par:set-difference-size-ii-eq1} \\
-              & \equin m^+ - n^+ & \textref{sub:theorem-6a}.
+              & \equin m^+ - n^+.
           \end{align*}
 
       \subparagraph{Case 2}%
@@ -9400,8 +9400,7 @@
           between $(A - \{a\}) - B$ and $m - n$.
         Therefore $g \cup \{\tuple{a, m}\}$ is a one-to-one correspondence
           between $A - B$ and $(m - n) \cup \{m\}$.
-        By \nameref{sub:theorem-6a},
-          $$A - B \equin (m - n) \cup \{m\} \equin m^+ - n.$$
+        Hence $$A - B \equin (m - n) \cup \{m\} \equin m^+ - n.$$
 
       \subparagraph{Subconclusion}%
 
