@@ -952,32 +952,48 @@ theorem finite_dom_ran_size [Nonempty α] {A B : Set α}
 > For all `y ∈ ran f`, consider `f⁻¹⟦{y}⟧`. Let
 >
 > `A_y = {x ∈ m | f(g(x)) = y}`.
->
-> Since `g` is a one-to-one correspondence, it follows that `A_y ≈ f⁻¹⟦{y}⟧`.
 -/
   let A_y y := { x ∈ Set.Iio m | f (g x) = y }
-  have hA₁ : ∀ y ∈ B, A_y y ≈ f ⁻¹' {y} := by
+/-
+> Since `g` is a one-to-one correspondence, it follows that `A_y ≈ f⁻¹⟦{y}⟧`.
+-/
+  have hA₁ : ∀ y, y ∈ f '' A → A_y y ≈ A ∩ f ⁻¹' {y} := by
     intro y hy
-    dsimp only
     refine ⟨fun x => g x, ?_, ?_, ?_⟩
-    · intro x hx
+    · -- `Set.MapsTo`
+      intro x hx
       simp only [Set.mem_Iio, Set.mem_setOf_eq, Set.mem_preimage, Set.mem_singleton_iff] at hx ⊢
-      exact hx.right
-    · intro x₁ hx₁ x₂ hx₂ hf
-      exact (hg.right.left hx₁.left hx₂.left hf)
-    · sorry
+      exact ⟨hg.left hx.left, hx.right⟩
+    · -- `Set.InjOn`
+      intro x₁ hx₁ x₂ hx₂ hf
+      exact hg.right.left hx₁.left hx₂.left hf
+    · -- `Set.SurjOn`
+      unfold Set.SurjOn Set.preimage Set.image
+      rw [Set.subset_def]
+      simp only [Set.mem_singleton_iff, Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_Iio]
+      intro x ⟨hx₁, hx₂⟩
+      have hx₃ := hg.right.right hx₁
+      simp only [Set.mem_image, Set.mem_Iio] at hx₃
+      have ⟨z, hz⟩ := hx₃
+      exact ⟨z, ⟨hz.left, hz.right ▸ hx₂⟩, hz.right⟩
 /-
 > Since `A_y` is a nonempty subset of natural numbers, the
 > *Well Ordering of `ω`* implies there exists a least element, say `q_y`.
 -/
-  have hA₂ : ∀ y ∈ B, Set.Nonempty (A_y y) := by
-    sorry
-  have hA₃ : ∀ y ∈ B, ∃ q : ℕ, ∀ p ∈ A_y y, q ≤ p := by
+  have hA₂ : ∀ y, y ∈ f '' A → Set.Nonempty (A_y y) := by
+    intro y hy
+    unfold Set.Nonempty
+    simp only [Set.mem_image, Set.mem_Iio, Set.mem_setOf_eq] at hy ⊢
+    have ⟨x, hx⟩ := hy
+    have ⟨z, hz⟩ := hg.right.right hx.left
+    simp only [Set.mem_Iio] at hz
+    exact ⟨z, hz.left, hz.right ▸ hx.right⟩
+  have hA₃ : ∀ y, y ∈ f '' A → ∃ q, q ∈ A_y y ∧ ∀ p ∈ A_y y, q ≤ p := by
     sorry
 /-
 > Define `C = {q_y | y ∈ ran f}`.
 -/
-  let C := { q | ∃ y ∈ B, ∀ p ∈ A_y y, q ≤ p }
+  let C := { q | ∃ y, y ∈ f '' A ∧ (∀ p ∈ A_y y, q ≤ p) }
 /-
 > Thus `h : C → ran f` given by `h(x) = f(g(x))` is a one-to-on ecorrespondence
 > between `C` and `ran f` by construction. That is, `C ≈ ran f`.
