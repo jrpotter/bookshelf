@@ -935,23 +935,60 @@ natural numbers `m, n ∈ ω` such that `dom f ≈ m`, `ran f ≈ n`, and `m ≥
 theorem finite_dom_ran_size [Nonempty α] {A B : Set α}
   (hA : Set.Finite A) (hB : Set.Finite B) (hf : Set.MapsTo f A B)
   : ∃ m n : ℕ, A ≈ Set.Iio m ∧ f '' A ≈ Set.Iio n ∧ m ≥ n := by
+/-
+> Let `A` and `B` be finite sets and `f : A → B` be a function. By definition of
+> finite sets, there exists natural numbers `m, p ∈ ω` such that `A ≈ m` and
+> `B ≈ p`. By definition of the domain of a function, `dom f = A`. Thus
+> `dom f ≈ m`.
+-/
   have ⟨m, hm⟩ := Set.finite_iff_equinumerous_nat.mp hA
   have ⟨p, hp⟩ := Set.finite_iff_equinumerous_nat.mp hB
+/-
+> By *Theorem 6A*, there exists a one-to-one correspondence `g` between `m` and
+> `dom f = A`.
+-/
   have ⟨g, hg⟩ := Set.equinumerous_symm hm
-
+/-
+> For all `y ∈ ran f`, consider `f⁻¹⟦{y}⟧`. Let
+>
+> `A_y = {x ∈ m | f(g(x)) = y}`.
+>
+> Since `g` is a one-to-one correspondence, it follows that `A_y ≈ f⁻¹⟦{y}⟧`.
+-/
   let A_y y := { x ∈ Set.Iio m | f (g x) = y }
   have hA₁ : ∀ y ∈ B, A_y y ≈ f ⁻¹' {y} := by
-    sorry
+    intro y hy
+    dsimp only
+    refine ⟨fun x => g x, ?_, ?_, ?_⟩
+    · intro x hx
+      simp only [Set.mem_Iio, Set.mem_setOf_eq, Set.mem_preimage, Set.mem_singleton_iff] at hx ⊢
+      exact hx.right
+    · intro x₁ hx₁ x₂ hx₂ hf
+      exact (hg.right.left hx₁.left hx₂.left hf)
+    · sorry
+/-
+> Since `A_y` is a nonempty subset of natural numbers, the
+> *Well Ordering of `ω`* implies there exists a least element, say `q_y`.
+-/
   have hA₂ : ∀ y ∈ B, Set.Nonempty (A_y y) := by
     sorry
   have hA₃ : ∀ y ∈ B, ∃ q : ℕ, ∀ p ∈ A_y y, q ≤ p := by
     sorry
-
+/-
+> Define `C = {q_y | y ∈ ran f}`.
+-/
   let C := { q | ∃ y ∈ B, ∀ p ∈ A_y y, q ≤ p }
+/-
+> Thus `h : C → ran f` given by `h(x) = f(g(x))` is a one-to-on ecorrespondence
+> between `C` and `ran f` by construction. That is, `C ≈ ran f`.
+-/
   let h x := f (g x)
   have hh : C ≈ f '' A := by
     sorry
-
+/-
+> By *Lemma 6F*, there exists some `n ≤ m` such that `C ≈ n`. By *Theorem 6A*,
+> `n ≈ ran f`.
+-/
   sorry
 
 /-- ### Set Difference Size
