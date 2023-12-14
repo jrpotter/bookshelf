@@ -1,0 +1,3 @@
+[submodule "doc-gen4"]
+	path = doc-gen4
+	url = git@github.com:jrpotter/bookshelf-doc.git
