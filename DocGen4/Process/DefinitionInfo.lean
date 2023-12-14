@@ -36,8 +36,10 @@ def DefinitionInfo.ofDefinitionVal (v : DefinitionVal) : MetaM DefinitionInfo :=
   let info ← Info.ofConstantVal v.toConstantVal
   let isUnsafe := v.safety == DefinitionSafety.unsafe
   let isNonComputable := isNoncomputable (← getEnv) v.name
+
   try
-    let eqs? ← getEqnsFor? v.name
+    let eqs? ←  getEqnsFor? v.name
+
     match eqs? with
     | some eqs =>
       let equations ← eqs.mapM processEq

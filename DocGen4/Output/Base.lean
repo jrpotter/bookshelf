@@ -11,7 +11,7 @@ namespace DocGen4.Output
 open scoped DocGen4.Jsx
 open Lean System Widget Elab Process
 
-def basePath := FilePath.mk "." / "build" / "doc"
+def basePath := FilePath.mk "." / ".lake" / "build" / "doc"
 def srcBasePath := basePath / "src"
 def declarationsBasePath := basePath / "declarations"
 
@@ -104,6 +104,13 @@ Returns the doc-gen4 link to a module `NameExt`.
 def moduleNameExtToLink (n : NameExt) : BaseHtmlM String := do
   let parts := n.name.components.map Name.toString
   return (← getRoot) ++ (parts.intersperse "/").foldl (· ++ ·) "" ++ "." ++ n.ext.toString
+
+/--
+Returns the doc-gen4 link to a module name.
+-/
+def moduleNameToLink (n : Name) : BaseHtmlM String := do
+  let parts := n.components.map Name.toString
+  return (← getRoot) ++ (parts.intersperse "/").foldl (· ++ ·) "" ++ ".html"
 
 /--
 Returns the doc-gen4 link to a module name.

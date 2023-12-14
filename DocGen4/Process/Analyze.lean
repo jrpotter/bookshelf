@@ -126,7 +126,8 @@ def process (task : AnalyzeTask) : MetaM (AnalyzerResult × Hierarchy) := do
         maxHeartbeats := 5000000,
         options := ← getOptions,
         fileName := ← getFileName,
-        fileMap := ← getFileMap
+        fileMap := ← getFileMap,
+        catchRuntimeEx := true,
       }
       let analysis ← Prod.fst <$> Meta.MetaM.toIO (DocInfo.ofConstant (name, cinfo)) config { env := env } {} {}
       if let some dinfo := analysis then
