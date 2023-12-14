@@ -22,3 +22,9 @@ leanpkg.path
 *.synctex.gz
 *.toc
 .*.lb
+
+# direnv
+.direnv/
+
+# nix
+result
