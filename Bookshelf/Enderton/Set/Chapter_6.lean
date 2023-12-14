@@ -512,7 +512,7 @@ theorem corollary_6d_b
     ]
     refine ⟨1, ?_⟩
     intro x nx
-    simp only [mul_eq_one, false_and] at nx
+    simp only [mul_eq_one, OfNat.ofNat_ne_one, false_and] at nx
 
 /-- ### Corollary 6E
 
@@ -992,7 +992,7 @@ lemma sdiff_size_aux [DecidableEq α] [Nonempty α]
       simp only [Set.diff_empty]
       exact hA
     rw [this]
-    refine ⟨trivial, hB', Set.equinumerous_emptyset_emptyset⟩
+    refine ⟨by simp, hB', Set.equinumerous_emptyset_emptyset⟩
   | succ m ih =>
 /-
 > #### (ii)

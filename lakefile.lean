@@ -22,10 +22,10 @@ require leanInk from git
     "doc-gen"
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git" @
-    "master"
+    "v4.3.0"
 require std from git
   "https://github.com/leanprover/std4.git" @
-    "main"
+    "v4.3.0"
 
 -- ========================================
 -- Documentation Generator

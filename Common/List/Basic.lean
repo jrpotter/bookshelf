@@ -162,7 +162,7 @@ theorem length_zipWith_self_tail_eq_length_sub_one
   rw [length_zipWith]
   simp only [length_cons, ge_iff_le, min_eq_right_iff]
   show length as ≤ length as + 1
-  simp only [le_add_iff_nonneg_right]
+  simp only [le_add_iff_nonneg_right, zero_le]
 
 /--
 The output `List` of a `zipWith` is nonempty **iff** both of its inputs are

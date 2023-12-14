@@ -50,7 +50,7 @@ theorem exercise_4c (x y : ℝ)
   : ⌊x + y⌋ = ⌊x⌋ + ⌊y⌋ ∨ ⌊x + y⌋ = ⌊x⌋ + ⌊y⌋ + 1 := by
   have hx : x = Int.floor x + Int.fract x := Eq.symm (add_eq_of_eq_sub' rfl)
   have hy : y = Int.floor y + Int.fract y := Eq.symm (add_eq_of_eq_sub' rfl)
-  by_cases Int.fract x + Int.fract y < 1
+  by_cases h : Int.fract x + Int.fract y < 1
   · refine Or.inl ?_
     rw [Int.floor_eq_iff]
     simp only [Int.cast_add]

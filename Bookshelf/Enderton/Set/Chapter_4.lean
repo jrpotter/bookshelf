@@ -702,7 +702,7 @@ theorem exercise_4_17 (m n p : ℕ)
   | zero => calc m ^ (n + 0)
     _ = m ^ n := rfl
     _ = m ^ n * 1 := by rw [right_mul_id]
-    _ = m ^ n * m ^ 0 := rfl
+    _ = m ^ n * m ^ 0 := by rfl
   | succ p ih => calc m ^ (n + p.succ)
     _ = m ^ (n + p).succ := rfl
     _ = m ^ (n + p) * m := rfl

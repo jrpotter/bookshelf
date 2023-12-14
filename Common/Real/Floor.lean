@@ -1,6 +1,5 @@
 import Mathlib.Algebra.BigOperators.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Real.Archimedean
 
 /-! # Common.Real.Floor
 

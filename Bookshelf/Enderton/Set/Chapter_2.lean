@@ -616,7 +616,7 @@ lemma right_diff_eq_insert_one_three : A \ (B \ C) = {1, 3} := by
       rw [hy] at hz
       unfold Membership.mem Set.instMembershipSet Set.Mem at hz
       unfold singleton Set.instSingletonSet Set.singleton setOf at hz
-      simp only at hz
+      simp at hz
     · intro hy
       refine ⟨Or.inr (Or.inr hy), ?_⟩
       intro hz

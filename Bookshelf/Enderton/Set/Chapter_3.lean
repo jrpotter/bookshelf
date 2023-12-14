@@ -542,7 +542,7 @@ theorem exercise_3_1 {x y z u v w : ℕ}
   · rw [hx, hy, hz, hu, hv, hw]
     simp
   · rw [hy, hv]
-    simp only
+    simp
 
 /-- ### Exercise 3.2a
 

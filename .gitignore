@@ -4,6 +4,7 @@ lakefile.olean
 lake-packages
 _target
 leanpkg.path
+.lake/
 
 # TeX
 *.aux

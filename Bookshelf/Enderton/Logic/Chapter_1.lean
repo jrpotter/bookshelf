@@ -481,7 +481,7 @@ theorem exercise_1_2_2b_iii {k : ℕ} (h : Odd k)
       exact absurd hr hk
     unfold σ
     rw [hn₁]
-    simp only [Nat.add_eq, add_zero, not_forall, exists_prop, and_true]
+    simp only [Nat.add_eq, add_zero, imp_false, not_not]
     exact exercise_1_2_2b_i False Q hn₂
 
 end Exercise_1_2_2
