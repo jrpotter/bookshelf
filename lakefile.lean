@@ -10,8 +10,9 @@ require mathlib from git
 require std from git
   "https://github.com/leanprover/std4.git" @
     "v4.3.0"
-meta if get_config? env = some "dev" then
-  require «doc-gen4» from "./doc-gen4"
+require «doc-gen4» from git
+  "https://github.com/jrpotter/bookshelf-doc" @
+    "main"
 
 @[default_target]
 lean_lib «Bookshelf» {
