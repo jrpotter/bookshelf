@@ -85,7 +85,7 @@
   {"url": "https://github.com/jrpotter/bookshelf-doc",
    "type": "git",
    "subDir": null,
-   "rev": "cfa8d0e042c85e04203646d4b1b3fe99c7f42b11",
+   "rev": "9bd217dc37ea79a3f118a313583f539cdbc762e6",
    "name": "«doc-gen4»",
    "manifestFile": "lake-manifest.json",
    "inputRev": "main",
