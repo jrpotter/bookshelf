@@ -1,7 +1,11 @@
 # bookshelf
 
-A study of the books listed below. Most proofs are conducted in LaTeX. Where
-feasible, theorems are also formally proven in [Lean](https://leanprover.github.io/).
+A study of the books listed below.
+
+## Overview
+
+Most proofs are conducted in LaTeX. Where feasible, theorems are also formally
+proven in [Lean](https://leanprover.github.io/).
 
 - [ ] Apostol, Tom M. Calculus, Vol. 1: One-Variable Calculus, with an Introduction to Linear Algebra. 2nd ed. Vol. 1. 2 vols. Wiley, 1991.
 - [x] Avigad, Jeremy. ‘Theorem Proving in Lean’, n.d.
@@ -13,3 +17,22 @@ feasible, theorems are also formally proven in [Lean](https://leanprover.github.
 - [ ] Gustedt, Jens. Modern C. Shelter Island, NY: Manning Publications Co, 2020.
 - [ ] Ross, Sheldon. A First Course in Probability Theory. 8th ed. Pearson Prentice Hall, n.d.
 - [ ] Smullyan, Raymond M. To Mock a Mockingbird: And Other Logic Puzzles Including an Amazing Adventure in Combinatory Logic. Oxford: Oxford university press, 2000.
+
+## Building
+
+[direnv](https://direnv.net/) can be used to launch a dev shell upon entering
+this directory (refer to `.envrc`). Otherwise run via:
+```bash
+$ nix develop
+```
+If you prefer not to use `nix`, you can also use the [elan](https://github.com/leanprover/elan)
+package manager like normal. Afterward, build the project by running
+```bash
+$ lake build
+```
+Optionally build documentation by running:
+```bash
+$ lake build Bookshelf:docs
+```
+Afterward, you can view the generated files by running `python3 -m http.server`
+from within the `.lake/build/doc` directory.
